@@ -157,12 +157,16 @@ class HotelController extends Controller {
         $itemDispo = $this->cUrlExecAction($url);
         $dispoHotel = json_decode($itemDispo, true);
 
-        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=amenities%2Cfees%2Cpictures%2Cinformation%2Cnotices%2Croom_types(amenities%2Cpictures%2Cinformation)%2Cextra_details&include=unpublished&resolve=merge_info&catalog_info=true";
+        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=information,amenities,pictures&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
         $hotelDetails = json_decode($hotel, true);
 
-        return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array('item' => $dispoHotel,
-                    'hotel' => $hotelDetails));
+        return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', 
+                array(
+                    'dispoHotel' => $dispoHotel,
+                    'hotelDetails' => $hotelDetails
+                    )
+                );
     }
 
     private function cUrlExecAction($url) {

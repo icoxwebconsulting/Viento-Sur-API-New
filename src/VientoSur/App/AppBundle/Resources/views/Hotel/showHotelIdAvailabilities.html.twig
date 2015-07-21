@@ -1,42 +1,47 @@
-Name: {{hotel[0].name}} /
-Estrallas: {{hotel[0].stars}}
+Name: {{hotelDetails[0].name}} /
+Estrallas: {{hotelDetails[0].stars}}
 <br>
 <div>
-<img src="{{hotel[0].pictures[0].url}}" width="400"  height="300">
+<img src="{{hotelDetails[0].pictures[0].url}}" width="400"  height="300">
 </div>
 <br>
 
-Información: {{hotel[0].information.es}}
+Información: {{hotelDetails[0].information.es}}
 <br>    
 {#    Key "items" for array with keys "choice, payment_type, meal_plan, rooms, 
 cancellation_policy, promo, price_detail, contract_currency, payment_methods" #}
 <br>
-Nuemero de habitaciones: {{item.roompacks[0].rooms|length}}
+Nuemero de habitaciones: {{dispoHotel.roompacks[0].rooms|length}}
 <br>
-{%for room in item.roompacks[0].rooms%}
+{%for room in dispoHotel.roompacks[0].rooms%}
     {#{{room.kkl}}#}
     Referencia:{{ room.reference}}
     Nombre :{{ room.name}}
-    Capacidad: {{ room.capacity.max}}
+   {# Capacidad: {{ room.capacity.max}}#}
     Codigo: {{ room.room_code}}
-    Occupation Personas: 
+   {# Occupation Personas: 
     {%for main_guest in  room.occupation.main_guests%}
          {{main_guest.guest_age_type_id}}/Total: {{main_guest.quantity}}
-    {%endfor%}   
+    {%endfor%} #}  
     <br>
     {#"currency, subtotal, taxes, taxes_detail, fee, discounts, total, nightly"#}
 {%endfor%}
 Servicios: <bR>
-{%for amenitie in hotel[0].amenities %}
+{%for amenitie in hotelDetails[0].amenities %}
     {{ amenitie.descriptions.es}}<br>
 {%endfor%}
+<br>
 Precio del paquete: <br>
-Moneda:{{item.roompacks[0].price_detail.currency}}
-subtotal:{{item.roompacks[0].price_detail.subtotal}}
-taxes:{{item.roompacks[0].price_detail.taxes}}
-taxes_detail: {{item.roompacks[0].price_detail.taxes_detail|length}}
-fee: {{item.roompacks[0].price_detail.fee}}
-discounts: {{item.roompacks[0].price_detail.discounts}}
-total: {{item.roompacks[0].price_detail.total}}
-nightly: {{item.roompacks[0].price_detail.total}}
-Metodos de pago del Paquete: {{item.roompacks[0].payment_methods|length}}
+Moneda:{{dispoHotel.roompacks[0].price_detail.currency}}<br>
+impuestos :{{dispoHotel.roompacks[0].price_detail.taxes}}<br>
+detalle impuestos: <br>
+{%for taxes_detail in dispoHotel.roompacks[0].price_detail.taxes_detail %}
+    codigo/ {{taxes_detail.code}}
+    cantidad/{{taxes_detail.amount}}<br>
+    {%endfor%}
+cuota(fee): {{dispoHotel.roompacks[0].price_detail.fee}}<br>
+Descuentos : {{dispoHotel.roompacks[0].price_detail.discounts}}<br>
+subtotal :{{dispoHotel.roompacks[0].price_detail.subtotal}}<br>
+total: {{dispoHotel.roompacks[0].price_detail.total}}<br>
+Metodos de pago del Paquete: 
+{{dispoHotel.roompacks[0].payment_type}}
