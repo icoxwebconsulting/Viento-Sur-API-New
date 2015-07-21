@@ -1,0 +1,70 @@
+{%for item in items %}
+    Itenerario : {{loop.index}}
+    Salida:
+    {%for outbound_choice in item.outbound_choices%}
+        <table border="1">
+            <tr>
+                <td>Duracion: </td>
+                <td>opcion: {{loop.index}}</td> 
+            </tr>
+            <tr>
+                <td>{{outbound_choice.duration}}</td>
+                <td>
+                    {%for segment in outbound_choice.segments%}
+                        <table>
+                            <tr>
+                                Escala: {{loop.index}}
+                                Aeropuerto salida: {{segment.from}}
+                                Aeropuerto llegada: {{segment.to}}
+                                fecha salida :  {{segment.departure_datetime}}
+                                fecha llegada :  {{segment.arrival_datetime}}
+                                duration: {{segment.duration}}
+                                airline: {{segment.airline}}
+                            </tr>
+                        </table>
+                    {%endfor%}
+
+                </td>
+
+            </tr>
+        </table>
+    {%endfor%}
+    Retorno:
+    {%for inbound_choice in item.inbound_choices%}
+        <table border="1">
+            <tr>
+                <td>Duracion: </td>
+                <td>Opcion: {{loop.index}}</td> 
+            <tr>
+                <td>{{inbound_choice.duration}}</td>
+                <td>
+                    {%for segment in inbound_choice.segments%}
+                        <table>
+                            <tr>
+                                Escala: {{loop.index}}
+                                Aeropuerto salida: {{segment.from}}
+                                Aeropuerto llegada: {{segment.to}}
+                                fecha salida :  {{segment.departure_datetime}}
+                                fecha llegada :  {{segment.arrival_datetime}}
+                                duration: {{segment.duration}}
+                                airline: {{segment.airline}}
+                            </tr>
+                        </table>
+                    {%endfor%}
+
+                </td>
+            </tr>
+        </table>
+    {%endfor%}
+    <table>
+        <tr>
+            currency:{{item.price_detail.currency}} 
+            {#                                charges:{{item.price_detail.charges}}#}
+            adult_base:{{item.price_detail.adult_base}}
+            adults_subtotal:{{item.price_detail.adults_subtotal}}
+            total:{{item.price_detail.total}}
+        </tr>
+    </table> 
+    <br><hr>
+{%endfor%}
+

@@ -1,0 +1,13 @@
+869537,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/index/,1437500063,,200
+622cf9,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/js/routing?callback=fos.Router.setData,1437500068,,200
+fc2bbd,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=cara,1437500089,,200
+3d3946,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=caraca,1437500090,,200
+bac8f8,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=c,1437500092,,200
+f0627b,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=carac,1437500093,,200
+6332ed,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=car,1437500093,,200
+ef7997,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=ca,1437500097,,200
+9f16ba,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=c,1437500101,,200
+aefa5f,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=ca,1437500101,,200
+44fb2f,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=car,1437500102,,200
+9eb3ce,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=carac,1437500103,,200
+504f22,127.0.0.1,GET,http://test.vientosur.dev/app_dev.php/app/hotel/autocomplete/?query=cara,1437500108,,200

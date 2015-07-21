@@ -1,0 +1,4 @@
+viento_sur_app_hotel_homepage:
+    resource: "@VientoSurAppAppBundle/Controller/HotelController.php"
+    type:     annotation
+    prefix:   /app

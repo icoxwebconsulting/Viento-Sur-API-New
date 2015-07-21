@@ -1,0 +1,8 @@
+viento_sur_app_app:
+    resource: "@VientoSurAppAppBundle/Resources/config/routing.yml"
+    prefix:   /
+    options:
+        expose: true
+        
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

@@ -1,0 +1,32 @@
+{#<input type="hidden" name="rest_complet" value="{{restUrl}}">#}
+{%for item in items %}
+    
+    Hotel : {{loop.index}}
+    {{item.id}}
+        <table border="1">
+            <tr>
+                <td>Nombre: </td>
+                <td>Identificacion Hotel</td>
+                <td> Habitaciones disponibles (paquetes) </td>
+                <td>Precio:</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
+                    Stars: {{item.hotel.stars}}
+                </td>
+                <td>
+                    {{item.hotel.hotel_type_id}}
+                </td>
+                <td>
+                    {%for roompack in item.roompacks%}
+                  Plan de comidas:{{roompack.meal_plan.id}}/
+                  hab disp:  {{roompack.rooms|length}}
+                 {#{{roompack.price_detail}}#}
+                    {%endfor%}
+                </td>
+                <td>{#{{item.price_detail}}#}</td>
+            </tr>
+        </table><br>
+{%endfor%}
+
