@@ -132,8 +132,8 @@ class HotelController extends Controller {
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
 
 //        die();
-
-        $url = "https://api.despegar.com/v3/packages/hotels/availabilities?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=".$destination."&distribution=" . $distribucion . "&language=es&accepts=partial";
+//https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=2015-12-01&checkout_date=2015-12-05&destination=982&distribution=2&language=es&accepts=partial
+        $url = "https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=".$destination."&distribution=" . $distribucion . "&language=es&accepts=partial";
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
         //return print_r($results);
