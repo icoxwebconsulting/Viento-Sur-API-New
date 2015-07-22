@@ -5,12 +5,16 @@
     {{item.id}}
     <table border="1">
         <tr>
+            <td></td>
             <td>Nombre: </td>
             <td>Identificacion Hotel</td>
             <td> Habitaciones disponibles (paquetes) </td>
             <td>Precio:</td>
         </tr>
         <tr>
+            <td>
+                {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
+            </td>
             <td>
                 <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
                 Stars: {{item.hotel.stars}}
@@ -22,9 +26,6 @@
                 {%for roompack in item.roompacks%}
                     Plan de comidas:{{roompack.meal_plan.id}}/
                     hab disp:  {{roompack.rooms|length}}
-                    {#{%for price in roompack.price_detail%}#}
-                    {{roompack.price_detail.currency}}
-                {#{%endfor%}#}
                 {%endfor%}
             </td>
             <td>
@@ -33,10 +34,10 @@
                  Moneda:{{price.price_detail.currency}}<br>
                  Sub Total:{{price.price_detail.subtotal}}<br>
                  Impuestos:{{price.price_detail.taxes}}<br>
-                 Detalles de impuestos:
+                 Detalles de impuestos:<br>
                  {%for taxes_detail in price.price_detail.taxes_detail %}
-                    codigo/ {{taxes_detail.code}}
-                    cantidad/{{taxes_detail.amount}}<br>
+                    codigo: {{taxes_detail.code}}
+                    cantidad: {{taxes_detail.amount}}<br>
                  {%endfor%}<br>
                  Cuota:{{price.price_detail.fee}}<br>
                  Descuentos:{{price.price_detail.discounts}}<br>

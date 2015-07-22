@@ -130,9 +130,6 @@ class HotelController extends Controller {
         $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
-
-//        die();
-//https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=2015-12-01&checkout_date=2015-12-05&destination=982&distribution=2&language=es&accepts=partial
         $url = "https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=".$destination."&distribution=" . $distribucion . "&language=es&accepts=partial";
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
@@ -168,7 +165,25 @@ class HotelController extends Controller {
                     )
                 );
     }
+    
+        /**
+     * Lists all Company entities.
+     *
+     * @Route("/show/details{idHotel}", name="viento_sur_app_app_homepage_show_hotel_photo")
+     * @Method("GET")
+     * @Template()
+     */
+    public function detailsHotelListForIdAction(Request $request, $idHotel) {
 
+        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=pictures&resolve=merge_info&catalog_info=true";
+        $hotel = $this->cUrlExecAction($hotelUrl);
+        $hotelDetails = json_decode($hotel, true);
+
+        return array(
+                    'hotelDetails' => $hotelDetails
+                    );
+    }
+    
     private function cUrlExecAction($url) {
 
         //step1

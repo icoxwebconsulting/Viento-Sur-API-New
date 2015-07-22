@@ -184,16 +184,30 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 }
 
-                // viento_sur_app_app_homepage_show_hotel_id
-                if (0 === strpos($pathinfo, '/app/hotel/show') && preg_match('#^/app/hotel/show/(?P<idHotel>[^/]++)/availabilities/(?P<restUrl>[^/]++)$#s', $pathinfo, $matches)) {
-                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'HEAD'));
-                        goto not_viento_sur_app_app_homepage_show_hotel_id;
-                    }
+                if (0 === strpos($pathinfo, '/app/hotel/show')) {
+                    // viento_sur_app_app_homepage_show_hotel_id
+                    if (preg_match('#^/app/hotel/show/(?P<idHotel>[^/]++)/availabilities/(?P<restUrl>[^/]++)$#s', $pathinfo, $matches)) {
+                        if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                            $allow = array_merge($allow, array('GET', 'HEAD'));
+                            goto not_viento_sur_app_app_homepage_show_hotel_id;
+                        }
 
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'viento_sur_app_app_homepage_show_hotel_id')), array (  '_controller' => 'VientoSur\\App\\AppBundle\\Controller\\HotelController::showHotelIdAvailabilitiesAction',));
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'viento_sur_app_app_homepage_show_hotel_id')), array (  '_controller' => 'VientoSur\\App\\AppBundle\\Controller\\HotelController::showHotelIdAvailabilitiesAction',));
+                    }
+                    not_viento_sur_app_app_homepage_show_hotel_id:
+
+                    // viento_sur_app_app_homepage_show_hotel_photo
+                    if (0 === strpos($pathinfo, '/app/hotel/show/details') && preg_match('#^/app/hotel/show/details(?P<idHotel>[^/]++)$#s', $pathinfo, $matches)) {
+                        if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                            $allow = array_merge($allow, array('GET', 'HEAD'));
+                            goto not_viento_sur_app_app_homepage_show_hotel_photo;
+                        }
+
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'viento_sur_app_app_homepage_show_hotel_photo')), array (  '_controller' => 'VientoSur\\App\\AppBundle\\Controller\\HotelController::detailsHotelListForIdAction',));
+                    }
+                    not_viento_sur_app_app_homepage_show_hotel_photo:
+
                 }
-                not_viento_sur_app_app_homepage_show_hotel_id:
 
             }
 
