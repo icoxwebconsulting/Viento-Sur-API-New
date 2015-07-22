@@ -79,6 +79,7 @@
   'DoctrineBundle:Collector:db.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/vendor/doctrine/doctrine-bundle/Resources/views/Collector/db.html.twig',
   'VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/showHotelIdAvailabilities.html.twig',
   'VientoSurAppAppBundle:Hotel:exemple.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/exemple.html.twig',
+  'VientoSurAppAppBundle:Hotel:detailsHotelListForId.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/detailsHotelListForId.html.twig',
   'VientoSurAppAppBundle:Hotel:listFlightsItineraries.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/listFlightsItineraries.html.twig',
   'VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/listHotelsAvailabilities.html.twig',
   'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' => '/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/searchHotels.html.twig',
