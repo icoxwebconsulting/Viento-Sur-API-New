@@ -6,13 +6,17 @@
         <title>Demo Viento Sur</title>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('bundles/vientosurappapp/css/datepicker.css') }}" />
+        
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script src="{{ asset('bundles/vientosurappapp/js/Hotel/hotel.js')}}" type="text/javascript"></script>
         <script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.mockjax.js')}}" type="text/javascript"></script>
         <script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.autocomplete.js')}}" type="text/javascript"></script>
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/vientosurappapp/js/bootstrap-datepicker.js') }}"></script>
+
 {#        <link rel="stylesheet" href="/resources/demos/style.css">#}
         <script>
             $(function () {

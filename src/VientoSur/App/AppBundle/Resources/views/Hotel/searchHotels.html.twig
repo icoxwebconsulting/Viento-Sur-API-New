@@ -10,13 +10,13 @@
     <div class="hotelDates-container">
         <div class="date-container" id="fromDateHotelInputContainer">	<!--Departure date input-->
             <label id="fromDateHotelLabel" for="fromCalendarHotel">Entrada</label>
-            <input type="text" placeholder="dd-mm-aaaa" class="input-date required" id="fromCalendarHotel" name="fromCalendarHotel">
+            <input type="text" data-date="" data-date-format="yyyy-mm-dd"  class="input-date required datepicker" id="fromCalendarHotel" name="fromCalendarHotel">
             <span class="mainSprite calendar"></span>
         </div>
         <p class="date-separator">&nbsp;</p>
         <div class="date-container" id="toDateHotelInputContainer">	<!--Arrival date input-->
             <label id="toDateHotelLabel" for="toCalendarHotel">Salida</label>
-            <input type="text" placeholder="dd-mm-aaaa" class="input-date required" id="toCalendarHotel" name="toCalendarHotel">
+            <input type="text" data-date="" data-date-format="yyyy-mm-dd" class="input-date required datepicker" id="toCalendarHotel" name="toCalendarHotel">
             <span class="mainSprite calendar"></span>
         </div>
         <div class="clearBox"></div>
@@ -772,5 +772,6 @@
                 $("#destinationCity").val(suggestion.data);
             }
     });
+     $('.datepicker').datepicker();
     });
 </script>
