@@ -211,6 +211,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
             }
 
+            // viento_sur_app_app_homepage_send_hotel_booking
+            if ($pathinfo === '/app/hotel/booking/hotel/send') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_viento_sur_app_app_homepage_send_hotel_booking;
+                }
+
+                return array (  '_controller' => 'VientoSur\\App\\AppBundle\\Controller\\HotelController::sendHotelBookingAction',  '_route' => 'viento_sur_app_app_homepage_send_hotel_booking',);
+            }
+            not_viento_sur_app_app_homepage_send_hotel_booking:
+
         }
 
         // fos_js_routing_js

@@ -8,19 +8,16 @@
     </div>
 
     <div class="hotelDates-container">
-        <div class="date-container" id="fromDateHotelInputContainer">	<!--Departure date input-->
             <label id="fromDateHotelLabel" for="fromCalendarHotel">Entrada</label>
-            <input type="text" data-date="" data-date-format="yyyy-mm-dd"  class="input-date required datepicker" id="fromCalendarHotel" name="fromCalendarHotel">
+            <input type="text" data-date="" data-date-format="yyyy-mm-dd"  class="input-date required datepicker" id="fromCalendarHotel" name="fromCalendarHotel" onFocus="closeTo(this);">
             <span class="mainSprite calendar"></span>
-        </div>
-        <p class="date-separator">&nbsp;</p>
-        <div class="date-container" id="toDateHotelInputContainer">	<!--Arrival date input-->
+             ------
             <label id="toDateHotelLabel" for="toCalendarHotel">Salida</label>
-            <input type="text" data-date="" data-date-format="yyyy-mm-dd" class="input-date required datepicker" id="toCalendarHotel" name="toCalendarHotel">
+            <input type="text" data-date="" data-date-format="yyyy-mm-dd" class="input-date required datepicker" id="toCalendarHotel" name="toCalendarHotel" onFocus="closeFrom(this);">
             <span class="mainSprite calendar"></span>
-        </div>
         <div class="clearBox"></div>
     </div>
+    <br>
     <input id="hotelsMinDays" type="hidden" class="ignore" value="1" >
 
     <input id="ageSelectorMessage" type="hidden" class="ignore" value="Por favor, ingrese la edad." >
@@ -764,14 +761,28 @@
 </form>
 <script>
     jQuery(document).ready(function () {
-        
-    var url = Routing.generate('hotel_autocomplete');
-    $('#autocomplete').autocomplete({
-    serviceUrl: url,
+
+        var url = Routing.generate('hotel_autocomplete');
+        $('#autocomplete').autocomplete({
+            serviceUrl: url,
             onSelect: function (suggestion) {
                 $("#destinationCity").val(suggestion.data);
             }
+        });
+        $('#fromCalendarHotel').datepicker();
+        $('#toCalendarHotel').datepicker();
+
+
+
     });
-     $('.datepicker').datepicker();
-    });
+    var cal;
+
+    function closeTo(event)
+    {
+       $( "#toCalendarHotel" ).datepicker( "hide" );
+    }
+        function closeFrom(event)
+    {
+       $( "#fromCalendarHotel" ).datepicker( "hide" );
+    }
 </script>

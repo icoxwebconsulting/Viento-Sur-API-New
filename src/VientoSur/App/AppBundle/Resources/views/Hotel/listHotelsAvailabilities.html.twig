@@ -1,50 +1,55 @@
 {#<input type="hidden" name="rest_complet" value="{{restUrl}}">#}
-{%for item in items %}
+{% if items.message is defined%}
+    No se encontraron hoteles disponibles
+{%elseif items.items|length>0%}
+    {%for item in items.items %}
 
-    Hotel : {{loop.index}}
-    {{item.id}}
-    <table border="1">
-        <tr>
-            <td></td>
-            <td>Nombre: </td>
-            <td>Identificacion Hotel</td>
-            <td> Habitaciones disponibles (paquetes) </td>
-            <td>Precio:</td>
-        </tr>
-        <tr>
-            <td>
-                {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
-            </td>
-            <td>
-                <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
-                Stars: {{item.hotel.stars}}
-            </td>
-            <td>
-                {{item.hotel.hotel_type_id}}
-            </td>
-            <td>
-                {%for roompack in item.roompacks%}
-                    Plan de comidas:{{roompack.meal_plan.id}}/
-                    hab disp:  {{roompack.rooms|length}}
-                {%endfor%}
-            </td>
-            <td>
-            {# currency, subtotal, taxes, taxes_detail, fee, discounts, total, nightly               #}
-            {%for price in item.roompacks%}<br>
-                 Moneda:{{price.price_detail.currency}}<br>
-                 Sub Total:{{price.price_detail.subtotal}}<br>
-                 Impuestos:{{price.price_detail.taxes}}<br>
-                 Detalles de impuestos:<br>
-                 {%for taxes_detail in price.price_detail.taxes_detail %}
-                    codigo: {{taxes_detail.code}}
-                    cantidad: {{taxes_detail.amount}}<br>
-                 {%endfor%}<br>
-                 Cuota:{{price.price_detail.fee}}<br>
-                 Descuentos:{{price.price_detail.discounts}}<br>
-                 Total:{{price.price_detail.total}}<br>
-                 {%endfor%}
-            </td>
-        </tr>
-    </table><br>
-{%endfor%}
-
+        Hotel : {{loop.index}}
+        {{item.id}}
+        <table border="1">
+            <tr>
+                <td></td>
+                <td>Nombre: </td>
+                <td>Identificacion Hotel</td>
+                <td> Habitaciones disponibles (paquetes) </td>
+                <td>Precio:</td>
+            </tr>
+            <tr>
+                <td>
+                    {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
+                </td>
+                <td>
+                    <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
+                    Stars: {{item.hotel.stars}}
+                </td>
+                <td>
+                    {{item.hotel.hotel_type_id}}
+                </td>
+                <td>
+                    {%for roompack in item.roompacks%}
+                        Plan de comidas:{{roompack.meal_plan.id}}/
+                        hab disp:  {{roompack.rooms|length}}
+                    {%endfor%}
+                </td>
+                <td>
+                    {# currency, subtotal, taxes, taxes_detail, fee, discounts, total, nightly               #}
+                    {%for price in item.roompacks%}<br>
+                        Moneda:{{price.price_detail.currency}}<br>
+                        Sub Total:{{price.price_detail.subtotal}}<br>
+                        Impuestos:{{price.price_detail.taxes}}<br>
+                        Detalles de impuestos:<br>
+                        {%for taxes_detail in price.price_detail.taxes_detail %}
+                            codigo: {{taxes_detail.code}}
+                            cantidad: {{taxes_detail.amount}}<br>
+                        {%endfor%}<br>
+                        Cuota:{{price.price_detail.fee}}<br>
+                        Descuentos:{{price.price_detail.discounts}}<br>
+                        Total:{{price.price_detail.total}}<br>
+                    {%endfor%}
+                </td>
+            </tr>
+        </table><br>
+    {%endfor%}
+{%else%}
+    No se encontraron hoteles disponibles
+{%endif%}

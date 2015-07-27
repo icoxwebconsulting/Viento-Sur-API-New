@@ -135,8 +135,9 @@ class HotelController extends Controller {
         $results = json_decode($hotels, true);
         //return print_r($results);
         $restUrl = "?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&distribution=" . $distribucion;
+        
         return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
-                    'items' => $results['items'],
+                    'items' => $results,
                     'restUrl' => $restUrl
         ));
     }
@@ -182,6 +183,30 @@ class HotelController extends Controller {
         return array(
                     'hotelDetails' => $hotelDetails
                     );
+    }
+    
+            /**
+     * Lists all Company entities.
+     *
+     * @Route("/booking/hotel/send", name="viento_sur_app_app_homepage_send_hotel_booking")
+     * @Method("POST")
+     * @Template()
+     */
+    public function sendHotelBookingAction(Request $request) {
+
+//        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=pictures&resolve=merge_info&catalog_info=true";
+//        $hotel = $this->cUrlExecAction($hotelUrl);
+//        $hotelDetails = json_decode($hotel, true);
+
+        var_dump($request);
+        echo $request->getClientIp();
+        echo $request->getLocale();
+       echo  $request->headers->get('User-Agent');
+       //192.168.1.6
+        die();
+//        return array(
+//                    'hotelDetails' => $hotelDetails
+//                    );
     }
     
     private function cUrlExecAction($url) {
