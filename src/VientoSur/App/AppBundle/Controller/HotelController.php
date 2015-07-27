@@ -28,7 +28,8 @@ class HotelController extends Controller {
         return array();
         //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
     }
-        /**
+
+    /**
      * Lists all Company entities.
      *
      * @Route("/autocomplete/", name="hotel_autocomplete")
@@ -37,21 +38,20 @@ class HotelController extends Controller {
      */
     public function autocompleteHotelAction(Request $request) {
         $query = $request->get('query');
-        $url = "https://api.despegar.com/v3/autocomplete?query=".$query."&product=HOTELS&locale=es&city_result=10";
+        $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
         $cities = $this->cUrlExecAction($url);
         $results = json_decode($cities, true);
-        
-        foreach ($results as $item){
+
+        foreach ($results as $item) {
             $city = Array();
 
-            $city["value"]= $item["description"];
+            $city["value"] = $item["description"];
             $city["data"] = substr($item["id"], 5);
-            $response[] =$city;
+            $response[] = $city;
         }
         return new JsonResponse(array("suggestions" => $response));
         //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
     }
-    
 
     /**
      * Lists all Company entities.
@@ -69,12 +69,11 @@ class HotelController extends Controller {
         echo $adultsSelect = $request->get('adultsSelect');
         echo $childrenSelect = $request->get('childrenSelect');
         echo $infantsSelect = $request->get('infantsSelect');
-    
+
         $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&return_date=" . $toDate . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
-        $items = $this->cUrlExecAction($url); 
+        $items = $this->cUrlExecAction($url);
         $results = json_decode($items, true);
-        return $this->render('VientoSurAppAppBundle:Hotel:listFlightsItineraries.html.twig', 
-                array('items' => $results['items']));
+        return $this->render('VientoSurAppAppBundle:Hotel:listFlightsItineraries.html.twig', array('items' => $results['items']));
     }
 
     /**
@@ -130,12 +129,12 @@ class HotelController extends Controller {
         $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
-        $url = "https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=".$destination."&distribution=" . $distribucion . "&language=es&accepts=partial";
+        $url = "https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&accepts=partial";
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
         //return print_r($results);
         $restUrl = "?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&distribution=" . $distribucion;
-        
+
         return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
                     'items' => $results,
                     'restUrl' => $restUrl
@@ -159,15 +158,14 @@ class HotelController extends Controller {
         $hotel = $this->cUrlExecAction($hotelUrl);
         $hotelDetails = json_decode($hotel, true);
 
-        return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', 
-                array(
+        return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                     'dispoHotel' => $dispoHotel,
                     'hotelDetails' => $hotelDetails
-                    )
-                );
+                        )
+        );
     }
-    
-        /**
+
+    /**
      * Lists all Company entities.
      *
      * @Route("/show/details{idHotel}", name="viento_sur_app_app_homepage_show_hotel_photo")
@@ -181,11 +179,11 @@ class HotelController extends Controller {
         $hotelDetails = json_decode($hotel, true);
 
         return array(
-                    'hotelDetails' => $hotelDetails
-                    );
+            'hotelDetails' => $hotelDetails
+        );
     }
-    
-            /**
+
+    /**
      * Lists all Company entities.
      *
      * @Route("/booking/hotel/send", name="viento_sur_app_app_homepage_send_hotel_booking")
@@ -198,22 +196,54 @@ class HotelController extends Controller {
 //        $hotel = $this->cUrlExecAction($hotelUrl);
 //        $hotelDetails = json_decode($hotel, true);
 
-        var_dump($request);
         echo $request->getClientIp();
         echo $request->getLocale();
-       echo  $request->headers->get('User-Agent');
-       //192.168.1.6
+        echo $request->headers->get('User-Agent');
+        $miArray = array("source"=>array(
+                                "country_code"=>"AR"),
+                         "reservation_context"=> array(
+                                "shown_currency"=> "USD",
+                                "threat_metrix_id"=> "25",
+                                "context_language"=> "ES",
+                                "client_ip"=> "120.12.352.25",
+                                "user_agent"=> "Mozilla/5.0 (Windows NT 6.3; rv:36.0)Gecko/20100101 Firefox/36.0"),
+                         "keys"=>array(
+                                "availability_token"=>"3c81f6c0-6c8a-469c-a0d8-983ab56bef32")
+                    );
+       $postvars = json_encode($miArray);
+       $url = "https://api.despegar.com/v3/hotels/bookings";
+       $response = $this->cUrlExecPostBookingAction($url,$miArray);
+      
+       print_r($response);
+        //192.168.1.6
         die();
-//        return array(
-//                    'hotelDetails' => $hotelDetails
-//                    );
     }
-    
+
     private function cUrlExecAction($url) {
 
         //step1
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        //step3
+        $results = curl_exec($cSession);
+        //step4
+        curl_close($cSession);
+
+        return $results;
+    }
+    
+    
+    private function cUrlExecPostBookingAction($url,$postvars) {
+
+        //step1
+        $postvars = json_encode($postvars);
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_POST, true);                //0 for a get request
+        curl_setopt($cSession, CURLOPT_POSTFIELDS,$postvars);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
         curl_setopt($cSession, CURLOPT_HEADER, false);
