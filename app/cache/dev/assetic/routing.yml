@@ -1,5 +1,0 @@
-_assetic:
-    resource: .
-    type: assetic
-_app:
-    resource: /var/www/html/CODIGOS/viento-sur-api-new/app/config/routing_dev.yml
