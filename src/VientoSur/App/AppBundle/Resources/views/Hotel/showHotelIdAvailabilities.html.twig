@@ -46,9 +46,9 @@ total: {{dispoHotel.roompacks[0].price_detail.total}}<br>
 Metodos de pago del Paquete: 
 {{dispoHotel.roompacks[0].payment_type}}
 <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
-    <input type="text" name="ejemplo" value="hola">
+    <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
     <button type="submit">
-        send
+        Comprar
     </button>
 
 </form>

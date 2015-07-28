@@ -168,7 +168,7 @@ class HotelController extends Controller {
     /**
      * Lists all Company entities.
      *
-     * @Route("/show/details{idHotel}", name="viento_sur_app_app_homepage_show_hotel_photo")
+     * @Route("/show/details/{idHotel}", name="viento_sur_app_app_homepage_show_hotel_photo")
      * @Method("GET")
      * @Template()
      */
@@ -186,37 +186,53 @@ class HotelController extends Controller {
     /**
      * Lists all Company entities.
      *
-     * @Route("/booking/hotel/send", name="viento_sur_app_app_homepage_send_hotel_booking")
+     * @Route("/booking/hotel/send/booking", name="viento_sur_app_app_homepage_send_hotel_booking")
      * @Method("POST")
      * @Template()
      */
     public function sendHotelBookingAction(Request $request) {
 
-//        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=pictures&resolve=merge_info&catalog_info=true";
-//        $hotel = $this->cUrlExecAction($hotelUrl);
-//        $hotelDetails = json_decode($hotel, true);
+        $request->getClientIp();
+        $request->getLocale();
+        $request->headers->get('User-Agent');
+        $request->get('availability_token');
+        
+        $arrayData = array("source" => array(
+                "country_code" => "AR"),
+                "reservation_context" => array(
+                    "context_language" => $request->getLocale(),
+                    "shown_currency" => "USD",
+                    "threat_metrix_id" => "25",
+                    "client_ip" => "192.168.1.6",
+                    "user_agent" => $request->headers->get('User-Agent')
+                ),
+                "keys" => array(
+                    "availability_token" => $request->get('availability_token')
+                )
+        );
+        $response = $this->cUrlExecPostBookingAction($arrayData);
+        $formUrl = json_decode($response, true);
+        return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', 
+                                array('formUrl' => $formUrl["next_step_url"]))
+                            );
+    }
+    
+        /**
+     * Lists all Company entities.
+     *
+     * @Route("/booking/pay/", name="viento_sur_app_boking_hotel_pay")
+     * @Method("GET")
+     * @Template()
+     */
+    public function bookingHotelPayAction(Request $request) {  
+       
+        $url = "https://api.despegar.com" . $request->query->get('formUrl');
+        $formResponse = $this->cUrlExecAction($url);
+        $formBooking = json_decode($formResponse, true);
 
-        echo $request->getClientIp();
-        echo $request->getLocale();
-        echo $request->headers->get('User-Agent');
-        $miArray = array("source"=>array(
-                                "country_code"=>"AR"),
-                         "reservation_context"=> array(
-                                "shown_currency"=> "USD",
-                                "threat_metrix_id"=> "25",
-                                "context_language"=> "ES",
-                                "client_ip"=> "120.12.352.25",
-                                "user_agent"=> "Mozilla/5.0 (Windows NT 6.3; rv:36.0)Gecko/20100101 Firefox/36.0"),
-                         "keys"=>array(
-                                "availability_token"=>"3c81f6c0-6c8a-469c-a0d8-983ab56bef32")
-                    );
-       $postvars = json_encode($miArray);
-       $url = "https://api.despegar.com/v3/hotels/bookings";
-       $response = $this->cUrlExecPostBookingAction($url,$miArray);
-      
-       print_r($response);
-        //192.168.1.6
-        die();
+        return array(
+            'formBooking' => $formBooking
+        );
     }
 
     private function cUrlExecAction($url) {
@@ -234,18 +250,21 @@ class HotelController extends Controller {
 
         return $results;
     }
-    
-    
-    private function cUrlExecPostBookingAction($url,$postvars) {
+
+    private function cUrlExecPostBookingAction($postvars) {
 
         //step1
         $postvars = json_encode($postvars);
         $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_POST, true);                //0 for a get request
-        curl_setopt($cSession, CURLOPT_POSTFIELDS,$postvars);
+        curl_setopt($cSession, CURLOPT_URL, "https://api.despegar.com/v3/hotels/bookings");
+        curl_setopt($cSession, CURLOPT_POST, true); 
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $postvars);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, 
+                array('X-ApiKey:2864680fe4d74241aa613874fa20705f',
+                      'Content-Type: application/json'
+                    )
+        );
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
