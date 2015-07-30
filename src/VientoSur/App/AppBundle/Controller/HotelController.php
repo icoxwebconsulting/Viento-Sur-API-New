@@ -192,10 +192,10 @@ class HotelController extends Controller {
      */
     public function sendHotelBookingAction(Request $request) {
 
-        $request->getClientIp();
-        $request->getLocale();
-        $request->headers->get('User-Agent');
-        $request->get('availability_token');
+//        $request->getClientIp();
+//        $request->getLocale();
+//        $request->headers->get('User-Agent');
+//        $request->get('availability_token');
         
         $arrayData = array("source" => array(
                 "country_code" => "AR"),
@@ -228,6 +228,7 @@ class HotelController extends Controller {
        
         $url = "https://api.despegar.com" . $request->query->get('formUrl');
         $formResponse = $this->cUrlExecAction($url);
+        
         $formBooking = json_decode($formResponse, true);
 
         return array(

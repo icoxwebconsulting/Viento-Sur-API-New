@@ -1,1 +1,8 @@
 Construyendo el formulario......
+
+{%for passenger in formBooking.dictionary.form_choices[1].passengers%}
+        <br>habitacion{{loop.index}}
+        Primner Nombre: 
+        <input type="{{passenger.first_name.type}}" name="{{passenger.qualified_name}}" value=""/>
+ 
+    {%endfor%}
