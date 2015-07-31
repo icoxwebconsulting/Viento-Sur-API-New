@@ -26,7 +26,6 @@ class HotelController extends Controller {
      */
     public function indexAction(Request $request) {
         return array();
-        //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
     }
 
     /**

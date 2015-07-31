@@ -6,3 +6,23 @@ Construyendo el formulario......
         <input type="{{passenger.first_name.type}}" name="{{passenger.qualified_name}}" value=""/>
  
     {%endfor%}
+    <br>
+    Tarjeta :<br>
+     {{formBooking.dictionary.form_choices[1].payment.credit_card|yaml_dump}}
+     
+    {% set numberCard = formBooking.dictionary.form_choices[1].payment.credit_card.number%}
+    {% set expirationCard = formBooking.dictionary.form_choices[1].payment.credit_card.expiration%}
+    {% set securityCodeCard = formBooking.dictionary.form_choices[1].payment.credit_card.security_code%}
+    {% set ownerNameCard = formBooking.dictionary.form_choices[1].payment.credit_card.owner_name%}
+<br>
+Nuemero:
+<input type="{{numberCard.type}}" name="{{numberCard.qualified_name}}" value=""/>
+<br>
+Expiration:
+<input type="{{expirationCard.type}}" name="{{expirationCard.qualified_name}}" value=""/>
+<br>
+security_code:
+<input type="{{securityCodeCard.type}}" name="{{securityCodeCard.qualified_name}}" value=""/>
+<br>
+owner_name:
+<input type="{{ownerNameCard.type}}" name="{{ownerNameCard.qualified_name}}" value=""/>
