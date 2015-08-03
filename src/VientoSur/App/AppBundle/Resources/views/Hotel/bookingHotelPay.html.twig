@@ -8,7 +8,7 @@ Construyendo el formulario......
     {%endfor%}
     <br>
     Tarjeta :<br>
-     {{formBooking.dictionary.form_choices[1].payment.credit_card|yaml_dump}}
+     {#{{formBooking.dictionary.form_choices[1].payment.credit_card|yaml_dump}}#}
      
     {% set numberCard = formBooking.dictionary.form_choices[1].payment.credit_card.number%}
     {% set expirationCard = formBooking.dictionary.form_choices[1].payment.credit_card.expiration%}
@@ -21,8 +21,39 @@ Nuemero:
 Expiration:
 <input type="{{expirationCard.type}}" name="{{expirationCard.qualified_name}}" value=""/>
 <br>
-security_code:
+codigo de seguridad:
 <input type="{{securityCodeCard.type}}" name="{{securityCodeCard.qualified_name}}" value=""/>
 <br>
-owner_name:
+Titular de la tarjeta:
 <input type="{{ownerNameCard.type}}" name="{{ownerNameCard.qualified_name}}" value=""/>
+ {% set contactEmail =formBooking.dictionary.form_choices[1].contact.email%}
+ {% set contactPhone =formBooking.dictionary.form_choices[1].contact.phones%}
+    <br>
+    {#{{contactPhone|yaml_dump}}#}
+    <br>
+    Contacto :<br>
+    Email:
+    <input type="{{contactEmail.type}}" name="{{contactEmail.qualified_name}}" value=""/>
+    <br>
+    Email Confirmacion:
+    <input type="{{contactEmail.type}}" name="{{contactEmail.qualified_name}}" value=""/>
+    <br>
+    Telefono:
+    <select name="{{ contactPhone[0].type.qualified_name}}" value="">
+        {%for tipo in contactPhone[0].type.options%}
+            {{loop.index}}
+        <option value="{{tipo.key}}">{{tipo.description}}</option>
+        {%endfor%}
+    </select>
+    <br>
+    Pais:
+    <input type="{{contactPhone[0].country_code.type}}" name="{{contactPhone[0].country_code.qualified_name}}" value=""/>
+    <br>
+    <br>
+    Area:
+    <input type="{{contactPhone[0].area_code.type}}" name="{{contactPhone[0].area_code.qualified_name}}" value=""/>
+    <br>
+    <br>
+    Número:
+    <input type="{{contactPhone[0].number.type}}" name="{{contactPhone[0].number.qualified_name}}" value=""/>
+    <br>
