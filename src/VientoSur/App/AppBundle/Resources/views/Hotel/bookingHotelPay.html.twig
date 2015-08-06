@@ -1,4 +1,16 @@
 Construyendo el formulario......
+<br>
+precio detalles:
+{{price_detail.taxes}}<br>
+detalle impuestos: <br>
+{%for taxes_detail in price_detail.taxes_detail %}
+    codigo/ {{taxes_detail.code}}
+    cantidad/{{taxes_detail.amount}}<br>
+    {%endfor%}
+cuota(fee): {{price_detail.fee}}<br>
+Descuentos : {{price_detail.discounts}}<br>
+subtotal :{{price_detail.subtotal}}<br>
+total: {{price_detail.total}}<br>
 
 {%for passenger in formBooking.dictionary.form_choices[1].passengers%}
         <br>habitacion{{loop.index}}

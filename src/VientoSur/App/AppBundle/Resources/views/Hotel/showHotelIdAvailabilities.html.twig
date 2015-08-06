@@ -33,7 +33,8 @@ Servicios: <bR>
 <br>
 Precio del paquete: <br>
 Moneda:{{dispoHotel.roompacks[0].price_detail.currency}}<br>
-impuestos :{{dispoHotel.roompacks[0].price_detail.taxes}}<br>
+Noche:{{dispoHotel.roompacks[0].price_detail.nightly.subtotal}}<br>
+{#impuestos :{{dispoHotel.roompacks[0].price_detail.taxes}}<br>
 detalle impuestos: <br>
 {%for taxes_detail in dispoHotel.roompacks[0].price_detail.taxes_detail %}
     codigo/ {{taxes_detail.code}}
@@ -42,7 +43,7 @@ detalle impuestos: <br>
 cuota(fee): {{dispoHotel.roompacks[0].price_detail.fee}}<br>
 Descuentos : {{dispoHotel.roompacks[0].price_detail.discounts}}<br>
 subtotal :{{dispoHotel.roompacks[0].price_detail.subtotal}}<br>
-total: {{dispoHotel.roompacks[0].price_detail.total}}<br>
+total: {{dispoHotel.roompacks[0].price_detail.total}}<br>#}
 Metodos de pago del Paquete: 
 {{dispoHotel.roompacks[0].payment_type}}
 <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >

@@ -11,8 +11,6 @@
             <tr>
                 <td></td>
                 <td>Nombre: </td>
-                <td>Identificacion Hotel</td>
-                <td> Habitaciones disponibles (paquetes) </td>
                 <td>Precio:</td>
             </tr>
             <tr>
@@ -20,23 +18,15 @@
                     {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
                 </td>
                 <td>
-                    <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
+                    <a target="_blank" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
                     Stars: {{item.hotel.stars}}
-                </td>
-                <td>
-                    {{item.hotel.hotel_type_id}}
-                </td>
-                <td>
-                    {%for roompack in item.roompacks%}
-                        Plan de comidas:{{roompack.meal_plan.id}}/
-                        hab disp:  {{roompack.rooms|length}}
-                    {%endfor%}
                 </td>
                 <td>
                     {# currency, subtotal, taxes, taxes_detail, fee, discounts, total, nightly               #}
                     {%for price in item.roompacks%}<br>
                         Moneda:{{price.price_detail.currency}}<br>
-                        Sub Total:{{price.price_detail.subtotal}}<br>
+                        Total por Noche :{{price.price_detail.nightly.subtotal}}<br> 
+                        {#Sub Total:{{price.price_detail.subtotal}}<br>
                         Impuestos:{{price.price_detail.taxes}}<br>
                         Detalles de impuestos:<br>
                         {%for taxes_detail in price.price_detail.taxes_detail %}
@@ -45,7 +35,7 @@
                         {%endfor%}<br>
                         Cuota:{{price.price_detail.fee}}<br>
                         Descuentos:{{price.price_detail.discounts}}<br>
-                        Total:{{price.price_detail.total}}<br>
+                        Total por Noche :{{price.price_detail.total}}<br>#}
                     {%endfor%}
                 </td>
             </tr>
