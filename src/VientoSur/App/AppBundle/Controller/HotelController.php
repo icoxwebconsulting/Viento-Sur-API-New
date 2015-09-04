@@ -43,6 +43,7 @@ class HotelController extends Controller {
         $cities = $this->cUrlExecAction($url);
         $results = json_decode($cities, true);
 
+        print_r($results);
         foreach ($results as $item) {
             $city = Array();
 
@@ -57,7 +58,7 @@ class HotelController extends Controller {
         /**
      * Lists all Company entities.
      *
-     * @Route("/autocomplete/country", name="hotel_autocomplete")
+     * @Route("/autocomplete/country", name="hotel_autocomplete_country")
      * @Method("GET")
      * @Template()
      */
@@ -95,7 +96,13 @@ class HotelController extends Controller {
         echo $childrenSelect = $request->get('childrenSelect');
         echo $infantsSelect = $request->get('infantsSelect');
 
+        if($toDate!=""){
         $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&return_date=" . $toDate . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
+        }
+        else{
+        $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
+        }
+// https://api.despegar.com/v3/flights/itineraries?site=ar&from=BUE&to=MIA&departure_date=2015-08-21&adults=1&group_by=default
         $items = $this->cUrlExecAction($url);
         $results = json_decode($items, true);
         return $this->render('VientoSurAppAppBundle:Hotel:listFlightsItineraries.html.twig', array('items' => $results['items']));
@@ -167,7 +174,6 @@ class HotelController extends Controller {
     }
 
     /**
-     * Lists all Company entities.
      *
      * @Route("/show/{idHotel}/availabilities/{restUrl}", name="viento_sur_app_app_homepage_show_hotel_id")
      * @Method("GET")
@@ -218,22 +224,28 @@ class HotelController extends Controller {
      * @Template()
      */
     public function sendHotelBookingAction(Request $request) {
-
+        //$request->headers->get('User-Agent')
+        //echo $request->get('availability_token');
+        
         $arrayData = array("source" => array(
                 "country_code" => "AR"),
                 "reservation_context" => array(
                     "context_language" => $request->getLocale(),
                     "shown_currency" => "USD",
                     "threat_metrix_id" => "25",
-                    "client_ip" => "192.168.1.6",
-                    "user_agent" => $request->headers->get('User-Agent')
+                    "client_ip" => "190.200.42.169",
+                    "user_agent" => "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:34.0) Gecko/20100101 Firefox/34.0 )"
                 ),
                 "keys" => array(
-                    "availability_token" => $request->get('availability_token')
+                    "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
                 )
         );
+        
+        //print_r($arrayData);
+        
         $response = $this->cUrlExecPostBookingAction($arrayData);
         $formUrl = json_decode($response, true);
+
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', 
                                 array('formUrl' => $formUrl["next_step_url"]))
                             );
@@ -252,8 +264,8 @@ class HotelController extends Controller {
         
         $url = "https://api.despegar.com" . $request->query->get('formUrl');
         $formResponse = $this->cUrlExecAction($url);
-        
         $formBooking = json_decode($formResponse, true);
+       
         return array(
             'formBooking' => $formBooking,
             'price_detail' => $priceDetail
@@ -297,5 +309,18 @@ class HotelController extends Controller {
         curl_close($cSession);
 
         return $results;
+    }
+    
+    
+    /**
+     * Lists all Company entities.
+     *
+     * @Route("/booking/hotel/pay", name="viento_sur_app_pay_hotel_booking")
+     * @Method("POST")
+     * @Template()
+     */
+    public function payHotelBookingAction(Request $request) {
+
+        return array();
     }
 }

@@ -3,10 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/listHotelsAvailabilities.html.twig</file>
             <file>file:/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Controller/HotelController.php</file>
-            <file>file:/var/www/html/CODIGOS/viento-sur-api-new/.gitignore</file>
-            <file>file:/var/www/html/CODIGOS/viento-sur-api-new/src/VientoSur/App/AppBundle/Resources/views/Hotel/searchHotels.html.twig</file>
         </group>
     </open-files>
 </project-private>

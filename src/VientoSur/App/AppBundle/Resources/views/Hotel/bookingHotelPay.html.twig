@@ -12,6 +12,7 @@ Descuentos : {{price_detail.discounts}}<br>
 subtotal :{{price_detail.subtotal}}<br>
 total: {{price_detail.total}}<br>
 
+<form name="payHotel" id="pay-hotels" action ="{{ path('viento_sur_app_pay_hotel_booking')}}" method="POST">
 {%for passenger in formBooking.dictionary.form_choices[1].passengers%}
         <br>habitacion{{loop.index}}
         Primner Nombre: 
@@ -69,3 +70,7 @@ Titular de la tarjeta:
     Número:
     <input type="{{contactPhone[0].number.type}}" name="{{contactPhone[0].number.qualified_name}}" value=""/>
     <br>
+    <div class="mod-searchbutton">
+        <button type="submit">Pagar</button>
+    </div>
+</form>
