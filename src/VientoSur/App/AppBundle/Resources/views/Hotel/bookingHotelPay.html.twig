@@ -13,11 +13,16 @@ subtotal :{{price_detail.subtotal}}<br>
 total: {{price_detail.total}}<br>
 
 <form name="payHotel" id="pay-hotels" action ="{{ path('viento_sur_app_pay_hotel_booking')}}" method="POST">
-{%for passenger in formBooking.dictionary.form_choices[1].passengers%}
+    <input type="hidden" name="passengers" value="{{formBooking.dictionary.form_choices[1].passengers|length}}">
+    
+    {%for passenger in formBooking.dictionary.form_choices[1].passengers%}
         <br>habitacion{{loop.index}}
-        Primner Nombre: 
-        <input type="{{passenger.first_name.type}}" name="{{passenger.qualified_name}}" value=""/>
- 
+        Nombre: 
+        <input type="text" name="{{passenger.first_name.qualified_name}}" value=""/>
+        Apellido: 
+        <input type="{{passenger.last_name.type}}" name="{{passenger.last_name.qualified_name}}" value=""/>
+        DNI: 
+        <input type="{{passenger.room_reference.type}}" name="{{passenger.room_reference.qualified_name}}" value=""/>
     {%endfor%}
     <br>
     Tarjeta :<br>
