@@ -40,10 +40,9 @@ class HotelController extends Controller {
     public function autoCompleteHotelAction(Request $request) {
         $query = $request->get('query');
         $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
-        $cities = $this->cUrlExecAction($url);
+        $cities = $this->cUrlExecAutoCompleteAction($url);
         $results = json_decode($cities, true);
-
-        print_r($results);
+        //print_r($results);
         foreach ($results as $item) {
             $city = Array();
 
@@ -58,21 +57,21 @@ class HotelController extends Controller {
     /**
      * Lists all Company entities.
      *
-     * @Route("/autocomplete/country", name="hotel_autocomplete_country")
+     * @Route("/autocomplete/vuelo", name="vuelo_autocomplete")
      * @Method("GET")
      * @Template()
      */
     public function autoCompleteHotelCountryAction(Request $request) {
         $query = $request->get('query');
         $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
-        $cities = $this->cUrlExecAction($url);
+        $cities = $this->cUrlExecAutoCompleteAction($url);
         $results = json_decode($cities, true);
 
         foreach ($results as $item) {
             $city = Array();
 
             $city["value"] = $item["description"];
-            $city["data"] = substr($item["id"], 5);
+            $city["data"] = $item["code"];
             $response[] = $city;
         }
         return new JsonResponse(array("suggestions" => $response));
@@ -88,10 +87,10 @@ class HotelController extends Controller {
      */
     public function sendFlightsItinerariesAction(Request $request) {
 
-        echo $from = $request->get('origin');
-        echo $destination = $request->get('destination');
-        echo $fromDate = $request->get('fromDate');
-        echo $toDate = $request->get('toDate');
+        echo $from = $request->get('origen-city');
+        echo $destination = $request->get('destino-city');
+        echo $fromDate = $request->get('fromCalendarVuelo');
+        echo $toDate = $request->get('toCalendarVuelo');
         echo $adultsSelect = $request->get('adultsSelect');
         echo $childrenSelect = $request->get('childrenSelect');
         echo $infantsSelect = $request->get('infantsSelect');
@@ -283,8 +282,9 @@ class HotelController extends Controller {
         //Q1JFRElUX0NBUkQtNQ
         $session = $request->getSession();
         //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
-        //$url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
+        $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
         echo "responsables";
+        echo "<br>";
         if ($request->get('passengers') == 1) {
             $passengerDefinitionsFirstName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].firstName.value');
             $passengerDefinitionsLastName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].lastName.value');
@@ -300,6 +300,7 @@ class HotelController extends Controller {
 
         //creditcard
         echo "carta";
+        echo "<br>";
         echo $number = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.number.value');
         echo $expiration = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.expiration.value');
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
@@ -307,6 +308,7 @@ class HotelController extends Controller {
 
         //contact
         echo "contacto";
+        echo "<br>";
         echo $email = $request->get('hotelInputDefinition.contactDefinition.email.value');
         echo $emailConfirm = $request->get('hotelInputDefinition.contactDefinition.email.value');
         echo $phoneType = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].type.value');
@@ -345,6 +347,9 @@ class HotelController extends Controller {
     private function cUrlExecAction($url) {
 
         //step1
+        // api productiva ca8fe17f100646cbbefa4ecddcf51350
+        // ca8fe17f100646cbbefa4ecddcf51350
+        // api desarrollo 2864680fe4d74241aa613874fa20705f
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url); 
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
@@ -358,6 +363,22 @@ class HotelController extends Controller {
         return $results;
     }
 
+        private function cUrlExecAutoCompleteAction($url) {
+
+        //step1
+        // api productiva ca8fe17f100646cbbefa4ecddcf51350
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url); 
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:ca8fe17f100646cbbefa4ecddcf51350'));
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        //step3
+        $results = curl_exec($cSession);
+        //step4
+        curl_close($cSession);
+
+        return $results;
+    }
     private function cUrlExecPostBookingAction($postvars, $url) {
 
         //step1

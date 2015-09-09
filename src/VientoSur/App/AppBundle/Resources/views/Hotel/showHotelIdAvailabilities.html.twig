@@ -31,7 +31,7 @@ Servicios: <bR>
     {{ amenitie.descriptions.es}}<br>
 {%endfor%}
 <br>
-Precio del paquete: <br>
+Precio <br>
 Moneda:{{dispoHotel.roompacks[0].price_detail.currency}}<br>
 Noche:{{dispoHotel.roompacks[0].price_detail.nightly.subtotal}}<br>
 {#impuestos :{{dispoHotel.roompacks[0].price_detail.taxes}}<br>
@@ -41,11 +41,11 @@ detalle impuestos: <br>
     cantidad/{{taxes_detail.amount}}<br>
     {%endfor%}
 cuota(fee): {{dispoHotel.roompacks[0].price_detail.fee}}<br>
-Descuentos : {{dispoHotel.roompacks[0].price_detail.discounts}}<br>
+Descuentos : {{dispoHotel.roompacks[0].price_detail.discounts}}<br>#}
 subtotal :{{dispoHotel.roompacks[0].price_detail.subtotal}}<br>
-total: {{dispoHotel.roompacks[0].price_detail.total}}<br>#}
-Metodos de pago del Paquete: 
-{{dispoHotel.roompacks[0].payment_type}}
+total: {{dispoHotel.roompacks[0].price_detail.total}}<br>
+{#Metodos de pago del Paquete: 
+{{dispoHotel.roompacks[0].payment_type}}#}
 <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
     <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
     <button type="submit">

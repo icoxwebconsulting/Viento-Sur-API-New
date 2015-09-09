@@ -2,18 +2,18 @@
 
     <div id="contenedorTipoViaje" class="city-container">
         <label id="DestinationCityLabel" for="destinationCity">Destino / Hotel</label>
-{#        <input id="autocomplete" name="autocomplete" type="text" class="city-input required" data-provide="typeahead" placeholder="Ingrese una ciudad o un nombre de hotel">#}
-        gg<input id="destinationCity" name="cityInput" type="text">
+      <input id="autocomplete" name="autocomplete" type="text" class="city-input required" data-provide="typeahead" placeholder="Ingrese una ciudad o un nombre de hotel">
+       <input id="destinationCity" name="cityInput" type="hidden">
 
     </div>
 
     <div class="hotelDates-container">
             <label id="fromDateHotelLabel" for="fromCalendarHotel">Entrada</label>
-            <input type="text" data-date="" data-date-format="yyyy-mm-dd"  class="input-date required datepicker" id="fromCalendarHotel" name="fromCalendarHotel" onFocus="closeTo(this);">
+            <input type="text" data-date="" data-date-format="yyyy-mm-dd"  class="input-date required datepicker" id="fromCalendarHotel" name="fromCalendarHotel" onFocus="closeToHotel(this);">
             <span class="mainSprite calendar"></span>
              ------
             <label id="toDateHotelLabel" for="toCalendarHotel">Salida</label>
-            <input type="text" data-date="" data-date-format="yyyy-mm-dd" class="input-date required datepicker" id="toCalendarHotel" name="toCalendarHotel" onFocus="closeFrom(this);">
+            <input type="text" data-date="" data-date-format="yyyy-mm-dd" class="input-date required datepicker" id="toCalendarHotel" name="toCalendarHotel" onFocus="closeFromHotel(this);">
             <span class="mainSprite calendar"></span>
         <div class="clearBox"></div>
     </div>
@@ -777,11 +777,11 @@
     });
     var cal;
 
-    function closeTo(event)
+    function closeToHotel(event)
     {
        $( "#toCalendarHotel" ).datepicker( "hide" );
     }
-        function closeFrom(event)
+        function closeFromHotel(event)
     {
        $( "#fromCalendarHotel" ).datepicker( "hide" );
     }
