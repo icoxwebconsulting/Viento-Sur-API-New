@@ -109,7 +109,7 @@ class HotelController extends Controller {
     /**
      * Lists all Company entities.
      *
-     * @Route("/send/hotels/availabilities", name="viento_sur_app_app_homepage_send_hotels")
+     * @Route("/send/hotels/availabilities", name="viento_sur_send_hotels")
      * @Method("POST")
      * @Template()
      */
