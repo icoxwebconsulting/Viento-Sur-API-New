@@ -115,15 +115,16 @@ class HotelController extends Controller {
      */
     public function sendHotelsAvailabilitiesAction(Request $request) {
         //step2
-        $destination = $request->get('cityInput');
-        $fromCalendarHotel = $request->get('fromCalendarHotel');
-        $toCalendarHotel = $request->get('toCalendarHotel');
-        $habitacionesCant = $request->get('habitacionesCant');
-        $adultsSelector1 = $request->get('adultsSelector1');
+        echo $request->get('autocomplete');
+        $destination = $request->get('cityInput'); echo '  '.$destination;
+        $fromCalendarHotel = $request->get('start'); echo ' '.$fromCalendarHotel;
+        $toCalendarHotel = $request->get('end'); echo ' '.$toCalendarHotel;
+        $habitacionesCant = $request->get('habitacionesCant'); echo ' habitacion '.$habitacionesCant; 
+        $adultsSelector1 = $request->get('adultsSelector1');echo ' adulto '.$adultsSelector1;
         $adultsSelector2 = $request->get('adultsSelector2');
         $adultsSelector3 = $request->get('adultsSelector3');
         $adultsSelector4 = $request->get('adultsSelector4');
-        $childrenSelectOne = $request->get('childrenRoomSelector1');
+        $childrenSelectOne = $request->get('childrenRoomSelector1');echo ' ni7o '.$adultsSelector1; die();
         $childrenSelectTwo = $request->get('childrenRoomSelector2');
         $childrenSelectTree = $request->get('childrenRoomSelector3');
         $childrenSelectFour = $request->get('childrenRoomSelector4');
