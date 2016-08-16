@@ -3,6 +3,9 @@
 {% block title %}Viento Sur{% endblock %}
 
 {% block stylesheets %}
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{#{ asset('bundles/vientosurappapp/css/datepicker.css') }#}" />-->
 
     <!-- GOOGLE FONTS -->
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
@@ -86,10 +89,10 @@
                 <div class="nav">
                     <ul class="slimmenu" id="slimmenu">
                         <li class="active"><a href="index-5.html">HOTELES</a></li>
-                        <li><a href="#">VUELOS</a></li>
+                        <!--<li><a href="#">VUELOS</a></li>
                         <li><a href="#">AUTOS</a></li>
                         <li><a href="#">PAQUETES</a></li>
-                        <li><a href="#">COMPRA SEGURA</a></li>
+                        <li><a href="#">COMPRA SEGURA</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -108,12 +111,12 @@
                                 <ul class="nav nav-tabs" id="myTab">
                                     <li class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Hoteles</span></a>
                                     </li>
-                                    <li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Vuelos</span></a>
+                                    <!--<li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Vuelos</span></a>
                                     </li>
                                     <li><a href="#tab-4" data-toggle="tab"><i class="fa fa-car"></i> <span >Autos</span></a>
                                     </li>
                                     <li><a href="#tab-5" data-toggle="tab"><i class="fa fa-suitcase"></i> <span >Paquetes</span></a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="tab-1">
@@ -898,8 +901,18 @@
 
 {% block javascripts %}
 
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/Hotel/hotel.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.mockjax.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.autocomplete.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <!--<script type="text/javascript" src="{##}{ asset('bundles/vientosurappapp/js/bootstrap-datepicker.js') }#}"></script>-->
+
     <script src="{{ asset('bundles/vientosurappapp/js/modernizr.js') }}"></script>
-    <script src="{{ asset('bundles/vientosurappapp/js/jquery.js') }}" type="text/javascript"></script>
+    <!--<script src="{#{ asset('bundles/vientosurappapp/js/jquery.js') }#}" type="text/javascript"></script>-->
     <script src="{{ asset('bundles/vientosurappapp/js/bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/slimmenu.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
@@ -920,6 +933,17 @@
     <script src="{{ asset('bundles/vientosurappapp/js/countdown.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/gridrotator.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/custom.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            var url = Routing.generate('hotel_autocomplete');
+            $('#autocomplete').autocomplete({
+                serviceUrl: url,
+                onSelect: function (suggestion) {
+                    $("#destinationCity").val(suggestion.data);
+                }
+            });
+        });
+    </script>
 
 
 {% endblock %}
