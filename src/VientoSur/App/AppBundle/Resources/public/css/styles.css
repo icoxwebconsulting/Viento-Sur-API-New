@@ -10889,7 +10889,7 @@ img.mfp-img {
   }
   .top-area,
   .special-area {
-    height: auto;
+    height: 700px;
   }
   .bg-holder > .bg-parallax {
     background-attachment: scroll;

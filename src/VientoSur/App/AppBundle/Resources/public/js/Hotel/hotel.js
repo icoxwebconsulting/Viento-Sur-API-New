@@ -64,6 +64,7 @@ jQuery(document).ready(function () {
     $("#childAge4room1").addClass("hide");
     $("#childAge5room1").addClass("hide");
     $("#childAge6room1").addClass("hide");
+    $("#childAge7room1").addClass("hide");
 
 
     $("#childrenRoom1").change(function () {
@@ -83,6 +84,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").removeClass("show");
             $("#childAge5room1").removeClass("show");
             $("#childAge6room1").removeClass("show");
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").addClass("hide");
             $("#childAge2room1").addClass("hide");
@@ -90,6 +92,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").addClass("hide");
             $("#childAge5room1").addClass("hide");
             $("#childAge6room1").addClass("hide");
+            $("#childAge7room1").addClass("hide");
 
         }
 
@@ -100,6 +103,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").removeClass("show");
             $("#childAge5room1").removeClass("show");
             $("#childAge6room1").removeClass("show");
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").removeClass("hide");
             $("#childAge1room1").addClass("show");
@@ -109,6 +113,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").addClass("hide");
             $("#childAge5room1").addClass("hide");
             $("#childAge6room1").addClass("hide");
+            $("#childAge7room1").addClass("hide");
 
         }
 
@@ -118,6 +123,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").removeClass("show");
             $("#childAge5room1").removeClass("show");
             $("#childAge6room1").removeClass("show");
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").removeClass("hide");
             $("#childAge1room1").addClass("show");
@@ -128,6 +134,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").addClass("hide");
             $("#childAge5room1").addClass("hide");
             $("#childAge6room1").addClass("hide");
+            $("#childAge7room1").addClass("hide");
 
         }
 
@@ -136,6 +143,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").removeClass("show");
             $("#childAge5room1").removeClass("show");
             $("#childAge6room1").removeClass("show");
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").removeClass("hide");
             $("#childAge1room1").addClass("show");
@@ -147,6 +155,7 @@ jQuery(document).ready(function () {
             $("#childAge4room1").addClass("hide");
             $("#childAge5room1").addClass("hide");
             $("#childAge6room1").addClass("hide");
+            $("#childAge7room1").addClass("hide");
 
         }
 
@@ -154,6 +163,7 @@ jQuery(document).ready(function () {
 
             $("#childAge5room1").removeClass("show");
             $("#childAge6room1").removeClass("show");
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").removeClass("hide");
             $("#childAge1room1").addClass("show");
@@ -166,12 +176,14 @@ jQuery(document).ready(function () {
 
             $("#childAge5room1").addClass("hide");
             $("#childAge6room1").addClass("hide");
+            $("#childAge7room1").addClass("hide");
 
         }
 
         if ($("#childrenRoom1").val() == 5) {
 
             $("#childAge6room1").removeClass("show");
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").removeClass("hide");
             $("#childAge1room1").addClass("show");
@@ -185,10 +197,13 @@ jQuery(document).ready(function () {
             $("#childAge5room1").addClass("show");
 
             $("#childAge6room1").addClass("hide");
+            $("#childAge7room1").addClass("hide");
 
         }
 
         if ($("#childrenRoom1").val() == 6) {
+
+            $("#childAge7room1").removeClass("show");
 
             $("#childAge1room1").removeClass("hide");
             $("#childAge1room1").addClass("show");
@@ -203,6 +218,27 @@ jQuery(document).ready(function () {
             $("#childAge6room1").removeClass("hide");
             $("#childAge6room1").addClass("show");
 
+            $("#childAge7room1").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom1").val() == 7) {
+
+            $("#childAge1room1").removeClass("hide");
+            $("#childAge1room1").addClass("show");
+            $("#childAge2room1").removeClass("hide");
+            $("#childAge2room1").addClass("show");
+            $("#childAge3room1").removeClass("hide");
+            $("#childAge3room1").addClass("show");
+            $("#childAge4room1").removeClass("hide");
+            $("#childAge4room1").addClass("show");
+            $("#childAge5room1").removeClass("hide");
+            $("#childAge5room1").addClass("show");
+            $("#childAge6room1").removeClass("hide");
+            $("#childAge6room1").addClass("show");
+            $("#childAge7room1").removeClass("hide");
+            $("#childAge7room1").addClass("show");
+
         }
 
     });
@@ -216,6 +252,7 @@ jQuery(document).ready(function () {
     $("#childAge4room2").addClass("hide");
     $("#childAge5room2").addClass("hide");
     $("#childAge6room2").addClass("hide");
+    $("#childAge7room2").addClass("hide");
 
 
     $("#childrenRoom2").change(function () {
@@ -235,6 +272,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").removeClass("show");
             $("#childAge5room2").removeClass("show");
             $("#childAge6room2").removeClass("show");
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").addClass("hide");
             $("#childAge2room2").addClass("hide");
@@ -242,6 +280,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").addClass("hide");
             $("#childAge5room2").addClass("hide");
             $("#childAge6room2").addClass("hide");
+            $("#childAge7room2").addClass("hide");
 
         }
 
@@ -252,6 +291,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").removeClass("show");
             $("#childAge5room2").removeClass("show");
             $("#childAge6room2").removeClass("show");
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").removeClass("hide");
             $("#childAge1room2").addClass("show");
@@ -261,6 +301,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").addClass("hide");
             $("#childAge5room2").addClass("hide");
             $("#childAge6room2").addClass("hide");
+            $("#childAge7room2").addClass("hide");
 
         }
 
@@ -270,6 +311,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").removeClass("show");
             $("#childAge5room2").removeClass("show");
             $("#childAge6room2").removeClass("show");
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").removeClass("hide");
             $("#childAge1room2").addClass("show");
@@ -280,6 +322,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").addClass("hide");
             $("#childAge5room2").addClass("hide");
             $("#childAge6room2").addClass("hide");
+            $("#childAge7room2").addClass("hide");
 
         }
 
@@ -288,6 +331,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").removeClass("show");
             $("#childAge5room2").removeClass("show");
             $("#childAge6room2").removeClass("show");
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").removeClass("hide");
             $("#childAge1room2").addClass("show");
@@ -299,6 +343,7 @@ jQuery(document).ready(function () {
             $("#childAge4room2").addClass("hide");
             $("#childAge5room2").addClass("hide");
             $("#childAge6room2").addClass("hide");
+            $("#childAge7room2").addClass("hide");
 
         }
 
@@ -306,6 +351,7 @@ jQuery(document).ready(function () {
 
             $("#childAge5room2").removeClass("show");
             $("#childAge6room2").removeClass("show");
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").removeClass("hide");
             $("#childAge1room2").addClass("show");
@@ -318,12 +364,14 @@ jQuery(document).ready(function () {
 
             $("#childAge5room2").addClass("hide");
             $("#childAge6room2").addClass("hide");
+            $("#childAge7room2").addClass("hide");
 
         }
 
         if ($("#childrenRoom2").val() == 5) {
 
             $("#childAge6room2").removeClass("show");
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").removeClass("hide");
             $("#childAge1room2").addClass("show");
@@ -337,10 +385,13 @@ jQuery(document).ready(function () {
             $("#childAge5room2").addClass("show");
 
             $("#childAge6room2").addClass("hide");
+            $("#childAge7room2").addClass("hide");
 
         }
 
         if ($("#childrenRoom2").val() == 6) {
+
+            $("#childAge7room2").removeClass("show");
 
             $("#childAge1room2").removeClass("hide");
             $("#childAge1room2").addClass("show");
@@ -355,8 +406,28 @@ jQuery(document).ready(function () {
             $("#childAge6room2").removeClass("hide");
             $("#childAge6room2").addClass("show");
 
+            $("#childAge7room2").addClass("hide");
+
         }
 
+        if ($("#childrenRoom2").val() == 7) {
+
+            $("#childAge1room2").removeClass("hide");
+            $("#childAge1room2").addClass("show");
+            $("#childAge2room2").removeClass("hide");
+            $("#childAge2room2").addClass("show");
+            $("#childAge3room2").removeClass("hide");
+            $("#childAge3room2").addClass("show");
+            $("#childAge4room2").removeClass("hide");
+            $("#childAge4room2").addClass("show");
+            $("#childAge5room2").removeClass("hide");
+            $("#childAge5room2").addClass("show");
+            $("#childAge6room2").removeClass("hide");
+            $("#childAge6room2").addClass("show");
+            $("#childAge7room2").removeClass("hide");
+            $("#childAge7room2").addClass("show");
+
+        }
     });
     //close bloque 2
 
@@ -368,6 +439,7 @@ jQuery(document).ready(function () {
     $("#childAge4room3").addClass("hide");
     $("#childAge5room3").addClass("hide");
     $("#childAge6room3").addClass("hide");
+    $("#childAge7room3").addClass("hide");
 
 
     $("#childrenRoom3").change(function () {
@@ -387,6 +459,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").removeClass("show");
             $("#childAge5room3").removeClass("show");
             $("#childAge6room3").removeClass("show");
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").addClass("hide");
             $("#childAge2room3").addClass("hide");
@@ -394,6 +467,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").addClass("hide");
             $("#childAge5room3").addClass("hide");
             $("#childAge6room3").addClass("hide");
+            $("#childAge7room3").addClass("hide");
 
         }
 
@@ -404,6 +478,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").removeClass("show");
             $("#childAge5room3").removeClass("show");
             $("#childAge6room3").removeClass("show");
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").removeClass("hide");
             $("#childAge1room3").addClass("show");
@@ -413,6 +488,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").addClass("hide");
             $("#childAge5room3").addClass("hide");
             $("#childAge6room3").addClass("hide");
+            $("#childAge7room3").addClass("hide");
 
         }
 
@@ -422,6 +498,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").removeClass("show");
             $("#childAge5room3").removeClass("show");
             $("#childAge6room3").removeClass("show");
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").removeClass("hide");
             $("#childAge1room3").addClass("show");
@@ -432,6 +509,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").addClass("hide");
             $("#childAge5room3").addClass("hide");
             $("#childAge6room3").addClass("hide");
+            $("#childAge7room3").addClass("hide");
 
         }
 
@@ -440,6 +518,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").removeClass("show");
             $("#childAge5room3").removeClass("show");
             $("#childAge6room3").removeClass("show");
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").removeClass("hide");
             $("#childAge1room3").addClass("show");
@@ -451,6 +530,7 @@ jQuery(document).ready(function () {
             $("#childAge4room3").addClass("hide");
             $("#childAge5room3").addClass("hide");
             $("#childAge6room3").addClass("hide");
+            $("#childAge7room3").addClass("hide");
 
         }
 
@@ -458,6 +538,7 @@ jQuery(document).ready(function () {
 
             $("#childAge5room3").removeClass("show");
             $("#childAge6room3").removeClass("show");
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").removeClass("hide");
             $("#childAge1room3").addClass("show");
@@ -470,12 +551,14 @@ jQuery(document).ready(function () {
 
             $("#childAge5room3").addClass("hide");
             $("#childAge6room3").addClass("hide");
+            $("#childAge7room3").addClass("hide");
 
         }
 
         if ($("#childrenRoom3").val() == 5) {
 
             $("#childAge6room3").removeClass("show");
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").removeClass("hide");
             $("#childAge1room3").addClass("show");
@@ -489,10 +572,13 @@ jQuery(document).ready(function () {
             $("#childAge5room3").addClass("show");
 
             $("#childAge6room3").addClass("hide");
+            $("#childAge7room3").addClass("hide");
 
         }
 
         if ($("#childrenRoom3").val() == 6) {
+
+            $("#childAge7room3").removeClass("show");
 
             $("#childAge1room3").removeClass("hide");
             $("#childAge1room3").addClass("show");
@@ -506,6 +592,26 @@ jQuery(document).ready(function () {
             $("#childAge5room3").addClass("show");
             $("#childAge6room3").removeClass("hide");
             $("#childAge6room3").addClass("show");
+
+            $("#childAge7room3").addClass("hide");
+        }
+
+        if ($("#childrenRoom3").val() == 7) {
+
+            $("#childAge1room3").removeClass("hide");
+            $("#childAge1room3").addClass("show");
+            $("#childAge2room3").removeClass("hide");
+            $("#childAge2room3").addClass("show");
+            $("#childAge3room3").removeClass("hide");
+            $("#childAge3room3").addClass("show");
+            $("#childAge4room3").removeClass("hide");
+            $("#childAge4room3").addClass("show");
+            $("#childAge5room3").removeClass("hide");
+            $("#childAge5room3").addClass("show");
+            $("#childAge6room3").removeClass("hide");
+            $("#childAge6room3").addClass("show");
+            $("#childAge7room3").removeClass("hide");
+            $("#childAge7room3").addClass("show");
         }
 
     });
@@ -519,6 +625,7 @@ jQuery(document).ready(function () {
     $("#childAge4room4").addClass("hide");
     $("#childAge5room4").addClass("hide");
     $("#childAge6room4").addClass("hide");
+    $("#childAge7room4").addClass("hide");
 
 
     $("#childrenRoom4").change(function () {
@@ -538,6 +645,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").removeClass("show");
             $("#childAge5room4").removeClass("show");
             $("#childAge6room4").removeClass("show");
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").addClass("hide");
             $("#childAge2room4").addClass("hide");
@@ -545,6 +653,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").addClass("hide");
             $("#childAge5room4").addClass("hide");
             $("#childAge6room4").addClass("hide");
+            $("#childAge7room4").addClass("hide");
 
         }
 
@@ -555,6 +664,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").removeClass("show");
             $("#childAge5room4").removeClass("show");
             $("#childAge6room4").removeClass("show");
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").removeClass("hide");
             $("#childAge1room4").addClass("show");
@@ -564,6 +674,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").addClass("hide");
             $("#childAge5room4").addClass("hide");
             $("#childAge6room4").addClass("hide");
+            $("#childAge7room4").addClass("hide");
 
         }
 
@@ -573,6 +684,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").removeClass("show");
             $("#childAge5room4").removeClass("show");
             $("#childAge6room4").removeClass("show");
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").removeClass("hide");
             $("#childAge1room4").addClass("show");
@@ -583,6 +695,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").addClass("hide");
             $("#childAge5room4").addClass("hide");
             $("#childAge6room4").addClass("hide");
+            $("#childAge7room4").addClass("hide");
 
         }
 
@@ -591,6 +704,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").removeClass("show");
             $("#childAge5room4").removeClass("show");
             $("#childAge6room4").removeClass("show");
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").removeClass("hide");
             $("#childAge1room4").addClass("show");
@@ -602,6 +716,7 @@ jQuery(document).ready(function () {
             $("#childAge4room4").addClass("hide");
             $("#childAge5room4").addClass("hide");
             $("#childAge6room4").addClass("hide");
+            $("#childAge7room4").addClass("hide");
 
         }
 
@@ -609,6 +724,7 @@ jQuery(document).ready(function () {
 
             $("#childAge5room4").removeClass("show");
             $("#childAge6room4").removeClass("show");
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").removeClass("hide");
             $("#childAge1room4").addClass("show");
@@ -621,12 +737,14 @@ jQuery(document).ready(function () {
 
             $("#childAge5room4").addClass("hide");
             $("#childAge6room4").addClass("hide");
+            $("#childAge7room4").addClass("hide");
 
         }
 
         if ($("#childrenRoom4").val() == 5) {
 
             $("#childAge6room4").removeClass("show");
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").removeClass("hide");
             $("#childAge1room4").addClass("show");
@@ -640,10 +758,13 @@ jQuery(document).ready(function () {
             $("#childAge5room4").addClass("show");
 
             $("#childAge6room4").addClass("hide");
+            $("#childAge7room4").addClass("hide");
 
         }
 
         if ($("#childrenRoom4").val() == 6) {
+
+            $("#childAge7room4").removeClass("show");
 
             $("#childAge1room4").removeClass("hide");
             $("#childAge1room4").addClass("show");
@@ -657,7 +778,28 @@ jQuery(document).ready(function () {
             $("#childAge5room4").addClass("show");
             $("#childAge6room4").removeClass("hide");
             $("#childAge6room4").addClass("show");
+
+            $("#childAge7room4").addClass("hide");
         }
+
+        if ($("#childrenRoom4").val() == 7) {
+
+            $("#childAge1room4").removeClass("hide");
+            $("#childAge1room4").addClass("show");
+            $("#childAge2room4").removeClass("hide");
+            $("#childAge2room4").addClass("show");
+            $("#childAge3room4").removeClass("hide");
+            $("#childAge3room4").addClass("show");
+            $("#childAge4room4").removeClass("hide");
+            $("#childAge4room4").addClass("show");
+            $("#childAge5room4").removeClass("hide");
+            $("#childAge5room4").addClass("show");
+            $("#childAge6room4").removeClass("hide");
+            $("#childAge6room4").addClass("show");
+            $("#childAge7room4").removeClass("hide");
+            $("#childAge7room4").addClass("show");
+        }
+
 
     });
     //close bloque 4
