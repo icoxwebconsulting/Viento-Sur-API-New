@@ -245,7 +245,8 @@ footer#main-footer .form-control:focus {
   margin-bottom: 13px;
 }
 .tabbable .form-group .input-icon {
-  top: 35px;
+  /*top: 35px;*/
+  top: 21px;
 }
 .btn-lg,
 .btn-group-lg > .btn {
