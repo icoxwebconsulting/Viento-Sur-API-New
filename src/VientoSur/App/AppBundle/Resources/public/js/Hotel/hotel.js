@@ -16,16 +16,23 @@ jQuery(document).ready(function () {
 
         if ($("#roomsQty").val() == 1) {
 
+            $("#room").addClass("show");
+
+            $("#room1").removeClass("show");
             $("#room2").removeClass("show");
             $("#room3").removeClass("show");
             $("#room4").removeClass("show");
 
+            $("#room1").addClass("hide");
             $("#room2").addClass("hide");
             $("#room3").addClass("hide");
             $("#room4").addClass("hide");
         }
         if ($("#roomsQty").val() == 2) {
-
+            $("#room").removeClass("show");
+            $("#room").addClass("hide");
+            $("#room1").removeClass("hide");
+            $("#room1").addClass("show");
             $("#room2").removeClass("hide");
             $("#room2").addClass("show");
             $("#room3").removeClass("show");
@@ -35,7 +42,10 @@ jQuery(document).ready(function () {
         }
 
         if ($("#roomsQty").val() == 3) {
-
+            $("#room").removeClass("show");
+            $("#room").addClass("hide");
+            $("#room1").removeClass("hide");
+            $("#room1").addClass("show");
             $("#room2").removeClass("hide");
             $("#room2").addClass("show");
             $("#room2").removeClass("hide");
@@ -45,7 +55,10 @@ jQuery(document).ready(function () {
         }
 
         if ($("#roomsQty").val() == 4) {
-
+            $("#room").removeClass("show");
+            $("#room").addClass("hide");
+            $("#room1").removeClass("hide");
+            $("#room1").addClass("show");
             $("#room2").removeClass("hide");
             $("#room2").addClass("show");
             $("#room2").removeClass("hide");
