@@ -618,13 +618,44 @@ label {
 }
 .form-group.form-group-sm label {
   margin-bottom: 3px;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
 }
 .form-group.form-group-sm .form-control {
   height: 25px;
   padding: 3px 7px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4em;
+}
+.form-group.form-group-sm .row .col-md-1 {
+  width: 14%;
+  float: left;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 1px;
+  padding-bottom: 5px;
+}
+.form-group.form-group-sm .col-md-1 .form-control {
+  height: 25px;
+  padding: 3px 7px;
+  font-size: 10px;
+  line-height: 1.4em;
+}
+.form-group.form-group-sm .col-md-2 .form-control {
+  height: 25px;
+  padding: 3px 7px;
+  font-size: 10px;
+  line-height: 1.4em;
+}
+.form-group.form-group-sm .row .col-md-2 {
+  width: 16.66666667%;
+  float: left;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 5px;
 }
 .form-group.form-group-icon-left .form-control {
   padding-left: 32px;
@@ -1172,7 +1203,7 @@ ul.slimmenu.slimmenu-collapsed li .slimmenu-sub-collapser > i {
 }
 .search-tabs-bg > .tabbable >.tab-content > .tab-pane {
   background: #fff;
-  padding: 25px;
+  padding: 10px 25px 10px 25px;
   -webkit-box-shadow: 0 2px 1px rgba(0,0,0,0.15);
   box-shadow: 0 2px 1px rgba(0,0,0,0.15);
 }
