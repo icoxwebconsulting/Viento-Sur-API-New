@@ -656,6 +656,7 @@ label {
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 5px;
+  margin-left: -15px;
 }
 .form-group.form-group-icon-left .form-control {
   padding-left: 32px;
