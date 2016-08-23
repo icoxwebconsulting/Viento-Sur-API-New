@@ -69,6 +69,194 @@ jQuery(document).ready(function () {
     });
 
     //seleccion de niños
+    //bloque 0
+    $("#lblAge").addClass("hide");
+    $("#childAge1room").addClass("hide");
+    $("#childAge2room").addClass("hide");
+    $("#childAge3room").addClass("hide");
+    $("#childAge4room").addClass("hide");
+    $("#childAge5room").addClass("hide");
+    $("#childAge6room").addClass("hide");
+    $("#childAge7room").addClass("hide");
+
+
+    $("#childrenRoom").change(function () {
+
+        if ($("#childrenRoom").val() > 0) {
+            $("#lblAge").removeClass("hide");
+            $("#lblAge").addClass("show");
+        } else {
+            $("#lblAge").removeClass("show");
+            $("#lblAge").addClass("hide");
+        }
+
+        if ($("#childrenRoom").val() == 0) {
+            $("#childAge1room").removeClass("show");
+            $("#childAge2room").removeClass("show");
+            $("#childAge3room").removeClass("show");
+            $("#childAge4room").removeClass("show");
+            $("#childAge5room").removeClass("show");
+            $("#childAge6room").removeClass("show");
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").addClass("hide");
+            $("#childAge2room").addClass("hide");
+            $("#childAge3room").addClass("hide");
+            $("#childAge4room").addClass("hide");
+            $("#childAge5room").addClass("hide");
+            $("#childAge6room").addClass("hide");
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 1) {
+
+            $("#childAge2room").removeClass("show");
+            $("#childAge3room").removeClass("show");
+            $("#childAge4room").removeClass("show");
+            $("#childAge5room").removeClass("show");
+            $("#childAge6room").removeClass("show");
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+
+            $("#childAge2room").addClass("hide");
+            $("#childAge3room").addClass("hide");
+            $("#childAge4room").addClass("hide");
+            $("#childAge5room").addClass("hide");
+            $("#childAge6room").addClass("hide");
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 2) {
+
+            $("#childAge3room").removeClass("show");
+            $("#childAge4room").removeClass("show");
+            $("#childAge5room").removeClass("show");
+            $("#childAge6room").removeClass("show");
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+            $("#childAge2room").removeClass("hide");
+            $("#childAge2room").addClass("show");
+
+            $("#childAge3room").addClass("hide");
+            $("#childAge4room").addClass("hide");
+            $("#childAge5room").addClass("hide");
+            $("#childAge6room").addClass("hide");
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 3) {
+
+            $("#childAge4room").removeClass("show");
+            $("#childAge5room").removeClass("show");
+            $("#childAge6room").removeClass("show");
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+            $("#childAge2room").removeClass("hide");
+            $("#childAge2room").addClass("show");
+            $("#childAge3room").removeClass("hide");
+            $("#childAge3room").addClass("show");
+
+            $("#childAge4room").addClass("hide");
+            $("#childAge5room").addClass("hide");
+            $("#childAge6room").addClass("hide");
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 4) {
+
+            $("#childAge5room").removeClass("show");
+            $("#childAge6room").removeClass("show");
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+            $("#childAge2room").removeClass("hide");
+            $("#childAge2room").addClass("show");
+            $("#childAge3room").removeClass("hide");
+            $("#childAge3room").addClass("show");
+            $("#childAge4room").removeClass("hide");
+            $("#childAge4room").addClass("show");
+
+            $("#childAge5room").addClass("hide");
+            $("#childAge6room").addClass("hide");
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 5) {
+
+            $("#childAge6room").removeClass("show");
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+            $("#childAge2room").removeClass("hide");
+            $("#childAge2room").addClass("show");
+            $("#childAge3room").removeClass("hide");
+            $("#childAge3room").addClass("show");
+            $("#childAge4room").removeClass("hide");
+            $("#childAge4room").addClass("show");
+            $("#childAge5room").removeClass("hide");
+            $("#childAge5room").addClass("show");
+
+            $("#childAge6room").addClass("hide");
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 6) {
+
+            $("#childAge7room").removeClass("show");
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+            $("#childAge2room").removeClass("hide");
+            $("#childAge2room").addClass("show");
+            $("#childAge3room").removeClass("hide");
+            $("#childAge3room").addClass("show");
+            $("#childAge4room").removeClass("hide");
+            $("#childAge4room").addClass("show");
+            $("#childAge5room").removeClass("hide");
+            $("#childAge5room").addClass("show");
+            $("#childAge6room").removeClass("hide");
+            $("#childAge6room").addClass("show");
+
+            $("#childAge7room").addClass("hide");
+
+        }
+
+        if ($("#childrenRoom").val() == 7) {
+
+            $("#childAge1room").removeClass("hide");
+            $("#childAge1room").addClass("show");
+            $("#childAge2room").removeClass("hide");
+            $("#childAge2room").addClass("show");
+            $("#childAge3room").removeClass("hide");
+            $("#childAge3room").addClass("show");
+            $("#childAge4room").removeClass("hide");
+            $("#childAge4room").addClass("show");
+            $("#childAge5room").removeClass("hide");
+            $("#childAge5room").addClass("show");
+            $("#childAge6room").removeClass("hide");
+            $("#childAge6room").addClass("show");
+            $("#childAge7room").removeClass("hide");
+            $("#childAge7room").addClass("show");
+        }
+
+    });
+    //close bloque 0
+
+    //seleccion de niños
     //bloque 1
     $("#lblAge1").addClass("hide");
     $("#childAge1room1").addClass("hide");
