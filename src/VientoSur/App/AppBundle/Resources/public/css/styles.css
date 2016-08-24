@@ -2273,7 +2273,7 @@ div.nav-drop {
   transition: 0.3s;
 }
 .nav-drop > .nav-drop-menu > li > a > .right {
-  float: right;
+  float: left;
 }
 .nav-drop > .nav-drop-menu > li > a:hover {
   background: #ed8323;
