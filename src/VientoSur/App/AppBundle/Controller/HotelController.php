@@ -42,7 +42,7 @@ class HotelController extends Controller {
         $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
         $cities = $this->cUrlExecAutoCompleteAction($url);
         $results = json_decode($cities, true);
-        //print_r($results);
+        //print_r($results);die();
         foreach ($results as $item) {
             $city = Array();
 
@@ -371,7 +371,8 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url); 
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:ca8fe17f100646cbbefa4ecddcf51350'));
+        //curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:ca8fe17f100646cbbefa4ecddcf51350'));
+            curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
