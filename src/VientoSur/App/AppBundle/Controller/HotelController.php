@@ -116,9 +116,15 @@ class HotelController extends Controller {
     public function sendHotelsAvailabilitiesAction(Request $request) {
         //step2
         //echo $request->get('autocomplete');
-        $destination = $request->get('cityInput'); //echo '  '.$destination;
-        $fromCalendarHotel = $request->get('start'); //echo ' '.$fromCalendarHotel;
-        $toCalendarHotel = $request->get('end'); //echo ' '.$toCalendarHotel;
+        //$destination = $request->get('cityInput'); //echo '  '.$destination;
+        $destination = 982;
+        //$fromCalendarHotel = $request->get('start'); echo ' '.$fromCalendarHotel;
+        list($day,$month,$year)=explode("/",$request->get('start'));
+        $fromCalendarHotel = $year.'-'.$month.'-'.$day;
+        //echo $fromCalendarHotel;
+        //$toCalendarHotel = $request->get('end'); echo ' '.$toCalendarHotel; die();
+        list($day,$month,$year)=explode("/",$request->get('end'));
+        $toCalendarHotel = $year.'-'.$month.'-'.$day; //echo $fromCalendarHotel.' '.$toCalendarHotel; die();
         $habitacionesCant = $request->get('habitacionesCant'); //echo ' habitacion '.$habitacionesCant;
         $adultsSelector1 = $request->get('adultsSelector1');//echo ' adulto '.$adultsSelector1;
         $adultsSelector2 = $request->get('adultsSelector2');
@@ -209,7 +215,7 @@ class HotelController extends Controller {
         $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=pictures&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
         $hotelDetails = json_decode($hotel, true);
-
+       
         return array(
             'hotelDetails' => $hotelDetails
         );
@@ -356,6 +362,7 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
         curl_setopt($cSession, CURLOPT_HEADER, false);
+        curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
         //step3
         $results = curl_exec($cSession);
         //step4
