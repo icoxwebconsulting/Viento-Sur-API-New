@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td>
-                    {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
+                    {#{{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}#}
                 </td>
                 <td>
                     <a target="_blank" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">{{item.hotel.name}}</a> /
