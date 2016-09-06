@@ -409,7 +409,7 @@
                     {%elseif items.items|length>0%}
                         {%for item in items.items %}
                             <li>
-                                <a class="booking-item" href="#">
+                                <a target="_blank" class="booking-item" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl})}}">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="booking-item-img-wrap">
@@ -442,13 +442,20 @@
                                             <span class="booking-services"><i class="fa fa-wifi"></i></span>
                                         </div>
                                         <div class="col-md-3 booking-prices align-center">
-                                            {%for price in item.roompacks%}
+
                                                 <div class="booking-align-vertical"> <span class="booking-item-price-night">Habitación por noche</span>
-                                                    <span class="booking-item-price">{{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal}}</span>
-                                                    <span class="btn btn-primary">Ver detalle</span>
+                                                    <span class="booking-item-price">
+                                                        {%for price in item.roompacks%}
+                                                            {{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal}}
+                                                        {%endfor%}
+                                                    </span>
+
+                                                    <span class="btn btn-primary">Ver detalle
+
+
+                                                    </span>
                                                     <span class="booking-item-benefit mt20">Cancele gratis</span>
                                                 </div>
-                                            {%endfor%}
                                         </div>
                                     </div>
                                 </a>
