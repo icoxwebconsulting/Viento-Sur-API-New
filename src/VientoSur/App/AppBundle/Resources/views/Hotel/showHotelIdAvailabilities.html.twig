@@ -432,21 +432,9 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="tab-1">
                                         <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
-                                            <img src="{{hotelDetails[0].pictures[0].url}}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
-                                            <img src="{{ asset('bundles/vientosurappapp/images/800x600.png') }}" alt="Image Alternative text" title="" />
+                                            {% for key, pictures in hotelDetails[0].pictures %}
+                                                <img src="{{hotelDetails[0].pictures[key].url}}" alt="Image Alternative text" title="" />
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="google-map-tab">
@@ -520,9 +508,9 @@
 
                         <!--<h4>Este hotel está en Praga 1 y es ideal para: De lujo</h4>-->
 
-                        <p>{{hotelDetails[0].information.es}}</p>
+                        <p>{{ hotelDetails[0].information.es }}</p>
 
-                        <h4>Habitaciones del hotel: {{dispoHotel.roompacks[0].rooms|length}}</h4>
+                        <h4>N&uacute;mero de habitaciones: {{ hotelDetails[0].number_of_rooms}}</h4>
                     </div>
 
                 </div>
