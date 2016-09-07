@@ -188,11 +188,11 @@ class HotelController extends Controller {
 
         $url = "https://api.despegar.com/v3/hotels/availabilities/" . $idHotel . $restUrl . "&language=en&currency=USD";
         $itemDispo = $this->cUrlExecAction($url);
-        $dispoHotel = json_decode($itemDispo, true);
+        $dispoHotel = json_decode($itemDispo, true); //print_r($dispoHotel['roompacks'][1]['rooms']);die();
 
-        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=information,amenities,pictures&resolve=merge_info&catalog_info=true";
+        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=information,amenities,pictures,room_types(pictures,information)&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
-        $hotelDetails = json_decode($hotel, true);
+        $hotelDetails = json_decode($hotel, true);//print_r($hotelDetails);die();
 
         $session = $request->getSession();
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
