@@ -524,57 +524,62 @@
 
                     <ul class="booking-list">
                         {% for key, room_type in hotelDetails[0].room_types %}
-                       {#{% for key, room in dispoHotel.roompacks %}#}
-                            <li>
-                            <a class="booking-item" href="#">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="booking-item-img-wrap">
-                                            <img src="{{ room_type.pictures[0].url }}" alt="Image Alternative text" title="" />
-                                            <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>
-                                        </div>
-                                    </div>
+                            {% set count_room = 0 %}
+                            {% for key, room in dispoHotel.roompacks %}
+                                {% if room_type.id == room.rooms[0].room_type_id and room.rooms[0].availability > 0 and count_room == 0 %}
+                                   <li>
+                                       <a class="booking-item" href="#">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="booking-item-img-wrap">
+                                                        <img src="{{ room_type.pictures[0].url }}" alt="Image Alternative text" title="" />
+                                                        <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>
+                                                    </div>
+                                                </div>
 
-                                    <div class="col-md-6">
-                                        <div class="booking-item-rating">
-                                            <h4 class="booking-item-title">{#{{ room.rooms[0].name }}#}{{ room_type.despegar_names.es }}</h4>
-                                        </div>
+                                                <div class="col-md-6">
+                                                    <div class="booking-item-rating">
+                                                        <h4 class="booking-item-title">{#{{ room.rooms[0].name }}#}{{ room_type.despegar_names.es }}</h4>
+                                                    </div>
 
-                                        <ul class="booking-item-features booking-item-features-small clearfix">
-                                            <p>Servicios</p>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-air"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-bar"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-kitchen"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-patio"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-washing-machine"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
-                                            </li>
-                                        </ul>
-                                        <p class="booking-text-color">Desayuno buffet</p>
-                                        <p class="booking-text-color">No permite cambios o cancelaciones</p>
-                                        <p class="booking-item-last-booked">Sólo quedan 5 habitaciones</p>
-                                    </div>
+                                                    <ul class="booking-item-features booking-item-features-small clearfix">
+                                                        <p>Servicios</p>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-air"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-bar"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-kitchen"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-patio"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-washing-machine"></i>
+                                                        </li>
+                                                        <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
+                                                        </li>
+                                                    </ul>
+                                                    <p class="booking-text-color">Desayuno buffet</p>
+                                                    <p class="booking-text-color">No permite cambios o cancelaciones</p>
+                                                    <p class="booking-item-last-booked">Sólo quedan {{ room.rooms[0].availability }} habitaciones</p>
+                                                </div>
 
-                                    <div class="col-md-3 booking-prices align-center">
-                                        <div class="booking-align-vertical">
-                                            <span class="booking-item-price-night">Precio para 2 noches</span>
-                                            <span class="booking-item-price">$3020</span>
-                                            <span class="btn btn-primary">Reservar</span>
-                                            <span class="booking-item-benefit mt20">Hasta 18 cuotas!</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                                                <div class="col-md-3 booking-prices align-center">
+                                                    <div class="booking-align-vertical">
+                                                        <span class="booking-item-price-night">Precio por noche</span>
+                                                        <span class="booking-item-price">{{ room.price_detail.nightly.subtotal }}</span>
+                                                        <span class="btn btn-primary">Reservar</span>
+                                                        <span class="booking-item-benefit mt20">Hasta 18 cuotas!</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    {% set count_room = 1 %}
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
                         <!--<li>
                             <a class="booking-item" href="#">
