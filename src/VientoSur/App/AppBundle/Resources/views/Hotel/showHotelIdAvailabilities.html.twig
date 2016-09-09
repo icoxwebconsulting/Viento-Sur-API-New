@@ -544,9 +544,26 @@
 
                                                     <ul class="booking-item-features booking-item-features-small clearfix">
                                                         <p>Servicios</p>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-air"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
+                                                        {% for amenitie in room_type.amenities %}
+                                                            {% if amenitie.id == 'AIRROOM' %}
+                                                                <li rel="tooltip" data-placement="top"><i class="im im-air"></i></li>
+                                                            {% elseif amenitie.id == 'TVINROOM' %}
+                                                                <li rel="tooltip" data-placement="top"><i class="im im-tv"></i></li>
+                                                            {% elseif amenitie.id == 'BARROM' %}
+                                                                <li rel="tooltip" data-placement="top"><i class="im im-bar"></i></li>
+                                                            {% elseif amenitie.id == 'BAN' %}
+                                                                <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i></li>
+                                                            {#{% elseif amenitie.id == 'WAKEUP' %}
+                                                                <i class="im im-kitchen"></i>
+                                                            {% elseif amenitie.id == 'WAKEUP' %}
+                                                                <i class="im im-patio"></i>
+                                                            {% elseif amenitie.id == 'WAKEUP' %}
+                                                                <i class="im im-washing-machine"></i>
+                                                            {% elseif amenitie.id == 'WAKEUP' %}
+                                                                <i class="im im-pool"></i>#}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <!--<li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
                                                         </li>
                                                         <li rel="tooltip" data-placement="top"><i class="im im-bar"></i>
                                                         </li>
@@ -559,7 +576,7 @@
                                                         <li rel="tooltip" data-placement="top"><i class="im im-washing-machine"></i>
                                                         </li>
                                                         <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
-                                                        </li>
+                                                        </li>-->
                                                     </ul>
                                                     <p class="booking-text-color">Desayuno buffet</p>
                                                     <p class="booking-text-color">No permite cambios o cancelaciones</p>
