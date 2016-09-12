@@ -438,8 +438,22 @@
                                             <p class="booking-item-address">A 600 metros del centro
                                                 <i class="fa fa-map-marker"> Ver mapa</i>
                                             </p>
-                                            <p class="booking-item-last-booked">Últimas 5 habitaciones</p>
-                                            <span class="booking-services"><i class="fa fa-wifi"></i></span>
+                                            {% for key, room_availability in item.roompacks %}
+                                                {% if  room_availability.rooms[0].availability < 6 %}
+                                                    <p class="booking-item-last-booked">
+                                                        {% if room_availability.rooms[0].availability == 1 %}
+                                                            Última habitaci&oacute;n disponible
+                                                        {% else %}
+                                                            Últimas {{ room_availability.rooms[0].availability }} habitaciones
+                                                        {% endif %}
+                                                    </p>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for key, amenity in item.hotel.amenity_ids %}
+                                                {% if amenity == 'INGRAH' %}
+                                                    <span class="booking-services"><i class="fa fa-wifi"></i></span>
+                                                {% endif %}
+                                            {% endfor %}
                                         </div>
                                         <div class="col-md-3 booking-prices align-center">
 
