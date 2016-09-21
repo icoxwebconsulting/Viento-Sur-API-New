@@ -301,8 +301,8 @@ class HotelController extends Controller {
         $session = $request->getSession();
         //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
         $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
-        echo "responsables";
-        echo "<br>";
+        //echo "responsables";
+        //echo "<br>";
         if ($request->get('passengers') == 1) {
             $passengerDefinitionsFirstName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].firstName.value');
             $passengerDefinitionsLastName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].lastName.value');
@@ -317,16 +317,16 @@ class HotelController extends Controller {
         }
 
         //creditcard
-        echo "carta";
-        echo "<br>";
+        //echo "carta";
+        //echo "<br>";
         echo $number = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.number.value');
         echo $expiration = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.expiration.value');
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
         //contact
-        echo "contacto";
-        echo "<br>";
+        //echo "contacto";
+        //echo "<br>";
         echo $email = $request->get('hotelInputDefinition.contactDefinition.email.value');
         echo $emailConfirm = $request->get('hotelInputDefinition.contactDefinition.email.value');
         echo $phoneType = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].type.value');
