@@ -196,6 +196,7 @@ class HotelController extends Controller {
 
         $session = $request->getSession();
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
+
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                     'dispoHotel' => $dispoHotel,
                     'hotelDetails' => $hotelDetails
@@ -231,10 +232,12 @@ class HotelController extends Controller {
     public function sendHotelBookingAction(Request $request) {
         //$request->headers->get('User-Agent')
         //echo $request->get('availability_token');
+      // echo $request->get('availability_token');die();
+        //echo $request->get('availability_token');
 
         $arrayData = array("source" => array(
                 "country_code" => "AR"),
-            "reservation_context" => array(
+                "reservation_context" => array(
                 "context_language" => $request->getLocale(),
                 "shown_currency" => "USD",
                 "threat_metrix_id" => "25",
@@ -242,14 +245,17 @@ class HotelController extends Controller {
                 "user_agent" => "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:34.0) Gecko/20100101 Firefox/34.0 )"
             ),
             "keys" => array(
-                "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
+               // "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
+                "availability_token" => $request->get('availability_token')
             )
         );
 
         //print_r($arrayData);
-        $url = "https://api.despegar.com/v3/hotels/bookings";
+        //quitar ?example=true para PRODUCCION
+        $url = "https://api.despegar.com/v3/hotels/bookings?example=true";
         $response = $this->cUrlExecPostBookingAction($arrayData, $url);
         $formUrl = json_decode($response, true);
+        //print_r($formUrl);die();
 
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array('formUrl' => $formUrl["next_step_url"]))
         );
@@ -265,11 +271,16 @@ class HotelController extends Controller {
     public function bookingHotelPayAction(Request $request) {
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
-        $url = "https://api.despegar.com" . $request->query->get('formUrl');
+        //quitar ?example=true para PRODUCCION
+        $url = "https://api.despegar.com" . $request->query->get('formUrl')."?example=true";
         $sessionForm = $request->getSession();
         $sessionForm->set('url_detail_form', $url);
         $formResponse = $this->cUrlExecAction($url);
         $formBooking = json_decode($formResponse, true);
+
+        //print_r($priceDetail); die();
+
+        //print_r($formBooking);die();
 
         return array(
             'formBooking' => $formBooking,
@@ -342,7 +353,8 @@ class HotelController extends Controller {
                 ),
             ),
             "keys" => array(
-                "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
+                //"availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"820350c2-e64a-4a45-83c2-dae3b72236d2
+                "availability_token" => "d911467c-4fd0-432e-ba2c-c949d4f15e99"
             )
         );
 
@@ -379,7 +391,7 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_URL, $url); 
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         //curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:ca8fe17f100646cbbefa4ecddcf51350'));
-            curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);

@@ -411,7 +411,16 @@
                                         {{dispoHotel.roompacks[0].price_detail.currency}}&nbsp;
                                         {{dispoHotel.roompacks[0].price_detail.nightly.subtotal}}
                                     </div>
-                                    <a href="#"><span class="btn btn-primary mt15">Reservar ahora</span></a>
+                                    <a href="#">
+                                        <!--<span class="btn btn-primary mt15">Reservar ahora</span>-->
+                                        <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
+                                            <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                            <button type="submit" class="btn btn-primary">
+                                                Reservar ahora
+                                            </button>
+
+                                        </form>
+                                    </a>
                                 </div>
                             </div>
                     </header>
@@ -580,14 +589,22 @@
                                                     </ul>
                                                     <p class="booking-text-color">Desayuno buffet</p>
                                                     <p class="booking-text-color">No permite cambios o cancelaciones</p>
-                                                    <p class="booking-item-last-booked">Sólo quedan {{ room.rooms[0].availability }} habitaciones</p>
+                                                    <p class="booking-item-last-booked">{% if room.rooms[0].availability < 6 %}Sólo quedan {{ room.rooms[0].availability }} habitaciones {% endif %}</p>
                                                 </div>
 
                                                 <div class="col-md-3 booking-prices align-center">
                                                     <div class="booking-align-vertical">
                                                         <span class="booking-item-price-night">Precio por noche</span>
                                                         <span class="booking-item-price">{{ room.price_detail.nightly.subtotal }}</span>
-                                                        <span class="btn btn-primary">Reservar</span>
+                                                        <!--<span class="btn btn-primary">Reservar</span>-->
+                                                        <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
+                                                            <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Reservar
+                                                            </button>
+
+                                                        </form>
+
                                                         <span class="booking-item-benefit mt20">Hasta 18 cuotas!</span>
                                                     </div>
                                                 </div>

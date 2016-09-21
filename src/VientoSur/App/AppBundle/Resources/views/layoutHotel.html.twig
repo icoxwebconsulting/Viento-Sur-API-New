@@ -1,0 +1,187 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Viento Sur{% endblock %}
+
+{% block stylesheets %}
+
+    <!-- GOOGLE FONTS -->
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- /GOOGLE FONTS -->
+
+    <!-- bootstrap  -->
+    <link href="{{ asset('bundles/vientosurappapp/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="{{ asset('bundles/vientosurappapp/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="{{ asset('bundles/vientosurappapp/css/styles.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('bundles/vientosurappapp/css/vs-global.css') }}" rel="stylesheet" type="text/css" />
+
+    <script src="{{ asset('bundles/vientosurappapp/js/modernizr.js')}}" type="text/javascript"></script>
+
+{% endblock %}
+
+{% block body %}
+    <div class="global-wrap">
+        <header id="main-header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <a class="logo" href="#">
+                                <img src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-color.png') }}" alt="Viento Sur" title="" />
+                            </a>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div class="top-user-area clearfix">
+                                <ul class="top-user-area-list list list-horizontal list-border">
+                                    <li><a href="#">Iniciar Sesión</a></li>
+
+                                    <li><a href="#">Registrarse</a></li>
+
+                                    <li class="nav-drop"><a href="#">AR $<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a>
+                                        <ul class="list nav-drop-menu">
+                                            <li><a href="#">EUR<span class="right">€</span></a>
+                                            </li>
+                                            <li><a href="#">USD<span class="right">$</span></a>
+                                            </li>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="top-user-area-lang nav-drop">
+                                        <a href="#">
+                                            Español<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" />
+                                        </a>
+                                        <ul class="list nav-drop-menu">
+                                            <li>
+                                                <a title="English" href="#">
+                                                    <img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a title="Portuguese" href="#">
+                                                    <img src="{{ asset('bundles/vientosurappapp/images/flag_pt.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="container">
+            <div class="nav">
+                <ul class="slimmenu" id="slimmenu">
+                    <li class="active"><a href="index-5.html">HOTELES</a></li>
+                    <!--<li><a href="#">VUELOS</a></li>
+                    <li><a href="#">AUTOS</a></li>
+                    <li><a href="#">PAQUETES</a></li>
+                    <li><a href="#">COMPRA SEGURA</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </header>
+        <!-- end header -->
+
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <footer id="main-footer">
+
+            <div class="container">
+                <div class="row row-wrap">
+
+                    <div class="col-md-4">
+                        <a class="logo" href="index.html">
+                            <img src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-invert.png') }}" alt="Viento Sur" title="" />
+                        </a>
+                        <p class="mb20">Reserva tu viaje a cualquier parte del <br> mundo al mejor precio garantizado</p>
+                        <ul class="list list-horizontal list-space">
+                            <li>
+                                <a class="fa fa-facebook box-icon-md round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-twitter box-icon-md round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-google-plus box-icon-md round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-linkedin box-icon-md round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-pinterest box-icon-md round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Newsletter</h4>
+                        <form>
+                            <input type="text" class="form-control mb10" placeholder="ingresa tu e-mail">
+                            <input type="submit" class="btn btn-primary" value="Suscribirse">
+                        </form>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>¿Tenés consultas?</h4>
+                        <p>Si querés enviarnos una consulta contactanos a través de nuestro formulario de contacto</p>
+                        <input type="submit" class="btn btn-primary" value="Contacto">
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/Hotel/hotel.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.mockjax.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.autocomplete.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <!--<script type="text/javascript" src="{##}{ asset('bundles/vientosurappapp/js/bootstrap-datepicker.js') }#}"></script>-->
+
+    <script src="{{ asset('bundles/vientosurappapp/js/modernizr.js') }}"></script>
+    <!--<script src="{#{ asset('bundles/vientosurappapp/js/jquery.js') }#}" type="text/javascript"></script>-->
+    <script src="{{ asset('bundles/vientosurappapp/js/bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/slimmenu.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/bootstrap-timepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/nicescroll.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/dropit.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/ionrangeslider.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/icheck.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/fotorama.js') }}" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/typeahead.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/magnific.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/owl-carousel.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/fitvids.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/tweet.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/countdown.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/gridrotator.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/custom.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            var url = Routing.generate('hotel_autocomplete');
+            $('#autocomplete').autocomplete({
+                serviceUrl: url,
+                onSelect: function (suggestion) {
+                    $("#destinationCity").val(suggestion.data);
+                }
+            });
+        });
+    </script>
+{% endblock %}
