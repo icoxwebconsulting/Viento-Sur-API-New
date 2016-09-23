@@ -12,6 +12,8 @@
     <link href="{{ asset('bundles/vientosurappapp/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
     <link href="{{ asset('bundles/vientosurappapp/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="{{ asset('bundles/vientosurappapp/css/icomoon.css') }}">
     <!-- Ionicons -->
     <link href="{{ asset('bundles/vientosurappapp/css/styles.css') }}" rel="stylesheet" type="text/css" />
 
@@ -37,9 +39,9 @@
                         <div class="col-md-9">
                             <div class="top-user-area clearfix">
                                 <ul class="top-user-area-list list list-horizontal list-border">
-                                    <li><a href="#">Iniciar Sesión</a></li>
+                                    <!--<li><a href="#">Iniciar Sesión</a></li>-->
 
-                                    <li><a href="#">Registrarse</a></li>
+                                    <!--<li><a href="#">Registrarse</a></li>-->
 
                                     <li class="nav-drop"><a href="#">AR $<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a>
                                         <ul class="list nav-drop-menu">
@@ -87,10 +89,8 @@
     </header>
         <!-- end header -->
 
-        <div class="container">
-            {% block content %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
 
         <footer id="main-footer">
 
@@ -122,11 +122,11 @@
                     </div>
 
                     <div class="col-md-4">
-                        <h4>Newsletter</h4>
+                        <!--<h4>Newsletter</h4>
                         <form>
                             <input type="text" class="form-control mb10" placeholder="ingresa tu e-mail">
                             <input type="submit" class="btn btn-primary" value="Suscribirse">
-                        </form>
+                        </form>-->
                     </div>
 
                     <div class="col-md-4">
