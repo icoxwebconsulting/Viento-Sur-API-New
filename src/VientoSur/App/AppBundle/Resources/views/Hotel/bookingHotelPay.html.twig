@@ -20,7 +20,7 @@
                         subtotal :{{price_detail.subtotal}}<br>
                         total: {{price_detail.total}}<br>
                     </div>
-                    <form class="booking-item-dates-change mb5">
+                    <!--<form class="booking-item-dates-change mb5">
                         <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
                             <label class="mfont">Destino/Nombre del hotel</label>
                             <input class="typeahead form-control" value="Praga, Republica Checa" placeholder="Praga, Republica Checa" type="text" />
@@ -113,7 +113,8 @@
                         </div>
 
                         <input class="btn btn-primary btn-search" type="submit" value="Buscar" />
-                    </form>
+                    </form>-->
+                    {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
                 </div>
             </div>
 
