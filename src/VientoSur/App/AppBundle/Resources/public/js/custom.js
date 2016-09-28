@@ -77,7 +77,9 @@ $('.typeahead').typeahead({
 $('input.date-pick, .input-daterange, .date-pick-inline').datepicker({
     todayHighlight: true,
     format: 'dd/mm/yyyy',
-    language: 'es'
+    language: 'es',
+    autoclose:  true,
+     startDate: "0d"
 });
 
 $('input.date-pick, .input-daterange input[name="start"]').datepicker('setDate', '');
