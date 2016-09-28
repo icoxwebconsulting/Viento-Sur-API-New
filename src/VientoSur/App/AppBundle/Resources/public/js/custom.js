@@ -79,7 +79,7 @@ $('input.date-pick, .input-daterange, .date-pick-inline').datepicker({
     format: 'dd/mm/yyyy',
     language: 'es',
     autoclose:  true,
-     startDate: "0d"
+    startDate: "0d"
 });
 
 $('input.date-pick, .input-daterange input[name="start"]').datepicker('setDate', '');
