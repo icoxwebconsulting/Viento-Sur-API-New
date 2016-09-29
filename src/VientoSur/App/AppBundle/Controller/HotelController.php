@@ -201,7 +201,9 @@ class HotelController extends Controller {
                     'dispoHotel'   => $dispoHotel,
                     'hotelDetails' => $hotelDetails,
                     'latitude'     => $latitude,
-                    'longitude'    => $longitude
+                    'longitude'    => $longitude,
+                    'idHotel'      => $idHotel,
+                    'restUrl'      => $restUrl
                         )
         );
     }
