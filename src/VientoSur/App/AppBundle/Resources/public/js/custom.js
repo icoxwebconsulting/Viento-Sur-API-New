@@ -303,40 +303,11 @@ $('.form-group-cc-cvc input').payment('formatCardCVC');
 
 
 
-if ($('#map-canvas').length) {
-    var map,
-        service;
 
-    jQuery(function($) {
-        $(document).ready(function() {
-            var latlng = new google.maps.LatLng(40.7564971, -73.9743277);
-            var myOptions = {
-                zoom: 16,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                scrollwheel: false
-            };
-
-            map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-
-
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map
-            });
-            marker.setMap(map);
-
-
-            $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
-                google.maps.event.trigger(map, 'resize');
-                map.setCenter(latlng);
-            });
-        });
-    });
-}
 
 
 $('.card-select > li').click(function() {
+    var self;
     self = this;
     $(self).addClass('card-item-selected');
     $(self).siblings('li').removeClass('card-item-selected');

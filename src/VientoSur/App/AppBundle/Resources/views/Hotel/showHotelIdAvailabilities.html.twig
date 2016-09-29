@@ -1,5 +1,38 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+
+    <script type="text/javascript">
+        function initMap() {
+            var myLatLng = {lat: {{ latitude }}, lng: {{ longitude }} };
+
+            // Create a map object and specify the DOM element for display.
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                scrollwheel: false,
+                zoom: 16
+            });
+            // Create a marker and set its position.
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: '{{hotelDetails[0].name}}'
+            });
+
+            $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
+                google.maps.event.trigger(map, 'resize');
+                map.setCenter(myLatLng);
+            });
+
+        }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04&callback=initMap"></script>
+
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <ul class="breadcrumb">
@@ -84,64 +117,11 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="google-map-tab">
-                                        <div id="map-canvas" style="width:100%; height:500px;"></div>
+                                        <div id="map" style="width:500px; height:500px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="col-md-4">
-                            <div class="booking-item-meta">
-                                <h2 class="lh1em">Fantástico</h2>
-                                <div class="booking-item-rating">
-                                    <span class="booking-item-rating-number">9.4</span>
-                                    <p><a class="text-default" href="#">Puntuación basada en <br>
-                                            369 comentarios</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4 class="lh1em">Calificación de viajeros</h4>
-                                    <ul class="list booking-item-raiting-list">
-                                        <li>
-                                            <div class="booking-item-raiting-list-title">Excelente</div>
-                                            <div class="booking-item-raiting-list-bar">
-                                                <div style="width:91%;"></div>
-                                            </div>
-                                            <div class="booking-item-raiting-list-number">1223</div>
-                                        </li>
-                                        <li>
-                                            <div class="booking-item-raiting-list-title">Muy bueno</div>
-                                            <div class="booking-item-raiting-list-bar">
-                                                <div style="width:6%;"></div>
-                                            </div>
-                                            <div class="booking-item-raiting-list-number">61</div>
-                                        </li>
-                                        <li>
-                                            <div class="booking-item-raiting-list-title">Normal</div>
-                                            <div class="booking-item-raiting-list-bar">
-                                                <div style="width:5%;"></div>
-                                            </div>
-                                            <div class="booking-item-raiting-list-number">40</div>
-                                        </li>
-                                        <li>
-                                            <div class="booking-item-raiting-list-title">Malo</div>
-                                            <div class="booking-item-raiting-list-bar">
-                                                <div style="width:3%;"></div>
-                                            </div>
-                                            <div class="booking-item-raiting-list-number">15</div>
-                                        </li>
-                                        <li>
-                                            <div class="booking-item-raiting-list-title">Horrible</div>
-                                            <div class="booking-item-raiting-list-bar">
-                                                <div style="width:1%;"></div>
-                                            </div>
-                                            <div class="booking-item-raiting-list-number">9</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
 
                 </div><!-- close info -->
@@ -313,7 +293,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                   <div class="col-md-6">
                                         <div class="booking-item-rating">
                                             <h4 class="booking-item-title">Habitación doble superior</h4>
                                         </div>

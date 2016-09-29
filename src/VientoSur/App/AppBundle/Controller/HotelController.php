@@ -180,11 +180,11 @@ class HotelController extends Controller {
 
     /**
      *
-     * @Route("/show/{idHotel}/availabilities/{restUrl}", name="viento_sur_app_app_homepage_show_hotel_id")
+     * @Route("/show/{idHotel}/availabilities/{restUrl}/latitude/{latitude}/longitude/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
      * @Method("GET")
      * @Template()
      */
-    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl) {
+    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
 
         $url = "https://api.despegar.com/v3/hotels/availabilities/" . $idHotel . $restUrl . "&language=en&currency=USD";
         $itemDispo = $this->cUrlExecAction($url);
@@ -198,8 +198,10 @@ class HotelController extends Controller {
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
-                    'dispoHotel' => $dispoHotel,
-                    'hotelDetails' => $hotelDetails
+                    'dispoHotel'   => $dispoHotel,
+                    'hotelDetails' => $hotelDetails,
+                    'latitude'     => $latitude,
+                    'longitude'    => $longitude
                         )
         );
     }
