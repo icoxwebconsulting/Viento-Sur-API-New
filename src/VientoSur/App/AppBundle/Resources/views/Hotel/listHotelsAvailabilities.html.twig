@@ -5,9 +5,9 @@
   <script type="text/javascript">
         $(function() {
             $("#pagination").bootpag({
-                total: {{ items.paging.total }} ,
+                total: {{ items.paging.total / 10}} ,
                 maxVisible:15,
-                page: {{ offset + 1 }} ,
+                page: {{ (offset / offset) + 1 }} ,
                 firstLastUse: true,
                 first: '←',
                 last: '→'
@@ -37,7 +37,7 @@
             <li class="active">Hoteles en Buenos Aires ({{ items.paging.total }})</li>
         </ul>
 
-        <h3 class="booking-title">{{ items.paging.limit }} de {{ items.paging.total }} hoteles disponibles para estas fechas en Buenos Aires con mejor precio</h3>
+        <h3 class="booking  s-title">{{ items.paging.limit }} de {{ items.paging.total }} hoteles disponibles para estas fechas en Buenos Aires con mejor precio</h3>
 
         <div class="row">
 
