@@ -233,25 +233,7 @@
                     $("#destinationCity").val(suggestion.data);
                 }
             });
-            $("#pagination").bootpag({
-                total: {{ items.paging.total }} ,
-                maxVisible:15,
-                page: {{ offset + 1 }} ,
-                firstLastUse: true,
-                first: '←',
-                last: '→'
 
-            }).on("page", function(event, num){
-                  var offset =  (num*10)-1;
-                  var limit = 10;
-                  var URLdomain = window.location.host;
-                 // alert(URLdomain);
-
-                  var URLsearch = window.location.search;
-                 // alert(URLsearch);
-
-                  window.location.replace("http://" + URLdomain + "/hotel/send/hotels/availabilities/" + offset + "/" + limit + URLsearch);
-            });
         });
         $('#submitConsult').on('show.bs.modal', function (e) {
             $title = $(e.relatedTarget).attr('data-title');
