@@ -5,16 +5,16 @@
   <script type="text/javascript">
         $(function() {
             $("#pagination").bootpag({
-                total: {{ items.paging.total / 10}} ,
+                total: {{ (items.paging.total / 10) }} ,
                 maxVisible:15,
-                page: {{ (offset / offset) + 1 }} ,
+                page: {{ limit }} ,
                 firstLastUse: true,
                 first: '←',
                 last: '→'
 
             }).on("page", function(event, num){
                   var offset =  (num*10)-1;
-                  var limit = 10;
+                  var limit = num;
                   var URLdomain = window.location.host;
                  // alert(URLdomain);
 
@@ -140,7 +140,7 @@
                 </ul>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="sfont mb20">{{ items.paging.total }} hoteles encontrados en Buenos Aires &nbsp;&nbsp;Mostrando {{ items.paging.offset + 1}} – {{ items.paging.limit }} </p>
+                        <p class="sfont mb20">{{ items.paging.total }} hoteles encontrados en Buenos Aires &nbsp;&nbsp;Mostrando {{ items.paging.offset + 1}} – {{ items.paging.offset + 11}} </p>
                         <ul class="pagination" id="pagination">
 
                         </ul>
