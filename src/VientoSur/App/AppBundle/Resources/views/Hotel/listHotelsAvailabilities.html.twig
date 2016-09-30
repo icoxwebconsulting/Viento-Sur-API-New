@@ -1,15 +1,18 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
+
+
+
 {% block content %}
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
             <li><a href="index.html">Hoteles</a></li>
-            <li><a href="#">Hoteles en Republica Checa</a></li>
-            <li class="active">Hoteles en Praga (610)</li>
+            <li><a href="#">Hoteles en Argentina</a></li>
+            <li class="active">Hoteles en Buenos Aires ({{ items.paging.total }})</li>
         </ul>
 
-        <h3 class="booking-title">458 de 604 hoteles disponibles para estas fechas en Praga con mejor precio</h3>
+        <h3 class="booking-title">{{ items.paging.limit }} de {{ items.paging.total }} hoteles disponibles para estas fechas en Buenos Aires con mejor precio</h3>
 
         <div class="row">
 
@@ -112,27 +115,9 @@
                 </ul>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="sfont mb20">521 hoteles encontrados en Praga &nbsp;&nbsp;Mostrando 1 – 15</p>
-                        <ul class="pagination">
-                            <li class="active"><a href="#">1</a>
-                            </li>
-                            <li><a href="#">2</a>
-                            </li>
-                            <li><a href="#">3</a>
-                            </li>
-                            <li><a href="#">4</a>
-                            </li>
-                            <li><a href="#">5</a>
-                            </li>
-                            <li><a href="#">6</a>
-                            </li>
-                            <li><a href="#">7</a>
-                            </li>
-                            <li class="dots"><i>...</i></li>
-                            <li><a href="#">43</a>
-                            </li>
-                            <li class="next"><a href="#">Siguiente</a>
-                            </li>
+                        <p class="sfont mb20">{{ items.paging.total }} hoteles encontrados en Buenos Aires &nbsp;&nbsp;Mostrando {{ items.paging.offset + 1}} – {{ items.paging.limit }} </p>
+                        <ul class="pagination" id="pagination">
+
                         </ul>
                     </div>
                 </div>
@@ -140,4 +125,6 @@
         </div>
         <div class="gap"></div>
     </div>
+                    
+                    
 {% endblock %}
