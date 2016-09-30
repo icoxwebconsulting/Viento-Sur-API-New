@@ -109,11 +109,11 @@ class HotelController extends Controller {
     /**
      * Lists all Company entities.
      *
-     * @Route("/send/hotels/availabilities", name="viento_sur_send_hotels")
-     * @Method("POST")
+     * @Route("/send/hotels/availabilities/{offset}/{limit}", name="viento_sur_send_hotels")
+     * @Method("GET")
      * @Template()
      */
-    public function sendHotelsAvailabilitiesAction(Request $request) {
+    public function sendHotelsAvailabilitiesAction($offset, $limit, Request $request) {
         //step2
         //echo $request->get('autocomplete');
         //$destination = $request->get('cityInput'); //echo '  '.$destination;
@@ -166,15 +166,17 @@ class HotelController extends Controller {
         $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
-        $url = "https://api.despegar.com/v3/hotels/availabilities?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&accepts=partial&currency=USD";
+     //   $url = "https://api.despegar.com/v3/hotels/availabilities?=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&offset=0&classify_roompacks_by=none&roompack_choices=recommended&limit=10";
+          $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=".$limit;
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
-        //return print_r($results);
+        //return print_r($results);die();
         $restUrl = "?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&distribution=" . $distribucion;
 
         return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
-                    'items' => $results,
-                    'restUrl' => $restUrl
+                    'items'   => $results,
+                    'restUrl' => $restUrl,
+                    'offset'   =>   $offset
         ));
     }
 

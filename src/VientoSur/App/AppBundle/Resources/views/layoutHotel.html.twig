@@ -173,6 +173,7 @@
     <script src="{{ asset('bundles/vientosurappapp/js/countdown.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/gridrotator.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/custom.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/vientosurappapp/js/jquery.bootpag.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(function() {
             var url = Routing.generate('hotel_autocomplete');
@@ -182,14 +183,27 @@
                     $("#destinationCity").val(suggestion.data);
                 }
             });
-        });
-        $('#field-hotel-checkin').datepicker({
-            autoclose:  'true',
-            startDate: '0d'
-        });
-        $('#field-hotel-checkout').datepicker({
-            autoclose:  'true',
-            startDate: '0d'
-        });
+      $("#pagination").bootpag({
+            total: {{ items.paging.total }} ,
+            maxVisible:15,
+            page: {{ offset + 1 }} ,
+            firstLastUse: true,
+            first: '←',
+            last: '→'
+            
+  }).on("page", function(event, num){
+        var offset =  (num*10)-1;
+        var limit = 10;
+        var URLdomain = window.location.host;
+       // alert(URLdomain);
+        
+        var URLsearch = window.location.search;
+       // alert(URLsearch);
+        
+        window.location.replace("http://" + URLdomain + "/web/hotel/send/hotels/availabilities/" + offset + "/" + limit + URLsearch);
+});
+    });
+
+  
     </script>
 {% endblock %}
