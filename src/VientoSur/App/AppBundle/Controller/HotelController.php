@@ -178,6 +178,18 @@ class HotelController extends Controller {
         ));
     }
 
+
+    /**
+     *
+     * @Route("/consult", name="viento_sur_app_consult")
+     * @Method("GET")
+     * @Template()
+     */
+    public function consultAction(Request $request) {
+
+    }
+
+
     /**
      *
      * @Route("/show/{idHotel}/availabilities/{restUrl}/latitude/{latitude}/longitude/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
