@@ -23,8 +23,15 @@
 
                   window.location.replace("http://" + URLdomain + "/hotel/send/hotels/availabilities/" + offset + "/" + limit + URLsearch);
             });
+            $("#field-hotel-checkin").datepicker({
+                "setDate": new Date()
+
+
+            });
         });
     </script>
+
+
 {% endblock %}
 
 

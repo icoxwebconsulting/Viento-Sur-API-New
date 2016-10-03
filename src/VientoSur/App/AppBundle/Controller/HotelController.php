@@ -173,6 +173,10 @@ class HotelController extends Controller {
         //return print_r($results);die();
         $restUrl = "?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&distribution=" . $distribucion;
 
+        $session = $request->getSession();
+        $session->set('checkin_date', $request->get('start'));
+        $session->set('checkout_date', $request->get('end'));
+
         return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
                     'items'   => $results,
                     'restUrl' => $restUrl,
