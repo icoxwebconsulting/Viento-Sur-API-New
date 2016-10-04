@@ -169,11 +169,15 @@ class HotelController extends Controller {
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
      //   $url = "https://api.despegar.com/v3/hotels/availabilities?=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&offset=0&classify_roompacks_by=none&roompack_choices=recommended&limit=10";
-          $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
+        $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
         //return print_r($results);die();
         $restUrl = "?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&distribution=" . $distribucion;
+
+        $session = $request->getSession();
+        $session->set('checkin_date', $request->get('start'));
+        $session->set('checkout_date', $request->get('end'));
 
         return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
                     'items'   => $results,
@@ -430,7 +434,7 @@ class HotelController extends Controller {
         return $results;
     }
 
-        private function cUrlExecAutoCompleteAction($url) {
+    private function cUrlExecAutoCompleteAction($url) {
 
         //step1
         // api productiva ca8fe17f100646cbbefa4ecddcf51350
@@ -447,6 +451,7 @@ class HotelController extends Controller {
 
         return $results;
     }
+
     private function cUrlExecPostBookingAction($postvars, $url) {
 
         //step1
