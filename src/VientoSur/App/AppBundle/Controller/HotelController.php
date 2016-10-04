@@ -359,12 +359,9 @@ class HotelController extends Controller {
         $params["expiration_month"] = "01";
         $params["expiration_year"] = "2016";
         $params["security_code"] = "123";
-        $params["bank"] = "some bank";
+        $params["bank"] = "somebank";
         $params["holder_name"] = "John";
         $tokenizeKey = $request->get('tokenize_key');
-
-        print_r($tokenizeKey);
-        print_r($_POST);
 
         $request = $client->post('pbdyy/validation', [
             'headers' => ['X­Tokenize­Key​' => $tokenizeKey],
