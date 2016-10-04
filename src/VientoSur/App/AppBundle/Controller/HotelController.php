@@ -363,6 +363,9 @@ class HotelController extends Controller {
         $params["holder_name"] = "John";
         $tokenizeKey = $request->get('tokenize_key');
 
+        print_r($tokenizeKey);
+        print_r($_POST);
+
         $request = $client->post('pbdyy/validation', [
             'headers' => ['X­Tokenize­Key​' => $tokenizeKey],
             'form_params' => $params
