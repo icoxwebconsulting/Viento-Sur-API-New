@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use VientoSur\App\AppBundle\Controller\DistributionController;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 
 /**
  * Company controller.
@@ -299,7 +301,10 @@ class HotelController extends Controller {
 
         //print_r($priceDetail); die();
 
-        //print_r($formBooking);die();
+//        echo "<pre>";
+//        print_r($formBooking);
+//        echo "</pre>";
+//        die();
 
         return array(
             'formBooking' => $formBooking,
@@ -342,6 +347,29 @@ class HotelController extends Controller {
         echo $expiration = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.expiration.value');
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
+
+        $client = $this->get("guzzle.client.api_vault");
+
+        $params["brand_code"] = "VI";
+        $params["number"] = "1234567891023456";
+        $params["expiration_month"] = "01";
+        $params["expiration_year"] = "2016";
+        $params["security_code"] = "123";
+        $params["bank"] = "some bank";
+        $params["holder_name"] = "John";
+        $params['tokenize_key'] = $request->get('tokenize_key');
+
+        $request = $client->get('pbdyy/validation', [
+            ['form_params' => $params]
+        ]);
+
+        if ($request->getStatusCode() == 200) {
+            $request->getBody()->rewind();
+            $response = json_decode($request->getBody()->getContents(), true);
+
+            print_r($response);
+            die('response');
+        }
 
         //contact
         //echo "contacto";

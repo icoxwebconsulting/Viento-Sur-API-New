@@ -19,3 +19,4 @@ web/uploads/*
 /bin/
 /composer.phar
 /nbproject/private/
+/vendor
