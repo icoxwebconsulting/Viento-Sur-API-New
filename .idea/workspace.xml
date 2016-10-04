@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ed59970-47a1-4a04-91f1-9b79a2518b95" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" afterPath="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" />
     </list>
     <ignored path="VientoSur.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HotelController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HotelController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="369" column="47" selection-start-line="369" selection-start-column="47" selection-end-line="369" selection-end-column="47" />
+            <state relative-caret-position="270">
+              <caret line="366" column="61" selection-start-line="366" selection-start-column="61" selection-end-line="366" selection-end-column="61" />
               <folding>
                 <element signature="e#54#111#0#PHP" expanded="true" />
               </folding>
@@ -65,7 +65,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/config/config.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="807">
@@ -87,8 +87,8 @@
         <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig" />
         <option value="$PROJECT_DIR$/app/AppKernel.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
+        <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" />
       </list>
     </option>
   </component>
@@ -404,12 +404,12 @@
       <workItem from="1475523195769" duration="2074000" />
       <workItem from="1475578803310" duration="376000" />
       <workItem from="1475585517486" duration="3869000" />
-      <workItem from="1475594358719" duration="5955000" />
+      <workItem from="1475594358719" duration="6388000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12274000" />
+    <option name="totallyTimeSpent" value="12707000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -530,21 +530,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="369" column="47" selection-start-line="369" selection-start-column="47" selection-end-line="369" selection-end-column="47" />
-          <folding>
-            <element signature="e#54#111#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="807">
           <caret line="84" column="35" selection-start-line="84" selection-start-column="35" selection-end-line="84" selection-end-column="35" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="366" column="61" selection-start-line="366" selection-start-column="61" selection-end-line="366" selection-end-column="61" />
+          <folding>
+            <element signature="e#54#111#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
