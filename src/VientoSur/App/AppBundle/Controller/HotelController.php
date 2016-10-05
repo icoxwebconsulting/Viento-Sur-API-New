@@ -2,6 +2,7 @@
 
 namespace VientoSur\App\AppBundle\Controller;
 
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -450,7 +451,7 @@ class HotelController extends Controller {
                 ],
                 'form_params' => $params
             ]);
-        }catch (BadRequestHttpException $exception)
+        }catch (ClientException $exception)
         {
             print_r($exception->getMessage());
 

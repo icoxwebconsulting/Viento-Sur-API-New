@@ -26,10 +26,10 @@
       <file leaf-file-name="HotelController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="464" column="0" selection-start-line="464" selection-start-column="0" selection-end-line="464" selection-end-column="0" />
+            <state relative-caret-position="414">
+              <caret line="453" column="31" selection-start-line="453" selection-start-column="31" selection-end-line="453" selection-end-column="31" />
               <folding>
-                <element signature="e#54#111#0#PHP" expanded="true" />
+                <element signature="e#54#95#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -437,12 +437,12 @@
       <workItem from="1475578803310" duration="376000" />
       <workItem from="1475585517486" duration="3869000" />
       <workItem from="1475594358719" duration="7911000" />
-      <workItem from="1475664432658" duration="13171000" />
+      <workItem from="1475664432658" duration="13212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27401000" />
+    <option name="totallyTimeSpent" value="27442000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -488,7 +488,7 @@
         <state relative-caret-position="6426">
           <caret line="365" column="30" selection-start-line="365" selection-start-column="30" selection-end-line="365" selection-end-column="30" />
           <folding>
-            <element signature="e#54#111#0#PHP" expanded="true" />
+            <element signature="e#96#153#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -532,7 +532,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#54#111#0#PHP" expanded="true" />
+            <element signature="e#96#153#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -701,10 +701,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="464" column="0" selection-start-line="464" selection-start-column="0" selection-end-line="464" selection-end-column="0" />
+        <state relative-caret-position="414">
+          <caret line="453" column="31" selection-start-line="453" selection-start-column="31" selection-end-line="453" selection-end-column="31" />
           <folding>
-            <element signature="e#54#111#0#PHP" expanded="true" />
+            <element signature="e#54#95#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
