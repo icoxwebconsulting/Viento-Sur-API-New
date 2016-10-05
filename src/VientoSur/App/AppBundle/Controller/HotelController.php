@@ -396,7 +396,7 @@ class HotelController extends Controller {
         
         echo 'Header: '. print_r($header).'<br/>';
         
-        echo 'Body: '. print_r($params).'<br/>';
+        echo 'Body: '. print_r(json_decode($postvars)).'<br/>';
         
         
         
@@ -416,7 +416,7 @@ class HotelController extends Controller {
         curl_close($cSession);
         
         // do anything you want with your response
-        echo 'Response:' .print_r($results);
+        echo 'Response:' .print_r(json_decode($results));
         
         
         exit();
