@@ -385,7 +385,7 @@ class HotelController extends Controller {
         
         $header = [
                 'Content-Type' => "application/json; charset=UTF-8",
-                'X­Tokenize­Key' => $tokenizeKey,
+                'X-Tokenize-Key' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
             ];
@@ -400,7 +400,7 @@ class HotelController extends Controller {
         echo '<pre><br/>';
         
         echo 'Body: <pre>';
-        print_r(json_decode($postvars));
+        print_r($params);
         echo '<pre><br/>';
         
         
@@ -411,7 +411,7 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, array($postvars));
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
