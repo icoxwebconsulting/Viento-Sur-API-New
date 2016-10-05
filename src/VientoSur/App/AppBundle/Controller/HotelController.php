@@ -455,13 +455,15 @@ class HotelController extends Controller {
         {
             print_r($exception->getMessage());
 
+            print_r($exception->getRequest());
+
             // Print out the headers.
-            foreach ($request->getHeaders() as $name => $values) {
-                echo $name . ': ' . implode(', ', $values) . "\r\n";
-            }
-            // Get the request body.
-            $body = $request->getBody();
-            print_r($body);
+//            foreach ($request->getHeaders() as $name => $values) {
+//                echo $name . ': ' . implode(', ', $values) . "\r\n";
+//            }
+//            // Get the request body.
+//            $body = $request->getBody();
+//            print_r($body);
             die('listo');
 
         }
