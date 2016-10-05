@@ -402,7 +402,7 @@ class HotelController extends Controller {
         echo '</pre><br/>';
 
         echo 'Body: <pre>';
-        print_r($params);
+        print_r(json_encode($params));
         echo '</pre><br/>';
 
 
