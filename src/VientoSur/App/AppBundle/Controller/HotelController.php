@@ -191,11 +191,30 @@ class HotelController extends Controller {
     /**
      *
      * @Route("/consult", name="viento_sur_app_consult")
-     * @Method("GET")
+     * @Method("POST")
      * @Template()
      */
     public function consultAction(Request $request) {
+        $message = \Swift_Message::newInstance(null)
+            ->setSubject("Consulta web Viento Sur")
+            ->setFrom("not-reply@vientosur.com")
+            ->setTo("sanchez91nestor@gmail.com")
+            ->setBody(
+                $this->renderView(
+                    'VientoSurAppAppBundle:Email:contact.html.twig',
+                    array(
+                        'txtContactName' => $request->request->get('fullname'),
+                        'txtEmail' => $request->request->get('email'),
+                        'txtComments' => $request->request->get('message')
+                    )
+                ),
+                'text/html'
+            );
 
+        $this->get('mailer')->send($message);
+        $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'Your message has been sent successfully');
     }
 
 
@@ -355,16 +374,17 @@ class HotelController extends Controller {
         $client = $this->get("guzzle.client.api_vault");
 
         $params["brand_code"] = "VI";
-        $params["number"] = "1234567891023456";
-        $params["expiration_month"] = "01";
-        $params["expiration_year"] = "2016";
+        $params["number"] = "4111111111111111";
+        $params["expiration_month"] = "12";
+        $params["expiration_year"] = "2030";
         $params["security_code"] = "123";
-        $params["bank"] = "somebank";
-        $params["holder_name"] = "John";
+        $params["bank"] = "*";
+        $params["holder_name"] = "John Teken";
         $tokenizeKey = $request->get('tokenize_key');
 
         $request = $client->post('pbdyy/validation', [
             'headers' => [
+                'Content-Type' => "application/json; charset=UTF-8",
                 'X­Tokenize­Key​' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"

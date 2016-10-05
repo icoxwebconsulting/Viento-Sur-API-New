@@ -160,7 +160,7 @@
                             <!--<label for="nombre_apellido" class="col-sm-2 control-label">Nombre y Apellido</label>-->
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="nombre_apellido" placeholder="Nombre y Apellido"/>
+                                <input type="text" class="form-control" name="nombre_apellido" id="fullnameField" placeholder="Nombre y Apellido"/>
                                 <!--<textarea class="form-control" id="observacion" rows="5" style="resize: none;" required ></textarea>-->
                             </div>
                         </div>
@@ -168,7 +168,7 @@
                             <!--<label for="nombre_apellido" class="col-sm-2 control-label">Nombre y Apellido</label>-->
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="email" placeholder="Email"/>
+                                <input type="text" class="form-control" name="email" id="emailField" placeholder="Email"/>
                                 <!--<textarea class="form-control" id="observacion" rows="5" style="resize: none;" required ></textarea>-->
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
                                 <!--<input type="text" class="form-control" name="email" placeholder="Email"/>-->
-                                <textarea class="form-control" id="consulta" rows="5" style="resize: none;" required placeholder="Consulta"></textarea>
+                                <textarea class="form-control" id="messageField" rows="5" style="resize: none;" required placeholder="Consulta"></textarea>
                             </div>
                         </div>
                     </form>
@@ -257,7 +257,9 @@
             else {
                 var url = $(this).data('path');
                 var data = {
-                    observacion: $('#observacion').val()
+                    fullname: $('#fullnameField').val(),
+                    email: $('#emailField').val(),
+                    message: $('#messageField').val()
                 };
                 $.ajax({
                     type: 'post',
