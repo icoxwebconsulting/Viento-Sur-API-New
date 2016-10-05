@@ -27,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="342">
-              <caret line="456" column="54" selection-start-line="456" selection-start-column="54" selection-end-line="456" selection-end-column="54" />
+              <caret line="456" column="20" selection-start-line="456" selection-start-column="20" selection-end-line="456" selection-end-column="20" />
               <folding>
                 <element signature="e#54#95#0#PHP" expanded="true" />
               </folding>
@@ -438,12 +438,12 @@
       <workItem from="1475585517486" duration="3869000" />
       <workItem from="1475594358719" duration="7911000" />
       <workItem from="1475664432658" duration="13788000" />
-      <workItem from="1475700328650" duration="150000" />
+      <workItem from="1475700328650" duration="171000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28168000" />
+    <option name="totallyTimeSpent" value="28189000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -728,7 +728,7 @@
     <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
-          <caret line="456" column="54" selection-start-line="456" selection-start-column="54" selection-end-line="456" selection-end-column="54" />
+          <caret line="456" column="20" selection-start-line="456" selection-start-column="20" selection-end-line="456" selection-end-column="20" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
           </folding>

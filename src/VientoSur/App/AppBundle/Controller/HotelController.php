@@ -454,7 +454,7 @@ class HotelController extends Controller {
         }catch (ClientException $exception)
         {
             echo "<pre>";
-            echo json_encode($exception->getRequest());
+            print_r($exception->getRequest());
             echo "</pre>";
             die('exit');
 
