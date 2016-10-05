@@ -455,7 +455,7 @@ class HotelController extends Controller {
         {
 
             echo "<pre>";
-            print_r(json_decode($exception->getRequest()));
+            print_r(json_encode($exception->getRequest()));
             echo "</pre>";
 
 
