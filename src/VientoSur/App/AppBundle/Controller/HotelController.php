@@ -371,7 +371,7 @@ class HotelController extends Controller {
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
+        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
         
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
