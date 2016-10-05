@@ -424,7 +424,7 @@ class HotelController extends Controller {
 
         // do anything you want with your response
         echo 'Response:<pre>';
-        print_r(json_decode($results));
+        print_r($results);
         echo '</pre>';
 
 
