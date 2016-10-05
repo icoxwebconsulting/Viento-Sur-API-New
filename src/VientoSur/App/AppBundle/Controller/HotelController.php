@@ -455,7 +455,7 @@ class HotelController extends Controller {
             echo $name . ': ' . implode(', ', $values) . "\r\n";
         }
         // Get the request body.
-        $body = $request->getBody());
+        $body = $request->getBody();
         print_r($body);
 
         if ($request->getStatusCode() == 200) {
