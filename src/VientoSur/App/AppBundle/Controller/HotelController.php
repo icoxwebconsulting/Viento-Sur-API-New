@@ -49,6 +49,10 @@ class HotelController extends Controller {
         
         //step1
         $postvars = json_encode($params);
+        
+        echo $postvars;
+        exit();
+        
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_POST, true);
