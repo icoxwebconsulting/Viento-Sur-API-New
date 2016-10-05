@@ -454,16 +454,7 @@ class HotelController extends Controller {
         }catch (ClientException $exception)
         {
             echo "<pre>";
-            print_r($exception->getRequest());
-            echo "</pre>";
-
-
-            echo "<pre>";
-            print_r($exception->getResponse());
-            echo "</pre>";
-
-            echo "<pre>";
-            print_r($request->getBody());
+            print_r($exception);
             echo "</pre>";
             die('exit');
 
