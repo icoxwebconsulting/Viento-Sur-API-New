@@ -1,19 +1,19 @@
 <div class="content-sidebar">
-    <form class="booking-item-dates-change mb5" name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_send_hotels')}}" method="POST">
+    <form class="booking-item-dates-change mb5" name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_send_hotels', { 'offset': '1', 'limit':'1' } )}}" method="GET">
         <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
             <label class="mfont">Destino/Nombre del hotel</label>
             <!--colocar valor por defecto que trae la busqueda inicial-->
-            <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal">
-            <input id="destinationCity" name="cityInput" type="hidden">
+            <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal"/>
+            <input id="destinationCity" name="cityInput" type="hidden"/>
         </div>
         <div class="input-daterange" data-date-format="d M, D">
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
                 <label class="sfont">Fecha de entrada</label>
-                <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
+                <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkin_date')}}"/>
             </div>
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
                 <label class="sfont">Fecha de salida</label>
-                <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
+                <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkout_date')}}"/>
             </div>
         </div>
 
@@ -1060,3 +1060,4 @@
     </form>
 </div>
 <div class="gap-small"></div>
+

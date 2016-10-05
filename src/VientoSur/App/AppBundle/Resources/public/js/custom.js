@@ -80,10 +80,13 @@ $('input.date-pick, .input-daterange, .date-pick-inline').datepicker({
     language: 'es',
     autoclose:  true,
     startDate: "0d"
+
 });
 
-$('input.date-pick, .input-daterange input[name="start"]').datepicker('setDate', '');
-$('.input-daterange input[name="end"]').datepicker('setDate', '');
+
+
+//$('input.date-pick, .input-daterange input[name="start"]').datepicker('setDate', '');
+//$('.input-daterange input[name="end"]').datepicker('setDate', '');
 
 $('input.time-pick').timepicker({
     minuteStep: 15,
