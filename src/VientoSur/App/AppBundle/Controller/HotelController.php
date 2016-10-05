@@ -449,6 +449,15 @@ class HotelController extends Controller {
             'form_params' => $params
         ]);
 
+        $headers = $request->getHeaders();
+        // Print out the headers.
+        foreach ($request->getHeaders() as $name => $values) {
+            echo $name . ': ' . implode(', ', $values) . "\r\n";
+        }
+        // Get the request body.
+        $body = $request->getBody());
+        print_r($body);
+
         if ($request->getStatusCode() == 200) {
             $request->getBody()->rewind();
             $response = json_decode($request->getBody()->getContents(), true);
