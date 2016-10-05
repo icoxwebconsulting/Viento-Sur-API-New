@@ -453,7 +453,6 @@ class HotelController extends Controller {
         }catch (BadRequestHttpException $exception)
         {
             print_r($exception->getMessage());
-            die('listo');
 
             // Print out the headers.
             foreach ($request->getHeaders() as $name => $values) {
@@ -462,6 +461,8 @@ class HotelController extends Controller {
             // Get the request body.
             $body = $request->getBody();
             print_r($body);
+            die('listo');
+
         }
 
 
