@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use VientoSur\App\AppBundle\Controller\DistributionController;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
@@ -449,20 +450,22 @@ class HotelController extends Controller {
                 ],
                 'form_params' => $params
             ]);
-        }catch (BadResponseException $exception)
+        }catch (BadRequestHttpException $exception)
         {
             print_r($exception->getMessage());
             die('listo');
+
+            // Print out the headers.
+            foreach ($request->getHeaders() as $name => $values) {
+                echo $name . ': ' . implode(', ', $values) . "\r\n";
+            }
+            // Get the request body.
+            $body = $request->getBody();
+            print_r($body);
         }
 
 
-        // Print out the headers.
-        foreach ($request->getHeaders() as $name => $values) {
-            echo $name . ': ' . implode(', ', $values) . "\r\n";
-        }
-        // Get the request body.
-        $body = $request->getBody();
-        print_r($body);
+
 
         if ($request->getStatusCode() == 200) {
             $request->getBody()->rewind();
