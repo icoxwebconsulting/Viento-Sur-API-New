@@ -371,14 +371,15 @@ class HotelController extends Controller {
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
+        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
         
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
         $params["expiration_month"] = "12";
         $params["expiration_year"] = "2030";
         $params["security_code"] = "123";
-        $params["bank"] = "*";
+        $params["bank"] = "Some bank";
+        $params["seconds_to_live"] = "600";
         $params["holder_name"] = "John Teken";      
         $tokenizeKey = $request->get('tokenize_key');
         
