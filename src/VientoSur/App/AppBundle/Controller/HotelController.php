@@ -371,7 +371,7 @@ class HotelController extends Controller {
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
+       /* $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
         
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
@@ -426,9 +426,9 @@ class HotelController extends Controller {
         echo '</pre>';
         
         
-        exit();
+        exit();*/
         
-        /*$client = $this->get("guzzle.client.api_vault");
+        $client = $this->get("guzzle.client.api_vault");
 
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
@@ -439,10 +439,10 @@ class HotelController extends Controller {
         $params["holder_name"] = "John Teken";
         $tokenizeKey = $request->get('tokenize_key');
 
-        $request = $client->post('pbdyy/validation', [
+        $request = $client->post('pbdyy', [
             'headers' => [
                 'Content-Type' => "application/json; charset=UTF-8",
-                'X­Tokenize­Key​' => $tokenizeKey,
+                'X-Tokenize-Key' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
             ],
@@ -456,7 +456,7 @@ class HotelController extends Controller {
             print_r($response);
             die('response');
         }
-        */
+        
         //contact
         //echo "contacto";
         //echo "<br>";
