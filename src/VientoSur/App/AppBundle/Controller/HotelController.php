@@ -439,15 +439,22 @@ class HotelController extends Controller {
         $params["holder_name"] = "John Teken";
         $tokenizeKey = $request->get('tokenize_key');
 
-        $request = $client->post('pbdyy/validation', [
-            'headers' => [
-                'Content-Type' => "application/json; charset=UTF-8",
-                'X­Tokenize­Key​' => $tokenizeKey,
-                'X-Client' => "2864680fe4d74241aa613874fa20705f",
-                'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
-            ],
-            'form_params' => $params
-        ]);
+        try{
+            $request = $client->post('pbdyy/validation', [
+                'headers' => [
+                    'Content-Type' => "application/json; charset=UTF-8",
+                    'X-Tokenize-key'=>$tokenizeKey,
+                    'X-Client' => "2864680fe4d74241aa613874fa20705f",
+                    'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
+                ],
+                'form_params' => $params
+            ]);
+        }catch (BadResponseException $exception)
+        {
+            print_r($exception->getMessage());
+            die('listo');
+        }
+
 
         // Print out the headers.
         foreach ($request->getHeaders() as $name => $values) {
