@@ -365,6 +365,7 @@ class HotelController extends Controller {
 
         $request = $client->post('pbdyy/validation', [
             'headers' => [
+                'Content-Type' => "application/json; charset=UTF-8",
                 'X­Tokenize­Key​' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
