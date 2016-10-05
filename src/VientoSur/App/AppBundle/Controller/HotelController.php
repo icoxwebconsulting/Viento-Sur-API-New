@@ -355,12 +355,12 @@ class HotelController extends Controller {
         $client = $this->get("guzzle.client.api_vault");
 
         $params["brand_code"] = "VI";
-        $params["number"] = "1234567891023456";
-        $params["expiration_month"] = "01";
-        $params["expiration_year"] = "2016";
+        $params["number"] = "4111111111111111";
+        $params["expiration_month"] = "12";
+        $params["expiration_year"] = "2030";
         $params["security_code"] = "123";
-        $params["bank"] = "somebank";
-        $params["holder_name"] = "John";
+        $params["bank"] = "*";
+        $params["holder_name"] = "John Teken";
         $tokenizeKey = $request->get('tokenize_key');
 
         $request = $client->post('pbdyy/validation', [
