@@ -392,6 +392,14 @@ class HotelController extends Controller {
         //step1
         $postvars = json_encode($params);
         
+        echo 'Post: '. $url_test.'<br/>';
+        
+        echo 'Header: '. print_r($header).'<br/>';
+        
+        echo 'Body: '. print_r($params).'<br/>';
+        
+        
+        
         //echo $postvars;
         //exit();
         
@@ -408,7 +416,9 @@ class HotelController extends Controller {
         curl_close($cSession);
         
         // do anything you want with your response
-        var_dump($results);
+        echo 'Response:' .print_r($results);
+        
+        
         exit();
         
         /*$client = $this->get("guzzle.client.api_vault");
