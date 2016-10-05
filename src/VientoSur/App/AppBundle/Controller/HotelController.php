@@ -455,7 +455,10 @@ class HotelController extends Controller {
         {
             print_r($exception->getMessage());
 
+            echo "<pre>";
             print_r($exception->getRequest());
+            echo "</pre>";
+            die('exit');
 
             // Print out the headers.
 //            foreach ($request->getHeaders() as $name => $values) {
@@ -464,7 +467,6 @@ class HotelController extends Controller {
 //            // Get the request body.
 //            $body = $request->getBody();
 //            print_r($body);
-            die('listo');
 
         }
 
