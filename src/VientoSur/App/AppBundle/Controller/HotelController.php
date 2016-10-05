@@ -29,45 +29,6 @@ class HotelController extends Controller {
      * @Template()
      */
     public function indexAction(Request $request) {
-        
-        $url = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
-        
-        $params["brand_code"] = "VI";
-        $params["number"] = "4111111111111111";
-        $params["expiration_month"] = "12";
-        $params["expiration_year"] = "2030";
-        $params["security_code"] = "123";
-        $params["bank"] = "*";
-        $params["holder_name"] = "John Teken";        
-        
-        $header = [
-                'Content-Type' => "application/json; charset=UTF-8",
-                'X­Tokenize­Key​' => '479d484b164cfb30879fbdd70183fc31ecfe254c43ae7c0871f9b38723801815eb7eaf9ef01019c0c501eb5317ca618cd84402',
-                'X-Client' => "2864680fe4d74241aa613874fa20705f",
-                'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
-            ];
-        
-        //step1
-        $postvars = json_encode($params);
-        
-        //echo $postvars;
-        //exit();
-        
-        $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, array('body'=>$postvars));
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($cSession, CURLOPT_HEADER, false);
-        //step3
-        $results = curl_exec($cSession);
-        //step4
-        curl_close($cSession);
-        
-        // do anything you want with your response
-        var_dump($results);
-        exit();
         return array();
     }
 
@@ -410,7 +371,47 @@ class HotelController extends Controller {
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-        $client = $this->get("guzzle.client.api_vault");
+        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
+        
+        $params["brand_code"] = "VI";
+        $params["number"] = "4111111111111111";
+        $params["expiration_month"] = "12";
+        $params["expiration_year"] = "2030";
+        $params["security_code"] = "123";
+        $params["bank"] = "*";
+        $params["holder_name"] = "John Teken";      
+        $tokenizeKey = $request->get('tokenize_key');
+        
+        $header = [
+                'Content-Type' => "application/json; charset=UTF-8",
+                'X­Tokenize­Key​' => $tokenizeKey,
+                'X-Client' => "2864680fe4d74241aa613874fa20705f",
+                'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
+            ];
+        
+        //step1
+        $postvars = json_encode($params);
+        
+        //echo $postvars;
+        //exit();
+        
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url_test);
+        curl_setopt($cSession, CURLOPT_POST, true);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, array('body'=>$postvars));
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        //step3
+        $results = curl_exec($cSession);
+        //step4
+        curl_close($cSession);
+        
+        // do anything you want with your response
+        var_dump($results);
+        exit();
+        
+        /*$client = $this->get("guzzle.client.api_vault");
 
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
@@ -438,7 +439,7 @@ class HotelController extends Controller {
             print_r($response);
             die('response');
         }
-
+        */
         //contact
         //echo "contacto";
         //echo "<br>";
