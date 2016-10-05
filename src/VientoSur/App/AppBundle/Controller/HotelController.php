@@ -32,13 +32,13 @@ class HotelController extends Controller {
         
         $url = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
         
-        $params["brand_code"] = "VI";
-        $params["number"] = "4111111111111111";
-        $params["expiration_month"] = "12";
-        $params["expiration_year"] = "2030";
-        $params["security_code"] = "123";
-        $params["bank"] = "*";
-        $params["holder_name"] = "John Teken";        
+        $params['body']["brand_code"] = "VI";
+        $params['body']["number"] = "4111111111111111";
+        $params['body']["expiration_month"] = "12";
+        $params['body']["expiration_year"] = "2030";
+        $params['body']["security_code"] = "123";
+        $params['body']["bank"] = "*";
+        $params['body']["holder_name"] = "John Teken";        
         
         $header = [
                 'Content-Type' => "application/json; charset=UTF-8",
