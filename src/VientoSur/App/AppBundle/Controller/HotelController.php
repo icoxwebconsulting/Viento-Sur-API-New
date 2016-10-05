@@ -386,12 +386,12 @@ class HotelController extends Controller {
         $tokenizeKey = $request->get('tokenize_key');
 
         $header = [
-                'Content-Type' => "application/json; charset=UTF-8",
+                'Content-Type' => 'application/json',
                 'X-Tokenize-Key' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
             ];
-        
+
 
 
         //step1
