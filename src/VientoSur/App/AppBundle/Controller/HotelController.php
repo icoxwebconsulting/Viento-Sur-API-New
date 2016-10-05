@@ -373,13 +373,13 @@ class HotelController extends Controller {
 
         $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
         
-        $params['body']["brand_code"] = "VI";
-        $params['body']["number"] = "4111111111111111";
-        $params['body']["expiration_month"] = "12";
-        $params['body']["expiration_year"] = "2030";
-        $params['body']["security_code"] = "123";
-        $params['body']["bank"] = "*";
-        $params['body']["holder_name"] = "John Teken";      
+        $params["brand_code"] = "VI";
+        $params["number"] = "4111111111111111";
+        $params["expiration_month"] = "12";
+        $params["expiration_year"] = "2030";
+        $params["security_code"] = "123";
+        $params["bank"] = "*";
+        $params["holder_name"] = "John Teken";      
         $tokenizeKey = $request->get('tokenize_key');
         
         $header = [
@@ -398,7 +398,7 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, $postvars);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
