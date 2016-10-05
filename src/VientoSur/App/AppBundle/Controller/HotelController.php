@@ -191,11 +191,30 @@ class HotelController extends Controller {
     /**
      *
      * @Route("/consult", name="viento_sur_app_consult")
-     * @Method("GET")
+     * @Method("POST")
      * @Template()
      */
     public function consultAction(Request $request) {
+        $message = \Swift_Message::newInstance(null)
+            ->setSubject("Consulta web Viento Sur")
+            ->setFrom("not-reply@vientosur.com")
+            ->setTo("sanchez91nestor@gmail.com")
+            ->setBody(
+                $this->renderView(
+                    'VientoSurAppAppBundle:Email:contact.html.twig',
+                    array(
+                        'txtContactName' => $request->request->get('fullname'),
+                        'txtEmail' => $request->request->get('email'),
+                        'txtComments' => $request->request->get('message')
+                    )
+                ),
+                'text/html'
+            );
 
+        $this->get('mailer')->send($message);
+        $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'Your message has been sent successfully');
     }
 
 
