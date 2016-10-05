@@ -391,9 +391,11 @@ class HotelController extends Controller {
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
             ];
+        
+
 
         //step1
-        $postvars = json_encode($params);
+        $params = json_encode($params);
 
         echo 'Post: '. $url_test.'<br/>';
 
