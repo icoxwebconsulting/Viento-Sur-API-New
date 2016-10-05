@@ -453,10 +453,18 @@ class HotelController extends Controller {
             ]);
         }catch (ClientException $exception)
         {
-            print_r($exception->getMessage());
 
             echo "<pre>";
-            print_r($exception->getRequest());
+            print_r(\GuzzleHttp\json_decode($exception->getRequest()));
+            echo "</pre>";
+
+
+            echo "<pre>";
+            print_r(\GuzzleHttp\json_decode($exception->getResponse()));
+            echo "</pre>";
+
+            echo "<pre>";
+            print_r($request->getBody());
             echo "</pre>";
             die('exit');
 
