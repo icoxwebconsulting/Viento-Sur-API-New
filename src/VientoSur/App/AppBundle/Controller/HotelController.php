@@ -397,11 +397,11 @@ class HotelController extends Controller {
         
         echo 'Header: <pre>';
         print_r($header);
-        echo '<pre><br/>';
+        echo '</pre><br/>';
         
         echo 'Body: <pre>';
         print_r($params);
-        echo '<pre><br/>';
+        echo '</pre><br/>';
         
         
         
@@ -423,7 +423,7 @@ class HotelController extends Controller {
         // do anything you want with your response
         echo 'Response:<pre>';
         print_r(json_decode($results));
-        echo '<pre>';
+        echo '</pre>';
         
         
         exit();
