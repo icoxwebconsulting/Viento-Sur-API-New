@@ -455,12 +455,12 @@ class HotelController extends Controller {
         {
 
             echo "<pre>";
-            print_r(\GuzzleHttp\json_decode($exception->getRequest()));
+            print_r(json_decode($exception->getRequest()));
             echo "</pre>";
 
 
             echo "<pre>";
-            print_r(\GuzzleHttp\json_decode($exception->getResponse()));
+            print_r($exception->getResponse());
             echo "</pre>";
 
             echo "<pre>";
