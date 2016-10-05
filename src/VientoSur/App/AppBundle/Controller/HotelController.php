@@ -394,9 +394,13 @@ class HotelController extends Controller {
         
         echo 'Post: '. $url_test.'<br/>';
         
-        echo 'Header: '. print_r($header).'<br/>';
+        echo 'Header: <pre>';
+        print_r($header);
+        echo '<pre><br/>';
         
-        echo 'Body: '. print_r(json_decode($postvars)).'<br/>';
+        echo 'Body: <pre>';
+        print_r(json_decode($postvars));
+        echo '<pre><br/>';
         
         
         
@@ -416,7 +420,9 @@ class HotelController extends Controller {
         curl_close($cSession);
         
         // do anything you want with your response
-        echo 'Response:' .print_r(json_decode($results));
+        echo 'Response:<pre>';
+        print_r(json_decode($results));
+        echo '<pre>';
         
         
         exit();
