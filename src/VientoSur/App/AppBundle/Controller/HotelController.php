@@ -381,7 +381,7 @@ class HotelController extends Controller {
         $params["expiration_year"] = "2030";
         $params["security_code"] = "123";
         $params["bank"] = "Some bank";
-        $params["seconds_to_live"] = "600";
+//        $params["seconds_to_live"] = "600";
         $params["holder_name"] = "John Teken";
         $tokenizeKey = $request->get('tokenize_key');
 
