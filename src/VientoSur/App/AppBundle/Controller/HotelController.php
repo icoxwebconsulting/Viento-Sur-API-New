@@ -381,7 +381,7 @@ class HotelController extends Controller {
         $params["expiration_year"] = "2030";
         $params["security_code"] = "123";
         $params["bank"] = "Some bank";
-//        $params["seconds_to_live"] = "600";
+        $params["seconds_to_live"] = "600";
         $params["holder_name"] = "John Teken";
         $tokenizeKey = $request->get('tokenize_key');
 
@@ -415,7 +415,7 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, array($params));
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
