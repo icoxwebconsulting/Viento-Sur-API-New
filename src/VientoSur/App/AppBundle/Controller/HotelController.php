@@ -386,7 +386,7 @@ class HotelController extends Controller {
         $tokenizeKey = $request->get('tokenize_key');
 
         $header = [
-                'Content-Type: application/json; charset=UTF-8',
+                'Content-Type: application/json',
                 'X-Tokenize-Key: '.$tokenizeKey,
                 'X-Client: 2864680fe4d74241aa613874fa20705f',
                 'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
@@ -415,7 +415,7 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, array('{
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, '{
   "brand_code":"VI",
   "number": "4111111111111111",
   "expiration_month":"12",
@@ -424,7 +424,7 @@ class HotelController extends Controller {
   "bank":"Some bank",
   "seconds_to_live":"600",
   "holder_name":"John Teken"
-}'));
+}');
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
