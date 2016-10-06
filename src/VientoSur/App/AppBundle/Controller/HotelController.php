@@ -425,11 +425,11 @@ class HotelController extends Controller {
   "seconds_to_live":"600",
   "holder_name":"John Teken"
 }'));
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_FAILONERROR, true);
         curl_setopt($cSession, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($cSession, CURLOPT_SSL_VERIFYPEER, false);   
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         //step3
         $results = curl_exec($cSession);
         //step4
