@@ -386,10 +386,10 @@ class HotelController extends Controller {
         $tokenizeKey = $request->get('tokenize_key');
 
         $header = [
-                'Content-Type' => 'application/json; charset=UTF-8',
-                'X-Tokenize-Key' => $tokenizeKey,
-                'X-Client' => "2864680fe4d74241aa613874fa20705f",
-                'X-ApiKey' => "a70a590e54044cea93728f6abc2aa037"
+                'Content-Type: application/json; charset=UTF-8',
+                'X-Tokenize-Key: '.$tokenizeKey,
+                'X-Client: 2864680fe4d74241aa613874fa20705f',
+                'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
             ];
 
 
@@ -425,11 +425,9 @@ class HotelController extends Controller {
   "seconds_to_live":"600",
   "holder_name":"John Teken"
 }'));
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($cSession, CURLOPT_FAILONERROR, true);
-        curl_setopt($cSession, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($cSession, CURLOPT_SSL_VERIFYPEER, false);   
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
         //step4
