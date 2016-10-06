@@ -356,7 +356,7 @@ class HotelController extends Controller {
             'Content-Type: application/json',
             'X-Tokenize-Key: '.$tokenizeKey,
             'X-Client: 2864680fe4d74241aa613874fa20705f',
-            'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
+            'X-ApiKey: 2864680fe4d74241aa613874fa20705f'
         ];
 
         //step1
@@ -425,7 +425,7 @@ class HotelController extends Controller {
                     'Content-Type: application/json',
                     'X-Tokenize-Key: '.$tokenizeKey,
                     'X-Client: 2864680fe4d74241aa613874fa20705f',
-                    'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
+                    'X-ApiKey: 2864680fe4d74241aa613874fa20705f'
                 ];
 
                 //step1
@@ -527,9 +527,6 @@ class HotelController extends Controller {
 //            echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
 //            echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-
-
-
             echo $email = $request->get('hotelInputDefinition.contactDefinition.email.value');
             echo $emailConfirm = $request->get('hotelInputDefinition.contactDefinition.email.value');
             echo $phoneType = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].type.value');
@@ -537,36 +534,83 @@ class HotelController extends Controller {
             echo $countryCode = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].areaCode.valu');
             echo $phoneNumber = $request->get('otelInputDefinition.contactDefinition.phoneDefinitions[0].number.value');
 
-            $arrayData = array("source" => array(
-                "payment_method_choice" => "1"),
+
+            $arrayData = array(
+                "payment_method_choice" => "1",
                 "form" => array(
-                    "passengers" => array(
-                        "first_name" => "Felipe",
-                        "last_name" => "viñoles",
-                        "room_reference" => "1",
-                    ),
-                    "payment" => array(
-                        "credit_card" => "1",
-                        "number" => "254232323",
-                        "expiration" => "01/2015",
-                    ),
-                    "contact" => array(
-                        "email" => "agustin.vicenteARROBAgmail.com",
-                        "payment_option_choice" => "CREDIT_VI_null"
-                    ),
+                   "passengers" => array(
+                         "first_name" => "Test",
+                        "last_name" => "Booking"
+                     )
                 ),
-                "keys" => array(
-                    //"availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"820350c2-e64a-4a45-83c2-dae3b72236d2
-                    "availability_token" => "d911467c-4fd0-432e-ba2c-c949d4f15e99"
+                "payment" => array(
+                    "credit_card" => array(
+                        "number" => "4242424242424242",
+                        "expiration" => "2020-12",
+                        "security_code" => "123",
+                        "owner_name" => "Test Booking",
+                        "owner_document" => array(
+                            "type" => "LOCAL",
+                           "number" => "12345678"
+                        ),
+                        "card_code" => "VI",
+                        "card_type" => "CREDIT"
+                     ),
+                     "billing_address" => array(
+                         "country" => "AR",
+                         "state" => "Buenos Aires",
+                         "city" => "BUE",
+                         "street" => "Calle Falsa",
+                         "number" => "123",
+                         "floor" => "1",
+                         "department" => "G",
+                         "postal_code" => "1234"
+                    ),
+                   "contact" => array(
+                       "email" => "testhoteles@despegar.com",
+                        "phones" => array(
+                            "type" => "CELULAR",
+                           "number" => "12345678",
+                           "country_code" => "54",
+                           "area_code" => "11"
+                        )
+                   )
                 ),
                 "secure_token_information" => array(
                     'secure_token' => $response->secure_token
                 )
             );
 
+
+//            $arrayData = array("source" => array(
+//                "payment_method_choice" => "1"),
+//                "form" => array(
+//                    "passengers" => array(
+//                        "first_name" => "Felipe",
+//                        "last_name" => "viñoles",
+//                        "room_reference" => "1",
+//                    ),
+//                    "payment" => array(
+//                        "credit_card" => array(
+//                            "number" => "254232323",
+//                            "expiration" => "01/2018",
+//                            "owner_name" => "Test Booking"
+//                        )
+//                    ),
+//                    "contact" => array(
+//                        "email" => "agustin.vicenteARROBAgmail.com",
+//                        "payment_option_choice" => "CREDIT_VI_null"
+//                    ),
+//                ),
+//                "keys" => array(
+//                    //"availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"820350c2-e64a-4a45-83c2-dae3b72236d2
+//                    "availability_token" => "d911467c-4fd0-432e-ba2c-c949d4f15e99"
+//                ),
+//
+//            );
+
             $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
             var_dump($response);
-            print_r("poder");
         }
 
         return array();
@@ -633,26 +677,35 @@ class HotelController extends Controller {
     }
 
 
-    private function cUrlExecPatchBookingAction($postvars, $url) {
+    private function cUrlExecPatchBookingAction($params, $url) {
 
-        //step1
-        $postvars = json_encode($postvars);
+        echo "<pre>";
+        print_r($params);
+        echo "</pre>";
+
+        $header = [
+            'Content-Type: application/json',
+            'X-Client: 2864680fe4d74241aa613874fa20705f',
+            'X-ApiKey: 2864680fe4d74241aa613874fa20705f'
+        ];
+
         $cSession = curl_init();
+        $params = json_encode($params);
         curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_CUSTOMREQUEST, 'PATCH');
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, $postvars);
+        curl_setopt($cSession, CURLOPT_POST, true);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f',
-                'Content-Type: application/json'
-            )
-        );
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
-                
+        $httpCode = curl_getinfo($cSession, CURLINFO_HTTP_CODE);
+        $results = json_decode($results);
         //step4
         curl_close($cSession);
-
+        print_r($results);
+        die('listo');
+        // do anything you want with your response
         return $results;
     }
 
