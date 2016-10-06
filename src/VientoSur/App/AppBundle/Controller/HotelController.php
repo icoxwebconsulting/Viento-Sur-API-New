@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -337,43 +338,9 @@ class HotelController extends Controller {
         );
     }
 
-    /**
-     * Lists all Company entities.
-     *
-     * @Route("/booking/hotel/pay", name="viento_sur_app_pay_hotel_booking")
-     * @Method("POST")
-     * @Template()
-     */
-    public function payHotelBookingAction(Request $request) {
-
-        //Q1JFRElUX0NBUkQtNQ
-        $session = $request->getSession();
-        //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
-        $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
-        //echo "responsables";
-        //echo "<br>";
-        if ($request->get('passengers') == 1) {
-            $passengerDefinitionsFirstName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].firstName.value');
-            $passengerDefinitionsLastName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].lastName.value');
-            $passengerDefinitionsDni1 = $request->get('hotelInputDefinition.passengerDefinitions[0].roomId.value');
-        } elseif ($request->get('passengers') == 2) {
-            echo $passengerDefinitionsFirstName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].firstName.value');
-            echo $passengerDefinitionsLastName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].lastName.value');
-            echo $passengerDefinitionsDni1 = $request->get('hotelInputDefinition.passengerDefinitions[0].roomId.value');
-            echo $passengerDefinitionsFirstName2 = $request->get('hotelInputDefinition.passengerDefinitions[1].firstName.value');
-            echo $passengerDefinitionsLastName2 = $request->get('hotelInputDefinition.passengerDefinitions[1].lastName.value');
-            echo $passengerDefinitionsDni2 = $request->get('hotelInputDefinition.passengerDefinitions[1].roomId.value');
-        }
-
-        //creditcard
-        //echo "carta";
-        //echo "<br>";
-        echo $number = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.number.value');
-        echo $expiration = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.expiration.value');
-        echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
-        echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
-
-        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
+    private function dVaultValidation($tokenizeKey, $param)
+    {
+        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
 
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
@@ -383,29 +350,27 @@ class HotelController extends Controller {
         $params["bank"] = "Some bank";
         $params["seconds_to_live"] = "600";
         $params["holder_name"] = "John Teken";
-        $tokenizeKey = $request->get('tokenize_key');
+        $tokenizeKey = $tokenizeKey;
 
         $header = [
-                'Content-Type: application/json',
-                'X-Tokenize-Key: '.$tokenizeKey,
-                'X-Client: 2864680fe4d74241aa613874fa20705f',
-                'X-ApiKey: 2864680fe4d74241aa613874fa20705f'
-            ];
-
-
+            'Content-Type: application/json',
+            'X-Tokenize-Key: '.$tokenizeKey,
+            'X-Client: 2864680fe4d74241aa613874fa20705f',
+            'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
+        ];
 
         //step1
         $params = json_encode($params);
 
-        echo 'Post: '. $url_test.'<br/>';
-
-        echo 'Header: <pre>';
-        print_r(json_encode($header));
-        echo '</pre><br/>';
-
-        echo 'Body: <pre>';
-        print_r(json_encode($params));
-        echo '</pre><br/>';
+//        echo 'Post: '. $url_test.'<br/>';
+//
+//        echo 'Header: <pre>';
+//        print_r(json_encode($header));
+//        echo '</pre><br/>';
+//
+//        echo 'Body: <pre>';
+//        print_r(json_encode($params));
+//        echo '</pre><br/>';
 
 
 
@@ -421,102 +386,189 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
+        $httpCode = curl_getinfo($cSession, CURLINFO_HTTP_CODE);
+
+
         //step4
         curl_close($cSession);
 
         // do anything you want with your response
-        echo 'Response:<pre>';
-        print_r(json_decode($results));
-        echo '</pre>';
+        if($httpCode == 204)
+            return true;
+        else
+            return false;
+
+    }
 
 
-        exit();
-        
-        $client = $this->get("guzzle.client.api_vault");
 
-        $params["brand_code"] = "VI";
-        $params["number"] = "4111111111111111";
+    private function dVault($tokenizeKey, $params)
+    {
+        try{
+            $response = $this->dVaultValidation($tokenizeKey, $params);
+
+            if($response)
+            {
+                $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
+
+                $params["brand_code"] = "VI";
+                $params["number"] = "4111111111111111";
+                $params["expiration_month"] = "12";
+                $params["expiration_year"] = "2030";
+                $params["security_code"] = "123";
+                $params["bank"] = "Some bank";
+                $params["seconds_to_live"] = "600";
+                $params["holder_name"] = "John Teken";
+                $tokenizeKey = $tokenizeKey;
+
+                $header = [
+                    'Content-Type: application/json',
+                    'X-Tokenize-Key: '.$tokenizeKey,
+                    'X-Client: 2864680fe4d74241aa613874fa20705f',
+                    'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
+                ];
+
+                //step1
+                $params = json_encode($params);
+
+//        echo 'Post: '. $url_test.'<br/>';
+//
+//        echo 'Header: <pre>';
+//        print_r(json_encode($header));
+//        echo '</pre><br/>';
+//
+//        echo 'Body: <pre>';
+//        print_r(json_encode($params));
+//        echo '</pre><br/>';
+
+
+
+                //echo $postvars;
+                //exit();
+
+                $cSession = curl_init();
+                curl_setopt($cSession, CURLOPT_URL, $url_test);
+                curl_setopt($cSession, CURLOPT_POST, true);
+                curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
+                curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+                curl_setopt($cSession, CURLOPT_HEADER, false);
+                //step3
+                $results = curl_exec($cSession);
+                //step4
+                curl_close($cSession);
+
+                // do anything you want with your response
+                return json_decode($results);
+            }
+
+        }catch(Exception $exception)
+        {
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Lists all Company entities.
+     *
+     * @Route("/booking/hotel/pay", name="viento_sur_app_pay_hotel_booking")
+     * @Method("POST")
+     * @Template()
+     */
+    public function payHotelBookingAction(Request $request)
+    {
+
+        //echo "<br>";
+        echo $number = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.number.value');
+        echo $expiration = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.expiration.value');
+        echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
+        echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
+        $params = array();
+
+        $params["number"] = $number;
         $params["expiration_month"] = "12";
         $params["expiration_year"] = "2030";
-        $params["security_code"] = "123";
-        $params["bank"] = "*";
-        $params["holder_name"] = "John Teken";
-        $tokenizeKey = $request->get('tokenize_key');
+        $params["security_code"] = $secureCode;
+        $params["bank"] = "Some bank";
+        $params["seconds_to_live"] = "600";
+        $params["holder_name"] = $ownerName;
+        $response = $this->dVault($request->get('tokenize_key'), $params);
 
-        try{
-            $request = $client->post('pbdyy/validation', [
-                'headers' => [
-                    'Content-Type' => "application/json; charset=UTF-8",
-                    'X-Tokenize-key'=>$tokenizeKey,
-                    'X-Client' => "2864680fe4d74241aa613874fa20705f",
-                    'X-ApiKey' => "a70a590e54044cea93728f6abc2aa037"
-                ],
-                'form_params' => $params
-            ]);
-        }catch (ClientException $exception)
+
+        if(isset($response->secure_token))
         {
-            echo "<pre>";
-            print_r($exception->getRequest());
-            echo "</pre>";
-            die('exit');
 
-            // Print out the headers.
-//            foreach ($request->getHeaders() as $name => $values) {
-//                echo $name . ': ' . implode(', ', $values) . "\r\n";
-//            }
-//            // Get the request body.
-//            $body = $request->getBody();
-//            print_r($body);
+            //Q1JFRElUX0NBUkQtNQ
+            $session = $request->getSession();
+            //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
+            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
+            //echo "responsables";
+            //echo "<br>";
+            if ($request->get('passengers') == 1) {
+                $passengerDefinitionsFirstName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].firstName.value');
+                $passengerDefinitionsLastName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].lastName.value');
+                $passengerDefinitionsDni1 = $request->get('hotelInputDefinition.passengerDefinitions[0].roomId.value');
+            } elseif ($request->get('passengers') == 2) {
+                echo $passengerDefinitionsFirstName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].firstName.value');
+                echo $passengerDefinitionsLastName1 = $request->get('hotelInputDefinition.passengerDefinitions[0].lastName.value');
+                echo $passengerDefinitionsDni1 = $request->get('hotelInputDefinition.passengerDefinitions[0].roomId.value');
+                echo $passengerDefinitionsFirstName2 = $request->get('hotelInputDefinition.passengerDefinitions[1].firstName.value');
+                echo $passengerDefinitionsLastName2 = $request->get('hotelInputDefinition.passengerDefinitions[1].lastName.value');
+                echo $passengerDefinitionsDni2 = $request->get('hotelInputDefinition.passengerDefinitions[1].roomId.value');
+            }
 
-        }
+            //creditcard
+            //echo "carta";
+//            //echo "<br>";
+//            echo $number = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.number.value');
+//            echo $expiration = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.expiration.value');
+//            echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
+//            echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
 
 
 
-        if ($request->getStatusCode() == 200) {
-            $request->getBody()->rewind();
-            $response = json_decode($request->getBody()->getContents(), true);
+            echo $email = $request->get('hotelInputDefinition.contactDefinition.email.value');
+            echo $emailConfirm = $request->get('hotelInputDefinition.contactDefinition.email.value');
+            echo $phoneType = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].type.value');
+            echo $country = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].countryCode.value');
+            echo $countryCode = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].areaCode.valu');
+            echo $phoneNumber = $request->get('otelInputDefinition.contactDefinition.phoneDefinitions[0].number.value');
 
-            print_r($response);
-            die('response');
-        }
-
-        //contact
-        //echo "contacto";
-        //echo "<br>";
-        echo $email = $request->get('hotelInputDefinition.contactDefinition.email.value');
-        echo $emailConfirm = $request->get('hotelInputDefinition.contactDefinition.email.value');
-        echo $phoneType = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].type.value');
-        echo $country = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].countryCode.value');
-        echo $countryCode = $request->get('hotelInputDefinition.contactDefinition.phoneDefinitions[0].areaCode.valu');
-        echo $phoneNumber = $request->get('otelInputDefinition.contactDefinition.phoneDefinitions[0].number.value');
-
-        $arrayData = array("source" => array(
+            $arrayData = array("source" => array(
                 "payment_method_choice" => "1"),
-            "form" => array(
-                "passengers" => array(
-                    "first_name" => "Felipe",
-                    "last_name" => "viñoles",
-                    "room_reference" => "1",
+                "form" => array(
+                    "passengers" => array(
+                        "first_name" => "Felipe",
+                        "last_name" => "viñoles",
+                        "room_reference" => "1",
+                    ),
+                    "payment" => array(
+                        "credit_card" => "1",
+                        "number" => "254232323",
+                        "expiration" => "01/2015",
+                    ),
+                    "contact" => array(
+                        "email" => "agustin.vicenteARROBAgmail.com",
+                        "payment_option_choice" => "CREDIT_VI_null"
+                    ),
                 ),
-                "payment" => array(
-                    "credit_card" => "1",
-                    "number" => "254232323",
-                    "expiration" => "01/2015",
+                "keys" => array(
+                    //"availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"820350c2-e64a-4a45-83c2-dae3b72236d2
+                    "availability_token" => "d911467c-4fd0-432e-ba2c-c949d4f15e99"
                 ),
-                "contact" => array(
-                    "email" => "agustin.vicenteARROBAgmail.com",
-                     "payment_option_choice" => "CREDIT_VI_null"
-                ),
-            ),
-            "keys" => array(
-                //"availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"820350c2-e64a-4a45-83c2-dae3b72236d2
-                "availability_token" => "d911467c-4fd0-432e-ba2c-c949d4f15e99"
-            )
-        );
+                "secure_token_information" => array(
+                    'secure_token' => $response->secure_token
+                )
+            );
 
-        $response = $this->cUrlExecPostBookingAction($arrayData, $url);
-       // var_dump($response);
+            $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
+            var_dump($response);
+            print_r("poder");
+        }
+
         return array();
     }
 
@@ -574,6 +626,30 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
+        //step4
+        curl_close($cSession);
+
+        return $results;
+    }
+
+
+    private function cUrlExecPatchBookingAction($postvars, $url) {
+
+        //step1
+        $postvars = json_encode($postvars);
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $postvars);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f',
+                'Content-Type: application/json'
+            )
+        );
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        //step3
+        $results = curl_exec($cSession);
+                
         //step4
         curl_close($cSession);
 
