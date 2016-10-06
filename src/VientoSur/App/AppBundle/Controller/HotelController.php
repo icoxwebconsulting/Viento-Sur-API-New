@@ -415,16 +415,7 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, '{
-  "brand_code":"VI",
-  "number": "4111111111111111",
-  "expiration_month":"12",
-  "expiration_year":"2030",
-  "security_code":"123",
-  "bank":"Some bank",
-  "seconds_to_live":"600",
-  "holder_name":"John Teken"
-}');
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
