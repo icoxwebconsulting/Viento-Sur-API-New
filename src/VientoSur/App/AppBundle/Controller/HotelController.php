@@ -428,8 +428,6 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_FAILONERROR, true);
-        curl_setopt($cSession, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($cSession, CURLOPT_SSL_VERIFYPEER, false);   
         //step3
