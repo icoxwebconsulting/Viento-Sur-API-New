@@ -449,7 +449,7 @@ class HotelController extends Controller {
                     'Content-Type' => "application/json; charset=UTF-8",
                     'X-Tokenize-key'=>$tokenizeKey,
                     'X-Client' => "2864680fe4d74241aa613874fa20705f",
-                    'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
+                    'X-ApiKey' => "a70a590e54044cea93728f6abc2aa037"
                 ],
                 'form_params' => $params
             ]);
