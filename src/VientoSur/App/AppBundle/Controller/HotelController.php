@@ -373,7 +373,7 @@ class HotelController extends Controller {
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
+        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
 
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
@@ -386,7 +386,7 @@ class HotelController extends Controller {
         $tokenizeKey = $request->get('tokenize_key');
 
         $header = [
-                'Content-Type' => 'application/json',
+                'Content-Type' => 'application/json; charset=UTF-8',
                 'X-Tokenize-Key' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
                 'X-ApiKey' => "a70a590e54044cea93728f6abc2aa037"
@@ -415,7 +415,16 @@ class HotelController extends Controller {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, array($params));
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, array('{
+  "brand_code":"VI",
+  "number": "4111111111111111",
+  "expiration_month":"12",
+  "expiration_year":"2030",
+  "security_code":"123",
+  "bank":"Some bank",
+  "seconds_to_live":"600",
+  "holder_name":"John Teken"
+}'));
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
@@ -426,7 +435,7 @@ class HotelController extends Controller {
 
         // do anything you want with your response
         echo 'Response:<pre>';
-        print_r($results);
+        print_r(json_decode($results));
         echo '</pre>';
 
 
