@@ -389,7 +389,7 @@ class HotelController extends Controller {
                 'Content-Type: application/json',
                 'X-Tokenize-Key: '.$tokenizeKey,
                 'X-Client: 2864680fe4d74241aa613874fa20705f',
-                'X-ApiKey: a70a590e54044cea93728f6abc2aa037'
+                'X-ApiKey: 2864680fe4d74241aa613874fa20705f'
             ];
 
 
