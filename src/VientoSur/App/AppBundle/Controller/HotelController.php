@@ -373,7 +373,7 @@ class HotelController extends Controller {
         echo $secureCode = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.securityCode.value');
         echo $ownerName = $request->get('hotelInputDefinition.paymentDefinition.cardDefinition.ownerName.value');
 
-        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
+        $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
 
         $params["brand_code"] = "VI";
         $params["number"] = "4111111111111111";
@@ -389,7 +389,7 @@ class HotelController extends Controller {
                 'Content-Type' => 'application/json',
                 'X-Tokenize-Key' => $tokenizeKey,
                 'X-Client' => "2864680fe4d74241aa613874fa20705f",
-                'X-ApiKey' => "2864680fe4d74241aa613874fa20705f"
+                'X-ApiKey' => "a70a590e54044cea93728f6abc2aa037"
             ];
 
 
