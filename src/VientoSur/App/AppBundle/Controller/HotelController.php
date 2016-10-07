@@ -612,7 +612,7 @@ class HotelController extends Controller {
 //            );
 
             
-            $response = $this->cUrlExecPatchBookingAction(json_encode($arrayData), $url);
+            $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
             var_dump($response);
         }
 
@@ -690,18 +690,26 @@ class HotelController extends Controller {
 
         $cSession = curl_init();
         $params = json_encode($params);
+        
+        echo $url.'<br>';
+        echo $params;
+        exit();
+        
+        
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_POST, true);
         curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
+        curl_getinfo($cSession, CURLINFO_HTTP_CODE);
         //step3
         $results = curl_exec($cSession);
-        $httpCode = curl_getinfo($cSession, CURLINFO_HTTP_CODE);
+        
         $results = json_decode($results);
         //step4
         curl_close($cSession);
+        
         print_r($results);
         die('listo');
         // do anything you want with your response
