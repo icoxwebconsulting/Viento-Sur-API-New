@@ -610,6 +610,14 @@ class HotelController extends Controller {
 //
 //            );
 
+            echo $url.'<br/><pre>';
+            
+            print_r($arrayData);
+            
+            echo '<pre>';
+            
+            exit();
+            
             $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
             var_dump($response);
         }
