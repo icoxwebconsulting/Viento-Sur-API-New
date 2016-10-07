@@ -685,13 +685,13 @@ class HotelController extends Controller {
         $header = [
             'Content-Type: application/json',
             'X-Client: 2864680fe4d74241aa613874fa20705f',
-            'X-ApiKey: 2864680fe4d74241aa613874fa20705f'
+            'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
+            'X-HTTP-Method-Override: PATCH'
         ];
 
+        $cSession = curl_init();
         $params = json_encode($params);
         
-        
-        $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_POST, true);
         curl_setopt($cSession, CURLOPT_POSTFIELDS, '{"payment_method_choice":"1",
@@ -730,18 +730,17 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
+        curl_getinfo($cSession, CURLINFO_HTTP_CODE);
         //step3
         $results = curl_exec($cSession);
+        
+        $results = json_decode($results);
         //step4
         curl_close($cSession);
         
-        $results_test = json_decode($results);
-        
-        
-        print_r($results_test);
+        print_r($results);
         die('listo');
-        
-        
+        // do anything you want with your response
         return $results;
     }
 
