@@ -502,7 +502,7 @@ class HotelController extends Controller {
 
             //Q1JFRElUX0NBUkQtNQ
             $session = $request->getSession();
-            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==?example=true";
+            $url = "https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==?example=true";
             //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
 //            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
             //$url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8Mg%3D%3D?example=true";
@@ -688,10 +688,11 @@ class HotelController extends Controller {
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
             'X-HTTP-Method-Override: PATCH'
         ];
-
-        $cSession = curl_init();
+        
         $params = json_encode($params);
         
+        
+        $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_POST, true);
         curl_setopt($cSession, CURLOPT_POSTFIELDS, '{"payment_method_choice":"1",
@@ -730,14 +731,11 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
-        curl_getinfo($cSession, CURLINFO_HTTP_CODE);
         //step3
         $results = curl_exec($cSession);
-        
-        $results = json_decode($results);
         //step4
         curl_close($cSession);
-        
+
         print_r($results);
         die('listo');
         // do anything you want with your response
