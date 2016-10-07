@@ -502,7 +502,7 @@ class HotelController extends Controller {
 
             //Q1JFRElUX0NBUkQtNQ
             $session = $request->getSession();
-            $url = "https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==?example=true";
+            $url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8MQ==?example=true";
             //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
 //            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
             //$url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8Mg%3D%3D?example=true";
@@ -686,16 +686,10 @@ class HotelController extends Controller {
             'Content-Type: application/json',
             'X-Client: 2864680fe4d74241aa613874fa20705f',
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
-            'X-HTTP-Method-Override: PATCH'
         ];
         
-        $params = json_encode($params);
-        
-        
-        $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, '{"payment_method_choice":"1",
+        //$params = json_encode($params);
+        $params = '{"payment_method_choice":"1",
 	"form":{
 		"passengers":[{"first_name":"Test","last_name":"Booking"}],
 		"payment":
@@ -727,12 +721,20 @@ class HotelController extends Controller {
 	       }
 },"secure_token_information":{"secure_token":
 "3a0c6602f63fcef58b16611510de3574d349c336c92020672fc09dca90b3010104423f05452a57ae73dee0427072975e58dd424458be3ae7de0f6c20e8c6b163f73549"}
-}');
+}';
+        echo $url.'<br/>';
+        
+        echo $params.'<br/>';
+        
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
-        $results = curl_exec($cSession);
+        $results = json_decode(curl_exec($cSession));
         //step4
         curl_close($cSession);
 
