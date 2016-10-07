@@ -502,9 +502,10 @@ class HotelController extends Controller {
 
             //Q1JFRElUX0NBUkQtNQ
             $session = $request->getSession();
+            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==?example=true";
             //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
 //            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
-            $url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8Mg%3D%3D?example=true";
+            //$url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8Mg%3D%3D?example=true";
             //echo "responsables";
             //echo "<br>";
             if ($request->get('passengers') == 1) {
@@ -610,15 +611,8 @@ class HotelController extends Controller {
 //
 //            );
 
-            echo $url.'<br/><pre>';
             
-            echo json_encode($arrayData);
-            
-            echo '<pre>';
-            
-            exit();
-            
-            $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
+            $response = $this->cUrlExecPatchBookingAction(json_encode($arrayData), $url);
             var_dump($response);
         }
 
@@ -687,10 +681,6 @@ class HotelController extends Controller {
 
 
     private function cUrlExecPatchBookingAction($params, $url) {
-
-        echo "<pre>";
-        print_r($params);
-        echo "</pre>";
 
         $header = [
             'Content-Type: application/json',
