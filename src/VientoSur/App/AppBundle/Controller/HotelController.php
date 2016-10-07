@@ -618,7 +618,7 @@ class HotelController extends Controller {
 //            );
 
             
-            $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
+            $response = $this->cUrlExecPatchBookingAction($arrayData, $url, $response->secure_token);
             var_dump($response);
         }
 
@@ -716,7 +716,7 @@ class HotelController extends Controller {
     }
 
 
-    private function cUrlExecPatchBookingAction($params, $url) {
+    private function cUrlExecPatchBookingAction($params, $url, $sour_token) {
 
 
         $header = [
@@ -757,7 +757,7 @@ class HotelController extends Controller {
 				    }
 	       }
 },"secure_token_information":{"secure_token":
-"3a0c6602f63fcef58b16611510de3574d349c336c92020672fc09dca90b3010104423f05452a57ae73dee0427072975e58dd424458be3ae7de0f6c20e8c6b163f73549"}
+"'.$sour_token.'"}
 }';
 //        echo $url.'<br/>';
 //
