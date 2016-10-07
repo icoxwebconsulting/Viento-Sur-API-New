@@ -612,7 +612,7 @@ class HotelController extends Controller {
 
             echo $url.'<br/><pre>';
             
-            print_r($arrayData);
+            echo json_encode($arrayData);
             
             echo '<pre>';
             
