@@ -691,14 +691,41 @@ class HotelController extends Controller {
         $cSession = curl_init();
         $params = json_encode($params);
         
-        echo $url.'<br>';
-        echo $params;
-        exit();
-        
-        
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_POST, true);
-        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, '{"payment_method_choice":"1",
+	"form":{
+		"passengers":[{"first_name":"Test","last_name":"Booking"}],
+		"payment":
+			{"credit_card":
+				{"number":"4242424242424242",
+				 "expiration":"2020-12",
+				 "security_code":"123",
+				 "owner_name":"Test Booking",
+				 "owner_document":	
+					 {"type":"LOCAL",
+					  "number":"12345678"
+					 },
+				  "card_code":"VI","card_type":"CREDIT"
+				 },
+				 "billing_address":
+					{"country":"AR",
+					 "state":"Buenos Aires",
+					 "city":"BUE",
+					 "street":"Calle Falsa",
+					 "number":"123",
+					 "floor":"1",
+					 "department":"G",
+					 "postal_code":"1234"
+					}
+			},
+			 "contact":{"email":"testhoteles@despegar.com",
+				    "phones":[{"type":"CELULAR","number":"12345678","country_code":"54","area_code":"11"}]
+				    }
+	       }
+},"secure_token_information":{"secure_token":
+"3a0c6602f63fcef58b16611510de3574d349c336c92020672fc09dca90b3010104423f05452a57ae73dee0427072975e58dd424458be3ae7de0f6c20e8c6b163f73549"}
+}');
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
