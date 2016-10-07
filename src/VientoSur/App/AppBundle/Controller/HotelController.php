@@ -119,6 +119,7 @@ class HotelController extends Controller {
      * @Template()
      */
     public function sendHotelsAvailabilitiesAction($offset, $limit, Request $request) {
+
         //step2
         //echo $request->get('autocomplete');
         //$destination = $request->get('cityInput'); //echo '  '.$destination;
@@ -228,7 +229,6 @@ class HotelController extends Controller {
      * @Template()
      */
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
-
         $url = "https://api.despegar.com/v3/hotels/availabilities/" . $idHotel . $restUrl . "&language=en&currency=USD";
         $itemDispo = $this->cUrlExecAction($url);
         $dispoHotel = json_decode($itemDispo, true); //print_r($dispoHotel['roompacks'][1]['rooms']);die();
@@ -316,6 +316,7 @@ class HotelController extends Controller {
      * @Template()
      */
     public function bookingHotelPayAction(Request $request) {
+
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         //quitar ?example=true para PRODUCCION
@@ -362,8 +363,8 @@ class HotelController extends Controller {
         //step1
         $params = json_encode($params);
 
-//        echo 'Post: '. $url_test.'<br/>';
-//
+       // echo 'Post: '. $url_test.'<br/>';
+
 //        echo 'Header: <pre>';
 //        print_r(json_encode($header));
 //        echo '</pre><br/>';
@@ -371,11 +372,11 @@ class HotelController extends Controller {
 //        echo 'Body: <pre>';
 //        print_r(json_encode($params));
 //        echo '</pre><br/>';
-
-
-
-        //echo $postvars;
-        //exit();
+//
+//
+//
+////        echo $postvars;
+//        exit();
 
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url_test);
@@ -457,6 +458,11 @@ class HotelController extends Controller {
                 $results = curl_exec($cSession);
                 //step4
                 curl_close($cSession);
+
+
+//                echo 'Response: <pre>';
+//                print_r($results);
+//                echo '</pre><br/>';
 
                 // do anything you want with your response
                 return json_decode($results);
@@ -625,6 +631,17 @@ class HotelController extends Controller {
         // api productiva ca8fe17f100646cbbefa4ecddcf51350
         // ca8fe17f100646cbbefa4ecddcf51350
         // api desarrollo 2864680fe4d74241aa613874fa20705f
+
+//                echo 'GET: '. $url.'<br/>';
+//
+//        echo 'Header: <pre>';
+//        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
+//        echo '</pre><br/>';
+//
+//        echo 'Request: <pre>';
+//        print_r(json_encode($url));
+//        echo '</pre><br/>';
+
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url); 
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
@@ -635,6 +652,11 @@ class HotelController extends Controller {
         $results = curl_exec($cSession);
         //step4
         curl_close($cSession);
+
+//        echo 'Response: <pre>';
+//        print_r($results);
+//        echo '</pre><br/>';
+//        die('finish');
 
         return $results;
     }
@@ -659,6 +681,15 @@ class HotelController extends Controller {
 
     private function cUrlExecPostBookingAction($postvars, $url) {
 
+//        echo 'Post: '. $url.'<br/>';
+//        echo 'Header: <pre>';
+//        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
+//        echo '</pre><br/>';
+//
+//        echo 'BODY: <pre>';
+//        print_r(json_encode($postvars));
+//        echo '</pre><br/>';
+
         //step1
         $postvars = json_encode($postvars);
         $cSession = curl_init();
@@ -676,11 +707,17 @@ class HotelController extends Controller {
         //step4
         curl_close($cSession);
 
+//        echo 'Response: <pre>';
+//        print_r($results);
+//        echo '</pre><br/>';
+//        die('finish');
+
         return $results;
     }
 
 
     private function cUrlExecPatchBookingAction($params, $url) {
+
 
         $header = [
             'Content-Type: application/json',
@@ -722,9 +759,18 @@ class HotelController extends Controller {
 },"secure_token_information":{"secure_token":
 "3a0c6602f63fcef58b16611510de3574d349c336c92020672fc09dca90b3010104423f05452a57ae73dee0427072975e58dd424458be3ae7de0f6c20e8c6b163f73549"}
 }';
-        echo $url.'<br/>';
-        
-        echo $params.'<br/>';
+//        echo $url.'<br/>';
+//
+//        echo $params.'<br/>';
+
+        echo 'PATCH: '. $url.'<br/>';
+        echo 'Header: <pre>';
+        print_r(json_encode($header));
+        echo '</pre><br/>';
+
+        echo 'BODY: <pre>';
+        print_r($params);
+        echo '</pre><br/>';
         
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
@@ -734,14 +780,17 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
-        $results = json_decode(curl_exec($cSession));
+        $results = curl_exec($cSession);
         //step4
         curl_close($cSession);
 
+        echo 'Response: <pre>';
         print_r($results);
+        echo '</pre><br/>';
+
         die('listo');
         // do anything you want with your response
-        return $results;
+        return json_decode($results);
     }
 
 }
