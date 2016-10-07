@@ -503,7 +503,8 @@ class HotelController extends Controller {
             //Q1JFRElUX0NBUkQtNQ
             $session = $request->getSession();
             //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
-            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
+//            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
+            $url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8Mg%3D%3D?example=true";
             //echo "responsables";
             //echo "<br>";
             if ($request->get('passengers') == 1) {
