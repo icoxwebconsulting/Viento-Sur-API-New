@@ -172,7 +172,6 @@ class HotelController extends Controller {
         $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
-        //   $url = "https://api.despegar.com/v3/hotels/availabilities?=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&offset=0&classify_roompacks_by=none&roompack_choices=recommended&limit=10";
         $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
@@ -723,14 +722,14 @@ class HotelController extends Controller {
 
     private function cUrlExecPostBookingAction($postvars, $url) {
 
-//        echo 'Post: '. $url.'<br/>';
-//        echo 'Header: <pre>';
-//        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
-//        echo '</pre><br/>';
-//
-//        echo 'BODY: <pre>';
-//        print_r(json_encode($postvars));
-//        echo '</pre><br/>';
+        echo 'Post: '. $url.'<br/>';
+        echo 'Header: <pre>';
+        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
+        echo '</pre><br/>';
+
+        echo 'BODY: <pre>';
+        print_r(json_encode($postvars));
+        echo '</pre><br/>';
 
         //step1
         $postvars = json_encode($postvars);
@@ -749,10 +748,10 @@ class HotelController extends Controller {
         //step4
         curl_close($cSession);
 
-//        echo 'Response: <pre>';
-//        print_r($results);
-//        echo '</pre><br/>';
-//        die('finish');
+        echo 'Response: <pre>';
+        print_r($results);
+        echo '</pre><br/>';
+        die('finish');
 
         return $results;
     }
