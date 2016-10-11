@@ -321,24 +321,32 @@ class HotelController extends Controller {
         //quitar ?example=true para PRODUCCION
         $bookingId = $request->query->get('formUrl');
         $url = "https://api.despegar.com" . $bookingId ."?example=true";
+        $expiration_years = [];
 
+        $expiration_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        
+        $year = date('y');
+        $new_year = strtotime ( '+10 year' , strtotime ( $year ) ) ;
+        $new_y_10 = date ( 'Y' , $new_year );
+        
+        foreach (range($year, $new_y_10) as $y) {
+            $array_years[$y]= $y;
+        }
+
+        
+        
         $this->get('session')->set('booking-id', $bookingId);
 
         $sessionForm = $request->getSession();
         $sessionForm->set('url_detail_form', $url);
         $formResponse = $this->cUrlExecAction($url);
         $formBooking = json_decode($formResponse, true);
-
-        //print_r($priceDetail); die();
-
-//        echo "<pre>";
-//        print_r($formBooking);
-//        echo "</pre>";
-//        die();
-
+        
         return array(
-            'formBooking' => $formBooking,
-            'price_detail' => $priceDetail
+            'formBooking'      => $formBooking,
+            'price_detail'     => $priceDetail,
+            'expiration_years' => $expiration_years,
+            'expiration_month' => $expiration_month,
         );
     }
 
@@ -627,7 +635,7 @@ class HotelController extends Controller {
 
             $arrayData = '{"payment_method_choice":"1",
             "form":{
-                "passengers":[{"first_name":"Test","last_name":"Booking", "document_number": "123456789"}],
+                "passengers":[{"first_name":"Test","last_name":"Booking", "document_number": "29742594"}],
                 "payment":
                     {"credit_card":
                         {"number":"4242424242424242",
