@@ -32,13 +32,19 @@
 
                     {%for passenger in formBooking.dictionary.form_choices[1].passengers%}
                         <div class="row">
-                            <div class="col-md-12"><div class="form-group form-group-lg"><label class="room-label roomLabel">Habitación: {{loop.index}}</label></div></div>
+                            <div class="col-md-12">
+                                <div class="form-group form-group-lg">
+                                    <label class="room-label roomLabel">
+                                        Habitación: {{loop.index}}
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group form-group-lg">
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control" name="{{passenger.first_name.qualified_name}}" value="" placeholder="Como figura en el documento"/>
+                                    {{ formNewPay.first_name_0}}
                                 </div>
                             </div>
                             <div class="col-md-4">
