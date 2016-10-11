@@ -339,17 +339,15 @@ class HotelController extends Controller {
         $formResponse = $this->cUrlExecAction($url);
         $formBooking = json_decode($formResponse, true);
         
-        echo '<pre>';
-        print_r($formBooking);
-        echo '</pre>';
+        $formNewPay = $this->createFormBuilder($formBooking)->getForm();
         
-        exit();
         
         return array(
             'formBooking'      => $formBooking,
             'price_detail'     => $priceDetail,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
+            'formNewPay'       => $formNewPay
         );
     }
 
