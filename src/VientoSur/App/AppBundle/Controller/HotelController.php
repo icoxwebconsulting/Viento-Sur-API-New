@@ -331,10 +331,10 @@ class HotelController extends Controller {
 
         //print_r($priceDetail); die();
 
-//        echo "<pre>";
-//        print_r($formBooking);
-//        echo "</pre>";
-//        die();
+        echo "<pre>";
+        print_r($formBooking);
+        echo "</pre>";
+        die();
 
         return array(
             'formBooking' => $formBooking,
