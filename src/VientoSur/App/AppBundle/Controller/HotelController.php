@@ -14,6 +14,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use VientoSur\App\AppBundle\Controller\DistributionController;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+
 
 /**
  * Company controller.
@@ -342,10 +346,21 @@ class HotelController extends Controller {
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
-            $formNewPay->add("first_name_$k", 'text');
-            $formNewPay->add("last_name_$k", 'text');
-            $formNewPay->add("document_number_$k", 'text');
+            $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'constraints' => array(
+                    new Length(array('min' => 3)),
+            )]);
+            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'constraints' => array(
+                    new Length(array('min' => 3)),
+            )]);
+            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'constraints' => array(
+                    new Length(array('min' => 7)), new Regex(array(
+                'pattern'   => $passengers['document_number']['regex_validations'][2]['regex'],
+                'match'     => true,
+                'message'   => 'Número de Documento no Válido.'
+            )))]);
         }
+        
+        
        
         
         return array(
