@@ -319,13 +319,13 @@ class HotelController extends Controller {
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         //quitar ?example=true para PRODUCCION
-        //$bookingId = $request->query->get('formUrl');
-        //$url = "https://api.despegar.com" . $bookingId ."?example=true";
+        $bookingId = $request->query->get('formUrl');
+        $url = "https://api.despegar.com" . $bookingId ."?example=true";
         $expiration_years[0] = 'Año' ;
 
         $expiration_month = [0=>'Mes', 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
         
-        $year = date('y');
+        $year = date('Y');
         $new_year = strtotime ( '+5 year' , strtotime ( $year ) ) ;
         $new_y_10 = date ( 'Y' , $new_year );
         
