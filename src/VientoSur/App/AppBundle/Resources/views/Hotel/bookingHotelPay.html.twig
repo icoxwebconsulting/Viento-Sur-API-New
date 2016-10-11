@@ -1,7 +1,6 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
 {% block content %}
-    {{ form(formNewPay) }}
     <div class="container">
         <div class="row">
             <div class="gap"></div>
@@ -44,7 +43,7 @@
                             <div class="col-md-4">
                                 <div class="form-group form-group-lg">
                                     <label>Nombre</label>
-                                    {{ form_widget(formNewPay.first_name_0) }}
+                                    {{ form_row(formNewPay.first_name_0) }}
                                 </div>
                             </div>
                             <div class="col-md-4">
