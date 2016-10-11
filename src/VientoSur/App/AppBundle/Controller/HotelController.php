@@ -330,11 +330,9 @@ class HotelController extends Controller {
         $new_y_10 = date ( 'Y' , $new_year );
         
         foreach (range($year, $new_y_10) as $y) {
-            $array_years[$y]= $y;
+            $expiration_years[$y]= $y;
         }
 
-        
-        
         $this->get('session')->set('booking-id', $bookingId);
 
         $sessionForm = $request->getSession();
