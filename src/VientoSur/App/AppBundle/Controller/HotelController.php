@@ -326,8 +326,8 @@ class HotelController extends Controller {
         $expiration_month = [0=>'Mes', 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
         
         $year = date('y');
-        $new_year = strtotime ( '+10 year' , strtotime ( $year ) ) ;
-        $new_y_10 = date ( 'Y' , $new_year );
+        $new_year = strtotime ( '+5 year' , strtotime ( $year ) ) ;
+        $new_y_10 = date ( 'YYYY' , $new_year );
         
         foreach (range($year, $new_y_10) as $y) {
             $expiration_years[$y]= $y;
