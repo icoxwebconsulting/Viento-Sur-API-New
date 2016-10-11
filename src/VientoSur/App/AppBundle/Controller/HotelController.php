@@ -346,7 +346,7 @@ class HotelController extends Controller {
             $formNewPay->add("last_name_$k", 'text');
             $formNewPay->add("document_number_$k", 'text');
         }
-        exit();
+       
         
         return array(
             'formBooking'      => $formBooking,
