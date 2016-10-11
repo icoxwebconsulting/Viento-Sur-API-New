@@ -338,6 +338,8 @@ class HotelController extends Controller {
 
         $array_card_brand = ['VI'=>'Visa', 'CA'=>'MasterCard', 'AX'=>'American Express', 'DC'=>'Diners Club', 'CL'=>'Cabal', 'TN'=>'Tarjeta Naranja', 'NV'=>'Tarjeta Nevada'];
         
+        $phone_option     = ['CELULAR'=>'Celular', 'HOME'=>'Casa', 'WORK'=>'Trabajo', 'FAX'=>'Fax', 'OTHER'=>'Otro'];
+        
         $this->get('session')->set('booking-id', $bookingId);
 
         $sessionForm = $request->getSession();
@@ -348,13 +350,13 @@ class HotelController extends Controller {
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
-            $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'constraints' => array(
+            $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'constraints' => array(
+            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'constraints' => array(
+            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
                 'pattern'   => $passengers['document_number']['regex_validations'][2]['regex'],
                 'match'     => true,
@@ -362,34 +364,29 @@ class HotelController extends Controller {
             )))]);
         }
         
-        $formNewPay->add("credit_card_card_brand", 'choice',['label' => 'Tarjeta','required' => TRUE, 'choices'=>$array_card_brand]);
+        $formNewPay->add("credit_card_card_brand", 'choice',['label' => 'Tarjeta','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'choices'=>$array_card_brand]);
         
-        $formNewPay->add("credit_card_number", 'text',['label' => 'Número','required' => TRUE, 'constraints' => array(
+        $formNewPay->add("credit_card_number", 'text',['label' => 'Número','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
                     new Length(array('min' => 6)))]);
         
-        $formNewPay->add("credit_card_expiration_month", 'choice',['label' => '','required' => TRUE, 'choices'=>$expiration_month, 'placeholder' => 'Mes']);
-        $formNewPay->add("credit_card_expiration_year", 'choice',['label' => '','required' => TRUE, 'choices'=>$expiration_years, 'placeholder' => 'Año']);
+        $formNewPay->add("credit_card_expiration_month", 'choice',['label' => '','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'choices'=>$expiration_month, 'placeholder' => 'Mes']);
+        $formNewPay->add("credit_card_expiration_year", 'choice',['label' => '','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'choices'=>$expiration_years, 'placeholder' => 'Año']);
         $formNewPay->add("credit_card_security_code", 'text',['label' => 'Código de Seguridad', 'required' => TRUE, 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'constraints' => array(
+        
+        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
                     new Length(array('min' => 2, 'max' => 35)) ,new Regex(array(
                 'pattern'   => '^([a-zA-Z]+\s)+[a-zA-Z]+$',
                 'match'     => true,
                 'message'   => 'Nombre del propietario no válido.'
             )))]);
-        $formNewPay->add("credit_card_owner_document_number",'text',['label' => 'DNI del titular de la tarjeta','required' => TRUE, 'constraints' => array(
+        
+        $formNewPay->add("credit_card_owner_document_number",'text',['label' => 'DNI del titular de la tarjeta','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
                 'pattern'   => '^(?!([0-9])\1*$).*$',
                 'match'     => true,
                 'message'   => 'Número de Documento no Válido.'
-            )))]);
-        
-         $formNewPay->add("contact_email",'text',['label' => 'E-mail (donde recibirá su voucher)','required' => TRUE, 'constraints' => array(
-                    new Length(array('min' => 0, 'max'=>128)), new Regex(array(
-                'pattern'   => '^[\w\.-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,4}$',
-                'match'     => true,
-                'message'   => 'Email Inválido.'
             )))]);
          
          $formNewPay->add('contact_email', 'repeated', array(
@@ -405,6 +402,28 @@ class HotelController extends Controller {
             'message'   => 'Email Inválido.'
             )))));
        
+        $formNewPay->add("contact_phones_options", 'choice',['label' => 'Teléfono','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'choices'=>$phone_option]);
+        
+        $formNewPay->add("contact_phones_country_code", 'text',['label' => 'País','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
+                 new Regex(array(
+                'pattern'   => '^[0-9]{1,3}$',
+                'match'     => true,
+                'message'   => 'Código de país no Válido.'
+            )))]);
+        
+        $formNewPay->add("contact_phones_area_code", 'text',['label' => 'Área','required' => TRUE, 'options' => array('attr' => array('class' => 'form-control')), 'constraints' => array(
+                 new Regex(array(
+                'pattern'   => '^[0-9]{1,4}$',
+                'match'     => true,
+                'message'   => 'Código de Área no Válido.'
+            )))]);
+        
+        $formNewPay->add("contact_phones_number", 'text',['label' => 'Número','required' => TRUE, 'constraints' => array(
+                 new Regex(array(
+                'pattern'   => '^[0-9]{1,4}$',
+                'match'     => true,
+                'message'   => 'Número de Teléfono no Válido.'
+            )))]);
         
         return array(
             'formBooking'      => $formBooking,
