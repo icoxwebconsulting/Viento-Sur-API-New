@@ -76,11 +76,12 @@
                                     {% for month in expiration_month %}
                                         <option value="{{ month }}">{{ month }}</option>
                                     {% endfor %}
-                                </select>   / 
+                                </select> 
                             </div> 
                         </div>
                         <div class="col-md-2">        
-                            <div class="form-group form-group-lg">        
+                            <div class="form-group form-group-lg"> 
+                                <label>&nbsp;</label>
                                 <select type="{{expirationCard.type}}" class="form-control" name="expiration_years" style="width: 100px;">
                                     {% for year in expiration_years %}
                                         <option value="{{ year }}">{{ year }}</option>
