@@ -339,17 +339,11 @@ class HotelController extends Controller {
         $formResponse = $this->cUrlExecAction($url);
         $formBooking = json_decode($formResponse, true);
         
-        if($request->getMethod() == 'POST'){
-            
-            $postData = $request->get('payHotel');
-            
-            echo '<pre>';
-            print_r($postData);
-            echo '</pre>';
-            exit();
-            
-        }
+        echo '<pre>';
+        print_r($formBooking);
+        echo '</pre>';
         
+        exit();
         
         return array(
             'formBooking'      => $formBooking,
