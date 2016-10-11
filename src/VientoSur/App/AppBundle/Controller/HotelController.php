@@ -324,7 +324,7 @@ class HotelController extends Controller {
         //quitar ?example=true para PRODUCCION
         $bookingId = $request->query->get('formUrl');
         $url = "https://api.despegar.com" . $bookingId ."?example=true";
-        $expiration_years[0] = 'Año' ;
+        $expiration_years = [];
 
         $expiration_month = [0=>'Mes', 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
         
@@ -360,6 +360,11 @@ class HotelController extends Controller {
             )))]);
         }
         
+        $formNewPay->add("credit_card_number", 'text',['label' => 'Número','required' => TRUE, 'constraints' => array(
+                    new Length(array('min' => 6)))]);
+        
+        $formNewPay->add("credit_card_expiration_month", 'choice',['required' => TRUE, 'choices'=>$expiration_month, 'placeholder' => 'Mes']);
+        $formNewPay->add("credit_card_expiration_year", 'choice',['required' => TRUE, 'choices'=>$expiration_years, 'placeholder' => 'Año']);
         
        
         
