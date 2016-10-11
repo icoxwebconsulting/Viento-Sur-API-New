@@ -333,9 +333,6 @@ class HotelController extends Controller {
             $expiration_years[$y]= $y;
         }
 
-        print_r($expiration_years);
-        exit();
-        
         $this->get('session')->set('booking-id', $bookingId);
 
         $sessionForm = $request->getSession();
