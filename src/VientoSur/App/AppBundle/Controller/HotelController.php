@@ -311,7 +311,6 @@ class HotelController extends Controller {
      * Lists all Company entities.
      *
      * @Route("/booking/pay/", name="viento_sur_app_boking_hotel_pay")
-     * @Method("GET")
      * @Template()
      */
     public function bookingHotelPayAction(Request $request) {
