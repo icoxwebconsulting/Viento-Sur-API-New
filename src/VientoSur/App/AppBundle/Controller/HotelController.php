@@ -339,11 +339,6 @@ class HotelController extends Controller {
         $formResponse = $this->cUrlExecAction($url);
         $formBooking = json_decode($formResponse, true);
         
-        echo '<pre>';
-        print_r($formBooking);
-        echo '</pre>';
-        exit();
-        
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
