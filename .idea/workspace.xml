@@ -4,6 +4,7 @@
     <list default="true" id="8ed59970-47a1-4a04-91f1-9b79a2518b95" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" afterPath="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig" afterPath="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig" />
     </list>
     <ignored path="VientoSur.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,10 +28,31 @@
       <file leaf-file-name="HotelController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="771" column="23" selection-start-line="771" selection-start-column="23" selection-end-line="771" selection-end-column="23" />
+            <state relative-caret-position="303">
+              <caret line="658" column="51" selection-start-line="658" selection-start-column="51" selection-end-line="658" selection-end-column="51" />
               <folding>
                 <element signature="e#54#95#0#PHP" expanded="true" />
+                <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+                <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bookingHotelPay.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="627">
+              <caret line="144" column="52" selection-start-line="144" selection-start-column="52" selection-end-line="144" selection-end-column="52" />
+              <folding>
+                <marker date="1475871802160" expanded="true" signature="62:9254" ph="{% block content ...%}" />
               </folding>
             </state>
           </provider>
@@ -46,7 +68,6 @@
       <list>
         <option value="$PROJECT_DIR$/app/AppKernel.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig" />
         <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Email/contact.html.twig" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml.dist" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml" />
@@ -54,6 +75,7 @@
         <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/layoutHotel.html.twig" />
         <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/IndexController.php" />
         <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Index/option.html.twig" />
+        <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig" />
         <option value="$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php" />
       </list>
     </option>
@@ -182,6 +204,108 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="App" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hotel" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="App" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VientoSur" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="App" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -263,12 +387,12 @@
       <workItem from="1475842051014" duration="811000" />
       <workItem from="1475848915640" duration="599000" />
       <workItem from="1475866912733" duration="4000" />
-      <workItem from="1475866937996" duration="3062000" />
+      <workItem from="1475866937996" duration="5546000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40104000" />
+    <option name="totallyTimeSpent" value="42588000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -315,6 +439,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>
@@ -367,6 +500,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>
@@ -419,6 +561,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>
@@ -463,6 +614,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>
@@ -507,6 +667,15 @@
           <caret line="365" column="30" selection-start-line="365" selection-start-column="30" selection-end-line="365" selection-end-column="30" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>
@@ -545,6 +714,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>
@@ -597,13 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13410">
           <caret line="745" column="17" selection-start-line="745" selection-start-column="17" selection-end-line="745" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2520">
-          <caret line="140" column="30" selection-start-line="140" selection-start-column="30" selection-end-line="140" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -713,12 +884,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Resources/views/Hotel/bookingHotelPay.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="144" column="52" selection-start-line="144" selection-start-column="52" selection-end-line="144" selection-end-column="52" />
+          <folding>
+            <marker date="1475871802160" expanded="true" signature="62:9254" ph="{% block content ...%}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/VientoSur/App/AppBundle/Controller/HotelController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="771" column="23" selection-start-line="771" selection-start-column="23" selection-end-line="771" selection-end-column="23" />
+        <state relative-caret-position="303">
+          <caret line="658" column="51" selection-start-line="658" selection-start-column="51" selection-end-line="658" selection-end-column="51" />
           <folding>
             <element signature="e#54#95#0#PHP" expanded="true" />
+            <marker date="1475873247894" expanded="true" signature="29445:29554" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="29595:29658" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="30169:30223" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31104:31213" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="31251:31319" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32016:32070" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32571:32633" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="32667:32716" ph="..." />
+            <marker date="1475873247894" expanded="true" signature="33246:33296" ph="..." />
           </folding>
         </state>
       </provider>

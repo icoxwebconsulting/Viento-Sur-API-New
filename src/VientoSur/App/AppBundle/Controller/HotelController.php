@@ -172,7 +172,7 @@ class HotelController extends Controller {
         $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
-     //   $url = "https://api.despegar.com/v3/hotels/availabilities?=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&offset=0&classify_roompacks_by=none&roompack_choices=recommended&limit=10";
+        //   $url = "https://api.despegar.com/v3/hotels/availabilities?=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&offset=0&classify_roompacks_by=none&roompack_choices=recommended&limit=10";
         $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
@@ -184,10 +184,10 @@ class HotelController extends Controller {
         $session->set('checkout_date', $request->get('end'));
 
         return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
-                    'items'   => $results,
-                    'restUrl' => $restUrl,
-                    'offset'   =>   $offset,
-                    'limit'    =>   $limit
+            'items'   => $results,
+            'restUrl' => $restUrl,
+            'offset'   =>   $offset,
+            'limit'    =>   $limit
         ));
     }
 
@@ -241,13 +241,13 @@ class HotelController extends Controller {
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
-                    'dispoHotel'   => $dispoHotel,
-                    'hotelDetails' => $hotelDetails,
-                    'latitude'     => $latitude,
-                    'longitude'    => $longitude,
-                    'idHotel'      => $idHotel,
-                    'restUrl'      => $restUrl
-                        )
+                'dispoHotel'   => $dispoHotel,
+                'hotelDetails' => $hotelDetails,
+                'latitude'     => $latitude,
+                'longitude'    => $longitude,
+                'idHotel'      => $idHotel,
+                'restUrl'      => $restUrl
+            )
         );
     }
 
@@ -263,7 +263,7 @@ class HotelController extends Controller {
         $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=pictures&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
         $hotelDetails = json_decode($hotel, true);
-       
+
         return array(
             'hotelDetails' => $hotelDetails
         );
@@ -279,12 +279,12 @@ class HotelController extends Controller {
     public function sendHotelBookingAction(Request $request) {
         //$request->headers->get('User-Agent')
         //echo $request->get('availability_token');
-      // echo $request->get('availability_token');die();
+        // echo $request->get('availability_token');die();
         //echo $request->get('availability_token');
 
         $arrayData = array("source" => array(
-                "country_code" => "AR"),
-                "reservation_context" => array(
+            "country_code" => "AR"),
+            "reservation_context" => array(
                 "context_language" => $request->getLocale(),
                 "shown_currency" => "USD",
                 "threat_metrix_id" => "25",
@@ -292,7 +292,7 @@ class HotelController extends Controller {
                 "user_agent" => "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:34.0) Gecko/20100101 Firefox/34.0 )"
             ),
             "keys" => array(
-               // "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
+                // "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
                 "availability_token" => $request->get('availability_token')
             )
         );
@@ -320,7 +320,11 @@ class HotelController extends Controller {
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         //quitar ?example=true para PRODUCCION
-        $url = "https://api.despegar.com" . $request->query->get('formUrl')."?example=true";
+        $bookingId = $request->query->get('formUrl');
+        $url = "https://api.despegar.com" . $bookingId ."?example=true";
+
+        $this->get('session')->set('booking-id', $bookingId);
+
         $sessionForm = $request->getSession();
         $sessionForm->set('url_detail_form', $url);
         $formResponse = $this->cUrlExecAction($url);
@@ -363,7 +367,7 @@ class HotelController extends Controller {
         //step1
         $params = json_encode($params);
 
-       // echo 'Post: '. $url_test.'<br/>';
+        // echo 'Post: '. $url_test.'<br/>';
 
 //        echo 'Header: <pre>';
 //        print_r(json_encode($header));
@@ -505,10 +509,13 @@ class HotelController extends Controller {
 
         if(isset($response->secure_token))
         {
+            $bookingId = $this->get('session')->get('booking-id');
+            $formId = $request->get('form_id');
+
 
             //Q1JFRElUX0NBUkQtNQ
             $session = $request->getSession();
-            $url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8MQ==?example=true";
+            $url = 'https://api.despegar.com'.$bookingId.'/'.$formId.'?example=true';
             //$url = $session->get('url_detail_form') . "/Q1JFRElUX0NBUkQtNQ==";
 //            $url = " https://api.despegar.com/v3/hotels/bookings/45ad82b0-7c7e-11e4-ac22-fa163e7a50a2/forms/Q1JFRElUX0NBUkR8MQ==";
             //$url = "https://api.despegar.com/v3/hotels/bookings/ticketexample/forms/Q1JFRElUX0NBUkR8Mg%3D%3D?example=true";
@@ -543,51 +550,52 @@ class HotelController extends Controller {
             echo $phoneNumber = $request->get('otelInputDefinition.contactDefinition.phoneDefinitions[0].number.value');
 
 
-            $arrayData = array(
-                "payment_method_choice" => "1",
-                "form" => array(
-                   "passengers" => array(
-                         "first_name" => "Test",
-                        "last_name" => "Booking"
-                     )
-                ),
-                "payment" => array(
-                    "credit_card" => array(
-                        "number" => "4242424242424242",
-                        "expiration" => "2020-12",
-                        "security_code" => "123",
-                        "owner_name" => "Test Booking",
-                        "owner_document" => array(
-                            "type" => "LOCAL",
-                           "number" => "12345678"
-                        ),
-                        "card_code" => "VI",
-                        "card_type" => "CREDIT"
-                     ),
-                     "billing_address" => array(
-                         "country" => "AR",
-                         "state" => "Buenos Aires",
-                         "city" => "BUE",
-                         "street" => "Calle Falsa",
-                         "number" => "123",
-                         "floor" => "1",
-                         "department" => "G",
-                         "postal_code" => "1234"
-                    ),
-                   "contact" => array(
-                       "email" => "testhoteles@despegar.com",
-                        "phones" => array(
-                            "type" => "CELULAR",
-                           "number" => "12345678",
-                           "country_code" => "54",
-                           "area_code" => "11"
-                        )
-                   )
-                ),
-                "secure_token_information" => array(
-                    'secure_token' => $response->secure_token
-                )
-            );
+//            $arrayData = array(
+//                "payment_method_choice" => "1",
+//                "form" => array(
+//                    "passengers" => array(
+//                        "first_name" => "Test",
+//                        "last_name" => "Booking",
+//                        "room_reference" => "1",
+//                    )
+//                ),
+//                "payment" => array(
+//                    "credit_card" => array(
+//                        "number" => "4242424242424242",
+//                        "expiration" => "2020-12",
+//                        "security_code" => "123",
+//                        "owner_name" => "Test Booking",
+//                        "owner_document" => array(
+//                            "type" => "LOCAL",
+//                            "number" => "12345678"
+//                        ),
+//                        "card_code" => "VI",
+//                        "card_type" => "CREDIT"
+//                    ),
+//                    "billing_address" => array(
+//                        "country" => "AR",
+//                        "state" => "Buenos Aires",
+//                        "city" => "BUE",
+//                        "street" => "Calle Falsa",
+//                        "number" => "123",
+//                        "floor" => "1",
+//                        "department" => "G",
+//                        "postal_code" => "1234"
+//                    ),
+//                    "contact" => array(
+//                        "email" => "testhoteles@despegar.com",
+//                        "phones" => array(
+//                            "type" => "CELULAR",
+//                            "number" => "12345678",
+//                            "country_code" => "54",
+//                            "area_code" => "11"
+//                        )
+//                    )
+//                ),
+//                "secure_token_information" => array(
+//                    'secure_token' => $response->secure_token
+//                )
+//            );
 
 
 //            $arrayData = array("source" => array(
@@ -595,7 +603,7 @@ class HotelController extends Controller {
 //                "form" => array(
 //                    "passengers" => array(
 //                        "first_name" => "Felipe",
-//                        "last_name" => "viñoles",
+//                        "last_name" => "viÃ±oles",
 //                        "room_reference" => "1",
 //                    ),
 //                    "payment" => array(
@@ -617,8 +625,42 @@ class HotelController extends Controller {
 //
 //            );
 
-            
-            $response = $this->cUrlExecPatchBookingAction($arrayData, $url, $response->secure_token);
+
+            $arrayData = '{"payment_method_choice":"1",
+            "form":{
+                "passengers":[{"first_name":"Test","last_name":"Booking"}],
+                "payment":
+                    {"credit_card":
+                        {"number":"4242424242424242",
+                         "expiration":"2020-12",
+                         "security_code":"123",
+                         "owner_name":"Test Booking",
+                         "owner_document":
+                             {"type":"LOCAL",
+                              "number":"12345678"
+                             },
+                          "card_code":"VI","card_type":"CREDIT"
+                         },
+                         "billing_address":
+                            {"country":"AR",
+                             "state":"Buenos Aires",
+                             "city":"BUE",
+                             "street":"Calle Falsa",
+                             "number":"123",
+                             "floor":"1",
+                             "department":"G",
+                             "postal_code":"1234"
+                            }
+                    },
+                     "contact":{"email":"testhoteles@despegar.com",
+                            "phones":[{"type":"CELULAR","number":"12345678","country_code":"54","area_code":"11"}]
+                            }
+                   }
+        },"secure_token_information":{"secure_token":';
+            $arrayData.= $response->secure_token.'}}';
+
+
+            $response = $this->cUrlExecPatchBookingAction($arrayData, $url);
             var_dump($response);
         }
 
@@ -643,7 +685,7 @@ class HotelController extends Controller {
 //        echo '</pre><br/>';
 
         $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url); 
+        curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
         curl_setopt($cSession, CURLOPT_HEADER, false);
@@ -666,7 +708,7 @@ class HotelController extends Controller {
         //step1
         // api productiva ca8fe17f100646cbbefa4ecddcf51350
         $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url); 
+        curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         //curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:ca8fe17f100646cbbefa4ecddcf51350'));
         curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
@@ -698,8 +740,8 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_POSTFIELDS, $postvars);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f',
-            'Content-Type: application/json'
-                )
+                'Content-Type: application/json'
+            )
         );
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
@@ -716,7 +758,7 @@ class HotelController extends Controller {
     }
 
 
-    private function cUrlExecPatchBookingAction($params, $url, $sour_token) {
+    private function cUrlExecPatchBookingAction($params, $url) {
 
 
         $header = [
@@ -724,41 +766,9 @@ class HotelController extends Controller {
             'X-Client: 2864680fe4d74241aa613874fa20705f',
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
         ];
-        
+
         //$params = json_encode($params);
-        $params = '{"payment_method_choice":"1",
-	"form":{
-		"passengers":[{"first_name":"Test","last_name":"Booking"}],
-		"payment":
-			{"credit_card":
-				{"number":"4242424242424242",
-				 "expiration":"2020-12",
-				 "security_code":"123",
-				 "owner_name":"Test Booking",
-				 "owner_document":	
-					 {"type":"LOCAL",
-					  "number":"12345678"
-					 },
-				  "card_code":"VI","card_type":"CREDIT"
-				 },
-				 "billing_address":
-					{"country":"AR",
-					 "state":"Buenos Aires",
-					 "city":"BUE",
-					 "street":"Calle Falsa",
-					 "number":"123",
-					 "floor":"1",
-					 "department":"G",
-					 "postal_code":"1234"
-					}
-			},
-			 "contact":{"email":"testhoteles@despegar.com",
-				    "phones":[{"type":"CELULAR","number":"12345678","country_code":"54","area_code":"11"}]
-				    }
-	       }
-},"secure_token_information":{"secure_token":
-"'.$sour_token.'"}
-}';
+
 //        echo $url.'<br/>';
 //
 //        echo $params.'<br/>';
@@ -771,7 +781,7 @@ class HotelController extends Controller {
         echo 'BODY: <pre>';
         print_r($params);
         echo '</pre><br/>';
-        
+
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
