@@ -39,11 +39,11 @@
                                 </div>
                             </div>
                         </div>
+                        {% set first_name = 'first_name_'~loop.index-- %}            
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group form-group-lg">
-                                    <label>Nombre</label>
-                                    {{ form_row(formNewPay.first_name_0) }}
+                                    {{ form_row(formNewPay.first_name) }}
                                 </div>
                             </div>
                             <div class="col-md-4">
