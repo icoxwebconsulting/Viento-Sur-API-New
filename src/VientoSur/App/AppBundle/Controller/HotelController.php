@@ -627,7 +627,7 @@ class HotelController extends Controller {
 
             $arrayData = '{"payment_method_choice":"1",
             "form":{
-                "passengers":[{"first_name":"Test","last_name":"Booking"}],
+                "passengers":[{"first_name":"Test","last_name":"Booking", "document_number": "123456789"}],
                 "payment":
                     {"credit_card":
                         {"number":"4242424242424242",
