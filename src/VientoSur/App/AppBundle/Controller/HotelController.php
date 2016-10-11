@@ -353,7 +353,7 @@ class HotelController extends Controller {
             'price_detail'     => $priceDetail,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
-            'formNewPay'       => $formNewPay->getForm()
+            'formNewPay'       => $formNewPay->getForm()->createView()
         );
     }
 
