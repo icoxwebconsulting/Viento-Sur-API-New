@@ -347,9 +347,9 @@ class HotelController extends Controller {
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
-            $formNewPay->add("first_name_$k", $passengers[$k]['first_name']['type']);
-            $formNewPay->add("last_name_$k", $passengers[$k]['last_name']['type']);
-            $formNewPay->add("document_number_$k", $passengers[$k]['document_number']['type']);
+            $formNewPay->add("first_name_$k", $passengers['first_name']['type']);
+            $formNewPay->add("last_name_$k", $passengers['last_name']['type']);
+            $formNewPay->add("document_number_$k", $passengers['document_number']['type']);
         }
         
         
