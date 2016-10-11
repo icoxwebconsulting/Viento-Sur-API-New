@@ -344,7 +344,13 @@ class HotelController extends Controller {
         echo '</pre>';
         exit();
         
-        $formNewPay = $this->createFormBuilder($formBooking)->getForm();
+        $formNewPay = $this->createFormBuilder($formBooking);
+        
+        foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
+            $formNewPay->add("first_name_$k", $passengers[$k]['first_name']['type']);
+            $formNewPay->add("last_name_$k", $passengers[$k]['last_name']['type']);
+            $formNewPay->add("document_number_$k", $passengers[$k]['document_number']['type']);
+        }
         
         
         return array(
@@ -352,7 +358,7 @@ class HotelController extends Controller {
             'price_detail'     => $priceDetail,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
-            'formNewPay'       => $formNewPay
+            'formNewPay'       => $formNewPay->getForm()
         );
     }
 
