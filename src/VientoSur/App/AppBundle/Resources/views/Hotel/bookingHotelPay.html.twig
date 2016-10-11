@@ -72,12 +72,16 @@
                         <div class="col-md-4">
                             <div class="form-group form-group-lg">
                                 <label>Vencimiento</label>
-                                <select type="{{expirationCard.type}}" class="form-control" name="{{expirationCard.qualified_name}}" >
+                                <select type="{{expirationCard.type}}" class="form-control" name="expiration_month" >
                                     {% for month in expiration_month %}
                                         <option value="{{ month }}">{{ month }}</option>
                                     {% endfor %}
                                 </select>    
-                                <input type="{{expirationCard.type}}" class="form-control" name="{{expirationCard.qualified_name}}" value=""/>
+                                <select type="{{expirationCard.type}}" class="form-control" name="expiration_years" >
+                                    {% for year in expiration_years %}
+                                        <option value="{{ year }}">{{ year }}</option>
+                                    {% endfor %}
+                                </select>    
                             </div>
                         </div>
                         <div class="col-md-4">
