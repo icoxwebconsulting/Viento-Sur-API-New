@@ -340,9 +340,6 @@ class HotelController extends Controller {
         
         $phone_option     = ['CELULAR'=>'Celular', 'HOME'=>'Casa', 'WORK'=>'Trabajo', 'FAX'=>'Fax', 'OTHER'=>'Otro'];
         
-        echo $bookingId;
-        exit();
-        
         $this->get('session')->set('booking-id', $bookingId);
 
         $sessionForm = $request->getSession();
