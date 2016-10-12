@@ -855,7 +855,7 @@ class HotelController extends Controller {
         echo '</pre><br/>';
 
         echo 'Request: <pre>';
-        print_r(json_encode($url));
+        print_r($url);
         echo '</pre><br/>';
 
         $cSession = curl_init();
