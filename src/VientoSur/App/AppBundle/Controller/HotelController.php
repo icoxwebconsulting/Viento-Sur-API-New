@@ -837,7 +837,7 @@ class HotelController extends Controller {
           ];  
         echo 'Post: '. $url.'<br/>';
         echo 'Header: <pre>';
-        print_r($header);
+        print_r(json_encode($header));
         echo '</pre><br/>';
 //
         echo 'BODY: <pre>';
