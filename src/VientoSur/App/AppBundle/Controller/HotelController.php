@@ -605,15 +605,15 @@ class HotelController extends Controller {
                 //step1
                 $params = json_encode($params);
 
-        echo 'Post: '. $url_test.'<br/>';
-
-        echo 'Header: <pre>';
-        print_r(json_encode($header));
-        echo '</pre><br/>';
-
-        echo 'Body: <pre>';
-        print_r(json_encode($params));
-        echo '</pre><br/>';
+//        echo 'Post: '. $url_test.'<br/>';
+//
+//        echo 'Header: <pre>';
+//        print_r(json_encode($header));
+//        echo '</pre><br/>';
+//
+//        echo 'Body: <pre>';
+//        print_r(json_encode($params));
+//        echo '</pre><br/>';
 
 
 
@@ -632,9 +632,10 @@ class HotelController extends Controller {
                 //step4
                 curl_close($cSession);
 
-                echo 'Response: <pre>';
-                print_r($results);
-                echo '</pre><br/>';
+
+//                echo 'Response: <pre>';
+//                print_r($results);
+//                echo '</pre><br/>';
 
                 // do anything you want with your response
                 return json_decode($results);
