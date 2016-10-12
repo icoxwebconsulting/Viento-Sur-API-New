@@ -461,13 +461,14 @@ class HotelController extends Controller {
                    if(isset($response->secure_token)){
                        $form_id_booking = $formNewPaySend['form_id_booking'];
                        
-                       $url_last = 'https://api.despegar.com'.$bookingId.'/'.$form_id_booking.'?example=true';
+                       //$url_last = 'https://api.despegar.com'.$bookingId.'/'.$form_id_booking.'?example=true';
+                       $url_last = 'https://api.despegar.com/v3/hotels/bookings/4a910b4d-90a2-11e6-bfbf-fa163e2a6cad/forms/Q1JFRElUX0NBUkR8MTkyMzgyNTQzOQ==?example=true';
                        
                        $arrayDataLast = '{"payment_method_choice":"1",
                         "bed_option_choice":null,
                         "bed_layout_ids":[],
                         "secure_token_information" : {
-                            "secure_token" : "'.$response->secure_token.'"
+                            "secure_token" : "1d98db2d78660db5298167c42fdd9090101c6112ef1f9772bb0a193b6932e2c3f0a48ad836fb17a139913dcbf940e0864d719531109d7ec38773a13fdaeb7a8eedc353"
                         },
                         "form":{
                             "passengers":[{"first_name":"'.$formNewPaySend['first_name_0'].'",
