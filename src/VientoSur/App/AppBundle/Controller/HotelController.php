@@ -306,7 +306,7 @@ class HotelController extends Controller {
         $formUrl = json_decode($response, true);
         //print_r($formUrl);die();
 
-        return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array('formUrl' => $formUrl["next_step_url"]))
+        return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array('formUrl' => $formUrl["next_step_url"],'booking_id'=>$formUrl["id"]))
         );
     }
 
@@ -323,6 +323,7 @@ class HotelController extends Controller {
         $formUrl     = $request->get('formUrl');
         //quitar ?example=true para PRODUCCION
         $bookingId = $request->query->get('formUrl');
+        $booking_id = $request->get('booking_id');
         $url = "https://api.despegar.com" . $bookingId ."?example=true";
         $expiration_years = [];
 
@@ -437,10 +438,68 @@ class HotelController extends Controller {
             $formNewPaySend->handleRequest($request);
             
             if ($formNewPaySend->isValid()) {
-               echo '<pre>';
-               print_r($formNewPaySend->getData());
-               echo '</pre>';
-               exit();
+               
+               $array_for_dvault = [
+                        'brand_code'       =>$formNewPaySend['credit_card_card_brand'],
+                        'number'           =>$formNewPaySend['credit_card_number'],
+                        'expiration_month' =>$formNewPaySend['credit_card_expiration_month'], 
+                        'expiration_year'  =>$formNewPaySend['credit_card_expiration_year'],
+                        'security_code'    =>$formNewPaySend['credit_card_security_code'],
+                        'bank'             =>'*',
+                        'seconds_to_live'  =>'600',
+                        'holder_name'      =>$formNewPaySend['credit_card_owner_name'],
+               ];
+               
+               if($this->dVaultValidation($formNewPaySend['tokenize_key'], $array_for_dvault)){
+                   $response = $this->dVault($formNewPaySend['tokenize_key'], $array_for_dvault);
+                   if(isset($response->secure_token)){
+                       $form_id_booking = $formNewPaySend['form_id_booking'];
+                       $url_last = "https://api.despegar.com/v3/hotels/bookings/$bookingId/forms/$form_id_booking?example=true";
+                       
+                       $arrayDataLast = '{"payment_method_choice":"1",
+                        "form":{
+                            "passengers":[{"first_name":"'.$formNewPaySend['first_name_0'].'",
+                                           "last_name":"'.$formNewPaySend['last_name_0'].'",
+                                           "document_number": "'.$formNewPaySend['document_number_0'].'"}],
+                            "payment":
+                                {"credit_card":
+                                    {"number":"'.$formNewPaySend['credit_card_number'].'",
+                                     "expiration":"'.$formNewPaySend['credit_card_expiration_year'].'-'.$formNewPaySend['credit_card_expiration_month'].'",
+                                     "security_code":"'.$formNewPaySend['credit_card_security_code'].'",
+                                     "owner_name":"'.$formNewPaySend['credit_card_owner_name'].'",
+                                     "owner_document":
+                                         {"type":"LOCAL",
+                                          "number":"'.$formNewPaySend['credit_card_owner_document_number'].'"
+                                         },
+                                      "card_code":"'.$formNewPaySend['credit_card_card_brand'].'",
+                                      "card_type":"CREDIT",
+                                      "bank_code":"null"
+                                     },
+                                     "billing_address":
+                                        {"country":"AR",
+                                         "state":"Buenos Aires",
+                                         "city":"BUE",
+                                         "street":"Calle Falsa",
+                                         "number":"123",
+                                         "floor":"1",
+                                         "department":"G",
+                                         "postal_code":"1234"
+                                        }
+                                },
+                                 "contact":{"email":"'.$formNewPaySend['contact_email'].'",
+                                        "phones":[{"type":"'.$formNewPaySend['contact_phones_options'].'",
+                                                    "number":"'.$formNewPaySend['contact_phones_number'].'",
+                                                    "country_code":"'.$formNewPaySend['contact_phones_country_code'].'",
+                                                    "area_code":"'.$formNewPaySend['contact_phones_area_code'].'"}]
+                                        }
+                               }
+                        },"secure_token_information":{"secure_token":"'.$response->secure_token.'"}}';
+                        
+                       $response = $this->cUrlExecPatchBookingAction($arrayDataLast, $url_last);
+                       var_dump($response);
+                   }
+               }
+               
             }
         }
         
@@ -450,6 +509,7 @@ class HotelController extends Controller {
             'formUrl'          => $formUrl,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
+            'booking_id'       => $booking_id,
             'formNewPay'       => $formNewPaySend->createView()
         );
     }
@@ -457,16 +517,6 @@ class HotelController extends Controller {
     private function dVaultValidation($tokenizeKey, $param)
     {
         $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
-
-        $params["brand_code"] = "VI";
-        $params["number"] = "4111111111111111";
-        $params["expiration_month"] = "12";
-        $params["expiration_year"] = "2030";
-        $params["security_code"] = "123";
-        $params["bank"] = "Some bank";
-        $params["seconds_to_live"] = "600";
-        $params["holder_name"] = "John Teken";
-        $tokenizeKey = $tokenizeKey;
 
         $header = [
             'Content-Type: application/json',
@@ -476,7 +526,7 @@ class HotelController extends Controller {
         ];
 
         //step1
-        $params = json_encode($params);
+        $params = json_encode($param);
 
         // echo 'Post: '. $url_test.'<br/>';
 
@@ -526,16 +576,6 @@ class HotelController extends Controller {
             if($response)
             {
                 $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
-
-                $params["brand_code"] = "VI";
-                $params["number"] = "4111111111111111";
-                $params["expiration_month"] = "12";
-                $params["expiration_year"] = "2030";
-                $params["security_code"] = "123";
-                $params["bank"] = "Some bank";
-                $params["seconds_to_live"] = "600";
-                $params["holder_name"] = "John Teken";
-                $tokenizeKey = $tokenizeKey;
 
                 $header = [
                     'Content-Type: application/json',
