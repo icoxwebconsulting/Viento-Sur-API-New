@@ -363,7 +363,7 @@ class HotelController extends Controller {
             )]);
             $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
-                'pattern'   => '^(?!([0-9])\1*$).*$',
+                'pattern'   => "/^(?!([0-9])\1*$).*$/",
                 'match'     => true,
                 'message'   => 'Número de Documento no Válido.'
             )))]);
@@ -382,14 +382,14 @@ class HotelController extends Controller {
         
         $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en la tarjeta'), 'constraints' => array(
                     new Length(array('min' => 2, 'max' => 35)) ,new Regex(array(
-                'pattern'   => '^([a-zA-Z]+\s)+[a-zA-Z]+$',
+                'pattern'   => "/^([a-zA-Z]+\s)+[a-zA-Z]+$/",
                 'match'     => true,
                 'message'   => 'Nombre del propietario no válido.'
             )))]);
         
         $formNewPay->add("credit_card_owner_document_number",'text',['label' => 'DNI del titular de la tarjeta','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
-                'pattern'   => '^(?!([0-9])\1*$).*$',
+                'pattern'   => "/^(?!([0-9])\1*$).*$/",
                 'match'     => true,
                 'message'   => 'Número de Documento no Válido.'
             )))]);
@@ -402,7 +402,7 @@ class HotelController extends Controller {
             'first_options'  => array('label' => 'E-mail (donde recibirá su voucher)'),
             'second_options' => array('label' => 'Confirme su e-mail'),'constraints' => array(
                 new Length(array('min' => 0, 'max'=>128)), new Regex(array(
-            'pattern'   => '^[\w\.-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,4}$',
+            'pattern'   => "/^[\w\.-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,4}$/",
             'match'     => true,
             'message'   => 'Email Inválido.'
             )))));
@@ -411,21 +411,21 @@ class HotelController extends Controller {
         
         $formNewPay->add("contact_phones_country_code", 'text',['label' => 'País','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                  new Regex(array(
-                'pattern'   => '^[0-9]{1,3}$',
+                'pattern'   => "/^[0-9]{1,3}$/",
                 'match'     => true,
                 'message'   => 'Código de país no Válido.'
             )))]);
         
         $formNewPay->add("contact_phones_area_code", 'text',['label' => 'Área','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                  new Regex(array(
-                'pattern'   => '^[0-9]{1,4}$',
+                'pattern'   => "/^[0-9]{1,4}$/",
                 'match'     => true,
                 'message'   => 'Código de Área no Válido.'
             )))]);
         
         $formNewPay->add("contact_phones_number", 'text',['label' => 'Número','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                  new Regex(array(
-                'pattern'   => '^[0-9]{1,4}$',
+                'pattern'   => "/^[0-9]{1,4}$/",
                 'match'     => true,
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
