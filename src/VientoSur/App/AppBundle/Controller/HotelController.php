@@ -340,6 +340,9 @@ class HotelController extends Controller {
         
         $phone_option     = ['CELULAR'=>'Celular', 'HOME'=>'Casa', 'WORK'=>'Trabajo', 'FAX'=>'Fax', 'OTHER'=>'Otro'];
         
+        echo $bookingId;
+        exit();
+        
         $this->get('session')->set('booking-id', $bookingId);
 
         $sessionForm = $request->getSession();
@@ -835,14 +838,14 @@ class HotelController extends Controller {
             'X-Client: 2864680fe4d74241aa613874fa20705f',
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
           ];  
-        echo 'Post: '. $url.'<br/>';
-        echo 'Header: <pre>';
-        print_r(json_encode($header));
-        echo '</pre><br/>';
+//        echo 'Post: '. $url.'<br/>';
+//        echo 'Header: <pre>';
+//        print_r(json_encode($header));
+//        echo '</pre><br/>';
 //
-        echo 'BODY: <pre>';
-        print_r(json_encode($postvars));
-        echo '</pre><br/>';
+//        echo 'BODY: <pre>';
+//        print_r(json_encode($postvars));
+//        echo '</pre><br/>';
 
         //step1
         $postvars = json_encode($postvars);
@@ -858,10 +861,10 @@ class HotelController extends Controller {
         //step4
         curl_close($cSession);
 
-        echo 'Response: <pre>';
-        print_r($results);
-        echo '</pre><br/>';
-        die('finish');
+//        echo 'Response: <pre>';
+//        print_r($results);
+//        echo '</pre><br/>';
+//        die('finish');
 
         return $results;
     }
