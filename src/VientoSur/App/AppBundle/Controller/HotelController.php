@@ -425,6 +425,10 @@ class HotelController extends Controller {
                 'match'     => true,
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
+        
+        $formNewPay->add('tokenize_key', 'hidden', array('data' => $formBooking['tokenize_key']));
+        $formNewPay->add('form_id_booking', 'hidden', array('data' => $formBooking['items'][1]['id']));
+        
         /* end form*/
         $formNewPaySend = $formNewPay->getForm();
         
