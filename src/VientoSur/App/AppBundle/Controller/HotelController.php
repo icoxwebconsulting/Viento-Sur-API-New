@@ -353,10 +353,10 @@ class HotelController extends Controller {
             $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'placeholder' => 'Como figura en el documento', 'attr' => array('class' => 'form-control'), 'constraints' => array(
+            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'placeholder' => 'Como figura en el documento', 'attr' => array('class' => 'form-control'), 'constraints' => array(
+            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
                 'pattern'   => $passengers['document_number']['regex_validations'][2]['regex'],
                 'match'     => true,
@@ -375,7 +375,7 @@ class HotelController extends Controller {
                     new Length(array('min' => 3)),
             )]);
         
-        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'placeholder' => 'Como figura en la tarjeta', 'attr' => array('class' => 'form-control'), 'constraints' => array(
+        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en la tarjeta'), 'constraints' => array(
                     new Length(array('min' => 2, 'max' => 35)) ,new Regex(array(
                 'pattern'   => '^([a-zA-Z]+\s)+[a-zA-Z]+$',
                 'match'     => true,
