@@ -438,7 +438,7 @@ class HotelController extends Controller {
             
             if ($formNewPaySend->isValid()) {
                echo '<pre>';
-               print_r($formNewPay->getData());
+               print_r($formNewPaySend->getData());
                echo '</pre>';
                exit();
             }
