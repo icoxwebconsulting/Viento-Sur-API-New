@@ -496,8 +496,8 @@ class HotelController extends Controller {
                                         },
                                     "invoice":{
                                         "tax_status":"FINAL_CONSUMER",
-                                        "invoice_name":"Name LastName",
-                                        "fiscal_document":"20301111232"
+                                        "invoice_name":"Mauro Garcia",
+                                        "fiscal_document":"20297425944"
                                     }    
                                  },
                                  "contact":{"email":"'.$formNewPaySend['contact_email'].'",
