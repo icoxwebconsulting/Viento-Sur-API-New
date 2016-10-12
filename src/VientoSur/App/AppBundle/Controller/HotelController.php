@@ -239,7 +239,7 @@ class HotelController extends Controller {
         $itemDispo = $this->cUrlExecAction($url);
         $dispoHotel = json_decode($itemDispo, true); //print_r($dispoHotel['roompacks'][1]['rooms']);die();
 
-        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=information,amenities,pictures,room_types(pictures,information,amenities)&resolve=merge_info&catalog_info=true";
+        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=information,amenities,pictures,room_types(pictures,information,amenities)&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
         $hotelDetails = json_decode($hotel, true);//print_r($hotelDetails);die();
 
@@ -283,22 +283,17 @@ class HotelController extends Controller {
      * @Template()
      */
     public function sendHotelBookingAction(Request $request) {
-        //$request->headers->get('User-Agent')
-        //echo $request->get('availability_token');
-        // echo $request->get('availability_token');die();
-        //echo $request->get('availability_token');
-
+        
         $arrayData = array("source" => array(
             "country_code" => "AR"),
             "reservation_context" => array(
-                "context_language" => $request->getLocale(),
-                "shown_currency" => "USD",
-                "threat_metrix_id" => "25",
-                "client_ip" => "190.200.42.169",
-                "user_agent" => "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:34.0) Gecko/20100101 Firefox/34.0 )"
+            "context_language" => $request->getLocale(),
+            "shown_currency" => "USD",
+            "threat_metrix_id" => "25",
+            "client_ip" => $request->getClientIp(),
+            "user_agent" => $request->headers->get('User-Agent')
             ),
             "keys" => array(
-                // "availability_token" => "31e27bc2-fe88-473f-8bb8-1afb5b8d3a6b"
                 "availability_token" => $request->get('availability_token')
             )
         );
@@ -834,14 +829,19 @@ class HotelController extends Controller {
 
     private function cUrlExecPostBookingAction($postvars, $url) {
 
-//        echo 'Post: '. $url.'<br/>';
-//        echo 'Header: <pre>';
-//        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
-//        echo '</pre><br/>';
+          $header = [
+            'Content-Type: application/json',
+            'X-Client: 2864680fe4d74241aa613874fa20705f',
+            'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
+          ];  
+        echo 'Post: '. $url.'<br/>';
+        echo 'Header: <pre>';
+        print_r(json_encode($header));
+        echo '</pre><br/>';
 //
-//        echo 'BODY: <pre>';
-//        print_r(json_encode($postvars));
-//        echo '</pre><br/>';
+        echo 'BODY: <pre>';
+        print_r(json_encode($postvars));
+        echo '</pre><br/>';
 
         //step1
         $postvars = json_encode($postvars);
@@ -850,20 +850,17 @@ class HotelController extends Controller {
         curl_setopt($cSession, CURLOPT_POST, true);
         curl_setopt($cSession, CURLOPT_POSTFIELDS, $postvars);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f',
-                'Content-Type: application/json'
-            )
-        );
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
         curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
         //step4
         curl_close($cSession);
 
-//        echo 'Response: <pre>';
-//        print_r($results);
-//        echo '</pre><br/>';
-//        die('finish');
+        echo 'Response: <pre>';
+        print_r($results);
+        echo '</pre><br/>';
+        die('finish');
 
         return $results;
     }
