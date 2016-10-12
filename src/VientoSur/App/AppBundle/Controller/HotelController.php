@@ -496,16 +496,7 @@ class HotelController extends Controller {
                                     "invoice":{
                                         "tax_status":"REGISTERED",
                                         "invoice_name":"Name LastName",
-                                        "fiscal_document":"20301111232",
-                                        "billing_address":{
-                                           "stateId":"13028",
-                                           "cityId":"1445",
-                                           "postal_code":"1510",
-                                           "street":"Street Name",
-                                           "number":"1234",
-                                           "floor":"4",
-                                           "department":"A"
-                                        }
+                                        "fiscal_document":"20301111232"
                                     }    
                                  },
                                  "contact":{"email":"'.$formNewPaySend['contact_email'].'",
