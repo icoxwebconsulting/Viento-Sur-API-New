@@ -460,6 +460,11 @@ class HotelController extends Controller {
                        $url_last = 'https://api.despegar.com'.$bookingId.'/'.$form_id_booking.'?example=true';
                        
                        $arrayDataLast = '{"payment_method_choice":"1",
+                        "bed_option_choice":null,
+                        "bed_layout_ids":[],
+                        "secure_token_information" : {
+                            "secure_token" : "'.$response->secure_token.'"
+                        },
                         "form":{
                             "passengers":[{"first_name":"'.$formNewPaySend['first_name_0'].'",
                                            "last_name":"'.$formNewPaySend['last_name_0'].'",
@@ -470,13 +475,13 @@ class HotelController extends Controller {
                                      "expiration":"'.$formNewPaySend['credit_card_expiration_year'].'-'.$formNewPaySend['credit_card_expiration_month'].'",
                                      "security_code":"'.$formNewPaySend['credit_card_security_code'].'",
                                      "owner_name":"'.$formNewPaySend['credit_card_owner_name'].'",
+                                     "owner_type":"PERSON",    
                                      "owner_document":
                                          {"type":"LOCAL",
                                           "number":"'.$formNewPaySend['credit_card_owner_document_number'].'"
                                          },
                                       "card_code":"'.$formNewPaySend['credit_card_card_brand'].'",
-                                      "card_type":"CREDIT",
-                                      "bank_code":"null"
+                                      "card_type":"CREDIT"
                                      },
                                      "billing_address":
                                         {"country":"AR",
@@ -487,8 +492,22 @@ class HotelController extends Controller {
                                          "floor":"1",
                                          "department":"G",
                                          "postal_code":"1234"
+                                        },
+                                    "invoice":{
+                                        "tax_status":"REGISTERED",
+                                        "invoice_name":"Name LastName",
+                                        "fiscal_document":"20301111232",
+                                        "billing_address":{
+                                           "stateId":"13028",
+                                           "cityId":"1445",
+                                           "postal_code":"1510",
+                                           "street":"Street Name",
+                                           "number":"1234",
+                                           "floor":"4",
+                                           "department":"A"
                                         }
-                                },
+                                    }    
+                                 },
                                  "contact":{"email":"'.$formNewPaySend['contact_email'].'",
                                         "phones":[{"type":"'.$formNewPaySend['contact_phones_options'].'",
                                                     "number":"'.$formNewPaySend['contact_phones_number'].'",
@@ -496,7 +515,7 @@ class HotelController extends Controller {
                                                     "area_code":"'.$formNewPaySend['contact_phones_area_code'].'"}]
                                         }
                                }
-                        },"secure_token_information":{"secure_token":"'.$response->secure_token.'"}}';
+                        }}';
                         
                        $response = $this->cUrlExecPatchBookingAction($arrayDataLast, $url_last);
                        var_dump($response);
@@ -781,6 +800,11 @@ class HotelController extends Controller {
 
 
             $arrayData = '{"payment_method_choice":"1",
+                "bed_option_choice":null,
+                "bed_layout_ids":[],
+                "secure_token_information" : {
+                    "secure_token" : "1e7abc2b8d16311dfc19b8047d30ab770101a416f18bee4195b934326f6b052329731077d2ab2455aef84278089e854ab557de"
+                },
             "form":{
                 "passengers":[{"first_name":"Test","last_name":"Booking", "document_number": "29742594"}],
                 "payment":
