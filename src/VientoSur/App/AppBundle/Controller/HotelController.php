@@ -330,7 +330,7 @@ class HotelController extends Controller {
         $url = "https://api.despegar.com" . $bookingId ."?example=true";
         $expiration_years = [];
 
-        $expiration_month = [0=>'Mes', 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
+        $expiration_month = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
         
         $year = date('Y');
         $new_year = strtotime ( '+5 year' , strtotime ( $year ) ) ;
@@ -363,7 +363,7 @@ class HotelController extends Controller {
             )]);
             $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
-                'pattern'   => $passengers['document_number']['regex_validations'][2]['regex'],
+                'pattern'   => '^(?!([0-9])\1*$).*$',
                 'match'     => true,
                 'message'   => 'Número de Documento no Válido.'
             )))]);
