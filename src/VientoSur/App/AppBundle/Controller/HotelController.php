@@ -427,7 +427,7 @@ class HotelController extends Controller {
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
         
-        $formNewPay->add('tokenize_key', 'hidden', array('data' => $formBooking['tokenize_key']));
+        $formNewPay->add('tokenize_key_form', 'hidden', array('data' => $formBooking['tokenize_key']));
         $formNewPay->add('form_id_booking', 'hidden', array('data' => $formBooking['items'][1]['id']));
         
         /* end form*/
@@ -450,8 +450,8 @@ class HotelController extends Controller {
                         'holder_name'      =>$formNewPaySend['credit_card_owner_name'],
                ];
                
-               if($this->dVaultValidation($formNewPaySend['tokenize_key'], $array_for_dvault)){
-                   $response = $this->dVault($formNewPaySend['tokenize_key'], $array_for_dvault);
+               if($this->dVaultValidation($formNewPaySend['tokenize_key_form'], $array_for_dvault)){
+                   $response = $this->dVault($formNewPaySend['tokenize_key_form'], $array_for_dvault);
                    if(isset($response->secure_token)){
                        $form_id_booking = $formNewPaySend['form_id_booking'];
                        $url_last = "https://api.despegar.com/v3/hotels/bookings/$bookingId/forms/$form_id_booking?example=true";
