@@ -431,9 +431,11 @@ class HotelController extends Controller {
             )))]);
         /* end form*/
         $formNewPay->getForm();
-        $formNewPay->handleRequest($request);
         
         if($request->getMethod() == 'POST'){
+            
+            $formNewPay->handleRequest($request);
+            
             if ($formNewPay->isValid()) {
                echo '<pre>';
                print_r($formNewPay->getData());
