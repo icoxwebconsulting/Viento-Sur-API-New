@@ -425,7 +425,7 @@ class HotelController extends Controller {
         
         $formNewPay->add("contact_phones_number", 'text',['label' => 'Número','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                  new Regex(array(
-                'pattern'   => "/^[0-9]{1,4}$/",
+                'pattern'   => "/^[0-9]{5,10}$/",
                 'match'     => true,
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
