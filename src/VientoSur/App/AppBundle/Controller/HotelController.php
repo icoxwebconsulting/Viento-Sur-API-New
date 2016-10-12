@@ -430,13 +430,13 @@ class HotelController extends Controller {
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
         /* end form*/
-        $formNewPay->getForm();
+        $formNewPaySend = $formNewPay->getForm();
         
         if($request->getMethod() == 'POST'){
             
-            $formNewPay->handleRequest($request);
+            $formNewPaySend->handleRequest($request);
             
-            if ($formNewPay->isValid()) {
+            if ($formNewPaySend->isValid()) {
                echo '<pre>';
                print_r($formNewPay->getData());
                echo '</pre>';
@@ -450,7 +450,7 @@ class HotelController extends Controller {
             'formUrl'          => $formUrl,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
-            'formNewPay'       => $formNewPay->createView()
+            'formNewPay'       => $formNewPaySend->createView()
         );
     }
 
