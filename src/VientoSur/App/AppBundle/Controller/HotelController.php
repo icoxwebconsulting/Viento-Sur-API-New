@@ -321,6 +321,7 @@ class HotelController extends Controller {
 
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
+        $formUrl     = $request->get('formUrl');
         //quitar ?example=true para PRODUCCION
         $bookingId = $request->query->get('formUrl');
         $url = "https://api.despegar.com" . $bookingId ."?example=true";
@@ -347,6 +348,7 @@ class HotelController extends Controller {
         $formResponse = $this->cUrlExecAction($url);
         $formBooking = json_decode($formResponse, true);
         
+        /* start form */
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
@@ -424,10 +426,23 @@ class HotelController extends Controller {
                 'match'     => true,
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
+        /* end form*/
+        
+        $formNewPay->handleRequest($request);
+        
+        if($request->getMethod() == 'POST'){
+            if ($formNewPay->isValid()) {
+               echo '<pre>';
+               print_r($formNewPay->getData());
+               echo '</pre>';
+               exit();
+            }
+        }
         
         return array(
             'formBooking'      => $formBooking,
             'price_detail'     => $priceDetail,
+            'formUrl'          => $formUrl,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
             'formNewPay'       => $formNewPay->getForm()->createView()

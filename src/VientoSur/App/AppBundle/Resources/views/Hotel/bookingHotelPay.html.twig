@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-md-9">
-                <form name="payHotel" id="pay-hotels" action ="{{ path('viento_sur_app_boking_hotel_pay')}}" method="POST">
+                <form name="payHotel" id="pay-hotels" action ="{{ path('viento_sur_app_boking_hotel_pay', {'formUrl': formUrl})}}" method="POST">
                     <input type="hidden" name="passengers" value="{{formBooking.dictionary.form_choices[1].passengers|length}}">
 
                     {%for passenger in formBooking.dictionary.form_choices[1].passengers%}
