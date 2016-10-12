@@ -850,13 +850,13 @@ class HotelController extends Controller {
 
 //                echo 'GET: '. $url.'<br/>';
 //
-//        echo 'Header: <pre>';
-//        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
-//        echo '</pre><br/>';
-//
-//        echo 'Request: <pre>';
-//        print_r(json_encode($url));
-//        echo '</pre><br/>';
+        echo 'Header: <pre>';
+        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
+        echo '</pre><br/>';
+
+        echo 'Request: <pre>';
+        print_r(json_encode($url));
+        echo '</pre><br/>';
 
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
@@ -869,10 +869,10 @@ class HotelController extends Controller {
         //step4
         curl_close($cSession);
 
-//        echo 'Response: <pre>';
-//        print_r($results);
-//        echo '</pre><br/>';
-//        die('finish');
+        echo 'Response: <pre>';
+        print_r($results);
+        echo '</pre><br/>';
+        die('finish');
 
         return $results;
     }
@@ -902,14 +902,14 @@ class HotelController extends Controller {
             'X-Client: 2864680fe4d74241aa613874fa20705f',
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
           ];  
-        echo 'Post: '. $url.'<br/>';
-        echo 'Header: <pre>';
-        print_r(json_encode($header));
-        echo '</pre><br/>';
-
-        echo 'BODY: <pre>';
-        print_r(json_encode($postvars));
-        echo '</pre><br/>';
+//        echo 'Post: '. $url.'<br/>';
+//        echo 'Header: <pre>';
+//        print_r(json_encode($header));
+//        echo '</pre><br/>';
+//
+//        echo 'BODY: <pre>';
+//        print_r(json_encode($postvars));
+//        echo '</pre><br/>';
 
         //step1
         $postvars = json_encode($postvars);
@@ -925,10 +925,10 @@ class HotelController extends Controller {
         //step4
         curl_close($cSession);
 
-        echo 'Response: <pre>';
-        print_r($results);
-        echo '</pre><br/>';
-        die('finish');
+//        echo 'Response: <pre>';
+//        print_r($results);
+//        echo '</pre><br/>';
+//        die('finish');
 
         return $results;
     }
