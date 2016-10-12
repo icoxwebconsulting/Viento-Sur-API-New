@@ -440,7 +440,7 @@ class HotelController extends Controller {
             if ($formNewPaySend->isValid()) {
                
                $array_for_dvault = [
-                        'brand_code'       =>$formNewPaySend['credit_card_card_brand'],
+                        'brand_code'       =>$formNewPaySend->get('credit_card_card_brand'),
                         'number'           =>$formNewPaySend['credit_card_number'],
                         'expiration_month' =>$formNewPaySend['credit_card_expiration_month'], 
                         'expiration_year'  =>$formNewPaySend['credit_card_expiration_year'],
