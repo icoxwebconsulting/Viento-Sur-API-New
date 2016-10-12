@@ -290,6 +290,7 @@ class HotelController extends Controller {
             "context_language" => $request->getLocale(),
             "shown_currency" => "USD",
             "threat_metrix_id" => "25",
+            "agent_code"=>'AG32502',    
             "client_ip" => $request->getClientIp(),
             "user_agent" => $request->headers->get('User-Agent')
             ),
@@ -836,7 +837,7 @@ class HotelController extends Controller {
           ];  
         echo 'Post: '. $url.'<br/>';
         echo 'Header: <pre>';
-        print_r(json_encode($header));
+        print_r($header);
         echo '</pre><br/>';
 //
         echo 'BODY: <pre>';
