@@ -430,7 +430,7 @@ class HotelController extends Controller {
                 'message'   => 'Número de Teléfono no Válido.'
             )))]);
         /* end form*/
-        
+        $formNewPay->getForm();
         $formNewPay->handleRequest($request);
         
         if($request->getMethod() == 'POST'){
@@ -448,7 +448,7 @@ class HotelController extends Controller {
             'formUrl'          => $formUrl,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
-            'formNewPay'       => $formNewPay->getForm()->createView()
+            'formNewPay'       => $formNewPay->createView()
         );
     }
 
