@@ -13,6 +13,11 @@ a:hover {
   color: #c96810;
   text-decoration: none;
 }
+
+.formBooking ul li{
+    color: red;
+}
+
 h1,
 h2,
 h3,
