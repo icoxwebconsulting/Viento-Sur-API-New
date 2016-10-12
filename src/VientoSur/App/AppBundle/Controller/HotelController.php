@@ -350,13 +350,13 @@ class HotelController extends Controller {
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
-            $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
+            $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'placeholder' => 'Como figura en el documento', 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
+            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'placeholder' => 'Como figura en el documento', 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
-            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
+            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'placeholder' => 'Como figura en el documento', 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 7)), new Regex(array(
                 'pattern'   => $passengers['document_number']['regex_validations'][2]['regex'],
                 'match'     => true,
@@ -369,13 +369,13 @@ class HotelController extends Controller {
         $formNewPay->add("credit_card_number", 'text',['label' => 'Número','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 6)))]);
         
-        $formNewPay->add("credit_card_expiration_month", 'choice',['label' => '','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$expiration_month, 'placeholder' => 'Mes']);
-        $formNewPay->add("credit_card_expiration_year", 'choice',['label' => '','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$expiration_years, 'placeholder' => 'Año']);
+        $formNewPay->add("credit_card_expiration_month", 'choice',['label' => 'Vencimiento','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$expiration_month, 'placeholder' => 'Mes']);
+        $formNewPay->add("credit_card_expiration_year", 'choice',['label' => '&nbsp;','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$expiration_years, 'placeholder' => 'Año']);
         $formNewPay->add("credit_card_security_code", 'text',['label' => 'Código de Seguridad', 'required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 3)),
             )]);
         
-        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
+        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'placeholder' => 'Como figura en la tarjeta', 'attr' => array('class' => 'form-control'), 'constraints' => array(
                     new Length(array('min' => 2, 'max' => 35)) ,new Regex(array(
                 'pattern'   => '^([a-zA-Z]+\s)+[a-zA-Z]+$',
                 'match'     => true,

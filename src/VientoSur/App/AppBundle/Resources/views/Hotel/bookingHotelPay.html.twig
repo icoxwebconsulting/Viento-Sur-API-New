@@ -40,6 +40,8 @@
                             </div>
                         </div>
                         {% set first_name = 'first_name_'~(loop.index - 1) %}            
+                        {% set last_name = 'last_name_'~(loop.index - 1) %}   
+                        {% set document_number = 'document_number_'~(loop.index - 1) %}       
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group form-group-lg">
@@ -48,14 +50,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group form-group-lg">
-                                    <label>Apellido</label>
-                                    <input type="{{passenger.last_name.type}}" class="form-control" name="{{passenger.last_name.qualified_name}}" value="" placeholder="Como figura en el documento"/>
+                                    {{ form_row(formNewPay[last_name]) }}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group form-group-lg">
-                                    <label>DNI</label>
-                                    <input type="{{passenger.room_reference.type}}" class="form-control" name="{{passenger.room_reference.qualified_name}}" value="" placeholder="Como figura en el documento"/>
+                                    {{ form_row(formNewPay[document_number]) }}
                                 </div>
                             </div>
                         </div>
@@ -63,69 +63,55 @@
                     <div class="row">
                         <div class="col-md-12"><div class="form-group form-group-lg"><label class="room-label roomLabel">Tarjeta</label></div></div>
                     </div>
-                    {% set numberCard = formBooking.dictionary.form_choices[1].payment.credit_card.number%}
-                    {% set expirationCard = formBooking.dictionary.form_choices[1].payment.credit_card.expiration%}
-                    {% set securityCodeCard = formBooking.dictionary.form_choices[1].payment.credit_card.security_code%}
-                    {% set ownerNameCard = formBooking.dictionary.form_choices[1].payment.credit_card.owner_name%}
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group form-group-lg">
-                                <label>Número</label>
-                                <input type="{{numberCard.type}}" class="form-control" name="{{numberCard.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.credit_card_card_brand) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-group-lg">
+                                {{ form_row(formNewPay.credit_card_number) }}
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group form-group-lg">
-                                <label>Vencimiento</label>
-                                <select type="{{expirationCard.type}}" class="form-control" name="expiration_month" style="width: 100px;" >
-                                    {% for month in expiration_month %}
-                                        <option value="{{ month }}">{{ month }}</option>
-                                    {% endfor %}
-                                </select> 
+                                {{ form_row(formNewPay.credit_card_expiration_month) }}
                             </div> 
                         </div>
                         <div class="col-md-2">        
                             <div class="form-group form-group-lg"> 
-                                <label>&nbsp;</label>
-                                <select type="{{expirationCard.type}}" class="form-control" name="expiration_years" style="width: 100px;">
-                                    {% for year in expiration_years %}
-                                        <option value="{{ year }}">{{ year }}</option>
-                                    {% endfor %}
-                                </select>    
+                                {{ form_row(formNewPay.credit_card_expiration_year) }}  
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group form-group-lg">
-                                <label>Código de Seguridad</label>
-                                <input type="{{securityCodeCard.type}}" class="form-control" name="{{securityCodeCard.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.credit_card_security_code) }}
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group form-group-lg">
-                                <label>Titular de la tarjeta</label>
-                                <input type="{{ownerNameCard.type}}" class="form-control" name="{{ownerNameCard.qualified_name}}" value="" placeholder="Como figura en la tarjeta"/>
+                                {{ form_row(formNewPay.credit_card_owner_name) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-group-lg">
+                                {{ form_row(formNewPay.credit_card_owner_document_number) }}
                             </div>
                         </div>
                     </div>
-
-                    {% set contactEmail =formBooking.dictionary.form_choices[1].contact.email%}
-                    {% set contactPhone =formBooking.dictionary.form_choices[1].contact.phones%}
-
                     <div class="row">
                         <div class="col-md-12"><div class="form-group form-group-lg"><label class="room-label roomLabel">Información de contacto</label></div></div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-lg">
-                                <label>Email</label>
-                                <input type="{{contactEmail.type}}" class="form-control" name="{{contactEmail.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.contact_email.first_options) }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-lg">
-                                <label>Confirme su e-mail</label>
-                                <input type="{{contactEmail.type}}" class="form-control" name="{{contactEmail.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.contact_email.second_options) }}
                             </div>
                         </div>
                     </div>
@@ -133,31 +119,27 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="form-group form-group-lg">
-                                <label>Teléfono</label>
-                                <select name="{{ contactPhone[0].type.qualified_name}}" class="form-control" value="">
-                                    {%for tipo in contactPhone[0].type.options%}
-                                        {{loop.index}}
-                                        <option value="{{tipo.key}}">{{tipo.description}}</option>
-                                    {%endfor%}
-                                </select>
+                                {{ form_row(formNewPay.contact_phones_options) }}
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group form-group-lg">
-                                <label>País</label>
-                                <input type="{{contactPhone[0].country_code.type}}" class="form-control" name="{{contactPhone[0].country_code.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.contact_phones_options) }}
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group form-group-lg">
-                                <label>Área</label>
-                                <input type="{{contactPhone[0].area_code.type}}" class="form-control" name="{{contactPhone[0].area_code.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.contact_phones_country_code) }}
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group form-group-lg">
-                                <label>Número</label>
-                                <input type="{{contactPhone[0].number.type}}" class="form-control" name="{{contactPhone[0].number.qualified_name}}" value=""/>
+                                {{ form_row(formNewPay.contact_phones_area_code) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-group-lg">
+                                {{ form_row(formNewPay.contact_phones_number) }}
                             </div>
                         </div>
                     </div>
