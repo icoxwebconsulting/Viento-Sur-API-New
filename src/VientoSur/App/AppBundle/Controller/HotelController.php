@@ -456,6 +456,8 @@ class HotelController extends Controller {
                    $response = $this->dVault($formNewPaySend['tokenize_key_form'], $array_for_dvault);
                    if(isset($response->secure_token)){
                        $form_id_booking = $formNewPaySend['form_id_booking'];
+                       echo $form_id_booking;
+                       exit();
                        $url_last = "https://api.despegar.com".$bookingId.$form_id_booking."?example=true";
                        
                        $arrayDataLast = '{"payment_method_choice":"1",
