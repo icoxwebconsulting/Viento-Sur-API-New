@@ -238,10 +238,9 @@ class HotelController extends Controller {
      */
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
         $url = "https://api.despegar.com/v3/hotels/availabilities/" . $idHotel . $restUrl . "&language=en&currency=USD";
-        echo $url."<br/><br/>";
+        
         $itemDispo = $this->cUrlExecAction($url);
-        echo "<pre>$itemDispo</pre>";
-        exit();
+        
         $dispoHotel = json_decode($itemDispo, true); //print_r($dispoHotel['roompacks'][1]['rooms']);die();
 
         $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=information,amenities,pictures,room_types(pictures,information,amenities)&resolve=merge_info&catalog_info=true";
@@ -271,7 +270,7 @@ class HotelController extends Controller {
      */
     public function detailsHotelListForIdAction(Request $request, $idHotel) {
 
-        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es%2Cen&options=pictures&resolve=merge_info&catalog_info=true";
+        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=pictures&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
         $hotelDetails = json_decode($hotel, true);
 
@@ -903,14 +902,14 @@ class HotelController extends Controller {
             'X-Client: 2864680fe4d74241aa613874fa20705f',
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
           ];  
-//        echo 'Post: '. $url.'<br/>';
-//        echo 'Header: <pre>';
-//        print_r(json_encode($header));
-//        echo '</pre><br/>';
-//
-//        echo 'BODY: <pre>';
-//        print_r(json_encode($postvars));
-//        echo '</pre><br/>';
+        echo 'Post: '. $url.'<br/>';
+        echo 'Header: <pre>';
+        print_r(json_encode($header));
+        echo '</pre><br/>';
+
+        echo 'BODY: <pre>';
+        print_r(json_encode($postvars));
+        echo '</pre><br/>';
 
         //step1
         $postvars = json_encode($postvars);
@@ -926,10 +925,10 @@ class HotelController extends Controller {
         //step4
         curl_close($cSession);
 
-//        echo 'Response: <pre>';
-//        print_r($results);
-//        echo '</pre><br/>';
-//        die('finish');
+        echo 'Response: <pre>';
+        print_r($results);
+        echo '</pre><br/>';
+        die('finish');
 
         return $results;
     }
