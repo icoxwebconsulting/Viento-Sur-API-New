@@ -481,7 +481,8 @@ class HotelController extends Controller {
                                           "number":"'.$formNewPaySend['credit_card_owner_document_number'].'"
                                          },
                                       "card_code":"'.$formNewPaySend['credit_card_card_brand'].'",
-                                      "card_type":"CREDIT"
+                                      "card_type":"CREDIT",
+                                      "bank_code": "*"
                                      },
                                      "billing_address":
                                         {"country":"AR",
@@ -494,7 +495,7 @@ class HotelController extends Controller {
                                          "postal_code":"1234"
                                         },
                                     "invoice":{
-                                        "tax_status":"REGISTERED",
+                                        "tax_status":"FINAL_CONSUMER",
                                         "invoice_name":"Name LastName",
                                         "fiscal_document":"20301111232"
                                     }    
