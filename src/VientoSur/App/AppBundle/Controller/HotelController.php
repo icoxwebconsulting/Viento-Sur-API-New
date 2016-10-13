@@ -353,6 +353,7 @@ class HotelController extends Controller {
         $formBooking = json_decode($formResponse, true);
         
         /* start form */
+        
         $formNewPay = $this->createFormBuilder($formBooking);
         
         foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
@@ -435,6 +436,9 @@ class HotelController extends Controller {
         $formNewPay->add('form_id_booking', 'hidden', array('data' => $formBooking['items'][1]['id']));
         
         /* end form*/
+        
+        
+        
         $formNewPaySend = $formNewPay->getForm();
         
         if($request->getMethod() == 'POST'){
@@ -656,7 +660,7 @@ class HotelController extends Controller {
      * @Method("POST")
      * @Template()
      */
-    public function payHotelBookingAction(Request $request)
+ /*   public function payHotelBookingAction(Request $request)
     {
 
         //echo "<br>";
@@ -839,7 +843,7 @@ class HotelController extends Controller {
         }
 
         return array();
-    }
+    }*/
 
     private function cUrlExecAction($url) {
 
