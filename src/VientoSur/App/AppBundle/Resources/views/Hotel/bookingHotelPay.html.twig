@@ -9,7 +9,7 @@
                     <div class="booking-item-dates-change mb5">
                         <h2>Detalle de su pago</h2>
                         Habitación por noche:
-                       {#{{price_detail.taxes}}#} {{price_detail.nightly.subtotal}}<br>
+                        {#{{price_detail.taxes}}#} {{price_detail.nightly.subtotal}}<br>
                         detalle impuestos: <br>
                         {%for taxes_detail in price_detail.taxes_detail %}
                             codigo/ {{taxes_detail.code}}
@@ -24,129 +24,29 @@
 
                 </div>
             </div>
-
             <div class="col-md-9">
-                <form name="payHotel" id="pay-hotels" action ="{{ path('viento_sur_app_boking_hotel_pay', {'formUrl': formUrl, 'booking_id':booking_id})}}" method="POST">
-                    <input type="hidden" name="passengers" value="{{formBooking.dictionary.form_choices[1].passengers|length}}">
-
-                    {%for passenger in formBooking.dictionary.form_choices[1].passengers%}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group form-group-lg">
-                                    <label class="room-label roomLabel">
-                                        Habitación: {{loop.index}}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        {% set first_name = 'first_name_'~(loop.index - 1) %}            
-                        {% set last_name = 'last_name_'~(loop.index - 1) %}   
-                        {% set document_number = 'document_number_'~(loop.index - 1) %}       
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group form-group-lg">
-                                    {{ form_row(formNewPay[first_name]) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group form-group-lg">
-                                    {{ form_row(formNewPay[last_name]) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group form-group-lg">
-                                    {{ form_row(formNewPay[document_number]) }}
-                                </div>
-                            </div>
-                        </div>
-                    {%endfor%}
-                    <div class="row">
-                        <div class="col-md-12"><div class="form-group form-group-lg"><label class="room-label roomLabel">Tarjeta</label></div></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.credit_card_card_brand) }}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.credit_card_number) }}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.credit_card_expiration_month) }}
-                            </div> 
-                        </div>
-                        <div class="col-md-2">        
-                            <div class="form-group form-group-lg"> 
-                                {{ form_row(formNewPay.credit_card_expiration_year) }}  
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.credit_card_security_code) }}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.credit_card_owner_name) }}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.credit_card_owner_document_number) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12"><div class="form-group form-group-lg"><label class="room-label roomLabel">Información de contacto</label></div></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.contact_email.first) }}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.contact_email.second) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.contact_phones_options) }}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.contact_phones_country_code) }}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.contact_phones_area_code) }}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group form-group-lg">
-                                {{ form_row(formNewPay.contact_phones_number) }}
-                            </div>
-                        </div>
-                    </div>
-                    {{ form_widget(formNewPay.tokenize_key_form) }}
-                    {{ form_widget(formNewPay.form_id_booking) }}
-                    {{ form_widget(formNewPay._token) }}
-                    <div class="mod-searchbutton">
-                        <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
-                    </div>
-                </form>
+            {{ form_start(formNewPay) }}
+                {{ form_widget(formNewPay) }}
+                <div class="gap"></div>
+                <div class="mod-searchbutton">
+                    <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
+                </div>
+                {{ form_rest(form) }}
+            {{ form_end(formNewPay) }}
             </div>
             <div class="gap"></div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(".js-datepicker_test").datepicker({
+            format: "mm-yyyy",
+            startView: "months",
+            minViewMode: "months"
+        });
+    </script>
 {% endblock %}

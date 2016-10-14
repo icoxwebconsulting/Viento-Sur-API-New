@@ -180,8 +180,8 @@ class HotelController extends Controller {
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
         $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
-        
-        
+
+
         $hotels = $this->cUrlExecAction($url);
         $results = json_decode($hotels, true);
 
@@ -238,9 +238,9 @@ class HotelController extends Controller {
      */
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
         $url = "https://api.despegar.com/v3/hotels/availabilities/" . $idHotel . $restUrl . "&language=en&currency=USD";
-        
+
         $itemDispo = $this->cUrlExecAction($url);
-        
+
         $dispoHotel = json_decode($itemDispo, true); //print_r($dispoHotel['roompacks'][1]['rooms']);die();
 
         $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=information,amenities,pictures,room_types(pictures,information,amenities)&resolve=merge_info&catalog_info=true";
@@ -287,14 +287,14 @@ class HotelController extends Controller {
      * @Template()
      */
     public function sendHotelBookingAction(Request $request) {
-        
+
         $arrayData = array("source" => array(
             "country_code" => "AR"),
             "reservation_context" => array(
             "context_language" => $request->getLocale(),
             "shown_currency" => "USD",
             "threat_metrix_id" => "25",
-            "agent_code"=>'AG32502',    
+            "agent_code"=>'AG32502',
             "client_ip" => $request->getClientIp(),
             "user_agent" => $request->headers->get('User-Agent')
             ),
@@ -331,7 +331,7 @@ class HotelController extends Controller {
         $url = "https://api.despegar.com" . $bookingId ."?example=true";
         $expiration_years = [];
 
-        $expiration_month = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
+        $expiration_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         
         $year = date('Y');
         $new_year = strtotime ( '+5 year' , strtotime ( $year ) ) ;
@@ -355,90 +355,11 @@ class HotelController extends Controller {
         /* start form */
         
         $formNewPay = $this->createFormBuilder($formBooking);
-        
-        foreach ($formBooking['dictionary']['form_choices'][1]['passengers'] AS $k=>$passengers){
-            $formNewPay->add("first_name_$k", 'text',['label' => 'Nombre', 'required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
-                    new Length(array('min' => 3)),
-            )]);
-            $formNewPay->add("last_name_$k", 'text',['label' => 'Apellido','required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
-                    new Length(array('min' => 3)),
-            )]);
-            $formNewPay->add("document_number_$k", 'text',['label' => 'DNI','required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en el documento'), 'constraints' => array(
-                    new Length(array('min' => 7)), new Regex(array(
-                'pattern'   => "/^(?!([0-9])\1*$).*$/",
-                'match'     => true,
-                'message'   => 'Número de Documento no Válido.'
-            )))]);
-        }
-        
-        $formNewPay->add("credit_card_card_brand", 'choice',['label' => 'Tarjeta','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$array_card_brand]);
-        
-        $formNewPay->add("credit_card_number", 'text',['label' => 'Número','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
-                    new Length(array('min' => 6)))]);
-        
-        $formNewPay->add("credit_card_expiration_month", 'choice',['label' => 'Vencimiento','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$expiration_month, 'placeholder' => 'Mes']);
-        $formNewPay->add("credit_card_expiration_year", 'choice',['label' => '&nbsp;','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$expiration_years, 'placeholder' => 'Año']);
-        $formNewPay->add("credit_card_security_code", 'text',['label' => 'Código de Seguridad', 'required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
-                    new Length(array('min' => 3)),
-            )]);
-        
-        $formNewPay->add("credit_card_owner_name", 'text',['label' => 'Titular de la tarjeta', 'required' => TRUE, 'attr' => array('class' => 'form-control', 'placeholder' => 'Como figura en la tarjeta'), 'constraints' => array(
-                    new Length(array('min' => 2, 'max' => 35)) ,new Regex(array(
-                'pattern'   => "/^([a-zA-Z]+\s)+[a-zA-Z]+$/",
-                'match'     => true,
-                'message'   => 'Nombre del propietario no válido.'
-            )))]);
-        
-        $formNewPay->add("credit_card_owner_document_number",'text',['label' => 'DNI del titular de la tarjeta','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
-                    new Length(array('min' => 7)), new Regex(array(
-                'pattern'   => "/^(?!([0-9])\1*$).*$/",
-                'match'     => true,
-                'message'   => 'Número de Documento no Válido.'
-            )))]);
-         
-         $formNewPay->add('contact_email', 'repeated', array(
-            'type' => 'email',
-            'invalid_message' => 'Los campos de correo electrónico deben coincidir.',
-            'options' => array('attr' => array('class' => 'form-control')),
-            'required' => TRUE,
-            'first_options'  => array('label' => 'E-mail (donde recibirá su voucher)'),
-            'second_options' => array('label' => 'Confirme su e-mail'),'constraints' => array(
-                new Length(array('min' => 0, 'max'=>128)), new Regex(array(
-            'pattern'   => "/^[\w\.-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,4}$/",
-            'match'     => true,
-            'message'   => 'Email Inválido.'
-            )))));
-       
-        $formNewPay->add("contact_phones_options", 'choice',['label' => 'Teléfono','required' => TRUE, 'attr' => array('class' => 'form-control'), 'choices'=>$phone_option]);
-        
-        $formNewPay->add("contact_phones_country_code", 'text',['label' => 'País','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
-                 new Regex(array(
-                'pattern'   => "/^[0-9]{1,3}$/",
-                'match'     => true,
-                'message'   => 'Código de país no Válido.'
-            )))]);
-        
-        $formNewPay->add("contact_phones_area_code", 'text',['label' => 'Área','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
-                 new Regex(array(
-                'pattern'   => "/^[0-9]{1,4}$/",
-                'match'     => true,
-                'message'   => 'Código de Área no Válido.'
-            )))]);
-        
-        $formNewPay->add("contact_phones_number", 'text',['label' => 'Número','required' => TRUE, 'attr' => array('class' => 'form-control'), 'constraints' => array(
-                 new Regex(array(
-                'pattern'   => "/^[0-9]{5,10}$/",
-                'match'     => true,
-                'message'   => 'Número de Teléfono no Válido.'
-            )))]);
-        
-        $formNewPay->add('tokenize_key_form', 'hidden', array('data' => $formBooking['tokenize_key']));
-        $formNewPay->add('form_id_booking', 'hidden', array('data' => $formBooking['items'][1]['id']));
-        
-        /* end form*/
-        
-        
-        
+
+        $formHelper = $this->get('form_helper');
+
+        $formNewPay = $formHelper->initForm($formBooking, $formNewPay);
+
         $formNewPaySend = $formNewPay->getForm();
         
         if($request->getMethod() == 'POST'){
@@ -449,78 +370,7 @@ class HotelController extends Controller {
                
                $formNewPaySend = $formNewPaySend->getData(); 
                 
-               $array_for_dvault = [
-                        'brand_code'       =>$formNewPaySend['credit_card_card_brand'],
-                        'number'           =>$formNewPaySend['credit_card_number'],
-                        'expiration_month' =>$formNewPaySend['credit_card_expiration_month'], 
-                        'expiration_year'  =>$formNewPaySend['credit_card_expiration_year'],
-                        'security_code'    =>$formNewPaySend['credit_card_security_code'],
-                        'bank'             =>'*',
-                        'seconds_to_live'  =>'600',
-                        'holder_name'      =>$formNewPaySend['credit_card_owner_name'],
-               ];
-               
-               if($this->dVaultValidation($formNewPaySend['tokenize_key_form'], $array_for_dvault)){
-                   $response = $this->dVault($formNewPaySend['tokenize_key_form'], $array_for_dvault);
-                   if(isset($response->secure_token)){
-                       $form_id_booking = $formNewPaySend['form_id_booking'];
-                       
-                       $url_last = 'https://api.despegar.com'.$bookingId.'/'.$form_id_booking.'?example=true';
-                       
-                       $arrayDataLast = '{"payment_method_choice":"1",
-                        "bed_option_choice":null,
-                        "bed_layout_ids":[],
-                        "secure_token_information" : {
-                            "secure_token" : "'.$response->secure_token.'"
-                        },
-                        "form":{
-                            "passengers":[{"first_name":"'.$formNewPaySend['first_name_0'].'",
-                                           "last_name":"'.$formNewPaySend['last_name_0'].'",
-                                           "document_number": "'.$formNewPaySend['document_number_0'].'"}],
-                            "payment":
-                                {"credit_card":
-                                    {"number":"'.$formNewPaySend['credit_card_number'].'",
-                                     "expiration":"'.$formNewPaySend['credit_card_expiration_year'].'-'.$formNewPaySend['credit_card_expiration_month'].'",
-                                     "security_code":"'.$formNewPaySend['credit_card_security_code'].'",
-                                     "owner_name":"'.$formNewPaySend['credit_card_owner_name'].'",
-                                     "owner_type":"PERSON",    
-                                     "owner_document":
-                                         {"type":"LOCAL",
-                                          "number":"'.$formNewPaySend['credit_card_owner_document_number'].'"
-                                         },
-                                      "card_code":"'.$formNewPaySend['credit_card_card_brand'].'",
-                                      "card_type":"CREDIT",
-                                      "bank_code": "*"
-                                     },
-                                     "billing_address":
-                                        {"country":"AR",
-                                         "state":"Buenos Aires",
-                                         "city":"BUE",
-                                         "street":"Calle Falsa",
-                                         "number":"123",
-                                         "floor":"1",
-                                         "department":"G",
-                                         "postal_code":"1234"
-                                        },
-                                    "invoice":{
-                                        "tax_status":"FINAL_CONSUMER",
-                                        "invoice_name":"Mauro Garcia",
-                                        "fiscal_document":"20297425944"
-                                    }    
-                                 },
-                                 "contact":{"email":"'.$formNewPaySend['contact_email'].'",
-                                        "phones":[{"type":"'.$formNewPaySend['contact_phones_options'].'",
-                                                    "number":"'.$formNewPaySend['contact_phones_number'].'",
-                                                    "country_code":"'.$formNewPaySend['contact_phones_country_code'].'",
-                                                    "area_code":"'.$formNewPaySend['contact_phones_area_code'].'"}]
-                                        }
-                               }
-                        }}';
-                        
-                       $response = $this->cUrlExecPatchBookingAction($arrayDataLast, $url_last);
-                       var_dump($response);
-                   }
-               }
+               //procesar formulario recibido
                
             }
         }
@@ -905,7 +755,7 @@ class HotelController extends Controller {
             'Content-Type: application/json',
             'X-Client: 2864680fe4d74241aa613874fa20705f',
             'X-ApiKey: 2864680fe4d74241aa613874fa20705f',
-          ];  
+          ];
 //        echo 'Post: '. $url.'<br/>';
 //        echo 'Header: <pre>';
 //        print_r(json_encode($header));

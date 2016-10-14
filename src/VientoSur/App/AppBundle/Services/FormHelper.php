@@ -2,9 +2,14 @@
 
 namespace VientoSur\App\AppBundle\Services;
 
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 class FormHelper
 {
     private $formNewPay;
+
+    private $fieldNames;
 
     public function __construct()
     {
@@ -14,6 +19,13 @@ class FormHelper
     public function initForm($formBooking, $formNewPay)
     {
         $this->formNewPay = $formNewPay;
+        $this->fieldNames = array(
+            'passengers' => [],
+            'payment' => [],
+            'contact' => [],
+            'additional_data' => [],
+            'vouchers' => []
+        );
 
         $resultado = array();
 
@@ -47,6 +59,11 @@ class FormHelper
         }
 
         return $this->formNewPay;
+    }
+
+    public function getFieldNames()
+    {
+        return $this->fieldNames;
     }
 
     private function is_assoc($array)
@@ -88,30 +105,80 @@ class FormHelper
         }
     }
 
+    private function sanitizeName($name)
+    {
+        return str_replace(array('[', ']', '.'), array('_-', '-_', ':'), $name);
+    }
+
+    private function reverseSanitizeName($name)
+    {
+        return str_replace(array('_-', '-_', ':'), array('[', ']', '.'), $name);
+    }
+
     private function processFormElement($groupKey, $key, $element)
     {
+        $fieldName = $this->sanitizeName($element['qualified_name']);
+
         switch ($element['type']) {
             case 'TEXT':
-
+                $this->formNewPay->add(
+                    $fieldName,
+                    'text'
+                );
                 break;
 
             case 'BOOLEAN':
-
+                $this->formNewPay->add(
+                    $fieldName,
+                    'checkbox',
+                    array(
+                        'label' => 'Show this entry publicly?',
+                        'required' => false,
+                    ));
                 break;
 
             case 'DATE':
-
-                break;
-
             case 'DATE_YEAR_MONTH':
-
+                $this->formNewPay->add(
+                    $key,
+                    'date',
+                    array(
+                        'widget' => 'single_text',
+                        // do not render as type="date", to avoid HTML5 date pickers
+                        'html5' => false,
+                        // add a class that can be selected in JavaScript
+                        'attr' => ['class' => 'js-datepicker_test'],
+                    )
+                );
                 break;
 
             case 'MULTIVALUED':
+                $optionField = $this->generateChoiceField($element['options']);
 
+                $this->formNewPay->add(
+                    $fieldName,
+                    'choice',
+                    array(
+                        'choices' => $optionField,
+                        // *this line is important*
+                        'choices_as_values' => true,
+                    )
+                );
                 break;
 
 
         }
+
+        $this->fieldNames[$groupKey][] = $fieldName;
+    }
+
+    private function generateChoiceField($optionsArray)
+    {
+        $optionField = array();
+        foreach ($optionsArray as $item) {
+            $optionField[$item['key']] = $item['key'];
+        }
+
+        return $optionField;
     }
 }
