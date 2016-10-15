@@ -31,7 +31,7 @@
                 <div class="mod-searchbutton">
                     <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
                 </div>
-                {{ form_rest(form) }}
+                {{ form_rest(formNewPay) }}
             {{ form_end(formNewPay) }}
             </div>
             <div class="gap"></div>
@@ -43,10 +43,6 @@
     {{ parent() }}
 
     <script>
-        $(".js-datepicker_test").datepicker({
-            format: "mm-yyyy",
-            startView: "months",
-            minViewMode: "months"
-        });
+        $('#form_expiration_day').hide();
     </script>
 {% endblock %}

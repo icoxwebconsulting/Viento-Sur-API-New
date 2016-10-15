@@ -123,7 +123,10 @@ class FormHelper
             case 'TEXT':
                 $this->formNewPay->add(
                     $fieldName,
-                    'text'
+                    'text',
+                    array(
+                        'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                    )
                 );
                 break;
 
@@ -132,9 +135,10 @@ class FormHelper
                     $fieldName,
                     'checkbox',
                     array(
-                        'label' => 'Show this entry publicly?',
-                        'required' => false,
-                    ));
+                        'label' => '',
+                        'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                    )
+                );
                 break;
 
             case 'DATE':
@@ -143,11 +147,10 @@ class FormHelper
                     $key,
                     'date',
                     array(
-                        'widget' => 'single_text',
-                        // do not render as type="date", to avoid HTML5 date pickers
-                        'html5' => false,
-                        // add a class that can be selected in JavaScript
-                        'attr' => ['class' => 'js-datepicker_test'],
+                        'format' =>'MMM-yyyy  d',
+                        'years' => range(date('Y'), date('Y')+12),
+                        'days' => array(1),
+                        'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => false)
                     )
                 );
                 break;
@@ -169,7 +172,7 @@ class FormHelper
 
         }
 
-        $this->fieldNames[$groupKey][] = $fieldName;
+        $this->fieldNames[$groupKey][] = ($fieldName != '')? $fieldName : $key;
     }
 
     private function generateChoiceField($optionsArray)

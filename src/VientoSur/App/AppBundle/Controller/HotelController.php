@@ -371,6 +371,34 @@ class HotelController extends Controller {
                $formNewPaySend = $formNewPaySend->getData(); 
                 
                //procesar formulario recibido
+
+                //obtengo el arreglo de los nombres de los elementos por categoría:
+                $fieldNames = $formHelper->getFieldNames();
+
+                $array_for_dvault = [
+                    'brand_code'       =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:cardType:value'],
+                    'number'           =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:number:value'],
+                    'expiration_month' =>$formNewPaySend['expiration']->format('m'),
+                    'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
+                    'security_code'    =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:securityCode:value'],
+                    'bank'             =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:bankCode:value'],
+                    'seconds_to_live'  =>'600',
+                    'holder_name'      =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:ownerName:value'],
+                ];
+
+                if($this->dVaultValidation($formNewPaySend['tokenize_key'], $array_for_dvault)){
+                    $response = $this->dVault($formNewPaySend['tokenize_key'], $array_for_dvault);
+                    if(isset($response->secure_token)){
+                        $form_id_booking = $formNewPaySend['form_id_booking'];
+                        $url_last = 'https://api.despegar.com'.$bookingId.'/'.$form_id_booking.'?example=true';
+
+                        $arrayDataLast = $formNewPaySend['dictionary']['form_choices']['1'];
+
+
+                        $response = $this->cUrlExecPatchBookingAction($arrayDataLast, $url_last);
+                        var_dump($response);
+                    }
+                }
                
             }
         }
