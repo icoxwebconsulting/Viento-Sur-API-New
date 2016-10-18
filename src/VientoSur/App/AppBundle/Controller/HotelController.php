@@ -310,8 +310,11 @@ class HotelController extends Controller {
         $formUrl = json_decode($response, true);
         //print_r($formUrl);die();
 
-        return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array('formUrl' => $formUrl["next_step_url"],'booking_id'=>$formUrl["id"]))
-        );
+        return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(
+            'formUrl' => $formUrl["next_step_url"],
+            'booking_id' => $formUrl["id"],
+            "roompack_choice" => $request->get('roompack_choice')
+        )));
     }
 
     /**
@@ -325,6 +328,8 @@ class HotelController extends Controller {
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         $formUrl     = $request->get('formUrl');
+        $roompackChoice = $request->get('roompack_choice');
+
         //quitar ?example=true para PRODUCCION
         $bookingId = $request->query->get('formUrl');
         $booking_id = $request->get('booking_id');
@@ -358,7 +363,7 @@ class HotelController extends Controller {
 
         $formHelper = $this->get('form_helper');
 
-        $formNewPay = $formHelper->initForm($formBooking, $formNewPay);
+        $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice);
 
         $formNewPaySend = $formNewPay->getForm();
         
@@ -381,7 +386,7 @@ class HotelController extends Controller {
                     'expiration_month' =>$formNewPaySend['expiration']->format('m'),
                     'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
                     'security_code'    =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:securityCode:value'],
-                    'bank'             =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:bankCode:value'],
+                    'bank'             =>null,//TODO: Colocar valor requerido
                     'seconds_to_live'  =>'600',
                     'holder_name'      =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:ownerName:value'],
                 ];
@@ -389,13 +394,21 @@ class HotelController extends Controller {
                 if($this->dVaultValidation($formNewPaySend['tokenize_key'], $array_for_dvault)){
                     $response = $this->dVault($formNewPaySend['tokenize_key'], $array_for_dvault);
                     if(isset($response->secure_token)){
-                        $form_id_booking = $formNewPaySend['form_id_booking'];
+
+                        //obtengo los valores ya seteados según la selección
+                        $fillData = $formHelper->fillFormData($formBooking, $formNewPaySend);
+                        $seletedPack = $formHelper->getSelectedPack();
+                        $form_id_booking = $seletedPack['id'];
+
+                        $queryArray = [];
+                        $queryArray['payment_method_choice'] = "1";
+                        $queryArray['secure_token_information'] = array('secure_token' => $response->secure_token);
+                        $queryArray['form'] = $fillData;
+
+
                         $url_last = 'https://api.despegar.com'.$bookingId.'/'.$form_id_booking.'?example=true';
 
-                        $arrayDataLast = $formNewPaySend['dictionary']['form_choices']['1'];
-
-
-                        $response = $this->cUrlExecPatchBookingAction($arrayDataLast, $url_last);
+                        $response = $this->cUrlExecPatchBookingAction(json_encode($queryArray), $url_last);
                         var_dump($response);
                     }
                 }
@@ -407,6 +420,7 @@ class HotelController extends Controller {
             'formBooking'      => $formBooking,
             'price_detail'     => $priceDetail,
             'formUrl'          => $formUrl,
+            'roompack_choice'  => $roompackChoice,
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
             'booking_id'       => $booking_id,
@@ -856,7 +870,7 @@ class HotelController extends Controller {
         print_r($results);
         echo '</pre><br/>';
 
-        die('listo');
+        exit();
         // do anything you want with your response
         return json_decode($results);
     }

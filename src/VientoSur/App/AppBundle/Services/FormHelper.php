@@ -2,8 +2,10 @@
 
 namespace VientoSur\App\AppBundle\Services;
 
+use Assetic\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\HttpFoundation\Response;
 
 class FormHelper
 {
@@ -11,13 +13,16 @@ class FormHelper
 
     private $fieldNames;
 
+    private $selectedPack;
+
     public function __construct()
     {
 
     }
 
-    public function initForm($formBooking, $formNewPay)
+    public function initForm($formBooking, $formNewPay, $roompackChoice)
     {
+
         $this->formNewPay = $formNewPay;
         $this->fieldNames = array(
             'passengers' => [],
@@ -26,10 +31,22 @@ class FormHelper
             'additional_data' => [],
             'vouchers' => []
         );
+        $this->selectedPack = null;
+
+        foreach ($formBooking['items'] as $roomPack) {
+            if ($roomPack['roompack_choice'] == $roompackChoice) {
+                $this->selectedPack = $roomPack;
+                break;
+            }
+        }
+
+        if ($this->selectedPack == null) {
+            throw new \Exception('No se consigue roompack');
+        }
 
         $resultado = array();
 
-        foreach ($formBooking['dictionary']['form_choices']["1"] as $key => $option) {
+        foreach ($formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']] as $key => $option) {
             if (is_array($option)) {
                 if ($this->is_assoc($option)) {
                     $resultado[] = array(
@@ -51,7 +68,11 @@ class FormHelper
                     $resultado[] = array(
                         "$key" => 'NO es asociativo'
                     );
-                    $this->processNestedElement($key, $option);
+                    if($key == 'vouchers'){
+                        $this->processSimpleElement($key, $option);
+                    }else{
+                        $this->processNestedElement($key, $option);
+                    }
                 }
             } else {
                 $hola = 'no es un array';
@@ -59,6 +80,98 @@ class FormHelper
         }
 
         return $this->formNewPay;
+    }
+
+    public function fillFormData($formBooking, $formNewPaySend)
+    {
+        $data = $this->processReverseNames($formNewPaySend);
+
+        $expMonth = $formNewPaySend['expiration']->format('m');
+        $expYear = $formNewPaySend['expiration']->format('Y');
+        $form = $formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']];
+        $dataArray = [];
+
+        foreach ($form as $key => $option) {
+            if (is_array($option)) {
+                $temp = [];
+                switch ($key) {
+                    case 'passengers':
+                        foreach ($option as $key2 => $item) {
+                            $temp = [];
+                            foreach ($item as $key3 => $element) {
+                                if (is_array($element) && array_key_exists('value', $element)) {
+                                    $temp[$key3] = $data[$form[$key][$key2][$key3]['qualified_name']];
+                                }
+                            }
+                            $dataArray[$key][] = $temp;
+                        }
+
+                        break;
+
+                    case 'payment':
+                        if (is_array($option)) {
+                            foreach ($option as $key2 => $item) {
+                                if (is_array($item)) {
+                                    $temp = [];
+                                    foreach ($item as $key3 => $element) {
+                                        if (is_array($element) && array_key_exists('value', $element)) {
+                                            if ($key3 != 'expiration') {
+                                                if ($key3 == 'bank_code') {
+                                                    //$temp[$key3] = "null";
+                                                } else {
+                                                    $temp[$key3] = $data[$form[$key][$key2][$key3]['qualified_name']];
+                                                }
+                                            } else {
+                                                $temp[$key3] = $expYear . '-' . $expMonth;
+                                            }
+                                        }
+                                    }
+                                    $dataArray[$key][$key2] = $temp;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 'contact':
+                        $temp = [];
+                        foreach ($option as $key2 => $item) {
+                            if (is_array($item) && array_key_exists('value', $item)) {
+                                $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
+                            } else if ($key2 == 'phones') {
+                                $temp2 = [];
+                                foreach ($item as $key3 => $element) {
+                                    foreach ($element as $key4 => $element0) {
+                                        if ((is_array($element0) && array_key_exists('value', $element0))) {
+                                            $temp2[$key4] = $data[$form[$key][$key2][$key3][$key4]['qualified_name']];
+                                        }
+                                    }
+                                    $temp['phones'][] = $temp2;
+                                }
+                            }
+                        }
+                        $dataArray[$key] = $temp;
+                        break;
+                    case 'additional_data':
+                        $temp = [];
+                        foreach ($option as $key2 => $item) {
+                            if (is_array($item) && array_key_exists('value', $item)) {
+                                $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
+                            }
+                        }
+                        $dataArray[$key] = $temp;
+                        break;
+                    case 'vouchers':
+                        $temp = [];
+                        foreach ($option as $key2 => $item) {
+                            if (is_array($item) && array_key_exists('value', $item)) {
+                                $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
+                            }
+                        }
+                }
+            }
+        }
+
+        return $dataArray;
     }
 
     public function getFieldNames()
@@ -115,6 +228,19 @@ class FormHelper
         return str_replace(array('_-', '-_', ':'), array('[', ']', '.'), $name);
     }
 
+    private function processReverseNames($toReverse)
+    {
+        $array = [];
+
+        foreach ($toReverse as $key => $value) {
+            if (!strncmp($key, 'hotelInputDefinition', 20)) {
+                $array[$this->reverseSanitizeName($key)] = $value;
+            }
+        }
+
+        return $array;
+    }
+
     private function processFormElement($groupKey, $key, $element)
     {
         $fieldName = $this->sanitizeName($element['qualified_name']);
@@ -147,8 +273,8 @@ class FormHelper
                     $key,
                     'date',
                     array(
-                        'format' =>'MMM-yyyy  d',
-                        'years' => range(date('Y'), date('Y')+12),
+                        'format' => 'MMM-yyyy  d',
+                        'years' => range(date('Y'), date('Y') + 12),
                         'days' => array(1),
                         'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => false)
                     )
@@ -172,10 +298,11 @@ class FormHelper
 
         }
 
-        $this->fieldNames[$groupKey][] = ($fieldName != '')? $fieldName : $key;
+        $this->fieldNames[$groupKey][] = ($fieldName != '') ? $fieldName : $key;
     }
 
-    private function generateChoiceField($optionsArray)
+    private
+    function generateChoiceField($optionsArray)
     {
         $optionField = array();
         foreach ($optionsArray as $item) {
@@ -183,5 +310,11 @@ class FormHelper
         }
 
         return $optionField;
+    }
+
+    public
+    function getSelectedPack()
+    {
+        return $this->selectedPack;
     }
 }

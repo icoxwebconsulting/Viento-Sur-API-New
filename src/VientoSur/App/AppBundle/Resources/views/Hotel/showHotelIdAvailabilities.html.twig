@@ -28,6 +28,13 @@
 
         }
 
+        $("#animarscroll").on("click", function(){
+            var posicion = $(".booking-list-rooms").offset().top;
+            $("html, body").animate({
+                scrollTop: posicion
+            }, 1500);
+        });
+
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04&callback=initMap"></script>
 
@@ -83,13 +90,10 @@
                                     </div>
                                     <a href="#">
                                         <!--<span class="btn btn-primary mt15">Reservar ahora</span>-->
-                                        <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
-                                            <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
-                                            <button type="submit" class="btn btn-primary">
-                                                Reservar ahora
-                                            </button>
-
-                                        </form>
+                                        <br />
+                                        <button class="btn btn-primary" id="animarscroll">
+                                            Ver Habitaciones
+                                        </button>
                                     </a>
                                 </div>
                             </div>
@@ -216,6 +220,7 @@
                                                         <!--<span class="btn btn-primary">Reservar</span>-->
                                                         <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
                                                             <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                                            <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
                                                             <button type="submit" class="btn btn-primary">
                                                                 Reservar
                                                             </button>
