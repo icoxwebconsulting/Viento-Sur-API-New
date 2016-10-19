@@ -7,6 +7,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\Response;
 
+use VientoSur\App\AppBundle\Services\Despegar;
+
 class FormHelper
 {
     private $formNewPay;
@@ -15,9 +17,11 @@ class FormHelper
 
     private $selectedPack;
 
-    public function __construct()
-    {
+    private $despegar;
 
+    public function __construct(Despegar $dp)
+    {
+        $this->despegar = $dp;
     }
 
     public function initForm($formBooking, $formNewPay, $roompackChoice)
@@ -49,9 +53,7 @@ class FormHelper
         foreach ($formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']] as $key => $option) {
             if (is_array($option)) {
                 if ($this->is_assoc($option)) {
-                    $resultado[] = array(
-                        "$key" => 'Es asociativo'
-                    );
+                    //es asociativo
                     if ($key != 'payment') {
                         $this->processSimpleElement($key, $option);
                     } else {
@@ -59,28 +61,26 @@ class FormHelper
                         foreach ($option as $item) {
                             if (is_array($item)) {
                                 $this->processSimpleElement($key, $item);
-                            } else {
-                                //es texto
                             }
                         }
                     }
                 } else {
-                    $resultado[] = array(
-                        "$key" => 'NO es asociativo'
-                    );
-                    if($key == 'vouchers'){
+                    //no es asociativo
+                    if ($key == 'vouchers') {
                         $this->processSimpleElement($key, $option);
-                    }else{
+                    } else {
                         $this->processNestedElement($key, $option);
                     }
                 }
-            } else {
-                $hola = 'no es un array';
             }
         }
 
         return $this->formNewPay;
     }
+
+    private $formToFill;
+    private $dataFill;
+    private $expDate;
 
     public function fillFormData($formBooking, $formNewPaySend)
     {
@@ -90,6 +90,10 @@ class FormHelper
         $expYear = $formNewPaySend['expiration']->format('Y');
         $form = $formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']];
         $dataArray = [];
+
+        $this->formToFill = $form;
+        $this->dataFill = $data;
+        $this->expDate = $expYear . '-' . $expMonth;
 
         foreach ($form as $key => $option) {
             if (is_array($option)) {
@@ -109,27 +113,7 @@ class FormHelper
                         break;
 
                     case 'payment':
-                        if (is_array($option)) {
-                            foreach ($option as $key2 => $item) {
-                                if (is_array($item)) {
-                                    $temp = [];
-                                    foreach ($item as $key3 => $element) {
-                                        if (is_array($element) && array_key_exists('value', $element)) {
-                                            if ($key3 != 'expiration') {
-                                                if ($key3 == 'bank_code') {
-                                                    //$temp[$key3] = "null";
-                                                } else {
-                                                    $temp[$key3] = $data[$form[$key][$key2][$key3]['qualified_name']];
-                                                }
-                                            } else {
-                                                $temp[$key3] = $expYear . '-' . $expMonth;
-                                            }
-                                        }
-                                    }
-                                    $dataArray[$key][$key2] = $temp;
-                                }
-                            }
-                        }
+                        $dataArray['payment'] = $this->fillSimpleElement($key, $option, $data);
                         break;
 
                     case 'contact':
@@ -167,6 +151,8 @@ class FormHelper
                                 $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
                             }
                         }
+                        $dataArray[$key] = $temp;
+                        break;
                 }
             }
         }
@@ -202,8 +188,8 @@ class FormHelper
                         $this->processFormElement($groupKey, $key, $element, $subKey);
                     } else {
                         foreach ($element as $key2 => $item) {
-                            if (array_key_exists('value', $element)) {
-                                $this->processFormElement($groupKey, $key, $element, $subKey);
+                            if (is_array($item) && array_key_exists('value', $item)) {
+                                $this->processFormElement($groupKey, $key, $item, $key2);
                             }
                         }
                     }
@@ -216,6 +202,55 @@ class FormHelper
                 //sólo texto
             }
         }
+    }
+
+    private function fillSimpleElement($groupKey, $elements, $subKey = null)
+    {
+        $dataArray = [];
+
+        foreach ($elements as $key => $element) {
+            if (is_array($element)) {
+                $temp = [];
+                if ($this->is_assoc($element)) {
+                    //determinar si es un campo anidado
+                    if (array_key_exists('value', $element)) {
+                        //si está seteado value se sobreentiende que es un elemento simple, sino está anidado y se debe iterar
+                        if ($subKey) {
+                            $temp[$key][$subKey] = $this->dataFill[$this->formToFill[$groupKey][$key][$subKey]['qualified_name']];
+                        } else {
+                            $temp[$key] = $this->dataFill[$this->formToFill[$groupKey][$key]['qualified_name']];
+                        }
+                    } else {
+                        $temp2 = [];
+                        foreach ($element as $key2 => $item) {
+                            if (is_array($item) && array_key_exists('value', $item)) {
+                                if ($key2 == 'expiration') {
+                                    $temp2[$key2] = $this->expDate;
+                                } else {
+                                    $temp2[$key2] = $this->dataFill[$this->formToFill[$groupKey][$key][$key2]['qualified_name']];
+                                }
+                            } else {
+                                if (is_array($item)) {
+                                    foreach ($item as $key3 => $value) {
+                                        if (is_array($value) && array_key_exists('value', $value)) {
+                                            $temp2[$key2][$key3] = $this->dataFill[$this->formToFill[$groupKey][$key][$key2][$key3]['qualified_name']];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        $temp = $temp2;
+                    }
+                    $dataArray[$key] = $temp;
+                } else {//elemento anidado, procesar c/u
+                    for ($j = 0; $j < count($element); $j++) {
+                        $this->fillSimpleElement($groupKey, $element[$j], $key);
+                    }
+                }
+            }
+        }
+
+        return $dataArray;
     }
 
     private function sanitizeName($name)
@@ -247,13 +282,25 @@ class FormHelper
 
         switch ($element['type']) {
             case 'TEXT':
-                $this->formNewPay->add(
-                    $fieldName,
-                    'text',
-                    array(
-                        'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
-                    )
-                );
+                if (strstr($fieldName, 'stateId')) {
+                    //consultar api de despegar
+                    $stateArray = $this->despegar->getStates();
+                    $optionField = array();
+                    foreach ($stateArray->items as $item) {
+                        if (property_exists($item->descriptions, 'es')) {
+                            $optionField[$item->descriptions->es] = $item->id;
+                        }
+                    }
+                    $this->generateMultiValues($fieldName, $optionField);
+                } else {
+                    $this->formNewPay->add(
+                        $fieldName,
+                        'text',
+                        array(
+                            'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                        )
+                    );
+                }
                 break;
 
             case 'BOOLEAN':
@@ -283,16 +330,7 @@ class FormHelper
 
             case 'MULTIVALUED':
                 $optionField = $this->generateChoiceField($element['options']);
-
-                $this->formNewPay->add(
-                    $fieldName,
-                    'choice',
-                    array(
-                        'choices' => $optionField,
-                        // *this line is important*
-                        'choices_as_values' => true,
-                    )
-                );
+                $this->generateMultiValues($fieldName, $optionField);
                 break;
 
 
@@ -301,8 +339,7 @@ class FormHelper
         $this->fieldNames[$groupKey][] = ($fieldName != '') ? $fieldName : $key;
     }
 
-    private
-    function generateChoiceField($optionsArray)
+    private function generateChoiceField($optionsArray)
     {
         $optionField = array();
         foreach ($optionsArray as $item) {
@@ -312,9 +349,21 @@ class FormHelper
         return $optionField;
     }
 
-    public
-    function getSelectedPack()
+    public function getSelectedPack()
     {
         return $this->selectedPack;
+    }
+
+    private function generateMultiValues($fieldName, $optionField)
+    {
+        $this->formNewPay->add(
+            $fieldName,
+            'choice',
+            array(
+                'choices' => $optionField,
+                // *this line is important*
+                'choices_as_values' => true,
+            )
+        );
     }
 }

@@ -179,6 +179,8 @@ class HotelController extends Controller {
         $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
+
+       // getHotelsAvailabilities($fromCalendarHotel, $toCalendarHotel, $destination, $distribucion, $offset);
         $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
 
 
@@ -386,7 +388,7 @@ class HotelController extends Controller {
                     'expiration_month' =>$formNewPaySend['expiration']->format('m'),
                     'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
                     'security_code'    =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:securityCode:value'],
-                    'bank'             =>null,//TODO: Colocar valor requerido
+                    'bank'             =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:bankCode:value'],//TODO: Colocar valor requerido
                     'seconds_to_live'  =>'600',
                     'holder_name'      =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:ownerName:value'],
                 ];

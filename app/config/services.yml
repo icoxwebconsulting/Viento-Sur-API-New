@@ -6,4 +6,8 @@ parameters:
 services:
     form_helper:
         class: VientoSur\App\AppBundle\Services\FormHelper
+        arguments:
+            "dp": "@despegar"
+    despegar:
+        class: VientoSur\App\AppBundle\Services\Despegar
         arguments: []
