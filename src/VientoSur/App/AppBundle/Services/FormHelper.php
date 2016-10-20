@@ -115,7 +115,15 @@ class FormHelper
                         break;
 
                     case 'payment':
-                        $dataArray['payment'] = $this->fillSimpleElement($key, $option, $data);
+                        $temp = $this->fillSimpleElement($key, $option, $data);
+                        if (isset($temp['credit_card'])) {
+                            unset($temp['credit_card']['number']);
+                            unset($temp['credit_card']['expiration']);
+                            unset($temp['credit_card']['card_code']);
+                            unset($temp['credit_card']['bank_code']);
+                            unset($temp['credit_card']['security_code']);
+                        }
+                        $dataArray['payment'] = $temp;
                         break;
 
                     case 'contact':

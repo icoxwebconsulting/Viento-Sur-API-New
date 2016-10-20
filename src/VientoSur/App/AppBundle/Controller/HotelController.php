@@ -394,12 +394,12 @@ class HotelController extends Controller {
                 
                //procesar formulario recibido
                 $array_for_dvault = [
-                    'brand_code'       =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:cardType:value'],
+                    'brand_code'       =>'VI',
                     'number'           =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:number:value'],
                     'expiration_month' =>$formNewPaySend['expiration']->format('m'),
                     'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
                     'security_code'    =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:securityCode:value'],
-                    'bank'             =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:bankCode:value'],//TODO: Colocar valor requerido
+                    'bank'             =>"AR-VI-*-CREDIT",//TODO: Colocar valor requerido
                     'seconds_to_live'  =>'600',
                     'holder_name'      =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:ownerName:value'],
                 ];
@@ -419,7 +419,9 @@ class HotelController extends Controller {
 
                         //quitar ?example=true para PRODUCCION
                         $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
-                        var_dump($response);
+                        echo 'Response: <pre>';
+                        print_r($response);
+                        echo '</pre><br/>';
                         exit();
                     } else {
                         //TODO: Error en dVault response token

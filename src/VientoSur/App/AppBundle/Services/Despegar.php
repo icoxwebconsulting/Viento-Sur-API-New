@@ -125,6 +125,16 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
 
+        echo 'PATCH: '. $url.'<br/>';
+        echo 'Header: <pre>';
+        print_r(json_encode($header));
+        echo '</pre><br/>';
+
+        echo 'BODY: <pre>';
+        print_r($params);
+        echo '</pre><br/>';
+
+
         return $this->curlExec($url, $header, 'PATCH', json_encode($params));
     }
 
