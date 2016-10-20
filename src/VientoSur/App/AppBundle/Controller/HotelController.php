@@ -251,6 +251,7 @@ class HotelController extends Controller {
      * @Template()
      */
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
+        $session = $request->getSession();
         $urlParams = array(
             'language' => 'es',
             'currency' => 'USD'
@@ -258,6 +259,7 @@ class HotelController extends Controller {
 
         $despegar = $this->get('despegar');
         $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams);
+        $session->set('hotelAvailabilities', $dispoHotel);
         $dispoHotel = json_decode($dispoHotel, true);
 
         $urlParams = array(
@@ -270,7 +272,6 @@ class HotelController extends Controller {
         $hotelDetails = $despegar->getHotelsDetails($urlParams);
         $hotelDetails = json_decode($hotelDetails, true);
 
-        $session = $request->getSession();
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
@@ -350,8 +351,21 @@ class HotelController extends Controller {
 
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
-        $formUrl     = $request->get('formUrl');
+       // $session->remove('price_detail');
         $roompackChoice = $request->get('roompack_choice');
+
+        $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
+        //$session->remove('hotelAvailabilities');
+
+        foreach ($hotelAvailabilities->roompacks as $item) {
+            if ($item->choice = $roompackChoice) {
+                $roompack = $item;
+                break;
+            }
+        }
+
+
+        $formUrl     = $request->get('formUrl');
         $bookingId = $request->query->get('formUrl');
         $booking_id = $request->get('booking_id');
 
@@ -380,6 +394,7 @@ class HotelController extends Controller {
             $session->set('formBooking', $formBooking);
         } else {
             $formBooking = $session->get('formBooking');
+            //$session->remove('formBooking');
         }
         $formBooking = json_decode($formBooking, true);
 
@@ -418,7 +433,7 @@ class HotelController extends Controller {
                         $form_id_booking = $seletedPack['id'];
 
                         $patchParams = [];
-                        $patchParams['payment_method_choice'] = "1";
+                        $patchParams['payment_method_choice'] = "6";
                         $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
                         $patchParams['form'] = $fillData;
 
