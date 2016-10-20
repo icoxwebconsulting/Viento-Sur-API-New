@@ -374,8 +374,13 @@ class HotelController extends Controller {
         $sessionForm = $request->getSession();
         $sessionForm->set('url_detail_form', $despegar->getHotelsBookingsNextStepUrl($bookingId));
 
-        //quitar ?example=true para PRODUCCION
-        $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
+        if($request->getMethod() == 'GET') {
+            //quitar ?example=true para PRODUCCION
+            $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
+            $session->set('formBooking', $formBooking);
+        } else {
+            $formBooking = $session->get('formBooking');
+        }
         $formBooking = json_decode($formBooking, true);
 
         /* start form */
