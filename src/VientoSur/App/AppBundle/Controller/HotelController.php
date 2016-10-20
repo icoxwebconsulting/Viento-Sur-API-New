@@ -399,7 +399,7 @@ class HotelController extends Controller {
                     'expiration_month' =>$formNewPaySend['expiration']->format('m'),
                     'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
                     'security_code'    =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:securityCode:value'],
-                    'bank'             =>"*",//TODO: Colocar valor requerido
+                    'bank'             =>"AR-VI-*-CREDIT",//TODO: Colocar valor requerido
                     'seconds_to_live'  =>'600',
                     'holder_name'      =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:ownerName:value'],
                 ];
