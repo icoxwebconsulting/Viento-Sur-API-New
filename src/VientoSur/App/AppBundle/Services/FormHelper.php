@@ -6,7 +6,9 @@ use Assetic\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 use VientoSur\App\AppBundle\Services\Despegar;
 
 class FormHelper
