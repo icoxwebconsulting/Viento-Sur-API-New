@@ -127,15 +127,12 @@ class HotelController extends Controller {
      */
     public function sendHotelsAvailabilitiesAction($offset, $limit, Request $request) {
 
-        //step2
-        //echo $request->get('autocomplete');
-        //$destination = $request->get('cityInput'); //echo '  '.$destination;
+        //TODO: destination representa la ciudad que está disponible a través del api geography (o autocomplete) cuando esté en producción
         $destination = 982;
-        //$fromCalendarHotel = $request->get('start'); echo ' '.$fromCalendarHotel;
+
         list($day,$month,$year)=explode("/",$request->get('start'));
         $fromCalendarHotel = $year.'-'.$month.'-'.$day;
-        //echo $fromCalendarHotel;
-        //$toCalendarHotel = $request->get('end'); echo ' '.$toCalendarHotel; die();
+
         list($day,$month,$year)=explode("/",$request->get('end'));
         $toCalendarHotel = $year.'-'.$month.'-'.$day; //echo $fromCalendarHotel.' '.$toCalendarHotel; die();
         $habitacionesCant = $request->get('habitacionesCant'); //echo ' habitacion '.$habitacionesCant;
@@ -180,14 +177,33 @@ class HotelController extends Controller {
         $distribucionClass = new DistributionController();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
 
-       // getHotelsAvailabilities($fromCalendarHotel, $toCalendarHotel, $destination, $distribucion, $offset);
-        $url = "https://api.despegar.com/v3/hotels/availabilities?country_code=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&destination=" . $destination . "&distribution=" . $distribucion . "&language=es&radius=200&accepts=partial&currency=USD&sorting=best_selling_descending&classify_roompacks_by=none&roompack_choices=recommended&offset=".$offset."&limit=10";
+        $urlParams = array(
+            "country_code" => "AR",
+            "checkin_date" => $fromCalendarHotel,
+            "checkout_date" => $toCalendarHotel,
+            "destination" => $destination,
+            "distribution" => $distribucion,
+            "language" => "es",
+            "radius" => "200",
+            "accepts" => "partial",
+            "currency" => "USD",
+            "sorting" => "best_selling_descending",
+            "classify_roompacks_by" => "none",
+            "roompack_choices" => "recommended",
+            "offset" => $offset,
+            "limit" => "10"
+        );
 
+        $despegar = $this->get('despegar');
+        $results = $despegar->getHotelsAvailabilities($urlParams);
+        $results = json_decode($results, true);
 
-        $hotels = $this->cUrlExecAction($url);
-        $results = json_decode($hotels, true);
-
-        $restUrl = "?site=AR&checkin_date=" . $fromCalendarHotel . "&checkout_date=" . $toCalendarHotel . "&distribution=" . $distribucion;
+        $restUrl = '?' . http_build_query(array(
+                "site" => "AR",
+                "checkin_date" => $fromCalendarHotel,
+                "checkout_date" => $toCalendarHotel,
+                "distribution" => $distribucion
+            ));
 
         $session = $request->getSession();
         $session->set('checkin_date', $request->get('start'));
@@ -239,15 +255,26 @@ class HotelController extends Controller {
      * @Template()
      */
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
-        $url = "https://api.despegar.com/v3/hotels/availabilities/" . $idHotel . $restUrl . "&language=en&currency=USD";
+        $urlParams = array(
+            'language' => 'es',
+            'currency' => 'USD'
+        );
 
-        $itemDispo = $this->cUrlExecAction($url);
-
-        $dispoHotel = json_decode($itemDispo, true); //print_r($dispoHotel['roompacks'][1]['rooms']);die();
+        $despegar = $this->get('despegar');
+        $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams);
+        $dispoHotel = json_decode($dispoHotel, true);
 
         $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=information,amenities,pictures,room_types(pictures,information,amenities)&resolve=merge_info&catalog_info=true";
-        $hotel = $this->cUrlExecAction($hotelUrl);
-        $hotelDetails = json_decode($hotel, true);//print_r($hotelDetails);die();
+
+        $urlParams = array(
+            'ids' => $idHotel,
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        );
+        $hotelDetails = $despegar->getHotelsDetails($urlParams);
+        $hotelDetails = json_decode($hotelDetails, true);
 
         $session = $request->getSession();
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
