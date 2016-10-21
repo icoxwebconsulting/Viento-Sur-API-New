@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use VientoSur\App\AppBundle\Controller\DistributionController;
-use GuzzleHttp\Exception\BadResponseException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -347,6 +346,7 @@ class HotelController extends Controller {
             }
         }
 
+        //$roompack = json_encode($roompack, true);
 
         $formUrl     = $request->get('formUrl');
         $bookingId = $request->query->get('formUrl');
@@ -443,7 +443,8 @@ class HotelController extends Controller {
             'expiration_years' => $expiration_years,
             'expiration_month' => $expiration_month,
             'booking_id'       => $booking_id,
-            'formNewPay'       => $formNewPaySend->createView()
+            'formNewPay'       => $formNewPaySend->createView(),
+            'paymentMethods'   => $roompack->payment_methods
         );
     }
 

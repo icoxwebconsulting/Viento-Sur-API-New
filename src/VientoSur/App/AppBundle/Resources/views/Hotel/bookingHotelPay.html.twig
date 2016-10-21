@@ -25,7 +25,33 @@
                 </div>
             </div>
             <div class="col-md-9">
-            {{ form_start(formNewPay) }}
+                {{ form_start(formNewPay) }}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Formas de pago</div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {% for paymentMethod in paymentMethods %}
+                                <li class="list-group-item">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}">
+                                        </label>
+                                        {{ paymentMethod.type }}
+
+                                        {% for cardId in paymentMethod.card_ids %}
+                                            <label class="card-selector">
+                                                {% set cardData = cardId|split('-') %}
+                                                <div class="eva-card-container">
+                                                    <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                </div>
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
                 {{ form_widget(formNewPay) }}
                 <div class="gap"></div>
                 <div class="mod-searchbutton">
@@ -46,4 +72,15 @@
     <script>
         $('#form_expiration_day').hide();
     </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<style type="text/css">
+    .credit-card-div  span { padding-top:10px; }
+    .credit-card-div img { padding-top:30px; }
+    .credit-card-div .small-font { font-size:9px; }
+    .credit-card-div .pad-adjust { padding-top:10px; }
+</style>
+    <link href="{{ asset('bundles/vientosurappapp/css/cards-horizontal.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
