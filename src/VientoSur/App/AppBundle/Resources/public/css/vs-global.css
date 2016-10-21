@@ -841,3 +841,33 @@ h4.booking-item-title {
     display: block;
   }
 }
+
+/*card selector*/
+/*label.card-selector > input { !* HIDE RADIO *!*/
+  /*visibility: hidden; !* Makes input not-clickable *!*/
+  /*position: absolute; !* Remove input from document flow *!*/
+/*}*/
+
+/*label.card-selector > input + span { !* IMAGE STYLES *!*/
+  /*cursor: pointer;*/
+  /*border: 2px solid transparent;*/
+/*}*/
+
+/*label.card-selector > input:checked + span { !* (RADIO CHECKED) IMAGE STYLES *!*/
+  /*border: 2px solid #f00;*/
+/*}*/
+
+.eva-card-container {
+  min-width: 65px;
+  height: 40px;
+  border: 1px solid #DDD;
+  border-bottom-color: #CCC;
+  background: #EEE;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  box-sizing: content-box;
+}
