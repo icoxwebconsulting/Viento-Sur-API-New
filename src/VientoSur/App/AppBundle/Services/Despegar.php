@@ -125,7 +125,7 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
 
-        echo 'PATCH: '. $url.'<br/>';
+        echo 'PATCH: ' . $url . '<br/>';
         echo 'Header: <pre>';
         print_r(json_encode($header));
         echo '</pre><br/>';
@@ -203,5 +203,16 @@ class Despegar
             return false;
         }
         return false;
+    }
+
+    public function autocomplete($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'autocomplete?' . urldecode(http_build_query($urlParams));
+        $header = [
+            'Content-Type: application/json',
+            'X-Client: ' . $this->apiKey,
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        return $this->curlExec($url, $header, 'GET');
     }
 }

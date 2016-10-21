@@ -2,7 +2,6 @@
 
 namespace VientoSur\App\AppBundle\Controller;
 
-use GuzzleHttp\Exception\ClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -39,51 +38,35 @@ class HotelController extends Controller {
     }
 
     /**
-     * Lists all Company entities.
+     * Autocomplete
      *
-     * @Route("/autocomplete/", name="hotel_autocomplete")
+     * @Route("/autocomplete/{type}", name="despegar_autocomplete")
      * @Method("GET")
-     * @Template()
      */
-    public function autoCompleteHotelAction(Request $request) {
+    public function autoCompleteHotelCountryAction($type, Request $request)
+    {
         $query = $request->get('query');
-        $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
-        $cities = $this->cUrlExecAutoCompleteAction($url);
-        $results = json_decode($cities, true);
-        //print_r($results);die();
-        foreach ($results as $item) {
+        $urlParams = [
+            'query' => $query,
+            'product' => $type,
+            'locale' => 'es',
+            'city_result' => '10'
+        ];
+        $despegar = $this->get('despegar');
+        $result = $despegar->autocomplete($urlParams);
+        $result = json_decode($result, true);
+
+        foreach ($result as $item) {
             $city = Array();
-
-            $city["value"] = $item["description"];
-            $city["data"] = substr($item["id"], 5);
-            $response[] = $city;
-        }
-        return new JsonResponse(array("suggestions" => $response));
-        //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
-    }
-
-    /**
-     * Lists all Company entities.
-     *
-     * @Route("/autocomplete/vuelo", name="vuelo_autocomplete")
-     * @Method("GET")
-     * @Template()
-     */
-    public function autoCompleteHotelCountryAction(Request $request) {
-        $query = $request->get('query');
-        $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
-        $cities = $this->cUrlExecAutoCompleteAction($url);
-        $results = json_decode($cities, true);
-
-        foreach ($results as $item) {
-            $city = Array();
-
             $city["value"] = $item["description"];
             $city["data"] = $item["code"];
             $response[] = $city;
         }
-        return new JsonResponse(array("suggestions" => $response));
-        //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
+        return new JsonResponse(
+            array(
+                "suggestions" => $response
+            )
+        );
     }
 
     /**
@@ -433,7 +416,7 @@ class HotelController extends Controller {
                         $form_id_booking = $seletedPack['id'];
 
                         $patchParams = [];
-                        $patchParams['payment_method_choice'] = "6";
+                        $patchParams['payment_method_choice'] = "2";
                         $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
                         $patchParams['form'] = $fillData;
 
@@ -465,51 +448,12 @@ class HotelController extends Controller {
     }
 
     private function cUrlExecAction($url) {
-
-        //step1
-        // api productiva ca8fe17f100646cbbefa4ecddcf51350
-        // ca8fe17f100646cbbefa4ecddcf51350
-        // api desarrollo 2864680fe4d74241aa613874fa20705f
-
-//                echo 'GET: '. $url.'<br/>';
-//
-//        echo 'Header: <pre>';
-//        print_r(json_encode(array('X-ApiKey:2864680fe4d74241aa613874fa20705f')));
-//        echo '</pre><br/>';
-//
-//        echo 'Request: <pre>';
-//        print_r(json_encode($url));
-//        echo '</pre><br/>';
-
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
         curl_setopt($cSession, CURLOPT_HEADER, false);
         curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
-        //step3
-        $results = curl_exec($cSession);
-        //step4
-        curl_close($cSession);
-
-//        echo 'Response: <pre>';
-//        print_r($results);
-//        echo '</pre><br/>';
-//        die('finish');
-
-        return $results;
-    }
-
-    private function cUrlExecAutoCompleteAction($url) {
-
-        //step1
-        // api productiva ca8fe17f100646cbbefa4ecddcf51350
-        $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        //curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:ca8fe17f100646cbbefa4ecddcf51350'));
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
-        curl_setopt($cSession, CURLOPT_HEADER, false);
         //step3
         $results = curl_exec($cSession);
         //step4
