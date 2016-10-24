@@ -14,12 +14,14 @@ use VientoSur\App\AppBundle\Services\Despegar;
 class FormHelper
 {
     private $formNewPay;
-
     private $fieldNames;
-
     private $selectedPack;
-
     private $despegar;
+
+    //
+    private $formToFill;
+    private $dataFill;
+    private $expDate;
 
     private $passengersForm;
     private $paymentForm;
@@ -88,10 +90,6 @@ class FormHelper
 
         return $this->formNewPay;
     }
-
-    private $formToFill;
-    private $dataFill;
-    private $expDate;
 
     public function fillFormData($formBooking, $formNewPaySend)
     {
@@ -191,12 +189,12 @@ class FormHelper
 
     private function processNestedElement($key, $data)
     {
-        foreach ($data as $element) {
-            $this->processSimpleElement($key, $element);
+        foreach ($data as $subKey => $element) {
+            $this->processSimpleElement($key, $element, $subKey);
         }
     }
 
-    private function processSimpleElement($groupKey, $elements, $subKey = null)
+    private function processSimpleElement($groupKey, $elements, $subKey = null, $extraKey = null)
     {
         foreach ($elements as $key => $element) {
             if (is_array($element)) {
@@ -204,7 +202,7 @@ class FormHelper
                     //determinar si es un campo anidado
                     if (array_key_exists('value', $element)) {
                         //si está seteado value se sobreentiende que es un elemento simple, sino está anidado y se debe iterar
-                        $this->processFormElement($groupKey, $key, $element, $subKey);
+                        $this->processFormElement($groupKey, $key, $element, $subKey, $extraKey);
                     } else {
                         foreach ($element as $key2 => $item) {
                             if (is_array($item) && array_key_exists('value', $item)) {
@@ -214,7 +212,7 @@ class FormHelper
                     }
                 } else {//elemento anidado, procesar c/u
                     for ($j = 0; $j < count($element); $j++) {
-                        $this->processSimpleElement($groupKey, $element[$j], $key);
+                        $this->processSimpleElement($groupKey, $element[$j], $key, $j);
                     }
                 }
             } else {
@@ -295,9 +293,15 @@ class FormHelper
         return $array;
     }
 
-    private function processFormElement($groupKey, $key, $element)
+    private function processFormElement($groupKey, $key, $element, $subKey = null, $extraKey = null)
     {
-        $fieldName = $this->sanitizeName($element['qualified_name']);
+        //$fieldName = $this->sanitizeName($element['qualified_name']);
+        $fieldName = $key;
+        if ($subKey === 'phones') {
+            $fieldName .= $extraKey;
+        } else {
+            $fieldName .= ($subKey !== null) ? '' . $subKey : '';
+        }
 
         switch ($element['type']) {
             case 'TEXT':

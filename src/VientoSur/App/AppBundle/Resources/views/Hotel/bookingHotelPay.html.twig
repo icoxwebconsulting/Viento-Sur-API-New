@@ -29,9 +29,30 @@
 
                 <!--Pasajeros-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Pasajeros</div>
+                    <div class="panel-heading">Titular de habitación</div>
                     <div class="panel-body">
-                        {{ form_row(formNewPay.passengers) }}
+                        {#{{ form_row(formNewPay.passengers) }}#}
+                        {% for passenger in formChoice.passengers %}
+                            {% if loop.index0 > 0 %}
+                                <hr/>
+                            {% endif %}
+                            <h4>Titular {{ loop.index }}:</h4>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% set fieldName = 'first_name' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):'}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'last_name' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):'}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'document_number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Documento de Identidad:'}) }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!--/Pasajeros-->
@@ -60,12 +81,48 @@
                                     </div>
                                 </li>
                             {% endfor %}
-
                             <hr />
-
-                            {{ form_row(formNewPay.payment) }}
-
                         </ul>
+
+                        {% if formChoice.payment.credit_card is defined %}
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label>Tarjeta:</label>
+                                    <select>
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{ form_row(formNewPay.payment.number, {'label': 'Número de tarjeta:'}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(formNewPay.payment.expiration, {'label': 'Vencimiento:'}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(formNewPay.payment.security_code, {'label': 'Código de seguridad:'}) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{ form_row(formNewPay.payment.owner_name, {'label': 'Titular de la tarjeta:', 'attr': {'placeholder': 'Como aparece en la tarjeta'}}) }}
+                                </div>
+                                {% if formNewPay.payment.owner_document is defined %}
+                                    <div class="col-md-4">
+                                        {{ form_row(formNewPay.payment.owner_document, {'label': 'Documento de Identidad del titular:'}) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden-row'} }) }}
+                            {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
+                            {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden-row'} }) }}
+                        {% endif %}
+
+                        {% if formChoice.payment.invoice is defined %}
+                            {% include 'bookingHotelPayInvoice.html.twig' %}
+                        {% endif %}
                     </div>
                 </div>
                 <!--/Formas de pago-->
@@ -74,28 +131,85 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Datos de Contacto</div>
                     <div class="panel-body">
-                        {{ form_row(formNewPay.contact) }}
+                        {#{{ form_row(formNewPay.contact) }}#}
+                        <div class="row">
+                        {% for phone in formChoice.contact.phones %}
+                                {% set fieldName = 'area_code' ~ loop.index0 %}
+                                {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                <div class="col-md-2">
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de área:'}) }}
+                                </div>
+                                {% endif %}
+
+                                <div class="col-md-2">
+                                    {% set fieldName = 'country_code' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:'}) }}
+                                </div>
+
+                                {% set fieldName = 'type' ~ loop.index0 %}
+                                {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                    <div class="col-md-2">
+                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:'}) }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="col-md-2">
+                                    {% set fieldName = 'number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Número:'}) }}
+                                </div>
+                        {% endfor %}
+                                <div class="col-md-2">
+                                    {{ form_row(formNewPay.contact.email, {'label': 'Email:'}) }}
+                                </div>
+                        </div>
                     </div>
                 </div>
                 <!--/Contacto-->
 
-                <!--Recibo-->
+                <!--Vouchers-->
                 {% if formNewPay.vouchers is defined %}
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Recibos</div>
+                    <div class="panel-heading">Cupones</div>
                     <div class="panel-body">
-                        {{ form_row(formNewPay.vouchers) }}
+                        {#{{ form_row(formNewPay.vouchers) }}#}
+                        <div class="row">
+                            {% for voucher in formChoice.vouchers %}
+                                <div class="col-md-2">
+                                    {% set fieldName = loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.vouchers, fieldName), {'label': 'Cupón:'}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 {% endif %}
-                <!--/Recibo-->
+                <!--/Vouchers-->
 
                 <!--Datos adicionales-->
                 {% if formNewPay.additionalData is defined %}
                     <div class="panel panel-primary">
                         <div class="panel-heading">Datos adicionales</div>
                         <div class="panel-body">
-                            {{ form_row(formNewPay.additionalData) }}
+                            {#{{ form_row(formNewPay.additionalData) }}#}
+                            <div class="row">
+                                {% if formNewPay.additionalData.comment is defined %}
+                                <div class="col-md-2">
+                                    {{ form_row(formNewPay.additionalData.comment, {'label': 'Comentarios:'}) }}
+                                </div>
+                                {% endif %}
+
+                                {% if formNewPay.additionalData.subscribe_newsletter is defined %}
+                                    <div class="col-md-2">
+                                        {{ form_row(formNewPay.additionalData.subscribe_newsletter, {'label': 'Subscribir a noticias:'}) }}
+                                    </div>
+                                {% endif %}
+
+                                {% if formNewPay.additionalData.travel_assistance is defined %}
+                                    <div class="col-md-2">
+                                        {{ form_row(formNewPay.additionalData.travel_assistance, {'label': 'Asistencia en viaje:'}) }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 {% endif %}
@@ -103,7 +217,7 @@
 
                 <div class="gap"></div>
                 <div class="mod-searchbutton">
-                    <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
+                    <button class="btn btn-primary btn-lg" type="submit">Comprar</button> <span>Por favor, antes de finalizar, revise los datos ingresados.</span>
                 </div>
                 <input type="hidden" name="roompack_choice" value="{{ roompack_choice }}">
                 {{ form_rest(formNewPay) }}
@@ -111,6 +225,7 @@
             </div>
             <div class="gap"></div>
             {{ dump(formNewPay) }}
+            {{ dump(formChoice) }}
         </div>
     </div>
 {% endblock %}
@@ -130,6 +245,9 @@
     .credit-card-div img { padding-top:30px; }
     .credit-card-div .small-font { font-size:9px; }
     .credit-card-div .pad-adjust { padding-top:10px; }
+    .hidden-row {
+        display: none;
+    }
 </style>
     <link href="{{ asset('bundles/vientosurappapp/css/cards-horizontal.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}

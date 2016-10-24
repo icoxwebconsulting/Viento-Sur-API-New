@@ -434,9 +434,13 @@ class HotelController extends Controller {
                 }
             }
         }
+
+        $selectedPack = $formHelper->getSelectedPack();
+        $formChoice = $formBooking['dictionary']['form_choices'][$selectedPack['form_choice']];
         
         return array(
             'formBooking'      => $formBooking,
+            'formChoice'      => $formChoice,
             'price_detail'     => $priceDetail,
             'formUrl'          => $formUrl,
             'roompack_choice'  => $roompackChoice,

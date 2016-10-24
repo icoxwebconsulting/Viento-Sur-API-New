@@ -1,0 +1,69 @@
+<hr />
+<h3>Facturación:</h3>
+<div class="row">
+    {% if formNewPay.payment.billing_address is defined %}
+        <div class="col-md-6">
+            {{ form_row(formNewPay.payment.billing_address, {'label': 'Dirección de facturación:'}) }}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.invoice_name is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.invoice_name, {'label': 'Nombre para facturación:'}) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% if formNewPay.payment.fiscal_document is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.fiscal_document, {'label': 'Documento Fiscal:'}) }}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.fiscal_document_type is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.fiscal_document_type, {'label': 'Tipo de documento Fiscal:'}) }}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.fiscal_document_prefix_verification_code is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.fiscal_document_prefix_verification_code , {'label': 'Dígito de verificación:'}) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% if formNewPay.payment.document_issuing_country_code is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.document_issuing_country_code , {'label': 'Código de país del emisor:'}) }}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.business_type is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.business_type , {'label': 'Tipo de negocio:'}) }}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.economical_activity is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.economical_activity , {'label': 'Actividad económica:'}) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% if formNewPay.payment.entity_type is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.entity_type , {'label': 'Tipo de entidad:'}) }}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.tax_status is defined %}
+        <div class="col-md-4">
+            {{ form_row(formNewPay.payment.tax_status , {'label': 'Situación fiscal:'}) }}
+        </div>
+    {% endif %}
+</div>
