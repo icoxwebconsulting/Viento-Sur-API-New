@@ -21,6 +21,12 @@ class FormHelper
 
     private $despegar;
 
+    private $passengersForm;
+    private $paymentForm;
+    private $contactForm;
+    private $additional_dataForm;
+    private $vouchersForm;
+
     public function __construct(Despegar $dp)
     {
         $this->despegar = $dp;
@@ -38,6 +44,11 @@ class FormHelper
             'vouchers' => []
         );
         $this->selectedPack = null;
+        $this->passengersForm = $this->formNewPay->create('passengers', 'form', array('inherit_data' => true));
+        $this->paymentForm = $this->formNewPay->create('payment', 'form', array('inherit_data' => true));
+        $this->contactForm = $this->formNewPay->create('contact', 'form', array('inherit_data' => true));
+        $this->additional_dataForm = $this->formNewPay->create('additionalData', 'form', array('inherit_data' => true));
+        $this->vouchersForm = $this->formNewPay->create('vouchers', 'form', array('inherit_data' => true));
 
         foreach ($formBooking['items'] as $roomPack) {
             if ($roomPack['roompack_choice'] == $roompackChoice) {
@@ -49,8 +60,6 @@ class FormHelper
         if ($this->selectedPack == null) {
             throw new \Exception('No se consigue roompack');
         }
-
-        $resultado = array();
 
         foreach ($formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']] as $key => $option) {
             if (is_array($option)) {
@@ -301,13 +310,15 @@ class FormHelper
                             $optionField[$item->descriptions->es] = $item->id;
                         }
                     }
-                    $this->generateMultiValues($fieldName, $optionField);
+                    $this->generateMultiValues($fieldName, $optionField, $groupKey);
                 } else {
                     $this->formNewPay->add(
-                        $fieldName,
-                        'text',
-                        array(
-                            'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                        $this->{$groupKey . 'Form'}->add(
+                            $fieldName,
+                            'text',
+                            array(
+                                'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                            )
                         )
                     );
                 }
@@ -315,11 +326,12 @@ class FormHelper
 
             case 'BOOLEAN':
                 $this->formNewPay->add(
-                    $fieldName,
-                    'checkbox',
-                    array(
-                        'label' => '',
-                        'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                    $this->{$groupKey . 'Form'}->add(
+                        $fieldName,
+                        'checkbox',
+                        array(
+                            'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
+                        )
                     )
                 );
                 break;
@@ -327,20 +339,22 @@ class FormHelper
             case 'DATE':
             case 'DATE_YEAR_MONTH':
                 $this->formNewPay->add(
-                    $key,
-                    'date',
-                    array(
-                        'format' => 'MMM-yyyy  d',
-                        'years' => range(date('Y'), date('Y') + 12),
-                        'days' => array(1),
-                        'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => false)
+                    $this->{$groupKey . 'Form'}->add(
+                        $key,
+                        'date',
+                        array(
+                            'format' => 'MMM-yyyy  d',
+                            'years' => range(date('Y'), date('Y') + 12),
+                            'days' => array(1),
+                            'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => false)
+                        )
                     )
                 );
                 break;
 
             case 'MULTIVALUED':
                 $optionField = $this->generateChoiceField($element['options']);
-                $this->generateMultiValues($fieldName, $optionField);
+                $this->generateMultiValues($fieldName, $optionField, $groupKey);
                 break;
 
 
@@ -364,15 +378,17 @@ class FormHelper
         return $this->selectedPack;
     }
 
-    private function generateMultiValues($fieldName, $optionField)
+    private function generateMultiValues($fieldName, $optionField, $groupKey)
     {
         $this->formNewPay->add(
-            $fieldName,
-            'choice',
-            array(
-                'choices' => $optionField,
-                // *this line is important*
-                'choices_as_values' => true,
+            $this->{$groupKey . 'Form'}->add(
+                $fieldName,
+                'choice',
+                array(
+                    'choices' => $optionField,
+                    // *this line is important*
+                    'choices_as_values' => true,
+                )
             )
         );
     }

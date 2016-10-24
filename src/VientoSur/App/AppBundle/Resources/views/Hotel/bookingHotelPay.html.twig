@@ -26,6 +26,17 @@
             </div>
             <div class="col-md-9">
                 {{ form_start(formNewPay) }}
+
+                <!--Pasajeros-->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Pasajeros</div>
+                    <div class="panel-body">
+                        {{ form_row(formNewPay.passengers) }}
+                    </div>
+                </div>
+                <!--/Pasajeros-->
+
+                <!--Formas de pago-->
                 <div class="panel panel-primary">
                     <div class="panel-heading">Formas de pago</div>
                     <div class="panel-body">
@@ -49,10 +60,47 @@
                                     </div>
                                 </li>
                             {% endfor %}
+
+                            <hr />
+
+                            {{ form_row(formNewPay.payment) }}
+
                         </ul>
                     </div>
                 </div>
-                {{ form_widget(formNewPay) }}
+                <!--/Formas de pago-->
+
+                <!--Contacto-->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Datos de Contacto</div>
+                    <div class="panel-body">
+                        {{ form_row(formNewPay.contact) }}
+                    </div>
+                </div>
+                <!--/Contacto-->
+
+                <!--Recibo-->
+                {% if formNewPay.vouchers is defined %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Recibos</div>
+                    <div class="panel-body">
+                        {{ form_row(formNewPay.vouchers) }}
+                    </div>
+                </div>
+                {% endif %}
+                <!--/Recibo-->
+
+                <!--Datos adicionales-->
+                {% if formNewPay.additionalData is defined %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Datos adicionales</div>
+                        <div class="panel-body">
+                            {{ form_row(formNewPay.additionalData) }}
+                        </div>
+                    </div>
+                {% endif %}
+                <!--/Datos adicionales-->
+
                 <div class="gap"></div>
                 <div class="mod-searchbutton">
                     <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
@@ -62,6 +110,7 @@
             {{ form_end(formNewPay) }}
             </div>
             <div class="gap"></div>
+            {{ dump(formNewPay) }}
         </div>
     </div>
 {% endblock %}
@@ -70,7 +119,7 @@
     {{ parent() }}
 
     <script>
-        $('#form_expiration_day').hide();
+        $('#form_payment_expiration_day').hide();
     </script>
 {% endblock %}
 
