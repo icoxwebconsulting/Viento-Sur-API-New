@@ -29,6 +29,8 @@ class FormHelper
     private $additional_dataForm;
     private $vouchersForm;
 
+    private $array_card_brand = ['VI' => 'Visa', 'CA' => 'MasterCard', 'AX' => 'American Express', 'DC' => 'Diners Club', 'CL' => 'Cabal', 'TN' => 'Tarjeta Naranja', 'NV' => 'Tarjeta Nevada'];
+
     public function __construct(Despegar $dp)
     {
         $this->despegar = $dp;
@@ -371,7 +373,7 @@ class FormHelper
     {
         $optionField = array();
         foreach ($optionsArray as $item) {
-            $optionField[$item['key']] = $item['key'];
+            $optionField[$item['description']] = $item['key'];
         }
 
         return $optionField;

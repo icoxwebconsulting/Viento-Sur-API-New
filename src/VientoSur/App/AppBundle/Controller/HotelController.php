@@ -10,7 +10,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use VientoSur\App\AppBundle\Controller\DistributionController;
+use VientoSur\App\AppBundle\Services\Distribution;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -152,7 +152,7 @@ class HotelController extends Controller {
         $FourChildrenSix = $request->get('childAgeSelector-4-6');
 
         $infantsSelect = $request->get('infantsSelect1');
-        $distribucionClass = new DistributionController();
+        $distribucionClass = new Distribution();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
 
         $urlParams = array(
@@ -333,11 +333,8 @@ class HotelController extends Controller {
 
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
-       // $session->remove('price_detail');
         $roompackChoice = $request->get('roompack_choice');
-
         $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
-        //$session->remove('hotelAvailabilities');
 
         foreach ($hotelAvailabilities->roompacks as $item) {
             if ($item->choice = $roompackChoice) {
@@ -361,9 +358,6 @@ class HotelController extends Controller {
         foreach (range($year, $new_y_10) as $y) {
             $expiration_years[$y]= $y;
         }
-
-        $array_card_brand = ['VI'=>'Visa', 'CA'=>'MasterCard', 'AX'=>'American Express', 'DC'=>'Diners Club', 'CL'=>'Cabal', 'TN'=>'Tarjeta Naranja', 'NV'=>'Tarjeta Nevada'];
-        $phone_option     = ['CELULAR'=>'Celular', 'HOME'=>'Casa', 'WORK'=>'Trabajo', 'FAX'=>'Fax', 'OTHER'=>'Otro'];
 
         $session->set('booking-id', $bookingId);
 
@@ -425,6 +419,8 @@ class HotelController extends Controller {
                         echo 'Response: <pre>';
                         print_r($response);
                         echo '</pre><br/>';
+                        // $session->remove('price_detail');
+                        //$session->remove('hotelAvailabilities');
                         exit();
                     } else {
                         //TODO: Error en dVault response token
@@ -448,7 +444,8 @@ class HotelController extends Controller {
             'expiration_month' => $expiration_month,
             'booking_id'       => $booking_id,
             'formNewPay'       => $formNewPaySend->createView(),
-            'paymentMethods'   => $roompack->payment_methods
+            'paymentMethods'   => $roompack->payment_methods,
+            'rooms'            => $roompack->rooms
         );
     }
 

@@ -1,15 +1,9 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller;
+namespace VientoSur\App\AppBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * Company controller.
- *
- * @Route("/hotel")
- */
-class DistributionController extends Controller {
+class Distribution {
 
     public function createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix) {
 

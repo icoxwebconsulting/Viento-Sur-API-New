@@ -83,7 +83,9 @@
 
                             <div class="col-md-4">
                                 <div class="booking-item-header-price">
-                                    <p> {% for room in dispoHotel.roompacks[0].rooms %} {{ room.name}} {% endfor %}</p>
+                                    <p>
+                                        Precio por noche
+                                    </p>
                                     <div class="text-lg">
                                         {{dispoHotel.roompacks[0].price_detail.currency}}&nbsp;
                                         {{dispoHotel.roompacks[0].price_detail.nightly.subtotal}}

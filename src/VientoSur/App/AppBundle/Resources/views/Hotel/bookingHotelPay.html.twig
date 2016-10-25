@@ -36,23 +36,28 @@
                             {% if loop.index0 > 0 %}
                                 <hr/>
                             {% endif %}
-                            <h4>Titular {{ loop.index }}:</h4>
+                            {% set temp = attribute(rooms, loop.index0) %}
+                            <h5>Habitación {{ loop.index }}: {{ temp.name }}</h5>
 
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'first_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):'}) }}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'last_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):'}) }}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'document_number' ~ loop.index0 %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Documento de Identidad:'}) }}
                                 </div>
                             </div>
+                            {% set fieldName = 'room_reference' ~ loop.index0 %}
+                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden-row'} }) }}
                         {% endfor %}
+                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden-row'} }) }}
+                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden-row'} }) }}
                     </div>
                 </div>
                 <!--/Pasajeros-->
@@ -66,14 +71,23 @@
                                 <li class="list-group-item">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}">
+                                            {% if loop.index0 == 0 %}
+                                                <input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}" checked="checked">
+                                            {% else %}
+                                                <input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}">
+                                            {% endif %}
                                         </label>
-                                        {{ paymentMethod.type }}
+                                        {% if paymentMethod.type == 'at_destination' %}
+                                            <p>Pago al Hotel</p>
+                                        {% else %}
+                                            {{ paymentMethod.type }}
+                                        {% endif %}
 
                                         {% for cardId in paymentMethod.card_ids %}
                                             <label class="card-selector">
                                                 {% set cardData = cardId|split('-') %}
                                                 <div class="eva-card-container">
+                                                {% endif %}
                                                     <span class="eva-card-body {{ cardData[1] }}"></span>
                                                 </div>
                                             </label>
@@ -235,6 +249,10 @@
 
     <script>
         $('#form_payment_expiration_day').hide();
+
+        $( document ).ready(function () {
+
+        });
     </script>
 {% endblock %}
 
@@ -247,6 +265,9 @@
     .credit-card-div .pad-adjust { padding-top:10px; }
     .hidden-row {
         display: none;
+    }
+    .selectedCardPayment {
+        border: 1px solid #1beab2;
     }
 </style>
     <link href="{{ asset('bundles/vientosurappapp/css/cards-horizontal.css') }}" rel="stylesheet" type="text/css" />
