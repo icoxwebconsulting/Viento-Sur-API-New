@@ -19,7 +19,6 @@ class FormHelper
     private $despegar;
 
     //
-    private $formToFill;
     private $dataFill;
     private $expDate;
 
@@ -29,14 +28,12 @@ class FormHelper
     private $additional_dataForm;
     private $vouchersForm;
 
-    private $array_card_brand = ['VI' => 'Visa', 'CA' => 'MasterCard', 'AX' => 'American Express', 'DC' => 'Diners Club', 'CL' => 'Cabal', 'TN' => 'Tarjeta Naranja', 'NV' => 'Tarjeta Nevada'];
-
     public function __construct(Despegar $dp)
     {
         $this->despegar = $dp;
     }
 
-    public function initForm($formBooking, $formNewPay, $roompackChoice)
+    public function initForm($formBooking, $formNewPay, $roompackChoice, $paymentMethods)
     {
 
         $this->formNewPay = $formNewPay;
@@ -64,6 +61,9 @@ class FormHelper
         if ($this->selectedPack == null) {
             throw new \Exception('No se consigue roompack');
         }
+
+        //Agregar los radiobuttons de los métodos de pago
+        $this->addPaymentMethods($paymentMethods);
 
         foreach ($formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']] as $key => $option) {
             if (is_array($option)) {
@@ -95,15 +95,11 @@ class FormHelper
 
     public function fillFormData($formBooking, $formNewPaySend)
     {
-        $data = $this->processReverseNames($formNewPaySend);
-
         $expMonth = $formNewPaySend['expiration']->format('m');
         $expYear = $formNewPaySend['expiration']->format('Y');
         $form = $formBooking['dictionary']['form_choices'][$this->selectedPack['form_choice']];
         $dataArray = [];
-
-        $this->formToFill = $form;
-        $this->dataFill = $data;
+        $this->dataFill = $formNewPaySend;
         $this->expDate = $expYear . '-' . $expMonth;
 
         foreach ($form as $key => $option) {
@@ -115,7 +111,8 @@ class FormHelper
                             $temp = [];
                             foreach ($item as $key3 => $element) {
                                 if (is_array($element) && array_key_exists('value', $element)) {
-                                    $temp[$key3] = $data[$form[$key][$key2][$key3]['qualified_name']];
+                                    //$temp[$key3] = $data[$form[$key][$key2][$key3]['qualified_name']];
+                                    $temp[$key3] = $formNewPaySend[$key3 . $key2];
                                 }
                             }
                             $dataArray[$key][] = $temp;
@@ -124,7 +121,7 @@ class FormHelper
                         break;
 
                     case 'payment':
-                        $temp = $this->fillSimpleElement($key, $option, $data);
+                        $temp = $this->fillSimpleElement($key, $option);
                         if (isset($temp['credit_card'])) {
                             unset($temp['credit_card']['number']);
                             unset($temp['credit_card']['expiration']);
@@ -139,13 +136,13 @@ class FormHelper
                         $temp = [];
                         foreach ($option as $key2 => $item) {
                             if (is_array($item) && array_key_exists('value', $item)) {
-                                $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
+                                $temp[$key2] = $formNewPaySend[$key2];
                             } else if ($key2 == 'phones') {
                                 $temp2 = [];
                                 foreach ($item as $key3 => $element) {
                                     foreach ($element as $key4 => $element0) {
                                         if ((is_array($element0) && array_key_exists('value', $element0))) {
-                                            $temp2[$key4] = $data[$form[$key][$key2][$key3][$key4]['qualified_name']];
+                                            $temp2[$key4] = $formNewPaySend[$key4 . $key3];
                                         }
                                     }
                                     $temp['phones'][] = $temp2;
@@ -158,7 +155,7 @@ class FormHelper
                         $temp = [];
                         foreach ($option as $key2 => $item) {
                             if (is_array($item) && array_key_exists('value', $item)) {
-                                $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
+                                $temp[$key2] = $formNewPaySend[$key2];
                             }
                         }
                         $dataArray[$key] = $temp;
@@ -166,8 +163,10 @@ class FormHelper
                     case 'vouchers':
                         $temp = [];
                         foreach ($option as $key2 => $item) {
-                            if (is_array($item) && array_key_exists('value', $item)) {
-                                $temp[$key2] = $data[$form[$key][$key2]['qualified_name']];
+                            foreach ($item as $key3 => $elm) {
+                                if (is_array($item) && array_key_exists('value', $item)) {
+                                    $temp[$key2][$key3] = $formNewPaySend[$key3 . $key2];
+                                }
                             }
                         }
                         $dataArray[$key] = $temp;
@@ -235,9 +234,9 @@ class FormHelper
                     if (array_key_exists('value', $element)) {
                         //si está seteado value se sobreentiende que es un elemento simple, sino está anidado y se debe iterar
                         if ($subKey) {
-                            $temp[$key][$subKey] = $this->dataFill[$this->formToFill[$groupKey][$key][$subKey]['qualified_name']];
+                            $temp[$key][$subKey] = $this->dataFill[$subKey . $key];
                         } else {
-                            $temp[$key] = $this->dataFill[$this->formToFill[$groupKey][$key]['qualified_name']];
+                            $temp[$key] = $this->dataFill[$key];
                         }
                     } else {
                         $temp2 = [];
@@ -246,13 +245,13 @@ class FormHelper
                                 if ($key2 == 'expiration') {
                                     $temp2[$key2] = $this->expDate;
                                 } else {
-                                    $temp2[$key2] = $this->dataFill[$this->formToFill[$groupKey][$key][$key2]['qualified_name']];
+                                    $temp2[$key2] = $this->dataFill[$key2];
                                 }
                             } else {
                                 if (is_array($item)) {
                                     foreach ($item as $key3 => $value) {
                                         if (is_array($value) && array_key_exists('value', $value)) {
-                                            $temp2[$key2][$key3] = $this->dataFill[$this->formToFill[$groupKey][$key][$key2][$key3]['qualified_name']];
+                                            $temp2[$key2][$key3] = $this->dataFill[$key3 . $key2];
                                         }
                                     }
                                 }
@@ -272,32 +271,8 @@ class FormHelper
         return $dataArray;
     }
 
-    private function sanitizeName($name)
-    {
-        return str_replace(array('[', ']', '.'), array('_-', '-_', ':'), $name);
-    }
-
-    private function reverseSanitizeName($name)
-    {
-        return str_replace(array('_-', '-_', ':'), array('[', ']', '.'), $name);
-    }
-
-    private function processReverseNames($toReverse)
-    {
-        $array = [];
-
-        foreach ($toReverse as $key => $value) {
-            if (!strncmp($key, 'hotelInputDefinition', 20)) {
-                $array[$this->reverseSanitizeName($key)] = $value;
-            }
-        }
-
-        return $array;
-    }
-
     private function processFormElement($groupKey, $key, $element, $subKey = null, $extraKey = null)
     {
-        //$fieldName = $this->sanitizeName($element['qualified_name']);
         $fieldName = $key;
         if ($subKey === 'phones') {
             $fieldName .= $extraKey;
@@ -396,6 +371,26 @@ class FormHelper
                     'choices_as_values' => true,
                 )
             )
+        );
+    }
+
+    private function addPaymentMethods($paymentMethods)
+    {
+        $options = [];
+        foreach ($paymentMethods as $key => $paymentMethod) {
+            $options[($key + 1)] = $paymentMethod->choice;
+        }
+
+        $this->formNewPay->add(
+            $this->paymentForm->add(
+                'paymentMethod',
+                'choice',
+                array(
+                    'choices' => $options,
+                    'multiple' => false,
+                    'expanded' => true,
+                    'required' => true,
+                ))
         );
     }
 }

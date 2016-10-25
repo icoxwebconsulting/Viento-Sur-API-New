@@ -71,11 +71,13 @@
                                 <li class="list-group-item">
                                     <div class="radio">
                                         <label>
-                                            {% if loop.index0 == 0 %}
-                                                <input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}" checked="checked">
-                                            {% else %}
-                                                <input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}">
-                                            {% endif %}
+                                            {#{% if loop.index0 == 0 %}#}
+                                                {#<input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}" checked="checked">#}
+                                            {#{% else %}#}
+                                                {#<input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}">#}
+                                            {#{% endif %}#}
+
+                                            {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
                                         </label>
                                         {% if paymentMethod.type == 'at_destination' %}
                                             <p>Pago al Hotel</p>
@@ -83,15 +85,16 @@
                                             {{ paymentMethod.type }}
                                         {% endif %}
 
+                                        <div class="card-list">
                                         {% for cardId in paymentMethod.card_ids %}
                                             <label class="card-selector">
                                                 {% set cardData = cardId|split('-') %}
-                                                <div class="eva-card-container">
-                                                {% endif %}
+                                                <div class="eva-card-container" data-card-id="{{ cardId }}">
                                                     <span class="eva-card-body {{ cardData[1] }}"></span>
                                                 </div>
                                             </label>
                                         {% endfor %}
+                                        </div>
                                     </div>
                                 </li>
                             {% endfor %}
@@ -102,9 +105,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <label>Tarjeta:</label>
-                                    <select>
-                                        <option value=""></option>
-                                    </select>
+                                    <input type="text" value="" id="card-selected" readonly>
                                 </div>
                             </div>
                             <div class="row">
@@ -148,29 +149,29 @@
                         {#{{ form_row(formNewPay.contact) }}#}
                         <div class="row">
                         {% for phone in formChoice.contact.phones %}
-                                {% set fieldName = 'area_code' ~ loop.index0 %}
-                                {% if attribute(formNewPay.contact, fieldName) is defined %}
+                            <div class="col-md-2">
+                                {% set fieldName = 'country_code' ~ loop.index0 %}
+                                {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:'}) }}
+                            </div>
+
+                            {% set fieldName = 'area_code' ~ loop.index0 %}
+                            {% if attribute(formNewPay.contact, fieldName) is defined %}
                                 <div class="col-md-2">
                                     {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de área:'}) }}
                                 </div>
-                                {% endif %}
+                            {% endif %}
 
+                            <div class="col-md-2">
+                                {% set fieldName = 'number' ~ loop.index0 %}
+                                {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Número:'}) }}
+                            </div>
+
+                            {% set fieldName = 'type' ~ loop.index0 %}
+                            {% if attribute(formNewPay.contact, fieldName) is defined %}
                                 <div class="col-md-2">
-                                    {% set fieldName = 'country_code' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:'}) }}
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:'}) }}
                                 </div>
-
-                                {% set fieldName = 'type' ~ loop.index0 %}
-                                {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                    <div class="col-md-2">
-                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:'}) }}
-                                    </div>
-                                {% endif %}
-
-                                <div class="col-md-2">
-                                    {% set fieldName = 'number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Número:'}) }}
-                                </div>
+                            {% endif %}
                         {% endfor %}
                                 <div class="col-md-2">
                                     {{ form_row(formNewPay.contact.email, {'label': 'Email:'}) }}
@@ -251,7 +252,33 @@
         $('#form_payment_expiration_day').hide();
 
         $( document ).ready(function () {
+            var cardsObject = {
+                'VI': 'Visa',
+                'CA': 'MasterCard',
+                'AX': 'American Express',
+                'DC': 'Diners Club',
+                'CL': 'Cabal',
+                'TN': 'Tarjeta Naranja',
+                'NV': 'Tarjeta Nevada'
+            };
+            $('.eva-card-container:first').addClass('selected-p-card');
+            var cardId = $('.eva-card-container:first').attr('data-card-id');
+            $('#form_payment_bank_code').val(cardId);
+            var splitCard = cardId.split("-");
+            $('#form_payment_card_code').val(splitCard[1]);
+            $('#form_payment_card_type').val(splitCard[3]);
+            $('#card-selected').val(cardsObject[splitCard[1]]);
 
+            $('.eva-card-container').on('click',function () {
+                $('.card-list .eva-card-container').removeClass('selected-p-card');
+                var cardId = $(this).attr('data-card-id');
+                $('#form_payment_bank_code').val(cardId);
+                $(this).addClass('selected-p-card');
+                var splitCard = cardId.split("-");
+                $('#form_payment_card_code').val(splitCard[1]);
+                $('#form_payment_card_type').val(splitCard[3]);
+                $('#card-selected').val(cardsObject[splitCard[1]]);
+            });
         });
     </script>
 {% endblock %}
@@ -266,9 +293,27 @@
     .hidden-row {
         display: none;
     }
-    .selectedCardPayment {
-        border: 1px solid #1beab2;
+    .selected-p-card {
+        border: 1px solid #1beab2 !important;
     }
+    .eva-card-container:hover {
+         border: 1px solid #1beab2 !important;
+     }
+    .card-list {
+        font-size: 0;
+        position: relative;
+        text-align: right;
+    }
+    .installment-data {
+        width: 50%;
+        position: relative;
+        float: left;
+    }
+    .card-list .eva-card-container {
+        margin-left: 3px;
+        margin-bottom: 5px;
+    }
+
 </style>
     <link href="{{ asset('bundles/vientosurappapp/css/cards-horizontal.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}

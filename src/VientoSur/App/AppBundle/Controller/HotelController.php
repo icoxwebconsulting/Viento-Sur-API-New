@@ -336,28 +336,18 @@ class HotelController extends Controller {
         $roompackChoice = $request->get('roompack_choice');
         $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
 
+        $roompack = null;
         foreach ($hotelAvailabilities->roompacks as $item) {
             if ($item->choice = $roompackChoice) {
                 $roompack = $item;
                 break;
             }
         }
-
         //$roompack = json_encode($roompack, true);
 
         $formUrl     = $request->get('formUrl');
         $bookingId = $request->query->get('formUrl');
         $booking_id = $request->get('booking_id');
-
-        $expiration_years = [];
-        $expiration_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        $year = date('Y');
-        $new_year = strtotime ( '+5 year' , strtotime ( $year ) ) ;
-        $new_y_10 = date ( 'Y' , $new_year );
-        
-        foreach (range($year, $new_y_10) as $y) {
-            $expiration_years[$y]= $y;
-        }
 
         $session->set('booking-id', $bookingId);
 
@@ -366,7 +356,7 @@ class HotelController extends Controller {
         $sessionForm->set('url_detail_form', $despegar->getHotelsBookingsNextStepUrl($bookingId));
 
         if($request->getMethod() == 'GET') {
-            //quitar ?example=true para PRODUCCION
+            //TODO: quitar ?example=true para PRODUCCION
             $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
             $session->set('formBooking', $formBooking);
         } else {
@@ -378,7 +368,7 @@ class HotelController extends Controller {
         /* start form */
         $formNewPay = $this->createFormBuilder($formBooking);
         $formHelper = $this->get('form_helper');
-        $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice);
+        $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice, $roompack->payment_methods);
         $formNewPaySend = $formNewPay->getForm();
         
         if($request->getMethod() == 'POST'){
@@ -390,18 +380,18 @@ class HotelController extends Controller {
                $formNewPaySend = $formNewPaySend->getData(); 
                 
                //procesar formulario recibido
-                $array_for_dvault = [
-                    'brand_code'       =>'VI',
-                    'number'           =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:number:value'],
+                $dvaultQuery = [
+                    'brand_code'       =>$formNewPaySend['card_code'],
+                    'number'           =>$formNewPaySend['number'],
                     'expiration_month' =>$formNewPaySend['expiration']->format('m'),
                     'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
-                    'security_code'    =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:securityCode:value'],
-                    'bank'             =>"AR-VI-*-CREDIT",//TODO: Colocar valor requerido
+                    'security_code'    =>$formNewPaySend['security_code'],
+                    'bank'             =>$formNewPaySend['bank_code'],
                     'seconds_to_live'  =>'600',
-                    'holder_name'      =>$formNewPaySend['hotelInputDefinition:paymentDefinition:cardDefinition:ownerName:value'],
+                    'holder_name'      =>$formNewPaySend['owner_name'],
                 ];
 
-                $response = $despegar->dVault($formNewPaySend['tokenize_key'], $array_for_dvault);
+                $response = $despegar->dVault($formNewPaySend['tokenize_key'], $dvaultQuery);
                 if ($response) {
                     if (isset($response->secure_token)) {
                         //obtengo los valores ya seteados según la selección
@@ -410,11 +400,11 @@ class HotelController extends Controller {
                         $form_id_booking = $seletedPack['id'];
 
                         $patchParams = [];
-                        $patchParams['payment_method_choice'] = "2";
+                        $patchParams['payment_method_choice'] = $formNewPaySend['paymentMethod'];
                         $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
                         $patchParams['form'] = $fillData;
 
-                        //quitar ?example=true para PRODUCCION
+                        //TODO: quitar ?example=true para PRODUCCION
                         $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
                         echo 'Response: <pre>';
                         print_r($response);
@@ -433,15 +423,13 @@ class HotelController extends Controller {
 
         $selectedPack = $formHelper->getSelectedPack();
         $formChoice = $formBooking['dictionary']['form_choices'][$selectedPack['form_choice']];
-        
+
         return array(
             'formBooking'      => $formBooking,
-            'formChoice'      => $formChoice,
+            'formChoice'       => $formChoice,
             'price_detail'     => $priceDetail,
             'formUrl'          => $formUrl,
             'roompack_choice'  => $roompackChoice,
-            'expiration_years' => $expiration_years,
-            'expiration_month' => $expiration_month,
             'booking_id'       => $booking_id,
             'formNewPay'       => $formNewPaySend->createView(),
             'paymentMethods'   => $roompack->payment_methods,
