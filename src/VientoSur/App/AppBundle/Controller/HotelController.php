@@ -324,7 +324,6 @@ class HotelController extends Controller {
     }
 
     /**
-     * Lists all Company entities.
      *
      * @Route("/booking/pay/", name="viento_sur_app_boking_hotel_pay")
      * @Template()
@@ -392,32 +391,41 @@ class HotelController extends Controller {
                 ];
 
                 $response = $despegar->dVault($formNewPaySend['tokenize_key'], $dvaultQuery);
-                if ($response) {
-                    if (isset($response->secure_token)) {
-                        //obtengo los valores ya seteados según la selección
-                        $fillData = $formHelper->fillFormData($formBooking, $formNewPaySend);
-                        $seletedPack = $formHelper->getSelectedPack();
-                        $form_id_booking = $seletedPack['id'];
+                $status = 'ok';
+                $detail = [];
+                if ($response && isset($response->secure_token)) {
+                    //obtengo los valores ya seteados según la selección
+                    $fillData = $formHelper->fillFormData($formBooking, $formNewPaySend);
+                    $seletedPack = $formHelper->getSelectedPack();
+                    $form_id_booking = $seletedPack['id'];
 
-                        $patchParams = [];
-                        $patchParams['payment_method_choice'] = $formNewPaySend['paymentMethod'];
-                        $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
-                        $patchParams['form'] = $fillData;
+                    $patchParams = [];
+                    $patchParams['payment_method_choice'] = $formNewPaySend['paymentMethod'];
+                    $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
+                    $patchParams['form'] = $fillData;
 
-                        //TODO: quitar ?example=true para PRODUCCION
-                        $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
-                        echo 'Response: <pre>';
-                        print_r($response);
-                        echo '</pre><br/>';
-                        // $session->remove('price_detail');
-                        //$session->remove('hotelAvailabilities');
-                        exit();
-                    } else {
-                        //TODO: Error en dVault response token
+                    //TODO: quitar ?example=true para PRODUCCION
+                    $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
+                    // echo 'Response: <pre>';
+                    // print_r($response);
+                    // echo '</pre><br/>';
+                    // $session->remove('price_detail');
+                    // $session->remove('hotelAvailabilities');
+                    $response = json_decode($response, true);
+                    if (isset($response['code'])) {
+                        $status = 'patch';
                     }
+                    $detail = $response;
                 } else {
-                    //TODO: Error en dVault validation
+                    //TODO: Error en dVault response token
+                    $status = 'dvault';
                 }
+
+                return $this->redirect($this->generateUrl('viento_sur_app_booking_hotel_summary', array(
+                    'status' => $status,
+                    'hotel_id' => $hotelAvailabilities->hotel->id,
+                    'detail' => $detail
+                )));
             }
         }
 
@@ -434,6 +442,34 @@ class HotelController extends Controller {
             'formNewPay'       => $formNewPaySend->createView(),
             'paymentMethods'   => $roompack->payment_methods,
             'rooms'            => $roompack->rooms
+        );
+    }
+
+    /**
+     *
+     * @Route("/booking/summary/", name="viento_sur_app_booking_hotel_summary")
+     * @Template()
+     */
+    public function payHotelBookingAction(Request $request)
+    {
+        $status = $request->get('status');
+        $detail = $request->get('detail');
+        $hotelId = $request->get('hotel_id');
+
+        $despegar = $this->get('despegar');
+        $urlParams = array(
+            'ids' => $hotelId,
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        );
+        $hotelDetails = json_decode($despegar->getHotelsDetails($urlParams), true);
+
+        return array(
+            'status' => $status,
+            'detail' => $detail,
+            'hotelDetails' => $hotelDetails[0]
         );
     }
 
