@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use VientoSur\App\AppBundle\Services\Distribution;
@@ -457,7 +458,6 @@ class HotelController extends Controller {
         $detail = $request->get('detail');
         $hotelId = $request->get('hotel_id');
 
-        $despegar = $this->get('despegar');
         $urlParams = array(
             'ids' => $hotelId,
             'language' => 'es',
@@ -465,19 +465,53 @@ class HotelController extends Controller {
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
         );
-        $hotelDetails = json_decode($despegar->getHotelsDetails($urlParams), true);
+        $hotelDetails = json_decode($this->get('despegar')->getHotelsDetails($urlParams), true);
 
-        if ($status == 'ok' && $request->getSession()->get('email')) {
-            $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
-                'hotelDetails' => $hotelDetails[0],
-                'detail' => $detail
-            ));
-        }
+//        if ($status == 'ok' && $request->getSession()->get('email')) {
+//            $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
+//                'hotelDetails' => $hotelDetails[0],
+//                'detail' => $detail,
+//                'hotelId' => $hotelId
+//            ));
+//        }
 
         return array(
             'status' => $status,
             'detail' => $detail,
+            'hotelId' => $hotelId,
             'hotelDetails' => $hotelDetails[0]
+        );
+    }
+
+    /**
+     * @Route("/booking/pdf/", name="viento_sur_app_booking_hotel_pdf")
+     */
+    public function showPdfBookingAction(Request $request)
+    {
+        $hotelId = $request->get('hotel_id');
+        $detail = $request->get('detail');
+        $urlParams = array(
+            'ids' => $hotelId,
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        );
+        $hotelDetails = json_decode($this->get('despegar')->getHotelsDetails($urlParams), true);
+
+        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig',array(
+            'hotelDetails' => $hotelDetails[0],
+            'detail' => $detail,
+            'hotelId' => $hotelId
+        ));
+        $pdfGenerator = $this->get('spraed.pdf.generator');
+
+        return new Response($pdfGenerator->generatePDF($html),
+            200,
+            array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="out.pdf"'
+            )
         );
     }
 

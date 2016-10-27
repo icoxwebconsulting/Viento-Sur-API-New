@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             //bundles de terceros
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
+            new Spraed\PDFGeneratorBundle\SpraedPDFGeneratorBundle(),
             
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),

@@ -3,7 +3,7 @@
 <table>
     <tr>
         <td>
-            <p><img src="{{ hotelDetails.pictures[0].url }}" style="max-height: 100px; max-width: 100px;"/></p>
+            {#<p><img src="{{ hotelDetails.pictures[0].url }}" style="max-height: 100px; max-width: 100px;"/></p>#}
         </td>
         <td>
             <p>Dirección: {{ hotelDetails.location.address }}</p>
@@ -12,11 +12,6 @@
     <tr>
         <td>
             Número de Reserva: {{ detail.checkout_id }}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'detail': detail, 'hotel_id': hotelId}) }}">Descargar PDF</a>
         </td>
     </tr>
 </table>

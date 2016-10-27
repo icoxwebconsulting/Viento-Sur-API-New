@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1de0dfdeba850ee8b9877e44ee619b88",
-    "content-hash": "d9992a4b8f17f340d37a369672306d0c",
+    "hash": "e404d8bc6efd2828e56042a3efdd6e5d",
+    "content-hash": "41270766f69dc3eb72fef40d1479ec8f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1624,6 +1624,55 @@
             ],
             "description": "A security checker for your composer.lock",
             "time": "2015-11-07 08:07:40"
+        },
+        {
+            "name": "spraed/pdf-generator-bundle",
+            "version": "v1.3",
+            "target-dir": "Spraed/PDFGeneratorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stedekay/SpraedPDFGeneratorBundle.git",
+                "reference": "a20d95fe5a2decc6b9adf39cec8e4b00b7d61111"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stedekay/SpraedPDFGeneratorBundle/zipball/a20d95fe5a2decc6b9adf39cec8e4b00b7d61111",
+                "reference": "a20d95fe5a2decc6b9adf39cec8e4b00b7d61111",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.3|~3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Spraed\\PDFGeneratorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/stedekay/SpraedPDFGeneratorBundle/contributors"
+                },
+                {
+                    "name": "Spraed Team",
+                    "homepage": "http://www.spraed-it.de"
+                }
+            ],
+            "description": "This bundle creates (multiple) PDFs in Symfony2 by converting Twig/HTML templates.",
+            "homepage": "https://github.com/stedekay/SpraedPDFGeneratorBundle",
+            "keywords": [
+                "bundle",
+                "generator",
+                "pdf",
+                "spraed"
+            ],
+            "time": "2016-03-22 13:59:57"
         },
         {
             "name": "swiftmailer/swiftmailer",
