@@ -52,10 +52,14 @@
                     <h3>Ocurrió un error al momento de realizar la reservación.</h3>
                 </div>
             </div>
-            {% if detail.credit_card is defined %}
+            {% if detail.causes is defined %}
             <div class="row">
                 <div class="col-md-8">
-
+                    <ul>
+                        {% for cause in detail.causes %}
+                            <li>{{ cause }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             {% endif %}

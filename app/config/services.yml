@@ -11,3 +11,6 @@ services:
     despegar:
         class: VientoSur\App\AppBundle\Services\Despegar
         arguments: []
+    email.service:
+        class: VientoSur\App\AppBundle\Services\Email
+        arguments: [@mailer,@templating]

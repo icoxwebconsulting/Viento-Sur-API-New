@@ -376,7 +376,8 @@ class HotelController extends Controller {
             
             if ($formNewPaySend->isValid()) {
                
-               $formNewPaySend = $formNewPaySend->getData(); 
+               $formNewPaySend = $formNewPaySend->getData();
+                $session->set('email', $formNewPaySend['email']);
                 
                //procesar formulario recibido
                 $dvaultQuery = [
@@ -465,6 +466,13 @@ class HotelController extends Controller {
             'catalog_info' => 'true'
         );
         $hotelDetails = json_decode($despegar->getHotelsDetails($urlParams), true);
+
+        if ($status == 'ok' && $request->getSession()->get('email')) {
+            $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
+                'hotelDetails' => $hotelDetails[0],
+                'detail' => $detail
+            ));
+        }
 
         return array(
             'status' => $status,

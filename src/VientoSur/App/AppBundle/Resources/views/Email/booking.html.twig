@@ -1,0 +1,17 @@
+<h3>Gracias, Tu reservación está confirmada</h3>
+
+<table>
+    <tr>
+        <td>
+            <p><img src="{{ hotelDetails.pictures[0].url }}" style="max-height: 100px; max-width: 100px;"/></p>
+        </td>
+        <td>
+            <p>Dirección: {{ hotelDetails.location.address }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Número de Reserva: {{ detail.checkout_id }}
+        </td>
+    </tr>
+</table>
