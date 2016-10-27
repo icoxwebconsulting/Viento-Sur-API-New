@@ -16,12 +16,13 @@
                   var offset =  (num*10)-1;
                   var limit = num;
                   var URLdomain = window.location.host;
+                  var url2 = Routing.generate('viento_sur_send_hotels');
                  // alert(URLdomain);
 
                   var URLsearch = window.location.search;
                  // alert(URLsearch);
 
-                  window.location.replace("http://" + URLdomain + "/hotel/send/hotels/availabilities/" + offset + "/" + limit + URLsearch);
+                  window.location.replace("http://" + URLdomain + url2 +"/" + offset + "/" + limit + URLsearch);
             });
             $("#field-hotel-checkin").datepicker({
                 "setDate": new Date()

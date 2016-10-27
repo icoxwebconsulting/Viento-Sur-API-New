@@ -495,4 +495,27 @@ class HotelController extends Controller {
 
         return $results;
     }
+
+    /**
+     *
+     * @Route("/autocomplete/", name="hotel_autocomplete")
+     * @Method("GET")
+     * @Template()
+     */
+    public function autoCompleteHotelAction(Request $request) {
+        $query = $request->get('query');
+        $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
+        $cities = $this->cUrlExecAutoCompleteAction($url);
+        $results = json_decode($cities, true);
+        //print_r($results);die();
+        foreach ($results as $item) {
+            $city = Array();
+
+            $city["value"] = $item["description"];
+            $city["data"] = substr($item["id"], 5);
+            $response[] = $city;
+        }
+        return new JsonResponse(array("suggestions" => $response));
+        //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
+    }
 }
