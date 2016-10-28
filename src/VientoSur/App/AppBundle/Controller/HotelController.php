@@ -207,7 +207,7 @@ class HotelController extends Controller {
         $message = \Swift_Message::newInstance(null)
             ->setSubject("Consulta web Viento Sur")
             ->setFrom("not-reply@vientosur.com")
-            ->setTo("sanchez91nestor@gmail.com")
+            ->setTo("davidjdr@gmail.com")
             ->setBody(
                 $this->renderView(
                     'VientoSurAppAppBundle:Email:contact.html.twig',
