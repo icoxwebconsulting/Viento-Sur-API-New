@@ -537,6 +537,7 @@ class HotelController extends Controller {
      * @Template()
      */
     public function autoCompleteHotelAction(Request $request) {
+        $this->get('despegar');
         $query = $request->get('query');
         $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
         $cities = $this->cUrlExecAutoCompleteAction($url);

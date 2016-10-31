@@ -10,7 +10,7 @@ services:
             "dp": "@despegar"
     despegar:
         class: VientoSur\App\AppBundle\Services\Despegar
-        arguments: []
+        arguments: ["%api_key%", "%api_key_test%", "%service_version%", "%service_url%", "%is_test%"]
     email.service:
         class: VientoSur\App\AppBundle\Services\Email
         arguments: [@mailer,@templating]

@@ -7,14 +7,22 @@ use GuzzleHttp\Client;
 
 class Despegar
 {
-    private $serviceUrl = 'https://api.despegar.com';
-    private $serviceVersion = 'v3';
-    private $apiKey = '2864680fe4d74241aa613874fa20705f';
-    private $xClient = '2864680fe4d74241aa613874fa20705f';
+    private $serviceUrl;
+    private $serviceVersion;
+    private $apiKey;
+    private $xClient;
 
-    public function __construct()
+    public function __construct($apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $isTest)
     {
-
+        $this->serviceUrl = $serviceUrl;
+        $this->serviceVersion = $serviceVersion;
+        if ($isTest) {
+            $this->apiKey = $apiKeyTest;
+            $this->xClient = $apiKeyTest;
+        } else {
+            $this->apiKey = $apiKey;
+            $this->xClient = $apiKey;
+        }
     }
 
     public function getServiceUrl()

@@ -18,4 +18,11 @@ parameters:
 
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            00f3d759b02b0fd560a3e4c155f76f024144ced5
+
+    # Api key de despegar
+    api_key:           ca8fe17f100646cbbefa4ecddcf51350
+    api_key_test:      2864680fe4d74241aa613874fa20705f
+    service_version:   v3
+    service_url:       https://api.despegar.com
+    is_test:           true
