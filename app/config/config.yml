@@ -81,6 +81,6 @@ swiftmailer:
 guzzle:
     clients:
         api_vault:
-            base_url: 'https://www.despegar.com/sandbox/vault/'
-            headers:
-                Accept: "application/json"
+            base_url: "%service_vault_url%"
+        api_despegar:
+            base_url: "%service_url%"

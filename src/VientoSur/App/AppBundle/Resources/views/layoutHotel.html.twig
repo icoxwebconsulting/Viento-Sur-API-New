@@ -198,7 +198,8 @@
                 serviceUrl: url,
                 onSelect: function (suggestion) {
                     $("#destinationCity").val(suggestion.data);
-                }
+                },
+                minChars: 3
             });
 
         });

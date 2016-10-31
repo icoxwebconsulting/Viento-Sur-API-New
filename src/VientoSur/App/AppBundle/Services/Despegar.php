@@ -11,9 +11,13 @@ class Despegar
     private $serviceVersion;
     private $apiKey;
     private $xClient;
+    private $clientVault;
+    private $clientDespegar;
 
-    public function __construct($apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $isTest)
+    public function __construct($guzzleVault, $guzzleDespegar, $apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $isTest)
     {
+        $this->clientVault = $guzzleVault;
+        $this->clientDespegar = $guzzleDespegar;
         $this->serviceUrl = $serviceUrl;
         $this->serviceVersion = $serviceVersion;
         if ($isTest) {
@@ -68,8 +72,15 @@ class Despegar
         $header = [
             'X-ApiKey:' . $this->apiKey
         ];
+//        $data = $this->clientVault->request('GET',"v3/hotels/availabilities", [
+//            'query' => http_build_query($urlParams),
+//            'headers' => [
+//                'X-ApiKey:'     => $this->apiKey
+//            ]
+//        ]);
 
         return $this->curlExec($url, $header, 'GET');
+
     }
 
     public function getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams)
@@ -217,8 +228,6 @@ class Despegar
     {
         $url = $this->getServiceUrl() . 'autocomplete?' . urldecode(http_build_query($urlParams));
         $header = [
-            'Content-Type: application/json',
-            'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
         return $this->curlExec($url, $header, 'GET');

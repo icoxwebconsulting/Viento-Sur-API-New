@@ -536,21 +536,26 @@ class HotelController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function autoCompleteHotelAction(Request $request) {
-        $this->get('despegar');
-        $query = $request->get('query');
-        $url = "https://api.despegar.com/v3/autocomplete?query=" . $query . "&product=HOTELS&locale=es&city_result=10";
-        $cities = $this->cUrlExecAutoCompleteAction($url);
-        $results = json_decode($cities, true);
-        //print_r($results);die();
-        foreach ($results as $item) {
-            $city = Array();
+    public function autoCompleteHotelAction(Request $request)
+    {
+        $type = 'HOTELS';
+        $urlParams = [
+            'query' => $request->get('query'),
+            'product' => $type,
+            'locale' => 'es-AR',
+            'city_result' => '10'
+        ];
 
-            $city["value"] = $item["description"];
-            $city["data"] = substr($item["id"], 5);
-            $response[] = $city;
+        $results = json_decode($this->get('despegar')->autocomplete($urlParams), true);
+        $response = [];
+        if ($results && !isset($results['code'])) {
+            foreach ($results as $item) {
+                $city = Array();
+                $city["value"] = $item["description"];
+                $city["data"] = substr($item["id"], 5);
+                $response[] = $city;
+            }
         }
         return new JsonResponse(array("suggestions" => $response));
-        //return $this->render('VientoSurAppAppBundle:Hotel:index.html.twig', array('name' => $name));
     }
 }
