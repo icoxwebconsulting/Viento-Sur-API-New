@@ -312,9 +312,7 @@ class HotelController extends Controller {
             )
         );
 
-        $despegar = $this->get('despegar');
-        //quitar ?example=true para PRODUCCION
-        $formUrl = $despegar->postHotelsBookings($postParams);
+        $formUrl = $this->get('despegar')->postHotelsBookings($postParams);
         $formUrl = json_decode($formUrl, true);
 
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(
@@ -356,7 +354,6 @@ class HotelController extends Controller {
         $sessionForm->set('url_detail_form', $despegar->getHotelsBookingsNextStepUrl($bookingId));
 
         if($request->getMethod() == 'GET') {
-            //TODO: quitar ?example=true para PRODUCCION
             $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
             $session->set('formBooking', $formBooking);
         } else {
@@ -406,7 +403,6 @@ class HotelController extends Controller {
                     $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
                     $patchParams['form'] = $fillData;
 
-                    //TODO: quitar ?example=true para PRODUCCION
                     $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
                     // echo 'Response: <pre>';
                     // print_r($response);

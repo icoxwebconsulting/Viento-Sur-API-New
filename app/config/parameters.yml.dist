@@ -25,6 +25,7 @@ parameters:
     api_key_test:      2864680fe4d74241aa613874fa20705f
     service_version:   v3
     service_url:       https://api.despegar.com
-    service_vault_url: https://www.despegar.com/sandbox/vault
+    service_vault_url: https://pbdyy2.despegar.com
+    service_vault_url_test: https://www.despegar.com/sandbox
     # Le indica al servicio si utiliza la key de test
     is_test:           true

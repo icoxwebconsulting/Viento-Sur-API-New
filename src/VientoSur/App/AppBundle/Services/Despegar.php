@@ -13,17 +13,22 @@ class Despegar
     private $xClient;
     private $clientVault;
     private $clientDespegar;
+    private $isTest;
+    private $urlVault;
 
-    public function __construct($guzzleVault, $guzzleDespegar, $apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $isTest)
+    public function __construct($guzzleVault, $guzzleDespegar, $apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $vaultUrl, $vaultUrlTest, $isTest)
     {
+        $this->isTest = $isTest;
         $this->clientVault = $guzzleVault;
         $this->clientDespegar = $guzzleDespegar;
         $this->serviceUrl = $serviceUrl;
         $this->serviceVersion = $serviceVersion;
         if ($isTest) {
+            $this->urlVault = $vaultUrlTest;
             $this->apiKey = $apiKeyTest;
             $this->xClient = $apiKeyTest;
         } else {
+            $this->urlVault = $vaultUrl;
             $this->apiKey = $apiKey;
             $this->xClient = $apiKey;
         }
@@ -111,7 +116,7 @@ class Despegar
 
     public function postHotelsBookings($params)
     {
-        $url = $this->getServiceUrl() . "hotels/bookings?example=true";
+        $url = $this->getServiceUrl() . "hotels/bookings" . (($this->isTest) ? '?example=true' : '');
         $header = [
             'Content-Type: application/json',
             'X-Client: ' . $this->apiKey,
@@ -123,7 +128,7 @@ class Despegar
 
     public function getHotelsBookingsNextStepUrl($bookingId)
     {
-        return $this->serviceUrl . $bookingId . "?example=true";
+        return $this->serviceUrl . $bookingId . (($this->isTest) ? '?example=true' : '');
     }
 
     public function hotelsBookingsNextStep($bookingId)
@@ -137,21 +142,21 @@ class Despegar
 
     public function patchHotelsBookings($bookingId, $form_id_booking, $params)
     {
-        $url = $this->serviceUrl . $bookingId . '/' . $form_id_booking . '?example=true';
+        $url = $this->serviceUrl . $bookingId . '/' . $form_id_booking . (($this->isTest) ? '?example=true' : '');
         $header = [
             'Content-Type: application/json',
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
 
-        echo 'PATCH: ' . $url . '<br/>';
-        echo 'Header: <pre>';
-        print_r(json_encode($header));
-        echo '</pre><br/>';
-
-        echo 'BODY: <pre>';
-        print_r($params);
-        echo '</pre><br/>';
+//        echo 'PATCH: ' . $url . '<br/>';
+//        echo 'Header: <pre>';
+//        print_r(json_encode($header));
+//        echo '</pre><br/>';
+//
+//        echo 'BODY: <pre>';
+//        print_r($params);
+//        echo '</pre><br/>';
 
 
         return $this->curlExec($url, $header, 'PATCH', json_encode($params));
@@ -159,8 +164,7 @@ class Despegar
 
     public function dVaultValidation($tokenizeKey, $params)
     {
-        //TODO: URL de prueba
-        $url = 'https://www.despegar.com/sandbox/vault/pbdyy/validation';
+        $url = $this->urlVault . '/vault/pbdyy/validation';
         $header = [
             'Content-Type: application/json',
             'X-Tokenize-Key: ' . $tokenizeKey,
@@ -193,8 +197,6 @@ class Despegar
             $response = $this->dVaultValidation($tokenizeKey, $params);
 
             if ($response) {
-                //TODO: URL de prueba
-                $url_test = 'https://www.despegar.com/sandbox/vault/pbdyy';
                 $header = [
                     'Content-Type: application/json',
                     'X-Tokenize-Key: ' . $tokenizeKey,
@@ -205,7 +207,7 @@ class Despegar
                 //step1
                 $params = json_encode($params);
                 $cSession = curl_init();
-                curl_setopt($cSession, CURLOPT_URL, $url_test);
+                curl_setopt($cSession, CURLOPT_URL, $this->urlVault . '/vault/pbdyy');
                 curl_setopt($cSession, CURLOPT_POST, true);
                 curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
                 curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
