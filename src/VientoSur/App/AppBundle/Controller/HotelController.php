@@ -199,7 +199,6 @@ class HotelController extends Controller {
      *
      * @Route("/consult", name="viento_sur_app_consult")
      * @Method("POST")
-     * @Template()
      */
     public function consultAction(Request $request) {
         $message = \Swift_Message::newInstance(null)
@@ -222,6 +221,7 @@ class HotelController extends Controller {
         $request->getSession()
             ->getFlashBag()
             ->add('success', 'Your message has been sent successfully');
+        return new JsonResponse(array("status" => 'success'));
     }
 
 
