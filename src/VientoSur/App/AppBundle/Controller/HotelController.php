@@ -453,13 +453,17 @@ class HotelController extends Controller {
         );
         $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
 
-//        if ($status == 'ok' && $request->getSession()->get('email')) {
-//            $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
-//                'hotelDetails' => $hotelDetails[0],
-//                'detail' => $detail,
-//                'hotelId' => $hotelId
-//            ));
-//        }
+        try{
+            if ($status == 'ok' && $request->getSession()->get('email')) {
+                $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
+                    'hotelDetails' => $hotelDetails[0],
+                    'detail' => $detail,
+                    'hotelId' => $hotelId
+                ));
+            }
+        } catch(\Exception $e){
+            $this->get('logger')->error('Booking email error');
+        }
 
         return array(
             'status' => $status,
