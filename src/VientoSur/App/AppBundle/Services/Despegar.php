@@ -186,9 +186,9 @@ class Despegar
         $response = curl_exec($cSession);
         $httpCode = curl_getinfo($cSession, CURLINFO_HTTP_CODE);
         curl_close($cSession);
-        echo 'Response0: <pre>';
-        print_r($response);
-        echo '</pre><br/>';
+//        echo 'Response0: <pre>';
+//        print_r($response);
+//        echo '</pre><br/>';
         // do anything you want with your response
         if ($httpCode == 204) {
             return true;
