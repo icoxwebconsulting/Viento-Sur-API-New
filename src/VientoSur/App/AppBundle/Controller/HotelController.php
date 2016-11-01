@@ -54,7 +54,6 @@ class HotelController extends Controller {
         ];
         $despegar = $this->get('despegar');
         $result = $despegar->autocomplete($urlParams);
-        $result = json_decode($result, true);
 
         foreach ($result as $item) {
             $city = Array();
@@ -175,7 +174,6 @@ class HotelController extends Controller {
 
         $despegar = $this->get('despegar');
         $results = $despegar->getHotelsAvailabilities($urlParams);
-        $results = json_decode($results, true);
 
         $restUrl = '?' . http_build_query(array(
                 "site" => "AR",
@@ -242,8 +240,7 @@ class HotelController extends Controller {
 
         $despegar = $this->get('despegar');
         $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams);
-        $session->set('hotelAvailabilities', $dispoHotel);
-        $dispoHotel = json_decode($dispoHotel, true);
+        $session->set('hotelAvailabilities', json_encode($dispoHotel));
 
         $urlParams = array(
             'ids' => $idHotel,
@@ -253,7 +250,6 @@ class HotelController extends Controller {
             'catalog_info' => 'true'
         );
         $hotelDetails = $despegar->getHotelsDetails($urlParams);
-        $hotelDetails = json_decode($hotelDetails, true);
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
@@ -313,7 +309,6 @@ class HotelController extends Controller {
         );
 
         $formUrl = $this->get('despegar')->postHotelsBookings($postParams);
-        $formUrl = json_decode($formUrl, true);
 
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(
             'formUrl' => $formUrl["next_step_url"],
@@ -341,7 +336,6 @@ class HotelController extends Controller {
                 break;
             }
         }
-        //$roompack = json_encode($roompack, true);
 
         $formUrl     = $request->get('formUrl');
         $bookingId = $request->query->get('formUrl');
@@ -355,12 +349,11 @@ class HotelController extends Controller {
 
         if($request->getMethod() == 'GET') {
             $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
-            $session->set('formBooking', $formBooking);
+            $session->set('formBooking', json_encode($formBooking));
         } else {
-            $formBooking = $session->get('formBooking');
+            $formBooking = json_decode($session->get('formBooking'),true);
             //$session->remove('formBooking');
         }
-        $formBooking = json_decode($formBooking, true);
 
         /* start form */
         $formNewPay = $this->createFormBuilder($formBooking);
@@ -404,12 +397,6 @@ class HotelController extends Controller {
                     $patchParams['form'] = $fillData;
 
                     $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
-                    // echo 'Response: <pre>';
-                    // print_r($response);
-                    // echo '</pre><br/>';
-                    // $session->remove('price_detail');
-                    // $session->remove('hotelAvailabilities');
-                    $response = json_decode($response, true);
                     if (isset($response['code'])) {
                         $status = 'patch';
                     }
@@ -419,6 +406,7 @@ class HotelController extends Controller {
                      echo 'Response: <pre>';
                      print_r($response);
                      echo '</pre><br/>';
+                    exit();
                     $status = 'dvault';
                 }
 
@@ -464,7 +452,7 @@ class HotelController extends Controller {
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
         );
-        $hotelDetails = json_decode($this->get('despegar')->getHotelsDetails($urlParams), true);
+        $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
 
 //        if ($status == 'ok' && $request->getSession()->get('email')) {
 //            $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
@@ -496,7 +484,7 @@ class HotelController extends Controller {
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
         );
-        $hotelDetails = json_decode($this->get('despegar')->getHotelsDetails($urlParams), true);
+        $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
 
         $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig',array(
             'hotelDetails' => $hotelDetails[0],
@@ -545,7 +533,7 @@ class HotelController extends Controller {
             'city_result' => '10'
         ];
 
-        $results = json_decode($this->get('despegar')->autocomplete($urlParams), true);
+        $results = $this->get('despegar')->autocomplete($urlParams);
         $response = [];
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {

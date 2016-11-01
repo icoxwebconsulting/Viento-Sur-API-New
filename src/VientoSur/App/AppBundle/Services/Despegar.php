@@ -55,6 +55,10 @@ class Despegar
         //step4
         curl_close($cSession);
         // do anything you want with your response
+        $results = json_decode($results, true);
+        if (isset($results['code']) && $results['code'] == 403) {
+            return false;
+        }
         return $results;
     }
 
@@ -111,7 +115,7 @@ class Despegar
         $results = curl_exec($cSession);
         curl_close($cSession);
 
-        return $results;
+        return json_decode($results, true);
     }
 
     public function postHotelsBookings($params)
@@ -232,6 +236,6 @@ class Despegar
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
-        return $this->curlExec($url, $header, 'GET');
+        return json_decode($this->curlExec($url, $header, 'GET'), true);
     }
 }
