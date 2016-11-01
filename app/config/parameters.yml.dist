@@ -15,7 +15,8 @@ parameters:
     mailer_user:       icox.automatic.service@gmail.com
     mailer_password:   la-virginia
     mailer_port:       465
-
+    mailer_encryption: ssl
+    mailer_auth_mode:  login
 
     # A secret key that's used to generate certain security-related tokens
     secret:            00f3d759b02b0fd560a3e4c155f76f024144ced5
