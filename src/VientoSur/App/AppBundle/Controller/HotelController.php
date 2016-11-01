@@ -416,6 +416,9 @@ class HotelController extends Controller {
                     $detail = $response;
                 } else {
                     //TODO: Error en dVault response token
+                     echo 'Response: <pre>';
+                     print_r($response);
+                     echo '</pre><br/>';
                     $status = 'dvault';
                 }
 
