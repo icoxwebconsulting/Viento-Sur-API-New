@@ -1,11 +1,10 @@
-<h2><b>Busca tu hotel</b></h2>
+<h2><b>Buscá tu hotel</b></h2>
 
 <form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_send_hotels', { 'offset': '1', 'limit':'1' } )}}" method="GET">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>¿A dónde?</label>
-                <!--<input class="typeahead form-control" placeholder="Destino, Código Postal" type="text" />-->
                 <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal">
                 <input id="destinationCity" name="cityInput" type="hidden">
             </div>
