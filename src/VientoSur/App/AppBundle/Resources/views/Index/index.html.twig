@@ -455,6 +455,8 @@
     <script>
         {#Código para el formulario de búsqueda de vuelos#}
         $(document).ready(function () {
+            $('#childrens-value').val(1);
+            $('#adults-value').val(0);
             $('input[type=radio][name=childrens]').change(function () {
                 var childrens = $.trim($(this).parent().text());
                 if (childrens > 0 || childrens == '3+') {
@@ -464,33 +466,69 @@
                         childrens = Number(childrens);
                     }
                     for (var i = 1; i < 8; i++) {
-                        var selector = '.field-menor-' + i;
+                        var selector = 'field-menor-' + i;
                         if (i <= childrens) {
-                            $(selector).show();
+                            {#Para selccionar la clase#}
+                            $('.' + selector).show();
+                            {#Para selccionar el elemento#}
+                            $('#' + selector).prop('required', true);
                         } else {
-                            $(selector).hide();
+                            {#Para selccionar la clase#}
+                            $('.' + selector).hide();
+                            {#Para selccionar el elemento#}
+                            $('#' + selector).removeProp('required');
                         }
                     }
                     $('.MenoresNum').removeClass('hidden');
                 } else {
+                    for (var i = 1; i < 8; i++) {
+                        var selector = 'field-menor-' + i;
+                        {#Para selccionar la clase#}
+                        $('.' + selector).hide();
+                        {#Para selccionar el elemento#}
+                        $('#' + selector).removeProp('required');
+                    }
                     $('.MenoresNum').addClass('hidden');
                 }
+                $('#childrens-value').val(childrens);
             });
 
             $('#childrens-plus').change(function () {
                 if (this.value > 0) {
                     for (var i = 1; i < 8; i++) {
-                        var selector = '.field-menor-' + i;
+                        var selector = 'field-menor-' + i;
                         if (i <= this.value) {
-                            $(selector).show();
+                            {#Para selccionar la clase#}
+                            $('.' + selector).show();
+                            {#Para selccionar el elemento#}
+                            $('#' + selector).prop('required', true);
                         } else {
-                            $(selector).hide();
+                            {#Para selccionar la clase#}
+                            $('.' + selector).hide();
+                            {#Para selccionar el elemento#}
+                            $('#' + selector).removeProp('required');
                         }
                     }
                     $('.MenoresNum').removeClass('hidden');
                 } else {
+                    for (var i = 1; i < 8; i++) {
+                        var selector = 'field-menor-' + i;
+                        {#Para selccionar la clase#}
+                        $('.' + selector).hide();
+                        {#Para selccionar el elemento#}
+                        $('#' + selector).removeProp('required');
+                    }
                     $('.MenoresNum').addClass('hidden');
                 }
+                $('#childrens-value').val(this.value);
+            });
+
+            $('input[type=radio][name=adults]').change(function () {
+                var adults = $.trim($(this).parent().text());
+                $('#adults-value').val(adults);
+            });
+            $('#adults-plus').change(function () {
+                $('#adults-value').val(this.value);
             });
         });
     </script>

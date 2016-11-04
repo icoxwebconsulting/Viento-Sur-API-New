@@ -25,28 +25,39 @@ class FlightController extends Controller
      */
     public function sendFlightsItinerariesAction(Request $request)
     {
-        $params = $request->getQueryString();
-        $from = 192635;//$request->get('from-flight');
-        $destination = 197776;//$request->get('to-flight');
-        $fromDate = $request->get('start-date');
-        $toDate = $request->get('end-date');
+        $from = 'BUE';//$request->get('from-flight');
+        $to = 'MAD';//$request->get('to-flight');
+        list($day, $month, $year) = explode("/", $request->get('start'));
+        $fromDate = $year . '-' . $month . '-' . $day;
+        list($day, $month, $year) = explode("/", $request->get('end'));
+        $toDate = $year . '-' . $month . '-' . $day;
 
-        $adults = $request->get('adults');
-        $adultsSelect = $request->get('adults-plus');
-
-        $children = $request->get('childrens');
-        $childrenSelect = $request->get('childrens-plus');
-
-        $request->get('field-menor-');
-
-        if ($toDate != "") {
-            $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&return_date=" . $toDate . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
-        } else {
-            $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
+        $adults = $request->get('adults-value');
+        $childrens = $request->get('childrens-value');
+        $childrenQty = 0;
+        $infantQty = 0;
+        for ($i = 1; $i <= $childrens; $i++) {
+            if ($request->get('field-menor-' . $i) == 'A') {
+                $infantQty++;
+            } else {
+                $childrenQty++;
+            }
         }
-// https://api.despegar.com/v3/flights/itineraries?site=ar&from=BUE&to=MIA&departure_date=2015-08-21&adults=1&group_by=default
-        $items = $this->cUrlExecAction($url);
-        $results = json_decode($items, true);
+
+        //validaciones
+
+        $urlParams = [
+            "site" => "AR",
+            "from" => $from,
+            "to" => $to,
+            "departure_date" => $fromDate,
+            "adults" => $adults,
+            "return_date" => $toDate,
+            "children" => $childrenQty,
+            "infants" => $infantQty
+        ];
+        $results = $this->get('despegar')->getFlightItineraries($urlParams);
+
         return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array('items' => $results['items']));
     }
 

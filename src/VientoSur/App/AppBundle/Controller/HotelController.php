@@ -82,7 +82,7 @@ class HotelController extends Controller {
         $fromCalendarHotel = $year.'-'.$month.'-'.$day;
 
         list($day,$month,$year)=explode("/",$request->get('end'));
-        $toCalendarHotel = $year.'-'.$month.'-'.$day; //echo $fromCalendarHotel.' '.$toCalendarHotel; die();
+        $toCalendarHotel = $year.'-'.$month.'-'.$day;
         $habitacionesCant = $request->get('habitacionesCant'); //echo ' habitacion '.$habitacionesCant;
         $adultsSelector1 = $request->get('adultsSelector1');//echo ' adulto '.$adultsSelector1;
         $adultsSelector2 = $request->get('adultsSelector2');

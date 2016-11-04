@@ -240,4 +240,13 @@ class Despegar
         ];
         return json_decode($this->curlExec($url, $header, 'GET'), true);
     }
+
+    public function getFlightItineraries($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'flights/itineraries?' . http_build_query($urlParams);
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        return $this->curlExec($url, $header, 'GET');
+    }
 }
