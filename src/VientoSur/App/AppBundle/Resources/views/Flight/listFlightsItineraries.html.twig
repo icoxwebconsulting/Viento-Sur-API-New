@@ -1,70 +1,117 @@
-{%for item in items %}
-    Itenerario : {{loop.index}}
-    Salida:
-    {%for outbound_choice in item.outbound_choices%}
-        <table border="1">
-            <tr>
-                <td>Duracion: </td>
-                <td>opcion: {{loop.index}}</td> 
-            </tr>
-            <tr>
-                <td>{{outbound_choice.duration}}</td>
-                <td>
-                    {%for segment in outbound_choice.segments%}
-                        <table>
-                            <tr>
-                                Escala: {{loop.index}}
-                                Aeropuerto salida: {{segment.from}}
-                                Aeropuerto llegada: {{segment.to}}
-                                fecha salida :  {{segment.departure_datetime}}
-                                fecha llegada :  {{segment.arrival_datetime}}
-                                duration: {{segment.duration}}
-                                airline: {{segment.airline}}
-                            </tr>
-                        </table>
-                    {%endfor%}
+{% extends '@VientoSurAppApp/layoutFlight.html.twig' %}
 
-                </td>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+        </div>
 
-            </tr>
-        </table>
-    {%endfor%}
-    Retorno:
-    {%for inbound_choice in item.inbound_choices%}
-        <table border="1">
-            <tr>
-                <td>Duracion: </td>
-                <td>Opcion: {{loop.index}}</td> 
-            <tr>
-                <td>{{inbound_choice.duration}}</td>
-                <td>
-                    {%for segment in inbound_choice.segments%}
-                        <table>
-                            <tr>
-                                Escala: {{loop.index}}
-                                Aeropuerto salida: {{segment.from}}
-                                Aeropuerto llegada: {{segment.to}}
-                                fecha salida :  {{segment.departure_datetime}}
-                                fecha llegada :  {{segment.arrival_datetime}}
-                                duration: {{segment.duration}}
-                                airline: {{segment.airline}}
-                            </tr>
-                        </table>
-                    {%endfor%}
+        <div class="col-md-9">
+            <ul class="">{#booking-list#}
+            </ul>
+            {% for item in items %}
+                Itenerario : {{ loop.index }}
+                Salida:
+                {% for outbound_choice in item.outbound_choices %}
+                    <table border="1">
+                        <tr>
+                            <td>Duracion:</td>
+                            <td>opcion: {{ loop.index }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ outbound_choice.duration }}</td>
+                            <td>
+                                {% for segment in outbound_choice.segments %}
+                                    <table>
+                                        <tr>
+                                            Escala: {{ loop.index }}
+                                            Aeropuerto salida: {{ segment.from }}
+                                            Aeropuerto llegada: {{ segment.to }}
+                                            fecha salida : {{ segment.departure_datetime }}
+                                            fecha llegada : {{ segment.arrival_datetime }}
+                                            duration: {{ segment.duration }}
+                                            airline: {{ segment.airline }}
+                                        </tr>
+                                    </table>
+                                {% endfor %}
 
-                </td>
-            </tr>
-        </table>
-    {%endfor%}
-    <table>
-        <tr>
-            currency:{{item.price_detail.currency}} 
-            {#                                charges:{{item.price_detail.charges}}#}
-            adult_base:{{item.price_detail.adult_base}}
-            adults_subtotal:{{item.price_detail.adults_subtotal}}
-            total:{{item.price_detail.total}}
-        </tr>
-    </table> 
-    <br><hr>
-{%endfor%}
+                            </td>
+
+                        </tr>
+                    </table>
+                {% endfor %}
+                Retorno:
+                {% for inbound_choice in item.inbound_choices %}
+                    <table border="1">
+                        <tr>
+                            <td>Duracion:</td>
+                            <td>Opcion: {{ loop.index }}</td>
+                        <tr>
+                            <td>{{ inbound_choice.duration }}</td>
+                            <td>
+                                {% for segment in inbound_choice.segments %}
+                                    <table>
+                                        <tr>
+                                            Escala: {{ loop.index }}
+                                            Aeropuerto salida: {{ segment.from }}
+                                            Aeropuerto llegada: {{ segment.to }}
+                                            fecha salida : {{ segment.departure_datetime }}
+                                            fecha llegada : {{ segment.arrival_datetime }}
+                                            duration: {{ segment.duration }}
+                                            airline: {{ segment.airline }}
+                                        </tr>
+                                    </table>
+                                {% endfor %}
+
+                            </td>
+                        </tr>
+                    </table>
+                {% endfor %}
+                <table>
+                    <tr>
+                        currency:{{ item.price_detail.currency }}
+                        {#                                charges:{{item.price_detail.charges}}#}
+                        adult_base:{{ item.price_detail.adult_base }}
+                        adults_subtotal:{{ item.price_detail.adults_subtotal }}
+                        total:{{ item.price_detail.total }}
+                    </tr>
+                </table>
+                <br>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    {{ dump(items) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            $("#pagination").bootpag({
+                total: 10 ,{#{{ (items.paging.total / 10) }}#}
+                maxVisible: 15,
+                page: {{ limit }} ,
+                firstLastUse: true,
+                first: '←',
+                last: '→'
+
+            }).on("page", function (event, num) {
+                var offset = (num * 10) - 1;
+                var limit = num;
+                var URLdomain = window.location.host;
+                var url2 = Routing.generate('viento_sur_send_flights');
+
+                var URLsearch = window.location.search;
+
+                window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);
+            });
+//            $("#field-hotel-checkin").datepicker({
+//                "setDate": new Date()
+//            });
+        });
+    </script>
+{% endblock %}
 

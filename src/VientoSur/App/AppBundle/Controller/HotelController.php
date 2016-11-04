@@ -142,8 +142,7 @@ class HotelController extends Controller {
             "limit" => "10"
         );
 
-        $despegar = $this->get('despegar');
-        $results = $despegar->getHotelsAvailabilities($urlParams);
+        $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
         $restUrl = '?' . http_build_query(array(
                 "site" => "AR",
@@ -267,7 +266,7 @@ class HotelController extends Controller {
             ),
             "reservation_context" => array(
                 "context_language" => "es",
-                "shown_currency" => "USD",
+                "shown_currency" => "ARS",
                 "threat_metrix_id" => "25",
                 "agent_code" => 'AG32502',
                 "client_ip" => $request->getClientIp(),

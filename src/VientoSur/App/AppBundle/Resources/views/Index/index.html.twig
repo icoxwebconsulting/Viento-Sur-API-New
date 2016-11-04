@@ -455,8 +455,8 @@
     <script>
         {#Código para el formulario de búsqueda de vuelos#}
         $(document).ready(function () {
-            $('#childrens-value').val(1);
-            $('#adults-value').val(0);
+            $('#childrens-value').val(0);
+            $('#adults-value').val(1);
             $('input[type=radio][name=childrens]').change(function () {
                 var childrens = $.trim($(this).parent().text());
                 if (childrens > 0 || childrens == '3+') {

@@ -1,0 +1,94 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Viento Sur{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/vientosurappapp/js/jquery.bootpag.min.js') }}" type="text/javascript"></script>
+    {#<script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.mockjax.js')}}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.autocomplete.js')}}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/nicescroll.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/dropit.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/ionrangeslider.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/icheck.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/fotorama.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/typeahead.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/magnific.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/owl-carousel.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/fitvids.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/tweet.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/countdown.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/gridrotator.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/custom.js') }}" type="text/javascript"></script>#}
+    {#<script type="text/javascript">#}
+        {#$(function() {#}
+            {#var url = Routing.generate('hotel_autocomplete');#}
+            {#$('#autocomplete').autocomplete({#}
+                {#serviceUrl: url,#}
+                {#onSelect: function (suggestion) {#}
+                    {#$("#destinationCity").val(suggestion.data);#}
+                {#},#}
+                {#minChars: 3#}
+            {#});#}
+
+        {#});#}
+        {#$('#submitConsult').on('show.bs.modal', function (e) {#}
+            {#$title = $(e.relatedTarget).attr('data-title');#}
+            {#$(this).find('.modal-title').text($title);#}
+
+            {#// Pass path reference to modal form submission on yes/ok#}
+
+            {#var path = $(e.relatedTarget).attr('data-path');#}
+            {#$(this).find('.modal-footer #confirmConsult').data('path', path);#}
+
+            {#//$(this).find('.modal-body').load('#}{#{ path('viento_sur_app_consult') }#}{#');#}
+        {#});#}
+
+
+        {#$('#submitConsult').find('.modal-footer #confirmConsult').on('click', function () {#}
+            {#if ($('#observacion').val()==="") {#}
+                {#// invalid#}
+                {#$("#requerido").text("Debe indicar una observación");#}
+                {#return false;#}
+            {#}#}
+            {#else {#}
+                {#var url = $(this).data('path');#}
+                {#var data = {#}
+                    {#fullname: $('#fullnameField').val(),#}
+                    {#email: $('#emailField').val(),#}
+                    {#message: $('#messageField').val()#}
+                {#};#}
+                {#$.ajax({#}
+                    {#type: 'post',#}
+                    {#url: url,#}
+                    {#data: data,#}
+                    {#success: function(data) {#}
+                        {#//$('#submitConsult').modal('hide');#}
+                        {#//location.reload();#}
+                        {#$('#submitConsult').modal('hide');#}
+                        {#$('#DataTable').DataTable().ajax.reload(null, false);#}
+                    {#}#}
+                {#});#}
+                {#return true;#}
+            {#}#}
+        {#});#}
+
+        {#$('#submitConsult').on('hidden.bs.modal', function (e) {#}
+            {#// do something...#}
+        {#});#}
+    {#</script>#}
+    {#<script>(function(d, s, id) {#}
+            {#var js, fjs = d.getElementsByTagName(s)[0];#}
+            {#if (d.getElementById(id)) return;#}
+            {#js = d.createElement(s); js.id = id;#}
+            {#js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.7";#}
+            {#fjs.parentNode.insertBefore(js, fjs);#}
+        {#}(document, 'script', 'facebook-jssdk'));#}
+    {#</script>#}
+{% endblock %}

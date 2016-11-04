@@ -20,10 +20,10 @@ class FlightController extends Controller
 {
     /**
      *
-     * @Route("/send/flights/itineraries", name="viento_sur_send_flights")
+     * @Route("/send/flights/itineraries/{offset}/{limit}", name="viento_sur_send_flights")
      * @Method("GET")
      */
-    public function sendFlightsItinerariesAction(Request $request)
+    public function sendFlightsItinerariesAction($offset, $limit, Request $request)
     {
         $from = 'BUE';//$request->get('from-flight');
         $to = 'MAD';//$request->get('to-flight');
@@ -44,8 +44,6 @@ class FlightController extends Controller
             }
         }
 
-        //validaciones
-
         $urlParams = [
             "site" => "AR",
             "from" => $from,
@@ -54,11 +52,17 @@ class FlightController extends Controller
             "adults" => $adults,
             "return_date" => $toDate,
             "children" => $childrenQty,
-            "infants" => $infantQty
+            "infants" => $infantQty,
+            "offset" => $offset,
+            "limit" => $limit //set to 10 in searchFlight.html.twig
         ];
         $results = $this->get('despegar')->getFlightItineraries($urlParams);
 
-        return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array('items' => $results['items']));
+        return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
+            'items' => $results['items'],
+            'offset' => $offset,
+            'limit' => $limit
+        ));
     }
 
     /**
