@@ -5,7 +5,7 @@
   <script type="text/javascript">
         $(function() {
             $("#pagination").bootpag({
-                total: {{ (items.paging.total / 10) }} ,
+                total: {{ (items.paging.total / 10)|round(0, 'ceil') }} ,
                 maxVisible:15,
                 page: {{ limit }} ,
                 firstLastUse: true,

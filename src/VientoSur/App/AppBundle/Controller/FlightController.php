@@ -6,7 +6,6 @@ namespace VientoSur\App\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,6 +24,7 @@ class FlightController extends Controller
      */
     public function sendFlightsItinerariesAction($offset, $limit, Request $request)
     {
+        //TODO: traer los valores de la consulta del api
         $from = 'BUE';//$request->get('from-flight');
         $to = 'MAD';//$request->get('to-flight');
         list($day, $month, $year) = explode("/", $request->get('start'));
@@ -54,14 +54,14 @@ class FlightController extends Controller
             "children" => $childrenQty,
             "infants" => $infantQty,
             "offset" => $offset,
-            "limit" => $limit //set to 10 in searchFlight.html.twig
+            "limit" => "10" //set to 10 in searchFlight.html.twig
         ];
         $results = $this->get('despegar')->getFlightItineraries($urlParams);
 
         return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
-            'items' => $results['items'],
+            'items' => $results,
             'offset' => $offset,
-            'limit' => $limit
+            'limit' => "10"
         ));
     }
 
