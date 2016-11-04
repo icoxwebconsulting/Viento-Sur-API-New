@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Company controller.
+ * Hotel controller.
  *
  * @Route("/hotel")
  */
@@ -27,7 +27,6 @@ class HotelController extends Controller {
     public $session;
 
     /**
-     * Lists all Company entities.
      *
      * @Route("/index/", name="hotel_index")
      * @Method("GET")
@@ -69,35 +68,6 @@ class HotelController extends Controller {
     }
 
     /**
-     * Lists all Company entities.
-     *
-     * @Route("/send/flights/itineraries", name="viento_sur_app_app_homepage_send_flights")
-     * @Method("POST")
-     * @Template()
-     */
-    public function sendFlightsItinerariesAction(Request $request) {
-
-        echo $from = $request->get('origen-city');
-        echo $destination = $request->get('destino-city');
-        echo $fromDate = $request->get('fromCalendarVuelo');
-        echo $toDate = $request->get('toCalendarVuelo');
-        echo $adultsSelect = $request->get('adultsSelect');
-        echo $childrenSelect = $request->get('childrenSelect');
-        echo $infantsSelect = $request->get('infantsSelect');
-
-        if ($toDate != "") {
-            $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&return_date=" . $toDate . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
-        } else {
-            $url = "https://api.despegar.com/v3/flights/itineraries?site=ar&from=" . $from . "&to=" . $destination . "&departure_date=" . $fromDate . "&adults=" . $adultsSelect . "&children=" . $childrenSelect . "&infants=" . $infantsSelect;
-        }
-// https://api.despegar.com/v3/flights/itineraries?site=ar&from=BUE&to=MIA&departure_date=2015-08-21&adults=1&group_by=default
-        $items = $this->cUrlExecAction($url);
-        $results = json_decode($items, true);
-        return $this->render('VientoSurAppAppBundle:Hotel:listFlightsItineraries.html.twig', array('items' => $results['items']));
-    }
-
-    /**
-     * Lists all Company entities.
      *
      * @Route("/send/hotels/availabilities/{offset}/{limit}", name="viento_sur_send_hotels")
      * @Method("GET")
@@ -164,7 +134,7 @@ class HotelController extends Controller {
             "language" => "es",
             "radius" => "200",
             "accepts" => "partial",
-            "currency" => "USD",
+            "currency" => "ARS",
             "sorting" => "best_selling_descending",
             "classify_roompacks_by" => "none",
             "roompack_choices" => "recommended",
@@ -524,7 +494,6 @@ class HotelController extends Controller {
      *
      * @Route("/autocomplete/", name="hotel_autocomplete")
      * @Method("GET")
-     * @Template()
      */
     public function autoCompleteHotelAction(Request $request)
     {

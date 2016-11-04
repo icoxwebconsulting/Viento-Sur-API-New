@@ -40,8 +40,8 @@ class IndexController extends Controller
         $languages['pt']['name'] = 'Portuguese';
 
         $currencies['ars']['name'] = "AR$";
-        $currencies['usd']['name'] = "USD";
-        $currencies['eur']['name'] = "EUR";
+        //$currencies['usd']['name'] = "USD";
+        //$currencies['eur']['name'] = "EUR";
 
 
         $language = $request->get('language', null);
