@@ -1,0 +1,22 @@
+{
+  "name": "viento-sur-api-new",
+  "authors": [
+    "David De Freitas <davidjdr@icox.com>"
+  ],
+  "description": "Viento Sur Web",
+  "main": "",
+  "license": "OTHER",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-waitingfor": "^1.2.4",
+    "bootstrap": "^3.3.7"
+  }
+}
