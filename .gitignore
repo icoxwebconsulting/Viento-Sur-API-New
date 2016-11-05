@@ -13,11 +13,12 @@ web/bundles/*
 web/css/*
 web/js/*
 web/uploads/*
+web/assets/vendor/
 
 /app/phpunit.xml
 /build/
 /bin/
 /composer.phar
-/nbproject/private/
+/nbproject/
 /vendor
 /.idea
