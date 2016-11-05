@@ -69,11 +69,10 @@ class HotelController extends Controller {
 
     /**
      *
-     * @Route("/send/hotels/availabilities/{offset}/{limit}", name="viento_sur_send_hotels")
+     * @Route("/send/hotels/availabilities/{page}", name="viento_sur_send_hotels")
      * @Method("GET")
-     * @Template()
      */
-    public function sendHotelsAvailabilitiesAction($offset, $limit, Request $request) {
+    public function sendHotelsAvailabilitiesAction($page, Request $request) {
 
         //TODO: destination representa la ciudad que está disponible a través del api geography (o autocomplete) cuando esté en producción
         $destination = 982;
@@ -121,10 +120,10 @@ class HotelController extends Controller {
         $FourChildrenFive = $request->get('childAgeSelector-4-5');
         $FourChildrenSix = $request->get('childAgeSelector-4-6');
 
-        $infantsSelect = $request->get('infantsSelect1');
         $distribucionClass = new Distribution();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
 
+        $offset = ($page - 1) * 10;
         $urlParams = array(
             "country_code" => "AR",
             "checkin_date" => $fromCalendarHotel,
@@ -141,6 +140,10 @@ class HotelController extends Controller {
             "offset" => $offset,
             "limit" => "10"
         );
+        //TODO: hay un tema con el api de despegar, cuando se envía el offset en 0 o no se envía a veces no retorna el total de elementos
+        if ($offset == 0) {
+            $urlParams['offset'] = 1;
+        }
 
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
@@ -155,12 +158,28 @@ class HotelController extends Controller {
         $session->set('checkin_date', $request->get('start'));
         $session->set('checkout_date', $request->get('end'));
 
-        return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
-            'items'   => $results,
-            'restUrl' => $restUrl,
-            'offset'   =>   $offset,
-            'limit'    =>   $limit
-        ));
+        //if(isset($results['paging']['total']))
+        $total = ceil($results['paging']['total'] / 10);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig', array(
+                'items' => $results,
+                'restUrl' => $restUrl,
+                'offset' => $offset,
+                'limit' => 10,
+                'total' => $total,
+                'page' => $page
+            ));
+        } else {
+            return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
+                'items' => $results,
+                'restUrl' => $restUrl,
+                'offset' => $offset,
+                'limit' => 10,
+                'total' => $total,
+                'page' => $page
+            ));
+        }
     }
 
 

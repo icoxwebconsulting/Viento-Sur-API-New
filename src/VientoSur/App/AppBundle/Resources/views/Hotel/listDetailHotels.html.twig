@@ -1,0 +1,74 @@
+{% if items.message is defined%}
+    <li>No se encontraron hoteles disponibles</li>
+{%elseif items.items|length>0%}
+    {%for item in items.items %}
+        <li>
+            <a target="_blank" class="booking-item" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="booking-item-img-wrap">
+                            {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
+                            <!--<img src="{#{ asset('bundles/vientosurappapp/images/resultado1.jpg') }#}" alt="Image Alternative text" title="" />
+                                            <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>-->
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="booking-item-rating">
+                            <h2 class="booking-item-title">{{item.hotel.name}}</h2>
+                            <ul class="icon-group booking-item-rating-stars">
+                                {% for i in 1..5 %}
+                                    {% if i <= item.hotel.stars %}
+                                        <li><i class="fa fa-star"></i>
+                                        </li>
+                                        {#{% else %}#}
+                                        <!--<li><i class="fa fa-star-o"></i>
+                                        </li>-->
+                                    {% endif %}
+                                    <!--<li><i class="fa fa-star-half-empty"></i>
+                                    </li>-->
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <p class="booking-item-address">A 600 metros del centro
+                            <i class="fa fa-map-marker"> Ver mapa</i>
+                        </p>
+                        {% for key, room_availability in item.roompacks %}
+                            {% if  room_availability.rooms[0].availability < 6 %}
+                                <p class="booking-item-last-booked">
+                                    {% if room_availability.rooms[0].availability == 1 %}
+                                        Última habitaci&oacute;n disponible
+                                    {% else %}
+                                        Últimas {{ room_availability.rooms[0].availability }} habitaciones
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key, amenity in item.hotel.amenity_ids %}
+                            {% if amenity == 'INGRAH' %}
+                                <span class="booking-services"><i class="fa fa-wifi"></i></span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-3 booking-prices align-center">
+
+                        <div class="booking-align-vertical"> <span class="booking-item-price-night">Habitación por noche</span>
+                            <span class="booking-item-price">
+                                                    {%for price in item.roompacks%}
+                                                        {{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal}}
+                                                    {%endfor%}
+                                                </span>
+
+                            <span class="btn btn-primary">Ver detalle
+
+
+                                                </span>
+                            <!--<span class="booking-item-benefit mt20">Cancele gratis</span>-->
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </li>
+    {%endfor%}
+{%else%}
+    No se encontraron hoteles disponiblesssss
+{%endif%}
