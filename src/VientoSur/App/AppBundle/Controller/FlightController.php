@@ -19,10 +19,10 @@ class FlightController extends Controller
 {
     /**
      *
-     * @Route("/send/flights/itineraries/{offset}/{limit}", name="viento_sur_send_flights")
+     * @Route("/send/flights/itineraries/{page}", name="viento_sur_send_flights")
      * @Method("GET")
      */
-    public function sendFlightsItinerariesAction($offset, $limit, Request $request)
+    public function sendFlightsItinerariesAction($page, Request $request)
     {
         //TODO: traer los valores de la consulta del api
         $from = 'BUE';//$request->get('from-flight');
@@ -44,6 +44,8 @@ class FlightController extends Controller
             }
         }
 
+        $offset = ($page - 1) * 10;
+
         $urlParams = [
             "site" => "AR",
             "from" => $from,
@@ -54,7 +56,7 @@ class FlightController extends Controller
             "children" => $childrenQty,
             "infants" => $infantQty,
             "offset" => $offset,
-            "limit" => "10" //set to 10 in searchFlight.html.twig
+            "limit" => "10"
         ];
         $results = $this->get('despegar')->getFlightItineraries($urlParams);
 
