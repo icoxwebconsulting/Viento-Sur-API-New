@@ -5,7 +5,7 @@
   ],
   "description": "Viento Sur Web",
   "main": "",
-  "license": "OTHER",
+  "license": "Privative",
   "homepage": "",
   "ignore": [
     "**/.*",
@@ -17,6 +17,9 @@
   ],
   "dependencies": {
     "bootstrap-waitingfor": "^1.2.4",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.6.4",
+    "bootstrap-timepicker": "^0.5.2",
+    "bootpag": "^1.0.7"
   }
 }

@@ -238,7 +238,7 @@ class Despegar
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
-        return json_decode($this->curlExec($url, $header, 'GET'), true);
+        return $this->curlExec($url, $header, 'GET');
     }
 
     public function getFlightItineraries($urlParams)

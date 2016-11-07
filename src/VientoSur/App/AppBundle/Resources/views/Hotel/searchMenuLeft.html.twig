@@ -3,8 +3,8 @@
         <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
             <label class="mfont">Destino/Nombre del hotel</label>
             <!--colocar valor por defecto que trae la busqueda inicial-->
-            <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal"/>
-            <input id="destinationCity" name="cityInput" type="hidden"/>
+            <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal" value="{{ app.session.get('destination').text }}" />
+            <input id="destinationCity" name="cityInput" type="hidden" value="{{ app.session.get('destination').text }}## {{ app.session.get('destination').id }}" />
         </div>
         <div class="input-daterange" data-date-format="d M, D">
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>

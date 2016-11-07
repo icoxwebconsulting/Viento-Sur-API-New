@@ -75,6 +75,7 @@ class HotelController extends Controller {
     public function sendHotelsAvailabilitiesAction($page, Request $request) {
 
         //TODO: destination representa la ciudad que está disponible a través del api geography (o autocomplete) cuando esté en producción
+        $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
         $destination = 982;
 
         list($day,$month,$year)=explode("/",$request->get('start'));
@@ -123,6 +124,7 @@ class HotelController extends Controller {
         $distribucionClass = new Distribution();
         $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
 
+        //TODO: falta por desarrollar el código de ordenamiento, está comentado en listHotelsAvailabilities.html.twig
         $offset = ($page - 1) * 10;
         $urlParams = array(
             "country_code" => "AR",
@@ -157,8 +159,11 @@ class HotelController extends Controller {
         $session = $request->getSession();
         $session->set('checkin_date', $request->get('start'));
         $session->set('checkout_date', $request->get('end'));
+        $session->set('destination', [
+            'text' => $destinationText,
+            'id' => $destination
+        ]);
 
-        //if(isset($results['paging']['total']))
         $total = ceil($results['paging']['total'] / 10);
 
         if ($request->isXmlHttpRequest()) {
@@ -533,6 +538,6 @@ class HotelController extends Controller {
                 $response[] = $city;
             }
         }
-        return new JsonResponse(array("suggestions" => $response));
+        return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
     }
 }
