@@ -544,7 +544,10 @@ blockquote:before {
   padding-left: 60px;
   padding-right: 60px;
 }
-
+label {
+  font-weight: 400;
+  display: block;
+}
 .form-group {
   position: relative;
 }

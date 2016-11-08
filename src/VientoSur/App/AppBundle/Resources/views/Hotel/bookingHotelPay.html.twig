@@ -87,7 +87,7 @@
 
                                         <div class="card-list">
                                             {% for cardId in paymentMethod.card_ids %}
-                                                <label class="card-selector">
+                                                <label class="card-selector" style="display: inline !important;">
                                                     {% set cardData = cardId|split('-') %}
                                                     <div class="eva-card-container" data-card-id="{{ cardId }}">
                                                         <span class="eva-card-body {{ cardData[1] }}"></span>
