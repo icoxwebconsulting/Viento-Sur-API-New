@@ -74,21 +74,25 @@ class HotelController extends Controller {
      */
     public function sendHotelsAvailabilitiesAction($page, Request $request) {
 
-        //TODO: destination representa la ciudad que está disponible a través del api geography (o autocomplete) cuando esté en producción
-        $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
-        $destination = 982;
+        if ($this->getParameter('is_test')) {
+            $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
+            $destination = 982;
+        } else {
+            $destinationText = $request->get('autocomplete');
+            $destination = $request->get('cityInput');
+        }
 
         list($day,$month,$year)=explode("/",$request->get('start'));
         $fromCalendarHotel = $year.'-'.$month.'-'.$day;
 
         list($day,$month,$year)=explode("/",$request->get('end'));
         $toCalendarHotel = $year.'-'.$month.'-'.$day;
-        $habitacionesCant = $request->get('habitacionesCant'); //echo ' habitacion '.$habitacionesCant;
-        $adultsSelector1 = $request->get('adultsSelector1');//echo ' adulto '.$adultsSelector1;
+        $habitacionesCant = $request->get('habitacionesCant');
+        $adultsSelector1 = $request->get('adultsSelector1');
         $adultsSelector2 = $request->get('adultsSelector2');
         $adultsSelector3 = $request->get('adultsSelector3');
         $adultsSelector4 = $request->get('adultsSelector4');
-        $childrenSelectOne = $request->get('childrenRoomSelector1');//echo ' ni7o '.$adultsSelector1; die();
+        $childrenSelectOne = $request->get('childrenRoomSelector1');
         $childrenSelectTwo = $request->get('childrenRoomSelector2');
         $childrenSelectTree = $request->get('childrenRoomSelector3');
         $childrenSelectFour = $request->get('childrenRoomSelector4');
