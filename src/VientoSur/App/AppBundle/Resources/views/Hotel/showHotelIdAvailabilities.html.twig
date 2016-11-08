@@ -45,8 +45,7 @@
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
             <li><a href="index.html">Hoteles</a></li>
-            <li><a href="#">Hoteles en Republica Checa</a></li>
-            <li class="active">Hoteles en Praga (610)</li>
+            <li><a href="#">Hotel {{hotelDetails[0].name}}</a></li>
         </ul>
 
         <div class="gap gap-small"></div>
@@ -55,7 +54,6 @@
 
             <div class="col-md-3">
                 {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
-
             </div>
             <!-- cierra sidebar -->
 
