@@ -48,15 +48,13 @@ class IndexController extends Controller
 
 
         $language = $request->get('language', null);
-        if($language)
-        {
+        if ($language) {
             $this->get('session')->set('language', $language);
             $currencies[$language]['active'] = true;
         }
 
         $currency = $request->get('currency', null);
-        if($currency)
-        {
+        if ($currency) {
             $this->get('session')->set('currency', $currency);
             $currencies[$currency]['active'] = true;
         }
@@ -126,26 +124,28 @@ class IndexController extends Controller
 
     /**
      *
-     * @Route("/autocomplete-city", name="city_autocomplete")
+     * @Route("/autocomplete-city/{state}", name="city_autocomplete")
      * @Method("GET")
      */
-    public function autoCompleteCityAction(Request $request)
+    public function autoCompleteCityAction($state, Request $request)
     {
         $type = 'HOTELS';
         $urlParams = [
             'query' => $request->get('query'),
             'product' => $type,
             'locale' => 'es-AR',
-            'city_result' => '10'
+            'city_result' => '10',
+            'political_divisions_to_filter_results' => $state
         ];
 
         $results = $this->get('despegar')->autocomplete($urlParams);
         $response = [];
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {
-                $city = Array();
-                $city["value"] = $item["description"];
-                $city["data"] = substr($item["id"], 5);
+                $city = [
+                    'value' => $item["description"],
+                    'data' => $item['item']["id"]
+                ];
                 $response[] = $city;
             }
         }

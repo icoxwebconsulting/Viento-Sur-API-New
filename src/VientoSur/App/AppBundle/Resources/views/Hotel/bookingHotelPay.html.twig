@@ -322,12 +322,14 @@
                     $("#form_payment_billing_addressstate_id").val(suggestion.data);
                     $("#form_payment_billing_addressstate_id").data('name', suggestion.value);
                     $('#autocomplete-city').removeProp('readonly').prop('placeholder', 'Buscar ciudad');
+                    $('#autocomplete-city').autocomplete().setOptions({
+                        serviceUrl: Routing.generate('city_autocomplete') + '/' + suggestion.data
+                    });
                 },
                 onInvalidateSelection: function () {
-                    $("#form_payment_billing_addressstate_id").val('');
+                    $("#form_payment_billing_addressstate_id, #form_payment_billing_addresscity_id").val('');
                     $('#autocomplete-city').prop('readonly');
                     $('#autocomplete-city').prop('placeholder', 'Rellene la provincia');
-                    $("#form_payment_billing_addresscity_id").val('');
                 },
                 minChars: 3
             });
