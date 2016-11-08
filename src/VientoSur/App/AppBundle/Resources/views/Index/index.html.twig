@@ -11,8 +11,8 @@
                             <ul class="nav nav-tabs" id="myTab">
                                 <li class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Hoteles</span></a>
                                 </li>
-                                {#<li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Vuelos</span></a>#}
-                                {#</li>#}
+                                <li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Vuelos</span></a>
+                                </li>
                                 <!--<li><a href="#tab-4" data-toggle="tab"><i class="fa fa-car"></i> <span >Autos</span></a>
                                 </li>
                                 <li><a href="#tab-5" data-toggle="tab"><i class="fa fa-suitcase"></i> <span >Paquetes</span></a>
@@ -31,213 +31,12 @@
 
                                 <!-- autos -->
                                 <div class="tab-pane fade" id="tab-4">
-                                    <h2>Alquiler de autos</h2>
-                                    <form>
-                                        <div class="row">
-
-                                            <div class="col-md-12">
-                                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                                                    <label>¿Dónde deseas retirarlo?</label>
-                                                    <input class="typeahead form-control" placeholder="Destino, Código postal" type="text" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                                                    <label>¿Dónde deseas devolverlo?</label>
-                                                    <input class="typeahead form-control" placeholder="Destino, Código postal" type="text" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="input-daterange" data-date-format="M d, D">
-                                                    <div class="row">
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                                                <label>Fecha de alquiler</label>
-                                                                <input id="field-car-pickup-date" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-clock-o input-icon input-icon-hightlight"></i>
-                                                                <label>Hora de alquiler</label>
-                                                                <input id="field-car-pickup-time" class="time-pick form-control required" value="12:00 AM" required="" type="text" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                                                <label>Fecha de devolución</label>
-                                                                <input id="field-car-dropoff-date" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-clock-o input-icon input-icon-hightlight"></i>
-                                                                <label>Hora de devolución</label>
-                                                                <input id="field-car-dropoff-time" class="time-pick form-control required" value="12:00 AM" required="" type="text" />
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <button class="btn btn-primary btn-lg" type="submit">Buscar autos</button>
-                                    </form>
+                                    {% include 'VientoSurAppAppBundle:Cars:searchCars.html.twig' %}
                                 </div>
 
                                 <!-- paquetes -->
                                 <div class="tab-pane fade" id="tab-5">
-                                    <h2>Busca paquetes</h2>
-                                    <form>
-                                        <div class="tabbable">
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade in active" id="flight-search-1">
-
-                                                    <div class="row">
-
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                                                                        <label>Origen</label>
-                                                                        <input class="typeahead form-control" placeholder="Destino, Codigo postal" type="text" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                                                                        <label>Destino</label>
-                                                                        <input class="typeahead form-control" placeholder="Destino, Código postal" type="text" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="input-daterange" data-date-format="M d, D">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                                                            <label>Partida</label>
-                                                                            <input class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                                                            <label>Regreso</label>
-                                                                            <input class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <div class="form-group form-group-lg form-group-select-plus">
-                                                                <label>Habitaciones</label>
-                                                                <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                    <label class="btn btn-primary active">
-                                                                        <input type="radio" name="options" />1</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />2</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />3</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />3+</label>
-                                                                </div>
-                                                                <select class="form-control hidden">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option selected="selected">4</option>
-                                                                    <option>5</option>
-                                                                    <option>6</option>
-                                                                    <option>7</option>
-                                                                    <option>8</option>
-                                                                    <option>9</option>
-                                                                    <option>10</option>
-                                                                    <option>11</option>
-                                                                    <option>12</option>
-                                                                    <option>13</option>
-                                                                    <option>14</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-md-4">
-                                                            <div class="form-group form-group-lg form-group-select-plus">
-                                                                <label>Adultos</label>
-                                                                <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                    <label class="btn btn-primary active">
-                                                                        <input type="radio" name="options" />1</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />2</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />3</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />3+</label>
-                                                                </div>
-                                                                <select class="form-control hidden">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option selected="selected">4</option>
-                                                                    <option>5</option>
-                                                                    <option>6</option>
-                                                                    <option>7</option>
-                                                                    <option>8</option>
-                                                                    <option>9</option>
-                                                                    <option>10</option>
-                                                                    <option>11</option>
-                                                                    <option>12</option>
-                                                                    <option>13</option>
-                                                                    <option>14</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <div class="form-group form-group-lg form-group-select-plus">
-                                                                <label>Nińos</label>
-                                                                <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                                                    <label class="btn btn-primary active">
-                                                                        <input type="radio" name="options" />1</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />2</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />3</label>
-                                                                    <label class="btn btn-primary">
-                                                                        <input type="radio" name="options" />3+</label>
-                                                                </div>
-                                                                <select class="form-control hidden">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option selected="selected">4</option>
-                                                                    <option>5</option>
-                                                                    <option>6</option>
-                                                                    <option>7</option>
-                                                                    <option>8</option>
-                                                                    <option>9</option>
-                                                                    <option>10</option>
-                                                                    <option>11</option>
-                                                                    <option>12</option>
-                                                                    <option>13</option>
-                                                                    <option>14</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-primary btn-lg" type="submit">Buscar paquetes</button>
-                                    </form>
+                                    {% include 'VientoSurAppAppBundle:Packages:searchPackages.html.twig' %}
                                 </div>
 
                             </div>
@@ -269,160 +68,7 @@
     </div>
     <!-- END TOP AREA  -->
 
-    <!-- hoteles -->
-    {#<div class="container">#}
-        {#<div class="gap-small"></div>#}
-
-        {#<h2 class="mb20">Hoteles en promoción</h2>#}
-
-        {#<div class="row row-wrap">#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>#}
-                        {#<p class="mb5">Paris</small></p>#}
-                        {#<p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>#}
-                        {#<p class="mb5">Paris</small></p>#}
-                        {#<p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>#}
-                        {#<p class="mb5">Paris</small></p>#}
-                        {#<p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>#}
-                        {#<p class="mb5">Paris</small></p>#}
-                        {#<p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-        {#</div>#}
-        {#<div class="gap gap-small"></div>#}
-    {#</div>#}
-
-    {#<!-- paquetes -->#}
-    {#<div class="container">#}
-        {#<div class="gap-small"></div>#}
-
-        {#<h2 class="mb20">Paquetes destacados</h2>#}
-
-        {#<div class="row row-wrap">#}
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>#}
-                        {#<p class="mb5"> 7 días / 6 noches</small></p>#}
-                        {#<p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>#}
-                        {#<p>Tarifa final <strong>$13245</strong></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>#}
-                        {#<p class="mb5"> 7 días / 6 noches</small></p>#}
-                        {#<p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>#}
-                        {#<p>Tarifa final <strong>$13245</strong></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>#}
-                        {#<p class="mb5"> 7 días / 6 noches</small></p>#}
-                        {#<p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>#}
-                        {#<p>Tarifa final <strong>$13245</strong></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-            {#<div class="col-md-3">#}
-                {#<div class="thumb">#}
-                    {#<header class="thumb-header">#}
-                        {#<a class="hover-img" href="#">#}
-                            {#<img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />#}
-                            {#<h5 class="hover-title-center">Reserva</h5>#}
-                        {#</a>#}
-                    {#</header>#}
-                    {#<div class="thumb-caption">#}
-                        {#<h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>#}
-                        {#<p class="mb5"> 7 días / 6 noches</small></p>#}
-                        {#<p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>#}
-                        {#<p>Tarifa final <strong>$13245</strong></p>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-        {#</div>#}
-        {#<div class="gap gap-small"></div>#}
-    {#</div>#}
+    {#{% include 'VientoSurAppAppBundle:Index:promotions.html.twig' %}#}
 
     <div class="bg-darken garantias">
         <div class="container">
@@ -451,85 +97,157 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
-    <script>
-        {#Código para el formulario de búsqueda de vuelos#}
-        $(document).ready(function () {
-            $('#childrens-value').val(0);
-            $('#adults-value').val(1);
-            $('input[type=radio][name=childrens]').change(function () {
-                var childrens = $.trim($(this).parent().text());
-                if (childrens > 0 || childrens == '3+') {
-                    if (childrens == '3+') {
-                        childrens = 4;
-                    } else {
-                        childrens = Number(childrens);
-                    }
-                    for (var i = 1; i < 8; i++) {
-                        var selector = 'field-menor-' + i;
-                        if (i <= childrens) {
-                            {#Para selccionar la clase#}
-                            $('.' + selector).show();
-                            {#Para selccionar el elemento#}
-                            $('#' + selector).prop('required', true);
-                        } else {
-                            {#Para selccionar la clase#}
-                            $('.' + selector).hide();
-                            {#Para selccionar el elemento#}
-                            $('#' + selector).removeProp('required');
-                        }
-                    }
-                    $('.MenoresNum').removeClass('hidden');
-                } else {
-                    for (var i = 1; i < 8; i++) {
-                        var selector = 'field-menor-' + i;
-                        {#Para selccionar la clase#}
-                        $('.' + selector).hide();
-                        {#Para selccionar el elemento#}
-                        $('#' + selector).removeProp('required');
-                    }
-                    $('.MenoresNum').addClass('hidden');
+{{ parent() }}
+<script>
+    $(document).ready(function () {
+        {#Codigo para el formulario de búsqueda de hoteles#}
+        $('.coupled').change(function () {
+            var couple = $(this).data('couple');
+            couple = couple.split('.');
+            if (couple) {
+                var diff = 8 - this.value;
+                var opts = '';
+                var i = (couple[1] == '0') ? 0 : 1;
+                var selected = $('#' + couple).find(":selected").val();
+                for (; i <= diff; i++) {
+                    opts += '<option value="' + i + '" ' + ((i == selected) ? 'selected="selected"' : '' ) + '>' + i + '</option>';
                 }
-                $('#childrens-value').val(childrens);
-            });
-
-            $('#childrens-plus').change(function () {
-                if (this.value > 0) {
-                    for (var i = 1; i < 8; i++) {
-                        var selector = 'field-menor-' + i;
-                        if (i <= this.value) {
-                            {#Para selccionar la clase#}
-                            $('.' + selector).show();
-                            {#Para selccionar el elemento#}
-                            $('#' + selector).prop('required', true);
-                        } else {
-                            {#Para selccionar la clase#}
-                            $('.' + selector).hide();
-                            {#Para selccionar el elemento#}
-                            $('#' + selector).removeProp('required');
-                        }
-                    }
-                    $('.MenoresNum').removeClass('hidden');
-                } else {
-                    for (var i = 1; i < 8; i++) {
-                        var selector = 'field-menor-' + i;
-                        {#Para selccionar la clase#}
-                        $('.' + selector).hide();
-                        {#Para selccionar el elemento#}
-                        $('#' + selector).removeProp('required');
-                    }
-                    $('.MenoresNum').addClass('hidden');
-                }
-                $('#childrens-value').val(this.value);
-            });
-
-            $('input[type=radio][name=adults]').change(function () {
-                var adults = $.trim($(this).parent().text());
-                $('#adults-value').val(adults);
-            });
-            $('#adults-plus').change(function () {
-                $('#adults-value').val(this.value);
-            });
+                $('#' + couple).empty().append(opts);
+            }
         });
-    </script>
+
+        $("#roomsQty").change(function () {
+            if (this.value == 1) {
+                $('#room').show();
+                $('#extraRooms').addClass('hide');
+                $("#childrenRoom1, #childrenRoom2, #childrenRoom3, #childrenRoom4").val(0).change();
+            } else {
+                $('#room').hide();
+                $('#childrenRoom').val(0).change();
+                $('#extraRooms').removeClass('hide');
+            }
+            for (var i = 1; i < 5; i++) {
+                if (this.value != 1 && i <= this.value) {
+                    $('.room' + i).show();
+                } else {
+                    $('.room' + i).hide();
+                }
+            }
+        });
+
+        $("#childrenRoom").change(function () {
+            for (var i = 1; i < 8; i++) {
+                var selector = 'childAge' + i + 'room';
+                if (i <= this.value) {
+                    $('.' + selector).show();
+                    $('#' + selector).prop('required', true);
+                } else {
+                    $('.' + selector).hide();
+                    $('#' + selector).removeProp('required');
+                }
+            }
+            if (this.value > 0) {
+                $("#ageBlock").removeClass('hide');
+            } else {
+                $("#ageBlock").addClass('hide');
+            }
+        });
+
+        $("#childrenRoom1, #childrenRoom2, #childrenRoom3, #childrenRoom4").change(function () {
+            var nro = this.id;
+            nro = nro.slice(-1);
+            if (this.value > 0) {
+                for (var i = 1; i < 8; i++) {
+                    if (i <= this.value) {
+                        var selector = 'childAge' + i + nro;
+                        $('.' + selector).show();
+                        $('#' + selector).prop('required', true);
+                    } else {
+                        var selector = 'childAge' + i + nro;
+                        $('.' + selector).hide();
+                        $('#' + selector).removeProp('required');
+                    }
+                }
+                $('#menor-room' + nro).removeClass('hide');
+            } else {
+                for (var i = 1; i < 8; i++) {
+                    var selector = 'childAge' + i + nro;
+                    $('.' + selector).hide();
+                    $('#' + selector).removeProp('required');
+                }
+                $('#menor-room' + nro).addClass('hide');
+            }
+        });
+
+        {#Código para el formulario de búsqueda de vuelos#}
+        $('#childrens-value').val(0);
+        $('#adults-value').val(1);
+        $('input[type=radio][name=childrens]').change(function () {
+            var childrens = $.trim($(this).parent().text());
+            if (childrens > 0 || childrens == '3+') {
+                if (childrens == '3+') {
+                    childrens = 4;
+                } else {
+                    childrens = Number(childrens);
+                }
+                for (var i = 1; i < 8; i++) {
+                    var selector = 'field-menor-' + i;
+                    if (i <= childrens) {
+                        {#Para selccionar la clase#}
+                        $('.' + selector).show();
+                        {#Para selccionar el elemento#}
+                        $('#' + selector).prop('required', true);
+                    } else {
+                        {#Para selccionar la clase#}
+                        $('.' + selector).hide();
+                        {#Para selccionar el elemento#}
+                        $('#' + selector).removeProp('required');
+                    }
+                }
+                $('.MenoresNum').removeClass('hidden');
+            } else {
+                for (var i = 1; i < 8; i++) {
+                    var selector = 'field-menor-' + i;
+                    {#Para selccionar la clase#}
+                    $('.' + selector).hide();
+                    {#Para selccionar el elemento#}
+                    $('#' + selector).removeProp('required');
+                }
+                $('.MenoresNum').addClass('hidden');
+            }
+            $('#childrens-value').val(childrens);
+        });
+
+        $('#childrens-plus').change(function () {
+            for (var i = 1; i < 8; i++) {
+                var selector = 'field-menor-' + i;
+                if (i <= this.value) {
+                    {#Para selccionar la clase#}
+                    $('.' + selector).show();
+                    {#Para selccionar el elemento#}
+                    $('#' + selector).prop('required', true);
+                } else {
+                    {#Para selccionar la clase#}
+                    $('.' + selector).hide();
+                    {#Para selccionar el elemento#}
+                    $('#' + selector).removeProp('required');
+                }
+            }
+            if (this.value == 0) {
+                $('.MenoresNum').addClass('hidden');
+            } else {
+                $('.MenoresNum').removeClass('hidden');
+            }
+            $('#childrens-value').val(this.value);
+        });
+
+        $('input[type=radio][name=adults]').change(function () {
+            var adults = $.trim($(this).parent().text());
+            $('#adults-value').val(adults);
+        });
+        $('#adults-plus').change(function () {
+            $('#adults-value').val(this.value);
+        });
+    });
+</script>
 {% endblock %}
