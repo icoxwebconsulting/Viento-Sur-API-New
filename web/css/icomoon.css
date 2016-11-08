@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src: 	url('../fonts/icomoon.eot?v=4.0.3');
-  src: 	url('../fonts/icomoon.svg?v=4.0.3#icomoon') format('svg'), 
-		url('../fonts/icomoon.eot?#iefix&v=4.0.3') format('embedded-opentype'), 
-		url('../fonts/icomoon.woff?v=4.0.3') format('woff'), 
-		url('../fonts/icomoon.ttf?v=4.0.3') format('truetype');
+  src: 	url('../../src/VientoSur/App/AppBundle/Resources/public/fonts/icomoon.eot?v=4.0.3');
+  src: 	url('../../src/VientoSur/App/AppBundle/Resources/public/fonts/icomoon.svg?v=4.0.3#icomoon') format('svg'),
+		url('../../src/VientoSur/App/AppBundle/Resources/public/fonts/icomoon.eot?#iefix&v=4.0.3') format('embedded-opentype'),
+		url('../../src/VientoSur/App/AppBundle/Resources/public/fonts/icomoon.woff?v=4.0.3') format('woff'),
+		url('../../src/VientoSur/App/AppBundle/Resources/public/fonts/icomoon.ttf?v=4.0.3') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

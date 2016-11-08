@@ -10,7 +10,6 @@ app/cache/*
 app/logs/*
 vendor/*
 web/bundles/*
-web/css/*
 web/uploads/*
 web/assets/vendor/
 

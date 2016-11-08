@@ -8,15 +8,11 @@
         <!-- bootstrap  -->
         <link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="{{ asset('bundles/vientosurappapp/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
-        <!-- --><!-- Ionicons -->
-        <link rel="stylesheet" href="{{ asset('bundles/vientosurappapp/css/icomoon.css') }}">
-        <!--  -->
-        <script src="{{ asset('bundles/vientosurappapp/js/modernizr.js')}}" type="text/javascript"></script>
-        <!--  -->
-        <link href="{{ asset('bundles/vientosurappapp/css/styles.css') }}" rel="stylesheet" type="text/css" />
-        <!--  -->
-        <link href="{{ asset('bundles/vientosurappapp/css/vs-global.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+        <!-- Ionicons -->
+        <link href="{{ asset('css/icomoon.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/vs-global.css') }}" rel="stylesheet" type="text/css" />
         <!-- favicon -->
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% block stylesheets %}
@@ -160,6 +156,7 @@
         </div>
     {% endblock %}
 
+    <script src="{{ asset('bundles/vientosurappapp/js/modernizr.js')}}" type="text/javascript"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
