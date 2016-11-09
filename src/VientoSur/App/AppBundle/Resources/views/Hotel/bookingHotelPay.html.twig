@@ -97,7 +97,13 @@
                                 <p class="list-group-item-text">
                                     <div class="radio">
                                         <div class="card-list">
-                                            {% if not type == 'cash' %}
+                                            {% if type == 'cash' %}
+                                                <label class="card-selector vs-cs-label">
+                                                    <div class="eva-card-container" data-card-id="">
+                                                        <span class="eva-card-body EFE"></span>
+                                                    </div>
+                                                </label>
+                                            {% else %}
                                                 {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
                                                 {% set cardI = attribute(cardsList, '*') %}
                                                 {% for card in cardI %}
@@ -108,12 +114,6 @@
                                                         </div>
                                                     </label>
                                                 {% endfor %}
-                                            {% else %}
-                                                <label class="card-selector vs-cs-label">
-                                                    <div class="eva-card-container" data-card-id="">
-                                                        <span class="eva-card-body EFE"></span>
-                                                    </div>
-                                                </label>
                                             {% endif %}
                                             {#{% for cardId in paymentMethod.card_ids %}#}
                                                 {#<label class="card-selector vs-cs-label">#}

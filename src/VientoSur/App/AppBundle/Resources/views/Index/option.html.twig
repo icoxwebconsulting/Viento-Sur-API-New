@@ -3,33 +3,33 @@
         <!--<li><a href="#">Iniciar Sesión</a></li>-->
         <!--<li><a href="#">Registrarse</a></li>-->
         <li class="nav-drop">
-            <a href="#">
-                AR $<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i>
-            </a>
-            <ul class="list nav-drop-menu">
-                {% for currency in currencies %}
-                <li>
-                    <a href="#">{{ currency.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
+            {#<a href="#">#}
+                {#AR $<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i>#}
+            {#</a>#}
+            {#<ul class="list nav-drop-menu">#}
+                {#{% for currency in currencies %}#}
+                {#<li>#}
+                    {#<a href="#">{{ currency.name }}</a>#}
+                {#</li>#}
+                {#{% endfor %}#}
+            {#</ul>#}
         </li>
         <li class="top-user-area-lang nav-drop">
-            <a href="#">
-                Español<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" />
-            </a>
-            <ul class="list nav-drop-menu">
-                <li>
-                    <a title="English" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English</span>
-                    </a>
-                </li>
-                <li>
-                    <a title="Portuguese" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/flag_pt.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese</span>
-                    </a>
-                </li>
-            </ul>
+            {#<a href="#">#}
+                {#Español<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" />#}
+            {#</a>#}
+            {#<ul class="list nav-drop-menu">#}
+                {#<li>#}
+                    {#<a title="English" href="#">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a title="Portuguese" href="#">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/flag_pt.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese</span>#}
+                    {#</a>#}
+                {#</li>#}
+            {#</ul>#}
         </li>
     </ul>
 </div>
