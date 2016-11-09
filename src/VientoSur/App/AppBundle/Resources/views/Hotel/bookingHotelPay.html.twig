@@ -193,8 +193,8 @@
                             {% if formNewPay.payment.card_code is defined %}
                                 {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
                             {% endif %}
-                            {% if formNewPay.payment.card_code is defined %}
-                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
+                            {% if formNewPay.payment.card_type is defined %}
+                                {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden-row'} }) }}
                             {% endif %}
                             {% if formChoice.payment.invoice is defined %}
                                 {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
