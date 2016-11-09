@@ -97,16 +97,24 @@
                                 <p class="list-group-item-text">
                                     <div class="radio">
                                         <div class="card-list">
-                                            {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
-                                            {% set cardI = attribute(cardsList, '*') %}
-                                            {% for card in cardI %}
+                                            {% if not type == 'cash' %}
+                                                {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                                                {% set cardI = attribute(cardsList, '*') %}
+                                                {% for card in cardI %}
+                                                    <label class="card-selector vs-cs-label">
+                                                        {% set cardData = card|split('-') %}
+                                                        <div class="eva-card-container" data-card-id="{{ card }}">
+                                                            <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                        </div>
+                                                    </label>
+                                                {% endfor %}
+                                            {% else %}
                                                 <label class="card-selector vs-cs-label">
-                                                    {% set cardData = card|split('-') %}
-                                                    <div class="eva-card-container" data-card-id="{{ card }}">
-                                                        <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                    <div class="eva-card-container" data-card-id="">
+                                                        <span class="eva-card-body EFE"></span>
                                                     </div>
                                                 </label>
-                                            {% endfor %}
+                                            {% endif %}
                                             {#{% for cardId in paymentMethod.card_ids %}#}
                                                 {#<label class="card-selector vs-cs-label">#}
                                                     {#{% set cardData = cardId|split('-') %}#}
@@ -130,15 +138,21 @@
                                     <label>Tarjeta:</label>
                                     <input type="text" value="" id="card-selected" readonly>
                                 </div>
-                                <div class="col-md-3">
-                                    {{ form_row(formNewPay.payment.number, {'label': 'Número de tarjeta:'}) }}
-                                </div>
-                                <div class="col-md-3">
-                                    {{ form_row(formNewPay.payment.expiration, {'label': 'Vencimiento:'}) }}
-                                </div>
-                                <div class="col-md-3">
-                                    {{ form_row(formNewPay.payment.security_code, {'label': 'Código de seguridad:'}) }}
-                                </div>
+                                {% if formNewPay.payment.number is defined %}
+                                    <div class="col-md-3">
+                                        {{ form_row(formNewPay.payment.number, {'label': 'Número de tarjeta:'}) }}
+                                    </div>
+                                {% endif %}
+                                {% if formNewPay.payment.expiration is defined %}
+                                    <div class="col-md-3">
+                                        {{ form_row(formNewPay.payment.expiration, {'label': 'Vencimiento:'}) }}
+                                    </div>
+                                {% endif %}
+                                {% if formNewPay.payment.security_code is defined %}
+                                    <div class="col-md-3">
+                                        {{ form_row(formNewPay.payment.security_code, {'label': 'Código de seguridad:'}) }}
+                                    </div>
+                                {% endif %}
                             </div>
 
                             <div class="row">
@@ -172,13 +186,20 @@
                                     </div>
                                 {% endif %}
                             </div>
-                            {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden-row'} }) }}
-                            {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
-                            {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden-row'} }) }}
-                        {% endif %}
 
-                        {% if formChoice.payment.invoice is defined %}
-                            {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
+                            {% if formNewPay.payment.bank_code is defined %}
+                                {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden-row'} }) }}
+                            {% endif %}
+                            {% if formNewPay.payment.card_code is defined %}
+                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
+                            {% endif %}
+                            {% if formNewPay.payment.card_code is defined %}
+                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
+                            {% endif %}
+                            {% if formChoice.payment.invoice is defined %}
+                                {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
+                            {% endif %}
+
                         {% endif %}
                     </div>
                 </div>

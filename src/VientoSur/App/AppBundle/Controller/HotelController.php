@@ -796,12 +796,14 @@ class HotelController extends Controller {
         $cardsGroup = [];
         foreach ($paymentMethods as $pm) {
             $temp = [];
-            foreach ($pm->card_ids as $cardId) {
-                $cardParts = explode("-", $cardId);
-                $bank = $cardParts[2];
-                $temp[$bank][] = $cardId;
+            if(isset($pm->card_ids )){
+                foreach ($pm->card_ids as $cardId) {
+                    $cardParts = explode("-", $cardId);
+                    $bank = $cardParts[2];
+                    $temp[$bank][] = $cardId;
+                }
+                $cardsGroup[$pm->choice] = $temp;
             }
-            $cardsGroup[$pm->choice] = $temp;
         }
 
         return array(
