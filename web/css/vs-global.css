@@ -878,3 +878,12 @@ h4.booking-item-title {
 .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+.vs-cs-label {
+  display: inline !important;
+  padding-left: 0 !important;
+}
+.b-interest {
+   font-size: 15px;
+   font-style: italic;
+ }

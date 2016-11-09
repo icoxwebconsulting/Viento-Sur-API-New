@@ -61,45 +61,66 @@
                     </div>
                 </div>
                 <!--/Pasajeros-->
-
+                {#{{ dump(paymentMethods) }}#}
+                {#{{ dump(paymentMethods2) }}#}
+                {#{{ dump(formNewPay.payment.paymentMethod) }}#}
                 <!--Formas de pago-->
                 <div class="panel panel-primary">
                     <div class="panel-heading">Formas de pago</div>
                     <div class="panel-body">
-                        <ul class="list-group">
+                        <div class="list-group">
                             {% for paymentMethod in paymentMethods %}
-                                <li class="list-group-item">
-                                    <div class="radio">
-                                        <label>
-                                            {#{% if loop.index0 == 0 %}#}
-                                            {#<input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}" checked="checked">#}
-                                            {#{% else %}#}
-                                            {#<input type="radio" name="paymentMethodChoice" value="{{ paymentMethod.choice }}">#}
-                                            {#{% endif %}#}
-
-                                            {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
-                                        </label>
-                                        {% if paymentMethod.type == 'at_destination' %}
-                                            <p>Pago al Hotel</p>
+                            <a href="javascript:void(0)" class="list-group-item">
+                                {% set type = paymentMethod.type %}
+                                <h4 class="list-group-item-heading">
+                                    {#REEMPLAZAR EL INPUT INFERIOR POR EL WIDGET, DESPUES DE PRUEBAS#}
+                                    {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0), {'value' : paymentMethod.choice }) }}
+                                    {#<input type="radio" name="paymentMethod" value="{{ paymentMethod.choice }}">#}
+                                    {% if paymentMethod.installment_quantity is defined %}
+                                        {% if paymentMethod.installment_quantity == 1 %}
+                                            <b style="font-weight: bold !important;">1</b> Pago
+                                        {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
+                                            <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment }}
+                                            {% if paymentMethod.with_bank_interest %}
+                                                <span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount }}
+                                                    (interés)</span>
+                                            {% else %}
+                                                <span class="b-interest">Sin interés</span>
+                                            {% endif %}
                                         {% else %}
-                                            {{ paymentMethod.type }}
+                                            Pago
                                         {% endif %}
-
+                                    {% elseif type == 'at_destination' %}
+                                        Pago en destino
+                                    {% endif %}
+                                </h4>
+                                <p class="list-group-item-text">
+                                    <div class="radio">
                                         <div class="card-list">
-                                            {% for cardId in paymentMethod.card_ids %}
-                                                <label class="card-selector" style="display: inline !important;">
-                                                    {% set cardData = cardId|split('-') %}
-                                                    <div class="eva-card-container" data-card-id="{{ cardId }}">
+                                            {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                                            {% set cardI = attribute(cardsList, '*') %}
+                                            {% for card in cardI %}
+                                                <label class="card-selector vs-cs-label">
+                                                    {% set cardData = card|split('-') %}
+                                                    <div class="eva-card-container" data-card-id="{{ card }}">
                                                         <span class="eva-card-body {{ cardData[1] }}"></span>
                                                     </div>
                                                 </label>
                                             {% endfor %}
+                                            {#{% for cardId in paymentMethod.card_ids %}#}
+                                                {#<label class="card-selector vs-cs-label">#}
+                                                    {#{% set cardData = cardId|split('-') %}#}
+                                                    {#<div class="eva-card-container" data-card-id="{{ cardId }}">#}
+                                                        {#<span class="eva-card-body {{ cardData[1] }}"></span>#}
+                                                    {#</div>#}
+                                                {#</label>#}
+                                            {#{% endfor %}#}
                                         </div>
                                     </div>
-                                </li>
+                                </p>
+                            </a>
                             {% endfor %}
-                            <hr/>
-                        </ul>
+                        </div>
 
                         {% if formChoice.payment.credit_card is defined %}
                             <hr/>
@@ -270,77 +291,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    <script>
-        $('#form_payment_expiration_day').hide();
-
-        $(document).ready(function () {
-            var cardsObject = {
-                'VI': 'Visa',
-                'CA': 'MasterCard',
-                'AX': 'American Express',
-                'DC': 'Diners Club',
-                'CL': 'Cabal',
-                'TN': 'Tarjeta Naranja',
-                'NV': 'Tarjeta Nevada'
-            };
-            $('.eva-card-container:first').addClass('selected-p-card');
-            var cardId = $('.eva-card-container:first').attr('data-card-id');
-            $('#form_payment_bank_code').val(cardId);
-            var splitCard = cardId.split("-");
-            $('#form_payment_card_code').val(splitCard[1]);
-            $('#form_payment_card_type').val(splitCard[3]);
-            $('#card-selected').val(cardsObject[splitCard[1]]);
-
-            $('.eva-card-container').on('click', function () {
-                $('.card-list .eva-card-container').removeClass('selected-p-card');
-                var cardId = $(this).attr('data-card-id');
-                $('#form_payment_bank_code').val(cardId);
-                $(this).addClass('selected-p-card');
-                var splitCard = cardId.split("-");
-                $('#form_payment_card_code').val(splitCard[1]);
-                $('#form_payment_card_type').val(splitCard[3]);
-                $('#card-selected').val(cardsObject[splitCard[1]]);
-            });
-
-            ////
-            var ac = $('#autocomplete-city').autocomplete({
-                serviceUrl: Routing.generate('city_autocomplete'),
-                onSelect: function (suggestion) {
-                    $("#form_payment_billing_addresscity_id").val(suggestion.data);
-                    $("#form_payment_billing_addresscity_id").data('name', suggestion.value);
-                },
-                onInvalidateSelection: function () {
-                    $("#form_payment_billing_addresscity_id").val('');
-                },
-                minChars: 3
-            });
-
-            $("#autocomplete-state").autocomplete({
-                serviceUrl: Routing.generate('state_autocomplete'),
-                onSelect: function (suggestion) {
-                    $("#form_payment_billing_addressstate_id").val(suggestion.data);
-                    $("#form_payment_billing_addressstate_id").data('name', suggestion.value);
-                    $('#autocomplete-city').removeProp('readonly').prop('placeholder', 'Buscar ciudad');
-                    $('#autocomplete-city').autocomplete().setOptions({
-                        serviceUrl: Routing.generate('city_autocomplete') + '/' + suggestion.data
-                    });
-                },
-                onInvalidateSelection: function () {
-                    $("#form_payment_billing_addressstate_id, #form_payment_billing_addresscity_id").val('');
-                    $('#autocomplete-city').prop('readonly');
-                    $('#autocomplete-city').prop('placeholder', 'Rellene la provincia');
-                },
-                minChars: 3
-            });
-
-
-
-            $('#autocomplete-state, #autocomplete-city').on("click", function () {
-                $(this).select();
-            });
-        });
-    </script>
+    <script src="{{ asset('js/hotel-form.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
