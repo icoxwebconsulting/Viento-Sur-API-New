@@ -149,11 +149,11 @@ class HotelController extends Controller {
             "limit" => "10"
         );
         //TODO: hay un tema con el api de despegar, cuando se envía el offset en 0 o no se envía a veces no retorna el total de elementos
-        if ($this->getParameter('is_test')) {//al parecer sólo ocurre con el api de pruebas
+        //if ($this->getParameter('is_test')) {//al parecer sólo ocurre con el api de pruebas
             if ($offset == 0) {
                 $urlParams['offset'] = 1;
             }
-        }
+        //}
 
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
