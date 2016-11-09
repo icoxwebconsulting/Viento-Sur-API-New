@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use VientoSur\App\AppBundle\Entity\Passengers;
+use VientoSur\App\AppBundle\Entity\Reservation;
 use VientoSur\App\AppBundle\Services\Distribution;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -385,8 +387,8 @@ class HotelController extends Controller {
                 if ($response && isset($response->secure_token)) {
                     //obtengo los valores ya seteados según la selección
                     $fillData = $formHelper->fillFormData($formBooking, $formNewPaySend);
-                    $seletedPack = $formHelper->getSelectedPack();
-                    $form_id_booking = $seletedPack['id'];
+                    $selectedPack = $formHelper->getSelectedPack();
+                    $form_id_booking = $selectedPack['id'];
 
                     $patchParams = [];
                     $patchParams['payment_method_choice'] = $formNewPaySend['paymentMethod'];
@@ -398,11 +400,34 @@ class HotelController extends Controller {
                         $status = 'patch';
                     }
                     $detail = $response;
+
+                    if ($status == 'ok') {
+                        $em = $this->getDoctrine()->getManager();
+
+                        $reservation = new Reservation();
+                        $reservation->setHotelId($hotelAvailabilities->hotel->id);
+                        $reservation->setCardType($dvaultQuery['brand_code']);
+                        $reservation->setHolderName($formNewPaySend['owner_name']);
+                        $reservation->setPhoneNumber($formNewPaySend['country_code0'] . '-' . $formNewPaySend['area_code0'] . '-' . $formNewPaySend['number0']);
+                        $reservation->setEmail($formNewPaySend['email']);
+                        $reservation->setComments($formNewPaySend['comment']);
+                        $em->persist($reservation);
+
+                        foreach ($fillData['passengers'] as $key => $value) {
+                            $passenger = new Passengers();
+                            $passenger->setName($formNewPaySend['first_name' . $key]);
+                            $passenger->setLastName($formNewPaySend['last_name' . $key]);
+                            $passenger->setDocument($formNewPaySend['document_number' . $key]);
+                            $passenger->setReservation($reservation);
+                            $em->persist($passenger);
+                        }
+                        $em->flush();
+                    }
                 } else {
                     //TODO: Error en dVault response token
-//                     echo 'Response: <pre>';
-//                     print_r($response);
-//                     echo '</pre><br/>';
+                     //echo 'Response: <pre>';
+                     //print_r($response);
+                     //echo '</pre><br/>';
                     $status = 'dvault';
                 }
 
