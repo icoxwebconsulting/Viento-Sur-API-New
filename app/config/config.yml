@@ -87,3 +87,8 @@ guzzle:
             base_url: "%service_vault_url%"
         api_despegar:
             base_url: "%service_url%"
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:    []

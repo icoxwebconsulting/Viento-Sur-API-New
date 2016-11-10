@@ -424,6 +424,26 @@ class HotelController extends Controller {
                             $em->persist($passenger);
                         }
                         $em->flush();
+                        //envío de correo
+                        try {
+                            $urlParams = array(
+                                'ids' => $hotelAvailabilities->hotel->id,
+                                'language' => 'es',
+                                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+                                'resolve' => 'merge_info',
+                                'catalog_info' => 'true'
+                            );
+                            $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
+                            if ($request->getSession()->get('email')) {
+                                $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
+                                    'hotelDetails' => $hotelDetails[0],
+                                    'detail' => $detail,
+                                    'hotelId' => $hotelAvailabilities->hotel->id
+                                ));
+                            }
+                        } catch (\Exception $e) {
+                            $this->get('logger')->error('Booking email error');
+                        }
                     }
                 } else {
                     //TODO: Error en dVault response token
@@ -817,7 +837,8 @@ class HotelController extends Controller {
             'paymentMethods'   => $paymentMethods,
             'paymentMethods2'  => $paymentMethods2,
             'rooms'            => $roompack->rooms,
-            'cardsGroup'       => $cardsGroup
+            'cardsGroup'       => $cardsGroup,
+            'errors'           => $formNewPaySend->getErrors()
         );
     }
 
@@ -840,18 +861,6 @@ class HotelController extends Controller {
             'catalog_info' => 'true'
         );
         $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
-
-        try{
-            if ($status == 'ok' && $request->getSession()->get('email')) {
-                $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
-                    'hotelDetails' => $hotelDetails[0],
-                    'detail' => $detail,
-                    'hotelId' => $hotelId
-                ));
-            }
-        } catch(\Exception $e){
-            $this->get('logger')->error('Booking email error');
-        }
 
         return array(
             'status' => $status,

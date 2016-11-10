@@ -303,6 +303,9 @@
                 {{ form_end(formNewPay) }}
             </div>
             <div class="gap"></div>
+            <div class="errors">
+{{ dump(errors) }}
+            </div>
             {#{{ dump(formNewPay) }}#}
             {#{{ dump(formChoice) }}#}
             {#{{ dump(paymentMethods) }}#}

@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends Controller
@@ -150,5 +151,26 @@ class IndexController extends Controller
             }
         }
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
+    }
+
+    /**
+     *
+     * @Route("/pdf", name="pdf_test")
+     * @Method("GET")
+     */
+    public function pdfTestAction(Request $request)
+    {
+        $html = $this->renderView('VientoSurAppAppBundle:Email:booking2.html.twig', array(
+            'some'  => 1
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="reservacion.pdf"'
+            )
+        );
     }
 }
