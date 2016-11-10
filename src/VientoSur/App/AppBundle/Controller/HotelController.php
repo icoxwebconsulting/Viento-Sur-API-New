@@ -372,18 +372,7 @@ class HotelController extends Controller {
                 $session->set('email', $formNewPaySend['email']);
                 
                //procesar formulario recibido
-                $dvaultQuery = [
-                    'brand_code'       =>$formNewPaySend['card_code'],
-                    'number'           =>$formNewPaySend['number'],
-                    'expiration_month' =>$formNewPaySend['expiration']->format('m'),
-                    'expiration_year'  =>$formNewPaySend['expiration']->format('Y'),
-                    'security_code'    =>$formNewPaySend['security_code'],
-                    'bank'             =>$formNewPaySend['bank_code'],
-                    'seconds_to_live'  =>'600',
-                    'holder_name'      =>$formNewPaySend['owner_name'],
-                ];
-
-                $response = $despegar->dVault($formNewPaySend['tokenize_key'], $dvaultQuery);
+                $response = $despegar->dVault($formNewPaySend);
                 $status = 'ok';
                 $detail = [];
                 if ($response && isset($response->secure_token)) {
@@ -408,7 +397,9 @@ class HotelController extends Controller {
 
                         $reservation = new Reservation();
                         $reservation->setHotelId($hotelAvailabilities->hotel->id);
-                        $reservation->setCardType($dvaultQuery['brand_code']);
+                        $reservation->setReservationId($detail['reservation_id']);
+                        $reservation->setTotalPrice($priceDetail['total']);
+                        $reservation->setCardType($formNewPaySend['card_code']);
                         $reservation->setHolderName($formNewPaySend['owner_name']);
                         $reservation->setPhoneNumber($formNewPaySend['country_code0'] . '-' . $formNewPaySend['area_code0'] . '-' . $formNewPaySend['number0']);
                         $reservation->setEmail($formNewPaySend['email']);
@@ -424,26 +415,48 @@ class HotelController extends Controller {
                             $em->persist($passenger);
                         }
                         $em->flush();
+
+                        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+                            'ids' => $hotelAvailabilities->hotel->id,
+                            'language' => 'es',
+                            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+                            'resolve' => 'merge_info',
+                            'catalog_info' => 'true'
+                        ));
+                        $reservationDetails = $this->get('despegar')->getReservationDetails(
+                            $detail['reservation_id'],
+                            array(
+                                'email' => $formNewPaySend['email'],
+                                'language' => 'es',
+                                'site' => 'AR'
+                            ), $this->getParameter('is_test')
+                        );
+
                         //envío de correo
                         try {
-                            $urlParams = array(
-                                'ids' => $hotelAvailabilities->hotel->id,
-                                'language' => 'es',
-                                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
-                                'resolve' => 'merge_info',
-                                'catalog_info' => 'true'
-                            );
-                            $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
                             if ($request->getSession()->get('email')) {
                                 $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
                                     'hotelDetails' => $hotelDetails[0],
+                                    'reservationDetails' => $reservationDetails,
                                     'detail' => $detail,
-                                    'hotelId' => $hotelAvailabilities->hotel->id
+                                    'hotelId' => $hotelAvailabilities->hotel->id,
+                                    'internal' => $reservation,
+                                    'pdf' => false
                                 ));
                             }
                         } catch (\Exception $e) {
                             $this->get('logger')->error('Booking email error');
                         }
+
+                        return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
+                            'hotelDetails' => $hotelDetails[0],
+                            'reservationDetails' => $reservationDetails,
+                            'detail' => $detail,
+                            'hotelId' => $hotelAvailabilities->hotel->id,
+                            'internal' => $reservation,
+                            'status' => $status,
+                            'pdf' => false
+                        ));
                     }
                 } else {
                     //TODO: Error en dVault response token
@@ -456,7 +469,8 @@ class HotelController extends Controller {
                 return $this->redirect($this->generateUrl('viento_sur_app_booking_hotel_summary', array(
                     'status' => $status,
                     'hotel_id' => $hotelAvailabilities->hotel->id,
-                    'detail' => $detail
+                    'detail' => $detail,
+                    'email' => $formNewPaySend['email']
                 )));
             }
         }
@@ -816,7 +830,7 @@ class HotelController extends Controller {
         $cardsGroup = [];
         foreach ($paymentMethods as $pm) {
             $temp = [];
-            if(isset($pm->card_ids )){
+            if (isset($pm->card_ids)) {
                 foreach ($pm->card_ids as $cardId) {
                     $cardParts = explode("-", $cardId);
                     $bank = $cardParts[2];
@@ -875,29 +889,43 @@ class HotelController extends Controller {
      */
     public function showPdfBookingAction(Request $request)
     {
-        $hotelId = $request->get('hotel_id');
         $detail = $request->get('detail');
-        $urlParams = array(
+        $hotelId = $request->get('hotel_id');
+        $email = $request->get('email');
+        $reservationId = $request->get('reservation_id');
+
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+
+        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
             'ids' => $hotelId,
             'language' => 'es',
             'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
-        );
-        $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
-
-        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig',array(
-            'hotelDetails' => $hotelDetails[0],
-            'detail' => $detail,
-            'hotelId' => $hotelId
         ));
-        $pdfGenerator = $this->get('spraed.pdf.generator');
+        $reservationDetails = $this->get('despegar')->getReservationDetails($detail['reservation_id'], array(
+            'email' => $email,
+            'language' => 'es',
+            'site' => 'AR'
+        ), $this->getParameter('is_test'));
 
-        return new Response($pdfGenerator->generatePDF($html),
+
+        $html = $this->renderView('VientoSurAppAppBundle:Email:booking.html.twig', array(
+            'hotelDetails' => $hotelDetails[0],
+            'reservationDetails' => $reservationDetails,
+            'detail' => $detail,
+            'hotelId' => $hotelId,
+            'internal' => $reservation,
+            'pdf' => true
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
             array(
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="out.pdf"'
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="reservacion.pdf"'
             )
         );
     }

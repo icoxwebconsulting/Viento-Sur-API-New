@@ -73,9 +73,7 @@
                             <a href="javascript:void(0)" class="list-group-item">
                                 {% set type = paymentMethod.type %}
                                 <h4 class="list-group-item-heading">
-                                    {#REEMPLAZAR EL INPUT INFERIOR POR EL WIDGET, DESPUES DE PRUEBAS#}
-                                    {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0), {'value' : paymentMethod.choice }) }}
-                                    {#<input type="radio" name="paymentMethod" value="{{ paymentMethod.choice }}">#}
+                                    {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
                                     {% if paymentMethod.installment_quantity is defined %}
                                         {% if paymentMethod.installment_quantity == 1 %}
                                             <b style="font-weight: bold !important;">1</b> Pago
@@ -304,7 +302,7 @@
             </div>
             <div class="gap"></div>
             <div class="errors">
-{{ dump(errors) }}
+                {{ dump(errors) }}
             </div>
             {#{{ dump(formNewPay) }}#}
             {#{{ dump(formChoice) }}#}

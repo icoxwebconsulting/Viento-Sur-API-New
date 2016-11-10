@@ -15,6 +15,8 @@ class Despegar
     private $clientDespegar;
     private $isTest;
     private $urlVault;
+    private $apiKeyTest;
+    private $apiKeyProd;
 
     public function __construct($guzzleVault, $guzzleDespegar, $apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $vaultUrl, $vaultUrlTest, $isTest)
     {
@@ -23,6 +25,8 @@ class Despegar
         $this->clientDespegar = $guzzleDespegar;
         $this->serviceUrl = $serviceUrl;
         $this->serviceVersion = $serviceVersion;
+        $this->apiKeyTest = $apiKeyTest;
+        $this->apiKeyProd = $apiKey;
         if ($isTest) {
             $this->urlVault = $vaultUrlTest;
             $this->apiKey = $apiKeyTest;
@@ -197,15 +201,26 @@ class Despegar
         }
     }
 
-    public function dVault($tokenizeKey, $params)
+    public function dVault($formNewPaySend)
     {
         try {
-            $response = $this->dVaultValidation($tokenizeKey, $params);
+            $params = [
+                'brand_code' => $formNewPaySend['card_code'],
+                'number' => $formNewPaySend['number'],
+                'expiration_month' => $formNewPaySend['expiration']->format('m'),
+                'expiration_year' => $formNewPaySend['expiration']->format('Y'),
+                'security_code' => $formNewPaySend['security_code'],
+                'bank' => $formNewPaySend['bank_code'],
+                'seconds_to_live' => '600',
+                'holder_name' => $formNewPaySend['owner_name'],
+            ];
+
+            $response = $this->dVaultValidation($formNewPaySend['tokenize_key'], $params);
 
             if ($response) {
                 $header = [
                     'Content-Type: application/json',
-                    'X-Tokenize-Key: ' . $tokenizeKey,
+                    'X-Tokenize-Key: ' . $formNewPaySend['tokenize_key'],
                     'X-Client: ' . $this->apiKey,
                     'X-ApiKey: ' . $this->apiKey
                 ];
@@ -246,6 +261,78 @@ class Despegar
         $url = $this->getServiceUrl() . 'flights/itineraries?' . http_build_query($urlParams);
         $header = [
             'X-ApiKey: ' . $this->apiKey
+        ];
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getReservationDetails($id, $urlParams, $isTest)
+    {
+        if ($isTest) {
+            return json_decode('{
+  "id": "11141355",
+  "penalty": {
+    "total_to_refund": 0,
+    "status": "NOT_ALLOW_BY_NOT_REFUNDABLE",
+    "penalty_customer_amount": 0,
+    "cancellation_type": "Total",
+    "known_penalty_cost": false,
+    "penalty_provider_amount": 0,
+    "cancellation_policies": []
+  },
+  "billing": {
+    "receipts": [],
+    "country": "AR",
+    "pay_at_destination": false
+  },
+  "status": "VOUCHER_SENT",
+  "rooms": [
+    {
+      "id": "8956",
+      "adults": 1,
+      "children": 1,
+      "descriptions": {},
+      "children_ages": [
+        4
+      ],
+      "holder_first_name": "room holder",
+      "holder_lastname": "room holder",
+      "holder_identification_number": "123"
+    }
+  ],
+  "checkin_date": "2017-11-14T12:00:00+0000",
+  "checkout_date": "2017-11-22T12:00:00+0000",
+  "hotel": {
+    "id": "202719"
+  },
+  "night_count": 7,
+  "customer_information": {
+    "mail": "testfenixH-desa@2despegar.com",
+    "phones": [
+      {
+        "type": "HOME",
+        "number": "52(55)1234-5678"
+      }
+    ],
+    "alternative_emails": [],
+    "first_name": "Test",
+    "last_name": "Booking"
+  },
+  "commission_collect_in_advance": false,
+  "client_amount_to_collect": 217,
+  "amount_to_collect_on_arrival": 0,
+  "site_currency": {
+    "code": "USD",
+    "rate": 1
+  },
+  "contract_currency": {
+    "code": "BRL",
+    "rate": 0.21
+  }
+}', true);
+        }
+        $url = $this->getServiceUrl() . 'hotels/reservations/' . $id . '?' . http_build_query($urlParams);
+        $header = [
+            'X-ApiKey: ' . (($isTest) ? $this->apiKeyProd : $this->apiKey)
         ];
         return $this->curlExec($url, $header, 'GET');
     }

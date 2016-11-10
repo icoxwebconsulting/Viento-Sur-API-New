@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Reservation
  *
  * @ORM\Table(name="reservation")
- * @ORM\Entity(repositoryClass="Reservation")
+ * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\ReservationRepository")
  */
 class Reservation
 {
@@ -28,6 +28,17 @@ class Reservation
      * @ORM\Column(name="hotel_id", type="integer", nullable=true)
      */
     private $hotelId;
+
+    /**
+     * @ORM\Column(name="reservation_id", type="integer", nullable=true)
+     */
+    private $reservationId;
+
+    /**
+     * @var
+     * @ORM\Column(name="total_price", type="float", nullable=true)
+     */
+    private $totalPrice;
 
     /**
      * @var string
@@ -234,5 +245,51 @@ class Reservation
     public function getContactName()
     {
         return $this->contactName;
+    }
+
+    /**
+     * Set reservationId
+     *
+     * @param integer $reservationId
+     * @return Reservation
+     */
+    public function setReservationId($reservationId)
+    {
+        $this->reservationId = $reservationId;
+
+        return $this;
+    }
+
+    /**
+     * Get reservationId
+     *
+     * @return integer 
+     */
+    public function getReservationId()
+    {
+        return $this->reservationId;
+    }
+
+    /**
+     * Set totalPrice
+     *
+     * @param float $totalPrice
+     * @return Reservation
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalPrice
+     *
+     * @return float 
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
     }
 }

@@ -1,0 +1,109 @@
+<div class="container bs-docs-container">
+    <table class="table">
+        <tr>
+            <th colspan="3">
+                <b>
+                    <h3>&iexcl;Gracias, {{ internal.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>
+                </b>
+            </th>
+        </tr>
+        <tr>
+            <th colspan="3">
+                <b>
+                    {{ hotelDetails.name }}
+                </b>
+            </th>
+        </tr>
+        <tr>
+            <th rowspan="2" width="20%">
+                <img src="{{ hotelDetails.main_picture.url }}" height="300" width="300"  />
+            </th>
+            <th width="15%">
+                Direcci&oacute;n:
+            </th>
+            <td>
+                {{ hotelDetails.location.address }}. {{ hotelDetails.information.es }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Tel&eacute;fono:
+            </th>
+            <td>
+                No disponible
+            </td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th width="20%">
+                Tu reserva:
+            </th>
+            <td>
+                {{ reservationDetails.night_count }} noche(s). {{ reservationDetails.rooms|length }} Habitacion(es).
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Entrada:
+            </th>
+            <td>
+                {{ reservationDetails.checkin_date|date("d/m/Y") }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Salida:
+            </th>
+            <td>
+                {{ reservationDetails.checkout_date|date("d/m/Y") }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                N&uacute;mero de reserva:
+            </th>
+            <td>
+                {{ reservationDetails.id }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Reserva realizada por:
+            </th>
+            <td>
+                {{ internal.email }}, {{ internal.holderName }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="jumbotron">
+        <table class="table table-condensed">
+            <tr>
+                <td colspan="2">
+                    {{ reservationDetails.rooms|length }} Habitacio(nes)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Precio total:
+                </th>
+                <td>
+                    {{ reservationDetails.contract_currency.code }} {{ reservationDetails.client_amount_to_collect }}
+                </td>
+            </tr>
+            {% if not pdf %}
+            <tr>
+                <th colspan="2">
+                    <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'reservation_id': internal.id}) }}">
+                        Descargar PDF
+                    </a>
+                </th>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+</div>

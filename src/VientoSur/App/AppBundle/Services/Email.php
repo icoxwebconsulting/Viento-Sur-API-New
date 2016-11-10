@@ -19,7 +19,7 @@ class Email
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
-            ->setFrom('no-responder@viento-sur.icox.mobi')
+            ->setFrom('no-responder@vientosur.net')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(

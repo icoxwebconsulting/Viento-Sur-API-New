@@ -1,5 +1,3 @@
-$('#form_payment_expiration_day').hide();
-
 $(document).ready(function () {
     var cardsObject = {
         'VI': 'Visa',
@@ -10,6 +8,9 @@ $(document).ready(function () {
         'TN': 'Tarjeta Naranja',
         'NV': 'Tarjeta Nevada'
     };
+
+    $('#form_payment_expiration_day').hide();
+
     $('.eva-card-container:first').addClass('selected-p-card');
     var cardId = $('.eva-card-container:first').attr('data-card-id');
     $('#form_payment_bank_code').val(cardId);

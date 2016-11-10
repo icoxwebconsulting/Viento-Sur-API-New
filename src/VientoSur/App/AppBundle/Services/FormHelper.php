@@ -378,7 +378,7 @@ class FormHelper
     {
         $options = [];
         foreach ($paymentMethods as $key => $paymentMethod) {
-            $options[($key + 1)] = $paymentMethod->choice;
+            $options[$paymentMethod->choice] = $paymentMethod->choice;
         }
 
         $this->formNewPay->add(

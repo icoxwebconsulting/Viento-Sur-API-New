@@ -1,73 +1,7 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
 {% block content %}
-    <div class="container">
-     <div>
-        {% if status == 'ok' %}
-        <div class="row" align="center">
-            <div class="col-md-8">
-                <h4>¡Gracias! Tu reserva está confirmada</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <p>{{ hotelDetails.name }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                <p><img src="{{ hotelDetails.pictures[0].url }}" style="max-height: 100px; max-width: 100px;"/></p>
-            </div>
-            <div class="col-md-4">
-                <div>Dirección: {{ hotelDetails.location.address }}</div>
-                <div>Teléfono:</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <table class="table">
-                    <tr>
-                        <td>Tu reserva:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Entrada:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Salida:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Número de reserva:</td>
-                        <td>{{ detail.checkout_id }}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-         <div class="row">
-             <div class="col-md-8">
-                 <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'detail': detail, 'hotel_id': hotelId}) }}">Descargar PDF</a>
-             </div>
-         </div>
-     </div>
-        {% else %}
-            <div class="row">
-                <div class="col-md-8">
-                    <h3>Ocurrió un error al momento de realizar la reservación.</h3>
-                </div>
-            </div>
-            {% if detail.causes is defined %}
-            <div class="row">
-                <div class="col-md-8">
-                    <ul>
-                        {% for cause in detail.causes %}
-                            <li>{{ cause }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% endif %}
-        {% endif %}
-    </div>
+
+    {% include 'VientoSurAppAppBundle:Email:bookingDetail.html.twig' %}
+
 {% endblock %}
