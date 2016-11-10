@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             //bundles de terceros
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
-            new Spraed\PDFGeneratorBundle\SpraedPDFGeneratorBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             
             //nuestros bundles

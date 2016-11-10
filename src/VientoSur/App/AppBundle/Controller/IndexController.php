@@ -169,7 +169,7 @@ class IndexController extends Controller
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="reservacion.pdf"'
+                'Content-Disposition'   => 'inline; filename="reservacion.pdf"'
             )
         );
     }
