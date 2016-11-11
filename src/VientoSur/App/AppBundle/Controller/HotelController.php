@@ -404,8 +404,8 @@ class HotelController extends Controller {
                         $reservation->setPhoneNumber($formNewPaySend['country_code0'] . '-' . $formNewPaySend['area_code0'] . '-' . $formNewPaySend['number0']);
                         $reservation->setEmail($formNewPaySend['email']);
                         $reservation->setComments($formNewPaySend['comment']);
-                        $reservation->setCheckin($request->getSession()->get('checkin_date'));
-                        $reservation->setCheckout($request->getSession()->get('checkout_date'));
+                        $reservation->setCheckin(new \DateTime($request->getSession()->get('checkin_date')));
+                        $reservation->setCheckout(new \DateTime($request->getSession()->get('checkout_date')));
                         $em->persist($reservation);
 
                         foreach ($fillData['passengers'] as $key => $value) {
@@ -425,6 +425,8 @@ class HotelController extends Controller {
                             'resolve' => 'merge_info',
                             'catalog_info' => 'true'
                         ));
+                        $hotelDetails = (is_array($hotelDetails))? $hotelDetails[0] : null;
+
                         $reservationDetails = $this->get('despegar')->getReservationDetails(
                             $detail['reservation_id'],
                             array(
@@ -438,7 +440,7 @@ class HotelController extends Controller {
                         try {
                             if ($request->getSession()->get('email')) {
                                 $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
-                                    'hotelDetails' => $hotelDetails[0],
+                                    'hotelDetails' => $hotelDetails,
                                     'reservationDetails' => $reservationDetails,
                                     'detail' => $detail,
                                     'hotelId' => $hotelAvailabilities->hotel->id,
@@ -451,7 +453,7 @@ class HotelController extends Controller {
                         }
 
                         return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
-                            'hotelDetails' => $hotelDetails[0],
+                            'hotelDetails' => $hotelDetails,
                             'reservationDetails' => $reservationDetails,
                             'detail' => $detail,
                             'hotelId' => $hotelAvailabilities->hotel->id,
@@ -461,10 +463,6 @@ class HotelController extends Controller {
                         ));
                     }
                 } else {
-                    //TODO: Error en dVault response token
-                     //echo 'Response: <pre>';
-                     //print_r($response);
-                     //echo '</pre><br/>';
                     $status = 'dvault';
                 }
 
@@ -861,7 +859,6 @@ class HotelController extends Controller {
     /**
      *
      * @Route("/booking/summary/", name="viento_sur_app_booking_hotel_summary")
-     * @Template()
      */
     public function payHotelBookingAction(Request $request)
     {
@@ -869,21 +866,31 @@ class HotelController extends Controller {
         $detail = $request->get('detail');
         $hotelId = $request->get('hotel_id');
 
-        $urlParams = array(
-            'ids' => $hotelId,
-            'language' => 'es',
-            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
-            'resolve' => 'merge_info',
-            'catalog_info' => 'true'
-        );
-        $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
-
-        return array(
-            'status' => $status,
-            'detail' => $detail,
-            'hotelId' => $hotelId,
-            'hotelDetails' => $hotelDetails[0]
-        );
+        $hotelDetails = null;
+        if ($status == 'ok') {
+            $urlParams = array(
+                'ids' => $hotelId,
+                'language' => 'es',
+                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+                'resolve' => 'merge_info',
+                'catalog_info' => 'true'
+            );
+            $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
+            $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
+            return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
+                'status' => $status,
+                'detail' => $detail,
+                'hotelId' => $hotelId,
+                'hotelDetails' => $hotelDetails
+            ));
+        } else {
+            return $this->render('VientoSurAppAppBundle:Hotel:errorHotelBooking.html.twig', array(
+                'status' => $status,
+                'detail' => $detail,
+                'hotelId' => $hotelId,
+                'hotelDetails' => $hotelDetails
+            ));
+        }
     }
 
     /**

@@ -157,16 +157,6 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
 
-//        echo 'PATCH: ' . $url . '<br/>';
-//        echo 'Header: <pre>';
-//        print_r(json_encode($header));
-//        echo '</pre><br/>';
-//
-//        echo 'BODY: <pre>';
-//        print_r($params);
-//        echo '</pre><br/>';
-
-
         return $this->curlExec($url, $header, 'PATCH', json_encode($params));
     }
 
@@ -330,10 +320,21 @@ class Despegar
   }
 }', true);
         }
+
         $url = $this->getServiceUrl() . 'hotels/reservations/' . $id . '?' . http_build_query($urlParams);
         $header = [
-            'X-ApiKey: ' . (($isTest) ? $this->apiKeyProd : $this->apiKey)
+            'X-ApiKey: ' . $this->apiKey
         ];
-        return $this->curlExec($url, $header, 'GET');
+
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
+        $results = curl_exec($cSession);
+        curl_close($cSession);
+        $results = json_decode($results, true);
+        return $results;
     }
 }

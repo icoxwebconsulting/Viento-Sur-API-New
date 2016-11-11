@@ -30,7 +30,7 @@ class Reservation
     private $hotelId;
 
     /**
-     * @ORM\Column(name="reservation_id", type="integer", nullable=true)
+     * @ORM\Column(name="reservation_id", type="string", nullable=true)
      */
     private $reservationId;
 
