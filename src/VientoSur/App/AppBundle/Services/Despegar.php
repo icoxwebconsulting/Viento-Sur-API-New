@@ -249,7 +249,7 @@ class Despegar
 
     public function autocomplete($urlParams)
     {
-        $url = $this->getServiceUrl() . 'autocomplete?' . urldecode(http_build_query($urlParams));
+        $url = $this->getServiceUrl() . 'autocomplete?' . http_build_query($urlParams);
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
