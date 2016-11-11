@@ -404,8 +404,10 @@ class HotelController extends Controller {
                         $reservation->setPhoneNumber($formNewPaySend['country_code0'] . '-' . $formNewPaySend['area_code0'] . '-' . $formNewPaySend['number0']);
                         $reservation->setEmail($formNewPaySend['email']);
                         $reservation->setComments($formNewPaySend['comment']);
-                        $reservation->setCheckin(new \DateTime($request->getSession()->get('checkin_date')));
-                        $reservation->setCheckout(new \DateTime($request->getSession()->get('checkout_date')));
+                        $checkin = explode("/", $request->getSession()->get('checkin_date'));
+                        $checkout = explode("/", $request->getSession()->get('checkout_date'));
+                        $reservation->setCheckin(new \DateTime($checkin[1] . '/' . $checkin[0] . '/' . $checkin[2]));
+                        $reservation->setCheckout(new \DateTime($checkout[1] . '/' . $checkout[0] . '/' . $checkout[2]));
                         $em->persist($reservation);
 
                         foreach ($fillData['passengers'] as $key => $value) {
