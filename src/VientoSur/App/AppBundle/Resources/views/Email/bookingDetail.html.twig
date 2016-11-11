@@ -1,23 +1,27 @@
 <div class="container bs-docs-container">
     <table class="table">
         <tr>
-            <th rowspan="3">
+            <th colspan="2">
                 <b>
                     <h3>&iexcl;Gracias, {{ internal.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>
                 </b>
             </th>
         </tr>
         <tr>
-            <th rowspan="3">
-                <b>
-                    {{ hotelDetails.name }}
-                </b>
+            <th colspan="2">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <img src="{{ hotelDetails.main_picture.url }}" height="250" />
+                        </td>
+                        <td>
+                            <h3>{{ hotelDetails.name }}</h3>
+                        </td>
+                    </tr>
+                </table>
             </th>
         </tr>
         <tr>
-            <th rowspan="2" width="20%">
-                <img src="{{ hotelDetails.main_picture.url }}" height="300" width="300"  />
-            </th>
             <th width="15%">
                 Direcci&oacute;n:
             </th>
