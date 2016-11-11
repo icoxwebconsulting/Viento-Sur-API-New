@@ -915,7 +915,7 @@ class HotelController extends Controller {
             'catalog_info' => 'true'
         ));
         $reservationDetails = $this->get('despegar')->getReservationDetails($detail['reservation_id'], array(
-            'email' => $email,
+            'email' => 'info@vientosur.net',
             'language' => 'es',
             'site' => 'AR'
         ), $this->getParameter('is_test'));
