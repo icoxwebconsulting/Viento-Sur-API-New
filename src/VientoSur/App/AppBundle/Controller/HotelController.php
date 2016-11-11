@@ -386,11 +386,10 @@ class HotelController extends Controller {
                     $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
                     $patchParams['form'] = $fillData;
 
-                    $response = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
-                    if (isset($response['code'])) {
+                    $detail = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
+                    if (isset($detail['code'])) {
                         $status = 'patch';
                     }
-                    $detail = $response;
 
                     if ($status == 'ok') {
                         $em = $this->getDoctrine()->getManager();
@@ -432,7 +431,7 @@ class HotelController extends Controller {
                         $reservationDetails = $this->get('despegar')->getReservationDetails(
                             $detail['reservation_id'],
                             array(
-                                'email' => $formNewPaySend['email'],
+                                'email' => 'info@vientosur.net',
                                 'language' => 'es',
                                 'site' => 'AR'
                             ), $this->getParameter('is_test')
