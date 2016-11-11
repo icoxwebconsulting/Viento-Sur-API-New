@@ -1,14 +1,14 @@
 <div class="container bs-docs-container">
     <table class="table">
         <tr>
-            <th colspan="3">
+            <th rowspan="3">
                 <b>
                     <h3>&iexcl;Gracias, {{ internal.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>
                 </b>
             </th>
         </tr>
         <tr>
-            <th colspan="3">
+            <th rowspan="3">
                 <b>
                     {{ hotelDetails.name }}
                 </b>
@@ -92,7 +92,7 @@
                     Precio total:
                 </th>
                 <td>
-                    {{ reservationDetails.contract_currency.code }} {{ reservationDetails.client_amount_to_collect }}
+                    {{ reservationDetails.site_currency.code }} {{ internal.totalPrice }}
                 </td>
             </tr>
             {% if not pdf %}

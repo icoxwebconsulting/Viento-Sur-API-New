@@ -9,10 +9,24 @@ class Email
     private $mailer;
     private $templating;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface  $templating)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
+    }
+
+    public function sendCommentsEmail($html)
+    {
+        $message = \Swift_Message::newInstance(null)
+            ->setSubject("Consulta web Viento Sur")
+            ->setFrom("not-reply@vientosur.net")
+            ->setTo("mailto:info@vientosur.net")
+            ->setBody(
+                $html,
+                'text/html'
+            );
+
+        $this->get('mailer')->send($message);
     }
 
     public function sendBookingEmail($email, $data)

@@ -202,26 +202,18 @@ class HotelController extends Controller {
      * @Method("POST")
      */
     public function consultAction(Request $request) {
-        $message = \Swift_Message::newInstance(null)
-            ->setSubject("Consulta web Viento Sur")
-            ->setFrom("not-reply@vientosur.com")
-            ->setTo("davidjdr@gmail.com")
-            ->setBody(
-                $this->renderView(
-                    'VientoSurAppAppBundle:Email:contact.html.twig',
-                    array(
-                        'txtContactName' => $request->request->get('fullname'),
-                        'txtEmail' => $request->request->get('email'),
-                        'txtComments' => $request->request->get('message')
-                    )
-                ),
-                'text/html'
-            );
+        $html = $this->renderView(
+            'VientoSurAppAppBundle:Email:contact.html.twig',
+            array(
+                'txtContactName' => $request->request->get('fullname'),
+                'txtEmail' => $request->request->get('email'),
+                'txtComments' => $request->request->get('message')
+            )
+        );
 
-        $this->get('mailer')->send($message);
-        $request->getSession()
-            ->getFlashBag()
-            ->add('success', 'Your message has been sent successfully');
+        $this->get('email.service')->sendCommentsEmail($html);
+
+        $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
         return new JsonResponse(array("status" => 'success'));
     }
 
@@ -361,16 +353,16 @@ class HotelController extends Controller {
         $formHelper = $this->get('form_helper');
         $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice, $roompack->payment_methods);
         $formNewPaySend = $formNewPay->getForm();
-        
+
         if($request->getMethod() == 'POST'){
-            
+
             $formNewPaySend->handleRequest($request);
-            
+
             if ($formNewPaySend->isValid()) {
-               
+
                $formNewPaySend = $formNewPaySend->getData();
                 $session->set('email', $formNewPaySend['email']);
-                
+
                //procesar formulario recibido
                 $response = $despegar->dVault($formNewPaySend);
                 $status = 'ok';
