@@ -75,6 +75,27 @@ class Reservation
      */
     private $comments;
 
+    /**
+     * @ORM\Column(name="created", type="datetime", nullable=false)
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(name="checkin", type="datetime", nullable=true)
+     */
+    private $checkin;
+
+    /**
+     * @ORM\Column(name="checkout", type="datetime", nullable=true)
+     */
+    private $checkout;
+
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+    }
+
 
     /**
      * Get id
@@ -291,5 +312,74 @@ class Reservation
     public function getTotalPrice()
     {
         return $this->totalPrice;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Reservation
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set checkin
+     *
+     * @param \DateTime $checkin
+     * @return Reservation
+     */
+    public function setCheckin($checkin)
+    {
+        $this->checkin = $checkin;
+
+        return $this;
+    }
+
+    /**
+     * Get checkin
+     *
+     * @return \DateTime 
+     */
+    public function getCheckin()
+    {
+        return $this->checkin;
+    }
+
+    /**
+     * Set checkout
+     *
+     * @param \DateTime $checkout
+     * @return Reservation
+     */
+    public function setCheckout($checkout)
+    {
+        $this->checkout = $checkout;
+
+        return $this;
+    }
+
+    /**
+     * Get checkout
+     *
+     * @return \DateTime 
+     */
+    public function getCheckout()
+    {
+        return $this->checkout;
     }
 }

@@ -404,6 +404,8 @@ class HotelController extends Controller {
                         $reservation->setPhoneNumber($formNewPaySend['country_code0'] . '-' . $formNewPaySend['area_code0'] . '-' . $formNewPaySend['number0']);
                         $reservation->setEmail($formNewPaySend['email']);
                         $reservation->setComments($formNewPaySend['comment']);
+                        $reservation->setCheckin($request->getSession()->get('checkin_date'));
+                        $reservation->setCheckout($request->getSession()->get('checkout_date'));
                         $em->persist($reservation);
 
                         foreach ($fillData['passengers'] as $key => $value) {
