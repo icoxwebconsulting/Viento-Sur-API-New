@@ -1,17 +1,49 @@
-<h3>Gracias, Tu reservación está confirmada</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Viento Sur - Reservaci&oacute;n</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .header-top {
+            max-height: 100%;
+            padding: 5px 0;
+            background: #404040;
+        }
+        .logo {
+            display: block;
+        }
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        header#main-header {
+            border-bottom: 2px solid #ed8323;
+        }
+        .header-top {
+            max-height: 100%;
+            padding: 5px 0;
+            background: #404040;
+        }
+    </style>
+</head>
+<body>
+<header id="main-header">
+    <div class="header-top">
+        <div class="container">
+            <div class="col-md-3">
+                <a class="logo" href="#">
+                    <img src="http://www.vientosur.net/web/bundles/vientosurappapp/images/vientosur-logo-color.png"
+                         alt="Viento Sur" title="">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
 
-<table>
-    <tr>
-        <td>
-            {#<p><img src="{{ hotelDetails.pictures[0].url }}" style="max-height: 100px; max-width: 100px;"/></p>#}
-        </td>
-        <td>
-            <p>Dirección: {{ hotelDetails.location.address }}</p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Número de Reserva: {{ detail.checkout_id }}
-        </td>
-    </tr>
-</table>
+{% include 'VientoSurAppAppBundle:Email:bookingDetail.html.twig' %}
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

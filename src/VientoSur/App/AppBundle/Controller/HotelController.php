@@ -911,7 +911,7 @@ class HotelController extends Controller {
         ), $this->getParameter('is_test'));
 
 
-        $html = $this->renderView('VientoSurAppAppBundle:Email:booking.html.twig', array(
+        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
             'hotelDetails' => $hotelDetails[0],
             'reservationDetails' => $reservationDetails,
             'detail' => $detail,
