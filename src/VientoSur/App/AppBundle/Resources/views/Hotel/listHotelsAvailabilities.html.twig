@@ -81,6 +81,31 @@
                 });
             }
 
+            $('.nav-drop').dropit();
+
+            $('.total_price_range').each(function () {
+                $(this).removeClass('hidden');
+                var slider = $("#price-slider").ionRangeSlider({
+                    type: 'double',
+                    hasGrid: true,
+                    prefix: "$",
+                    onChange: function () {
+                        $('#priceBtn').removeClass('disabled');
+                    }
+                });
+                $('#priceBtn').on('click', function () {
+                    if (!$(this).hasClass('disabled')) {
+                        var range = $('#price-slider').val();
+                        if (range.length > 0) {
+                            range = range.replace(';', '-');
+                            asynLoad({
+                                'price_range': range
+                            });
+                        }
+                    }
+                })
+            });
+
             $("#pagination").bootpag({
                 total: {{ total }},
                 maxVisible:10,

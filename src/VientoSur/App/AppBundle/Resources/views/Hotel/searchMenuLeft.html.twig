@@ -1060,6 +1060,31 @@
 
         <input class="btn btn-primary btn-search" type="submit" value="Buscar" />
     </form>
+    {% if items.facets is defined %}
+        <aside class="booking-filters">
+            <h3>Filtrar por:</h3>
+            <ul class="list booking-filters-list">
+                {% for facet in items.facets %}
+                    {% if facet.criteria == 'total_price_range' %}
+                        <li class="total_price_range hidden">
+                            <h5 class="booking-filters-title">Precio</h5>
+                            {% if app.request.get('price_range') is empty %}
+                                <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}"/>
+                            {% else %}
+                                {% set fromTo = app.request.get('price_range')|split('-') %}
+                                <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
+                                       data-to="{{ fromTo[1] }}"/>
+                            {% endif %}
+                            <br/>
+                            <span class="btn btn-primary btn-sm disabled" id="priceBtn">Aplicar</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </aside>
+    {% endif %}
 </div>
 <div class="gap-small"></div>
 

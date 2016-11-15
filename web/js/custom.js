@@ -1,5 +1,61 @@
 "use strict";
 
+$(document).ready(function () {
+
+    $('html').niceScroll({
+        cursorcolor: "#000",
+        cursorborder: "0px solid #fff",
+        railpadding: {
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0
+        },
+        cursorwidth: "10px",
+        cursorborderradius: "0px",
+        cursoropacitymin: 0.2,
+        cursoropacitymax: 0.8,
+        boxzoom: true,
+        horizrailenabled: false,
+        zindex: 9999
+    });
+
+
+    // Owl Carousel
+    var owlCarousel = $('#owl-carousel'),
+        owlItems = owlCarousel.attr('data-items'),
+        owlCarouselSlider = $('#owl-carousel-slider'),
+        owlNav = owlCarouselSlider.attr('data-nav');
+    // owlSliderPagination = owlCarouselSlider.attr('data-pagination');
+
+    owlCarousel.owlCarousel({
+        items: owlItems,
+        navigation: true,
+        navigationText: ['', '']
+    });
+
+    owlCarouselSlider.owlCarousel({
+        slideSpeed: 300,
+        paginationSpeed: 400,
+        // pagination: owlSliderPagination,
+        singleItem: true,
+        navigation: true,
+        navigationText: ['', ''],
+        transitionStyle: 'fade',
+        autoPlay: 4500
+    });
+
+    // footer always on bottom
+    var docHeight = $(window).height();
+    var footerHeight = $('#main-footer').height();
+    var footerTop = $('#main-footer').position().top + footerHeight;
+
+    if (footerTop < docHeight) {
+        $('#main-footer').css('margin-top', (docHeight - footerTop) + 'px');
+    }
+});
+
+
 $('ul.slimmenu').slimmenu({
     resizeWidth: '992',
     collapserTitle: 'Main Menu',
@@ -160,82 +216,6 @@ $('div.bg-parallax').each(function() {
 
         });
     }
-});
-
-
-
-$(document).ready(
-    function() {
-
-    $('html').niceScroll({
-        cursorcolor: "#000",
-        cursorborder: "0px solid #fff",
-        railpadding: {
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0
-        },
-        cursorwidth: "10px",
-        cursorborderradius: "0px",
-        cursoropacitymin: 0.2,
-        cursoropacitymax: 0.8,
-        boxzoom: true,
-        horizrailenabled: false,
-        zindex: 9999
-    });
-
-
-        // Owl Carousel
-        var owlCarousel = $('#owl-carousel'),
-            owlItems = owlCarousel.attr('data-items'),
-            owlCarouselSlider = $('#owl-carousel-slider'),
-            owlNav = owlCarouselSlider.attr('data-nav');
-        // owlSliderPagination = owlCarouselSlider.attr('data-pagination');
-
-        owlCarousel.owlCarousel({
-            items: owlItems,
-            navigation: true,
-            navigationText: ['', '']
-        });
-
-        owlCarouselSlider.owlCarousel({
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            // pagination: owlSliderPagination,
-            singleItem: true,
-            navigation: true,
-            navigationText: ['', ''],
-            transitionStyle: 'fade',
-            autoPlay: 4500
-        });
-
-
-    // footer always on bottom
-    var docHeight = $(window).height();
-   var footerHeight = $('#main-footer').height();
-   var footerTop = $('#main-footer').position().top + footerHeight;
-   
-   if (footerTop < docHeight) {
-    $('#main-footer').css('margin-top', (docHeight - footerTop) + 'px');
-   }
-    }
-
-
-);
-
-
-$('.nav-drop').dropit();
-
-
-$("#price-slider").ionRangeSlider({
-    min: 130,
-    max: 575,
-    type: 'double',
-    prefix: "$",
-    // maxPostfix: "+",
-    prettify: false,
-    hasGrid: true
 });
 
 $('.i-check, .i-radio').iCheck({

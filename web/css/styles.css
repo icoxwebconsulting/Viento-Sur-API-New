@@ -6854,7 +6854,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .booking-filters .irs-from,
 .booking-filters .irs-to,
 .booking-filters .irs-single {
-  color: #fff;
+  /*color: #fff;*/
 }
 .booking-filters .irs-grid-text {
   color: #d9d9d9;

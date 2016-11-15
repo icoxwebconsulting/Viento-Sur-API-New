@@ -152,6 +152,8 @@ class HotelController extends Controller
             $sorting = 'best_selling_descending';
         }
 
+        $priceRange = $request->query->get('price_range');
+
         $urlParams = array(
             "country_code" => "AR",
             "checkin_date" => $checkin_date,
@@ -167,6 +169,10 @@ class HotelController extends Controller
             "offset" => $offset,
             "limit" => "10"
         );
+
+        if ($priceRange) {
+            $urlParams['total_price_range'] = $priceRange;
+        }
 
         $sortMapping = [
             "subtotal_price_ascending" => "Precio: menor a mayor",
