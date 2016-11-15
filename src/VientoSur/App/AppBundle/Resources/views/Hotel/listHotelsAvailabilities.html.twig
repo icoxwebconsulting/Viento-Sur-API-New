@@ -12,16 +12,21 @@
                 first: '←',
                 last: '→'
             }).on("page", function(event, num){
-                var url = Routing.generate('viento_sur_send_hotels');
-                var URLsearch = window.location.search;
+                var url = window.location.pathname;
+                var search = $.query.set('page', num).toString();
 
                 waitingDialog.show('Viento Sur, Cargando...');
                 $("html, body").animate({ scrollTop: 0 }, "slow");
-                $(".booking-list").load(url + "/" + num + URLsearch, function (response, status, xhr) {
+                $(".booking-list").load(url + search, function (response, status, xhr) {
                     waitingDialog.hide();
                     if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         alert(msg + xhr.status + " " + xhr.statusText);
+                    } else {
+                        if (history.pushState) {
+                            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
+                            window.history.pushState({path: newurl}, '', newurl);
+                        }
                     }
                 });
             });

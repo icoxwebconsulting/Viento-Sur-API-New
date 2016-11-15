@@ -24,7 +24,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @Route("/hotel")
  */
-class HotelController extends Controller {
+class HotelController extends Controller
+{
 
     public $session;
 
@@ -34,7 +35,8 @@ class HotelController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         return array();
     }
 
@@ -71,11 +73,11 @@ class HotelController extends Controller {
 
     /**
      *
-     * @Route("/send/hotels/availabilities/{page}", name="viento_sur_send_hotels")
-     * @Method("GET")
+     * @Route("/send/hotels/process-search", name="viento_sur_process_search_hotels")
+     * @Method("POST")
      */
-    public function sendHotelsAvailabilitiesAction($page, Request $request) {
-
+    public function sendHotelsProcessSearch(Request $request)
+    {
         if ($this->getParameter('is_test')) {
             $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
             $destination = 982;
@@ -84,63 +86,76 @@ class HotelController extends Controller {
             $destination = $request->get('cityInput');
         }
 
-        list($day,$month,$year)=explode("/",$request->get('start'));
-        $fromCalendarHotel = $year.'-'.$month.'-'.$day;
+        list($day, $month, $year) = explode("/", $request->get('start'));
+        $fromCalendarHotel = $year . '-' . $month . '-' . $day;
 
-        list($day,$month,$year)=explode("/",$request->get('end'));
-        $toCalendarHotel = $year.'-'.$month.'-'.$day;
+        list($day, $month, $year) = explode("/", $request->get('end'));
+        $toCalendarHotel = $year . '-' . $month . '-' . $day;
+
         $habitacionesCant = $request->get('habitacionesCant');
-        $adultsSelector1 = $request->get('adultsSelector1');
-        $adultsSelector2 = $request->get('adultsSelector2');
-        $adultsSelector3 = $request->get('adultsSelector3');
-        $adultsSelector4 = $request->get('adultsSelector4');
-        $childrenSelectOne = $request->get('childrenRoomSelector1');
-        $childrenSelectTwo = $request->get('childrenRoomSelector2');
-        $childrenSelectTree = $request->get('childrenRoomSelector3');
-        $childrenSelectFour = $request->get('childrenRoomSelector4');
+        $distribution = '';
 
-        $OneChildrenOne = $request->get('childAgeSelector-1-1');
-        $OneChildrenTwo = $request->get('childAgeSelector-1-2');
-        $OneChildrenTree = $request->get('childAgeSelector-1-3');
-        $OneChildrenFour = $request->get('childAgeSelector-1-4');
-        $OneChildrenFive = $request->get('childAgeSelector-1-5');
-        $OneChildrenSix = $request->get('childAgeSelector-1-6');
+        if ($habitacionesCant == 1) {
+            $distribution = $request->get('adultsSelector');
+            $childrens = $request->get('childrenRoomSelector');
+            $childAges = '';
+            for ($i = 1; $i <= $childrens; $i++) {
+                $childAges .= '-' . $request->get('childAgeSelector-' . $i);
+            }
+            $distribution .= $childAges;
+        } else {
+            for ($h = 1; $h <= $habitacionesCant; $h++) {
+                $adults = $request->get('adultsSelector' . $h);
+                $childrens = $request->get('childrenRoomSelector' . $h);
+                $childAges = '';
+                for ($i = 1; $i <= $childrens; $i++) {
+                    $childAges .= '-' . $request->get('childAgeSelector-' . $h . '-' . $i);
+                }
+                $distribution .= (($h > 1) ? '!' : '') . $adults . $childAges;
+            }
+        }
 
-        $TwoChildrenOne = $request->get('childAgeSelector-2-1');
-        $TwoChildrenTwo = $request->get('childAgeSelector-2-2');
-        $TwoChildrenTree = $request->get('childAgeSelector-2-3');
-        $TwoChildrenFour = $request->get('childAgeSelector-2-4');
-        $TwoChildrenFive = $request->get('childAgeSelector-2-5');
-        $TwoChildrenSix = $request->get('childAgeSelector-2-6');
+        $session = $request->getSession();
+        $session->set('checkin_date', $request->get('start'));
+        $session->set('checkout_date', $request->get('end'));
+        $session->set('distribution', $distribution);
+        $session->set('destination', [
+            'text' => $destinationText,
+            'id' => $destination
+        ]);
 
-        $TreeChildrenOne = $request->get('childAgeSelector-3-1');
-        $TreeChildrenTwo = $request->get('childAgeSelector-3-2');
-        $TreeChildrenTree = $request->get('childAgeSelector-3-3');
-        $TreeChildrenFour = $request->get('childAgeSelector-3-4');
-        $TreeChildrenFive = $request->get('childAgeSelector-3-5');
-        $TreeChildrenSix = $request->get('childAgeSelector-3-6');
+        return $this->redirect($this->generateUrl('viento_sur_send_hotels', array(
+            'destination' => $destination,
+            'checkin_date' => $fromCalendarHotel,
+            "checkout_date" => $toCalendarHotel,
+            'distribution' => $distribution
+        )));
+    }
 
-        $FourChildrenOne = $request->get('childAgeSelector-4-1');
-        $FourChildrenTwo = $request->get('childAgeSelector-4-2');
-        $FourChildrenTree = $request->get('childAgeSelector-4-3');
-        $FourChildrenFour = $request->get('childAgeSelector-4-4');
-        $FourChildrenFive = $request->get('childAgeSelector-4-5');
-        $FourChildrenSix = $request->get('childAgeSelector-4-6');
-
-        $distribucionClass = new Distribution();
-        $distribucion = $distribucionClass->createDistribution($habitacionesCant, $adultsSelector1, $adultsSelector2, $adultsSelector3, $adultsSelector4, $childrenSelectOne, $childrenSelectTwo, $childrenSelectTree, $childrenSelectFour, $OneChildrenOne, $OneChildrenTwo, $OneChildrenTree, $OneChildrenFour, $OneChildrenFive, $OneChildrenSix, $TwoChildrenOne, $TwoChildrenTwo, $TwoChildrenTree, $TwoChildrenFour, $TwoChildrenFive, $TwoChildrenSix, $TreeChildrenOne, $TreeChildrenTwo, $TreeChildrenTree, $TreeChildrenFour, $TreeChildrenFive, $TreeChildrenSix, $FourChildrenOne, $FourChildrenTwo, $FourChildrenTree, $FourChildrenFour, $FourChildrenFive, $FourChildrenSix);
+    /**
+     *
+     * @Route("/send/hotels/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}", name="viento_sur_send_hotels")
+     * @Method("GET")
+     */
+    public function sendHotelsAvailabilitiesAction($destination, $checkin_date, $checkout_date, $distribution, Request $request)
+    {
+        $page = $request->query->get('page');
+        if (!$page) {
+            $page = 1;
+            $offset = 0;
+        } else {
+            $offset = ($page - 1) * 10;
+        }
 
         //TODO: falta por desarrollar el código de ordenamiento, está comentado en listHotelsAvailabilities.html.twig
-        $offset = ($page - 1) * 10;
         $urlParams = array(
             "country_code" => "AR",
-            "checkin_date" => $fromCalendarHotel,
-            "checkout_date" => $toCalendarHotel,
+            "checkin_date" => $checkin_date,
+            "checkout_date" => $checkout_date,
             "destination" => $destination,
-            "distribution" => $distribucion,
+            "distribution" => $distribution,
             "language" => "es",
             "radius" => "200",
-            "accepts" => "partial",
             "currency" => "ARS",
             "sorting" => "best_selling_descending",
             "classify_roompacks_by" => "none",
@@ -148,29 +163,19 @@ class HotelController extends Controller {
             "offset" => $offset,
             "limit" => "10"
         );
-        //TODO: hay un tema con el api de despegar, cuando se envía el offset en 0 o no se envía a veces no retorna el total de elementos
-        //if ($this->getParameter('is_test')) {//al parecer sólo ocurre con el api de pruebas
-            if ($offset == 0) {
-                $urlParams['offset'] = 1;
-            }
-        //}
+
+//        if ($offset == 0) {
+//            $urlParams['offset'] = 1;
+//        }
 
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
         $restUrl = '?' . http_build_query(array(
                 "site" => "AR",
-                "checkin_date" => $fromCalendarHotel,
-                "checkout_date" => $toCalendarHotel,
-                "distribution" => $distribucion
+                "checkin_date" => $checkin_date,
+                "checkout_date" => $checkout_date,
+                "distribution" => $distribution
             ));
-
-        $session = $request->getSession();
-        $session->set('checkin_date', $request->get('start'));
-        $session->set('checkout_date', $request->get('end'));
-        $session->set('destination', [
-            'text' => $destinationText,
-            'id' => $destination
-        ]);
 
         $total = ceil($results['paging']['total'] / 10);
 
@@ -201,7 +206,8 @@ class HotelController extends Controller {
      * @Route("/consult", name="viento_sur_app_consult")
      * @Method("POST")
      */
-    public function consultAction(Request $request) {
+    public function consultAction(Request $request)
+    {
         $html = $this->renderView(
             'VientoSurAppAppBundle:Email:contact.html.twig',
             array(
@@ -224,7 +230,8 @@ class HotelController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude) {
+    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude)
+    {
         $session = $request->getSession();
         $urlParams = array(
             'language' => 'es',
@@ -247,12 +254,12 @@ class HotelController extends Controller {
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
-                'dispoHotel'   => $dispoHotel,
+                'dispoHotel' => $dispoHotel,
                 'hotelDetails' => $hotelDetails,
-                'latitude'     => $latitude,
-                'longitude'    => $longitude,
-                'idHotel'      => $idHotel,
-                'restUrl'      => $restUrl
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'idHotel' => $idHotel,
+                'restUrl' => $restUrl
             )
         );
     }
@@ -264,7 +271,8 @@ class HotelController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function detailsHotelListForIdAction(Request $request, $idHotel) {
+    public function detailsHotelListForIdAction(Request $request, $idHotel)
+    {
 
         $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=pictures&resolve=merge_info&catalog_info=true";
         $hotel = $this->cUrlExecAction($hotelUrl);
@@ -276,13 +284,11 @@ class HotelController extends Controller {
     }
 
     /**
-     * Lists all Company entities.
-     *
      * @Route("/booking/hotel/send/booking", name="viento_sur_app_app_homepage_send_hotel_booking")
      * @Method("POST")
-     * @Template()
      */
-    public function sendHotelBookingAction(Request $request) {
+    public function sendHotelBookingAction(Request $request)
+    {
 
         $postParams = array(
             "source" => array(
@@ -315,7 +321,8 @@ class HotelController extends Controller {
      * @Route("/booking/pay/", name="viento_sur_app_boking_hotel_pay")
      * @Template()
      */
-    public function bookingHotelPayAction(Request $request) {
+    public function bookingHotelPayAction(Request $request)
+    {
 
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
@@ -330,7 +337,7 @@ class HotelController extends Controller {
             }
         }
 
-        $formUrl     = $request->get('formUrl');
+        $formUrl = $request->get('formUrl');
         $bookingId = $request->query->get('formUrl');
         $booking_id = $request->get('booking_id');
 
@@ -340,11 +347,11 @@ class HotelController extends Controller {
         $sessionForm = $request->getSession();
         $sessionForm->set('url_detail_form', $despegar->getHotelsBookingsNextStepUrl($bookingId));
 
-        if($request->getMethod() == 'GET') {
+        if ($request->getMethod() == 'GET') {
             $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
             $session->set('formBooking', json_encode($formBooking));
         } else {
-            $formBooking = json_decode($session->get('formBooking'),true);
+            $formBooking = json_decode($session->get('formBooking'), true);
             //$session->remove('formBooking');
         }
 
@@ -354,16 +361,16 @@ class HotelController extends Controller {
         $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice, $roompack->payment_methods);
         $formNewPaySend = $formNewPay->getForm();
 
-        if($request->getMethod() == 'POST'){
+        if ($request->getMethod() == 'POST') {
 
             $formNewPaySend->handleRequest($request);
 
             if ($formNewPaySend->isValid()) {
 
-               $formNewPaySend = $formNewPaySend->getData();
+                $formNewPaySend = $formNewPaySend->getData();
                 $session->set('email', $formNewPaySend['email']);
 
-               //procesar formulario recibido
+                //procesar formulario recibido
                 $response = $despegar->dVault($formNewPaySend);
                 $status = 'ok';
                 $detail = [];
@@ -418,7 +425,7 @@ class HotelController extends Controller {
                             'resolve' => 'merge_info',
                             'catalog_info' => 'true'
                         ));
-                        $hotelDetails = (is_array($hotelDetails))? $hotelDetails[0] : null;
+                        $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
 
                         $reservationDetails = $this->get('despegar')->getReservationDetails(
                             $detail['reservation_id'],
@@ -834,18 +841,18 @@ class HotelController extends Controller {
         }
 
         return array(
-            'formBooking'      => $formBooking,
-            'formChoice'       => $formChoice,
-            'price_detail'     => $priceDetail,
-            'formUrl'          => $formUrl,
-            'roompack_choice'  => $roompackChoice,
-            'booking_id'       => $booking_id,
-            'formNewPay'       => $formNewPaySend->createView(),
-            'paymentMethods'   => $paymentMethods,
-            'paymentMethods2'  => $paymentMethods2,
-            'rooms'            => $roompack->rooms,
-            'cardsGroup'       => $cardsGroup,
-            'errors'           => $formNewPaySend->getErrors()
+            'formBooking' => $formBooking,
+            'formChoice' => $formChoice,
+            'price_detail' => $priceDetail,
+            'formUrl' => $formUrl,
+            'roompack_choice' => $roompackChoice,
+            'booking_id' => $booking_id,
+            'formNewPay' => $formNewPaySend->createView(),
+            'paymentMethods' => $paymentMethods,
+            'paymentMethods2' => $paymentMethods2,
+            'rooms' => $roompack->rooms,
+            'cardsGroup' => $cardsGroup,
+            'errors' => $formNewPaySend->getErrors()
         );
     }
 
@@ -926,13 +933,14 @@ class HotelController extends Controller {
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
             array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'inline; filename="reservacion.pdf"'
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="reservacion.pdf"'
             )
         );
     }
 
-    private function cUrlExecAction($url) {
+    private function cUrlExecAction($url)
+    {
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);

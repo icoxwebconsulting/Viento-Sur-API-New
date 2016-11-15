@@ -1,5 +1,5 @@
 <div class="content-sidebar">
-    <form class="booking-item-dates-change mb5" name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_send_hotels', { 'page': '1' } )}}" method="GET">
+    <form class="booking-item-dates-change mb5" name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels')}}" method="POST">
         <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
             <label class="mfont">Destino/Nombre del hotel</label>
             <!--colocar valor por defecto que trae la busqueda inicial-->

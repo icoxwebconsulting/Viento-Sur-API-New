@@ -1,6 +1,6 @@
-{% if items.message is defined%}
+{% if items.message is defined %}
     <li>No se encontraron hoteles disponibles</li>
-{%elseif items.items|length>0%}
+{% elseif items.items|length > 0 %}
     {%for item in items.items %}
         <li>
             <a target="_blank" class="booking-item" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
@@ -53,22 +53,17 @@
 
                         <div class="booking-align-vertical"> <span class="booking-item-price-night">Habitación por noche</span>
                             <span class="booking-item-price">
-                                                    {%for price in item.roompacks%}
-                                                        {{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal}}
-                                                    {%endfor%}
-                                                </span>
-
-                            <span class="btn btn-primary">Ver detalle
-
-
-                                                </span>
+                                {%for price in item.roompacks%}
+                                    {{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal}}
+                                {%endfor%}
+                            </span>
+                            <span class="btn btn-primary">Ver detalle</span>
                             <!--<span class="booking-item-benefit mt20">Cancele gratis</span>-->
                         </div>
+
                     </div>
                 </div>
             </a>
         </li>
     {%endfor%}
-{%else%}
-    No se encontraron hoteles disponiblesssss
 {%endif%}
