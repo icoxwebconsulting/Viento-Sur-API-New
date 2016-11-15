@@ -1065,6 +1065,7 @@
             <h3>Filtrar por:</h3>
             <ul class="list booking-filters-list">
                 {% for facet in items.facets %}
+
                     {% if facet.criteria == 'total_price_range' %}
                         <li class="total_price_range hidden">
                             <h5 class="booking-filters-title">Precio</h5>
@@ -1079,6 +1080,27 @@
                             {% endif %}
                             <br/>
                             <span class="btn btn-primary btn-sm disabled" id="priceBtn">Aplicar</span>
+                        </li>
+                    {% endif %}
+
+                    {% if facet.criteria == 'stars' %}
+                        <li>
+                            <h5 class="booking-filters-title">Categoría</h5>
+                            {% for start in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if start.selected %}checked="checked"{% endif %} />
+                                        {% if start.value == '0' %}
+                                            Otros
+                                        {% else %}
+                                            {% for i in 1..start.value %}
+                                                <i class="fa fa-star"></i>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <span class="pull-right">({{ start.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
                         </li>
                     {% endif %}
                 {% endfor %}
