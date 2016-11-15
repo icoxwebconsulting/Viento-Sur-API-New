@@ -1,42 +1,5 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
-{% block javascripts %}
-  {{ parent() }}
-  <script type="text/javascript">
-        $(function() {
-            $("#pagination").bootpag({
-                total: {{ total }},
-                maxVisible:10,
-                page: {{ page }} ,
-                firstLastUse: true,
-                first: '←',
-                last: '→'
-            }).on("page", function(event, num){
-                var url = window.location.pathname;
-                var search = $.query.set('page', num).toString();
-
-                waitingDialog.show('Viento Sur, Cargando...');
-                $("html, body").animate({ scrollTop: 0 }, "slow");
-                $(".booking-list").load(url + search, function (response, status, xhr) {
-                    waitingDialog.hide();
-                    if (status == "error") {
-                        var msg = "Sorry but there was an error: ";
-                        alert(msg + xhr.status + " " + xhr.statusText);
-                    } else {
-                        if (history.pushState) {
-                            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
-                            window.history.pushState({path: newurl}, '', newurl);
-                        }
-                    }
-                });
-            });
-            $("#field-hotel-checkin").datepicker({
-                "setDate": new Date()
-            });
-        });
-    </script>
-{% endblock %}
-
 {% block content %}
     <div class="container">
         <ul class="breadcrumb">
@@ -53,21 +16,20 @@
             </div>
 
             <div class="col-md-9">
-                {#<div class="nav-drop booking-sort">#}
-                    {#<h5 class="booking-sort-title"><a href="#">Sort: Aviability<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>#}
-                    {#<ul class="nav-drop-menu">#}
-                        {#<li><a href="#">Price (low to high)</a>#}
-                        {#</li>#}
-                        {#<li><a href="#">Price (hight to low)</a>#}
-                        {#</li>#}
-                        {#<li><a href="#">Ranking</a>#}
-                        {#</li>#}
-                        {#<li><a href="#">Distance</a>#}
-                        {#</li>#}
-                        {#<li><a href="#">Number of Reviews</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</div>#}
+                <div class="nav-drop booking-sort">
+                    <h5 class="booking-sort-title"><a href="#">Ordenar por: <span id="sortSelected">{{ attribute(sortMapping, sorting) }}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                    <ul class="nav-drop-menu">
+                        {% if items.sorting is defined %}
+                            {% for item in items.sorting.values %}
+                                {% if attribute(sortMapping, item.value) is defined %}
+                                    <li><a href="javascript:void(0);"  class="nav-drop-menu-a" data-value="{{ item.value }}">{{ attribute(sortMapping, item.value) }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <li><a href="#">Más elegidos</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
                 <ul class="booking-list">
                     {% include 'VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig' %}
                 </ul>
@@ -82,4 +44,69 @@
         </div>
         <div class="gap"></div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function asynLoad(queryParams, callback) {
+                var url = window.location.pathname;
+                for (var key in queryParams) {
+                    var obj = null;
+                    if (queryParams.hasOwnProperty(key)) {
+                        obj = (!obj) ? $.query.set(key, queryParams[key]) : obj.set(key, queryParams[key]);
+                    }
+                }
+                var search = (!obj) ? $.query.toString() : obj.toString();
+
+                waitingDialog.show('Viento Sur, Cargando...');
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                $(".booking-list").load(url + search, function (response, status, xhr) {
+                    waitingDialog.hide();
+                    if (status == "error") {
+                        var msg = "Sorry but there was an error: ";
+                        alert(msg + xhr.status + " " + xhr.statusText);
+                    } else {
+                        if (history.pushState) {
+                            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
+                            window.history.pushState({path: newurl}, '', newurl);
+                            $.query.parseNew(search);
+                        }
+                        if (typeof callback == 'function') {
+                            callback();
+                        }
+                    }
+                });
+            }
+
+            $("#pagination").bootpag({
+                total: {{ total }},
+                maxVisible:10,
+                page: {{ page }} ,
+                firstLastUse: true,
+                first: '←',
+                last: '→'
+            }).on("page", function(event, num){
+                asynLoad({
+                    'page': num
+                });
+            });
+            $("#field-hotel-checkin").datepicker({
+                "setDate": new Date()
+            });
+
+            $('.nav-drop-menu-a').on('click', function () {
+                var text = this.text;
+                if (text != $('#sortSelected').text()) {
+                    asynLoad({
+                        'sorting' : $(this).data('value')
+                    }, function () {
+                        $('#sortSelected').text(text);
+                    })
+                }
+            })
+        })
+    </script>
 {% endblock %}

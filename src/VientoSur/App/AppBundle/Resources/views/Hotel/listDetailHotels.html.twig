@@ -33,14 +33,16 @@
                             <i class="fa fa-map-marker"> Ver mapa</i>
                         </p>
                         {% for key, room_availability in item.roompacks %}
-                            {% if  room_availability.rooms[0].availability < 6 %}
-                                <p class="booking-item-last-booked">
-                                    {% if room_availability.rooms[0].availability == 1 %}
-                                        Última habitaci&oacute;n disponible
-                                    {% else %}
-                                        Últimas {{ room_availability.rooms[0].availability }} habitaciones
-                                    {% endif %}
-                                </p>
+                            {% if room_availability.rooms[0].availability is defined %}
+                                {% if  room_availability.rooms[0].availability < 6 %}
+                                    <p class="booking-item-last-booked">
+                                        {% if room_availability.rooms[0].availability == 1 %}
+                                            Última habitaci&oacute;n disponible
+                                        {% else %}
+                                            Últimas {{ room_availability.rooms[0].availability }} habitaciones
+                                        {% endif %}
+                                    </p>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                         {% for key, amenity in item.hotel.amenity_ids %}

@@ -147,7 +147,11 @@ class HotelController extends Controller
             $offset = ($page - 1) * 10;
         }
 
-        //TODO: falta por desarrollar el código de ordenamiento, está comentado en listHotelsAvailabilities.html.twig
+        $sorting = $request->query->get('sorting');
+        if (!$sorting) {
+            $sorting = 'best_selling_descending';
+        }
+
         $urlParams = array(
             "country_code" => "AR",
             "checkin_date" => $checkin_date,
@@ -157,16 +161,25 @@ class HotelController extends Controller
             "language" => "es",
             "radius" => "200",
             "currency" => "ARS",
-            "sorting" => "best_selling_descending",
+            "sorting" => $sorting,
             "classify_roompacks_by" => "none",
             "roompack_choices" => "recommended",
             "offset" => $offset,
             "limit" => "10"
         );
 
-//        if ($offset == 0) {
-//            $urlParams['offset'] = 1;
-//        }
+        $sortMapping = [
+            "subtotal_price_ascending" => "Precio: menor a mayor",
+            "subtotal_price_descending" => "Precio: mayor a menor",
+            "rate_descending" => "Mejor puntuación",
+            "location_descending" => "Mejor ubicación",
+            "quality_price_descending" => "Mejor precio / calidad",
+            "logged_user_descending" => "Descuentos exclusivos",
+            "cross_selling_descending" => "Nuevos descuentos",
+            "best_selling_descending" => "Más elegidos",
+            "stars_descending" => "Estrellas: Mayor a menor",
+            "stars_ascending" => "Estrellas: Menor a mayor"
+        ];
 
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
@@ -180,24 +193,20 @@ class HotelController extends Controller
         $total = ceil($results['paging']['total'] / 10);
 
         if ($request->isXmlHttpRequest()) {
-            return $this->render('VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig', array(
-                'items' => $results,
-                'restUrl' => $restUrl,
-                'offset' => $offset,
-                'limit' => 10,
-                'total' => $total,
-                'page' => $page
-            ));
+            $view = 'VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig';
         } else {
-            return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', array(
-                'items' => $results,
-                'restUrl' => $restUrl,
-                'offset' => $offset,
-                'limit' => 10,
-                'total' => $total,
-                'page' => $page
-            ));
+            $view = 'VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig';
         }
+        return $this->render($view, array(
+            'items' => $results,
+            'restUrl' => $restUrl,
+            'offset' => $offset,
+            'limit' => 10,
+            'total' => $total,
+            'page' => $page,
+            'sorting' => $sorting,
+            'sortMapping' => $sortMapping
+        ));
     }
 
 
