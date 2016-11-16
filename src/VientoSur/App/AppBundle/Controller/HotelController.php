@@ -151,8 +151,8 @@ class HotelController extends Controller
         if (!$sorting) {
             $sorting = 'best_selling_descending';
         }
-
         $priceRange = $request->query->get('price_range');
+        $stars = $request->query->get('stars');
 
         $urlParams = array(
             "country_code" => "AR",
@@ -172,6 +172,9 @@ class HotelController extends Controller
 
         if ($priceRange) {
             $urlParams['total_price_range'] = $priceRange;
+        }
+        if ($stars) {
+            $urlParams['stars'] = $stars;
         }
 
         $sortMapping = [
@@ -198,12 +201,7 @@ class HotelController extends Controller
 
         $total = ceil($results['paging']['total'] / 10);
 
-        if ($request->isXmlHttpRequest()) {
-            $view = 'VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig';
-        } else {
-            $view = 'VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig';
-        }
-        return $this->render($view, array(
+        $viewParams = array(
             'items' => $results,
             'restUrl' => $restUrl,
             'offset' => $offset,
@@ -212,7 +210,22 @@ class HotelController extends Controller
             'page' => $page,
             'sorting' => $sorting,
             'sortMapping' => $sortMapping
-        ));
+        );
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                array(
+                    'html' => $this->renderView('VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig',
+                        $viewParams
+                    ),
+                    'paging' => $results['paging'],
+                    'total' => $total,
+                    'page' => $page
+                )
+            );
+        } else {
+            return $this->render('VientoSurAppAppBundle:Hotel:listHotelsAvailabilities.html.twig', $viewParams);
+        }
     }
 
 

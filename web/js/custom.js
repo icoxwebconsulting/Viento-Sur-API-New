@@ -218,10 +218,7 @@ $('div.bg-parallax').each(function() {
     }
 });
 
-$('.i-check, .i-radio').iCheck({
-    checkboxClass: 'i-check',
-    radioClass: 'i-radio'
-});
+
 
 
 

@@ -7,7 +7,7 @@
             <li><a href="#">Hoteles en {{ app.session.get('destination').text }} ({{ items.paging.total }})</a></li>
         </ul>
 
-        <h4 class="booking  s-title">{{ items.paging.limit }} de {{ items.paging.total }} hoteles disponibles para estas fechas en {{ app.session.get('destination').text }} con mejor precio</h4>
+        <h4 class="booking  s-title"><span class="totalHotels">{{ items.paging.total }}</span> hoteles disponibles para estas fechas en {{ app.session.get('destination').text }} con mejor precio</h4>
 
         <div class="row">
 
@@ -35,7 +35,7 @@
                 </ul>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="sfont mb20">{{ items.paging.total }} hoteles encontrados.</p>
+                        <p class="sfont mb20"><span class="totalHotels">{{ items.paging.total }}</span> hoteles encontrados.</p>
                         <ul class="pagination" id="pagination">
                         </ul>
                     </div>
@@ -51,38 +51,65 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            function asynLoad(queryParams, callback) {
+            function asynLoad(queryParams, callback, callbackError) {
                 var url = window.location.pathname;
+                var obj = null;
                 for (var key in queryParams) {
-                    var obj = null;
                     if (queryParams.hasOwnProperty(key)) {
-                        obj = (!obj) ? $.query.set(key, queryParams[key]) : obj.set(key, queryParams[key]);
+                        if (queryParams[key] != '') {
+                            obj = (!obj) ? $.query.set(key, queryParams[key]) : obj.set(key, queryParams[key]);
+                        } else {
+                            obj = (!obj) ? $.query.REMOVE(key) : obj.REMOVE(key);
+                        }
                     }
                 }
-                var search = (!obj) ? $.query.toString() : obj.toString();
+                var search = decodeURIComponent((!obj) ? $.query.toString() : obj.toString());
 
                 waitingDialog.show('Viento Sur, Cargando...');
                 $("html, body").animate({ scrollTop: 0 }, "slow");
-                $(".booking-list").load(url + search, function (response, status, xhr) {
-                    waitingDialog.hide();
-                    if (status == "error") {
-                        var msg = "Sorry but there was an error: ";
-                        alert(msg + xhr.status + " " + xhr.statusText);
-                    } else {
-                        if (history.pushState) {
-                            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
-                            window.history.pushState({path: newurl}, '', newurl);
-                            $.query.parseNew(search);
-                        }
-                        if (typeof callback == 'function') {
-                            callback();
-                        }
+                $.ajax({
+                    url: url + search,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $(".booking-list").html(data.html);
+                    if (history.pushState) {
+                        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
+                        window.history.pushState({path: newurl}, '', newurl);
+                        $.query.parseNew(search);
                     }
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                    pagination.bootpag({total: data.total, page: data.page, maxVisible: 10});
+                    $('.totalHotels').each(function () {
+                        $(this).text(data.paging.total)
+                    })
+                }).fail(function () {
+                    if (typeof callbackError == 'function') {
+                        callbackError();
+                    }
+                }).always(function () {
+                    waitingDialog.hide();
                 });
             }
 
+            var pagination = $("#pagination").bootpag({
+                total: {{ total }},
+                maxVisible:10,
+                page: {{ page }} ,
+                firstLastUse: true,
+                first: '←',
+                last: '→'
+            }).on("page", function(event, num){
+                asynLoad({
+                    'page': num
+                });
+            });
+
             $('.nav-drop').dropit();
 
+            {#Filtro por rango de precios#}
             $('.total_price_range').each(function () {
                 $(this).removeClass('hidden');
                 var slider = $("#price-slider").ionRangeSlider({
@@ -106,31 +133,60 @@
                 })
             });
 
-            $("#pagination").bootpag({
-                total: {{ total }},
-                maxVisible:10,
-                page: {{ page }} ,
-                firstLastUse: true,
-                first: '←',
-                last: '→'
-            }).on("page", function(event, num){
-                asynLoad({
-                    'page': num
-                });
-            });
             $("#field-hotel-checkin").datepicker({
                 "setDate": new Date()
             });
 
+            {#Orden de los elementos#}
             $('.nav-drop-menu-a').on('click', function () {
                 var text = this.text;
                 if (text != $('#sortSelected').text()) {
                     asynLoad({
-                        'sorting' : $(this).data('value')
+                        'sorting' : $(this).data('value'),
+                        'page': 1
                     }, function () {
                         $('#sortSelected').text(text);
                     })
                 }
+            });
+
+            {#Filtro por estrellas#}
+            $('.starts-filter').each(function () {
+                $(this).find('.i-check').iCheck({
+                    checkboxClass: 'i-check',
+                    handle: 'checkbox'
+                });
+                $(this).find('input').on('ifChecked', function (event, a) {
+                    var stars = $.query.get('stars');
+                    if (stars != '') {
+                        stars = stars.toString().split(',');
+                        stars.push(this.value);
+                        stars.sort(function (a, b) {
+                            return b - a
+                        });
+                    } else {
+                        stars = [this.value];
+                    }
+                    asynLoad({
+                        'stars': stars.toString(),
+                        'page': 1
+                    })
+                });
+                $(this).find('input').on('ifUnchecked', function(event, a){
+                    var stars = $.query.get('stars');
+                    if (stars != '') {
+                        stars = stars.toString().split(',');
+                        var idx = stars.indexOf(this.value);
+                        if(idx != -1){
+                            stars.splice(idx, 1);
+                        }
+                    }
+                    asynLoad({
+                        'stars': stars.toString(),
+                        'page': 1
+                    })
+                });
+                $(this).removeClass('hidden');
             })
         })
     </script>

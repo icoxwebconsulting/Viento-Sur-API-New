@@ -1084,12 +1084,12 @@
                     {% endif %}
 
                     {% if facet.criteria == 'stars' %}
-                        <li>
+                        <li class="starts-filter hidden">
                             <h5 class="booking-filters-title">Categoría</h5>
                             {% for start in facet.values %}
                                 <div class="checkbox">
                                     <label>
-                                        <input class="i-check" type="checkbox" {% if start.selected %}checked="checked"{% endif %} />
+                                        <input class="i-check" type="checkbox" {% if start.selected %}checked="checked"{% endif %} value="{{ start.value }}" />
                                         {% if start.value == '0' %}
                                             Otros
                                         {% else %}
