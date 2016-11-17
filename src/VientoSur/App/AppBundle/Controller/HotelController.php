@@ -86,6 +86,12 @@ class HotelController extends Controller
             $destination = $request->get('cityInput');
         }
 
+        $start = $request->get('start');
+        $end = $request->get('end');
+        if ($destination == '' || empty($start) || empty($end) || !strpos($start, '/') || !strpos($end, '/')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
         list($day, $month, $year) = explode("/", $request->get('start'));
         $fromCalendarHotel = $year . '-' . $month . '-' . $day;
 
@@ -174,6 +180,7 @@ class HotelController extends Controller
         $priceRange = $request->query->get('price_range');
         $stars = $request->query->get('stars');
         $paymentType = $request->query->get('payment_type');
+        $zones = $request->query->get('zones');
 
         $urlParams = array(
             "country_code" => "AR",
@@ -199,6 +206,9 @@ class HotelController extends Controller
         }
         if ($paymentType) {
             $urlParams['payment_type'] = $paymentType;
+        }
+        if ($zones) {
+            $urlParams['zones'] = $zones;
         }
 
         $sortMapping = [

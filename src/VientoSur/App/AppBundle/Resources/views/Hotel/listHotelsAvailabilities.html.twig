@@ -151,7 +151,7 @@
             });
 
             {#Filtro por estrellas y por filtro de pago, itera sobre c/u#}
-            $('.stars, .payment_type').each(function () {
+            $('.stars, .payment_type, .zones').each(function () {
                 var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
@@ -173,6 +173,8 @@
                     var obj = {'page': 1};
                     if (type == 'stars') {
                         obj.stars = param.toString()
+                    } else if (type == 'zones') {
+                        obj.zones = param.toString()
                     } else {
                         obj.payment_type = param.toString()
                     }
@@ -190,6 +192,8 @@
                     var obj = {'page': 1};
                     if (type == 'stars') {
                         obj.stars = param.toString()
+                    } else if (type == 'zones') {
+                        obj.zones = param.toString()
                     } else {
                         obj.payment_type = param.toString()
                     }
@@ -197,6 +201,15 @@
                 });
                 $(this).removeClass('hidden');
             });
+
+            $('.view-toggle').on('click', function () {
+                var type = $(this).data('type');
+                var selector = '.' + type + ' .' + type + '-hidden';
+                $(selector).slideToggle('fast', function() {
+                    $(selector).toggleClass('hide');
+                });
+                $('.view-toggle').toggleClass('hide')
+            })
         })
     </script>
 {% endblock %}
