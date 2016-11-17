@@ -147,6 +147,26 @@ class HotelController extends Controller
             $offset = ($page - 1) * 10;
         }
 
+        $session = $request->getSession();
+        if (!$session->has('destination')) {
+            $cityResponse = $this->get('despegar')->getCityInformation($destination, [
+                'product' => 'HOTELS',
+                'language' => 'ES'
+            ]);
+            if (isset($cityResponse['code']) && $cityResponse['code'] == 500) {
+                $destinationData = [
+                    'text' => '',
+                    'id' => $destination
+                ];
+            } else {
+                $destinationData = [
+                    'text' => $cityResponse['descriptions']['es'],
+                    'id' => $destination
+                ];
+            }
+            $session->set('destination', $destinationData);
+        }
+
         $sorting = $request->query->get('sorting');
         if (!$sorting) {
             $sorting = 'best_selling_descending';

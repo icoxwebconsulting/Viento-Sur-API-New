@@ -337,4 +337,13 @@ class Despegar
         $results = json_decode($results, true);
         return $results;
     }
+
+    public function getCityInformation($id, $urlParams)
+    {
+        $url = $this->getServiceUrl() . 'cities/' . $id . '?' . http_build_query($urlParams);
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        return $this->curlExec($url, $header, 'GET');
+    }
 }
