@@ -150,44 +150,53 @@
                 }
             });
 
-            {#Filtro por estrellas#}
-            $('.starts-filter').each(function () {
+            {#Filtro por estrellas y por filtro de pago, itera sobre c/u#}
+            $('.stars, .payment_type').each(function () {
+                var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
                     handle: 'checkbox'
                 });
                 $(this).find('input').on('ifChecked', function (event, a) {
-                    var stars = $.query.get('stars');
-                    if (stars != '') {
-                        stars = stars.toString().split(',');
-                        stars.push(this.value);
-                        stars.sort(function (a, b) {
-                            return b - a
-                        });
+                    var param = $.query.get(type);
+                    if (param != '') {
+                        param = param.toString().split(',');
+                        param.push(this.value);
+                        if (type == 'stars') {
+                            param.sort(function (a, b) {
+                                return b - a
+                            });
+                        }
                     } else {
-                        stars = [this.value];
+                        param = [this.value];
                     }
-                    asynLoad({
-                        'stars': stars.toString(),
-                        'page': 1
-                    })
+                    var obj = {'page': 1};
+                    if (type == 'stars') {
+                        obj.stars = param.toString()
+                    } else {
+                        obj.payment_type = param.toString()
+                    }
+                    asynLoad(obj)
                 });
-                $(this).find('input').on('ifUnchecked', function(event, a){
-                    var stars = $.query.get('stars');
-                    if (stars != '') {
-                        stars = stars.toString().split(',');
-                        var idx = stars.indexOf(this.value);
-                        if(idx != -1){
-                            stars.splice(idx, 1);
+                $(this).find('input').on('ifUnchecked', function (event, a) {
+                    var param = $.query.get(type);
+                    if (param != '') {
+                        param = param.toString().split(',');
+                        var idx = param.indexOf(this.value);
+                        if (idx != -1) {
+                            param.splice(idx, 1);
                         }
                     }
-                    asynLoad({
-                        'stars': stars.toString(),
-                        'page': 1
-                    })
+                    var obj = {'page': 1};
+                    if (type == 'stars') {
+                        obj.stars = param.toString()
+                    } else {
+                        obj.payment_type = param.toString()
+                    }
+                    asynLoad(obj)
                 });
                 $(this).removeClass('hidden');
-            })
+            });
         })
     </script>
 {% endblock %}

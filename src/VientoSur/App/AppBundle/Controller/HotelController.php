@@ -153,6 +153,7 @@ class HotelController extends Controller
         }
         $priceRange = $request->query->get('price_range');
         $stars = $request->query->get('stars');
+        $paymentType = $request->query->get('payment_type');
 
         $urlParams = array(
             "country_code" => "AR",
@@ -175,6 +176,9 @@ class HotelController extends Controller
         }
         if ($stars) {
             $urlParams['stars'] = $stars;
+        }
+        if ($paymentType) {
+            $urlParams['payment_type'] = $paymentType;
         }
 
         $sortMapping = [

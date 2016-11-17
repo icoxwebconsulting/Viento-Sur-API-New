@@ -1084,20 +1084,35 @@
                     {% endif %}
 
                     {% if facet.criteria == 'stars' %}
-                        <li class="starts-filter hidden">
+                        <li class="stars hidden" data-type="stars">
                             <h5 class="booking-filters-title">Categoría</h5>
-                            {% for start in facet.values %}
+                            {% for stars in facet.values %}
                                 <div class="checkbox">
                                     <label>
-                                        <input class="i-check" type="checkbox" {% if start.selected %}checked="checked"{% endif %} value="{{ start.value }}" />
-                                        {% if start.value == '0' %}
+                                        <input class="i-check" type="checkbox" {% if stars.selected %}checked="checked"{% endif %} value="{{ stars.value }}" />
+                                        {% if stars.value == '0' %}
                                             Otros
                                         {% else %}
-                                            {% for i in 1..start.value %}
+                                            {% for i in 1..stars.value %}
                                                 <i class="fa fa-star"></i>
                                             {% endfor %}
                                         {% endif %}
-                                        <span class="pull-right">({{ start.count }})</span>
+                                        <span class="pull-right">({{ stars.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+
+                    {% if facet.criteria == 'payment_type' %}
+                        <li class="payment_type hidden" data-type="payment_type">
+                            <h5 class="booking-filters-title">Alternativas de Pago</h5>
+                            {% for type in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        {{ type.label }}
+                                        <span class="pull-right">({{ type.count }})</span>
                                     </label>
                                 </div>
                             {% endfor %}
