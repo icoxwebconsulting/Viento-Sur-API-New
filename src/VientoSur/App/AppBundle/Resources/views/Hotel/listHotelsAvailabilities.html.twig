@@ -151,7 +151,7 @@
             });
 
             {#Filtro por estrellas y por filtro de pago, itera sobre c/u#}
-            $('.stars, .payment_type, .zones').each(function () {
+            $('.stars, .payment_type, .zones, .amenities').each(function () {
                 var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
@@ -175,6 +175,8 @@
                         obj.stars = param.toString()
                     } else if (type == 'zones') {
                         obj.zones = param.toString()
+                    } else if (type == 'amenities') {
+                        obj.amenities = param.toString()
                     } else {
                         obj.payment_type = param.toString()
                     }
@@ -194,6 +196,8 @@
                         obj.stars = param.toString()
                     } else if (type == 'zones') {
                         obj.zones = param.toString()
+                    } else if (type == 'amenities') {
+                        obj.amenities = param.toString()
                     } else {
                         obj.payment_type = param.toString()
                     }
@@ -202,13 +206,11 @@
                 $(this).removeClass('hidden');
             });
 
-            $('.view-toggle').on('click', function () {
+            $('.zones-view-toggle, .amenities-view-toggle').on('click', function () {
                 var type = $(this).data('type');
                 var selector = '.' + type + ' .' + type + '-hidden';
-                $(selector).slideToggle('fast', function() {
-                    $(selector).toggleClass('hide');
-                });
-                $('.view-toggle').toggleClass('hide')
+                $(selector).slideToggle();
+                $('.' + type + '-view-toggle').toggleClass('hide')
             })
         })
     </script>
