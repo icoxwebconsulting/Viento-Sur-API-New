@@ -307,7 +307,7 @@ class HotelController extends Controller
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                 'dispoHotel' => $dispoHotel,
-                'hotelDetails' => $hotelDetails,
+                'hotelDetails' => $hotelDetails[0],
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'idHotel' => $idHotel,

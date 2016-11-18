@@ -18,7 +18,7 @@
             var marker = new google.maps.Marker({
                 map: map,
                 position: myLatLng,
-                title: '{{hotelDetails[0].name}}'
+                title: '{{hotelDetails.name}}'
             });
 
             $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
@@ -45,7 +45,7 @@
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
             <li><a href="index.html">Hoteles</a></li>
-            <li><a href="#">Hotel {{hotelDetails[0].name}}</a></li>
+            <li><a href="#">Hotel {{hotelDetails.name}}</a></li>
         </ul>
 
         <div class="gap gap-small"></div>
@@ -65,10 +65,10 @@
                     <header class="booking-item-header">
                         <div class="row">
                             <div class="col-md-8">
-                                <h2 class="lh1em">{{hotelDetails[0].name}}</h2>
+                                <h2 class="lh1em">{{hotelDetails.name}}</h2>
                                 <ul class="icon-list icon-group booking-item-rating-stars">
                                     {% for i in 1..5 %}
-                                        {% if i <= hotelDetails[0].stars %}
+                                        {% if i <= hotelDetails.stars %}
                                             <li><i class="fa fa-star"></i>
                                             </li>
                                             {#{% else %}#}
@@ -115,7 +115,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="tab-1">
                                         <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
-                                            {% for key, pictures in hotelDetails[0].pictures %}
+                                            {% for key, pictures in hotelDetails.pictures %}
                                                 <img src="{{ pictures.url }}" alt="Image Alternative text" title="" />
                                             {% endfor %}
                                         </div>
@@ -138,9 +138,9 @@
 
                         <!--<h4>Este hotel está en Praga 1 y es ideal para: De lujo</h4>-->
 
-                        <p>{{ hotelDetails[0].information.es }}</p>
+                        <p>{{ hotelDetails.information.es }}</p>
 
-                        <h4>N&uacute;mero de habitaciones: {{ hotelDetails[0].number_of_rooms}}</h4>
+                        <h4>N&uacute;mero de habitaciones: {{ hotelDetails.number_of_rooms}}</h4>
                     </div>
 
                 </div>
@@ -153,7 +153,7 @@
                     <h3>Habitaciones disponibles</h3>
 
                     <ul class="booking-list">
-                        {% for key, room_type in hotelDetails[0].room_types %}
+                        {% for key, room_type in hotelDetails.room_types %}
                             {% set count_room = 0 %}
                             {% for key, room in dispoHotel.roompacks %}
                                 {% if room_type.id == room.rooms[0].room_type_id and room.rooms[0].availability > 0 and count_room == 0 %}
@@ -208,8 +208,28 @@
                                                         <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
                                                         </li>-->
                                                     </ul>
-                                                    <p class="booking-text-color">Desayuno buffet</p>
-                                                    <p class="booking-text-color">No permite cambios o cancelaciones</p>
+                                                    <p class="booking-text-color">
+                                                        {% if room.meal_plan.id == 'D' %}
+                                                            Bebidas incluidas
+                                                        {% elseif room.meal_plan.id == 'BRA' %}
+                                                            Desayuno americano
+                                                        {% elseif room.meal_plan.id == 'BRL' %}
+                                                            Desayuno a la carta
+                                                        {% elseif room.meal_plan.id == 'BRB' %}
+                                                            Desayuno buffet
+                                                        {% elseif room.meal_plan.id == 'BRC' %}
+                                                            Desayuno continental
+                                                        {% elseif room.meal_plan.id == 'M' %}
+                                                            Media pensión
+                                                        {% elseif room.meal_plan.id == 'H' %}
+                                                            Sólo hospedaje
+                                                        {% elseif room.meal_plan.id == 'F' %}
+                                                            Pensión completa
+                                                        {% elseif room.meal_plan.id == 'A' %}
+                                                            All inclusive
+                                                        {% endif %}
+                                                    </p>
+                                                    <p class="booking-text-color">{{ room.cancellation_policy.text }}</p>
                                                     <p class="booking-item-last-booked">{% if room.rooms[0].availability < 6 %}Sólo quedan {{ room.rooms[0].availability }} habitaciones {% endif %}</p>
                                                 </div>
 
