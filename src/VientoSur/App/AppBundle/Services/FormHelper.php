@@ -143,6 +143,9 @@ class FormHelper
                                     foreach ($element as $key4 => $element0) {
                                         if ((is_array($element0) && array_key_exists('value', $element0))) {
                                             $temp2[$key4] = $formNewPaySend[$key4 . $key3];
+                                            if($key4 == 'country_code') {
+                                                $temp2[$key4] = str_replace("+", "", $temp2[$key4]);
+                                            }
                                         }
                                     }
                                     $temp['phones'][] = $temp2;

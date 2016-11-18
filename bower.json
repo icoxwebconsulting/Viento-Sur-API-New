@@ -21,6 +21,7 @@
     "bootstrap-timepicker": "^0.5.2",
     "bootpag": "^1.0.7",
     "devbridge-autocomplete": "^1.2.26",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "intl-tel-input": "^9.2.4"
   }
 }
