@@ -212,7 +212,7 @@
                             {% for phone in formChoice.contact.phones %}
                                 <div class="col-md-2">
                                     {% set fieldName = 'country_code' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:'}) }}
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:', 'attr': {'size': 4}}) }}
                                 </div>
 
                                 {% set fieldName = 'area_code' ~ loop.index0 %}
@@ -314,6 +314,18 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/hotel-form.js') }}"></script>
+    <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
+    <script>
+        $("#form_contact_country_code0").intlTelInput({
+            autoHideDialCode: false,
+            nationalMode: false,
+            initialCountry: 'AR'
+        });
+        $("#form_contact_country_code0").on('keydown', function (e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -366,4 +378,5 @@
 
     </style>
     <link href="{{ asset('css/cards-horizontal.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}
