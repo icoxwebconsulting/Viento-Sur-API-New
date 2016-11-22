@@ -113,21 +113,70 @@
                                                     </label>
                                                 {% endfor %}
                                                 {#Agrupación por banco#}
+                                                {% set countBank = 1 %}
+                                                {% set moreBank = null %}
                                                 {% for key, list in cardsList %}
                                                     {% if key != '*' %}
-                                                        <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button">
-                                                            <span class="eva-card-body {{ key }}"></span>
-                                                            <div class="card-content hide">
-                                                                {% for card in list  %}
-                                                                    {% set cardData = card|split('-') %}
-                                                                    <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}">
-                                                                        <span class="eva-card-body {{ cardData[1] }}"></span>
-                                                                    </div>
-                                                                {% endfor %}
+                                                        {#limito la cantidad de bancos a 4 elementos#}
+                                                        {% if countBank < 5 %}
+                                                            <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
+                                                                <span class="eva-card-body {{ key }}"></span>
+                                                                <div class="card-content hide">
+                                                                    {% for card in list  %}
+                                                                        {% set cardData = card|split('-') %}
+                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                                            <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        {% elseif countBank == 5 %}
+                                                            {% set moreBank = 1 %}
+                                                            <div class="eva-card-container clickable-group-bank viewMore" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-group">
+                                                                <span class="eva-card-body"></span>
+                                                                <p class="textViewMore"> Más<br />Bancos </p>
+                                                                <span class="arrowViewMore">&gt;</span>
+                                                            </div>
+                                                        {% endif %}
+                                                        {% set countBank = countBank + 1 %}
                                                     {% endif %}
                                                 {% endfor %}
+
+                                                {#si hay bancos en grupos para dibujar#}
+                                                {% if moreBank is not null %}
+                                                    <div class="{{ loop.index }}-group hidden">
+                                                        {% set countBank = 1 %}
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th class="text-center">BANCO</th>
+                                                                <th class="text-center">TARJETA</th>
+                                                            </tr>
+                                                        {% for key, list in cardsList %}
+                                                            {% if key != '*' %}
+                                                                {% if countBank > 4 %}
+                                                                    <tr>
+                                                                        <th>
+                                                                            <div class="eva-card-container notClickableCard">
+                                                                                <span class="eva-card-body {{ key }} notClickableCard"></span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <td>
+                                                                            {% for card in list  %}
+                                                                                {% set cardData = card|split('-') %}
+                                                                                <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group">
+                                                                                    <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                                {% set countBank = countBank + 1 %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                {% endif %}
+
                                             {% endif %}
                                         </div>
                                     </div>

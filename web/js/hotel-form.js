@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var cardsObject = {
         'VI': 'Visa',
+        'VIS': 'Visa Signature',
         'CA': 'MasterCard',
         'AX': 'American Express',
         'DC': 'Diners Club',
@@ -30,6 +31,8 @@ $(document).ready(function () {
         $('.card-list .eva-card-container').removeClass('selected-p-card');
 
         if (bank) {
+            var parentId = $(this).data('parent-id');
+            $('#' + parentId).addClass('selected-p-card');
             $.ajax({
                 url: Routing.generate('hotel_card_detail'),
                 type: 'GET',
@@ -62,6 +65,39 @@ $(document).ready(function () {
                 $(this).addClass('selected-p-card');
             }
         })
+    });
+
+    var isVisible = false;
+    var clickedAway = false;
+
+    $(document).on('click', function (e) {
+        if (isVisible && clickedAway) {
+            $('.clickable-group-bank').popover('hide');
+            isVisible = clickedAway = false
+        } else {
+            clickedAway = true
+        }
+    });
+
+    $('.clickable-group-bank').popover({
+        placement: 'left',
+        html: true,
+        content: function () {
+            return $('.' + this.id).html();
+        },
+        trigger: 'manual',
+        template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content" style="height: 400px; overflow-y: scroll; overflow-x: hidden;"></div></div>'
+    }).on('show.bs.popover', function () {
+        $('.' + this.id + ' .clickable-card').each(function () {
+            if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
+                $(this).addClass('selected-p-card');
+            }
+        })
+    }).on('click', function (e) {
+        $(this).popover('show');
+        clickedAway = false;
+        isVisible = true;
+        e.preventDefault()
     });
 
     ////
