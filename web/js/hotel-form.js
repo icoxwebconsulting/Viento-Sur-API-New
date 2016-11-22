@@ -19,15 +19,49 @@ $(document).ready(function () {
     $('#form_payment_card_type').val(splitCard[3]);
     $('#card-selected').val(cardsObject[splitCard[1]]);
 
-    $('.eva-card-container').on('click', function () {
-        $('.card-list .eva-card-container').removeClass('selected-p-card');
-        var cardId = $(this).attr('data-card-id');
-        $('#form_payment_bank_code').val(cardId);
-        $(this).addClass('selected-p-card');
+    $('.list-group').on('click', '.clickable-card', function () {
+        var cardId = $(this).data('card-id');
+        var bank = $(this).data('bank-id');
         var splitCard = cardId.split("-");
+        $('#form_payment_bank_code').val(cardId);
         $('#form_payment_card_code').val(splitCard[1]);
         $('#form_payment_card_type').val(splitCard[3]);
         $('#card-selected').val(cardsObject[splitCard[1]]);
+        $('.card-list .eva-card-container').removeClass('selected-p-card');
+
+        if (bank) {
+            $.ajax({
+                url: Routing.generate('hotel_card_detail'),
+                type: 'GET',
+                data: {
+                    card: cardId
+                },
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.hasOwnProperty('description')) {
+                    $('#card-selected').val(data.description);
+                }
+            }).fail(function (e) {
+                console.log(e)
+            }).always(function () {
+            });
+        } else {
+            $(this).addClass('selected-p-card');
+        }
+    });
+
+    $('.clickable-bank').popover({
+        placement: 'bottom',
+        html: true,
+        content: function () {
+            return $(this).find('.card-content').html();
+        }
+    }).on('show.bs.popover', function () {
+        $(this).find('.clickable-card').each(function () {
+            if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
+                $(this).addClass('selected-p-card');
+            }
+        })
     });
 
     ////

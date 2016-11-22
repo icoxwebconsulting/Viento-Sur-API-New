@@ -54,10 +54,10 @@
                                 </div>
                             </div>
                             {% set fieldName = 'room_reference' ~ loop.index0 %}
-                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden-row'} }) }}
+                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden'} }) }}
                         {% endfor %}
-                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden-row'} }) }}
-                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden-row'} }) }}
+                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden'} }) }}
+                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden'} }) }}
                     </div>
                 </div>
                 <!--/Pasajeros-->
@@ -94,7 +94,7 @@
                                 </h4>
                                 <p class="list-group-item-text">
                                     <div class="radio">
-                                        <div class="card-list">
+                                        <div class="card-list credit-cards">
                                             {% if type == 'cash' %}
                                                 <label class="card-selector vs-cs-label">
                                                     <div class="eva-card-container" data-card-id="">
@@ -107,20 +107,28 @@
                                                 {% for card in cardI %}
                                                     <label class="card-selector vs-cs-label">
                                                         {% set cardData = card|split('-') %}
-                                                        <div class="eva-card-container" data-card-id="{{ card }}">
+                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}">
                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                         </div>
                                                     </label>
                                                 {% endfor %}
+                                                {#Agrupación por banco#}
+                                                {% for key, list in cardsList %}
+                                                    {% if key != '*' %}
+                                                        <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button">
+                                                            <span class="eva-card-body {{ key }}"></span>
+                                                            <div class="card-content hide">
+                                                                {% for card in list  %}
+                                                                    {% set cardData = card|split('-') %}
+                                                                    <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}">
+                                                                        <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
                                             {% endif %}
-                                            {#{% for cardId in paymentMethod.card_ids %}#}
-                                                {#<label class="card-selector vs-cs-label">#}
-                                                    {#{% set cardData = cardId|split('-') %}#}
-                                                    {#<div class="eva-card-container" data-card-id="{{ cardId }}">#}
-                                                        {#<span class="eva-card-body {{ cardData[1] }}"></span>#}
-                                                    {#</div>#}
-                                                {#</label>#}
-                                            {#{% endfor %}#}
                                         </div>
                                     </div>
                                 </p>
@@ -186,13 +194,13 @@
                             </div>
 
                             {% if formNewPay.payment.bank_code is defined %}
-                                {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden-row'} }) }}
+                                {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
                             {% if formNewPay.payment.card_code is defined %}
-                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
+                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
                             {% if formNewPay.payment.card_type is defined %}
-                                {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden-row'} }) }}
+                                {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
                             {% if formChoice.payment.invoice is defined %}
                                 {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
@@ -307,6 +315,7 @@
             {#{{ dump(formNewPay) }}#}
             {#{{ dump(formChoice) }}#}
             {#{{ dump(paymentMethods) }}#}
+            {#{{ dump(cardsGroup) }}#}
         </div>
     </div>
 {% endblock %}
@@ -347,10 +356,6 @@
             padding-top: 10px;
         }
 
-        .hidden-row {
-            display: none;
-        }
-
         .selected-p-card {
             border: 1px solid #1beab2 !important;
         }
@@ -373,10 +378,16 @@
 
         .card-list .eva-card-container {
             margin-left: 3px;
-            margin-bottom: 5px;
+            /*margin-bottom: 5px;*/
+        }
+
+        .credit-cards {
+            width: 50%;
+            /* float: right; */
+            margin-left: 50%;
         }
 
     </style>
-    <link href="{{ asset('css/cards-horizontal.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/cards-vertical.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}

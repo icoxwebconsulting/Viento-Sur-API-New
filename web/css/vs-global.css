@@ -872,6 +872,26 @@ h4.booking-item-title {
   box-sizing: content-box;
 }
 
+.eva-card-body.RIO, .eva-card-body[class*=RIO-] {
+  background-position: center -4200px
+}
+
+.eva-card-body.ITA, .eva-card-body.ITU, .eva-card-body[class*=ITA-], .eva-card-body[class*=ITU-] {
+  background-position: center -2400px
+}
+
+.eva-card-body.SCB, .eva-card-body[class*=SCB-] {
+  background-position: center -2000px
+}
+
+.eva-card-body.CSCL, .eva-card-body[class*=CSCL-] {
+  background-position: center -1440px
+}
+
+.eva-card-body.NAT, .eva-card-body[class*=NAT-] {
+  background-position: center -1400px
+}
+
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; cursor: pointer;}
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: #F0F0F0; }
