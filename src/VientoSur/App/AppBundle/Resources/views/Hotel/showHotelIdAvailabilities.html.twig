@@ -238,7 +238,7 @@
                                                         <span class="booking-item-price-night">Precio por noche</span>
                                                         <span class="booking-item-price">{{ room.price_detail.currency }} {{ room.price_detail.nightly.subtotal }}</span>
                                                         <!--<span class="btn btn-primary">Reservar</span>-->
-                                                        <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}" method="POST" >
+                                                        <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}{{ restUrl|raw }}" method="POST" >
                                                             <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
                                                             <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
                                                             <button type="submit" class="btn btn-primary">

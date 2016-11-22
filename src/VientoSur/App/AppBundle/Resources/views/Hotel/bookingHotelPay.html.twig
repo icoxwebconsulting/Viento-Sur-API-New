@@ -7,18 +7,11 @@
             <div class="col-md-3">
                 <div class="content-sidebar">
                     <div class="booking-item-dates-change mb5">
-                        <h2>Detalle de su pago</h2>
-                        Habitación por noche:
-                        {#{{price_detail.taxes}}#} {{ price_detail.nightly.subtotal }}<br>
-                        detalle impuestos: <br>
-                        {% for taxes_detail in price_detail.taxes_detail %}
-                            codigo/ {{ taxes_detail.code }}
-                            cantidad/{{ taxes_detail.amount }}<br>
-                        {% endfor %}
-                        cuota(fee): {{ price_detail.fee }}<br>
-                        Descuentos : {{ price_detail.discounts }}<br>
-                        subtotal :{{ price_detail.subtotal }}<br>
-                        total: {{ price_detail.total }}<br>
+                        <h3>Detalle de su pago</h3>
+                        {{ reservationDays }} noche{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}habitación{% else %} habitaciones{% endif %}<br/>
+                        Habitación por noche: {{ price_detail.nightly.subtotal|number_format(2, ',', '.') }}<br/>
+                        Impuestos y tasas: {{ (price_detail.taxes + price_detail.fee)|number_format(2, ',', '.') }}<br/>
+                        <b>Total: {{ price_detail.total|number_format(2, ',', '.') }}</b><br/>
                     </div>
                     {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
 
