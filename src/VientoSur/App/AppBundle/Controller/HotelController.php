@@ -355,7 +355,7 @@ class HotelController extends Controller
      */
     public function sendHotelBookingAction(Request $request)
     {
-
+        $params = $request->query->all();
         $postParams = array(
             "source" => array(
                 "country_code" => "AR"
@@ -378,7 +378,10 @@ class HotelController extends Controller
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(
             'formUrl' => $formUrl["next_step_url"],
             'booking_id' => $formUrl["id"],
-            "roompack_choice" => $request->get('roompack_choice')
+            "roompack_choice" => $request->get('roompack_choice'),
+            'checkin_date' => $params['checkin_date'],
+            'checkout_date' => $params['checkout_date'],
+            'distribution' => $params['distribution']
         )));
     }
 
@@ -389,10 +392,13 @@ class HotelController extends Controller
      */
     public function bookingHotelPayAction(Request $request)
     {
-
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         $roompackChoice = $request->get('roompack_choice');
+        $checkin =  $request->get('checkin_date');
+        $checkout =  $request->get('checkout_date');
+        $distribution = $request->get('distribution');
+        $reservationTime = $diff = date_diff(new \DateTime($checkin), new \Datetime($checkout));
         $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
 
         $roompack = null;
@@ -573,6 +579,8 @@ class HotelController extends Controller
             'paymentMethods' => $paymentMethods,
             'rooms' => $roompack->rooms,
             'cardsGroup' => $cardsGroup,
+            'reservationDays' => $reservationTime->days,
+            'roomNumbers' => count(explode("!", $distribution)),
             'errors' => $formNewPaySend->getErrors()
         );
     }
