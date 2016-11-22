@@ -71,9 +71,9 @@
                                         {% if paymentMethod.installment_quantity == 1 %}
                                             <b style="font-weight: bold !important;">1</b> Pago
                                         {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
-                                            <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment }}
-                                            {% if paymentMethod.with_bank_interest %}
-                                                <span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount }}
+                                            <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}
+                                            {% if paymentMethod.amounts.total_interest_amount > 0 %}
+                                                <span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}
                                                     (interés)</span>
                                             {% else %}
                                                 <span class="b-interest">Sin interés</span>
