@@ -6462,7 +6462,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   position: relative;
 }
 .booking-item {
-  cursor: pointer;
+  /*cursor: pointer;*/
   display: block;
   position: relative;
   padding: 17px;
