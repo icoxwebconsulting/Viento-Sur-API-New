@@ -96,9 +96,9 @@ class Despegar
 
     }
 
-    public function getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams)
+    public function getHotelsAvailabilitiesDetail($idHotel, $urlParams)
     {
-        $url = $this->getServiceUrl() . "hotels/availabilities/" . $idHotel . $restUrl . '&' . http_build_query($urlParams);
+        $url = $this->getServiceUrl() . "hotels/availabilities/" . $idHotel . '?' . http_build_query($urlParams);
         $header = [
             'X-ApiKey:' . $this->apiKey
         ];
@@ -106,7 +106,7 @@ class Despegar
         return $this->curlExec($url, $header, 'GET');
     }
 
-    public function getHotelsDetails($urlParams)
+    public function getHotelsDetails($urlParams, $orderById = false)
     {
         $url = $this->getServiceUrl() . "hotels?" . urldecode(http_build_query($urlParams));
 
@@ -118,8 +118,17 @@ class Despegar
         curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
         $results = curl_exec($cSession);
         curl_close($cSession);
+        $results = json_decode($results, true);
 
-        return json_decode($results, true);
+        if (!$orderById) {
+            return $results;
+        } else {
+            $hDetail = [];
+            foreach ($results as $detail) {
+                $hDetail[$detail['id']] = $detail;
+            }
+            return $hDetail;
+        }
     }
 
     public function postHotelsBookings($params)

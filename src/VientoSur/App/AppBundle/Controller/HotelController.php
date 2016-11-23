@@ -230,18 +230,32 @@ class HotelController extends Controller
 
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
-        $restUrl = '?' . http_build_query(array(
-                "site" => "AR",
-                "checkin_date" => $checkin_date,
-                "checkout_date" => $checkout_date,
-                "distribution" => $distribution
-            ));
+        $idsHotels = [];
+        foreach ($results['items'] as $item) {
+            $idsHotels[] = $item['id'];
+        }
+
+        $hotelsDetails = $this->get('despegar')->getHotelsDetails(array(
+            'ids' => implode(',', $idsHotels),
+            'language' => 'es',
+            'options' => 'pictures',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ), true);
+
+        $reservation = array(
+            'destination' => $destination,
+            "checkin_date" => $checkin_date,
+            "checkout_date" => $checkout_date,
+            "distribution" => $distribution
+        );
 
         $total = ceil($results['paging']['total'] / 10);
 
         $viewParams = array(
             'items' => $results,
-            'restUrl' => $restUrl,
+            'hotelsDetails' => $hotelsDetails,
+            'reservation' => $reservation,
             'offset' => $offset,
             'limit' => 10,
             'total' => $total,
@@ -292,30 +306,46 @@ class HotelController extends Controller
 
     /**
      *
-     * @Route("/show/{idHotel}/availabilities/{restUrl}/latitude/{latitude}/longitude/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
+     * @Route("/show/{idHotel}/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
      * @Method("GET")
-     * @Template()
      */
-    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude)
+    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $destination, $checkin_date, $checkout_date, $distribution, $latitude, $longitude)
     {
         $session = $request->getSession();
         $urlParams = array(
             'language' => 'es',
-            'currency' => 'ARS'
+            'country_code' => 'AR',
+            'currency' => 'ARS',
+            'destination' => $destination,
+            'checkin_date' => $checkin_date,
+            'checkout_date' => $checkout_date,
+            'distribution' => $distribution
         );
 
         $despegar = $this->get('despegar');
-        $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams);
+        $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $urlParams);
         $session->set('hotelAvailabilities', json_encode($dispoHotel));
 
-        $urlParams = array(
+        $hotelDetails = $despegar->getHotelsDetails(array(
             'ids' => $idHotel,
             'language' => 'es',
             'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
-        );
-        $hotelDetails = $despegar->getHotelsDetails($urlParams);
+        ));
+
+        $roomDetail = [];
+        foreach ($dispoHotel['roompacks'] as $roompack) {
+            foreach ($roompack['rooms'] as $room) {
+                unset($roompack['rooms']);
+                $roomDetail[$room['room_type_id']][] = array_merge($roompack, array('room' => $room));
+            }
+        }
+
+        $roomTypes = [];
+        foreach ($hotelDetails[0]['room_types'] as $room) {
+            $roomTypes[$room['id']] = $room;
+        }
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
@@ -325,27 +355,10 @@ class HotelController extends Controller
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'idHotel' => $idHotel,
-                'restUrl' => $restUrl
+                'reservation' => $urlParams,
+                'roomDetail' => $roomDetail,
+                'roomTypes' => $roomTypes
             )
-        );
-    }
-
-    /**
-     * Lists all Company entities.
-     *
-     * @Route("/show/details/{idHotel}", name="viento_sur_app_app_homepage_show_hotel_photo")
-     * @Method("GET")
-     * @Template()
-     */
-    public function detailsHotelListForIdAction(Request $request, $idHotel)
-    {
-
-        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=pictures&resolve=merge_info&catalog_info=true";
-        $hotel = $this->cUrlExecAction($hotelUrl);
-        $hotelDetails = json_decode($hotel, true);
-
-        return array(
-            'hotelDetails' => $hotelDetails
         );
     }
 
@@ -395,8 +408,8 @@ class HotelController extends Controller
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         $roompackChoice = $request->get('roompack_choice');
-        $checkin =  $request->get('checkin_date');
-        $checkout =  $request->get('checkout_date');
+        $checkin = $request->get('checkin_date');
+        $checkout = $request->get('checkout_date');
         $distribution = $request->get('distribution');
         $reservationTime = $diff = date_diff(new \DateTime($checkin), new \Datetime($checkout));
         $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
@@ -676,21 +689,5 @@ class HotelController extends Controller
         return new JsonResponse(
             $this->get('despegar')->getCardDetails($request->get('card'))
         );
-    }
-
-    private function cUrlExecAction($url)
-    {
-        $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
-        curl_setopt($cSession, CURLOPT_HEADER, false);
-        curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
-        //step3
-        $results = curl_exec($cSession);
-        //step4
-        curl_close($cSession);
-
-        return $results;
     }
 }

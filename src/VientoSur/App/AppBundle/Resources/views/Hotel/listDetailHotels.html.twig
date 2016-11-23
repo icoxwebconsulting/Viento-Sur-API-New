@@ -1,15 +1,15 @@
 {% if items.message is defined %}
     <li>No se encontraron hoteles disponibles</li>
 {% elseif items.items|length > 0 %}
-    {%for item in items.items %}
+    {% for item in items.items %}
         <li>
-            <a target="_blank" class="booking-item" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id,'restUrl':restUrl, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+            <a target="_blank" class="booking-item" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id, 'destination': reservation.destination, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="booking-item-img-wrap">
-                            {{ render(controller('VientoSurAppAppBundle:Hotel:detailsHotelListForId', { 'idHotel': item.id })) }}
-                            <!--<img src="{#{ asset('bundles/vientosurappapp/images/resultado1.jpg') }#}" alt="Image Alternative text" title="" />
-                                            <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>-->
+                            <div>
+                                <img src="{{ hotelsDetails[item.id].main_picture.url }}" width="200"  height="150">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-5">
