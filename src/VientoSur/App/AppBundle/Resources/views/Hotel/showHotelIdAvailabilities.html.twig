@@ -172,11 +172,12 @@
                                                     <tr>
                                                         <th>R&eacute;gimen de comida</th>
                                                         <th>Pol&iacute;ticas de cancelaci&oacute;n</th>
-                                                        <th>Precio por noche</th>
+                                                        <th colspan="2" class="text-center">Precio por noche</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for room in rooms %}
+                                                {% for key, rate_plan in rooms %}
+                                                    {% set room = rate_plan[0] %}
                                                     <tr>
                                                         <td>
                                                             {% if room.meal_plan.id == 'D' %}
@@ -203,7 +204,9 @@
                                                             {{ room.cancellation_policy.text }}
                                                         </td>
                                                         <td>
-                                                            <b class="">{{ room.price_detail.currency }} {{ room.price_detail.nightly.subtotal|number_format(2, ',', '.') }}</b>
+                                                            <span>{{ room.price_detail.currency }} <b>{{ room.price_detail.nightly.subtotal|number_format(2, ',', '.') }}</b></span>
+                                                        </td>
+                                                        <td>
                                                             <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}?{{ reservation|url_encode }}" method="POST" >
                                                                 <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
                                                                 <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
@@ -227,7 +230,8 @@
                             </li>
                         {% endfor %}
                     </ul>
-
+{{ dump(roomDetail) }}
+{{ dump(roomTypes) }}
                 </div>
 
                 <div class="gap"></div>

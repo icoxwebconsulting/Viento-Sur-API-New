@@ -319,7 +319,8 @@ class HotelController extends Controller
             'destination' => $destination,
             'checkin_date' => $checkin_date,
             'checkout_date' => $checkout_date,
-            'distribution' => $distribution
+            'distribution' => $distribution,
+            'classify_roompacks_by' => 'rate_plan'
         );
 
         $despegar = $this->get('despegar');
@@ -337,8 +338,7 @@ class HotelController extends Controller
         $roomDetail = [];
         foreach ($dispoHotel['roompacks'] as $roompack) {
             foreach ($roompack['rooms'] as $room) {
-                unset($roompack['rooms']);
-                $roomDetail[$room['room_type_id']][] = array_merge($roompack, array('room' => $room));
+                $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
             }
         }
 
