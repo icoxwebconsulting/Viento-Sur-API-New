@@ -35,6 +35,13 @@
             }, 1500);
         });
 
+        $(document).ready(function () {
+            for (var key in roomCapacity) {
+                if (roomCapacity.hasOwnProperty(key)) {
+                    $('#room-capacity-' + key).text(roomCapacity[key]);
+                }
+            }
+        })
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04&callback=initMap"></script>
 
@@ -152,7 +159,9 @@
                 <div class="booking-list-rooms">
 
                     <h3>Habitaciones disponibles</h3>
-
+                    <script>
+                        var roomCapacity = {};
+                    </script>
                     <ul class="booking-list">
                         {% for key, rooms in roomDetail %}
                             <li>
@@ -164,6 +173,7 @@
                                                 <img src="{{ roomTypes[key].pictures[0].url}}" alt="Habitaci&oacute;n" title="" />
                                                 <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
                                             </div>
+                                            <div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> Capacidad máxima</div>
                                         </div>
 
                                         <div class="col-md-9">
@@ -178,6 +188,11 @@
                                                 <tbody>
                                                 {% for key, rate_plan in rooms %}
                                                     {% set room = rate_plan[0] %}
+                                                    {% if loop.first %}
+                                                        <script>
+                                                            roomCapacity[{{ loop.parent.key }}] = {{ room.rooms[0].capacity.max }};
+                                                        </script>
+                                                    {% endif %}
                                                     <tr>
                                                         <td>
                                                             {% if room.meal_plan.id == 'D' %}
@@ -230,8 +245,8 @@
                             </li>
                         {% endfor %}
                     </ul>
-{{ dump(roomDetail) }}
-{{ dump(roomTypes) }}
+{#{{ dump(roomDetail) }}#}
+{#{{ dump(roomTypes) }}#}
                 </div>
 
                 <div class="gap"></div>

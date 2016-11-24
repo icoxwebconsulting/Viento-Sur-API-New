@@ -95,16 +95,19 @@
                                                     </div>
                                                 </label>
                                             {% else %}
-                                                {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                                            {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                                            {% if cardsList['*'] is defined %}
                                                 {% set cardI = attribute(cardsList, '*') %}
                                                 {% for card in cardI %}
                                                     <label class="card-selector vs-cs-label">
                                                         {% set cardData = card|split('-') %}
-                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}">
+                                                        <div class="eva-card-container clickable-card"
+                                                             data-card-id="{{ card }}">
                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                         </div>
                                                     </label>
                                                 {% endfor %}
+                                            {% endif %}
                                                 {#Agrupación por banco#}
                                                 {% set countBank = 1 %}
                                                 {% set moreBank = null %}
