@@ -143,7 +143,7 @@ class FormHelper
                                     foreach ($element as $key4 => $element0) {
                                         if ((is_array($element0) && array_key_exists('value', $element0))) {
                                             $temp2[$key4] = $formNewPaySend[$key4 . $key3];
-                                            if($key4 == 'country_code') {
+                                            if ($key4 == 'country_code') {
                                                 $temp2[$key4] = str_replace("+", "", $temp2[$key4]);
                                             }
                                         }
@@ -155,21 +155,11 @@ class FormHelper
                         $dataArray[$key] = $temp;
                         break;
                     case 'additional_data':
+                    case 'vouchers':
                         $temp = [];
                         foreach ($option as $key2 => $item) {
                             if (is_array($item) && array_key_exists('value', $item)) {
                                 $temp[$key2] = $formNewPaySend[$key2];
-                            }
-                        }
-                        $dataArray[$key] = $temp;
-                        break;
-                    case 'vouchers':
-                        $temp = [];
-                        foreach ($option as $key2 => $item) {
-                            foreach ($item as $key3 => $elm) {
-                                if (is_array($item) && array_key_exists('value', $item)) {
-                                    $temp[$key2][$key3] = $formNewPaySend[$key3 . $key2];
-                                }
                             }
                         }
                         $dataArray[$key] = $temp;
@@ -254,7 +244,12 @@ class FormHelper
                                 if (is_array($item)) {
                                     foreach ($item as $key3 => $value) {
                                         if (is_array($value) && array_key_exists('value', $value)) {
-                                            $temp2[$key2][$key3] = $this->dataFill[$key3 . $key2];
+                                            if ($key2 == 'owner_document' || $key2 = 'billing_address') {
+                                                $index = $key2 . $key3;
+                                            } else {
+                                                $index = $key3 . $key2;
+                                            }
+                                            $temp2[$key2][$key3] = $this->dataFill[$index];
                                         }
                                     }
                                 }
