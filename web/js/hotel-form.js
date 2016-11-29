@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var cardsObject = {
         'VI': 'Visa',
+        'VIS': 'Visa Signature',
         'CA': 'MasterCard',
         'AX': 'American Express',
         'DC': 'Diners Club',
@@ -19,15 +20,84 @@ $(document).ready(function () {
     $('#form_payment_card_type').val(splitCard[3]);
     $('#card-selected').val(cardsObject[splitCard[1]]);
 
-    $('.eva-card-container').on('click', function () {
-        $('.card-list .eva-card-container').removeClass('selected-p-card');
-        var cardId = $(this).attr('data-card-id');
-        $('#form_payment_bank_code').val(cardId);
-        $(this).addClass('selected-p-card');
+    $('.list-group').on('click', '.clickable-card', function () {
+        var cardId = $(this).data('card-id');
+        var bank = $(this).data('bank-id');
         var splitCard = cardId.split("-");
+        $('#form_payment_bank_code').val(cardId);
         $('#form_payment_card_code').val(splitCard[1]);
         $('#form_payment_card_type').val(splitCard[3]);
         $('#card-selected').val(cardsObject[splitCard[1]]);
+        $('.card-list .eva-card-container').removeClass('selected-p-card');
+
+        if (bank) {
+            var parentId = $(this).data('parent-id');
+            $('#' + parentId).addClass('selected-p-card');
+            $.ajax({
+                url: Routing.generate('hotel_card_detail'),
+                type: 'GET',
+                data: {
+                    card: cardId
+                },
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.hasOwnProperty('description')) {
+                    $('#card-selected').val(data.description);
+                }
+            }).fail(function (e) {
+                console.log(e)
+            }).always(function () {
+            });
+        } else {
+            $(this).addClass('selected-p-card');
+        }
+    });
+
+    $('.clickable-bank').popover({
+        placement: 'bottom',
+        html: true,
+        content: function () {
+            return $(this).find('.card-content').html();
+        }
+    }).on('show.bs.popover', function () {
+        $(this).find('.clickable-card').each(function () {
+            if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
+                $(this).addClass('selected-p-card');
+            }
+        })
+    });
+
+    var isVisible = false;
+    var clickedAway = false;
+
+    $(document).on('click', function (e) {
+        if (isVisible && clickedAway) {
+            $('.clickable-group-bank').popover('hide');
+            isVisible = clickedAway = false
+        } else {
+            clickedAway = true
+        }
+    });
+
+    $('.clickable-group-bank').popover({
+        placement: 'left',
+        html: true,
+        content: function () {
+            return $('.' + this.id).html();
+        },
+        trigger: 'manual',
+        template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content" style="height: 400px; overflow-y: scroll; overflow-x: hidden;"></div></div>'
+    }).on('show.bs.popover', function () {
+        $('.' + this.id + ' .clickable-card').each(function () {
+            if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
+                $(this).addClass('selected-p-card');
+            }
+        })
+    }).on('click', function (e) {
+        $(this).popover('show');
+        clickedAway = false;
+        isVisible = true;
+        e.preventDefault()
     });
 
     ////

@@ -47,10 +47,10 @@
                                 </div>
                             </div>
                             {% set fieldName = 'room_reference' ~ loop.index0 %}
-                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden-row'} }) }}
+                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden'} }) }}
                         {% endfor %}
-                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden-row'} }) }}
-                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden-row'} }) }}
+                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden'} }) }}
+                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden'} }) }}
                     </div>
                 </div>
                 <!--/Pasajeros-->
@@ -87,7 +87,7 @@
                                 </h4>
                                 <p class="list-group-item-text">
                                     <div class="radio">
-                                        <div class="card-list">
+                                        <div class="card-list credit-cards">
                                             {% if type == 'cash' %}
                                                 <label class="card-selector vs-cs-label">
                                                     <div class="eva-card-container" data-card-id="">
@@ -95,25 +95,85 @@
                                                     </div>
                                                 </label>
                                             {% else %}
-                                                {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                                            {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                                            {% if cardsList['*'] is defined %}
                                                 {% set cardI = attribute(cardsList, '*') %}
                                                 {% for card in cardI %}
                                                     <label class="card-selector vs-cs-label">
                                                         {% set cardData = card|split('-') %}
-                                                        <div class="eva-card-container" data-card-id="{{ card }}">
+                                                        <div class="eva-card-container clickable-card"
+                                                             data-card-id="{{ card }}">
                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                         </div>
                                                     </label>
                                                 {% endfor %}
                                             {% endif %}
-                                            {#{% for cardId in paymentMethod.card_ids %}#}
-                                                {#<label class="card-selector vs-cs-label">#}
-                                                    {#{% set cardData = cardId|split('-') %}#}
-                                                    {#<div class="eva-card-container" data-card-id="{{ cardId }}">#}
-                                                        {#<span class="eva-card-body {{ cardData[1] }}"></span>#}
-                                                    {#</div>#}
-                                                {#</label>#}
-                                            {#{% endfor %}#}
+                                                {#Agrupación por banco#}
+                                                {% set countBank = 1 %}
+                                                {% set moreBank = null %}
+                                                {% for key, list in cardsList %}
+                                                    {% if key != '*' %}
+                                                        {#limito la cantidad de bancos a 4 elementos#}
+                                                        {% if countBank < 5 %}
+                                                            <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
+                                                                <span class="eva-card-body {{ key }}"></span>
+                                                                <div class="card-content hide">
+                                                                    {% for card in list  %}
+                                                                        {% set cardData = card|split('-') %}
+                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                                            <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        {% elseif countBank == 5 %}
+                                                            {% set moreBank = 1 %}
+                                                            <div class="eva-card-container clickable-group-bank viewMore" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-group">
+                                                                <span class="eva-card-body"></span>
+                                                                <p class="textViewMore"> Más<br />Bancos </p>
+                                                                <span class="arrowViewMore">&gt;</span>
+                                                            </div>
+                                                        {% endif %}
+                                                        {% set countBank = countBank + 1 %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {#si hay bancos en grupos para dibujar#}
+                                                {% if moreBank is not null %}
+                                                    <div class="{{ loop.index }}-group hidden">
+                                                        {% set countBank = 1 %}
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th class="text-center">BANCO</th>
+                                                                <th class="text-center">TARJETA</th>
+                                                            </tr>
+                                                        {% for key, list in cardsList %}
+                                                            {% if key != '*' %}
+                                                                {% if countBank > 4 %}
+                                                                    <tr>
+                                                                        <th>
+                                                                            <div class="eva-card-container notClickableCard">
+                                                                                <span class="eva-card-body {{ key }} notClickableCard"></span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <td>
+                                                                            {% for card in list  %}
+                                                                                {% set cardData = card|split('-') %}
+                                                                                <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group">
+                                                                                    <span class="eva-card-body {{ cardData[1] }}"></span>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                                {% set countBank = countBank + 1 %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                {% endif %}
+
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </p>
@@ -228,13 +288,13 @@
                             {##}
 
                             {% if formNewPay.payment.bank_code is defined %}
-                                {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden-row'} }) }}
+                                {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
                             {% if formNewPay.payment.card_code is defined %}
-                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden-row'} }) }}
+                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
                             {% if formNewPay.payment.card_type is defined %}
-                                {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden-row'} }) }}
+                                {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
                             {% if formChoice.payment.invoice is defined %}
                                 {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
@@ -349,6 +409,7 @@
             {#{{ dump(formNewPay) }}#}
             {#{{ dump(formChoice) }}#}
             {#{{ dump(paymentMethods) }}#}
+            {#{{ dump(cardsGroup) }}#}
         </div>
     </div>
 {% endblock %}
@@ -389,10 +450,6 @@
             padding-top: 10px;
         }
 
-        .hidden-row {
-            display: none;
-        }
-
         .selected-p-card {
             border: 1px solid #1beab2 !important;
         }
@@ -415,10 +472,16 @@
 
         .card-list .eva-card-container {
             margin-left: 3px;
-            margin-bottom: 5px;
+            /*margin-bottom: 5px;*/
+        }
+
+        .credit-cards {
+            width: 50%;
+            /* float: right; */
+            margin-left: 50%;
         }
 
     </style>
-    <link href="{{ asset('css/cards-horizontal.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/cards-vertical.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}

@@ -872,6 +872,74 @@ h4.booking-item-title {
   box-sizing: content-box;
 }
 
+.eva-card-body.RIO, .eva-card-body[class*=RIO-] {
+  background-position: center -4200px
+}
+
+.eva-card-body.ITA, .eva-card-body.ITU, .eva-card-body[class*=ITA-], .eva-card-body[class*=ITU-] {
+  background-position: center -2400px
+}
+
+.eva-card-body.SCB, .eva-card-body[class*=SCB-] {
+  background-position: center -2000px
+}
+
+.eva-card-body.CSCL, .eva-card-body[class*=CSCL-] {
+  background-position: center -1440px
+}
+
+.eva-card-body.NAT, .eva-card-body[class*=NAT-] {
+  background-position: center -1400px
+}
+
+.textViewMore {
+  font-family: Arial,sans-serif;
+  font-size: 10px;
+  display: block;
+  height: 100%;
+  text-align: left;
+  padding: 5px 4px 1px;
+  float: left;
+  background-color: #F5F5F5;
+  color: #444;
+  text-transform: uppercase;
+  line-height: 1.3 !important;
+}
+
+.arrowViewMore {
+  color: #2FDCEA;
+  font-size: 13px;
+  float: right;
+  height: 100%;
+  line-height: 40px;
+  padding-right: 2px;
+  font-weight: 700;
+}
+
+.viewMore span .arrow {
+  color: #2FDCEA;
+  font-size: 13px;
+  float: right;
+  height: 100%;
+  line-height: 40px;
+  padding-right: 2px;
+  font-weight: 700;
+}
+
+.viewMore span {
+  height: 100% !important;
+  background-image: none;
+}
+
+.notClickableCard {
+    cursor: default;
+}
+
+.notClickableCard:hover {
+    border: none !important;
+}
+
+
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; cursor: pointer;}
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: #F0F0F0; }

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use VientoSur\App\AppBundle\Entity\Passengers;
 use VientoSur\App\AppBundle\Entity\Reservation;
-use VientoSur\App\AppBundle\Services\Distribution;
+use VientoSur\App\AppBundle\Services\PaymentMethods;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -84,6 +84,12 @@ class HotelController extends Controller
         } else {
             $destinationText = $request->get('autocomplete');
             $destination = $request->get('cityInput');
+        }
+
+        $start = $request->get('start');
+        $end = $request->get('end');
+        if ($destination == '' || empty($start) || empty($end) || !strpos($start, '/') || !strpos($end, '/')) {
+            return $this->redirect($this->generateUrl('homepage'));
         }
 
         list($day, $month, $year) = explode("/", $request->get('start'));
@@ -174,6 +180,8 @@ class HotelController extends Controller
         $priceRange = $request->query->get('price_range');
         $stars = $request->query->get('stars');
         $paymentType = $request->query->get('payment_type');
+        $zones = $request->query->get('zones');
+        $amenities = $request->query->get('amenities');
 
         $urlParams = array(
             "country_code" => "AR",
@@ -200,6 +208,12 @@ class HotelController extends Controller
         if ($paymentType) {
             $urlParams['payment_type'] = $paymentType;
         }
+        if ($zones) {
+            $urlParams['zones'] = $zones;
+        }
+        if ($amenities) {
+            $urlParams['amenities'] = $amenities;
+        }
 
         $sortMapping = [
             "subtotal_price_ascending" => "Precio: menor a mayor",
@@ -216,18 +230,32 @@ class HotelController extends Controller
 
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
-        $restUrl = '?' . http_build_query(array(
-                "site" => "AR",
-                "checkin_date" => $checkin_date,
-                "checkout_date" => $checkout_date,
-                "distribution" => $distribution
-            ));
+        $idsHotels = [];
+        foreach ($results['items'] as $item) {
+            $idsHotels[] = $item['id'];
+        }
+
+        $hotelsDetails = $this->get('despegar')->getHotelsDetails(array(
+            'ids' => implode(',', $idsHotels),
+            'language' => 'es',
+            'options' => 'pictures',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ), true);
+
+        $reservation = array(
+            'destination' => $destination,
+            "checkin_date" => $checkin_date,
+            "checkout_date" => $checkout_date,
+            "distribution" => $distribution
+        );
 
         $total = ceil($results['paging']['total'] / 10);
 
         $viewParams = array(
             'items' => $results,
-            'restUrl' => $restUrl,
+            'hotelsDetails' => $hotelsDetails,
+            'reservation' => $reservation,
             'offset' => $offset,
             'limit' => 10,
             'total' => $total,
@@ -278,30 +306,46 @@ class HotelController extends Controller
 
     /**
      *
-     * @Route("/show/{idHotel}/availabilities/{restUrl}/latitude/{latitude}/longitude/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
+     * @Route("/show/{idHotel}/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
      * @Method("GET")
-     * @Template()
      */
-    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $restUrl, $latitude, $longitude)
+    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $destination, $checkin_date, $checkout_date, $distribution, $latitude, $longitude)
     {
         $session = $request->getSession();
         $urlParams = array(
             'language' => 'es',
-            'currency' => 'ARS'
+            'country_code' => 'AR',
+            'currency' => 'ARS',
+            'destination' => $destination,
+            'checkin_date' => $checkin_date,
+            'checkout_date' => $checkout_date,
+            'distribution' => $distribution,
+            'classify_roompacks_by' => 'rate_plan'
         );
 
         $despegar = $this->get('despegar');
-        $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $restUrl, $urlParams);
+        $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $urlParams);
         $session->set('hotelAvailabilities', json_encode($dispoHotel));
 
-        $urlParams = array(
+        $hotelDetails = $despegar->getHotelsDetails(array(
             'ids' => $idHotel,
             'language' => 'es',
             'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
-        );
-        $hotelDetails = $despegar->getHotelsDetails($urlParams);
+        ));
+
+        $roomDetail = [];
+        foreach ($dispoHotel['roompacks'] as $roompack) {
+            foreach ($roompack['rooms'] as $room) {
+                $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
+            }
+        }
+
+        $roomTypes = [];
+        foreach ($hotelDetails[0]['room_types'] as $room) {
+            $roomTypes[$room['id']] = $room;
+        }
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
 
@@ -311,27 +355,10 @@ class HotelController extends Controller
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'idHotel' => $idHotel,
-                'restUrl' => $restUrl
+                'reservation' => $urlParams,
+                'roomDetail' => $roomDetail,
+                'roomTypes' => $roomTypes
             )
-        );
-    }
-
-    /**
-     * Lists all Company entities.
-     *
-     * @Route("/show/details/{idHotel}", name="viento_sur_app_app_homepage_show_hotel_photo")
-     * @Method("GET")
-     * @Template()
-     */
-    public function detailsHotelListForIdAction(Request $request, $idHotel)
-    {
-
-        $hotelUrl = "https://api.despegar.com/v3/hotels?ids=" . $idHotel . "&language=es&options=pictures&resolve=merge_info&catalog_info=true";
-        $hotel = $this->cUrlExecAction($hotelUrl);
-        $hotelDetails = json_decode($hotel, true);
-
-        return array(
-            'hotelDetails' => $hotelDetails
         );
     }
 
@@ -381,8 +408,8 @@ class HotelController extends Controller
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         $roompackChoice = $request->get('roompack_choice');
-        $checkin =  $request->get('checkin_date');
-        $checkout =  $request->get('checkout_date');
+        $checkin = $request->get('checkin_date');
+        $checkout = $request->get('checkout_date');
         $distribution = $request->get('distribution');
         $reservationTime = $diff = date_diff(new \DateTime($checkin), new \Datetime($checkout));
         $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
@@ -537,352 +564,8 @@ class HotelController extends Controller
         $formChoice = $formBooking['dictionary']['form_choices'][$selectedPack['form_choice']];
 
         $paymentMethods = $roompack->payment_methods;
-        $paymentMethods2 = json_decode('{"payment_methods": [{
-          "choice": "7",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 209.45,
-            "installment": 209.45,
-            "total_interest_amount": 0,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-*-CREDIT",
-            "AR-CA-*-CREDIT",
-            "AR-AX-*-CREDIT",
-            "AR-DC-*-CREDIT",
-            "AR-CL-*-CREDIT",
-            "AR-TN-*-CREDIT",
-            "AR-NV-*-CREDIT"
-          ],
-          "installment_quantity": 1,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "10",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 209.45,
-            "installment": 69.82,
-            "total_interest_amount": 0,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-RIO-CREDIT",
-            "AR-AX-RIO-CREDIT",
-            "AR-VI-MAC-CREDIT",
-            "AR-AX-MAC-CREDIT",
-            "AR-CA-MAC-CREDIT",
-            "AR-VI-HIP-CREDIT",
-            "AR-CA-ITU-CREDIT",
-            "AR-VI-ITU-CREDIT",
-            "AR-VI-ICBC-CREDIT",
-            "AR-VI-PRO-CREDIT",
-            "AR-VI-PAT-CREDIT",
-            "AR-AX-PAT-CREDIT",
-            "AR-CA-PAT-CREDIT",
-            "AR-VI-SUP-CREDIT",
-            "AR-CA-SUP-CREDIT",
-            "AR-VI-CIU-CREDIT",
-            "AR-CA-CIU-CREDIT",
-            "AR-DC-*-CREDIT",
-            "AR-CA-CS-CREDIT",
-            "AR-VI-COM-CREDIT",
-            "AR-CA-COM-CREDIT",
-            "AR-VI-AZU-CREDIT",
-            "AR-CA-BERSA-CREDIT",
-            "AR-VI-BERSA-CREDIT",
-            "AR-VI-BLP-CREDIT",
-            "AR-CL-CHA-CREDIT",
-            "AR-VI-CHA-CREDIT",
-            "AR-CA-NBSF-CREDIT",
-            "AR-VI-NBSF-CREDIT",
-            "AR-VI-SAENZ-CREDIT",
-            "AR-CA-SCR-CREDIT",
-            "AR-VI-SCR-CREDIT",
-            "AR-CA-SJU-CREDIT",
-            "AR-VI-SJU-CREDIT",
-            "AR-VI-TUC-CREDIT",
-            "AR-CS-*-CREDIT",
-            "AR-VI-BTDF-CREDIT",
-            "AR-CA-BLP-CREDIT",
-            "AR-CA-CHA-CREDIT",
-            "AR-CA-TUC-CREDIT",
-            "AR-VI-SHO-CREDIT",
-            "AR-VI-PVC-CREDIT",
-            "AR-CA-AZU-CREDIT",
-            "AR-VIS-BCO-CREDIT"
-          ],
-          "installment_quantity": 3,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "6",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 209.45,
-            "installment": 34.91,
-            "total_interest_amount": 0,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-RIO-CREDIT",
-            "AR-AX-RIO-CREDIT",
-            "AR-VI-MAC-CREDIT",
-            "AR-AX-MAC-CREDIT",
-            "AR-CA-MAC-CREDIT",
-            "AR-VI-HIP-CREDIT",
-            "AR-CA-ITU-CREDIT",
-            "AR-VI-ITU-CREDIT",
-            "AR-VI-ICBC-CREDIT",
-            "AR-VI-PRO-CREDIT",
-            "AR-VI-PAT-CREDIT",
-            "AR-AX-PAT-CREDIT",
-            "AR-CA-PAT-CREDIT",
-            "AR-VI-SUP-CREDIT",
-            "AR-CA-SUP-CREDIT",
-            "AR-VI-CIU-CREDIT",
-            "AR-CA-CIU-CREDIT",
-            "AR-DC-*-CREDIT",
-            "AR-CA-CS-CREDIT",
-            "AR-VI-COM-CREDIT",
-            "AR-CA-COM-CREDIT",
-            "AR-VI-AZU-CREDIT",
-            "AR-CA-BERSA-CREDIT",
-            "AR-VI-BERSA-CREDIT",
-            "AR-VI-BLP-CREDIT",
-            "AR-CL-CHA-CREDIT",
-            "AR-VI-CHA-CREDIT",
-            "AR-CA-NBSF-CREDIT",
-            "AR-VI-NBSF-CREDIT",
-            "AR-VI-SAENZ-CREDIT",
-            "AR-CA-SCR-CREDIT",
-            "AR-VI-SCR-CREDIT",
-            "AR-CA-SJU-CREDIT",
-            "AR-VI-SJU-CREDIT",
-            "AR-VI-TUC-CREDIT",
-            "AR-CS-*-CREDIT",
-            "AR-VI-BTDF-CREDIT",
-            "AR-CA-BLP-CREDIT",
-            "AR-CA-CHA-CREDIT",
-            "AR-CA-TUC-CREDIT",
-            "AR-VI-SHO-CREDIT",
-            "AR-VI-PVC-CREDIT",
-            "AR-CA-AZU-CREDIT",
-            "AR-VIS-BCO-CREDIT"
-          ],
-          "installment_quantity": 6,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "13",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 209.45,
-            "installment": 23.27,
-            "total_interest_amount": 0,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-PRO-CREDIT",
-            "AR-VI-SUP-CREDIT",
-            "AR-CA-SUP-CREDIT",
-            "AR-DC-*-CREDIT",
-            "AR-VI-COM-CREDIT",
-            "AR-CA-COM-CREDIT",
-            "AR-VI-BLP-CREDIT",
-            "AR-CL-CHA-CREDIT",
-            "AR-VI-CHA-CREDIT",
-            "AR-CA-BLP-CREDIT",
-            "AR-CA-CHA-CREDIT"
-          ],
-          "installment_quantity": 9,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "5",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 209.45,
-            "installment": 17.45,
-            "total_interest_amount": 0,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-ICBC-CREDIT",
-            "AR-VI-PRO-CREDIT",
-            "AR-VI-SUP-CREDIT",
-            "AR-CA-SUP-CREDIT",
-            "AR-VI-CIU-CREDIT",
-            "AR-CA-CIU-CREDIT",
-            "AR-DC-*-CREDIT",
-            "AR-VI-COM-CREDIT",
-            "AR-CA-COM-CREDIT",
-            "AR-VI-AZU-CREDIT",
-            "AR-VI-BLP-CREDIT",
-            "AR-CL-CHA-CREDIT",
-            "AR-VI-CHA-CREDIT",
-            "AR-VI-ROS-CREDIT",
-            "AR-VI-SAENZ-CREDIT",
-            "AR-CA-BLP-CREDIT",
-            "AR-CA-CHA-CREDIT",
-            "AR-VI-PVC-CREDIT",
-            "AR-CA-AZU-CREDIT",
-            "AR-VIS-BCO-CREDIT"
-          ],
-          "installment_quantity": 12,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "3",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 228.2,
-            "installment": 76.07,
-            "total_interest_amount": 18.75,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-*-CREDIT",
-            "AR-CA-*-CREDIT",
-            "AR-CL-*-CREDIT",
-            "AR-CA-HSBC-CREDIT",
-            "AR-VI-HSBC-CREDIT"
-          ],
-          "installment_quantity": 3,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "11",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 228.76,
-            "installment": 76.25,
-            "total_interest_amount": 19.31,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-AX-*-CREDIT"
-          ],
-          "installment_quantity": 3,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "2",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 243.17,
-            "installment": 40.53,
-            "total_interest_amount": 33.72,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-*-CREDIT",
-            "AR-CA-*-CREDIT",
-            "AR-CL-*-CREDIT",
-            "AR-CA-HSBC-CREDIT",
-            "AR-VI-HSBC-CREDIT"
-          ],
-          "installment_quantity": 6,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "8",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 244.22,
-            "installment": 40.7,
-            "total_interest_amount": 34.77,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-AX-*-CREDIT"
-          ],
-          "installment_quantity": 6,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "9",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 280.98,
-            "installment": 23.41,
-            "total_interest_amount": 71.53,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-*-CREDIT",
-            "AR-CA-*-CREDIT",
-            "AR-CL-*-CREDIT",
-            "AR-CA-HSBC-CREDIT",
-            "AR-VI-HSBC-CREDIT"
-          ],
-          "installment_quantity": 12,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "1",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 284.75,
-            "installment": 23.73,
-            "total_interest_amount": 75.3,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-AX-*-CREDIT"
-          ],
-          "installment_quantity": 12,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "4",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 318.05,
-            "installment": 17.67,
-            "total_interest_amount": 108.6,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-VI-*-CREDIT",
-            "AR-CA-*-CREDIT",
-            "AR-CL-*-CREDIT",
-            "AR-CA-HSBC-CREDIT",
-            "AR-VI-HSBC-CREDIT"
-          ],
-          "installment_quantity": 18,
-          "with_bank_interest": false
-        },
-        {
-          "choice": "12",
-          "type": "credit_card",
-          "amounts": {
-            "currency": "USD",
-            "total": 323.92,
-            "installment": 18,
-            "total_interest_amount": 114.47,
-            "discount": 0
-          },
-          "card_ids": [
-            "AR-AX-*-CREDIT"
-          ],
-          "installment_quantity": 18,
-          "with_bank_interest": false
-        }
-      ]}')->payment_methods;
+        //Muestra métodos de prueba:
+        //$paymentMethods = (new PaymentMethods())->getTestMethods();
 
         //procesado de métodos de pago agrupados por Banco
         $cardsGroup = [];
@@ -907,7 +590,6 @@ class HotelController extends Controller
             'booking_id' => $booking_id,
             'formNewPay' => $formNewPaySend->createView(),
             'paymentMethods' => $paymentMethods,
-            'paymentMethods2' => $paymentMethods2,
             'rooms' => $roompack->rooms,
             'cardsGroup' => $cardsGroup,
             'reservationDays' => $reservationTime->days,
@@ -999,19 +681,13 @@ class HotelController extends Controller
         );
     }
 
-    private function cUrlExecAction($url)
+    /**
+     * @Route("/card-detail", name="hotel_card_detail")
+     */
+    public function getCardDetailAction(Request $request)
     {
-        $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $url);
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HTTPHEADER, array('X-ApiKey:2864680fe4d74241aa613874fa20705f'));
-        curl_setopt($cSession, CURLOPT_HEADER, false);
-        curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
-        //step3
-        $results = curl_exec($cSession);
-        //step4
-        curl_close($cSession);
-
-        return $results;
+        return new JsonResponse(
+            $this->get('despegar')->getCardDetails($request->get('card'))
+        );
     }
 }

@@ -35,6 +35,13 @@
             }, 1500);
         });
 
+        $(document).ready(function () {
+            for (var key in roomCapacity) {
+                if (roomCapacity.hasOwnProperty(key)) {
+                    $('#room-capacity-' + key).text(roomCapacity[key]);
+                }
+            }
+        })
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04&callback=initMap"></script>
 
@@ -97,6 +104,7 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
                     </header>
 
                     <div class="row">
@@ -116,7 +124,7 @@
                                     <div class="tab-pane fade in active" id="tab-1">
                                         <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
                                             {% for key, pictures in hotelDetails.pictures %}
-                                                <img src="{{ pictures.url }}" alt="Image Alternative text" title="" />
+                                                <img src="{{ pictures.url }}" alt="{{ pictures.picture_category.descriptions.es }}" title="{{ pictures.picture_category.descriptions.es }}" />
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -151,216 +159,94 @@
                 <div class="booking-list-rooms">
 
                     <h3>Habitaciones disponibles</h3>
-
+                    <script>
+                        var roomCapacity = {};
+                    </script>
                     <ul class="booking-list">
-                        {% for key, room_type in hotelDetails.room_types %}
-                            {% set count_room = 0 %}
-                            {% for key, room in dispoHotel.roompacks %}
-                                {% if room_type.id == room.rooms[0].room_type_id and room.rooms[0].availability > 0 and count_room == 0 %}
-                                    <li>
-                                        <a class="booking-item" href="#">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="booking-item-img-wrap">
-                                                        <img src="{{ room_type.pictures[0].url }}" alt="Image Alternative text" title="" />
-                                                        <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="booking-item-rating">
-                                                        <h4 class="booking-item-title">{#{{ room.rooms[0].name }}#}{{ room_type.despegar_names.es }}</h4>
-                                                    </div>
-
-                                                    <ul class="booking-item-features booking-item-features-small clearfix">
-                                                        <p>Servicios</p>
-                                                        {% for amenitie in room_type.amenities %}
-                                                            {% if amenitie.id == 'AIRROOM' %}
-                                                                <li rel="tooltip" data-placement="top"><i class="im im-air"></i></li>
-                                                            {% elseif amenitie.id == 'TVINROOM' %}
-                                                                <li rel="tooltip" data-placement="top"><i class="im im-tv"></i></li>
-                                                            {% elseif amenitie.id == 'BARROM' %}
-                                                                <li rel="tooltip" data-placement="top"><i class="im im-bar"></i></li>
-                                                            {% elseif amenitie.id == 'BAN' %}
-                                                                <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i></li>
-                                                                {#{% elseif amenitie.id == 'WAKEUP' %}
-                                                                    <i class="im im-kitchen"></i>
-                                                                {% elseif amenitie.id == 'WAKEUP' %}
-                                                                    <i class="im im-patio"></i>
-                                                                {% elseif amenitie.id == 'WAKEUP' %}
-                                                                    <i class="im im-washing-machine"></i>
-                                                                {% elseif amenitie.id == 'WAKEUP' %}
-                                                                    <i class="im im-pool"></i>#}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        <!--<li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-bar"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-kitchen"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-patio"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-washing-machine"></i>
-                                                        </li>
-                                                        <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
-                                                        </li>-->
-                                                    </ul>
-                                                    <p class="booking-text-color">
-                                                        {% if room.meal_plan.id == 'D' %}
-                                                            Bebidas incluidas
-                                                        {% elseif room.meal_plan.id == 'BRA' %}
-                                                            Desayuno americano
-                                                        {% elseif room.meal_plan.id == 'BRL' %}
-                                                            Desayuno a la carta
-                                                        {% elseif room.meal_plan.id == 'BRB' %}
-                                                            Desayuno buffet
-                                                        {% elseif room.meal_plan.id == 'BRC' %}
-                                                            Desayuno continental
-                                                        {% elseif room.meal_plan.id == 'M' %}
-                                                            Media pensión
-                                                        {% elseif room.meal_plan.id == 'H' %}
-                                                            Sólo hospedaje
-                                                        {% elseif room.meal_plan.id == 'F' %}
-                                                            Pensión completa
-                                                        {% elseif room.meal_plan.id == 'A' %}
-                                                            All inclusive
-                                                        {% endif %}
-                                                    </p>
-                                                    <p class="booking-text-color">{{ room.cancellation_policy.text }}</p>
-                                                    <p class="booking-item-last-booked">{% if room.rooms[0].availability < 6 %}Sólo quedan {{ room.rooms[0].availability }} habitaciones {% endif %}</p>
-                                                </div>
-
-                                                <div class="col-md-3 booking-prices align-center">
-                                                    <div class="booking-align-vertical">
-                                                        <span class="booking-item-price-night">Precio por noche</span>
-                                                        <span class="booking-item-price">{{ room.price_detail.currency }} {{ room.price_detail.nightly.subtotal }}</span>
-                                                        <!--<span class="btn btn-primary">Reservar</span>-->
-                                                        <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}{{ restUrl|raw }}" method="POST" >
-                                                            <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
-                                                            <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Reservar
-                                                            </button>
-
-                                                        </form>
-
-                                                        <!--<span class="booking-item-benefit mt20">Hasta 18 cuotas!</span>-->
-                                                    </div>
-                                                </div>
+                        {% for key, rooms in roomDetail %}
+                            <li>
+                                <div class="booking-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div>{{ roomTypes[key].despegar_names.es }}</div>
+                                            <div class="booking-item-img-wrap">
+                                                <img src="{{ roomTypes[key].pictures[0].url}}" alt="Habitaci&oacute;n" title="" />
+                                                <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
                                             </div>
-                                        </a>
-                                    </li>
-                                    {% set count_room = 1 %}
-                                {% endif %}
-                            {% endfor %}
+                                            <div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> Capacidad máxima</div>
+                                        </div>
+
+                                        <div class="col-md-9">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>R&eacute;gimen de comida</th>
+                                                        <th>Pol&iacute;ticas de cancelaci&oacute;n</th>
+                                                        <th colspan="2" class="text-center">Precio por noche</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for key, rate_plan in rooms %}
+                                                    {% set room = rate_plan[0] %}
+                                                    {% if loop.first %}
+                                                        <script>
+                                                            roomCapacity[{{ loop.parent.key }}] = {{ room.rooms[0].capacity.max }};
+                                                        </script>
+                                                    {% endif %}
+                                                    <tr>
+                                                        <td>
+                                                            {% if room.meal_plan.id == 'D' %}
+                                                                Bebidas incluidas
+                                                            {% elseif room.meal_plan.id == 'BRA' %}
+                                                                Desayuno americano
+                                                            {% elseif room.meal_plan.id == 'BRL' %}
+                                                                Desayuno a la carta
+                                                            {% elseif room.meal_plan.id == 'BRB' %}
+                                                                Desayuno buffet
+                                                            {% elseif room.meal_plan.id == 'BRC' %}
+                                                                Desayuno continental
+                                                            {% elseif room.meal_plan.id == 'M' %}
+                                                                Media pensión
+                                                            {% elseif room.meal_plan.id == 'H' %}
+                                                                Sólo hospedaje
+                                                            {% elseif room.meal_plan.id == 'F' %}
+                                                                Pensión completa
+                                                            {% elseif room.meal_plan.id == 'A' %}
+                                                                All inclusive
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {{ room.cancellation_policy.text }}
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ room.price_detail.currency }} <b>{{ room.price_detail.nightly.subtotal|number_format(2, ',', '.') }}</b></span>
+                                                        </td>
+                                                        <td>
+                                                            <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}?{{ reservation|url_encode }}" method="POST" >
+                                                                <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                                                <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    Reservar
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        {#<div class="col-md-3 booking-prices align-center">#}
+
+                                        {#</div>#}
+                                    </div>
+                                </div>
+                            </li>
                         {% endfor %}
-                        <!--<li>
-                            <a class="booking-item" href="#">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="booking-item-img-wrap">
-                                            <img src="{{ asset('bundles/vientosurappapp/images/resultado1.jpg') }}" alt="Image Alternative text" title="" />
-                                            <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="booking-item-rating">
-                                            <h4 class="booking-item-title">Habitación doble superior</h4>
-                                        </div>
-
-                                        <ul class="booking-item-features booking-item-features-small clearfix">
-                                            <p>Servicios</p>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-air"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-bar"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-kitchen"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-patio"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-washing-machine"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
-                                            </li>
-                                        </ul>
-                                        <p class="booking-text-color">Desayuno buffet</p>
-                                        <p class="booking-text-color">No permite cambios o cancelaciones</p>
-                                        <p class="booking-item-last-booked">Sólo quedan 5 habitaciones</p>
-                                    </div>
-
-                                    <div class="col-md-3 booking-prices align-center">
-                                        <div class="booking-align-vertical">
-                                            <span class="booking-item-price-night">Precio para 2 noches</span>
-                                            <span class="booking-item-price">$3020</span>
-                                            <span class="btn btn-primary">Reservar</span>
-                                            <span class="booking-item-benefit mt20">Hasta 18 cuotas!</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="booking-item" href="#">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="booking-item-img-wrap">
-                                            <img src="{{ asset('bundles/vientosurappapp/images/resultado1.jpg') }}" alt="Image Alternative text" title="" />
-                                            <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>12</div>
-                                        </div>
-                                    </div>
-
-                                   <div class="col-md-6">
-                                        <div class="booking-item-rating">
-                                            <h4 class="booking-item-title">Habitación doble superior</h4>
-                                        </div>
-
-                                        <ul class="booking-item-features booking-item-features-small clearfix">
-                                            <p>Servicios</p>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-air"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-tv"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-bar"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-bathtub"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-kitchen"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-patio"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-washing-machine"></i>
-                                            </li>
-                                            <li rel="tooltip" data-placement="top"><i class="im im-pool"></i>
-                                            </li>
-                                        </ul>
-                                        <p class="booking-text-color">Desayuno buffet</p>
-                                        <p class="booking-text-color">No permite cambios o cancelaciones</p>
-                                        <p class="booking-item-last-booked">Sólo quedan 5 habitaciones</p>
-                                    </div>
-
-                                    <div class="col-md-3 booking-prices align-center">
-                                        <div class="booking-align-vertical">
-                                            <span class="booking-item-price-night">Precio para 2 noches</span>
-                                            <span class="booking-item-price-night booking-price-sale">$2398</span>
-                                            <span class="booking-item-price">$2094</span>
-                                            <span class="btn btn-primary">Reservar</span>
-                                            <span class="booking-item-benefit mt20">Hasta 18 cuotas!</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>-->
-
                     </ul>
+{#{{ dump(roomDetail) }}#}
+{#{{ dump(roomTypes) }}#}
                 </div>
 
                 <div class="gap"></div>
