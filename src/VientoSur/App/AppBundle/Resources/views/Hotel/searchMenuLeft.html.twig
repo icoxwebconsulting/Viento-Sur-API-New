@@ -1156,6 +1156,21 @@
                             </div>
                         </li>
                     {% endif %}
+
+                    {% if facet.criteria == 'hotel_type' %}
+                        <li class="hotel_type hidden" data-type="hotel_type">
+                            <h5 class="booking-filters-title">Tipo de alojamiento</h5>
+                            {% for hotel_type in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if hotel_type.selected %}checked="checked"{% endif %} value="{{ hotel_type.value }}" />
+                                        {{ hotel_type.label }}
+                                        <span class="pull-right">({{ hotel_type.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </aside>

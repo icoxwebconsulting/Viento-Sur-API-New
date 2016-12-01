@@ -151,7 +151,7 @@
             });
 
             {#Filtro por estrellas y por filtro de pago, itera sobre c/u#}
-            $('.stars, .payment_type, .zones, .amenities').each(function () {
+            $('.stars, .payment_type, .zones, .amenities, .hotel_type').each(function () {
                 var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
@@ -177,8 +177,10 @@
                         obj.zones = param.toString()
                     } else if (type == 'amenities') {
                         obj.amenities = param.toString()
-                    } else {
+                    } else if (type == 'payment_type') {
                         obj.payment_type = param.toString()
+                    } else if (type == 'hotel_type') {
+                        obj.hotel_type = param.toString()
                     }
                     asynLoad(obj)
                 });
@@ -198,8 +200,10 @@
                         obj.zones = param.toString()
                     } else if (type == 'amenities') {
                         obj.amenities = param.toString()
-                    } else {
+                    } else if (type == 'payment_type') {
                         obj.payment_type = param.toString()
+                    } else if (type == 'hotel_type') {
+                        obj.hotel_type = param.toString()
                     }
                     asynLoad(obj)
                 });
