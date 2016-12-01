@@ -14,3 +14,5 @@ services:
     email.service:
         class: VientoSur\App\AppBundle\Services\Email
         arguments: [@mailer,@templating]
+    booking_helper:
+        class: VientoSur\App\AppBundle\Services\BookingHelper
