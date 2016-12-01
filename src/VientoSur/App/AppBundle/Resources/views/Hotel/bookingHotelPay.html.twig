@@ -238,6 +238,55 @@
                                 {% endif %}
                             </div>
 
+                            {##}
+                            {% if formNewPay.payment.country is defined %}
+                                <hr/>
+                                <div class="row">
+                                    {% if formNewPay.payment.country is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.country, {'label': 'País:'}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if formNewPay.payment.state is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.state, {'label': 'Provincia:'}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if formNewPay.payment.city is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.city, {'label': 'Ciudad:'}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if formNewPay.payment.street is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.street, {'label': 'Calle:'}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if formNewPay.payment.floor is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.floor, {'label': 'Piso:'}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if formNewPay.payment.department is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.department, {'label': 'Departamento:'}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if formNewPay.payment.postal_code is defined %}
+                                        <div class="col-md-3">
+                                            {{ form_row(formNewPay.payment.postal_code, {'label': 'Código postal:'}) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {##}
+
                             {% if formNewPay.payment.bank_code is defined %}
                                 {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden'} }) }}
                             {% endif %}
@@ -367,6 +416,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://cdn.ywxi.net/js/1.js" async></script>
     <script src="{{ asset('js/hotel-form.js') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
     <script>

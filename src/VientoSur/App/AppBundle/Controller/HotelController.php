@@ -256,6 +256,7 @@ class HotelController extends Controller
 
         $total = ceil($results['paging']['total'] / 10);
 
+        $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution);
         $viewParams = array(
             'items' => $results,
             'hotelsDetails' => $hotelsDetails,
@@ -265,7 +266,8 @@ class HotelController extends Controller
             'total' => $total,
             'page' => $page,
             'sorting' => $sorting,
-            'sortMapping' => $sortMapping
+            'sortMapping' => $sortMapping,
+            'travellers' => $travellers
         );
 
         if ($request->isXmlHttpRequest()) {
@@ -352,6 +354,7 @@ class HotelController extends Controller
         }
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
+        $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution);
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                 'dispoHotel' => $dispoHotel,
@@ -361,7 +364,8 @@ class HotelController extends Controller
                 'idHotel' => $idHotel,
                 'reservation' => $urlParams,
                 'roomDetail' => $roomDetail,
-                'roomTypes' => $roomTypes
+                'roomTypes' => $roomTypes,
+                'travellers' => $travellers
             )
         );
     }
@@ -585,6 +589,8 @@ class HotelController extends Controller
             }
         }
 
+        $travellers = $this->get('booking_helper')->getSearchText($checkin, $checkout, $distribution);
+
         return array(
             'formBooking' => $formBooking,
             'formChoice' => $formChoice,
@@ -598,7 +604,8 @@ class HotelController extends Controller
             'cardsGroup' => $cardsGroup,
             'reservationDays' => $reservationTime->days,
             'roomNumbers' => count(explode("!", $distribution)),
-            'errors' => $formNewPaySend->getErrors()
+            'errors' => $formNewPaySend->getErrors(),
+            'travellers' => $travellers
         );
     }
 
