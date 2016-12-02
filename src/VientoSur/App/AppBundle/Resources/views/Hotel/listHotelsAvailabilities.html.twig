@@ -151,7 +151,7 @@
             });
 
             {#Filtro por estrellas y por filtro de pago, itera sobre c/u#}
-            $('.stars, .payment_type, .zones, .amenities, .hotel_type').each(function () {
+            $('.stars, .payment_type, .zones, .amenities, .hotel_type, .hotel_chains, .meal_plans, .profiles').each(function () {
                 var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
@@ -181,6 +181,12 @@
                         obj.payment_type = param.toString()
                     } else if (type == 'hotel_type') {
                         obj.hotel_type = param.toString()
+                    } else if (type == 'hotel_chains') {
+                        obj.hotel_chains = param.toString()
+                    } else if (type == 'meal_plans') {
+                        obj.meal_plans = param.toString()
+                    } else if (type == 'profiles') {
+                        obj.profiles = param.toString()
                     }
                     asynLoad(obj)
                 });
@@ -204,13 +210,19 @@
                         obj.payment_type = param.toString()
                     } else if (type == 'hotel_type') {
                         obj.hotel_type = param.toString()
+                    } else if (type == 'hotel_chains') {
+                        obj.hotel_chains = param.toString()
+                    } else if (type == 'meal_plans') {
+                        obj.meal_plans = param.toString()
+                    } else if (type == 'profiles') {
+                        obj.profiles = param.toString()
                     }
                     asynLoad(obj)
                 });
                 $(this).removeClass('hidden');
             });
 
-            $('.zones-view-toggle, .amenities-view-toggle').on('click', function () {
+            $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
                 var type = $(this).data('type');
                 var selector = '.' + type + ' .' + type + '-hidden';
                 $(selector).slideToggle();

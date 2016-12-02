@@ -76,4 +76,24 @@ class BookingHelper
         return $result;
     }
 
+    public function getTripProfiles()
+    {
+        return [
+            'businessTrip' => 'Viaje de negocios',
+            'castle' => 'Castillo',
+            'cheap' => 'Económico',
+            'design' => 'Diseño',
+            'family' => 'Familiar',
+            'gourmet' => 'Gastronómico',
+            'luxury' => 'Viaje de lujo',
+            'nature' => 'Naturaleza',
+            'other' => 'Otros',
+            'relax' => 'Relax',
+            'romantic' => 'Romántico',
+            'shopping' => 'Shopping',
+            'singles' => 'Solos y solas',
+            'sport' => 'Deportes'
+        ];
+    }
+
 }
