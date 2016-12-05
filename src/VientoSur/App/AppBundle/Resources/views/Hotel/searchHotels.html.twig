@@ -1,15 +1,15 @@
-<h2><b>Buscá tu hotel</b></h2>
+<h2><b>Busca Alojamientos con las mejores tarifas</b></h2>
 
 <form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels')}}" method="POST">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                <label>¿A dónde?</label>
+                <label>Ingresar destino</label>
                 {% if isTest %}
-                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal">
+                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas">
                     <input id="destinationCity" name="cityInput" type="hidden" />
                 {% else %}
-                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal">
+                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas">
                     <input id="destinationCity" name="cityInput" type="hidden" required />
                 {% endif %}
             </div>
@@ -1103,5 +1103,7 @@
         </div>
         <!--</div>-->
     </div>
-    <button class="btn btn-primary btn-sm" type="submit">Buscar hoteles</button>
+    <div class="text-right">
+        <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
+    </div>
 </form>
