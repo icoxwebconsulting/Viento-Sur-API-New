@@ -277,7 +277,7 @@ footer#main-footer .form-control:focus {
 }
 .content-sidebar {
   background: #ebebeb;
-  color: #666;
+  color: #003580;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -308,7 +308,7 @@ footer#main-footer .form-control:focus {
 .booking-filters label,
 .booking-filters .irs-from,
 .booking-filters .irs-to {
-  color: #666;
+  color: #003580;
 }
 .booking-filters h3 {
   font-weight: 400;
