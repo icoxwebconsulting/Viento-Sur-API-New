@@ -40,8 +40,9 @@ h3 b,
 h4 b,
 h5 b,
 .text-hero b {
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1em;
+  color: #003580;
 }
 h1 small,
 h2 small,
@@ -621,6 +622,7 @@ label {
   margin-bottom: 3px;
   font-size: 14px;
   font-weight: 600;
+  color: #003580;
 }
 .form-group.form-group-sm .form-control {
   height: 25px;
