@@ -23,7 +23,7 @@ h5,
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
   margin-top: 0;
   font-weight: 300;
-  color: #565656;
+  color: #003580;
   line-height: 1.3em;
 }
 h1.bolded,
@@ -682,7 +682,7 @@ label {
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s;
-  z-index: 2;
+  /*z-index: 2;*/
 }
 .form-group .input-icon.input-icon-show {
   -webkit-transform: translate3d(0, -10px, 0);

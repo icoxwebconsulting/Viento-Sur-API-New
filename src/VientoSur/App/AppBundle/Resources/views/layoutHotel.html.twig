@@ -97,6 +97,43 @@
         $('#submitConsult').on('hidden.bs.modal', function (e) {
             // do something...
         });
+
+        $(document).ready(function () {
+            var dateFormat = "dd/mm/yy";
+            var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
+            var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            var from = $("#field-hotel-checkin").datepicker({
+                dateFormat: dateFormat,
+                dayNamesMin: dayNamesMin,
+                monthNames: monthNames,
+                defaultDate: "+1w",
+                numberOfMonths: 2,
+                minDate: 0
+            }).on("change", function () {
+                to.datepicker("option", "minDate", getDate(this));
+                console.log(getDate(this));
+            });
+            var to = $("#field-hotel-checkout").datepicker({
+                dateFormat: dateFormat,
+                dayNamesMin: dayNamesMin,
+                monthNames: monthNames,
+                defaultDate: "+1w",
+                numberOfMonths: 2
+            }).on("change", function () {
+                from.datepicker("option", "maxDate", getDate(this));
+            });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    console.log(error);
+                    date = null;
+                }
+                return date;
+            }
+        });
     </script>
     <script>(function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
