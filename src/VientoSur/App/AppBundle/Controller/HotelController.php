@@ -150,7 +150,7 @@ class HotelController extends Controller
             $page = 1;
             $offset = 0;
         } else {
-            $offset = ($page - 1) * 10;
+            $offset = ($page - 1) * 25;
         }
 
         $session = $request->getSession();
@@ -200,7 +200,7 @@ class HotelController extends Controller
             "classify_roompacks_by" => "none",
             "roompack_choices" => "recommended",
             "offset" => $offset,
-            "limit" => "10"
+            "limit" => "25"
         );
 
         if ($priceRange) {
@@ -266,7 +266,7 @@ class HotelController extends Controller
             "distribution" => $distribution
         );
 
-        $total = ceil($results['paging']['total'] / 10);
+        $total = ceil($results['paging']['total'] / 25);
 
         $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution);
         $viewParams = array(
@@ -274,7 +274,7 @@ class HotelController extends Controller
             'hotelsDetails' => $hotelsDetails,
             'reservation' => $reservation,
             'offset' => $offset,
-            'limit' => 10,
+            'limit' => 25,
             'total' => $total,
             'page' => $page,
             'sorting' => $sorting,
