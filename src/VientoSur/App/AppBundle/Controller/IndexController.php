@@ -78,17 +78,31 @@ class IndexController extends Controller
             'query' => $request->get('query'),
             'product' => $type,
             'locale' => 'es-AR',
-            'city_result' => '10'
+            'city_result' => '10',
+            'hotel_result' => '5'
         ];
 
         $results = $this->get('despegar')->autocomplete($urlParams);
         $response = [];
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {
-                $city = Array();
-                $city["value"] = $item["description"];
-                $city["data"] = substr($item["id"], 5);
-                $response[] = $city;
+                if ($item['facet'] == 'CITY') {
+                    $response[] = [
+                        'value' => $item["description"],
+                        'data' => [
+                            'category' => 'Ciudades',
+                            'id' => $item["id"]
+                        ]
+                    ];
+                } else if ($item['facet'] == 'HOTEL') {
+                    $response[] = [
+                        'value' => $item["description"],
+                        'data' => [
+                            'category' => 'Hoteles',
+                            'id' => 'HOTEL-'  . $item["hotel_id"]
+                        ]
+                    ];
+                }
             }
         }
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));

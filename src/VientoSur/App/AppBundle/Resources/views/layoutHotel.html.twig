@@ -43,9 +43,10 @@
             $('#autocomplete').autocomplete({
                 serviceUrl: url,
                 onSelect: function (suggestion) {
-                    $("#destinationCity").val(suggestion.data);
+                    $("#destinationCity").val(suggestion.data.id);
                 },
                 minChars: 3,
+                groupBy: 'category',
                 onInvalidateSelection: function () {
                     console.log("invalidado");
                     $("#destinationCity").val('');

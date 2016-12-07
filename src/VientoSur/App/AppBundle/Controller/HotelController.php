@@ -130,12 +130,32 @@ class HotelController extends Controller
             'id' => $destination
         ]);
 
-        return $this->redirect($this->generateUrl('viento_sur_send_hotels', array(
-            'destination' => $destination,
-            'checkin_date' => $fromCalendarHotel,
-            "checkout_date" => $toCalendarHotel,
-            'distribution' => $distribution
-        )));
+        $destination = explode('-', $destination);
+
+        if ($destination[0] == 'CITY') {
+            return $this->redirectToRoute('viento_sur_send_hotels', array(
+                'destination' => $destination[1],
+                'checkin_date' => $fromCalendarHotel,
+                "checkout_date" => $toCalendarHotel,
+                'distribution' => $distribution
+            ));
+        } else {
+            //show/{idHotel}/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}
+            $hotelDetail = $this->get('despegar')->getHotelsDetails(array(
+                'ids' => $destination[1],
+                'language' => 'es',
+                'resolve' => 'merge_info',
+                'catalog_info' => 'true'
+            ));
+            return $this->redirectToRoute('viento_sur_app_app_homepage_show_hotel_id', array(
+                'idHotel' => $destination[1],
+                'checkin_date' => $fromCalendarHotel,
+                'checkout_date' => $toCalendarHotel,
+                'distribution' => $distribution,
+                'latitude' => $hotelDetail[0]['location']['latitude'],
+                'longitude' => $hotelDetail[0]['location']['longitude']
+            ));
+        }
     }
 
     /**
@@ -325,17 +345,17 @@ class HotelController extends Controller
 
     /**
      *
-     * @Route("/show/{idHotel}/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
+     * @Route("/show/{idHotel}/availabilities/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
      * @Method("GET")
      */
-    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $destination, $checkin_date, $checkout_date, $distribution, $latitude, $longitude)
+    public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $checkin_date, $checkout_date, $distribution, $latitude, $longitude)
     {
         $session = $request->getSession();
         $urlParams = array(
             'language' => 'es',
             'country_code' => 'AR',
             'currency' => 'ARS',
-            'destination' => $destination,
+            //'destination' => $destination,
             'checkin_date' => $checkin_date,
             'checkout_date' => $checkout_date,
             'distribution' => $distribution,
