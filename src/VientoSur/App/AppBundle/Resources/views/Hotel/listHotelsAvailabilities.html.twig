@@ -227,6 +227,38 @@
                 var selector = '.' + type + ' .' + type + '-hidden';
                 $(selector).slideToggle();
                 $('.' + type + '-view-toggle').toggleClass('hide')
+            });
+
+            var url = Routing.generate('hotel_autocomplete') + '/{{ destination }}';
+            console.log(url);
+            $('#hotel-autocomplete').autocomplete({
+                serviceUrl: url,
+                minChars: 3,
+                onSelect: function (suggestion) {
+                    $("#hotel").val(suggestion.data);
+                    $('#btn-aplicar').removeClass('disabled');
+                },
+                onInvalidateSelection: function () {
+                    console.log("invalidado");
+                    $("#hotel").val('');
+                    this.value = '';
+                    $('#btn-aplicar').addClass('disabled');
+                    var obj = {
+                        'page': 1,
+                        'hotel_name': ''
+                    };
+                    asynLoad(obj)
+                }
+            });
+
+            $('#btn-aplicar').on('click', function () {
+                if (!$(this).hasClass('disabled')) {
+                    var obj = {
+                        'page': 1,
+                        'hotel_name': $('#hotel-autocomplete').val()
+                    };
+                    asynLoad(obj)
+                }
             })
         })
     </script>

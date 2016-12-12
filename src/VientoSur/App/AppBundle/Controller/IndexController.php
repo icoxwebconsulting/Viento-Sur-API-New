@@ -68,10 +68,10 @@ class IndexController extends Controller
 
     /**
      *
-     * @Route("/autocomplete/", name="hotel_autocomplete")
+     * @Route("/autocomplete/", name="despegar_autocomplete")
      * @Method("GET")
      */
-    public function autoCompleteHotelAction(Request $request)
+    public function autoCompleteDespegarAction(Request $request)
     {
         $type = 'HOTELS';
         $urlParams = [
@@ -107,6 +107,37 @@ class IndexController extends Controller
         }
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
     }
+
+    /**
+     *
+     * @Route("/autocomplete-hotel/{division}", name="hotel_autocomplete")
+     * @Method("GET")
+     */
+    public function autoCompleteHotelAction($division, Request $request)
+    {
+        $type = 'HOTELS';
+        $urlParams = [
+            'query' => $request->get('query'),
+            'product' => $type,
+            'locale' => 'es-AR',
+            'hotel_result' => '5',
+            'political_divisions_to_filter_results' => $division
+        ];
+
+        $results = $this->get('despegar')->autocomplete($urlParams);
+        $response = [];
+        if ($results && !isset($results['code'])) {
+            foreach ($results as $item) {
+                $temp = explode(',',$item["description"]);
+                $response[] = [
+                    'value' => $temp[0],
+                    'data' => $item["hotel_id"]
+                ];
+            }
+        }
+        return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
+    }
+
 
     /**
      *

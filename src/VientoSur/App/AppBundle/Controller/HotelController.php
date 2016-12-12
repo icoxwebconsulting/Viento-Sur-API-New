@@ -206,6 +206,7 @@ class HotelController extends Controller
         $hotelChains = $request->query->get('hotel_chains');
         $mealPlans = $request->query->get('meal_plans');
         $tripProfile = $request->query->get('profiles');
+        $hotelName = $request->query->get('hotel_name');
 
         $urlParams = array(
             "country_code" => "AR",
@@ -249,6 +250,9 @@ class HotelController extends Controller
         }
         if ($tripProfile) {
             $urlParams['profiles'] = $tripProfile;
+        }
+        if ($hotelName) {
+            $urlParams['hotel_name'] = $hotelName;
         }
 
         $sortMapping = [
@@ -300,7 +304,8 @@ class HotelController extends Controller
             'sorting' => $sorting,
             'sortMapping' => $sortMapping,
             'travellers' => $travellers,
-            'tripProfile' => $this->get('booking_helper')->getTripProfiles()
+            'tripProfile' => $this->get('booking_helper')->getTripProfiles(),
+            'destination' => $destination
         );
 
         if ($request->isXmlHttpRequest()) {
