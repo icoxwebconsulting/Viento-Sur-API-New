@@ -57,10 +57,10 @@
                         <div class="booking-align-vertical"> <span class="booking-item-price-night">Habitación por noche</span>
                             <span class="booking-item-price">
                                 {%for price in item.roompacks%}
-                                    {{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal}}
+                                    {{price.price_detail.currency}}&nbsp;{{price.price_detail.nightly.subtotal|round|number_format(0, '.', '.')}}
                                 {%endfor%}
                             </span>
-                            <span class="btn btn-primary">Ver detalle</span>
+                            <span class="btn btn-primary">Elige habitación</span>
                             <!--<span class="booking-item-benefit mt20">Cancele gratis</span>-->
                         </div>
 
@@ -69,4 +69,5 @@
             </a>
         </li>
     {%endfor%}
+    {{ dump(items.items) }}
 {%endif%}

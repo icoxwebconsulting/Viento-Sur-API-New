@@ -80,7 +80,7 @@ class HotelController extends Controller
     {
         if ($this->getParameter('is_test')) {
             $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
-            $destination = 982;
+            $destination = 'CITY-982';
         } else {
             $destinationText = $request->get('autocomplete');
             $destination = $request->get('cityInput');
