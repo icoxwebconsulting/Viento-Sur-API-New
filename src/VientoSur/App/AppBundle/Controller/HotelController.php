@@ -403,6 +403,7 @@ class HotelController extends Controller
                 'reservation' => $urlParams,
                 'roomDetail' => $roomDetail,
                 'roomTypes' => $roomTypes,
+                'roomTypesEncoded' => json_encode($roomTypes),
                 'travellers' => $travellers
             )
         );

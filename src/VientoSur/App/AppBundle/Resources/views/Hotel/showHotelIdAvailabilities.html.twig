@@ -3,7 +3,6 @@
 {% block javascripts %}
     {{ parent() }}
 
-
     <script type="text/javascript">
         function initMap() {
             var myLatLng = {lat: {{ latitude }}, lng: {{ longitude }} };
@@ -41,6 +40,26 @@
                     $('#room-capacity-' + key).text(roomCapacity[key]);
                 }
             }
+
+            $('#roomImgs').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var modal = $(this);
+                modal.find('.modal-title').text($(button).data('room-name'));
+                var key = $(button).data('room-key');
+                console.log(roomTypes[key].pictures);
+                var img = [];
+                for (var i = 0, len = roomTypes[key].pictures.length; i < len; i++) {
+                    img.push({
+                        img: roomTypes[key].pictures[i].url,
+                        thumb: roomTypes[key].pictures[i].picture_category.descriptions.es
+                    })
+                }
+                modal.find('.modal-body').html('<div class="fotorama foto-div"></div>');
+                $('.modal-body .foto-div').fotorama({
+                    data: img,
+                    nav: 'thumbs'
+                });
+            });
         })
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04&callback=initMap"></script>
@@ -161,6 +180,7 @@
                     <h3>Habitaciones disponibles</h3>
                     <script>
                         var roomCapacity = {};
+                        var roomTypes = {{ roomTypesEncoded|raw }};
                     </script>
                     <ul class="booking-list">
                         {% for key, rooms in roomDetail %}
@@ -169,7 +189,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div>{{ roomTypes[key].despegar_names.es }}</div>
-                                            <div class="booking-item-img-wrap">
+                                            <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names.es }}" data-room-key="{{ key }}">
                                                 <img src="{{ roomTypes[key].pictures[0].url}}" alt="Habitaci&oacute;n" title="" />
                                                 <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
                                             </div>
@@ -265,5 +285,22 @@
             </div> <!-- close col md9-->
         </div>
         <div class="gap"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="roomImgs" tabindex="-1" role="dialog" aria-labelledby="roomImgsModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

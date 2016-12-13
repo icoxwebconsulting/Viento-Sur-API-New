@@ -955,3 +955,7 @@ h4.booking-item-title {
    font-size: 15px;
    font-style: italic;
  }
+
+.cursor-pointer {
+  cursor: pointer;
+}
