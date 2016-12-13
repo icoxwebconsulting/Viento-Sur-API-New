@@ -68,7 +68,7 @@ class IndexController extends Controller
 
     /**
      *
-     * @Route("/autocomplete/", name="despegar_autocomplete")
+     * @Route("/autocomplete/", name="search_hotel_autocomplete")
      * @Method("GET")
      */
     public function autoCompleteDespegarAction(Request $request)

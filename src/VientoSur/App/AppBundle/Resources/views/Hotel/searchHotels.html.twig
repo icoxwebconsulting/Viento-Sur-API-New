@@ -6,10 +6,10 @@
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>Ingresar destino o nombre del alojamiento</label>
                 {% if isTest %}
-                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas">
+                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas" style="color: #003580;">
                     <input id="destinationCity" name="cityInput" type="hidden" />
                 {% else %}
-                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas">
+                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas" style="color: #003580;">
                     <input id="destinationCity" name="cityInput" type="hidden" required />
                 {% endif %}
             </div>

@@ -940,7 +940,7 @@ h4.booking-item-title {
 }
 
 
-.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; cursor: pointer;}
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; cursor: pointer; color: #003580;}
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: #F0F0F0; }
 .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
@@ -958,4 +958,8 @@ h4.booking-item-title {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.ui-widget-header, .ui-widget-content, .ui-state-default {
+  color: #003580 !important;
 }
