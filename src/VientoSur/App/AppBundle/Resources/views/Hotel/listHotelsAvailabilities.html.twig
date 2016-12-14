@@ -277,6 +277,7 @@
             });
 
             $('.booking-list').on('click', '.booking-item, .booking-prices', function (event) {
+                event.stopPropagation();
                 var element = event.target;
                 if ($(element).data('prevent') != 'modal') {
                     window.open(this.dataset.href, '_blank');
