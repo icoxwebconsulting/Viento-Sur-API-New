@@ -43,6 +43,20 @@
             </div>
         </div>
         <div class="gap"></div>
+        <!-- Modal -->
+        <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Vista de mapa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mapHotel" style="width:500px; height:500px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -50,7 +64,8 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-
+            var latLng;
+            var hotelName;
             function asynLoad(queryParams, callback, callbackError) {
                 var url = window.location.pathname;
                 var obj = null;
@@ -259,7 +274,36 @@
                     };
                     asynLoad(obj)
                 }
+            });
+
+            $('.booking-list').on('click', '.booking-item, .booking-prices', function (event) {
+                var element = event.target;
+                if ($(element).data('prevent') != 'modal') {
+                    window.open(this.dataset.href, '_blank');
+                } else {
+                    latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
+                    hotelName = $(element).data('name');
+                    $('#mapModal').modal('show')
+                }
+            });
+
+            $('#mapModal').on('shown.bs.modal', function (e) {
+                var map = new google.maps.Map(document.getElementById('mapHotel'), {
+                    center: latLng,
+                    scrollwheel: false,
+                    zoom: 16
+                });
+
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: latLng,
+                    title: hotelName
+                });
+
+                google.maps.event.trigger(map, 'resize');
+                map.setCenter(latLng);
             })
         })
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04"></script>
 {% endblock %}

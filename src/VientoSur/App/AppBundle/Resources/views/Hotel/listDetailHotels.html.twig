@@ -3,7 +3,7 @@
 {% elseif items.items|length > 0 %}
     {% for item in items.items %}
         <li>
-            <a target="_blank" class="booking-item" href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+            <span class="booking-item cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="booking-item-img-wrap">
@@ -31,7 +31,7 @@
                         </div>
                         <p class="booking-item-address">
                             {#A 600 metros del centro#}
-                            <i class="fa fa-map-marker"> Ver mapa</i>
+                            <i class="fa fa-map-marker" data-prevent="modal" data-latitude="{{ item.hotel.location.latitude }}" data-longitude="{{ item.hotel.location.longitude }}" data-name="{{ item.hotel.name }}"> Ver mapa</i>
                         </p>
                         {% for key, room_availability in item.roompacks %}
                             {% if room_availability.rooms[0].availability is defined %}
@@ -52,7 +52,7 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <div class="col-md-3 booking-prices align-center">
+                    <div class="col-md-3 booking-prices align-center cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
 
                         <div class="booking-align-vertical"> <span class="booking-item-price-night">Habitación por noche</span>
                             <span class="booking-item-price">
@@ -66,7 +66,7 @@
 
                     </div>
                 </div>
-            </a>
+            </span>
         </li>
     {%endfor%}
 {%endif%}
