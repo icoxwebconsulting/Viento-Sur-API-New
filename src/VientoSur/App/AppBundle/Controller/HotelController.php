@@ -255,19 +255,6 @@ class HotelController extends Controller
             $urlParams['hotel_name'] = $hotelName;
         }
 
-        $sortMapping = [
-            "subtotal_price_ascending" => "Precio: menor a mayor",
-            "subtotal_price_descending" => "Precio: mayor a menor",
-            "rate_descending" => "Mejor puntuación",
-            "location_descending" => "Mejor ubicación",
-            "quality_price_descending" => "Mejor precio / calidad",
-            "logged_user_descending" => "Descuentos exclusivos",
-            "cross_selling_descending" => "Nuevos descuentos",
-            "best_selling_descending" => "Más elegidos",
-            "stars_descending" => "Estrellas: Mayor a menor",
-            "stars_ascending" => "Estrellas: Menor a mayor"
-        ];
-
         $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
 
         $idsHotels = [];
@@ -292,6 +279,54 @@ class HotelController extends Controller
 
         $total = ceil($results['paging']['total'] / 25);
 
+        $sortMapping = [
+            "subtotal_price_ascending" => "Precio: menor a mayor",//
+            "subtotal_price_descending" => "Precio: mayor a menor",//
+            "rate_descending" => "Mejor puntuación",//
+            "location_descending" => "Mejor ubicación",//
+            "quality_price_descending" => "Mejor precio / calidad",//
+            "logged_user_descending" => "Descuentos exclusivos",//
+            "cross_selling_descending" => "Nuevos descuentos",//
+            "best_selling_descending" => "Más elegidos",//
+            "stars_descending" => "Estrellas: Mayor a menor",//
+            "stars_ascending" => "Estrellas: Menor a mayor"//
+        ];
+
+        $sortArray = [
+            'price' => '',
+            'star' => '',
+            'best' => '',
+            'other' => '',
+            'selected' => [
+                'category' => '',
+                'name' => ''
+            ]
+        ];
+
+        foreach ($results['sorting']['values'] as $sort) {
+            if (array_key_exists($sort['value'], $sortMapping)) {
+                $element = ' class="nav-drop-menu-a" data-value="' . $sort['value'] . '">' . $sortMapping[$sort['value']] . '</a></li>';
+                $category = '';
+                if (in_array($sort['value'], ['best_selling_descending', 'subtotal_price_ascending', 'subtotal_price_descending'])) {
+                    $category = 'price';
+                    $sortArray['price'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                } else if (in_array($sort['value'], ['stars_descending', 'stars_ascending'])) {
+                    $category = 'star';
+                    $sortArray['star'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                } else if (in_array($sort['value'], ['rate_descending', 'location_descending', 'quality_price_descending'])) {
+                    $category = 'best';
+                    $sortArray['best'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                } else if (in_array($sort['value'], ['logged_user_descending', 'cross_selling_descending'])) {
+                    $category = 'other';
+                    $sortArray['other'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                }
+                if ($sort['selected']) {
+                    $sortArray['selected']['category'] = $category;
+                    $sortArray['selected']['name'] = $sortMapping[$sort['value']];
+                }
+            }
+        }
+
         $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution);
         $viewParams = array(
             'items' => $results,
@@ -305,7 +340,8 @@ class HotelController extends Controller
             'sortMapping' => $sortMapping,
             'travellers' => $travellers,
             'tripProfile' => $this->get('booking_helper')->getTripProfiles(),
-            'destination' => $destination
+            'destination' => $destination,
+            'sortArray' => $sortArray
         );
 
         if ($request->isXmlHttpRequest()) {

@@ -15,20 +15,35 @@
                 {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
             </div>
 
-            <div class="col-md-9">
-                <div class="nav-drop booking-sort">
-                    <h5 class="booking-sort-title"><a href="#">Ordenar por: <span id="sortSelected">{{ attribute(sortMapping, sorting) }}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
-                    <ul class="nav-drop-menu">
-                        {% if items.sorting is defined %}
-                            {% for item in items.sorting.values %}
-                                {% if attribute(sortMapping, item.value) is defined %}
-                                    <li><a href="javascript:void(0);"  class="nav-drop-menu-a" data-value="{{ item.value }}">{{ attribute(sortMapping, item.value) }}</a></li>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            <li><a href="#">Más elegidos</a></li>
-                        {% endif %}
-                    </ul>
+            <div class="col-md-9 hotel-results">
+                <div class="sorting">
+                    {% if sortArray.price is not empty %}
+                        <div class="nav-drop booking-sort">
+                            <h5 class="booking-sort-title"><a href="#">Precio: <span id="sort_price" class="sort_name">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                            <ul class="nav-drop-menu">
+                                {{ sortArray.price|raw }}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="nav-drop booking-sort">
+                        <h5 class="booking-sort-title"><a href="#">Estrellas: <span id="sort_star" class="sort_name">{% if sortArray.selected.category == 'star' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <ul class="nav-drop-menu">
+                            {{ sortArray.star|raw }}
+                        </ul>
+                    </div>
+                    <div class="nav-drop booking-sort">
+                        <h5 class="booking-sort-title"><a href="#">Mejor: <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <ul class="nav-drop-menu">
+                            {{ sortArray.best|raw }}
+                        </ul>
+                    </div>
+                    <div class="nav-drop booking-sort">
+                        <h5 class="booking-sort-title"><a href="#">Otros: <span id="sort_other" class="sort_name">{% if sortArray.selected.category == 'other' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <ul class="nav-drop-menu">
+                            {{ sortArray.other|raw }}
+                        </ul>
+                    </div>
                 </div>
                 <ul class="booking-list">
                     {% include 'VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig' %}
@@ -57,6 +72,7 @@
                 </div>
             </div>
         </div>
+        {{ dump(items.sorting) }}
     </div>
 {% endblock %}
 
@@ -155,12 +171,15 @@
             {#Orden de los elementos#}
             $('.nav-drop-menu-a').on('click', function () {
                 var text = this.text;
+                var category = $(this).data('category');
+                console.log(this)
                 if (text != $('#sortSelected').text()) {
                     asynLoad({
-                        'sorting' : $(this).data('value'),
+                        'sorting': $(this).data('value'),
                         'page': 1
                     }, function () {
-                        $('#sortSelected').text(text);
+                        $('.sort_name').text('Seleccione...');
+                        $('#sort_' + category).text(text);
                     })
                 }
             });
