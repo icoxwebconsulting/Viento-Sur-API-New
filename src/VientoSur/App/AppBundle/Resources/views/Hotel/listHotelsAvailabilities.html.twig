@@ -178,8 +178,8 @@
                         'sorting': $(this).data('value'),
                         'page': 1
                     }, function () {
-                        $('.sort_name').text('Seleccione...');
-                        $('#sort_' + category).text(text);
+                        $('.sort_name').text('Seleccione...').removeClass('vs-color-copy');
+                        $('#sort_' + category).text(text).addClass('vs-color-copy');
                     })
                 }
             });
