@@ -471,6 +471,14 @@ class HotelController extends Controller
 
         $formUrl = $this->get('despegar')->postHotelsBookings($postParams);
 
+        $session = $request->getSession();
+        $session->set('hotel_brief', [
+            'name' => $request->get('hotel_name'),
+            'img' => $request->get('hotel_img'),
+            'stars' => $request->get('hotel_stars'),
+            'address' => $request->get('hotel_address')
+        ]);
+
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(
             'formUrl' => $formUrl["next_step_url"],
             'booking_id' => $formUrl["id"],
@@ -680,7 +688,8 @@ class HotelController extends Controller
             'reservationDays' => $reservationTime->days,
             'roomNumbers' => count(explode("!", $distribution)),
             'errors' => $formNewPaySend->getErrors(),
-            'travellers' => $travellers
+            'travellers' => $travellers,
+            'hotelBrief' => $session->get('hotel_brief')
         );
     }
 

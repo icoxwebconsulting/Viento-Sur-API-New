@@ -163,7 +163,7 @@
 
                     <div class="col-md-10">
 
-                        <!--<h4>Este hotel está en Praga 1 y es ideal para: De lujo</h4>-->
+                        {#<h4>Este hotel está en Praga 1 y es ideal para: De lujo</h4>#}
 
                         <p>{{ hotelDetails.information.es }}</p>
 
@@ -190,7 +190,7 @@
                                         <div class="col-md-3">
                                             <div>{{ roomTypes[key].despegar_names.es }}</div>
                                             <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names.es }}" data-room-key="{{ key }}">
-                                                <img src="{{ roomTypes[key].pictures[0].url}}" alt="Habitaci&oacute;n" title="" />
+                                                <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="Habitaci&oacute;n" title="" />
                                                 <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
                                             </div>
                                             <div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> Capacidad máxima</div>
@@ -245,6 +245,10 @@
                                                             <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}?{{ reservation|url_encode }}" method="POST" >
                                                                 <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
                                                                 <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
+                                                                <input type="hidden" name="hotel_img" value="{{ hotelDetails.main_picture.url }}">
+                                                                <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
+                                                                <input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">
+                                                                <input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">
                                                                 <button type="submit" class="btn btn-primary">
                                                                     Reservar
                                                                 </button>

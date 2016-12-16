@@ -7,7 +7,20 @@
             <div class="col-md-3">
                 <div class="content-sidebar">
                     <div class="booking-item-dates-change mb5">
-                        <h3>Detalle de su pago</h3>
+                        <h5><b>Su alojamiento</b></h5>
+                        <img src="{{ hotelBrief.img }}/95x95" alt="Hotel" style="width: 95px; height: 95px !important;"/>
+                        <span>
+                            {% for i in 1..5 %}
+                                {% if i <= hotelBrief.stars %}
+                                    <span><i class="fa fa-star"></i></span>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                        <span>{{ hotelBrief.address }}</span>
+                        <div><b>{{ hotelBrief.name }}</b></div>
+                    </div>
+                    <div class="booking-item-dates-change mb5">
+                        <h5><b>Detalle de su pago</b></h5>
                         {{ reservationDays }} noche{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}habitación{% else %} habitaciones{% endif %}<br/>
                         Habitación por noche: {{ price_detail.nightly.subtotal|number_format(2, ',', '.') }}<br/>
                         Impuestos y tasas: {{ (price_detail.taxes + price_detail.fee)|number_format(2, ',', '.') }}<br/>
