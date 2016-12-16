@@ -14,7 +14,7 @@
                 <input class="typeahead form-control" id="to-flight" name="to-flight" placeholder="Ingresa hacia dónde viajas" type="text"/>
             </div>
         </div>
-        <div class="input-daterange" data-date-format="d M, D">
+        <div> <!--class="input-daterange" data-date-format="d M, D"-->
             <div class="col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                     <label>Partida</label>
@@ -33,13 +33,13 @@
                 <label>Adultos</label>
                 <div class="btn-group btn-group-select-num" data-toggle="buttons">
                     <label class="btn btn-primary active">
-                        <input type="radio" name="adults" />1</label>
+                        <input type="radio" name="adults-flight" />1</label>
                     <label class="btn btn-primary">
-                        <input type="radio" name="adults" />2</label>
+                        <input type="radio" name="adults-flight" />2</label>
                     <label class="btn btn-primary">
-                        <input type="radio" name="adults" />3</label>
+                        <input type="radio" name="adults-flight" />3</label>
                     <label class="btn btn-primary">
-                        <input type="radio" name="adults" />3+</label>
+                        <input type="radio" name="adults-flight" />3+</label>
                 </div>
                 <select class="form-control hidden" name="adults-plus">
                     <option>1</option>
@@ -178,7 +178,9 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-primary btn-sm" type="submit">Buscar vuelos</button>
+    <div class="text-right">
+        <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
+    </div>
 
     <input type="hidden" id="adults-value" name="adults-value" value="1" />
     <input type="hidden" id="childrens-value" name="childrens-value" value="0" />
