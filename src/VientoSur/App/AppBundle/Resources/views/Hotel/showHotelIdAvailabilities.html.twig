@@ -41,6 +41,24 @@
                 }
             }
 
+            var amenities = {{ hotelDetails.amenities|json_encode|raw }};
+
+            var ser = '', rel = '', add = '';
+            for (var i = 0; i < amenities.length; i++) {
+                console.log(amenities[i].descriptions.es, amenities[i].amenity_category.id)
+                var temp = '<li><i class="glyphicon glyphicon-ok"></i> ' + amenities[i].descriptions.es + '</li>';
+                if(amenities[i].amenity_category.id == 'SER') {
+                    ser += temp;
+                } else if (amenities[i].amenity_category.id == 'REL') {
+                    rel += temp;
+                } else if (amenities[i].amenity_category.id == 'ADD') {
+                    add += temp;
+                }
+            }
+            $('.list-services').html(ser);
+            $('.list-recreation').html(rel);
+            $('.list-generals').html(add);
+
             $('#roomImgs').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var modal = $(this);
@@ -91,7 +109,8 @@
                     <header class="booking-item-header">
                         <div class="row">
                             <div class="col-md-8">
-                                <h2 class="lh1em">{{hotelDetails.name}}</h2>
+                                <h2 class="lh1em"><b>{{ hotelDetails.name }}</b></h2>
+                                <p>{{ hotelDetails.location.address }}</p>
                                 <ul class="icon-list icon-group booking-item-rating-stars">
                                     {% for i in 1..5 %}
                                         {% if i <= hotelDetails.stars %}
@@ -111,8 +130,8 @@
                                         Precio por noche
                                     </p>
                                     <div class="text-lg">
-                                        {{dispoHotel.roompacks[0].price_detail.currency}}&nbsp;
-                                        {{dispoHotel.roompacks[0].price_detail.nightly.subtotal}}
+                                        {{ dispoHotel.roompacks[0].price_detail.currency }}&nbsp;
+                                        {{ dispoHotel.roompacks[0].price_detail.nightly.subtotal|number_format(2, ',', '.') }}
                                     </div>
                                     <a href="#">
                                         <!--<span class="btn btn-primary mt15">Reservar ahora</span>-->
@@ -127,7 +146,7 @@
                     </header>
 
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-10">
                             <!-- tabs-->
                             <div class="tabbable booking-details-tabbable">
                                 <ul class="nav nav-tabs" id="myTab">
@@ -165,7 +184,7 @@
 
                         {#<h4>Este hotel está en Praga 1 y es ideal para: De lujo</h4>#}
 
-                        <p>{{ hotelDetails.information.es }}</p>
+                        <p class="text-justify" style="color: #003580">{{ hotelDetails.information.es }}</p>
 
                         <h4>N&uacute;mero de habitaciones: {{ hotelDetails.number_of_rooms}}</h4>
                     </div>
@@ -188,7 +207,7 @@
                                 <div class="booking-item">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <div>{{ roomTypes[key].despegar_names.es }}</div>
+                                            <div><b>{{ roomTypes[key].despegar_names.es }}</b></div>
                                             <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names.es }}" data-room-key="{{ key }}">
                                                 <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="Habitaci&oacute;n" title="" />
                                                 <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
@@ -269,8 +288,28 @@
                             </li>
                         {% endfor %}
                     </ul>
-{#{{ dump(roomDetail) }}#}
+{#{{ dump(hotelDetails) }}#}
 {#{{ dump(roomTypes) }}#}
+                </div>
+
+                <div class="gap"></div>
+
+                <div class="row row-wrap">
+                    <div class="col-md-4">
+                        <h4>Servicios</h4>
+                        <ul class="amenities-list list-services">
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Actividades</h4>
+                        <ul class="amenities-list list-recreation">
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Generales</h4>
+                        <ul class="amenities-list list-generals">
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="gap"></div>
