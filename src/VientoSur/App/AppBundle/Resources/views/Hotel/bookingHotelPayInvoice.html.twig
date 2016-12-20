@@ -4,25 +4,25 @@
     <div class="row">
         {% if formNewPay.payment.billing_address is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_address, {'label': 'Dirección de facturación:'}) }}
+                {{ form_row(formNewPay.payment.billing_address, {'label': 'Dirección de facturación:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.invoice_name is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.invoice_name, {'label': 'Nombre para facturación:'}) }}
+                {{ form_row(formNewPay.payment.invoice_name, {'label': 'Nombre para facturación:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.fiscal_document is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.fiscal_document, {'label': 'Documento Fiscal:'}) }}
+                {{ form_row(formNewPay.payment.fiscal_document, {'label': 'Documento Fiscal:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.tax_status is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.tax_status , {'label': 'Situación fiscal:'}) }}
+                {{ form_row(formNewPay.payment.tax_status , {'label': 'Situación fiscal:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
@@ -30,19 +30,19 @@
     <div class="row">
         {% if formNewPay.payment.fiscal_document_type is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.fiscal_document_type, {'label': 'Tipo de documento Fiscal:'}) }}
+                {{ form_row(formNewPay.payment.fiscal_document_type, {'label': 'Tipo de documento Fiscal:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.fiscal_document_prefix_verification_code is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.fiscal_document_prefix_verification_code , {'label': 'Dígito de verificación:'}) }}
+                {{ form_row(formNewPay.payment.fiscal_document_prefix_verification_code , {'label': 'Dígito de verificación:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.entity_type is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.entity_type , {'label': 'Tipo de entidad:'}) }}
+                {{ form_row(formNewPay.payment.entity_type , {'label': 'Tipo de entidad:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
@@ -50,19 +50,19 @@
     <div class="row">
         {% if formNewPay.payment.document_issuing_country_code is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.document_issuing_country_code , {'label': 'Código de país del emisor:'}) }}
+                {{ form_row(formNewPay.payment.document_issuing_country_code , {'label': 'Código de país del emisor:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.business_type is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.business_type , {'label': 'Tipo de negocio:'}) }}
+                {{ form_row(formNewPay.payment.business_type , {'label': 'Tipo de negocio:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.economical_activity is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.economical_activity , {'label': 'Actividad económica:'}) }}
+                {{ form_row(formNewPay.payment.economical_activity , {'label': 'Actividad económica:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
@@ -74,25 +74,25 @@
     <div class="row">
         {% if formNewPay.payment.billing_addresscountry is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addresscountry , {'label': 'País:'}) }}
+                {{ form_row(formNewPay.payment.billing_addresscountry , {'label': 'País:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressstreet is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressstreet , {'label': 'Calle:'}) }}
+                {{ form_row(formNewPay.payment.billing_addressstreet , {'label': 'Calle:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressnumber is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressnumber , {'label': 'Nro:'}) }}
+                {{ form_row(formNewPay.payment.billing_addressnumber , {'label': 'Nro:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressfloor is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressfloor , {'label': 'Piso:'}) }}
+                {{ form_row(formNewPay.payment.billing_addressfloor , {'label': 'Piso:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
@@ -100,14 +100,14 @@
     <div class="row">
         {% if formNewPay.payment.billing_addressdepartment is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressdepartment , {'label': 'Departamento:'}) }}
+                {{ form_row(formNewPay.payment.billing_addressdepartment , {'label': 'Departamento:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressstate_id is defined %}
             <div class="col-md-3">
                 {{ form_label(formNewPay.payment.billing_addressstate_id, 'Provincia:') }}
-                <input type="text" id="autocomplete-state" data-provide="typeahead" placeholder="Buscar Provincia" required autocomplete="off" />
+                <input type="text" id="autocomplete-state" data-provide="typeahead" placeholder="Buscar Provincia" required autocomplete="off" class="form-control" />
                 {{ form_widget(formNewPay.payment.billing_addressstate_id , {'attr': {'class': 'hide'}}) }}
                 {{ form_errors(formNewPay.payment.billing_addressstate_id) }}
             </div>
@@ -116,7 +116,7 @@
         {% if formNewPay.payment.billing_addresscity_id is defined %}
             <div class="col-md-3">
                 {{ form_label(formNewPay.payment.billing_addresscity_id, 'Ciudad:') }}
-                <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="Rellene la Provincia" readonly required autocomplete="off" />
+                <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="Rellene la Provincia" readonly required autocomplete="off" class="form-control" />
                 {{ form_widget(formNewPay.payment.billing_addresscity_id , {'attr': {'class' : 'hide'}}) }}
                 {{ form_errors(formNewPay.payment.billing_addresscity_id) }}
             </div>
@@ -124,7 +124,7 @@
 
         {% if formNewPay.payment.billing_addresspostal_code is defined %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addresspostal_code , {'label': 'Código postal:'}) }}
+                {{ form_row(formNewPay.payment.billing_addresspostal_code , {'label': 'Código postal:', 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
