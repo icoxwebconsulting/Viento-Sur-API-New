@@ -130,8 +130,7 @@
                                         Precio por noche
                                     </p>
                                     <div class="text-lg">
-                                        {{ dispoHotel.roompacks[0].price_detail.currency }}&nbsp;
-                                        {{ dispoHotel.roompacks[0].price_detail.nightly.subtotal|number_format(2, ',', '.') }}
+                                        $&nbsp;{{ dispoHotel.roompacks[0].price_detail.nightly.subtotal|round|number_format(0, ',', '.') }}
                                     </div>
                                     <a href="#">
                                         <!--<span class="btn btn-primary mt15">Reservar ahora</span>-->
@@ -221,6 +220,7 @@
                                                     <tr>
                                                         <th>R&eacute;gimen de comida</th>
                                                         <th>Pol&iacute;ticas de cancelaci&oacute;n</th>
+                                                        <th></th>
                                                         <th colspan="2" class="text-center">Precio por noche</th>
                                                     </tr>
                                                 </thead>
@@ -257,8 +257,8 @@
                                                         <td>
                                                             {{ room.cancellation_policy.text }}
                                                         </td>
-                                                        <td>
-                                                            <span>{{ room.price_detail.currency }} <b>{{ room.price_detail.nightly.subtotal|number_format(2, ',', '.') }}</b></span>
+                                                        <td style="min-width: 80px;">
+                                                            <span><b>$ {{ room.price_detail.nightly.subtotal|round|number_format(0, ',', '.') }}</b></span>
                                                         </td>
                                                         <td>
                                                             <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}?{{ reservation|url_encode }}" method="POST" >

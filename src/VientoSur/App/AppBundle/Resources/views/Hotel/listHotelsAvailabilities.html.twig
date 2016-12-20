@@ -12,7 +12,12 @@
         <div class="row">
 
             <div class="col-md-3">
-                {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
+                <div class="content-sidebar">
+                    <div style="padding: 10px 20px 0 20px;">
+                        {{ travellers|raw }}
+                    </div>
+                    {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
+                </div>
             </div>
 
             <div class="col-md-9 hotel-results">
