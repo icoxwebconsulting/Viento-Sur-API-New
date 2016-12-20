@@ -18,14 +18,21 @@
                         </span>
                         <span>{{ hotelBrief.address }}</span>
                         <div><b>{{ hotelBrief.name }}</b></div>
+                        {{ travellers|raw }}
                     </div>
-                    <div class="booking-item-dates-change mb5">
+
+                    <div class="booking-item-dates-change">
                         <h5><b>Detalle de su pago</b></h5>
                         {{ reservationDays }} noche{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}habitación{% else %} habitaciones{% endif %}<br/>
                         Habitación por noche: {{ price_detail.nightly.subtotal|number_format(2, ',', '.') }}<br/>
                         Impuestos y tasas: {{ (price_detail.taxes + price_detail.fee)|number_format(2, ',', '.') }}<br/>
                         <b>Total: {{ price_detail.total|number_format(2, ',', '.') }}</b><br/>
                     </div>
+
+                    <div class="" style="padding: 0 5px 0 5px">
+                        <div class="alert alert-success text-justify" role="alert">El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</div>
+                    </div>
+
                     {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
 
                 </div>

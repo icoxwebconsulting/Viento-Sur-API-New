@@ -33,7 +33,7 @@ class BookingHelper
             'Dec' => 'Dic'
         ];
 
-        $str = '<b>Entrada:</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')];
+        $str = '<b>Entrada:</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '<br />';
         $str .= ' <b>Salida:</b> ' . $checkout_date->format('d') . ' ' . $months[$checkin_date->format('M')];
         $travellers = $this->processDistribution($distribution);
         $str .= '<br /> <b>' . $travellers['adults'] . ' adulto' . (($travellers['adults'] > 1) ? 's' : '') . '</b>';
