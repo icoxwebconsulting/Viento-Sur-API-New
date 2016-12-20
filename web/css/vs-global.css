@@ -976,3 +976,15 @@ h4.booking-item-title {
   font-size: x-small;
   padding-top: 40px;
 }
+
+form.booking-form {
+  color: #003580;
+}
+
+form.booking-form label {
+  font-weight: bold;
+}
+
+.top-buffer {
+  margin-top: 15px;
+}

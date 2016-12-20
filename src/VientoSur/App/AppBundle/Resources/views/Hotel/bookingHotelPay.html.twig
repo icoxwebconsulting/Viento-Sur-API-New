@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-md-9">
-                {{ form_start(formNewPay) }}
+                {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
 
                 <!--Pasajeros-->
                 <div class="panel panel-primary">
@@ -330,6 +330,13 @@
                                     {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:', 'attr': {'size': 4, 'class': 'form-control'}}) }}
                                 </div>
 
+                                {% set fieldName = 'type' ~ loop.index0 %}
+                                {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                    <div class="col-md-2">
+                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                {% endif %}
+
                                 {% set fieldName = 'area_code' ~ loop.index0 %}
                                 {% if attribute(formNewPay.contact, fieldName) is defined %}
                                     <div class="col-md-2">
@@ -341,19 +348,16 @@
                                     {% set fieldName = 'number' ~ loop.index0 %}
                                     {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Número:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
-
-                                {% set fieldName = 'type' ~ loop.index0 %}
-                                {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                    <div class="col-md-2">
-                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
                             {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 top-buffer"><div class="alert alert-success" role="alert">Teléfono: El alojamiento lo necesita para validar tu reserva.</div></div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 {{ form_row(formNewPay.contact.email, {'label': 'Email:', 'attr': {'class': 'form-control'}}) }}
                             </div>
+                            <div class="col-md-6 top-buffer"><div class="alert alert-success" role="alert">Enviaremos la confirmación de tu reserva a esta dirección.</div></div>
                         </div>
                     </div>
                 </div>
@@ -388,6 +392,10 @@
                                 {% if formNewPay.additionalData.comment is defined %}
                                     <div class="col-md-6">
                                         {{ form_row(formNewPay.additionalData.comment, {'label': 'Comentarios:', 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="alert alert-success" role="alert">Escribe tus peticiones en inglés o en español. Las peticiones especiales no se pueden garantizar, pero el alojamiento hará todo lo posible por satisfacer tu petición.</div>
                                     </div>
                                 {% endif %}
 
