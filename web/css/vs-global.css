@@ -970,3 +970,9 @@ h4.booking-item-title {
 .amenities-list {
   list-style-type: none;
 }
+
+.footer-copy {
+  color: #003580;
+  font-size: x-small;
+  padding-top: 40px;
+}
