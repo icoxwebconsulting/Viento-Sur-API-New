@@ -164,15 +164,10 @@
                 })
             });
 
-            $("#field-hotel-checkin").datepicker({
-                "setDate": new Date()
-            });
-
             {#Orden de los elementos#}
             $('.nav-drop-menu-a').on('click', function () {
                 var text = this.text;
                 var category = $(this).data('category');
-                console.log(this)
                 if (text != $('#sortSelected').text()) {
                     asynLoad({
                         'sorting': $(this).data('value'),

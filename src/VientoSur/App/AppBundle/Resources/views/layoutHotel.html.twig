@@ -109,10 +109,12 @@
                 monthNames: monthNames,
                 defaultDate: "+1w",
                 numberOfMonths: 2,
-                minDate: 0
-            }).on("change", function () {
-                to.datepicker("option", "minDate", getDate(this));
-                console.log(getDate(this));
+                minDate: 0,
+                onClose: function( selectedDate ) {
+                    var minDate = $(this).datepicker('getDate');
+                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                    $( "#field-hotel-checkout" ).datepicker( "option", "minDate", newMin );
+                }
             });
             var to = $("#field-hotel-checkout").datepicker({
                 dateFormat: dateFormat,
