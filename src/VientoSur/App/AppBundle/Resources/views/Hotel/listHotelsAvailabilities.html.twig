@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-md-9 hotel-results">
-                <div class="sorting">
+                <div class="sorting hotel_filter">
                     {% if sortArray.price is not empty %}
                         <div class="nav-drop booking-sort">
                             <h5 class="booking-sort-title"><a href="#">Precio: <span id="sort_price" class="sort_name">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
