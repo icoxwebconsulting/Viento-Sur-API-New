@@ -476,7 +476,8 @@ class HotelController extends Controller
             'name' => $request->get('hotel_name'),
             'img' => $request->get('hotel_img'),
             'stars' => $request->get('hotel_stars'),
-            'address' => $request->get('hotel_address')
+            'address' => $request->get('hotel_address'),
+            'room_cancellation' => $request->get('room_cancellation')
         ]);
 
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(

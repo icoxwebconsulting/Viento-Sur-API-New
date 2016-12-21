@@ -22,8 +22,21 @@
                     </div>
 
                     <div class="booking-item-dates-change">
-                        <h5><b>Detalle de su pago</b></h5>
+                        <h5><b>Usted está pagando:</b></h5>
                         {{ reservationDays }} noche{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}habitación{% else %} habitaciones{% endif %}<br/>
+                        <p>
+                        {% for room in rooms %}
+                            {% set temp = attribute(rooms, loop.index0) %}
+                            <b>* {{ temp.name }}<br/></b>
+
+                        {% endfor %}
+                        </p>
+                    </div>
+                    <div class="" style="padding: 0 5px 0 5px">
+                        <div class="alert alert-warning" role="alert" style="margin-bottom: 0px;">{{ hotelBrief.room_cancellation }}</div>
+                    </div>
+                    <div class="booking-item-dates-change">
+
                         Habitación por noche: $ {{ price_detail.nightly.subtotal|number_format(0, ',', '.') }}<br/>
                         Impuestos y tasas: $ {{ (price_detail.taxes + price_detail.fee)|number_format(0, ',', '.') }}<br/>
                         <b>Total: $ {{ price_detail.total|number_format(0, ',', '.') }}</b><br/>
@@ -32,7 +45,6 @@
                     <div class="" style="padding: 0 5px 0 5px">
                         <div class="alert alert-success text-justify" role="alert">El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</div>
                     </div>
-
                     {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
 
                 </div>
