@@ -194,12 +194,12 @@
 
                 <!-- lista habitaciones disponibles -->
                 <div class="booking-list-rooms">
-
-                    <h3>Habitaciones disponibles</h3>
                     <script>
                         var roomCapacity = {};
                         var roomTypes = {{ roomTypesEncoded|raw }};
                     </script>
+                    {% if roomDetail is not empty %}
+                    <h3>Habitaciones disponibles</h3>
                     <ul class="booking-list">
                         {% for key, rooms in roomDetail %}
                             <li>
@@ -289,6 +289,10 @@
                             </li>
                         {% endfor %}
                     </ul>
+
+                    {% else %}
+                        <h3>Habitaciones no disponibles</h3>
+                    {% endif %}
 {#{{ dump(hotelDetails) }}#}
 {#{{ dump(roomTypes) }}#}
                 </div>
