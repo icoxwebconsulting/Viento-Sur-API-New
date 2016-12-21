@@ -418,7 +418,7 @@ class HotelController extends Controller
         $roomDetail = [];
         foreach ($dispoHotel['roompacks'] as $roompack) {
             foreach ($roompack['rooms'] as $room) {
-                $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
+                $roomDetail[$room['room_code']][$roompack['roompack_classification']][] = $roompack;
             }
         }
 
