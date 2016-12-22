@@ -416,15 +416,16 @@ class HotelController extends Controller
         ));
 
         $roomDetail = [];
-        foreach ($dispoHotel['roompacks'] as $roompack) {
-            foreach ($roompack['rooms'] as $room) {
-                $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
-            }
-        }
-
         $roomTypes = [];
-        foreach ($hotelDetails[0]['room_types'] as $room) {
-            $roomTypes[$room['id']] = $room;
+        if (isset($hotelDetails[0]['room_types'])) {
+            foreach ($dispoHotel['roompacks'] as $roompack) {
+                foreach ($roompack['rooms'] as $room) {
+                    $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
+                }
+            }
+            foreach ($hotelDetails[0]['room_types'] as $room) {
+                $roomTypes[$room['id']] = $room;
+            }
         }
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
@@ -476,7 +477,8 @@ class HotelController extends Controller
             'name' => $request->get('hotel_name'),
             'img' => $request->get('hotel_img'),
             'stars' => $request->get('hotel_stars'),
-            'address' => $request->get('hotel_address')
+            'address' => $request->get('hotel_address'),
+            'room_cancellation' => $request->get('room_cancellation')
         ]);
 
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(

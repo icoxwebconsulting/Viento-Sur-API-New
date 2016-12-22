@@ -16,22 +16,41 @@
                                 {% endif %}
                             {% endfor %}
                         </span>
-                        <span>{{ hotelBrief.address }}</span>
+                        <div>{{ hotelBrief.address }}</div>
                         <div><b>{{ hotelBrief.name }}</b></div>
+                        {{ travellers|raw }}
                     </div>
-                    <div class="booking-item-dates-change mb5">
-                        <h5><b>Detalle de su pago</b></h5>
+
+                    <div class="booking-item-dates-change">
+                        <h5><b>Usted está pagando:</b></h5>
                         {{ reservationDays }} noche{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}habitación{% else %} habitaciones{% endif %}<br/>
-                        Habitación por noche: {{ price_detail.nightly.subtotal|number_format(2, ',', '.') }}<br/>
-                        Impuestos y tasas: {{ (price_detail.taxes + price_detail.fee)|number_format(2, ',', '.') }}<br/>
-                        <b>Total: {{ price_detail.total|number_format(2, ',', '.') }}</b><br/>
+                        <p>
+                        {% for room in rooms %}
+                            {% set temp = attribute(rooms, loop.index0) %}
+                            <b>* {{ temp.name }}<br/></b>
+
+                        {% endfor %}
+                        </p>
+                    </div>
+                    <div class="" style="padding: 0 5px 0 5px">
+                        <div class="alert alert-warning" role="alert" style="margin-bottom: 0px;">{{ hotelBrief.room_cancellation }}</div>
+                    </div>
+                    <div class="booking-item-dates-change">
+
+                        Habitación por noche: $ {{ price_detail.nightly.subtotal|number_format(0, ',', '.') }}<br/>
+                        Impuestos y tasas: $ {{ (price_detail.taxes + price_detail.fee)|number_format(0, ',', '.') }}<br/>
+                        <b>Total: $ {{ price_detail.total|number_format(0, ',', '.') }}</b><br/>
+                    </div>
+
+                    <div class="" style="padding: 0 5px 0 5px">
+                        <div class="alert alert-success text-justify" role="alert">El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</div>
                     </div>
                     {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
 
                 </div>
             </div>
             <div class="col-md-9">
-                {{ form_start(formNewPay) }}
+                {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
 
                 <!--Pasajeros-->
                 <div class="panel panel-primary">
@@ -48,15 +67,15 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'first_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento'}}) }}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'last_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento'}}) }}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'document_number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Documento de Identidad:'}) }}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Documento de Identidad:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
                             {% set fieldName = 'room_reference' ~ loop.index0 %}
@@ -200,11 +219,11 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>Tarjeta:</label>
-                                    <input type="text" value="" id="card-selected" readonly>
+                                    <input type="text" value="" id="card-selected" class="form-control" readonly>
                                 </div>
                                 {% if formNewPay.payment.number is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.number, {'label': 'Número de tarjeta:'}) }}
+                                        {{ form_row(formNewPay.payment.number, {'label': 'Número de tarjeta:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
                                 {% if formNewPay.payment.expiration is defined %}
@@ -214,7 +233,7 @@
                                 {% endif %}
                                 {% if formNewPay.payment.security_code is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.security_code, {'label': 'Código de seguridad:'}) }}
+                                        {{ form_row(formNewPay.payment.security_code, {'label': 'Código de seguridad:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
                             </div>
@@ -222,31 +241,31 @@
                             <div class="row">
                                 {% if formNewPay.payment.owner_name is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_name, {'label': 'Titular de la tarjeta:', 'attr': {'placeholder': 'Como aparece en la tarjeta'}}) }}
+                                        {{ form_row(formNewPay.payment.owner_name, {'label': 'Titular de la tarjeta:', 'attr': {'placeholder': 'Como aparece en la tarjeta', 'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 
                                 {% if formNewPay.payment.owner_document is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_document, {'label': 'Documento de Identidad del titular:'}) }}
+                                        {{ form_row(formNewPay.payment.owner_document, {'label': 'Documento de Identidad del titular:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 
                                 {% if formNewPay.payment.owner_documenttype is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_documenttype, {'label': 'Tipo de documento:'}) }}
+                                        {{ form_row(formNewPay.payment.owner_documenttype, {'label': 'Tipo de documento:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 
                                 {% if formNewPay.payment.owner_documentnumber is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_documentnumber, {'label': 'Nro. de documento:'}) }}
+                                        {{ form_row(formNewPay.payment.owner_documentnumber, {'label': 'Nro. de documento:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 
                                 {% if formNewPay.payment.owner_gender is defined %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_gender, {'label': 'Género:'}) }}
+                                        {{ form_row(formNewPay.payment.owner_gender, {'label': 'Género:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
                             </div>
@@ -257,43 +276,43 @@
                                 <div class="row">
                                     {% if formNewPay.payment.country is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.country, {'label': 'País:'}) }}
+                                            {{ form_row(formNewPay.payment.country, {'label': 'País:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
 
                                     {% if formNewPay.payment.state is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.state, {'label': 'Provincia:'}) }}
+                                            {{ form_row(formNewPay.payment.state, {'label': 'Provincia:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
 
                                     {% if formNewPay.payment.city is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.city, {'label': 'Ciudad:'}) }}
+                                            {{ form_row(formNewPay.payment.city, {'label': 'Ciudad:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
 
                                     {% if formNewPay.payment.street is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.street, {'label': 'Calle:'}) }}
+                                            {{ form_row(formNewPay.payment.street, {'label': 'Calle:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
 
                                     {% if formNewPay.payment.floor is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.floor, {'label': 'Piso:'}) }}
+                                            {{ form_row(formNewPay.payment.floor, {'label': 'Piso:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
 
                                     {% if formNewPay.payment.department is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.department, {'label': 'Departamento:'}) }}
+                                            {{ form_row(formNewPay.payment.department, {'label': 'Departamento:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
 
                                     {% if formNewPay.payment.postal_code is defined %}
                                         <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.postal_code, {'label': 'Código postal:'}) }}
+                                            {{ form_row(formNewPay.payment.postal_code, {'label': 'Código postal:', 'attr': {'class': 'form-control'}}) }}
                                         </div>
                                     {% endif %}
                                 </div>
@@ -327,31 +346,37 @@
                             {% for phone in formChoice.contact.phones %}
                                 <div class="col-md-2">
                                     {% set fieldName = 'country_code' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:', 'attr': {'size': 4}}) }}
-                                </div>
-
-                                {% set fieldName = 'area_code' ~ loop.index0 %}
-                                {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                    <div class="col-md-2">
-                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de área:'}) }}
-                                    </div>
-                                {% endif %}
-
-                                <div class="col-md-2">
-                                    {% set fieldName = 'number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Número:'}) }}
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de país:', 'attr': {'size': 4, 'class': 'form-control'}}) }}
                                 </div>
 
                                 {% set fieldName = 'type' ~ loop.index0 %}
                                 {% if attribute(formNewPay.contact, fieldName) is defined %}
                                     <div class="col-md-2">
-                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:'}) }}
+                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
+
+                                {% set fieldName = 'area_code' ~ loop.index0 %}
+                                {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                    <div class="col-md-2">
+                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Código de área:', 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="col-md-4">
+                                    {% set fieldName = 'number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': 'Número:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
                             {% endfor %}
-                            <div class="col-md-2">
-                                {{ form_row(formNewPay.contact.email, {'label': 'Email:'}) }}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 top-buffer"><div class="alert alert-success" role="alert">Teléfono: El alojamiento lo necesita para validar tu reserva.</div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form_row(formNewPay.contact.email, {'label': 'Email:', 'attr': {'class': 'form-control'}}) }}
                             </div>
+                            <div class="col-md-6 top-buffer"><div class="alert alert-success" role="alert">Enviaremos la confirmación de tu reserva a esta dirección.</div></div>
                         </div>
                     </div>
                 </div>
@@ -367,7 +392,7 @@
                                 {% for voucher in formChoice.vouchers %}
                                     <div class="col-md-2">
                                         {% set fieldName = loop.index0 %}
-                                        {{ form_row(attribute(formNewPay.vouchers, fieldName), {'label': 'Cupón:'}) }}
+                                        {{ form_row(attribute(formNewPay.vouchers, fieldName), {'label': 'Cupón:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endfor %}
                             </div>
@@ -384,20 +409,24 @@
                             {#{{ form_row(formNewPay.additionalData) }}#}
                             <div class="row">
                                 {% if formNewPay.additionalData.comment is defined %}
-                                    <div class="col-md-2">
-                                        {{ form_row(formNewPay.additionalData.comment, {'label': 'Comentarios:'}) }}
+                                    <div class="col-md-6">
+                                        {{ form_row(formNewPay.additionalData.comment, {'label': 'Comentarios:', 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="alert alert-success" role="alert">Escribe tus peticiones en inglés o en español. Las peticiones especiales no se pueden garantizar, pero el alojamiento hará todo lo posible por satisfacer tu petición.</div>
                                     </div>
                                 {% endif %}
 
                                 {% if formNewPay.additionalData.subscribe_newsletter is defined %}
-                                    <div class="col-md-2">
-                                        {{ form_row(formNewPay.additionalData.subscribe_newsletter, {'label': 'Subscribir a noticias:'}) }}
+                                    <div class="col-md-3">
+                                        {{ form_row(formNewPay.additionalData.subscribe_newsletter, {'label': 'Subscribir a noticias:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 
                                 {% if formNewPay.additionalData.travel_assistance is defined %}
-                                    <div class="col-md-2">
-                                        {{ form_row(formNewPay.additionalData.travel_assistance, {'label': 'Asistencia en viaje:'}) }}
+                                    <div class="col-md-3">
+                                        {{ form_row(formNewPay.additionalData.travel_assistance, {'label': 'Asistencia en viaje:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
                             </div>

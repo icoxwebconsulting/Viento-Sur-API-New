@@ -291,10 +291,15 @@ class FormHelper
                     }
                     $this->generateMultiValues($fieldName, $optionField, $groupKey);
                 } else {
+                    if ($fieldName == 'comment') {
+                        $type = 'textarea';
+                    } else {
+                        $type = 'text';
+                    }
                     $this->formNewPay->add(
                         $this->{$groupKey . 'Form'}->add(
                             $fieldName,
-                            'text',
+                            $type,
                             array(
                                 'required' => ($element['requirement_type'] == 'REQUIRED') ? true : false,
                             )
