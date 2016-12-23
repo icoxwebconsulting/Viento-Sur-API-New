@@ -787,4 +787,15 @@ class HotelController extends Controller
             $this->get('despegar')->getCardDetails($request->get('card'))
         );
     }
+
+    /**
+     * @Route("/booking/edit/{id}", name="viento_sur_app_edit_reservation")
+     * @Template()
+     */
+    public function editReservationAction($id, Request $request)
+    {
+        return [
+            'reservationId' => $id
+        ];
+    }
 }

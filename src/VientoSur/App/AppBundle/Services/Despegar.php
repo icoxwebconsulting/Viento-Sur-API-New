@@ -205,7 +205,7 @@ class Despegar
         try {
             $params = [
                 'brand_code' => $formNewPaySend['card_code'],
-                'number' => $formNewPaySend['number'],
+                'number' => str_replace(' ', '', $formNewPaySend['number']),
                 'expiration_month' => $formNewPaySend['expiration']->format('m'),
                 'expiration_year' => $formNewPaySend['expiration']->format('Y'),
                 'security_code' => $formNewPaySend['security_code'],

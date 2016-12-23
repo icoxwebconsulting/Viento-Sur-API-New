@@ -12,7 +12,7 @@
                 <table class="table">
                     <tr>
                         <td>
-                            <img src="{{ hotelDetails.main_picture.url }}" height="250" width="200" />
+                            <img src="{{ hotelDetails.main_picture.url }}/200x150" />
                         </td>
                         <td>
                             <h3>{{ hotelDetails.name }}</h3>
@@ -101,11 +101,16 @@
             </tr>
             {% if not pdf %}
             <tr>
-                <th colspan="2">
+                <td>
                     <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'reservation_id': internal.id}) }}">
                         Descargar PDF
                     </a>
-                </th>
+                </td>
+                <td>
+                    {#<a href="{{ url('viento_sur_app_edit_reservation', {'reservation_id': internal.id}) }}">#}
+                        {#Editar reservaci&oacute;n#}
+                    {#</a>#}
+                </td>
             </tr>
             {% endif %}
         </table>

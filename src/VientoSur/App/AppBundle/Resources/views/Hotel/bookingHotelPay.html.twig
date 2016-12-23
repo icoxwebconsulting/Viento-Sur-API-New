@@ -218,7 +218,7 @@
                             <h3>Medio de pago:</h3>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label>Tarjeta:</label>
+                                    <label>Tarjeta seleccionada:</label>
                                     <input type="text" value="" id="card-selected" class="form-control" readonly>
                                 </div>
                                 {% if formNewPay.payment.number is defined %}
@@ -236,6 +236,12 @@
                                         {{ form_row(formNewPay.payment.security_code, {'label': 'Código de seguridad:', 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>
+                                </div>
                             </div>
 
                             <div class="row">
@@ -471,6 +477,36 @@
             e.preventDefault();
             return false;
         });
+        $('#form_payment_number').on('blur', function () {
+            var cardBrand = $('#card-selected').val();
+
+            if (checkCreditCard(this.value, cardBrand)) {
+                $('#card-error').addClass('hidden')
+            } else {
+                var cardArray = ['Visa', 'MasterCard', 'American Express', 'Diners Club'];
+                if (cardArray.indexOf(cardBrand) != -1) {
+                    $('#card-error').text(ccErrors[ccErrorNo]).removeClass('hidden')
+                }
+            }
+        });
+
+        $('#card-selected').on('change', function () {
+            var cardNumber = $('#form_payment_number').val();
+            if (cardNumber.length < 1) {
+                return;
+            }
+            if (checkCreditCard(cardNumber, this.value)) {
+                $('#card-error').addClass('hidden')
+            } else {
+                var cardArray = ['Visa', 'MasterCard', 'American Express', 'Diners Club'];
+                if (cardArray.indexOf(this.value) != -1) {
+                    $('#card-error').text(ccErrors[ccErrorNo]).removeClass('hidden')
+                }
+            }
+        });
+
+        $('#form_payment_number').payment('formatCardNumber');
+        $('#form_payment_security_code').payment('formatCardCVC');
     </script>
 {% endblock %}
 
