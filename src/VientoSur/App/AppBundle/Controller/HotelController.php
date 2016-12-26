@@ -752,6 +752,7 @@ class HotelController extends Controller
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
         ));
+
         $reservationDetails = $this->get('despegar')->getReservationDetails($detail['reservation_id'], array(
             'email' => 'info@vientosur.net',
             'language' => 'es',
@@ -790,12 +791,54 @@ class HotelController extends Controller
 
     /**
      * @Route("/booking/edit/{id}", name="viento_sur_app_edit_reservation")
+     * * @Method("GET")
      * @Template()
      */
     public function editReservationAction($id, Request $request)
     {
+        $despegar = $this->get('despegar');
+
+        $em = $this->getDoctrine()->getManager();
+        //$reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
+
+        $reservation = $despegar->getReservationDetails($id, array(
+            'email' => 'info@vientosur.net',
+            'language' => 'es',
+            'site' => 'AR'
+        ), $this->getParameter('is_test'));
+
+        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+            'ids' => $reservation['hotel']['id'],
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ));
+
         return [
-            'reservationId' => $id
+            'hotelDetails' => $hotelDetails[0],
+            'internal' => $reservation,
+            'reservationDetails' => $reservation
         ];
+    }
+
+    /**
+     * @Route("/booking/edit/{id}", name="viento_sur_app_edit_patch_reservation")
+     * @Method("PATCH")
+     */
+    public function patchEditReservationAction($id, Request $request)
+    {
+        $despegar = $this->get('despegar');
+        $reservation = $despegar->cancelReservation($id);
+        $result = false;
+        if ($reservation && isset($reservation['id'])) {
+            $result = true;
+        }
+        return new JsonResponse(
+            array(
+                "cancelled" => $result,
+                "id" => $reservation['id']
+            )
+        );
     }
 }

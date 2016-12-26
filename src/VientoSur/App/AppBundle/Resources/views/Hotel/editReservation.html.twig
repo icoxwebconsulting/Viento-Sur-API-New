@@ -1,3 +1,154 @@
-{% extends '::base.html.twig' %}
+{% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
-<h3>Reservaci&oacute;n n° {{ reservationId }}</h3>
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <caption><h4>Datos del hotel:</h4></caption>
+                    <tr>
+                        <th colspan="2">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <img src="{{ hotelDetails.main_picture.url }}/200x150" class="origin" />
+                                    </td>
+                                    <td>
+                                        <h3>{{ hotelDetails.name }}</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th width="15%">
+                            Direcci&oacute;n:
+                        </th>
+                        <td>
+                            {{ hotelDetails.location.address }}. {{ hotelDetails.information.es }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tel&eacute;fono:
+                        </th>
+                        <td>
+                            No disponible
+                        </td>
+                    </tr>
+                </table>
+
+                {% if reservationDetails is not empty %}
+                    {#{{ dump(reservationDetails) }}#}
+                    <table class="table table-bordered">
+                        <caption><h4>Datos de su reservación:</h4></caption>
+                        <tbody>
+                        <tr>
+                            <th width="20%">
+                                Tu reserva:
+                            </th>
+                            <td>
+                                {{ reservationDetails.night_count }} noche(s). {{ reservationDetails.rooms|length }} Habitacion(es).
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Entrada:
+                            </th>
+                            <td>
+                                {{ reservationDetails.checkin_date|date("d/m/Y") }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Salida:
+                            </th>
+                            <td>
+                                {{ reservationDetails.checkout_date|date("d/m/Y") }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                N&uacute;mero de reserva:
+                            </th>
+                            <td>
+                                {{ reservationDetails.id }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+
+            {% if reservationDetails.status != 'CANCELLED' %}
+                <div class="col-md-12">
+                    <button type="button" id="cancelButton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#cancelModal">
+                        Cancelar reservaci&oacute;n
+                    </button>
+
+                    <div class="col-md-6 hidden" id="resultCancellation">
+                        <div class="alert alert-warning" role="alert"><i class="glyphicon glyphicon-info-sign"></i> <b id="textCancellation"></b></div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-6">
+                    <div class="alert alert-warning" role="alert"><i class="glyphicon glyphicon-info-sign"></i> <b>Estatus: Esta reservaci&oacute;n se encuentra cancelada.</b></div>
+                </div>
+            {% endif %}
+            <div class="gap"></div>
+        </div>
+    </div>
+{#{{ dump(reservationDetails) }}#}
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cancelar reservaci&oacute;n</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        ¿Est&aacute; seguro que desea cancelar la reservaci&oacute;n?
+                    </p>
+                    <p>
+                        Pulse confirmar cancelaci&oacute;n para proceder.
+                    </p>
+                    <div class="alert alert-danger hidden" role="alert" id="errorCancellation">
+                        <i class="glyphicon glyphicon-info-sign"></i> <b>Ocurrió un error al momento de intentar cancelar su reservación.</b>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="confirmCancel" data-loading-text="Procesando...">Confirmar cancelaci&oacute;n</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#confirmCancel').on('click', function () {
+            var $btn = $(this).button('loading');
+
+            $.ajax({
+                url: Routing.generate('viento_sur_app_edit_patch_reservation') + '/{{ reservationDetails.id }}',
+                type: 'PATCH',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.cancelled) {
+                    $('#textCancellation').text('Estatus: Su reservación fue cancelada exitosamente. Id de cancelación: ' + data.id);
+                    $('#cancelModal').modal('hide');
+                    $('#cancelButton').addClass('hidden');
+                    $('#resultCancellation').removeClass('hidden')
+                }
+            }).fail(function () {
+                $('#errorCancellation').removeClass('hidden')
+            }).always(function () {
+                $btn.button('reset')
+            });
+        })
+    </script>
+{% endblock %}
