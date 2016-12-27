@@ -107,9 +107,9 @@
                     </a>
                 </td>
                 <td>
-                    {#<a href="{{ url('viento_sur_app_edit_reservation', {'reservation_id': internal.id}) }}">#}
-                        {#Editar reservaci&oacute;n#}
-                    {#</a>#}
+                    <a href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
+                        Editar reservaci&oacute;n
+                    </a>
                 </td>
             </tr>
             {% endif %}
