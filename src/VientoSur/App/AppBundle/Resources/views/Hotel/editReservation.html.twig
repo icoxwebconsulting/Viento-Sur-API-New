@@ -26,21 +26,18 @@
                             Direcci&oacute;n:
                         </th>
                         <td>
-                            {{ hotelDetails.location.address }}. {{ hotelDetails.information.es }}
+                            {{ hotelDetails.location.address }}.
                         </td>
                     </tr>
                     <tr>
-                        <th>
-                            Tel&eacute;fono:
-                        </th>
-                        <td>
-                            No disponible
+                        <th width="15%">Descripci&oacute;n</th>
+                        <td class="text-justify">
+                            {{ hotelDetails.information.es }}
                         </td>
                     </tr>
                 </table>
 
                 {% if reservationDetails is not empty %}
-                    {#{{ dump(reservationDetails) }}#}
                     <table class="table table-bordered">
                         <caption><h4>Datos de su reservación:</h4></caption>
                         <tbody>
@@ -74,6 +71,29 @@
                             </th>
                             <td>
                                 {{ reservationDetails.id }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Habitaci&oacute;n(es):
+                            </th>
+                            <td>
+                                <ul>
+                                {% for room in reservationDetails.rooms %}
+                                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} Adulto(s) {% if room.children > 0 %}{{ room.children }} Niño(s){% endif %}</li>
+                                {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Pol&iacute;tica de cancelaci&oacute;n:
+                            </th>
+                            <td>
+                                <ul>
+                                    {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>Puede cancelar  hasta {{ reservationDetails.hours_before_checkin_penalty }} horas antes del checking.{% endif %}
+                                    <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} El cargo por cancelar es $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} Sin cargos por cancelación.{% endif %}</li>
+                                </ul>
                             </td>
                         </tr>
                         </tbody>
