@@ -829,7 +829,7 @@ class HotelController extends Controller
     {
         $despegar = $this->get('despegar');
         //$cancel = $despegar->cancelReservation($id);
-        $cancel = ['id'];
+        $cancel = ['id' => '222222'];
         $result = false;
         if ($cancel && isset($cancel['id'])) {
             $result = true;
@@ -861,7 +861,8 @@ class HotelController extends Controller
             array(
                 "cancelled" => $result,
                 "id" => $cancel['id'],
-                'email' => $internal->getEmail()
+                'email' => $internal->getEmail(),
+                'internal_id' => $id
             )
         );
     }
