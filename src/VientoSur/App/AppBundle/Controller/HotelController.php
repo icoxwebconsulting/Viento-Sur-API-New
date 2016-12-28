@@ -850,8 +850,8 @@ class HotelController extends Controller
                     'resolve' => 'merge_info',
                     'catalog_info' => 'true'
                 ));
-                $email = (($this->getParameter('is_test')) ? 'davidjdr@gmail.com' : $internal->getEmail());
-                $this->get('email.service')->sendCancellationEmail($email, array(
+
+                $this->get('email.service')->sendCancellationEmail($internal->getEmail(), array(
                     'hotelDetails' => $hotelDetails[0],
                     'reservationDetails' => $reservation,
                     'internal' => $internal,
