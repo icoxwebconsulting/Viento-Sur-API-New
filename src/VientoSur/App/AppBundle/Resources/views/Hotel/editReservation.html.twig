@@ -101,7 +101,7 @@
                 {% endif %}
             </div>
 
-            {% if reservationDetails.status != 'CANCELLED' %}
+            {% if reservationDetails.status == 'CANCELLED' %}
                 <div class="col-md-12">
                     <button type="button" id="cancelButton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#cancelModal">
                         Cancelar reservaci&oacute;n

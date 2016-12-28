@@ -828,8 +828,8 @@ class HotelController extends Controller
     public function patchEditReservationAction($id, Request $request)
     {
         $despegar = $this->get('despegar');
-        $cancel = $despegar->cancelReservation($id);
-
+        //$cancel = $despegar->cancelReservation($id);
+        $cancel = ['id'];
         $result = false;
         if ($cancel && isset($cancel['id'])) {
             $result = true;
@@ -860,7 +860,8 @@ class HotelController extends Controller
         return new JsonResponse(
             array(
                 "cancelled" => $result,
-                "id" => $cancel['id']
+                "id" => $cancel['id'],
+                'email' => $internal->getEmail()
             )
         );
     }
