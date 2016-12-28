@@ -617,7 +617,7 @@ class HotelController extends Controller
                                 $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
                                     'hotelDetails' => $hotelDetails,
                                     'reservationDetails' => $reservationDetails,
-                                    'reservationId' => base64_encode($detail['reservation_id']),
+                                    'reservationId' => base64_encode($reservation->getId()),
                                     'detail' => $detail,
                                     'hotelId' => $hotelAvailabilities->hotel->id,
                                     'internal' => $reservation,
@@ -631,7 +631,7 @@ class HotelController extends Controller
                         return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
                             'hotelDetails' => $hotelDetails,
                             'reservationDetails' => $reservationDetails,
-                            'reservationId' => base64_encode($detail['reservation_id']),
+                            'reservationId' => base64_encode($reservation->getId()),
                             'detail' => $detail,
                             'hotelId' => $hotelAvailabilities->hotel->id,
                             'internal' => $reservation,
@@ -797,10 +797,10 @@ class HotelController extends Controller
     {
         $despegar = $this->get('despegar');
         $id = base64_decode($id);
-        //$em = $this->getDoctrine()->getManager();
-        //$internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
+        $em = $this->getDoctrine()->getManager();
+        $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
 
-        $reservation = $despegar->getReservationDetails($id, array(
+        $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
             'email' => 'info@vientosur.net',
             'language' => 'es',
             'site' => 'AR'
@@ -816,7 +816,7 @@ class HotelController extends Controller
 
         return [
             'hotelDetails' => $hotelDetails[0],
-            //'internal' => $internal,
+            'internal' => $internal,
             'reservationDetails' => $reservation
         ];
     }
@@ -849,7 +849,7 @@ class HotelController extends Controller
                 'resolve' => 'merge_info',
                 'catalog_info' => 'true'
             ));
-            $email = (($this->getParameter('is_test'))? 'davidjdr@gmail.com' : $internal['email']);
+            $email = (($this->getParameter('is_test'))? 'davidjdr@gmail.com' : $internal->getEmail());
             $this->get('email.service')->sendCancellationEmail($email, array(
                 'hotelDetails' => $hotelDetails[0],
                 'reservationDetails' => $reservation,
@@ -860,7 +860,7 @@ class HotelController extends Controller
         return new JsonResponse(
             array(
                 "cancelled" => $result,
-                "id" => $reservation['id']
+                "id" => $cancel['id']
             )
         );
     }
