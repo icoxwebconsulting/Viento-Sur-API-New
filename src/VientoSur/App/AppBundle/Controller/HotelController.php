@@ -828,41 +828,41 @@ class HotelController extends Controller
     public function patchEditReservationAction($id, Request $request)
     {
         $despegar = $this->get('despegar');
-        //$cancel = $despegar->cancelReservation($id);
-        $cancel = ['id' => '222222'];
+        $cancel = $despegar->cancelReservation($id);
         $result = false;
+
         if ($cancel && isset($cancel['id'])) {
             $result = true;
             $em = $this->getDoctrine()->getManager();
             $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
 
-            $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
-                'email' => 'info@vientosur.net',
-                'language' => 'es',
-                'site' => 'AR'
-            ), $this->getParameter('is_test'));
+            if ($internal != null) {
+                $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
+                    'email' => 'info@vientosur.net',
+                    'language' => 'es',
+                    'site' => 'AR'
+                ), $this->getParameter('is_test'));
 
-            $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
-                'ids' => $reservation['hotel']['id'],
-                'language' => 'es',
-                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
-                'resolve' => 'merge_info',
-                'catalog_info' => 'true'
-            ));
-            $email = (($this->getParameter('is_test'))? 'davidjdr@gmail.com' : $internal->getEmail());
-            $this->get('email.service')->sendCancellationEmail($email, array(
-                'hotelDetails' => $hotelDetails[0],
-                'reservationDetails' => $reservation,
-                'internal' => $internal,
-                'idCancellation' => $cancel['id']
-            ));
+                $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+                    'ids' => $reservation['hotel']['id'],
+                    'language' => 'es',
+                    'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+                    'resolve' => 'merge_info',
+                    'catalog_info' => 'true'
+                ));
+                $email = (($this->getParameter('is_test')) ? 'davidjdr@gmail.com' : $internal->getEmail());
+                $this->get('email.service')->sendCancellationEmail($email, array(
+                    'hotelDetails' => $hotelDetails[0],
+                    'reservationDetails' => $reservation,
+                    'internal' => $internal,
+                    'idCancellation' => $cancel['id']
+                ));
+            }
         }
         return new JsonResponse(
             array(
                 "cancelled" => $result,
-                "id" => $cancel['id'],
-                'email' => $internal->getEmail(),
-                'internal_id' => $id
+                "id" => (($cancel != null) ? $cancel['id'] : 0)
             )
         );
     }
