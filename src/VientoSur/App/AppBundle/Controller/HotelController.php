@@ -835,9 +835,8 @@ class HotelController extends Controller
             $result = true;
             $em = $this->getDoctrine()->getManager();
             $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
-var_dump($internal);
-die;
-            $reservation = $despegar->getReservationDetails($id, array(
+
+            $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
                 'email' => 'info@vientosur.net',
                 'language' => 'es',
                 'site' => 'AR'
