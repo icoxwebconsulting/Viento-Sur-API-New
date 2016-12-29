@@ -2109,7 +2109,7 @@ body {
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-img {
+img.full {
   width: 100%;
 }
 img.origin {

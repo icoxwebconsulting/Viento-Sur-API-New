@@ -996,3 +996,24 @@ form.booking-form label {
   color: #003580 !important;
   border-top-width: thick;
 }
+
+.logos-footer {
+  padding: 10px 0 10px 110px;
+  background: #FFFFFF;
+}
+
+/**/
+@media (max-width: 680px) {
+  .logos-footer img {
+    display: flex;
+    margin:0 auto 20px;
+  }
+
+  .logos-footer {
+    padding: 10px 0 10px 0;
+  }
+
+  .logos-footer .footer-copy {
+    text-align: center;
+  }
+}
