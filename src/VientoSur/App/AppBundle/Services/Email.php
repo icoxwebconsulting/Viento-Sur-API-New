@@ -54,4 +54,30 @@ class Email
         ;
         $this->mailer->send($message);
     }
+
+    public function sendCancellationEmail($email, $data)
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Cancelación de reserva')
+            ->setFrom('no-responder@vientosur.net')
+            ->setTo($email)
+            ->setBody(
+                $this->templating->render(
+                    'VientoSurAppAppBundle:Email:HotelCancellation.html.twig',
+                    $data
+                ),
+                'text/html'
+            )/*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->mailer->send($message);
+    }
 }

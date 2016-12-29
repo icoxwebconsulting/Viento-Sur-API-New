@@ -12,7 +12,7 @@
                 <table class="table">
                     <tr>
                         <td>
-                            <img src="{{ hotelDetails.main_picture.url }}/200x150" />
+                            <img src="{{ hotelDetails.main_picture.url }}/200x150" class="origin" />
                         </td>
                         <td>
                             <h3>{{ hotelDetails.name }}</h3>
@@ -26,7 +26,13 @@
                 Direcci&oacute;n:
             </th>
             <td>
-                {{ hotelDetails.location.address }}. {{ hotelDetails.information.es }}
+                {{ hotelDetails.location.address }}.
+            </td>
+        </tr>
+        <tr>
+            <th width="15%">Descripci&oacute;n</th>
+            <td class="text-justify">
+                {{ hotelDetails.information.es }}
             </td>
         </tr>
         <tr>
@@ -81,6 +87,27 @@
                 {{ internal.email }}, {{ internal.holderName }}
             </td>
         </tr>
+        <tr>
+            <th>
+                Habitaci&oacute;n(es):
+            </th>
+            <td>
+                {% for room in reservationDetails.rooms %}
+                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} Adulto(s) {% if room.children > 0 %}{{ room.children }} Niño(s){% endif %}</li>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Pol&iacute;tica de cancelaci&oacute;n:
+            </th>
+            <td>
+                <ul>
+                    {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>Puede cancelar  hasta {{ reservationDetails.hours_before_checkin_penalty }} horas antes del checking.{% endif %}
+                    <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} El cargo por cancelar es $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} Sin cargos por cancelación.{% endif %}</li>
+                </ul>
+            </td>
+        </tr>
         </tbody>
     </table>
 
@@ -102,14 +129,14 @@
             {% if not pdf %}
             <tr>
                 <td>
-                    <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'reservation_id': internal.id}) }}">
+                    <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
                         Descargar PDF
                     </a>
                 </td>
                 <td>
-                    {#<a href="{{ url('viento_sur_app_edit_reservation', {'reservation_id': internal.id}) }}">#}
-                        {#Editar reservaci&oacute;n#}
-                    {#</a>#}
+                    <a href="{{ url('viento_sur_app_edit_reservation', {'id': reservationId}) }}">
+                        Editar reservaci&oacute;n
+                    </a>
                 </td>
             </tr>
             {% endif %}

@@ -364,4 +364,32 @@ class Despegar
         ];
         return $this->curlExec($url, $header, 'GET');
     }
+
+    public function cancelReservation($id)
+    {
+        $url = $this->getServiceUrl() . 'hotels/reservations/' . $id . '/operations' . (($this->isTest) ? '?test=true' : '');
+        $params = [
+            "email" => "info@vientosur.net",
+            "language" => "es",
+            "operation_id" => "CANCELLATION_REQUEST",
+            "site" => "AR"
+        ];
+        $header = [
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'X-ApiKey: ' . $this->apiKey
+        ];
+
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, json_encode($params));
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
+        $results = curl_exec($cSession);
+        curl_close($cSession);
+        $results = json_decode($results, true);
+        return $results;
+    }
 }
