@@ -96,12 +96,7 @@
 
         <div class="row">
 
-            <div class="col-md-3">
-                {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
-            </div>
-            <!-- cierra sidebar -->
-
-            <div class="col-md-9">
+            <div class="col-md-9 col-md-push-3">
 
                 <!-- info del hotel -->
                 <div class="booking-item-details">
@@ -215,70 +210,71 @@
                                         </div>
 
                                         <div class="col-md-9">
-                                            <table class="table">
-                                                <thead>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
                                                     <tr>
                                                         <th>R&eacute;gimen de comida</th>
                                                         <th>Pol&iacute;ticas de cancelaci&oacute;n</th>
                                                         <th></th>
                                                         <th colspan="2" class="text-center">Precio por noche</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                {% for key, rate_plan in rooms %}
-                                                    {% set room = rate_plan[0] %}
-                                                    {% if loop.first %}
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for key, rate_plan in rooms %}
+                                                        {% set room = rate_plan[0] %}
+                                                        {% if loop.first %}
                                                         <script>
                                                             roomCapacity[{{ loop.parent.key }}] = {{ room.rooms[0].capacity.max }};
                                                         </script>
-                                                    {% endif %}
-                                                    <tr>
-                                                        <td>
-                                                            {% if room.meal_plan.id == 'D' %}
-                                                                Bebidas incluidas
-                                                            {% elseif room.meal_plan.id == 'BRA' %}
-                                                                Desayuno americano
-                                                            {% elseif room.meal_plan.id == 'BRL' %}
-                                                                Desayuno a la carta
-                                                            {% elseif room.meal_plan.id == 'BRB' %}
-                                                                Desayuno buffet
-                                                            {% elseif room.meal_plan.id == 'BRC' %}
-                                                                Desayuno continental
-                                                            {% elseif room.meal_plan.id == 'M' %}
-                                                                Media pensión
-                                                            {% elseif room.meal_plan.id == 'H' %}
-                                                                Sólo hospedaje
-                                                            {% elseif room.meal_plan.id == 'F' %}
-                                                                Pensión completa
-                                                            {% elseif room.meal_plan.id == 'A' %}
-                                                                All inclusive
-                                                            {% endif %}
-                                                        </td>
-                                                        <td>
-                                                            {{ room.cancellation_policy.text }}
-                                                        </td>
-                                                        <td style="min-width: 80px;">
-                                                            <span><b>$ {{ room.price_detail.nightly.subtotal|round|number_format(0, ',', '.') }}</b></span>
-                                                        </td>
-                                                        <td>
-                                                            <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}?{{ reservation|url_encode }}" method="POST" >
-                                                                <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
-                                                                <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
-                                                                <input type="hidden" name="hotel_img" value="{{ hotelDetails.main_picture.url }}">
-                                                                <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
-                                                                <input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">
-                                                                <input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">
-                                                                <input type="hidden" name="room_cancellation" value="{{room.cancellation_policy.text}}">
-                                                                <button type="submit" class="btn btn-primary">
-                                                                    Reservar
-                                                                </button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                                </tbody>
-                                            </table>
-
+                                                        {% endif %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if room.meal_plan.id == 'D' %}
+                                                                    Bebidas incluidas
+                                                                {% elseif room.meal_plan.id == 'BRA' %}
+                                                                    Desayuno americano
+                                                                {% elseif room.meal_plan.id == 'BRL' %}
+                                                                    Desayuno a la carta
+                                                                {% elseif room.meal_plan.id == 'BRB' %}
+                                                                    Desayuno buffet
+                                                                {% elseif room.meal_plan.id == 'BRC' %}
+                                                                    Desayuno continental
+                                                                {% elseif room.meal_plan.id == 'M' %}
+                                                                    Media pensión
+                                                                {% elseif room.meal_plan.id == 'H' %}
+                                                                    Sólo hospedaje
+                                                                {% elseif room.meal_plan.id == 'F' %}
+                                                                    Pensión completa
+                                                                {% elseif room.meal_plan.id == 'A' %}
+                                                                    All inclusive
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                {{ room.cancellation_policy.text }}
+                                                            </td>
+                                                            <td style="min-width: 80px;">
+                                                                <span><b>$ {{ room.price_detail.nightly.subtotal|round|number_format(0, ',', '.') }}</b></span>
+                                                            </td>
+                                                            <td>
+                                                                <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking')}}?{{ reservation|url_encode }}" method="POST" >
+                                                                    <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                                                    <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
+                                                                    <input type="hidden" name="hotel_img" value="{{ hotelDetails.main_picture.url }}">
+                                                                    <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
+                                                                    <input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">
+                                                                    <input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">
+                                                                    <input type="hidden" name="room_cancellation" value="{{room.cancellation_policy.text}}">
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        Reservar
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
 
                                         {#<div class="col-md-3 booking-prices align-center">#}
@@ -331,6 +327,11 @@
 
 
             </div> <!-- close col md9-->
+
+            <div class="col-md-3 col-md-pull-9">
+                {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
+            </div>
+            <!-- cierra sidebar -->
         </div>
         <div class="gap"></div>
     </div>
