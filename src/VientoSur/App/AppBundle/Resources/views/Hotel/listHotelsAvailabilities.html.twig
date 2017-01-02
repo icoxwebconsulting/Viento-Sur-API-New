@@ -11,16 +11,9 @@
 
         <div class="row">
 
-            <div class="col-md-3">
-                <div class="content-sidebar">
-                    <div style="padding: 10px 20px 0 20px;">
-                        {{ travellers|raw }}
-                    </div>
-                    {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
-                </div>
-            </div>
 
-            <div class="col-md-9 hotel-results">
+
+            <div class="col-md-9 col-md-push-3 hotel-results">
                 <div class="sorting hotel_filter">
                     {% if sortArray.price is not empty %}
                         <div class="nav-drop booking-sort">
@@ -59,6 +52,15 @@
                         <ul class="pagination" id="pagination">
                         </ul>
                     </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-pull-9">
+                <div class="content-sidebar">
+                    <div style="padding: 10px 20px 0 20px;">
+                        {{ travellers|raw }}
+                    </div>
+                    {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
                 </div>
             </div>
         </div>
