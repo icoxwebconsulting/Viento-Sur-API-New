@@ -205,7 +205,7 @@ class Despegar
         try {
             $params = [
                 'brand_code' => $formNewPaySend['card_code'],
-                'number' => $formNewPaySend['number'],
+                'number' => str_replace(' ', '', $formNewPaySend['number']),
                 'expiration_month' => $formNewPaySend['expiration']->format('m'),
                 'expiration_year' => $formNewPaySend['expiration']->format('Y'),
                 'security_code' => $formNewPaySend['security_code'],
@@ -363,5 +363,33 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function cancelReservation($id)
+    {
+        $url = $this->getServiceUrl() . 'hotels/reservations/' . $id . '/operations' . (($this->isTest) ? '?test=true' : '');
+        $params = [
+            "email" => "info@vientosur.net",
+            "language" => "es",
+            "operation_id" => "CANCELLATION_REQUEST",
+            "site" => "AR"
+        ];
+        $header = [
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'X-ApiKey: ' . $this->apiKey
+        ];
+
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, json_encode($params));
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        curl_setopt($cSession, CURLOPT_ACCEPT_ENCODING, "");
+        $results = curl_exec($cSession);
+        curl_close($cSession);
+        $results = json_decode($results, true);
+        return $results;
     }
 }

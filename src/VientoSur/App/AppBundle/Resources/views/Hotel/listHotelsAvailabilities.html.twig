@@ -11,12 +11,10 @@
 
         <div class="row">
 
-            <div class="col-md-3">
-                {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
-            </div>
 
-            <div class="col-md-9 hotel-results">
-                <div class="sorting">
+
+            <div class="col-md-9 col-md-push-3 hotel-results">
+                <div class="sorting hotel_filter">
                     {% if sortArray.price is not empty %}
                         <div class="nav-drop booking-sort">
                             <h5 class="booking-sort-title"><a href="#">Precio: <span id="sort_price" class="sort_name">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
@@ -56,6 +54,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-3 col-md-pull-9">
+                <div class="content-sidebar">
+                    <div style="padding: 10px 20px 0 20px;">
+                        {{ travellers|raw }}
+                    </div>
+                    {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
+                </div>
+            </div>
         </div>
         <div class="gap"></div>
         <!-- Modal -->
@@ -72,7 +79,7 @@
                 </div>
             </div>
         </div>
-        {{ dump(items.sorting) }}
+        {#{{ dump(items.sorting) }}#}
     </div>
 {% endblock %}
 
@@ -164,15 +171,10 @@
                 })
             });
 
-            $("#field-hotel-checkin").datepicker({
-                "setDate": new Date()
-            });
-
             {#Orden de los elementos#}
             $('.nav-drop-menu-a').on('click', function () {
                 var text = this.text;
                 var category = $(this).data('category');
-                console.log(this)
                 if (text != $('#sortSelected').text()) {
                     asynLoad({
                         'sorting': $(this).data('value'),

@@ -6,17 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use VientoSur\App\AppBundle\Entity\Passengers;
 use VientoSur\App\AppBundle\Entity\Reservation;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use VientoSur\App\AppBundle\Services\PaymentMethods;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
@@ -416,15 +413,16 @@ class HotelController extends Controller
         ));
 
         $roomDetail = [];
-        foreach ($dispoHotel['roompacks'] as $roompack) {
-            foreach ($roompack['rooms'] as $room) {
-                $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
-            }
-        }
-
         $roomTypes = [];
-        foreach ($hotelDetails[0]['room_types'] as $room) {
-            $roomTypes[$room['id']] = $room;
+        if (isset($hotelDetails[0]['room_types'])) {
+            foreach ($dispoHotel['roompacks'] as $roompack) {
+                foreach ($roompack['rooms'] as $room) {
+                    $roomDetail[$room['room_type_id']][$roompack['roompack_classification']][] = $roompack;
+                }
+            }
+            foreach ($hotelDetails[0]['room_types'] as $room) {
+                $roomTypes[$room['id']] = $room;
+            }
         }
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
@@ -476,7 +474,8 @@ class HotelController extends Controller
             'name' => $request->get('hotel_name'),
             'img' => $request->get('hotel_img'),
             'stars' => $request->get('hotel_stars'),
-            'address' => $request->get('hotel_address')
+            'address' => $request->get('hotel_address'),
+            'room_cancellation' => $request->get('room_cancellation')
         ]);
 
         return $this->redirect($this->generateUrl('viento_sur_app_boking_hotel_pay', array(
@@ -618,6 +617,7 @@ class HotelController extends Controller
                                 $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
                                     'hotelDetails' => $hotelDetails,
                                     'reservationDetails' => $reservationDetails,
+                                    'reservationId' => base64_encode($reservation->getId()),
                                     'detail' => $detail,
                                     'hotelId' => $hotelAvailabilities->hotel->id,
                                     'internal' => $reservation,
@@ -631,6 +631,7 @@ class HotelController extends Controller
                         return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
                             'hotelDetails' => $hotelDetails,
                             'reservationDetails' => $reservationDetails,
+                            'reservationId' => base64_encode($reservation->getId()),
                             'detail' => $detail,
                             'hotelId' => $hotelAvailabilities->hotel->id,
                             'internal' => $reservation,
@@ -738,7 +739,7 @@ class HotelController extends Controller
         $detail = $request->get('detail');
         $hotelId = $request->get('hotel_id');
         $email = $request->get('email');
-        $reservationId = $request->get('reservation_id');
+        $reservationId = $request->get('id');
 
         $em = $this->getDoctrine()->getManager();
         $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
@@ -750,6 +751,7 @@ class HotelController extends Controller
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
         ));
+
         $reservationDetails = $this->get('despegar')->getReservationDetails($detail['reservation_id'], array(
             'email' => 'info@vientosur.net',
             'language' => 'es',
@@ -783,6 +785,85 @@ class HotelController extends Controller
     {
         return new JsonResponse(
             $this->get('despegar')->getCardDetails($request->get('card'))
+        );
+    }
+
+    /**
+     * @Route("/booking/edit/{id}", name="viento_sur_app_edit_reservation")
+     * * @Method("GET")
+     * @Template()
+     */
+    public function editReservationAction($id, Request $request)
+    {
+        $despegar = $this->get('despegar');
+        $id = base64_decode($id);
+        $em = $this->getDoctrine()->getManager();
+        $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
+
+        $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
+            'email' => 'info@vientosur.net',
+            'language' => 'es',
+            'site' => 'AR'
+        ), $this->getParameter('is_test'));
+
+        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+            'ids' => $reservation['hotel']['id'],
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ));
+
+        return [
+            'hotelDetails' => $hotelDetails[0],
+            'internal' => $internal,
+            'reservationDetails' => $reservation
+        ];
+    }
+
+    /**
+     * @Route("/booking/edit/{id}", name="viento_sur_app_edit_patch_reservation")
+     * @Method("PATCH")
+     */
+    public function patchEditReservationAction($id, Request $request)
+    {
+        $despegar = $this->get('despegar');
+        $cancel = $despegar->cancelReservation($id);
+        $result = false;
+
+        if ($cancel && isset($cancel['id'])) {
+            $result = true;
+            $em = $this->getDoctrine()->getManager();
+            $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
+
+            if ($internal != null) {
+                $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
+                    'email' => 'info@vientosur.net',
+                    'language' => 'es',
+                    'site' => 'AR'
+                ), $this->getParameter('is_test'));
+
+                $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+                    'ids' => $reservation['hotel']['id'],
+                    'language' => 'es',
+                    'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+                    'resolve' => 'merge_info',
+                    'catalog_info' => 'true'
+                ));
+
+                $this->get('email.service')->sendCancellationEmail($internal->getEmail(), array(
+                    'hotelDetails' => $hotelDetails[0],
+                    'reservationDetails' => $reservation,
+                    'internal' => $internal,
+                    'idCancellation' => $cancel['id']
+                ));
+            }
+        }
+        return new JsonResponse(
+            array(
+                "cancelled" => $result,
+                "id" => (($cancel != null) ? $cancel['id'] : 0)
+            )
         );
     }
 }

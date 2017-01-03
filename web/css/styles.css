@@ -2109,7 +2109,7 @@ body {
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-img {
+img.full {
   width: 100%;
 }
 img.origin {
@@ -6881,7 +6881,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   font-size: 14px;
 }
 .booking-sort .booking-sort-title > a {
-  color: #737373;
+  /*color: #737373;*/
 }
 .booking-item-meta .booking-item-rating {
   border: none;

@@ -38,7 +38,7 @@
 .nav-drop .fa-angle-down {
   font-size: 20px;
   font-weight: bold;
-  color: #ccc;
+  /*color: #ccc;*/
 }
 .search-tabs-abs {
   left: 0;
@@ -965,4 +965,55 @@ h4.booking-item-title {
 }
 .vs-color-copy {
   color: #003580 !important;
+}
+
+.amenities-list {
+  list-style-type: none;
+}
+
+.footer-copy {
+  color: #003580;
+  font-size: x-small;
+  padding-top: 40px;
+}
+
+form.booking-form {
+  color: #003580;
+}
+
+form.booking-form label {
+  font-weight: bold;
+}
+
+.top-buffer {
+  margin-top: 15px;
+}
+
+.hotel_filter {
+  margin-bottom: 10px;
+  border: 1px solid #003580;
+  padding: 5px 0 0 10px;
+  color: #003580 !important;
+  border-top-width: thick;
+}
+
+.logos-footer {
+  padding: 10px 0 10px 110px;
+  background: #FFFFFF;
+}
+
+/**/
+@media (max-width: 680px) {
+  .logos-footer img {
+    display: flex;
+    margin:0 auto 20px;
+  }
+
+  .logos-footer {
+    padding: 10px 0 10px 0;
+  }
+
+  .logos-footer .footer-copy {
+    text-align: center;
+  }
 }
