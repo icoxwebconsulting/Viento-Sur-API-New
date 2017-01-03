@@ -5,13 +5,15 @@
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>Origen</label>
-                <input class="typeahead form-control" id="from-flight" name="from-flight" placeholder="Ingresa desde dónde viajas" type="text"/>
+                <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="Ingresa desde dónde viajas" type="text"/>
+                <input id="originFlight" name="originFlight" type="hidden" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>Destino</label>
-                <input class="typeahead form-control" id="to-flight" name="to-flight" placeholder="Ingresa hacia dónde viajas" type="text"/>
+                <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="Ingresa hacia dónde viajas" type="text"/>
+                <input id="destinationFlight" name="destinationFlight" type="hidden" />
             </div>
         </div>
         <div> <!--class="input-daterange" data-date-format="d M, D"-->
@@ -29,65 +31,37 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group form-group-sm form-group-select-plus">
-                <label>Adultos</label>
-                <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                    <label class="btn btn-primary active">
-                        <input type="radio" name="adults-flight" />1</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="adults-flight" />2</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="adults-flight" />3</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="adults-flight" />3+</label>
-                </div>
-                <select class="form-control hidden" name="adults-plus">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option selected="selected">4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
+            <div class="form-group form-group-sm">
+                <label for="adultsPassengers">Adultos</label>
+                <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
+                    <option value="1" selected="selected">1</option>
+                    <option value="2" >2</option>
+                    <option value="3" >3</option>
+                    <option value="4" >4</option>
+                    <option value="5" >5</option>
+                    <option value="6" >6</option>
+                    <option value="7" >7</option>
+                    <option value="8" >8</option>
                 </select>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group form-group-sm form-group-select-plus">
-                <label>Niños</label>
-                <div class="btn-group btn-group-select-num children-num" data-toggle="buttons">
-                    <label class="btn btn-primary active">
-                        <input type="radio" name="childrens" />0</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="childrens" />1</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="childrens" />2</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="childrens" />3</label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="childrens" />3+</label>
-                </div>
-                <select class="form-control hidden" id="childrens-plus" name="childrens-plus">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option selected="selected">4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
+            <div class="form-group form-group-sm">
+                <label for="childrenPassengers">Menores</label>
+                <select id="childrenPassengers" class="form-control coupled" name="childrenPassengers" data-couple="adultsPassengers.1">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
                 </select>
             </div>
         </div>
         <!--se abre si hay menores-->
-        <div class="col-md-12 MenoresNum mb10 hidden">
+        <div class="col-md-12 MenoresNum mb10 hidden" id="menorGroup">
             <div class="form-group form-group-sm form-group-select-plus">
                 <label for="field-hotel-adult">Edad de los menores al finalizar el viaje</label>
             </div>

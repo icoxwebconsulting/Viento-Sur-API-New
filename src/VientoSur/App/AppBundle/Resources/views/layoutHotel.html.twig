@@ -125,6 +125,29 @@
                 from.datepicker("option", "maxDate", getDate(this));
             });
 
+            var fromFlight = $("#start-flight").datepicker({
+                dateFormat: dateFormat,
+                dayNamesMin: dayNamesMin,
+                monthNames: monthNames,
+                defaultDate: "+1w",
+                numberOfMonths: 2,
+                minDate: 0,
+                onClose: function( selectedDate ) {
+                    var minDate = $(this).datepicker('getDate');
+                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                    $( "#end-flight" ).datepicker( "option", "minDate", newMin );
+                }
+            });
+            var toFlight = $("#end-flight").datepicker({
+                dateFormat: dateFormat,
+                dayNamesMin: dayNamesMin,
+                monthNames: monthNames,
+                defaultDate: "+1w",
+                numberOfMonths: 2
+            }).on("change", function () {
+                from.datepicker("option", "maxDate", getDate(this));
+            });
+
             function getDate(element) {
                 var date;
                 try {

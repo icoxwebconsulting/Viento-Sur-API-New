@@ -101,74 +101,52 @@
 <script>
     $(document).ready(function () {
         {#Código para el formulario de búsqueda de vuelos#}
-        $('#childrens-value').val(0);
-        $('#adults-value').val(1);
-        $('input[type=radio][name=childrens]').change(function () {
-            var childrens = $.trim($(this).parent().text());
-            if (childrens > 0 || childrens == '3+') {
-                if (childrens == '3+') {
-                    childrens = 4;
-                } else {
-                    childrens = Number(childrens);
-                }
-                for (var i = 1; i < 8; i++) {
-                    var selector = 'field-menor-' + i;
-                    if (i <= childrens) {
-                        {#Para selccionar la clase#}
-                        $('.' + selector).show();
-                        {#Para selccionar el elemento#}
-                        $('#' + selector).prop('required', true);
-                    } else {
-                        {#Para selccionar la clase#}
-                        $('.' + selector).hide();
-                        {#Para selccionar el elemento#}
-                        $('#' + selector).removeProp('required');
-                    }
-                }
-                $('.MenoresNum').removeClass('hidden');
-            } else {
-                for (var i = 1; i < 8; i++) {
-                    var selector = 'field-menor-' + i;
-                    {#Para selccionar la clase#}
-                    $('.' + selector).hide();
-                    {#Para selccionar el elemento#}
-                    $('#' + selector).removeProp('required');
-                }
-                $('.MenoresNum').addClass('hidden');
+        var url = Routing.generate('flight_autocomplete');
+        $('#from-flight').autocomplete({
+            serviceUrl: url,
+            onSelect: function (suggestion) {
+                $("#originFlight").val(suggestion.data.id);
+            },
+            minChars: 3,
+            groupBy: 'category',
+            onInvalidateSelection: function () {
+                console.log("invalidado");
+                $("#originFlight").val('');
             }
-            $('#childrens-value').val(childrens);
         });
 
-        $('#childrens-plus').change(function () {
+        $('#to-flight').autocomplete({
+            serviceUrl: url,
+            onSelect: function (suggestion) {
+                $("#destinationFlight").val(suggestion.data.id);
+            },
+            minChars: 3,
+            groupBy: 'category',
+            onInvalidateSelection: function () {
+                console.log("invalidado");
+                $("#destinationFlight").val('');
+            }
+        });
+
+        $("#childrenPassengers").change(function () {
             for (var i = 1; i < 8; i++) {
                 var selector = 'field-menor-' + i;
                 if (i <= this.value) {
-                    {#Para selccionar la clase#}
                     $('.' + selector).show();
-                    {#Para selccionar el elemento#}
                     $('#' + selector).prop('required', true);
                 } else {
-                    {#Para selccionar la clase#}
                     $('.' + selector).hide();
-                    {#Para selccionar el elemento#}
                     $('#' + selector).removeProp('required');
                 }
             }
-            if (this.value == 0) {
-                $('.MenoresNum').addClass('hidden');
+            if (this.value > 0) {
+                $("#menorGroup").removeClass('hidden');
             } else {
-                $('.MenoresNum').removeClass('hidden');
+                $("#menorGroup").addClass('hidden');
             }
-            $('#childrens-value').val(this.value);
         });
 
-        $('input[type=radio][name=adults]').change(function () {
-            var adults = $.trim($(this).parent().text());
-            $('#adults-value').val(adults);
-        });
-        $('#adults-plus').change(function () {
-            $('#adults-value').val(this.value);
-        });
+        {#Fin código para el formulario de búsqueda de vuelos#}
 
         $('.slimmenu li').on('click', function (event) {
             //event.preventDefault();

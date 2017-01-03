@@ -69,7 +69,7 @@ class FlightController extends Controller
 
     /**
      *
-     * @Route("/autocomplete/", name="flight_autocomplete")
+     * @Route("/autocomplete-flight", name="flight_autocomplete")
      * @Method("GET")
      */
     public function autoCompleteFlightAction(Request $request)
@@ -79,19 +79,33 @@ class FlightController extends Controller
             'query' => $request->get('query'),
             'product' => $type,
             'locale' => 'es-AR',
-            'city_result' => '10'
+            'city_result' => '5',
+            'airport_result' => '5'
         ];
 
         $results = $this->get('despegar')->autocomplete($urlParams);
         $response = [];
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {
-                $city = Array();
-                $city["value"] = $item["description"];
-                $city["data"] = substr($item["id"], 5);
-                $response[] = $city;
+                if ($item['facet'] == 'CITY') {
+                    $response[] = [
+                        'value' => $item["description"],
+                        'data' => [
+                            'category' => 'Ciudades',
+                            'id' => $item["id"]
+                        ]
+                    ];
+                } else if ($item['facet'] == 'AIRPORT') {
+                    $response[] = [
+                        'value' => $item["description"],
+                        'data' => [
+                            'category' => 'Aereopuertos',
+                            'id' => 'AIRPORT-'  . $item["id"]
+                        ]
+                    ];
+                }
             }
         }
-        return new JsonResponse(array("suggestions" => $response));
+        return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
     }
 }
