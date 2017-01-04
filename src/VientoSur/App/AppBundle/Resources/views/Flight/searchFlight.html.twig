@@ -1,19 +1,29 @@
 <h2><b>Buscá tu vuelo</b></h2>
 
-<form name="searchFlight" id="search-flights" action="{{ path('viento_sur_send_flights', { 'page': '1' } ) }}" method="GET">
+<form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights' ) }}" method="GET">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>Origen</label>
-                <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="Ingresa desde dónde viajas" type="text"/>
-                <input id="originFlight" name="originFlight" type="hidden" />
+                {% if isTest %}
+                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="Ingresa desde dónde viajas" type="text"/>
+                    <input id="originFlight" name="originFlight" type="hidden"/>
+                {% else %}
+                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="Ingresa desde dónde viajas" type="text" required />
+                    <input id="originFlight" name="originFlight" type="hidden" required />
+                {% endif %}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>Destino</label>
-                <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="Ingresa hacia dónde viajas" type="text"/>
-                <input id="destinationFlight" name="destinationFlight" type="hidden" />
+                {% if isTest %}
+                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="Ingresa hacia dónde viajas" type="text"/>
+                    <input id="destinationFlight" name="destinationFlight" type="hidden" />
+                {% else %}
+                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="Ingresa hacia dónde viajas" type="text" required />
+                    <input id="destinationFlight" name="destinationFlight" type="hidden" required />
+                {% endif %}
             </div>
         </div>
         <div> <!--class="input-daterange" data-date-format="d M, D"-->

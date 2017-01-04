@@ -18,6 +18,42 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class FlightController extends Controller
 {
     /**
+     * @Route("/send/flights/process-search", name="viento_sur_process_search_flights")
+     * @Method("POST")
+     */
+    public function sendFlightsProcessSearch(Request $request)
+    {
+        if ($this->getParameter('is_test')) {
+            $from = '';
+            $to = '';
+        } else {
+            $from = $request->get('from-flight');
+            $to = $request->get('to-flight');
+        }
+
+        list($day, $month, $year) = explode("/", $request->get('start'));
+        $fromDate = $year . '-' . $month . '-' . $day;
+        list($day, $month, $year) = explode("/", $request->get('end'));
+        $toDate = $year . '-' . $month . '-' . $day;
+
+        $adults = $request->get('adults-value');
+        $childrens = $request->get('childrens-value');
+        $childrenQty = 0;
+        $infantQty = 0;
+        for ($i = 1; $i <= $childrens; $i++) {
+            if ($request->get('field-menor-' . $i) == 'A') {
+                $infantQty++;
+            } else {
+                $childrenQty++;
+            }
+        }
+
+        return $this->redirectToRoute('', array(
+        ));
+    }
+
+
+    /**
      *
      * @Route("/send/flights/itineraries/{page}", name="viento_sur_send_flights")
      * @Method("GET")
@@ -100,7 +136,7 @@ class FlightController extends Controller
                         'value' => $item["description"],
                         'data' => [
                             'category' => 'Aereopuertos',
-                            'id' => 'AIRPORT-'  . $item["id"]
+                            'id' => 'AIRPORT-' . $item["id"]
                         ]
                     ];
                 }
