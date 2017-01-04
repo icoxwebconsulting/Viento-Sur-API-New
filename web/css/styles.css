@@ -1864,9 +1864,9 @@ body {
 }
 .top-area,
 .special-area {
-  height: 700px;
+  /*height: 700px;*/
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .special-area {
@@ -2109,7 +2109,7 @@ body {
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-img {
+img.full {
   width: 100%;
 }
 img.origin {
@@ -10924,7 +10924,7 @@ img.mfp-img {
   }
   .top-area,
   .special-area {
-    height: 700px;
+    /*height: 700px;*/
   }
   .bg-holder > .bg-parallax {
     background-attachment: scroll;

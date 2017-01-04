@@ -40,6 +40,7 @@ $(document).ready(function () {
         // pagination: owlSliderPagination,
         singleItem: true,
         navigation: true,
+        pagination: false,
         navigationText: ['', ''],
         transitionStyle: 'fade',
         autoPlay: 4500
