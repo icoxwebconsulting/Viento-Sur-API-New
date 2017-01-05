@@ -6,10 +6,14 @@ $(document).ready(function () {
         defaultDate: "+1w",
         numberOfMonths: 2,
         minDate: 0,
-        onClose: function( selectedDate ) {
-            var minDate = $(this).datepicker('getDate');
-            var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
-            $( "#end-flight" ).datepicker( "option", "minDate", newMin );
+        onClose: function (selectedDate) {
+            try {
+                var minDate = $(this).datepicker('getDate');
+                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                $("#end-flight").datepicker("option", "minDate", newMin);
+            } catch (e) {
+                console.error(e);
+            }
         }
     });
     var toFlight = $("#end-flight").datepicker({
