@@ -24,11 +24,15 @@ class FlightController extends Controller
     public function sendFlightsProcessSearch(Request $request)
     {
         if ($this->getParameter('is_test')) {
-            $from = '';
-            $to = '';
+            $fromText = 'Buenos Aires, Argentina';
+            $toText = 'Miami, Estados Unidos';
+            $from = 'BUE';
+            $to = 'MIA';
         } else {
-            $from = $request->get('from-flight');
-            $to = $request->get('to-flight');
+            $fromText = $request->get('from-flight');
+            $toText = $request->get('to-flight');
+            $from = $request->get('originFlight');
+            $to = $request->get('destinationFlight');
         }
 
         list($day, $month, $year) = explode("/", $request->get('start'));
@@ -36,8 +40,8 @@ class FlightController extends Controller
         list($day, $month, $year) = explode("/", $request->get('end'));
         $toDate = $year . '-' . $month . '-' . $day;
 
-        $adults = $request->get('adults-value');
-        $childrens = $request->get('childrens-value');
+        $adults = $request->get('adultsPassengers');
+        $childrens = $request->get('childrenPassengers');
         $childrenQty = 0;
         $infantQty = 0;
         for ($i = 1; $i <= $childrens; $i++) {
@@ -48,58 +52,57 @@ class FlightController extends Controller
             }
         }
 
-        return $this->redirectToRoute('', array(
+        $session = $request->getSession();
+        $session->set('departure_date', $request->get('start'));
+        $session->set('return_date', $request->get('end'));
+        $session->set('origin_flight', [
+            'text' => $fromText,
+            'id' => $from
+        ]);
+        $session->set('destination_flight', [
+            'text' => $toText,
+            'id' => $to
+        ]);
+
+        return $this->redirectToRoute('viento_sur_send_flights', array(
+            'departure_date' => $fromDate,
+            'return_date' => $toDate,
+            'from' => $from,
+            'to' => $to,
+            'adults' => $adults,
+            'childrens' => $childrenQty, // I para presentar infante en asiento, C para representar niño de 2 a 11 años, si hay más de uno, separados por guion "-"
+            'infants' => $infantQty //cantidad de infantes en brazos
         ));
     }
 
 
     /**
-     *
-     * @Route("/send/flights/itineraries/{page}", name="viento_sur_send_flights")
+     * @Route("/send/flights/results/{from}/{to}/{departure_date}/{return_date}/{adults}/{childrens}/{infants}", name="viento_sur_send_flights")
      * @Method("GET")
      */
-    public function sendFlightsItinerariesAction($page, Request $request)
+    public function sendFlightsItinerariesAction($from, $to, $departure_date, $return_date, $adults, $childrens, $infants, Request $request)
     {
-        //TODO: traer los valores de la consulta del api
-        $from = 'BUE';//$request->get('from-flight');
-        $to = 'MAD';//$request->get('to-flight');
-        list($day, $month, $year) = explode("/", $request->get('start'));
-        $fromDate = $year . '-' . $month . '-' . $day;
-        list($day, $month, $year) = explode("/", $request->get('end'));
-        $toDate = $year . '-' . $month . '-' . $day;
 
-        $adults = $request->get('adults-value');
-        $childrens = $request->get('childrens-value');
-        $childrenQty = 0;
-        $infantQty = 0;
-        for ($i = 1; $i <= $childrens; $i++) {
-            if ($request->get('field-menor-' . $i) == 'A') {
-                $infantQty++;
-            } else {
-                $childrenQty++;
-            }
-        }
-
-        $offset = ($page - 1) * 10;
 
         $urlParams = [
             "site" => "AR",
+            "departure_date" => $departure_date,
+            "return_date" => $return_date,
+            "language" => "es",
             "from" => $from,
             "to" => $to,
-            "departure_date" => $fromDate,
             "adults" => $adults,
-            "return_date" => $toDate,
-            "children" => $childrenQty,
-            "infants" => $infantQty,
-            "offset" => $offset,
-            "limit" => "10"
+            "children" => $childrens,
+            "infants" => $infants,
+            "offset" => '0',
+            "limit" => "10",
+            "currency" => "ARS"
         ];
         $results = $this->get('despegar')->getFlightItineraries($urlParams);
 
         return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
-            'items' => $results,
-            'offset' => $offset,
-            'limit' => "10"
+            'flightMenu' => true,
+            'items' => $results
         ));
     }
 
@@ -123,23 +126,19 @@ class FlightController extends Controller
         $response = [];
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {
+                $category = '';
                 if ($item['facet'] == 'CITY') {
-                    $response[] = [
-                        'value' => $item["description"],
-                        'data' => [
-                            'category' => 'Ciudades',
-                            'id' => $item["id"]
-                        ]
-                    ];
+                    $category = 'Ciudades';
                 } else if ($item['facet'] == 'AIRPORT') {
-                    $response[] = [
-                        'value' => $item["description"],
-                        'data' => [
-                            'category' => 'Aereopuertos',
-                            'id' => 'AIRPORT-' . $item["id"]
-                        ]
-                    ];
+                    $category = 'Aereopuertos';
                 }
+                $response[] = [
+                    'value' => $item["description"],
+                    'data' => [
+                        'category' => $category,
+                        'id' => $item["facet"] . '-' . $item["code"]
+                    ]
+                ];
             }
         }
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));

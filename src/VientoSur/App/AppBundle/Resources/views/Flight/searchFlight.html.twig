@@ -1,6 +1,6 @@
 <h2><b>Buscá tu vuelo</b></h2>
 
-<form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights' ) }}" method="GET">
+<form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights' ) }}" method="POST">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
@@ -165,7 +165,4 @@
     <div class="text-right">
         <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
     </div>
-
-    <input type="hidden" id="adults-value" name="adults-value" value="1" />
-    <input type="hidden" id="childrens-value" name="childrens-value" value="0" />
 </form>

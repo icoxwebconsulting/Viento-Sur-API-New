@@ -258,9 +258,14 @@ class Despegar
     public function getFlightItineraries($urlParams)
     {
         $url = $this->getServiceUrl() . 'flights/itineraries?' . http_build_query($urlParams);
+
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST:true';
+        }
+
         return $this->curlExec($url, $header, 'GET');
     }
 
