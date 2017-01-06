@@ -5,7 +5,17 @@
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
             <li><a href="#">Vuelos</a></li>
-            <li><a href="#"></a></li>
+            {% if app.session.get('origin_flight').text is defined %}
+                {% set origin = app.session.get('origin_flight').text|split(',') %}
+            {% else %}
+                {% set origin = "" %}
+            {% endif %}
+            {% if app.session.get('destination_flight').text is defined %}
+                {% set destination = app.session.get('destination_flight').text|split(',') %}
+            {% else %}
+                {% set destination = "" %}
+            {% endif %}
+            <li><a href="#">{{ items.paging.total }} Vuelos de {{ origin[0] }} a {{ destination[0] }}</a></li>
         </ul>
 
         <br />
@@ -17,93 +27,16 @@
             </div>
 
             <div class="col-md-9">
-                {{ dump(items) }}
-                {#booking-list#}
-                {#<ul class="booking-list">#}
-                {#{% for item in items.items %}#}
-                    {#<li>#}
-                        {#<div class="row">#}
-                            {#<div class="col-md-4">#}
-                                {#{{ loop.index }}#}
-                            {#</div>#}
-                            {#<div class="col-md-5">#}
-                                {#{{ loop.index }}#}
-                            {#</div>#}
-                            {#<div class="col-md-3">#}
-                                {#{{ loop.index }}#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</li>#}
-                    {#Itinerario : {{ loop.index }}#}
-                    {#Salida:#}
-                    {#{% for outbound_choice in item.outbound_choices %}#}
-                        {#<table border="1">#}
-                            {#<tr>#}
-                                {#<td>Duracion:</td>#}
-                                {#<td>opcion: {{ loop.index }}</td>#}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<td>{{ outbound_choice.duration }}</td>#}
-                                {#<td>#}
-                                    {#{% for segment in outbound_choice.segments %}#}
-                                        {#<table>#}
-                                            {#<tr>#}
-                                                {#Escala: {{ loop.index }}#}
-                                                {#Aeropuerto salida: {{ segment.from }}#}
-                                                {#Aeropuerto llegada: {{ segment.to }}#}
-                                                {#fecha salida : {{ segment.departure_datetime }}#}
-                                                {#fecha llegada : {{ segment.arrival_datetime }}#}
-                                                {#duration: {{ segment.duration }}#}
-                                                {#airline: {{ segment.airline }}#}
-                                            {#</tr>#}
-                                        {#</table>#}
-                                    {#{% endfor %}#}
+                <div class="flight-filter">
 
-                                {#</td>#}
+                </div>
 
-                            {#</tr>#}
-                        {#</table>#}
-                    {#{% endfor %}#}
-                    {#Retorno:#}
-                    {#{% for inbound_choice in item.inbound_choices %}#}
-                        {#<table border="1">#}
-                            {#<tr>#}
-                                {#<td>Duracion:</td>#}
-                                {#<td>Opcion: {{ loop.index }}</td>#}
-                            {#<tr>#}
-                                {#<td>{{ inbound_choice.duration }}</td>#}
-                                {#<td>#}
-                                    {#{% for segment in inbound_choice.segments %}#}
-                                        {#<table>#}
-                                            {#<tr>#}
-                                                {#Escala: {{ loop.index }}#}
-                                                {#Aeropuerto salida: {{ segment.from }}#}
-                                                {#Aeropuerto llegada: {{ segment.to }}#}
-                                                {#fecha salida : {{ segment.departure_datetime }}#}
-                                                {#fecha llegada : {{ segment.arrival_datetime }}#}
-                                                {#duration: {{ segment.duration }}#}
-                                                {#airline: {{ segment.airline }}#}
-                                            {#</tr>#}
-                                        {#</table>#}
-                                    {#{% endfor %}#}
+                <ul class="booking-list">
+                    {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
+                </ul>
 
-                                {#</td>#}
-                            {#</tr>#}
-                        {#</table>#}
-                    {#{% endfor %}#}
-                    {#<table>#}
-                    {#<tr>#}
-                    {#currency:{{ item.price_detail.currency }}#}
-                    {#charges:{{item.price_detail.charges}}#}
-                    {#adult_base:{{ item.price_detail.adult_base }}#}
-                    {#adults_subtotal:{{ item.price_detail.adults_subtotal }}#}
-                    {#total:{{ item.price_detail.total }}#}
-                    {#</tr>#}
-                    {#</table>#}
-                    {#<br>#}
-                    {#<hr>#}
-                {#{% endfor %}#}
-                {#</ul>#}
+                {#{{ dump(items) }}#}
+
             </div>
         </div>
 
