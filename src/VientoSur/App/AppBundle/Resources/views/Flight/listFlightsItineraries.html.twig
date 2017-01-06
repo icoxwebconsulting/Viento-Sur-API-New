@@ -17,8 +17,9 @@
             </div>
 
             <div class="col-md-9">
+                {{ dump(items) }}
                 {#booking-list#}
-                <ul class="booking-list">
+                {#<ul class="booking-list">#}
                 {#{% for item in items.items %}#}
                     {#<li>#}
                         {#<div class="row">#}
@@ -102,7 +103,7 @@
                     {#<br>#}
                     {#<hr>#}
                 {#{% endfor %}#}
-                </ul>
+                {#</ul>#}
             </div>
         </div>
 
