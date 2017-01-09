@@ -127,7 +127,20 @@
                                     <button data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}">Detalle</button>
                                     <div id="detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
                                         {% for segment in inbound.segments %}
-                                            {{ dump(segment) }}
+                                            <div class="table-responsive">
+                                                <table class="table table-condensed">
+                                                    <tr class="active">
+                                                        <td>
+                                                            {% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %} -
+                                                            {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}
+                                                        </td>
+                                                        <td>
+                                                            Duración total: {{ item.duration }}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            {#{{ dump(segment) }}#}
                                         {% endfor %}
                                     </div>
                                 </li>
