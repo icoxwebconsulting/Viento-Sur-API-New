@@ -1062,10 +1062,10 @@
     </form>
     {% if items.facets is defined %}
         <aside class="booking-filters">
-            <h3>Filtrar por:</h3>
+            <h3 title="Hoteles en {{ app.session.get('destination').text }} - Filtros - VientoSur.net">Filtrar por:</h3>
             <ul class="list booking-filters-list">
                 <li class="hotel_name">
-                    <h5 class="booking-filters-title">Nombre del Hotel</h5>
+                    <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Nombre del hotel - VientoSur.net">Nombre del Hotel</h5>
                     <input id="hotel-autocomplete" name="hotel-autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Ingresa el nombre del hotel" />
                     <input id="hotel" name="hotel" type="hidden" />
                     <button class="btn btn-primary btn-sm disabled" id="btn-aplicar" style="margin-top: 5px;">Aplicar</button>
@@ -1074,7 +1074,7 @@
 
                     {% if facet.criteria == 'total_price_range' %}
                         <li class="total_price_range hidden">
-                            <h5 class="booking-filters-title">Precio</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Precio - VientoSur.net">Precio</h5>
                             {% if app.request.get('price_range') is empty %}
                                 <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
                                        data-max="{{ facet.max|round }}"/>
@@ -1091,7 +1091,7 @@
 
                     {% if facet.criteria == 'stars' %}
                         <li class="stars hidden" data-type="stars">
-                            <h5 class="booking-filters-title">Categoría</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Categoría - VientoSur.net">Categoría</h5>
                             {% for stars in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -1112,7 +1112,7 @@
 
                     {% if facet.criteria == 'payment_type' %}
                         <li class="payment_type hidden" data-type="payment_type">
-                            <h5 class="booking-filters-title">Alternativas de Pago</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Alternativas de pago - VientoSur.net">Alternativas de Pago</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -1127,7 +1127,7 @@
 
                     {% if facet.criteria == 'zones' %}
                         <li class="zones hidden" data-type="zones">
-                            <h5 class="booking-filters-title">Zonas</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Zonas - VientoSur.net">Zonas</h5>
                             {% for zone in facet.values %}
                                 <div class="checkbox {% if loop.index > 5 %}zones-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
                                     <label>
@@ -1146,7 +1146,7 @@
 
                     {% if facet.criteria == 'amenities' %}
                         <li class="amenities hidden" data-type="amenities">
-                            <h5 class="booking-filters-title">Servicios</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Servicios - VientoSur.net">Servicios</h5>
                             {% for amenity in facet.values %}
                                 <div class="checkbox {% if loop.index > 5 %}amenities-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
                                     <label>
@@ -1165,7 +1165,7 @@
 
                     {% if facet.criteria == 'hotel_type' %}
                         <li class="hotel_type hidden" data-type="hotel_type">
-                            <h5 class="booking-filters-title">Tipo de alojamiento</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Tipo de alojamiento - VientoSur.net">Tipo de alojamiento</h5>
                             {% for hotel_type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -1180,7 +1180,7 @@
 
                     {% if facet.criteria == 'hotel_chains' %}
                         <li class="hotel_chains hidden" data-type="hotel_chains">
-                            <h5 class="booking-filters-title">Cadena Hotelera</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Cadena Hotelera - VientoSur.net">Cadena Hotelera</h5>
                             {% for hotel_chains in facet.values %}
                                 <div class="checkbox {% if loop.index > 5 %}hotel_chains-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
                                     <label>
@@ -1199,7 +1199,7 @@
 
                     {% if facet.criteria == 'meal_plans' %}
                         <li class="meal_plans hidden" data-type="meal_plans">
-                            <h5 class="booking-filters-title">Régimen</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Régimen - VientoSur.net">Régimen</h5>
                             {% for meal_plans in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -1214,7 +1214,7 @@
 
                     {% if facet.criteria == 'profiles' %}
                         <li class="profiles hidden" data-type="profiles">
-                            <h5 class="booking-filters-title">Perfil del viaje</h5>
+                            <h5 class="booking-filters-title" title="Hoteles en {{ app.session.get('destination').text }} - Filtro Perfil del viaje - VientoSur.net">Perfil del viaje</h5>
                             {% for profiles in facet.values %}
                                 <div class="checkbox {% if loop.index > 5 %}profiles-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
                                     <label>
@@ -1234,7 +1234,6 @@
                 {% endfor %}
             </ul>
         </aside>
-        {#{{ dump(items.facets) }}#}
     {% endif %}
 </div>
 <div class="gap-small"></div>
