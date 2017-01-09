@@ -7,17 +7,15 @@
             <li><a href="#">Hoteles en {{ app.session.get('destination').text }} ({{ items.paging.total }})</a></li>
         </ul>
 
-        <h4 class="booking  s-title"><span class="totalHotels">{{ items.paging.total }}</span> hoteles disponibles para estas fechas en {{ app.session.get('destination').text }} con mejor precio</h4>
+        <h4 class="booking s-title" title="hoteles disponibles para estas fechas en {{ app.session.get('destination').text }} con mejor precio - VientoSur.net"><span class="totalHotels">{{ items.paging.total }}</span> hoteles disponibles para estas fechas en {{ app.session.get('destination').text }} con mejor precio</h4>
 
         <div class="row">
-
-
 
             <div class="col-md-9 col-md-push-3 hotel-results">
                 <div class="sorting hotel_filter">
                     {% if sortArray.price is not empty %}
                         <div class="nav-drop booking-sort">
-                            <h5 class="booking-sort-title"><a href="#">Precio: <span id="sort_price" class="sort_name">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                            <h5 class="booking-sort-title" title="Hoteles en {{ app.session.get('destination').text }} por Precio - VientoSur.net"><a href="#">Precio: <span id="sort_price" class="sort_name">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
                             <ul class="nav-drop-menu">
                                 {{ sortArray.price|raw }}
                             </ul>
@@ -25,19 +23,19 @@
                     {% endif %}
 
                     <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title"><a href="#">Estrellas: <span id="sort_star" class="sort_name">{% if sortArray.selected.category == 'star' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <h5 class="booking-sort-title" title="Hoteles en {{ app.session.get('destination').text }} por Estrellas - VientoSur.net"><a href="#">Estrellas: <span id="sort_star" class="sort_name">{% if sortArray.selected.category == 'star' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
                         <ul class="nav-drop-menu">
                             {{ sortArray.star|raw }}
                         </ul>
                     </div>
                     <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title"><a href="#">Mejor: <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <h5 class="booking-sort-title" title="Hoteles en {{ app.session.get('destination').text }} por Características - VientoSur.net"><a href="#">Mejor: <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
                         <ul class="nav-drop-menu">
                             {{ sortArray.best|raw }}
                         </ul>
                     </div>
                     <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title"><a href="#">Otros: <span id="sort_other" class="sort_name">{% if sortArray.selected.category == 'other' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <h5 class="booking-sort-title" title="Hoteles en {{ app.session.get('destination').text }} por Otras opciones - VientoSur.net"><a href="#">Otros: <span id="sort_other" class="sort_name">{% if sortArray.selected.category == 'other' %} {{ sortArray.selected.name }} {% else %} Seleccione... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
                         <ul class="nav-drop-menu">
                             {{ sortArray.other|raw }}
                         </ul>
@@ -65,13 +63,14 @@
             </div>
         </div>
         <div class="gap"></div>
+
         <!-- Modal -->
         <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Vista de mapa</h4>
+                        <h4 class="modal-title" id="myModalLabel" title="Hoteles en {{ app.session.get('destination').text }} - Vista de mapa - VientoSur.net">Vista de mapa</h4>
                     </div>
                     <div class="modal-body text-center">
                         <div id="mapHotel" style="width:565px; height:500px;"></div>
@@ -79,7 +78,7 @@
                 </div>
             </div>
         </div>
-        {#{{ dump(items.sorting) }}#}
+
     </div>
 {% endblock %}
 
