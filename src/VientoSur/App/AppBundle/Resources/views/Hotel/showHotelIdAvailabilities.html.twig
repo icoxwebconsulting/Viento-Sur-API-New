@@ -104,7 +104,7 @@
                     <header class="booking-item-header">
                         <div class="row">
                             <div class="col-md-8">
-                                <h2 class="lh1em"><b>{{ hotelDetails.name }}</b></h2>
+                                <h2 class="lh1em" title="Hotel {{ hotelDetails.name }} - VientoSur.net"><b>{{ hotelDetails.name }}</b></h2>
                                 <p>{{ hotelDetails.location.address }}</p>
                                 <ul class="icon-list icon-group booking-item-rating-stars">
                                     {% for i in 1..5 %}
@@ -176,11 +176,9 @@
 
                     <div class="col-md-10">
 
-                        {#<h4>Este hotel está en Praga 1 y es ideal para: De lujo</h4>#}
-
                         <p class="text-justify" style="color: #003580">{{ hotelDetails.information.es }}</p>
 
-                        <h4>N&uacute;mero de habitaciones: {{ hotelDetails.number_of_rooms}}</h4>
+                        <h4 title="Hotel {{ hotelDetails.name }} {{ hotelDetails.number_of_rooms}} habitaciones - VientoSur.net">N&uacute;mero de habitaciones: {{ hotelDetails.number_of_rooms}}</h4>
                     </div>
 
                 </div>
@@ -194,7 +192,7 @@
                         var roomTypes = {{ roomTypesEncoded|raw }};
                     </script>
                     {% if roomDetail is not empty %}
-                    <h3>Habitaciones disponibles</h3>
+                    <h3 title="Hotel {{ hotelDetails.name }} - Habitaciones Disponibles - VientoSur.net">Habitaciones disponibles</h3>
                     <ul class="booking-list">
                         {% for key, rooms in roomDetail %}
                             <li>
@@ -297,17 +295,17 @@
 
                 <div class="row row-wrap">
                     <div class="col-md-4">
-                        <h4>Servicios</h4>
+                        <h4 title="Hotel {{ hotelDetails.name }} - Servicios - VientoSur.net">Servicios</h4>
                         <ul class="amenities-list list-services">
                         </ul>
                     </div>
                     <div class="col-md-4">
-                        <h4>Actividades</h4>
+                        <h4 title="Hotel {{ hotelDetails.name }} - Actividades - VientoSur.net">Actividades</h4>
                         <ul class="amenities-list list-recreation">
                         </ul>
                     </div>
                     <div class="col-md-4">
-                        <h4>Generales</h4>
+                        <h4 title="Hotel {{ hotelDetails.name }} - Generales - VientoSur.net">Generales</h4>
                         <ul class="amenities-list list-generals">
                         </ul>
                     </div>
