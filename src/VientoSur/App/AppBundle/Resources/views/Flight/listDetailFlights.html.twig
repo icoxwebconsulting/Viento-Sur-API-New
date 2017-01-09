@@ -24,47 +24,107 @@
                         <ul class="list-group">
                             {% for outbound in item.outbound_choices %}
                                 <li class="list-group-item">
-                                    <input type="radio" name="optionsRadiosOut{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ outbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
-                                    <span class="airline-logo">
-                                        {% set airlines = [] %}
-                                        {% for segment in outbound.segments %}
-                                            {% if segment.airline not in airlines %}
-                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
-                                                {% set airlines = airlines|merge([segment.airline]) %}
+                                    <div>
+                                        <input type="radio" name="optionsRadiosOut{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ outbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
+                                        <span class="airline-logo">
+                                            {% set airlines = [] %}
+                                            {% for segment in outbound.segments %}
+                                                {% if segment.airline not in airlines %}
+                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                                    {% set airlines = airlines|merge([segment.airline]) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                        <span class="departure-time">
+                                            {{ outbound.segments[0].departure_datetime|date("H:i") }}
+                                        </span>
+                                        <span class="scales">
+                                            {% set totalSeg = outbound.segments|length - 1 %}
+                                            {% if totalSeg == 0 %}
+                                                Directo
+                                            {% elseif totalSeg == 1 %}
+                                                {{ totalSeg }} escala
+                                            {% else %}
+                                                {{ totalSeg }} escalas
                                             {% endif %}
-                                        {% endfor %}
-                                    </span>
-                                    <span class="departure-time">
-                                        {{ outbound.segments[0].departure_datetime|date("H:i") }}
-                                    </span>
-
-                                    <span class="scales">
-                                        {% set totalSeg = outbound.segments|length - 1 %}
-                                        {% if totalSeg == 0 %}
-                                            Directo
-                                        {% elseif totalSeg == 1 %}
-                                            {{ totalSeg }} escala
-                                        {% else %}
-                                            {{ totalSeg }} escalas
-                                        {% endif %}
-                                    </span>
-
-                                    <span class="arrival-time">
-                                        {% set lastSeg = outbound.segments|last %}
-                                        {{ lastSeg.arrival_datetime|date("H:i") }}
-                                        <!--falta diferencia en días desde la partida-->
-                                    </span>
-
-                                    <span class="duration">
-                                        {{ outbound.duration }}
-                                    </span>
-
-                                    <button data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}">Detalle</button>
-
+                                        </span>
+                                        <span class="arrival-time">
+                                            {% set lastSeg = outbound.segments|last %}
+                                            {{ lastSeg.arrival_datetime|date("H:i") }}
+                                            <!--falta diferencia en días desde la partida-->
+                                        </span>
+                                        <span class="duration">
+                                            {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
+                                        </span>
+                                        <button class="btn" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</button>
+                                    </div>
+                                    <div class="gap-small"></div>
                                     <div id="detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
-                                        {% for segment in outbound.segments %}
-                                            {{ dump(segment) }}
-                                        {% endfor %}
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="active">
+                                                    <td>
+                                                        <div style="width: 50%; float: left;">
+                                                            {% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text|split(',')[0] }}{% endif %} -
+                                                            {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text|split(',')[0] }}{% endif %}
+                                                        </div>
+                                                        <div class="text-right" style="width: 50%; float: right;">
+                                                            Duración total: {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.validating_carrier }}.png" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                {#segmentos#}
+                                                {% for segment in outbound.segments %}
+                                                    <tr>
+                                                        <td>
+                                                            Sale: {{ segment.departure_datetime|date("d/m/Y", false) }}
+                                                        </td>
+                                                        <td>
+                                                            Llega: {{ segment.arrival_datetime|date("d/m/Y", false) }}
+                                                        </td>
+                                                        <td>
+                                                            DURACIÓN:
+                                                        </td>
+                                                        <td>
+                                                            VUELO N°
+                                                        </td>
+                                                        <td>
+                                                            CLASE
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            {{ segment.from }}
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.to }}
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.flight_id }}
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.cabin_type }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5"></td>
+                                                    </tr>
+                                                    {#<tr>#}
+                                                        {#<td colspan="5">{{ dump(segment) }}</td>#}
+                                                    {#</tr>#}
+                                                {% endfor %}
+                                            </table>
+                                        </div>
                                     </div>
                                 </li>
                             {% endfor %}
@@ -74,7 +134,7 @@
                         <div class="flight-data" style="background-color: #F5F5F5; display: inline-block;width: 100%;height: 45px;">
                             VUELTA
                             <span class="departure-date">
-                                {{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}
+                                {{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y", false) }}
                             </span>
                             <span class="departure-location">
                                 {{ item.inbound_choices[0].segments[0].from }}
@@ -89,66 +149,115 @@
                         <ul class="list-group">
                             {% for inbound in item.inbound_choices %}
                                 <li class="list-group-item">
-                                    <input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
-                                    <span class="airline-logo">
-                                        {% set airlines = [] %}
-                                        {% for segment in inbound.segments %}
-                                            {% if segment.airline not in airlines %}
-                                                <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
-                                                {% set airlines = airlines|merge([segment.airline]) %}
+                                    <div>
+                                        <input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
+                                        <span class="airline-logo">
+                                            {% set airlines = [] %}
+                                            {% for segment in inbound.segments %}
+                                                {% if segment.airline not in airlines %}
+                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                                    {% set airlines = airlines|merge([segment.airline]) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                        <span class="departure-time">
+                                            {{ inbound.segments[0].departure_datetime|date("H:i") }}
+                                        </span>
+                                        <span class="scales">
+                                            {% set totalSeg = inbound.segments|length - 1 %}
+                                            {% if totalSeg == 0 %}
+                                                Directo
+                                            {% elseif totalSeg == 1 %}
+                                                {{ totalSeg }} escala
+                                            {% else %}
+                                                {{ totalSeg }} escalas
                                             {% endif %}
-                                        {% endfor %}
-                                    </span>
-                                    <span class="departure-time">
-                                        {{ inbound.segments[0].departure_datetime|date("H:i") }}
-                                    </span>
+                                        </span>
+                                        <span class="arrival-time">
+                                            {% set lastSeg = inbound.segments|last %}
+                                            {{ lastSeg.arrival_datetime|date("H:i") }}
+                                            <!--falta diferencia en días desde la partida-->
+                                        </span>
+                                        <span class="duration">
+                                            {{ inbound.duration }}
+                                        </span>
 
-                                    <span class="scales">
-                                        {% set totalSeg = inbound.segments|length - 1 %}
-                                        {% if totalSeg == 0 %}
-                                            Directo
-                                        {% elseif totalSeg == 1 %}
-                                            {{ totalSeg }} escala
-                                        {% else %}
-                                            {{ totalSeg }} escalas
-                                        {% endif %}
-                                    </span>
-
-                                    <span class="arrival-time">
-                                        {% set lastSeg = inbound.segments|last %}
-                                        {{ lastSeg.arrival_datetime|date("H:i") }}
-                                        <!--falta diferencia en días desde la partida-->
-                                    </span>
-
-                                    <span class="duration">
-                                        {{ inbound.duration }}
-                                    </span>
-
-                                    <button data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}">Detalle</button>
+                                        <button class="btn" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</button>
+                                    </div>
+                                    <div class="gap-small"></div>
                                     <div id="detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
-                                        {% for segment in inbound.segments %}
-                                            <div class="table-responsive">
-                                                <table class="table table-condensed">
-                                                    <tr class="active">
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="active">
+                                                    <td>
+                                                        <div style="width: 50%; float: left;">
+                                                            {% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text|split(',')[0] }}{% endif %} -
+                                                            {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text|split(',')[0] }}{% endif %}
+                                                        </div>
+                                                        <div class="text-right" style="width: 50%; float: right;">
+                                                            Duración total: {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.validating_carrier }}.png" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                {#segmentos#}
+                                                {% for segment in inbound.segments %}
+                                                    <tr>
                                                         <td>
-                                                            {% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %} -
-                                                            {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}
+                                                            Sale: {{ segment.departure_datetime|date("d/m/Y", false) }}
                                                         </td>
                                                         <td>
-                                                            Duración total: {{ item.duration }}
+                                                            Llega: {{ segment.arrival_datetime|date("d/m/Y", false) }}
+                                                        </td>
+                                                        <td>
+                                                            DURACIÓN:
+                                                        </td>
+                                                        <td>
+                                                            VUELO N°
+                                                        </td>
+                                                        <td>
+                                                            CLASE
                                                         </td>
                                                     </tr>
-                                                </table>
-                                            </div>
-                                            {#{{ dump(segment) }}#}
-                                        {% endfor %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ segment.from }}
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.to }}
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.flight_id }}
+                                                        </td>
+                                                        <td>
+                                                            {{ segment.cabin_type }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5"></td>
+                                                    </tr>
+                                                    {#<tr>#}
+                                                    {#<td colspan="5">{{ dump(segment) }}</td>#}
+                                                    {#</tr>#}
+                                                {% endfor %}
+                                            </table>
+                                        </div>
                                     </div>
                                 </li>
                             {% endfor %}
                         </ul>
                         {% endif %}
 
-                        {{ dump(item) }}
+                        {#{{ dump(item) }}#}
 
                     </div>
                     <div class="col-md-3 booking-prices align-center cursor-pointer">
