@@ -1017,3 +1017,162 @@ form.booking-form label {
     text-align: center;
   }
 }
+
+/**Diseño vuelos**/
+.detail-time {
+  background-color: #fcf8e3;
+  display: inline-block;
+  width: 100%!important;
+  margin-top: 10px;
+  text-align: center;
+  color: #666;
+}
+
+.detail-time .detail-time-wrapper {
+  display: block;
+  padding: 5px;
+}
+
+.detail-time .detail-time-wrapper .connection {
+  display: block;
+  font-size: 13px;
+}
+
+.detail-time .detail-time-wrapper .connection .text {
+  position: relative;
+}
+/**/
+.inline-detail-airline {
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+}
+
+.inline-detail-airline .inline-detail-airline-wrapper {
+  font-size: 13px;
+  padding: 5px;
+  border-top: 1px solid #EEE;
+  border-bottom: 1px solid #EEE;
+}
+
+.inline-detail-airline .inline-detail-airline-wrapper .inline-detail-airline-description {
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.inline-detail-airline .inline-detail-airline-wrapper .review-text {
+  position: relative;
+  /*top: -8px;*/
+}
+/**/
+.inline-detail-data .inline-detail-route-data {
+  display: table;
+  width: 60%;
+  float: left;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport {
+  display: table-cell;
+  vertical-align: top;
+  width: 39%;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-date {
+  display: block;
+  font-size: 11px;
+  color: #444;
+  height: 11px;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-date .inline-detail-airport-date-text {
+  color: #888;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-code-wrapper {
+  display: block;
+  margin: 10px 0 0;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-code-wrapper .inline-detail-airport-code {
+  font-size: 20px;
+  letter-spacing: -1px;
+  color: #AAA;
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-code-wrapper .inline-detail-airport-hour {
+  font-size: 20px;
+  letter-spacing: -1px;
+  color: #444;
+  font-weight: 700;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-description {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  line-height: normal;
+}
+
+.inline-detail-data .inline-detail-route-data .inline-detail-airport-separator {
+  display: table-cell;
+  vertical-align: middle;
+  width: 7%;
+  font-size: 16px;
+  color: #888;
+}
+/**/
+.inline-detail-data .inline-detail-flight {
+  width: 40%;
+  float: left;
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-data {
+  width: 33%;
+  text-align: center;
+  float: left;
+  min-height: 1px;
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-data .inline-detail-flight-data-title {
+  font-size: 11px;
+  color: #AAA;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-data .inline-detail-flight-data-description {
+  font-size: 16px;
+  color: #666;
+  font-weight: 700;
+  display: block;
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-cabinType {
+  width: 33%;
+  text-align: center;
+  float: left;
+  min-height: 1px;
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-airline {
+  display: inline-block;
+  padding: 10px 0;
+  background-color: #F5F5F5;
+  width: 100%;
+  text-align: left;
+  color: #666; margin-top: 10px;
+  font-size: 11px;
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-airline .airplane-name {
+  margin-left: 10px;
+  color: #AAA;
+  position: relative;
+  /*top: -3px;*/
+}
+
+.inline-detail-data .inline-detail-flight .inline-detail-flight-airline .airplane-name i {
+  font-size: large;
+}

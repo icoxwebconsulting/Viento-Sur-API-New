@@ -73,57 +73,112 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.validating_carrier }}.png" />
-                                                    </td>
-                                                </tr>
                                             </table>
-                                            <table>
-                                                {#segmentos#}
-                                                {% for segment in outbound.segments %}
-                                                    <tr>
-                                                        <td>
-                                                            Sale: {{ segment.departure_datetime|date("d/m/Y", false) }}
-                                                        </td>
-                                                        <td>
-                                                            Llega: {{ segment.arrival_datetime|date("d/m/Y", false) }}
-                                                        </td>
-                                                        <td>
-                                                            DURACIÓN:
-                                                        </td>
-                                                        <td>
-                                                            VUELO N°
-                                                        </td>
-                                                        <td>
-                                                            CLASE
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            {{ segment.from }}
-                                                        </td>
-                                                        <td>
-                                                            {{ segment.to }}
-                                                        </td>
-                                                        <td>
-                                                            {{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m
-                                                        </td>
-                                                        <td>
-                                                            {{ segment.flight_id }}
-                                                        </td>
-                                                        <td>
-                                                            {{ segment.cabin_type }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="5"></td>
-                                                    </tr>
-                                                    {#<tr>#}
-                                                        {#<td colspan="5">{{ dump(segment) }}</td>#}
-                                                    {#</tr>#}
-                                                {% endfor %}
-                                            </table>
+
+                                            {% for segment in outbound.segments %}
+                                                <div class="inline-detail-airline">
+                                                    <div class="inline-detail-airline-wrapper">
+                                                        <span class="inline-detail-airline-logo">
+                                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                                        </span>
+                                                        <span class="inline-detail-airline-description review-text">
+                                                            <span>
+                                                                {{ segment.airline }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="inline-detail-data">
+                                                <span class="inline-detail-route-data">
+                                                    <span class="inline-detail-airport">
+                                                        <span class="inline-detail-airport-date">
+                                                            <span>
+                                                                <span class="inline-detail-airport-date-text">Sale:</span>
+                                                                <span>{{ segment.departure_datetime|date("d/m/Y", false) }}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-code-wrapper">
+                                                            <span class="inline-detail-airport-code">{{ segment.from }}</span>
+                                                            <span class="inline-detail-airport-hour">{{ segment.departure_datetime|date("H:i", false) }}</span>
+                                                            {#<span class="night-flight ux-common-icon-night" tooltip="" tooltip-content="Vuelo nocturno" tooltip-id="night-flight-tooltip"></span>#}
+                                                        </span>
+                                                        <span class="inline-detail-airport-description">
+                                                            Ciudad - Aeropuerto ({{ segment.from }})
+                                                        </span>
+                                                    </span>
+
+                                                    <span class="inline-detail-airport-separator">
+                                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                    </span>
+
+                                                    <span class="inline-detail-airport">
+                                                        <span class="inline-detail-airport-date">
+                                                            <span>
+                                                                <span class="inline-detail-airport-date-text">Llega:</span>
+                                                                <span>{{ segment.arrival_datetime|date("d/m/Y", false) }}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-code-wrapper">
+                                                            <span class="inline-detail-airport-code">{{ segment.to }}</span>
+                                                            <span class="inline-detail-airport-hour">06:45</span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-description">
+                                                            Ciudad - Aeropuerto ({{ segment.to }})
+                                                        </span>
+                                                    </span>
+                                                </span>
+
+                                                <span class="inline-detail-flight">
+                                                    <span>
+                                                        <span class="inline-detail-flight-data">
+                                                            <span>
+                                                                <span class="inline-detail-flight-data-title">DURACIÓN</span>
+                                                                <span class="inline-detail-flight-data-description">{{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-data">
+                                                        <span>
+                                                            <span class="inline-detail-flight-data-title">VUELO N°</span>
+                                                            <span class="inline-detail-flight-data-description">{{ segment.flight_id }}</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-data inline-detail-flight-cabinType">
+                                                        <span class="inline-detail-flight-data-title">CLASE</span>
+                                                        <span class="inline-detail-flight-data-description">{{ segment.cabin_type }}</span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-airline">
+                                                        <span class="airplane-name">
+                                                            <i class="fa fa-plane" aria-hidden="true"></i>
+                                                            Aeronave
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <!--
+                                            <span>
+                                                <span class="time detail-time">
+                                                    <span class="detail-time-wrapper">
+                                                        <span class="connection">
+                                                            <span class="text">
+                                                                <span class="ux-common-icon-last-buy"></span>
+                                                                Espera de <b>1h 35m</b>&nbsp;en  (PUJ)
+                                                            </span>
+                                                            <span class="connection-type">
+                                                                <span>
+                                                                    <span class="icons">
+                                                                        <span class="main-sprite icon-detail-plane icon"></span>
+                                                                    </span>
+                                                                    (Mismo avión)
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            -->
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </li>
