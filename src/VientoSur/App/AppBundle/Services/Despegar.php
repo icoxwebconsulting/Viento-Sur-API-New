@@ -269,6 +269,34 @@ class Despegar
         return $this->curlExec($url, $header, 'GET');
     }
 
+    public function getFlightAirlines($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'airlines?' . http_build_query($urlParams);
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST:true';
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getFlightAirlineDetail($code, $urlParams)
+    {
+        $url = $this->getServiceUrl() . 'airlines/' . $code . '?' . http_build_query($urlParams);
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST:true';
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
     public function getReservationDetails($id, $urlParams, $isTest)
     {
         if ($isTest) {

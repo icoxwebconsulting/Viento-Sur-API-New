@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use VientoSur\App\AppBundle\Entity\Airlines;
+use VientoSur\App\AppBundle\Entity\AirlineAlliance;
+
 /**
  * Flight Controller
  *
@@ -82,8 +85,6 @@ class FlightController extends Controller
      */
     public function sendFlightsItinerariesAction($from, $to, $departure_date, $return_date, $adults, $childrens, $infants, Request $request)
     {
-
-
         $urlParams = [
             "site" => "AR",
             "departure_date" => $departure_date,
@@ -98,11 +99,45 @@ class FlightController extends Controller
             "limit" => "10",
             "currency" => "ARS"
         ];
+
         $results = $this->get('despegar')->getFlightItineraries($urlParams);
+
+        if (isset($results['items'])) {
+            $airlines = [];
+            foreach ($results['items'] as $item) {
+                if (isset($item['validating_carrier'])) {
+                    if (!in_array($item['validating_carrier'], $airlines)) {
+                        $airlines[] = $item['validating_carrier'];
+                    }
+                }
+                foreach ($item['outbound_choices'] as $outbound) {
+                    foreach ($outbound['segments'] as $segment) {
+                        if (!in_array($segment['airline'], $airlines)) {
+                            $airlines[] = $segment['airline'];
+                        }
+                    }
+                }
+                foreach ($item['inbound_choices'] as $inbound) {
+                    foreach ($inbound['segments'] as $segment) {
+                        if (!in_array($segment['airline'], $airlines)) {
+                            $airlines[] = $segment['airline'];
+                        }
+                    }
+                }
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+        $airlineData = [];
+        foreach ($airlineResults as $ar) {
+            $airlineData[$ar->getId()] = $ar->getName();
+        }
 
         return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
             'flightMenu' => true,
-            'items' => $results
+            'items' => $results,
+            'airlineNames' => $airlineData
         ));
     }
 
@@ -142,5 +177,52 @@ class FlightController extends Controller
             }
         }
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
+    }
+
+    /**
+     * @Route("/load-arlines", name="load_airlines")
+     * @Method("GET")
+     */
+    public function loadAirlinesAction()
+    {
+        $results = $this->get('despegar')->getFlightAirlines([
+            "site" => "AR"
+        ]);
+
+        $em = $this->getDoctrine()->getManager();
+        $arr = [];
+        for ($i = 0; $i < count($results); $i++) {
+            $airline = $results[$i];
+            if (!in_array($airline['id'], $arr)) {
+                $objAirline = new Airlines();
+                $objAirline->setId($airline['id']);
+                $arr[] = $airline['id'];
+                $objAirline->setName($airline['name']);
+                if (isset($airline['alliance'])) {
+                    $ojbAlliance = new AirlineAlliance();
+                    $ojbAlliance->setCode($airline['alliance']['id']);
+                    $ojbAlliance->setName($airline['alliance']['name']);
+                    $ojbAlliance->setAirline($objAirline);
+                    $em->persist($ojbAlliance);
+                }
+                $em->persist($objAirline);
+            }
+        }
+        $em->flush();
+
+        return new JsonResponse(array("result" => "ready"));
+    }
+
+    /**
+     * @Route("/load-arline-detail", name="load_airline-detail")
+     * @Method("GET")
+     */
+    public function loadAirlineDetailAction()
+    {
+        $results = $this->get('despegar')->getFlightAirlineDetail('V0', [
+            "site" => "AR"
+        ]);
+
+        return new JsonResponse(array("result" => $results));
     }
 }
