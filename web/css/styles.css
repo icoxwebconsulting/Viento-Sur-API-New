@@ -6454,12 +6454,12 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     filter: none;
   }
 }
-.booking-list {
+.booking-list, .flight-list {
   list-style: none;
   padding: 0;
   margin-bottom: 30px;
 }
-.booking-list > li {
+.booking-list > li, .flight-list > li{
   margin-bottom: 15px;
   position: relative;
 }
