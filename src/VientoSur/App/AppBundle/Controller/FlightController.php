@@ -225,4 +225,14 @@ class FlightController extends Controller
 
         return new JsonResponse(array("result" => $results));
     }
+
+
+    /**
+     * @Route("/flight/send/search", name="viento_sur_send_search_flight")
+     * @Method("POST")
+     */
+    public function sendSearchAction(Request $request)
+    {
+        $params = $request->query->all();
+    }
 }

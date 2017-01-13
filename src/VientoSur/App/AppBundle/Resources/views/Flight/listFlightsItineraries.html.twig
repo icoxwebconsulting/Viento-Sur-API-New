@@ -82,5 +82,15 @@
 //                "setDate": new Date()
 //            });
 //        });
+        $('.flight-list').on('click', '.booking-prices', function (event) {
+            event.stopPropagation();
+//            var element = event.target;
+//            window.open(this.dataset.href, '_blank');
+            var form = $(this).find('form');
+            var itemId = $(this).data('item');
+            console.log(itemId);
+            console.log($('input[name=optionsRadiosIn'+itemId+']:checked').val());
+            //$(form).find()
+        });
     </script>
 {% endblock %}
