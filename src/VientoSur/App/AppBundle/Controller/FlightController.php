@@ -233,6 +233,8 @@ class FlightController extends Controller
      */
     public function sendSearchAction(Request $request)
     {
-        $params = $request->query->all();
+        $options = $request->request->all();
+
+        return new JsonResponse(array("result" => $options));
     }
 }

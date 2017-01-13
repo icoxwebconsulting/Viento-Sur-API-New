@@ -3,7 +3,7 @@
 {% elseif items.items|length > 0 %}
     {% for item in items.items %}
         <li>
-            <form name="{{ loop.index }}-fliht-form" action="{{ path('viento_sur_send_search_flight') }}">
+            <form name="flight-form-{{ loop.index }}" id="flight-form-{{ loop.index }}" action="{{ path('viento_sur_send_search_flight') }}" method="post">
             <span class="booking-item"> <!--cursor-pointer-->
                 <div class="row">
                     <div class="col-md-9">
@@ -259,7 +259,7 @@
                                                 {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
                                             </span>
                                             <span class="table-data-cell">
-                                                <button class="btn" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</button>
+                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</span>
                                             </span>
                                         </div>
                                     </div>
@@ -395,19 +395,16 @@
 
                     </div>
                     <div class="col-md-3 booking-prices align-center cursor-pointer" data-item="{{ loop.index }}">
-
-                            <div class="booking-align-vertical"> <span class="booking-item-price-night">Precio Total Final</span>
-                                <span class="booking-item-price">
-                                    {% if item.price_detail.total is defined %}
-                                        $ {{ item.price_detail.total|round|number_format(0, '.', '.') }}
-                                    {% endif %}
-                                </span>
-                                <span class="btn btn-primary">Comprar</span>
-                            </div>
-                            <input type="hidden" name="outbound" />
-                            <input type="hidden" name="inbound" />
-                            <input type="hidden" name="item_id" value="{{ item.id }}" />
-
+                        <div class="booking-align-vertical"> <span class="booking-item-price-night">Precio Total Final</span>
+                            <span class="booking-item-price">
+                                {% if item.price_detail.total is defined %}
+                                    $ {{ item.price_detail.total|round|number_format(0, '.', '.') }}
+                                {% endif %}
+                            </span>
+                            <span class="btn btn-primary">Comprar</span>
+                        </div>
+                        <input type="hidden" name="item_id" value="{{ item.id }}" />
+                        <input type="hidden" name="option_id" value="{{ loop.index }}" />
                     </div>
                 </div>
             </span>
