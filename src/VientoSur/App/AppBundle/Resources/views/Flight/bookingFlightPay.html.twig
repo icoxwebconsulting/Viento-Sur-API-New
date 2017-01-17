@@ -47,11 +47,6 @@
                                     {% set fieldName = 'adults-gender' ~ loop.index0 %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
-
-                                <div class="col-md-8">
-                                    {{ dump(passenger) }}
-                                </div>
-
                             </div>
                         {% endfor %}
 
@@ -65,16 +60,118 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Formas de pago</div>
                     <div class="panel-body">
-
+                        {% for credit_card in formChoice.payments.credit_cards %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% set fieldName = 'card-type' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Tarjeta:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card-number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de Tarjeta:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card-expiration' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Vencimiento:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card-security_code' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Código de seguridad:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card-card_holder_name' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Titular de la tarjeta:', 'attr': {'placeholder': 'Como aparece en la tarjeta', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card_holder_identification-type' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de documento:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de documento:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ dump(credit_card) }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!--/Formas de pago-->
+
+                <!--Facturación-->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Datos para facturación</div>
+                    <div class="panel-body">
+                        {% for invoice in formChoice.payments.credit_cards %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% set fieldName = 'invoice-fiscal_status' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Situación fiscal:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% set fieldName = 'invoice-state' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Provincia:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'invoice-street' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Calle:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-2">
+                                    {% set fieldName = 'invoice-number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-2">
+                                    {% set fieldName = 'invoice-floor' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Piso:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-2">
+                                    {% set fieldName = 'invoice-department' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Depto:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--/Facturación-->
 
                 <!--Contacto-->
                 <div class="panel panel-primary">
                     <div class="panel-heading">Datos de Contacto</div>
                     <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(attribute(formNewPay.contact_info, 'email-'), {'label': 'Email:', 'attr': {'placeholder': 'Ingrese su email', 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label for="form_contact_info_email-" class="required">Confirme su Email:</label>
+                                    <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
                         {{ dump(formNewPay) }}
+                        {{ dump(formChoice) }}
                     </div>
                 </div>
                 <!--/Contacto-->

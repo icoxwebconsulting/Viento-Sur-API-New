@@ -9,6 +9,8 @@ class Flights
     private $formNewPay;
     private $fieldNames;
     private $passengersForm;
+    private $paymentsForm;
+    private $contact_infoForm;
 
     public function __construct(Despegar $dp)
     {
@@ -34,10 +36,16 @@ class Flights
         );
 
         $this->passengersForm = $this->formNewPay->create('passengers', 'form', array('inherit_data' => true));
+        $this->paymentsForm = $this->formNewPay->create('payments', 'form', array('inherit_data' => true));
+        $this->contact_infoForm = $this->formNewPay->create('contact_info', 'form', array('inherit_data' => true));
 
         foreach ($booking as $key => $item) {
             if ($key == 'passengers') {
                 $this->processPassengers($item);
+            } else if ($key == 'payments') {
+                $this->processPayments($item);
+            } else if ($key == 'contact_info') {
+                $this->processContactInfo($item);
             }
         }
 
@@ -66,16 +74,96 @@ class Flights
         }
     }
 
+    private function processPayments($payments)
+    {
+        foreach ($payments['credit_cards'] as $count => $elements) {
+            foreach ($elements as $key => $item) {
+                if ($key != 'metadata') {
+                    switch ($key) {
+                        case 'invoice':
+                            foreach ($item as $key2 => $detail) {
+                                if ($key2 != 'address') {
+                                    $this->processFormElement('payments', $key, $key2, $count, $detail);
+                                } else {
+                                    foreach ($detail as $key3 => $detail2) {
+                                        $this->processFormElement('payments', $key, $key3, $count, $detail2);
+                                    }
+                                }
+                            }
+                            break;
+                        case 'card_holder_identification':
+                        case 'card':
+                            foreach ($item as $key2 => $detail) {
+                                $this->processFormElement('payments', $key, $key2, $count, $detail);
+                            }
+                            break;
+                        default: //card_code, installments
+                            $this->processFormElement('payments', $key, $key, $count, $item);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    private function processContactInfo($contactInfo)
+    {
+        $count = 0;
+        foreach ($contactInfo as $key => $element) {
+            if ($key != 'phones') {
+                $this->processFormElement('contact_info', $key, '', '', $element);
+            } else {
+                foreach ($element as $key2 => $detail) {
+                    if ($key2 != 'metadata') {
+                        $this->processFormElement('contact_info', 'phones', $key2, $count, $detail);
+                    }
+                }
+            }
+            $count++;
+        }
+    }
+
     private function processFormElement($groupKey, $subcategory, $key, $count, $element)
     {
         switch ($element['data_type']) {
             case 'text':
+            case 'card_type':
+            case 'security_card_code':
+            case 'card_number':
+            case 'card_code':
+            case 'city_id':
+            case 'local_fiscal_id':
                 $this->formNewPay->add(
                     $this->{$groupKey . 'Form'}->add(
                         $subcategory . '-' . $key . $count,
                         'text',
                         array(
                             'required' => true,
+                        )
+                    )
+                );
+                break;
+            case 'email':
+                $this->formNewPay->add(
+                    $this->{$groupKey . 'Form'}->add(
+                        $subcategory . '-' . $key . $count,
+                        'email',
+                        array(
+                            'required' => true,
+                        )
+                    )
+                );
+                break;
+            case 'month_year':
+                $this->formNewPay->add(
+                    $this->{$groupKey . 'Form'}->add(
+                        $subcategory . '-' . $key . $count,
+                        'date',
+                        array(
+                            'format' => 'MMM-yyyy  d',
+                            'years' => range(date('Y'), date('Y') + 12),
+                            'days' => array(1),
+                            'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => false)
                         )
                     )
                 );
@@ -97,6 +185,7 @@ class Flights
             case 'document_type':
             case 'country_code':
             case 'gender_type':
+            case 'fiscal_status':
                 $optionField = $this->generateChoiceField($element['validations'][0]['allowed_values']);
                 $this->formNewPay->add(
                     $this->{$groupKey . 'Form'}->add(
