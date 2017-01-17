@@ -297,6 +297,24 @@ class Despegar
         return $this->curlExec($url, $header, 'GET');
     }
 
+    public function getFlightCheckoutHints($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'flights/checkout-hints?' . http_build_query($urlParams);
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        /**
+         * Hay un header extra: XDESP-FLIGHTS_KEEPER-MOCK-VITO
+         * Descripción: Header to mock the integration with Vito and use a known itinerary
+         */
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST:true';
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
     public function getReservationDetails($id, $urlParams, $isTest)
     {
         if ($isTest) {

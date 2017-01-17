@@ -228,13 +228,35 @@ class FlightController extends Controller
 
 
     /**
-     * @Route("/flight/send/search", name="viento_sur_send_search_flight")
+     * @Route("/booking/pay", name="viento_booking_flight_pay")
      * @Method("POST")
      */
-    public function sendSearchAction(Request $request)
+    public function bookingFlightPayAction(Request $request)
     {
-        $options = $request->request->all();
+        $fields = $request->request->all();
 
-        return new JsonResponse(array("result" => $options));
+        $optionId = $fields['option_id'];
+        $outbound = $fields['optionsRadiosOut' . $optionId];
+        $inbound = $fields['optionsRadiosIn' . $optionId];
+
+        $urlParams = [
+            'itinerary_id' => $fields['item_id'],
+            'outbound' => $outbound,
+            'inbound' => ((empty($inbound)) ? '' : $inbound),
+            'language' => 'es',
+            'tracker_id' => '',
+            'country' => 'AR'
+        ];
+
+        $flightService = $this->get('flights_service');
+        $booking = $flightService->getCheckoutData($urlParams);
+        $formNewPay = $this->createFormBuilder($booking);
+        $formNewPay = $flightService->initForm($booking, $formNewPay);
+        $formNewPaySend = $formNewPay->getForm();
+
+        return $this->render('VientoSurAppAppBundle:Flight:bookingFlightPay.html.twig', array(
+            'formNewPay' => $formNewPaySend->createView(),
+            'formChoice' => $booking
+        ));
     }
 }

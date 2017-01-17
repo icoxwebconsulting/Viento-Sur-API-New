@@ -1,0 +1,124 @@
+{% extends '@VientoSurAppApp/layoutFlight.html.twig' %}
+
+{% block content %}
+    <div class="container formBooking">
+        <div class="row">
+            <div class="gap"></div>
+
+            <div class="col-md-9 col-md-push-3">
+                {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
+
+                <!--Pasajeros-->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Pasajeros</div>
+                    <div class="panel-body">
+                        {% for passenger in formChoice.passengers.adults %}
+                            {% if loop.index0 > 0 %}
+                                <hr/>
+                            {% endif %}
+                            <h5>Adulto {{ loop.index }}</h5>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% set fieldName = 'adults-first_name' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'adults-last_name' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'adults-nationality' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {% set fieldName = 'adults-type' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {% set fieldName = 'adults-number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'adults-birthdate' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'adults-gender' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+
+                                <div class="col-md-8">
+                                    {{ dump(passenger) }}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+                        {#{% for passenger in formChoice.passengers.adults %}#}
+                        {#{% endfor %}#}
+                    </div>
+                </div>
+                <!--/Pasajeros-->
+
+                <!--Formas de pago-->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Formas de pago</div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+                <!--/Formas de pago-->
+
+                <!--Contacto-->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Datos de Contacto</div>
+                    <div class="panel-body">
+                        {{ dump(formNewPay) }}
+                    </div>
+                </div>
+                <!--/Contacto-->
+
+                <div class="gap"></div>
+                <div class="mod-searchbutton">
+                    <button class="btn btn-primary btn-lg" type="submit">Comprar</button>
+                    <span>Por favor, antes de finalizar, revise los datos ingresados.</span>
+                </div>
+                <div class="gap"></div>
+                {#{{ form_rest(formNewPay) }}#}
+                {{ form_end(formNewPay) }}
+            </div>
+
+            <div class="col-md-3 col-md-pull-9">
+                <div class="content-sidebar">
+                    <div style="height: 800px;">LEFT</div>
+                </div>
+            </div>
+
+            <div class="gap"></div>
+            <div class="errors">
+                {#{{ dump(errors) }}#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('js/creditcard.js') }}" type="text/javascript"></script>#}
+    {#<script src="https://cdn.ywxi.net/js/1.js" async></script>#}
+    {#<script src="{{ asset('js/hotel-form.js') }}"></script>#}
+    {#<script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>#}
+    <script>
+
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+
+    </style>
+    <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
