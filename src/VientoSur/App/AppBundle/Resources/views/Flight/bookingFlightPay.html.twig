@@ -170,6 +170,26 @@
                                 </div>
                             </div>
                         </div>
+                        {% for phone in formChoice.contact_info.phones %}
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% set fieldName = 'phones-type' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Teléfono:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {% set fieldName = 'phones-country_code' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'País:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-2">
+                                    {% set fieldName = 'phones-number' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Área:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-2">
+                                    {% set fieldName = 'phones-area_code' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Número:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        {% endfor %}
                         {{ dump(formNewPay) }}
                         {{ dump(formChoice) }}
                     </div>
