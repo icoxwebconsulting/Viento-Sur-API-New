@@ -250,13 +250,32 @@ class FlightController extends Controller
 
         $flightService = $this->get('flights_service');
         $booking = $flightService->getCheckoutData($urlParams);
+        $itineraryDetail = $flightService->getItineraryDetail([
+            'outbound_choice' => $outbound,
+            'inbound_choice' => ((empty($inbound)) ? '' : $inbound),
+        ], $fields['item_id']);
+
         $formNewPay = $this->createFormBuilder($booking);
         $formNewPay = $flightService->initForm($booking, $formNewPay);
         $formNewPaySend = $formNewPay->getForm();
 
+        $paymentMethods = [
+        ];
+        foreach ($itineraryDetail['payment_methods'] as $element) {
+            $value = $element['installments'];
+            if (isset($element['bank_code'])) {
+                $paymentMethods[$value][$element['bank_code']][] = $element;
+            } else {
+                $paymentMethods[$value]['generic'][] = $element;
+            }
+        }
+        ksort($paymentMethods, SORT_NUMERIC);
+
         return $this->render('VientoSurAppAppBundle:Flight:bookingFlightPay.html.twig', array(
             'formNewPay' => $formNewPaySend->createView(),
-            'formChoice' => $booking
+            'formChoice' => $booking,
+            'itineraryDetail' => $itineraryDetail,
+            'paymentMethods' => $paymentMethods
         ));
     }
 }

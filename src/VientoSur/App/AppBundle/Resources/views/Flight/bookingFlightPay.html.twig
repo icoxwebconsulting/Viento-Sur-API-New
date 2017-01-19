@@ -60,11 +60,52 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Formas de pago</div>
                     <div class="panel-body">
+                        <div class="list-group">
+                            {% for cuotas, bank in paymentMethods %}
+                            <a href="javascript:void(0)" class="list-group-item">
+                                <h4 class="list-group-item-heading">
+                                    <input type="radio" name="paymentOption" value="{{ cuotas }}">
+                                    <b style="font-weight: bold !important;">{{ cuotas }}</b> Cuota{% if cuotas > 1 %}s{% endif %}
+                                </h4>
+                                <p class="list-group-item-text">
+                                    <div class="radio">
+                                    <div class="card-list credit-cards">
+                                    {% for key, cards in bank %}
+                                            {% if key == 'generic' %}
+                                                {% for card in cards  %}
+                                                    <label class="card-selector vs-cs-label">
+                                                        <div class="eva-card-container clickable-card"
+                                                             data-card-id="{{ card.card_code }}">
+                                                            <span class="eva-card-body {{ card.card_code }}"></span>
+                                                        </div>
+                                                    </label>
+                                                {% endfor %}
+                                            {% else %}
+                                                <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
+                                                    <span class="eva-card-body {{ key }}"></span>
+                                                    <div class="card-content hide">
+                                                        {% for card in cards  %}
+                                                            <div class="eva-card-container clickable-card" data-card-id="{{ card.generic_card_code }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                                <span class="eva-card-body {{ card.generic_card_code }}"></span>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                    {% endfor %}
+                                    </div>
+                                    </div>
+                                </p>
+                            </a>
+                            {% endfor %}
+                        </div>
+
                         {% for credit_card in formChoice.payments.credit_cards %}
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     {% set fieldName = 'card-type' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Tarjeta:', 'attr': {'class': 'form-control'}}) }}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Tarjeta seleccionada:', 'attr': {'class': 'hidden'}}) }}
+                                    <input type="text" value="" id="card-selected" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="row">
@@ -73,12 +114,12 @@
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de Tarjeta:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
-                                    {% set fieldName = 'card-expiration' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Vencimiento:', 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
                                     {% set fieldName = 'card-security_code' ~ loop.index0 %}
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Código de seguridad:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card-expiration' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Vencimiento:'}) }}
                                 </div>
                             </div>
                             <div class="row">
@@ -204,6 +245,7 @@
                 <div class="gap"></div>
                 {#{{ form_rest(formNewPay) }}#}
                 {{ form_end(formNewPay) }}
+                {{ dump(paymentMethods) }}
             </div>
 
             <div class="col-md-3 col-md-pull-9">
@@ -228,14 +270,134 @@
     {#<script src="{{ asset('js/hotel-form.js') }}"></script>#}
     {#<script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>#}
     <script>
+        $(document).ready(function () {
+            var cardsObject = {
+                'VI': 'Visa',
+                'VIS': 'Visa Signature',
+                'CA': 'MasterCard',
+                'AX': 'American Express',
+                'DC': 'Diners Club',
+                'CL': 'Cabal',
+                'TN': 'Tarjeta Naranja',
+                'NV': 'Tarjeta Nevada'
+            };
 
+            $('#form_payments_card-expiration0_day').hide();
+
+            $('.eva-card-container:first').addClass('selected-p-card');
+            var cardId = $('.eva-card-container:first').attr('data-card-id');
+            console.log(cardId);
+            //$('#form_payment_bank_code').val(cardId);
+            //var splitCard = cardId.split("-");
+            //$('#form_payment_card_code').val(splitCard[1]);
+            //$('#form_payment_card_type').val(splitCard[3]);
+            $('#card-selected').val(cardsObject[cardId]);
+
+            $('.list-group').on('click', '.clickable-card', function () {
+                var cardId = $(this).data('card-id');
+                var bank = $(this).data('bank-id');
+//                var splitCard = cardId.split("-");
+//                $('#form_payment_bank_code').val(cardId);
+//                $('#form_payment_card_code').val(splitCard[1]);
+//                $('#form_payment_card_type').val(splitCard[3]);
+                $('#card-selected').val(cardsObject[cardId]);
+//                $('.card-list .eva-card-container').removeClass('selected-p-card');
+//
+//                if (bank) {
+//                    var parentId = $(this).data('parent-id');
+//                    $('#' + parentId).addClass('selected-p-card');
+//                    $.ajax({
+//                        url: Routing.generate('hotel_card_detail'),
+//                        type: 'GET',
+//                        data: {
+//                            card: cardId
+//                        },
+//                        dataType: 'json'
+//                    }).done(function (data) {
+//                        if (data.hasOwnProperty('description')) {
+//                            $('#card-selected').val(data.description);
+//                        }
+//                    }).fail(function (e) {
+//                        console.log(e)
+//                    }).always(function () {
+//                    });
+//                } else {
+//                    $(this).addClass('selected-p-card');
+//                }
+            });
+
+            $('.clickable-bank').popover({
+                placement: 'bottom',
+                html: true,
+                content: function () {
+                    return $(this).find('.card-content').html();
+                }
+            }).on('show.bs.popover', function () {
+//            $(this).find('.clickable-card').each(function () {
+//                if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
+//                    $(this).addClass('selected-p-card');
+//                }
+//            })
+            });
+
+            $('.list-group-item').on('click', function () {
+                $($(this).find('input:radio')[0]).prop("checked", true);
+            })
+        });
     </script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style type="text/css">
+        .credit-card-div span {
+            padding-top: 10px;
+        }
+
+        .credit-card-div img {
+            padding-top: 30px;
+        }
+
+        .credit-card-div .small-font {
+            font-size: 9px;
+        }
+
+        .credit-card-div .pad-adjust {
+            padding-top: 10px;
+        }
+
+        .selected-p-card {
+            border: 1px solid #1beab2 !important;
+        }
+
+        .eva-card-container:hover {
+            border: 1px solid #1beab2 !important;
+        }
+
+        .card-list {
+            font-size: 0;
+            position: relative;
+            text-align: right;
+        }
+
+        .installment-data {
+            width: 50%;
+            position: relative;
+            float: left;
+        }
+
+        .card-list .eva-card-container {
+            margin-left: 3px;
+            /*margin-bottom: 5px;*/
+        }
+
+        .credit-cards {
+            width: 50%;
+            /* float: right; */
+            margin-left: 50%;
+        }
 
     </style>
+    <link href="{{ asset('css/cards-vertical.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}
