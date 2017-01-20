@@ -171,7 +171,7 @@ class Flights
                         $subcategory . '-' . $key . $count,
                         'date',
                         array(
-                            'format' => 'MMM-yyyy  d',
+                            'format' => 'MM-yyyy  d',
                             'years' => range(date('Y'), date('Y') + 12),
                             'days' => array(1),
                             'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => false)
@@ -183,13 +183,10 @@ class Flights
                 $this->formNewPay->add(
                     $this->{$groupKey . 'Form'}->add(
                         $subcategory . '-' . $key . $count,
-                        'date',
-                        array(
-                            'format' => 'MMM-yyyy  d',
-                            'years' => range(date('Y'), date('Y') + 12),
-                            'days' => array(1),
-                            'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Dia')
-                        )
+                        'date', [
+                            'widget' => 'single_text',
+                            'format' => 'dd-MM-yyyy'
+                        ]
                     )
                 );
                 break;

@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'adults-birthdate' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'class': 'form-control'}}) }}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'adults-gender' ~ loop.index0 %}
@@ -264,87 +264,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {#<script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>#}
-    {#<script src="{{ asset('js/creditcard.js') }}" type="text/javascript"></script>#}
-    {#<script src="https://cdn.ywxi.net/js/1.js" async></script>#}
-    {#<script src="{{ asset('js/hotel-form.js') }}"></script>#}
-    {#<script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>#}
-    <script>
-        $(document).ready(function () {
-            var cardsObject = {
-                'VI': 'Visa',
-                'VIS': 'Visa Signature',
-                'CA': 'MasterCard',
-                'AX': 'American Express',
-                'DC': 'Diners Club',
-                'CL': 'Cabal',
-                'TN': 'Tarjeta Naranja',
-                'NV': 'Tarjeta Nevada'
-            };
-
-            $('#form_payments_card-expiration0_day').hide();
-
-            $('.eva-card-container:first').addClass('selected-p-card');
-            var cardId = $('.eva-card-container:first').attr('data-card-id');
-            console.log(cardId);
-            //$('#form_payment_bank_code').val(cardId);
-            //var splitCard = cardId.split("-");
-            //$('#form_payment_card_code').val(splitCard[1]);
-            //$('#form_payment_card_type').val(splitCard[3]);
-            $('#card-selected').val(cardsObject[cardId]);
-
-            $('.list-group').on('click', '.clickable-card', function () {
-                var cardId = $(this).data('card-id');
-                var bank = $(this).data('bank-id');
-//                var splitCard = cardId.split("-");
-//                $('#form_payment_bank_code').val(cardId);
-//                $('#form_payment_card_code').val(splitCard[1]);
-//                $('#form_payment_card_type').val(splitCard[3]);
-                $('#card-selected').val(cardsObject[cardId]);
-//                $('.card-list .eva-card-container').removeClass('selected-p-card');
-//
-//                if (bank) {
-//                    var parentId = $(this).data('parent-id');
-//                    $('#' + parentId).addClass('selected-p-card');
-//                    $.ajax({
-//                        url: Routing.generate('hotel_card_detail'),
-//                        type: 'GET',
-//                        data: {
-//                            card: cardId
-//                        },
-//                        dataType: 'json'
-//                    }).done(function (data) {
-//                        if (data.hasOwnProperty('description')) {
-//                            $('#card-selected').val(data.description);
-//                        }
-//                    }).fail(function (e) {
-//                        console.log(e)
-//                    }).always(function () {
-//                    });
-//                } else {
-//                    $(this).addClass('selected-p-card');
-//                }
-            });
-
-            $('.clickable-bank').popover({
-                placement: 'bottom',
-                html: true,
-                content: function () {
-                    return $(this).find('.card-content').html();
-                }
-            }).on('show.bs.popover', function () {
-//            $(this).find('.clickable-card').each(function () {
-//                if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
-//                    $(this).addClass('selected-p-card');
-//                }
-//            })
-            });
-
-            $('.list-group-item').on('click', function () {
-                $($(this).find('input:radio')[0]).prop("checked", true);
-            })
-        });
-    </script>
+    <script src="{{ asset('js/flight-payment-form.js') }}"></script>
+    <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
