@@ -259,8 +259,18 @@ class FlightController extends Controller
         $formNewPay = $flightService->initForm($booking, $formNewPay);
         $formNewPaySend = $formNewPay->getForm();
 
-        $paymentMethods = [
-        ];
+        if ($request->getMethod() == 'POST') {
+            $formNewPaySend->handleRequest($request);
+
+            if ($formNewPaySend->isValid()) {
+                $formNewPaySend = $formNewPaySend->getData();
+
+                //procesar formulario recibido
+                //$response = $despegar->dVault($formNewPaySend);
+            }
+        }
+
+        $paymentMethods = [];
         foreach ($itineraryDetail['payment_methods'] as $element) {
             $value = $element['installments'];
             if (isset($element['bank_code'])) {
@@ -272,6 +282,7 @@ class FlightController extends Controller
         ksort($paymentMethods, SORT_NUMERIC);
 
         return $this->render('VientoSurAppAppBundle:Flight:bookingFlightPay.html.twig', array(
+            'flightMenu' => true,
             'formNewPay' => $formNewPaySend->createView(),
             'formChoice' => $booking,
             'itineraryDetail' => $itineraryDetail,

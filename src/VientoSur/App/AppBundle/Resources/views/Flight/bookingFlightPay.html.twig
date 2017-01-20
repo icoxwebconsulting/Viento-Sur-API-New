@@ -12,7 +12,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Pasajeros</div>
                     <div class="panel-body">
-                        {% for passenger in formChoice.passengers.adults %}
+                        {% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}
                             {% if loop.index0 > 0 %}
                                 <hr/>
                             {% endif %}
@@ -20,38 +20,73 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-first_name' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-first_name' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-last_name' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-last_name' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-nationality' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-nationality' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-3">
-                                    {% set fieldName = 'adults-type' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-type' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-3">
-                                    {% set fieldName = 'adults-number' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-number' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-birthdate' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-birthdate' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
                                 </div>
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-gender' ~ loop.index0 %}
+                                    {% set fieldName = 'adults-gender' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
                         {% endfor %}
 
-                        {#{% for passenger in formChoice.passengers.adults %}#}
-                        {#{% endfor %}#}
+                        {% for i in 1..formChoice.passengers.children[0].metadata.quantity %}
+                            {% if loop.index0 > 0 %}
+                                <hr/>
+                            {% endif %}
+                            <h5>Niño {{ loop.index }}</h5>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% set fieldName = 'children-first_name' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'children-last_name' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'children-nationality' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {% set fieldName = 'children-type' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {% set fieldName = 'children-number' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'children-birthdate' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% set fieldName = 'children-gender' ~ loop.index %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!--/Pasajeros-->
@@ -64,7 +99,7 @@
                             {% for cuotas, bank in paymentMethods %}
                             <a href="javascript:void(0)" class="list-group-item">
                                 <h4 class="list-group-item-heading">
-                                    <input type="radio" name="paymentOption" value="{{ cuotas }}">
+                                    <input type="radio" name="paymentOption" value="{{ cuotas }}" required>
                                     <b style="font-weight: bold !important;">{{ cuotas }}</b> Cuota{% if cuotas > 1 %}s{% endif %}
                                 </h4>
                                 <p class="list-group-item-text">
@@ -140,11 +175,14 @@
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de documento:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ dump(credit_card) }}
-                                </div>
-                            </div>
+                            {#<div class="row">#}
+                                {#<div class="col-md-6">#}
+                                    {#{{ dump(credit_card) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {{ form_widget(attribute(formNewPay.payments, 'card-token0'), { 'attr': {'class': 'hidden'} }) }}
+                            {{ form_widget(attribute(formNewPay.payments, 'card_code0'), { 'attr': {'class': 'hidden'} }) }}
+                            {{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}
                         {% endfor %}
                     </div>
                 </div>
@@ -191,6 +229,12 @@
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Depto:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Nombre comercial:', 'attr': {'placeholder': 'En caso necesario', 'class': 'form-control'}}) }}
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -231,8 +275,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-                        {{ dump(formNewPay) }}
-                        {{ dump(formChoice) }}
                     </div>
                 </div>
                 <!--/Contacto-->
@@ -245,7 +287,9 @@
                 <div class="gap"></div>
                 {#{{ form_rest(formNewPay) }}#}
                 {{ form_end(formNewPay) }}
-                {{ dump(paymentMethods) }}
+                {#{{ dump(formNewPay) }}#}
+                {#{{ dump(formChoice) }}#}
+                {#{{ dump(paymentMethods) }}#}
             </div>
 
             <div class="col-md-3 col-md-pull-9">
