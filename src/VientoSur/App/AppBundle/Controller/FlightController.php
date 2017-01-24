@@ -226,12 +226,11 @@ class FlightController extends Controller
         return new JsonResponse(array("result" => $results));
     }
 
-
     /**
-     * @Route("/booking/pay", name="viento_booking_flight_pay")
+     * @Route("/booking/flight/send/booking", name="viento_sur_send_flight_booking")
      * @Method("POST")
      */
-    public function bookingFlightPayAction(Request $request)
+    public function sendFlightBookingAction(Request $request)
     {
         $fields = $request->request->all();
 
@@ -239,10 +238,24 @@ class FlightController extends Controller
         $outbound = $fields['optionsRadiosOut' . $optionId];
         $inbound = $fields['optionsRadiosIn' . $optionId];
 
-        $urlParams = [
-            'itinerary_id' => $fields['item_id'],
+        return $this->redirect($this->generateUrl('viento_booking_flight_pay', array(
             'outbound' => $outbound,
-            'inbound' => ((empty($inbound)) ? '' : $inbound),
+            'inbound' => $inbound,
+            'item_id' => $fields['item_id']
+        )));
+    }
+
+    /**
+     * @Route("/booking/pay", name="viento_booking_flight_pay")
+     */
+    public function bookingFlightPayAction(Request $request)
+    {
+        $params = $request->query->all();
+
+        $urlParams = [
+            'itinerary_id' => $params['item_id'],
+            'outbound' => $params['outbound'],
+            'inbound' => ((empty($params['inbound'])) ? '' : $params['inbound']),
             'language' => 'es',
             'tracker_id' => '',
             'country' => 'AR'
@@ -251,9 +264,9 @@ class FlightController extends Controller
         $flightService = $this->get('flights_service');
         $booking = $flightService->getCheckoutData($urlParams);
         $itineraryDetail = $flightService->getItineraryDetail([
-            'outbound_choice' => $outbound,
+            'outbound_choice' => $params['outbound'],
             'inbound_choice' => ((empty($inbound)) ? '' : $inbound),
-        ], $fields['item_id']);
+        ], $params['item_id']);
 
         $formNewPay = $this->createFormBuilder($booking);
         $formNewPay = $flightService->initForm($booking, $formNewPay);
@@ -266,7 +279,7 @@ class FlightController extends Controller
                 $formNewPaySend = $formNewPaySend->getData();
 
                 //procesar formulario recibido
-                //$response = $despegar->dVault($formNewPaySend);
+                $flightService->processdVault($formNewPaySend);
             }
         }
 

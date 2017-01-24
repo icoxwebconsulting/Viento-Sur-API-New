@@ -1,0 +1,46 @@
+.credit-card-div span {
+    padding-top: 10px;
+}
+
+.credit-card-div img {
+    padding-top: 30px;
+}
+
+.credit-card-div .small-font {
+    font-size: 9px;
+}
+
+.credit-card-div .pad-adjust {
+    padding-top: 10px;
+}
+
+.selected-p-card {
+    border: 1px solid #1beab2 !important;
+}
+
+.eva-card-container:hover {
+    border: 1px solid #1beab2 !important;
+}
+
+.card-list {
+    font-size: 0;
+    position: relative;
+    text-align: right;
+}
+
+.installment-data {
+    width: 50%;
+    position: relative;
+    float: left;
+}
+
+.card-list .eva-card-container {
+    margin-left: 3px;
+    /*margin-bottom: 5px;*/
+}
+
+.credit-cards {
+    width: 50%;
+    /* float: right; */
+    margin-left: 50%;
+}

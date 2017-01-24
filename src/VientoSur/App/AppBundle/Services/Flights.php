@@ -254,4 +254,29 @@ class Flights
 
         return $optionField;
     }
+
+    public function processdVault($formNewPaySend)
+    {
+        try {
+            $params = [
+                'brand_code' => $formNewPaySend['card_code'],
+                'number' => str_replace(' ', '', $formNewPaySend['number']),
+                'expiration_month' => $formNewPaySend['expiration']->format('m'),
+                'expiration_year' => $formNewPaySend['expiration']->format('Y'),
+                'security_code' => $formNewPaySend['security_code'],
+                'bank' => $formNewPaySend['bank_code'],
+                'seconds_to_live' => '600',
+                'holder_name' => $formNewPaySend['owner_name'],
+            ];
+
+            $response = $this->despegar->dVaultValidation($formNewPaySend['tokenize_key'], $params);
+
+            if ($response) {
+                $this->despegar->vaultPbdyy($formNewPaySend['tokenize_key'], $params);
+            }
+        } catch (Exception $exception) {
+            return false;
+        }
+        return false;
+    }
 }

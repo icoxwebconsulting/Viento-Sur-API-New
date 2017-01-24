@@ -200,6 +200,32 @@ class Despegar
         }
     }
 
+    public function vaultPbdyy($tokenizeKey, $params)
+    {
+        $header = [
+            'Content-Type: application/json',
+            'X-Tokenize-Key: ' . $tokenizeKey,
+            'X-Client: ' . $this->apiKey,
+            'X-ApiKey: ' . $this->apiKey
+        ];
+
+        //step1
+        $params = json_encode($params);
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $this->urlVault . '/vault/pbdyy');
+        curl_setopt($cSession, CURLOPT_POST, true);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        //step3
+        $results = curl_exec($cSession);
+        //step4
+        curl_close($cSession);
+
+        return json_decode($results);
+    }
+
     public function dVault($formNewPaySend)
     {
         try {

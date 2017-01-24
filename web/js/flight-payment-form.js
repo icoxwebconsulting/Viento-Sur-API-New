@@ -30,8 +30,14 @@ $(document).ready(function () {
 
     $('.list-group').on('click', '.clickable-card', function () {
         var cardId = $(this).data('card-id');
+        var cardCode = $(this).data('card-code');
         //var bank = $(this).data('bank-id');
-        $('#card-selected').val(cardsObject[cardId]);
+        $('#card-selected').val(cardsObject[cardCode]);
+        $('#form_payments_card-type0').val(cardCode);
+        $('#form_payments_card_code0, #form_payments_card-token0').each(function () {
+          this.value = cardId;
+        });
+        $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
         $('.card-list .eva-card-container').removeClass('selected-p-card');
     });
 
@@ -51,5 +57,17 @@ $(document).ready(function () {
 
     $('.list-group-item').on('click', function () {
         $($(this).find('input:radio')[0]).prop("checked", true);
-    })
+    });
+
+    $("#form_contact_info_phones-country_code0").on('keydown', function (e) {
+        e.preventDefault();
+        return false;
+    }).intlTelInput({
+        autoHideDialCode: false,
+        nationalMode: false,
+        initialCountry: 'AR'
+    });
+
+    $('#form_payments_card-number0').payment('formatCardNumber');
+    $('#form_payments_card-security_code0').payment('formatCardCVC');
 });
