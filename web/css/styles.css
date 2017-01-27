@@ -10888,6 +10888,63 @@ img.mfp-img {
   box-sizing: content-box;
 }
 
+.header-outbound{
+  background: #337ab7;
+  color: #fff;
+  padding: 4px 8px;
+  display: table;
+  width: 100%;
+}
+
+.segment-header {
+  float: left;
+  border-bottom: 1px solid #00B3EE;
+  display: block;
+}
+
+.flight-details-container li{
+  list-style: none;
+  display: block;
+
+}
+
+.item-label{
+  padding: 5px;
+  text-align: center;
+  display: inline-block;
+  font-size: 1.3rem;
+}
+
+.item-city-code{
+  padding: 5px;
+  font-size: 2.25rem;
+  color: #66d9ff;
+}
+
+.item-location-code{
+  padding: 5px;
+  font-size: 1.5rem;
+}
+
+.item-date{
+  padding: 5px;
+  font-size: 1.5rem;
+}
+
+.item-time{
+  padding: 5px;
+  /*background: #0099cc;*/
+  font-size: 1.5rem;
+}
+
+.airline-data-col{
+  padding-top: 4rem;
+}
+
+.connection{
+  background: #FFEB99;
+}
+
 @media (max-width: 992px) {
 
   .page-title {

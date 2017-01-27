@@ -5,7 +5,7 @@
         <div class="row">
             <div class="gap"></div>
 
-            <div class="col-md-9 col-md-push-3">
+            <div class="col-md-7 col-md-push-5">
                 {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
 
                 <!--Pasajeros-->
@@ -294,9 +294,227 @@
                 {#{{ dump(paymentMethods) }}#}
             </div>
 
-            <div class="col-md-3 col-md-pull-9">
+            <div class="col-md-5 col-md-pull-7">
                 <div class="content-sidebar">
-                    <div style="height: 800px;">LEFT</div>
+                    <div class="booking-item-dates-change mb5">
+                        <h5><b>Detalle de su compra</b></h5>
+                        <div class="row alert alert-warning">
+                            <div class="col-md-offset-1 col-md-10 ">
+                                <div class="row">
+                                        <span style="float: left;">Tarifa por adulto</span>
+                                        <span style="float: right;">{{ itineraryDetail.price_detail.adult_total | number_format(2, ',', '.') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="header-outbound">
+                                    <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
+                                    <span> <b>IDA</b> </span>
+                                    {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
+                                        <span style="float: right">PARADA {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
+
+                                    {% else %}
+                                        <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} PARADAS</span>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="outbound">
+                            {% if itineraryDetail.outbound_choices[0].segments | length > 0 %}
+                            {% for item in itineraryDetail.outbound_choices[0].segments %}
+                                <div class="row">
+                                    <div class="segment-header col-md-12">
+                                        <span>{{ item.cabin_type | capitalize }}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {# Salida #}
+                                    <div class="flight-details-container col-md-5 align-center">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-label">Salida</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-city-code">{{ item.from }}</span>
+                                            </div>
+                                        </div>
+                                        {#<div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-location-code">Buenos Aires</span>
+                                            </div>
+                                        </div>#}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {# Vuelo #}
+                                    <div class="col-md-2 align-center media-middle">
+
+                                        <div class="row">
+                                            <div class="col-md-12 airline-data-col">
+                                                <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
+                                                <span class="airline-data">{{ item.flight_id }}</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    {# Llegada #}
+                                    <div class="flight-details-container col-md-5 align-center">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-label">Llegada</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-city-code">{{ item.to }}</span>
+                                            </div>
+                                        </div>
+                                        {#<div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-location-code">Buenos Aires</span>
+                                            </div>
+                                        </div>#}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 alert alert-warning">
+                                        <span style="float: left">Tiempo de espera</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="booking-item-dates-change mb5">
+                        <div class="row">
+                            <div class="cold-md-12">
+                                <div class="header-outbound">
+                                    <span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>
+                                    <span> <b>VUELTA</b> </span>
+                                    {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
+                                        <span style="float: right">PARADA {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
+
+                                    {% else %}
+                                        <span style="float: right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} PARADAS</span>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="outbound">
+                            {% if itineraryDetail.inbound_choices[0].segments| length > 0 %}
+                                {% for item in itineraryDetail.inbound_choices[0].segments%}
+                                    <div class="row">
+                                        <div class="segment-header col-md-12">
+                                            <span>{{ item.cabin_type | capitalize }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        {# Salida #}
+                                        <div class="flight-details-container col-md-5 align-center">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-label">Salida</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-city-code">{{ item.from }}</span>
+                                                </div>
+                                            </div>
+                                            {#<div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-location-code">Buenos Aires</span>
+                                                </div>
+                                            </div>#}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {# Vuelo #}
+                                        <div class="col-md-2 align-center media-middle">
+
+                                            <div class="row">
+                                                <div class="col-md-12 airline-data-col">
+                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
+                                                    <span class="airline-data">{{ item.flight_id }}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        {# Llegada #}
+                                        <div class="flight-details-container col-md-5 align-center">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-label">Llegada</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-city-code">{{ item.to }}</span>
+                                                </div>
+                                            </div>
+                                            {#<div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-location-code">Buenos Aires</span>
+                                                </div>
+                                            </div>#}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 alert alert-warning">
+                                            <span style="float: left">Tiempo de espera</span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
 
