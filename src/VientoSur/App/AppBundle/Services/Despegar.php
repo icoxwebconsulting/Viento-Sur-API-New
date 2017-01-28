@@ -178,6 +178,9 @@ class Despegar
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST:true';
+        }
 
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);

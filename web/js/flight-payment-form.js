@@ -31,14 +31,21 @@ $(document).ready(function () {
     $('.list-group').on('click', '.clickable-card', function () {
         var cardId = $(this).data('card-id');
         var cardCode = $(this).data('card-code');
-        //var bank = $(this).data('bank-id');
+        var bank = $(this).data('bank-code');
+
         $('#card-selected').val(cardsObject[cardCode]);
         $('#form_payments_card-type0').val(cardCode);
-        $('#form_payments_card_code0, #form_payments_card-token0').each(function () {
-          this.value = cardId;
-        });
+        $('#form_payments_card_code0').val(cardId);
         $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
         $('.card-list .eva-card-container').removeClass('selected-p-card');
+
+        if (bank) {
+            var parentId = $(this).data('parent-id');
+            console.log(parentId);
+            $('#' + parentId).addClass('selected-p-card');
+        } else {
+            $(this).addClass('selected-p-card');
+        }
     });
 
     $('.clickable-bank').popover({
@@ -48,11 +55,11 @@ $(document).ready(function () {
             return $(this).find('.card-content').html();
         }
     }).on('show.bs.popover', function () {
-//            $(this).find('.clickable-card').each(function () {
-//                if ($('#form_payment_bank_code').val() == $(this).data('card-id')) {
-//                    $(this).addClass('selected-p-card');
-//                }
-//            })
+           $(this).find('.clickable-card').each(function () {
+               if ($('#form_payments_card_code0').val() == $(this).data('card-id')) {
+                   $(this).addClass('selected-p-card');
+               }
+           })
     });
 
     $('.list-group-item').on('click', function () {

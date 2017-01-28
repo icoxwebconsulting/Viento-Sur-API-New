@@ -263,10 +263,13 @@ class FlightController extends Controller
 
         $flightService = $this->get('flights_service');
         $booking = $flightService->getCheckoutData($urlParams);
-        $itineraryDetail = $flightService->getItineraryDetail([
-            'outbound_choice' => $params['outbound'],
-            'inbound_choice' => ((empty($inbound)) ? '' : $inbound),
-        ], $params['item_id']);
+        $options = [
+            'outbound_choice' => $params['outbound']
+        ];
+        if (isset($params['inbound'])) {
+            $options['inbound_choice'] = $params['inbound'];
+        }
+        $itineraryDetail = $flightService->getItineraryDetail($options, $params['item_id']);
 
         $formNewPay = $this->createFormBuilder($booking);
         $formNewPay = $flightService->initForm($booking, $formNewPay);
