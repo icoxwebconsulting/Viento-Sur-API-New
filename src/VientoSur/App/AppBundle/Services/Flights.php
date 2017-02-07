@@ -2,12 +2,16 @@
 
 namespace VientoSur\App\AppBundle\Services;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use VientoSur\App\AppBundle\Entity\FlightPassengers;
+use VientoSur\App\AppBundle\Entity\FlightReservation;
 
 
 class Flights
 {
     private $despegar;
+    private $em;
     private $formNewPay;
     private $fieldNames;
     private $passengersForm;
@@ -29,9 +33,10 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp)
+    public function __construct(Despegar $dp, EntityManager $entityManager)
     {
         $this->despegar = $dp;
+        $this->em = $entityManager;
     }
 
     public function getCheckoutData($urlParams)
@@ -406,6 +411,30 @@ class Flights
 
         if ($bookingInfo) {
             //TODO: guardar los datos de la reserva y pasajeros
+            $reservation = new FlightReservation();
+//            $reservation->setFlightId();
+//            $reservation->setReservationId();
+//            $reservation->setTotalPrice();
+//            $reservation->setCardType();
+//            $reservation->setHolderName();
+//            $reservation->setPhoneNumber();
+//            $reservation->setEmail();
+//            $reservation->setInbound();
+//            $reservation->setOutbound();
+            $reservation->setCreated(new \DateTime());
+            $this->em->persist($reservation);
+
+            foreach ($fillData['passengers'] as $key => $value) {
+                $passenger = new FlightPassengers();
+                $passenger->setName($fillData['first_name' . $key]);
+                $passenger->setLastName($fillData['last_name' . $key]);
+                $passenger->setDocument($fillData['document_number' . $key]);
+                $passenger->setBirthdate($fillData['document_number' . $key]);
+                $passenger->setFlightReservation($reservation);
+//                $passenger->setGender();
+                $this->em->persist($passenger);
+            }
+            $this->em->flush();
 
             //TODO: de ser necesario, traer los datos del vuelo y reserva
 
@@ -413,7 +442,9 @@ class Flights
             try {
                 //TODO: cambiar por el método de vuelos
                 if ($fillData['email-']) {
-                    $this->get('email.service')->sendBookingEmail($fillData['email-'], array());
+                    $this->get('email.service')->sendBookingFlightEmail($fillData['email-'], array(
+                        'pdf' => false
+                    ));
                 }
             } catch (\Exception $e) {
                 $this->get('logger')->error('Booking Flight email error');

@@ -80,4 +80,20 @@ class Email
         ;
         $this->mailer->send($message);
     }
+
+    public function sendBookingFlightEmail($email, $data)
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Confirmación de reserva')
+            ->setFrom('no-responder@vientosur.net')
+            ->setTo($email)
+            ->setBody(
+                $this->templating->render(
+                    'VientoSurAppAppBundle:Email:bookingFlight.html.twig',
+                    $data
+                ),
+                'text/html'
+            );
+        $this->mailer->send($message);
+    }
 }
