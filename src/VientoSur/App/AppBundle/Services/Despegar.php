@@ -490,4 +490,19 @@ class Despegar
         $results = json_decode($results, true);
         return $results;
     }
+
+    public function postFlightBookings($params)
+    {
+        $url = $this->getServiceUrl() . "flights/checkouts" . (($this->isTest) ? '?example=true' : '');
+        $header = [
+            'Content-Type: application/json',
+            'X-Client: ' . $this->apiKey,
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST:true';
+        }
+
+        return $this->curlExec($url, $header, 'POST', json_encode($params));
+    }
 }

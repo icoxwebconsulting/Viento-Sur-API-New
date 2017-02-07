@@ -360,6 +360,7 @@ class Flights
                         }
                     }
                 }
+                $contactInfo['accept_offers'] = false;//TODO: poner campo en formulario
             }
         }
         $toCheckout['booking_information']['contact_info'] = $contactInfo;
@@ -376,7 +377,7 @@ class Flights
                                 "type" => $formData['adults-type' . $j]
                             ],
                             "type" => "ADULT",
-                            "first_name" => $formData['adults-first_name'. $j],
+                            "first_name" => $formData['adults-first_name' . $j],
                             "last_name" => $formData['adults-last_name' . $j],
                             "birthdate" => $formData['adults-birthdate' . $j]->format('YYYY-MM-DD'),
                             "gender" => $formData['adults-gender' . $j],
@@ -428,5 +429,28 @@ class Flights
     public function processReservation($dvault, $formData, $booking)
     {
         $fillData = $this->fillFormData($formData, $booking);
+
+        $bookingInfo = $this->despegar->postFlightBookings($fillData);
+
+        if ($bookingInfo) {
+            //TODO: guardar los datos de la reserva y pasajeros
+
+            //TODO: de ser necesario, traer los datos del vuelo y reserva
+
+            //envío de correo
+            try {
+                //TODO: cambiar por el método de vuelos
+                if ($fillData['email-']) {
+                    $this->get('email.service')->sendBookingEmail($fillData['email-'], array(
+                    ));
+                }
+            } catch (\Exception $e) {
+                $this->get('logger')->error('Booking Flight email error');
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -286,7 +286,6 @@ class FlightController extends Controller
                 //TODO: verificar con despegar el error: invalid tokenize key
                 $status = 'ok';
 
-
                 if ($dvault) {
                     $reservation = $flightService->processReservation($dvault, $formNewPaySend, $booking);
 
