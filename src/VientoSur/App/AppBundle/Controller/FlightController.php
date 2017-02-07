@@ -281,8 +281,25 @@ class FlightController extends Controller
             if ($formNewPaySend->isValid()) {
                 $formNewPaySend = $formNewPaySend->getData();
 
-                //procesar formulario recibido
-                $flightService->processdVault($formNewPaySend);
+                //procesar pago mediante api de dvault
+                $dvault = true;//$flightService->processdVault($formNewPaySend);
+                //TODO: verificar con despegar el error: invalid tokenize key
+                $status = 'ok';
+
+
+                if ($dvault) {
+                    $reservation = $flightService->processReservation($dvault, $formNewPaySend, $booking);
+
+                    if (!$reservation) {
+                        $status = 'fail';
+                    }
+                } else {
+                    $status = 'dvault';
+                }
+
+                return $this->redirectToRoute('viento_sur_app_booking_flight_summary', array(
+                    'status' => $status
+                ));
             }
         }
 
@@ -304,5 +321,33 @@ class FlightController extends Controller
             'itineraryDetail' => $itineraryDetail,
             'paymentMethods' => $paymentMethods
         ));
+    }
+
+    /**
+     *
+     * @Route("/booking/summary/", name="viento_sur_app_booking_flight_summary")
+     */
+    public function payFlightBookingAction(Request $request)
+    {
+        $status = $request->get('status');
+
+        if ($status == 'ok') {
+//            $urlParams = array(
+//                'ids' => $hotelId,
+//                'language' => 'es',
+//                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+//                'resolve' => 'merge_info',
+//                'catalog_info' => 'true'
+//            );
+//            $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
+//            $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
+            return $this->render('VientoSurAppAppBundle:Flight:payFlightBooking.html.twig', array(
+                'status' => $status
+            ));
+        } else {
+            return $this->render('VientoSurAppAppBundle:Flight:errorFlightBooking.html.twig', array(
+                'status' => $status
+            ));
+        }
     }
 }
