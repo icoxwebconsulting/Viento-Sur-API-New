@@ -282,7 +282,7 @@ class Flights
         return false;
     }
 
-    private function fillFormData($formData, $booking)
+    private function fillFormData($dvault, $formData, $booking)
     {
         $toCheckout = [
             'risk_analysis' => [
@@ -332,7 +332,7 @@ class Flights
                     'business_name' => $formData['invoice-business_name' . $j]
                 ],
                 'card' => [
-                    'token' => $formData['card-token' . $j],
+                    'token' => 'secure:\/\/' . '',//$dvault['secure_token'], //TODO: descomentar cuando se pasen los datos correctamente
                     'type' => 'CREDIT'
                 ]
             ];
@@ -366,61 +366,33 @@ class Flights
         $toCheckout['booking_information']['contact_info'] = $contactInfo;
 
         //proceso de passengers
-        foreach ($booking['passengers'] as $key => $data) {
-            if ($key != 'metadata') {
-                if ($key == 'adults') {
-                    for ($i = 1; $i <= count($data); $i++) {
-                        $adult = [
-                            "identification" => [
-                                "number" => $formData['adults-number' . $j],
-                                "issuing_country" => "AR",
-                                "type" => $formData['adults-type' . $j]
-                            ],
-                            "type" => "ADULT",
-                            "first_name" => $formData['adults-first_name' . $j],
-                            "last_name" => $formData['adults-last_name' . $j],
-                            "birthdate" => $formData['adults-birthdate' . $j]->format('YYYY-MM-DD'),
-                            "gender" => $formData['adults-gender' . $j],
-                            "nationality" => "AR"
-                        ];
-                        $toCheckout['booking_information']['passengers']['adults'][] = $adult;
-                    }
-                } else if ($key == 'children') {
-                    for ($i = 0; $i < count($data); $i++) {
-                        $children = [
-                            "identification" => [
-                                "number" => "32132132",
-                                "issuing_country" => "AR",
-                                "type" => "PASSPORT"
-                            ],
-                            "type" => "ADULT",
-                            "first_name" => "Jonathan",
-                            "last_name" => "Becter",
-                            "birthdate" => "1991-01-01",
-                            "gender" => "MALE",
-                            "nationality" => "AR"
-                        ];
-                        $toCheckout['booking_information']['passengers']['children'][] = $children;
-                    }
-                } elseif ($key == 'infants') {
-                    for ($i = 0; $i < count($data); $i++) {
-                        $infants = [
-                            "identification" => [
-                                "number" => "32132132",
-                                "issuing_country" => "AR",
-                                "type" => "PASSPORT"
-                            ],
-                            "type" => "ADULT",
-                            "first_name" => "Jonathan",
-                            "last_name" => "Becter",
-                            "birthdate" => "1991-01-01",
-                            "gender" => "MALE",
-                            "nationality" => "AR"
-                        ];
-                        $toCheckout['booking_information']['passengers']['infants'][] = $infants;
-                    }
-                }
+        $j = 0;
+        $adultCount = $booking['passengers']['adults'][0]['metadata']['quantity'];
+        $childCount = (isset($booking['passengers']['children'][0]['metadata']['quantity']) ? $booking['passengers']['children'][0]['metadata']['quantity'] : 0);
+        $type = 'ADULT';
+        $typeField = 'adults';
+        for ($i = 1; $i <= $booking['passengers']['metadata']['quantity']; $i++) {
+            if ($j >= $childCount) {
+                $j = ($j == $adultCount) ? 1 : $j + 1;
+                $type = 'CHILDREN';
+                $typeField = 'children';
+            } else {
+                $j += 1;
             }
+            $passenger = [
+                "identification" => [
+                    "number" => $formData[$typeField . '-number' . $j],
+                    "issuing_country" => "AR",
+                    "type" => $formData[$typeField . '-type' . $j]
+                ],
+                "type" => $type,
+                "first_name" => $formData[$typeField . '-first_name' . $j],
+                "last_name" => $formData[$typeField . '-last_name' . $j],
+                "birthdate" => $formData[$typeField . '-birthdate' . $j]->format('Y-m-d'),
+                "gender" => $formData[$typeField . '-gender' . $j],
+                "nationality" => "AR"
+            ];
+            $toCheckout['booking_information']['passengers'][$typeField][] = $passenger;
         }
 
         return $toCheckout;
@@ -428,7 +400,7 @@ class Flights
 
     public function processReservation($dvault, $formData, $booking)
     {
-        $fillData = $this->fillFormData($formData, $booking);
+        $fillData = $this->fillFormData($dvault, $formData, $booking);
 
         $bookingInfo = $this->despegar->postFlightBookings($fillData);
 
@@ -441,8 +413,7 @@ class Flights
             try {
                 //TODO: cambiar por el método de vuelos
                 if ($fillData['email-']) {
-                    $this->get('email.service')->sendBookingEmail($fillData['email-'], array(
-                    ));
+                    $this->get('email.service')->sendBookingEmail($fillData['email-'], array());
                 }
             } catch (\Exception $e) {
                 $this->get('logger')->error('Booking Flight email error');
