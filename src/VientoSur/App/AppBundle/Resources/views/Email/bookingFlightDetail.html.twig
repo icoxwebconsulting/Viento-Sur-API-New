@@ -1,153 +1,203 @@
-<div class="container bs-docs-container">
-    <table class="table">
-        <tr>
-            <th colspan="2">
-                <b>
-                    {#<h3>&iexcl;Gracias, {{ internal.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>#}
-                </b>
-            </th>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <table class="table">
+{% block content %}
+    <div class="container">
+        <div class="container bs-docs-container">
+            <br>
+            <b>
+                <h3>&iexcl;Gracias, {{ internal.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>
+            </b>
+
+            <h5><b>Detalle de su compra</b></h5>
+            <div class="row alert alert-warning">
+                <div class="col-md-offset-1 col-md-10 ">
+                    <div class="row" style="font-size: 2rem; padding-bottom: 10px">
+                        <span style="float: left;">Tarifa por adulto</span>
+                        <span style="float: right;">{{ itineraryDetail.price_detail.adult_base | number_format(2, ',', '.') }}</span>
+                        <span style="float: right;">$ </span>
+                    </div>
+                    <div class="row">
+                        <span style="float: left;">Adulto</span>
+                        <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
+                        <span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>
+                        <span style="float: right;">$ </span>
+                    </div>
+
+                    {% if itineraryDetail.passenger_distribution.children > 0 %}
+                        <div class="row">
+                            <span style="float: left;">Niño</span>
+                            <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.children }})</span>
+                            <span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>
+                            <span style="float: right;">$ </span>
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <span style="float: left;">Impuestos y tasas</span>
+                        <span style="float: right;">{{ itineraryDetail.price_detail.taxes | number_format(2, ',', '.') }}</span>
+                        <span style="float: right;">$ </span>
+                    </div>
+                    <div class="row">
+                        <span style="float: left;">Cargos</span>
+                        <span style="float: right;">{{ itineraryDetail.price_detail.fees | number_format(2, ',', '.') }}</span>
+                        <span style="float: right;">$ </span>
+                    </div>
+                    <div class="row" style="padding-top: 2rem; border-top: 1px solid #000;">
+                        <span class="label-total" style="float: left;font-size: 2rem; text-align: left; text-transform: uppercase"><b>Total</b></span>
+                        <span style="float: right;font-size: 3rem"><b>{{ itineraryDetail.price_detail.total | number_format(2, ',', '.') }}</b></span>
+                        <span style="float: right; font-size: 2rem;padding-right: 3px;"><b>$</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking-item-dates-change mb5 col-lg-6">
+                <div class="row">
+                    <div class="cold-md-12">
+                        <div class="header-outbound">
+                            <span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>
+                            <span> <b>VUELTA</b> </span>
+                            {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
+                                <span style="float: right">PARADA {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
+
+                            {% else %}
+                                <span style="float: right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} PARADAS</span>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outbound">
+                    {% if itineraryDetail.inbound_choices[0].segments| length > 0 %}
+                        {% for item in itineraryDetail.inbound_choices[0].segments%}
+                            <div class="row">
+                                <div class="segment-header col-md-12">
+                                    <span>{{ item.cabin_type | capitalize }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {# Salida #}
+                                <div class="flight-details-container col-md-5 align-center">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-label">Salida</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-city-code">{{ item.from }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {# Vuelo #}
+                                <div class="col-md-2 align-center media-middle">
+
+                                    <div class="row">
+                                        <div class="col-md-12 airline-data-col">
+                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
+                                            <span class="airline-data">{{ item.flight_id }}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                {# Llegada #}
+                                <div class="flight-details-container col-md-5 align-center">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-label">Llegada</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-city-code">{{ item.to }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 alert alert-warning">
+                                    <span style="float: left">Tiempo de espera</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6" style="margin-top: 15px">
+                <table class="table table-bordered">
+                    <tbody>
                     <tr>
+                        <th width="100">
+                            Datos de la reserva
+                        </th>
                         <td>
-                            {#<img src="{{ hotelDetails.main_picture.url }}/200x150" class="origin" />#}
-                        </td>
-                        <td>
-                            {#<h3>{{ hotelDetails.name }}</h3>#}
+                            <ul>
+                                <li>N&uacute;mero de reserva: </li>
+                                <li>Reserva realizada por:  {{ internal.email }}, {{ internal.holderName }}</li>
+                            </ul>
                         </td>
                     </tr>
+                    <tr>
+                        <th width="100">
+                            Pasajeros:
+                        </th>
+                        <td>
+                            <ul>
+                                {% for passenger in pasengers %}
+                                    <li>
+                                        <p><strong>Nombre y apellido:</strong> {{ passenger.name }} {{ passenger.lastName }}</p>
+                                        <p><strong>Fecha de nacimiento:</strong> {{ passenger.birthdate | date('d/m/Y') }}</p>
+                                        <p><strong>Documento:</strong> {{ passenger.document }}</p>
+                                        <p><strong>Sexo:</strong> {{ passenger.gender }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">
+                            Pol&iacute;tica de cancelaci&oacute;n:
+                        </th>
+                        <td>
+                            <ul>
+                                {#<li></li>#}
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
-            </th>
-        </tr>
-        <tr>
-            <th width="15%">
-               Origen:
-            </th>
-            <td>
-                {#{{ hotelDetails.location.address }}.#}
-            </td>
-        </tr>
-        <tr>
-            <th width="15%">
-                Destino:
-            </th>
-            <td>
-                {#{{ hotelDetails.location.address }}.#}
-            </td>
-        </tr>
-        <tr>
-            <th width="15%">Descripci&oacute;n</th>
-            <td class="text-justify">
-                {#{{ hotelDetails.information.es }}#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Tel&eacute;fono:
-            </th>
-            <td>
-                No disponible
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
 
-    <table class="table table-bordered">
-        <tbody>
-        <tr>
-            <th width="20%">
-                Tu reserva:
-            </th>
-            <td>
-                {#{{ reservationDetails.night_count }} noche(s). {{ reservationDetails.rooms|length }} Habitacion(es).#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Entrada:
-            </th>
-            <td>
-                {#{{ reservationDetails.checkin_date|date("d/m/Y") }}#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Salida:
-            </th>
-            <td>
-                {#{{ reservationDetails.checkout_date|date("d/m/Y") }}#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                N&uacute;mero de reserva:
-            </th>
-            <td>
-                {#{{ reservationDetails.id }}#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Reserva realizada por:
-            </th>
-            <td>
-                {#{{ internal.email }}, {{ internal.holderName }}#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Habitaci&oacute;n(es):
-            </th>
-            <td>
-                {#{% for room in reservationDetails.rooms %}#}
-                    {#<li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} Adulto(s) {% if room.children > 0 %}{{ room.children }} Niño(s){% endif %}</li>#}
-                {#{% endfor %}#}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Pol&iacute;tica de cancelaci&oacute;n:
-            </th>
-            <td>
-                <ul>
-                    {#{% if reservationDetails.hours_before_checkin_penalty is defined %}<li>Puede cancelar  hasta {{ reservationDetails.hours_before_checkin_penalty }} horas antes del checking.{% endif %}#}
-                    {#<li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} El cargo por cancelar es $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} Sin cargos por cancelación.{% endif %}</li>#}
-                </ul>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="jumbotron">
-        <table class="table table-condensed">
-            <tr>
-                <td colspan="2">
-                    {#{{ reservationDetails.rooms|length }} Habitacio(nes)#}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Precio total:
-                </th>
-                <td>
-                    {#{{ reservationDetails.site_currency.code }} {{ internal.totalPrice }}#}
-                </td>
-            </tr>
+        <div class="row">
             {% if not pdf %}
-                <tr>
-                    <td>
-                        {#<a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">#}
-                            {#Descargar PDF#}
-                        {#</a>#}
-                    </td>
-                    <td>
-                        {#<a href="{{ url('viento_sur_app_edit_reservation', {'id': reservationId}) }}">#}
-                            {#Editar reservaci&oacute;n#}
-                        {#</a>#}
-                    </td>
-                </tr>
+                <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
+                Descargar PDF
+                </a>
+                <a href="{{ url('viento_sur_app_edit_reservation', {'id': reservationId}) }}">
+                Editar reservaci&oacute;n
+                </a>
             {% endif %}
-        </table>
+        </div>
     </div>
-</div>
+{% endblock %}

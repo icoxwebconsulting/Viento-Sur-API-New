@@ -341,7 +341,10 @@ class FlightController extends Controller
 //            $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
 //            $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
             return $this->render('VientoSurAppAppBundle:Flight:payFlightBooking.html.twig', array(
-                'status' => $status
+                'status' => $status,
+//                'itineraryDetail' => $itineraryDetail,
+//                'internal' => $reservation,
+//                'pasengers'=> $passengers,
             ));
         } else {
             return $this->render('VientoSurAppAppBundle:Flight:errorFlightBooking.html.twig', array(
