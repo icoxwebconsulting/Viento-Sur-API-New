@@ -287,10 +287,10 @@ class Flights
                 'holder_name' => $formNewPaySend['card-card_holder_name0'],
             ];
 
-            $response = $this->despegar->dVaultValidation($formNewPaySend['payments']['credit_cards'][0]['card']['token']['metadata']['public_key'], $params);
+            $response = $this->despegar->dVaultValidation($formNewPaySend['payments']['credit_cards'][0]['card']['token']['metadata']['public_key'], $params, true);
 
             if ($response) {
-                $this->despegar->vaultPbdyy($formNewPaySend['tokenize_key'], $params);
+                $this->despegar->vaultPbdyy($formNewPaySend['tokenize_key'], $params, true);
             }
         } catch (Exception $exception) {
             return false;
@@ -448,15 +448,16 @@ class Flights
             $this->em->persist($reservation);
 
             foreach ($fillData['booking_information']['passengers'] as $key => $value) {
-
-                $passenger = new FlightPassengers();
-                $passenger->setName($fillData['first_name' . $key]);
-                $passenger->setLastName($fillData['last_name' . $key]);
-                $passenger->setDocument($fillData['document_number' . $key]);
-                $passenger->setBirthdate($fillData['document_number' . $key]);
-                $passenger->setFlightReservation($reservation);
-//                $passenger->setGender();
-                $this->em->persist($passenger);
+                foreach ($value as $key2 => $data) {
+                    $passenger = new FlightPassengers();
+                    $passenger->setName($data['first_name']);
+                    $passenger->setLastName($data['last_name']);
+                    $passenger->setDocument('');
+                    $passenger->setBirthdate(new \DateTime($data['birthdate']));
+                    $passenger->setGender($data['gender']);
+                    $passenger->setFlightReservation($reservation);
+                    $this->em->persist($passenger);
+                }
             }
             $this->em->flush();
 

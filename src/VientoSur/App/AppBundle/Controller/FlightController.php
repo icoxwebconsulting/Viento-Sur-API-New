@@ -276,8 +276,8 @@ class FlightController extends Controller
             $request->getSession()->set('flightBooking', json_encode($booking));
             $request->getSession()->set('itineraryDetail', json_encode($itineraryDetail));
         } else {
-            $booking = json_decode($request->getSession()->get('flightBooking'), true);
             $itineraryDetail = json_decode($request->getSession()->get('itineraryDetail'), true);
+            $booking = json_decode($request->getSession()->get('flightBooking'), true);
             //$session->remove('formBooking');
         }
 

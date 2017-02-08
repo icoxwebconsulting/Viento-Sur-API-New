@@ -169,7 +169,7 @@ class Despegar
         return $this->curlExec($url, $header, 'PATCH', json_encode($params));
     }
 
-    public function dVaultValidation($tokenizeKey, $params)
+    public function dVaultValidation($tokenizeKey, $params, $isFlight = false)
     {
         $url = $this->urlVault . '/vault/pbdyy/validation';
         $header = [
@@ -178,8 +178,14 @@ class Despegar
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
-        if ($this->isTest) {
-            $header[] = 'XDESP-TEST: true';
+        if ($this->isTest && $isFlight) {
+            $header = [
+                'Content-Type: application/json',
+                'X-Tokenize-Key: ' . $tokenizeKey,
+                'X-Client: ' . $this->apiKeyProd,
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
         }
 
         $cSession = curl_init();
@@ -203,7 +209,7 @@ class Despegar
         }
     }
 
-    public function vaultPbdyy($tokenizeKey, $params)
+    public function vaultPbdyy($tokenizeKey, $params, $isFlight = false)
     {
         $header = [
             'Content-Type: application/json',
@@ -211,6 +217,16 @@ class Despegar
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
+
+        if ($this->isTest && $isFlight) {
+            $header = [
+                'Content-Type: application/json',
+                'X-Tokenize-Key: ' . $tokenizeKey,
+                'X-Client: ' . $this->apiKeyProd,
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
+        }
 
         //step1
         $params = json_encode($params);
