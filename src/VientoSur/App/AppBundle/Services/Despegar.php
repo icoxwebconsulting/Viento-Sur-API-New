@@ -292,7 +292,7 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST:true';
+            $header[] = 'XDESP-TEST: true';
         }
 
         return $this->curlExec($url, $header, 'GET');
@@ -306,7 +306,7 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST:true';
+            $header[] = 'XDESP-TEST: true';
         }
 
         return $this->curlExec($url, $header, 'GET');
@@ -320,7 +320,7 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST:true';
+            $header[] = 'XDESP-TEST: true';
         }
 
         return $this->curlExec($url, $header, 'GET');
@@ -338,7 +338,7 @@ class Despegar
          * Descripción: Header to mock the integration with Vito and use a known itinerary
          */
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST:true';
+            $header[] = 'XDESP-TEST: true';
         }
 
         return $this->curlExec($url, $header, 'GET');
@@ -356,7 +356,7 @@ class Despegar
          * Descripción: Header to mock the integration with Vito and use a known itinerary
          */
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST:true';
+            $header[] = 'XDESP-TEST: true';
         }
 
         return $this->curlExec($url, $header, 'GET');
@@ -500,7 +500,7 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST:true';
+            $header[] = 'XDESP-TEST: true';
         }
 
         return $this->curlExec($url, $header, 'POST', json_encode($params));

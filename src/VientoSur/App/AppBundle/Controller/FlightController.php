@@ -262,14 +262,25 @@ class FlightController extends Controller
         ];
 
         $flightService = $this->get('flights_service');
-        $booking = $flightService->getCheckoutData($urlParams);
-        $options = [
-            'outbound_choice' => $params['outbound']
-        ];
-        if (isset($params['inbound'])) {
-            $options['inbound_choice'] = $params['inbound'];
+
+        if ($request->getMethod() == 'GET') {
+            $options = [
+                'outbound_choice' => $params['outbound']
+            ];
+            if (isset($params['inbound'])) {
+                $options['inbound_choice'] = $params['inbound'];
+            }
+            $itineraryDetail = $flightService->getItineraryDetail($options, $params['item_id']);
+
+            $booking = $flightService->getCheckoutData($urlParams);
+            $request->getSession()->set('flightBooking', json_encode($booking));
+            $request->getSession()->set('itineraryDetail', json_encode($itineraryDetail));
+        } else {
+            $booking = json_decode($request->getSession()->get('flightBooking'), true);
+            $itineraryDetail = json_decode($request->getSession()->get('itineraryDetail'), true);
+            //$session->remove('formBooking');
         }
-        $itineraryDetail = $flightService->getItineraryDetail($options, $params['item_id']);
+
 
         $formNewPay = $this->createFormBuilder($booking);
         $formNewPay = $flightService->initForm($booking, $formNewPay);
@@ -287,7 +298,7 @@ class FlightController extends Controller
                 $status = 'ok';
 
                 if (!$dvault) {//TODO: quitar negación cuando se solucione el tema de dvault
-                    $reservation = $flightService->processReservation($dvault, $formNewPaySend, $booking);
+                    $reservation = $flightService->processReservation($dvault, $formNewPaySend, $booking, $request->getClientIp());
 
                     if (!$reservation) {
                         $status = 'fail';
@@ -313,12 +324,24 @@ class FlightController extends Controller
         }
         ksort($paymentMethods, SORT_NUMERIC);
 
+        $string = bin2hex(random_bytes(16));
+        $riskAnalysis = [
+            "a" => [
+                'orgId' => $this->getParameter('risk_provider_id_a')
+            ],
+            "b" => [
+                'orgId' => ($this->getParameter('is_test')) ? $this->getParameter('risk_provider_id_b_test') : $this->getParameter('risk_provider_id_b')
+            ],
+            'sessionId' => $string
+        ];
+
         return $this->render('VientoSurAppAppBundle:Flight:bookingFlightPay.html.twig', array(
             'flightMenu' => true,
             'formNewPay' => $formNewPaySend->createView(),
             'formChoice' => $booking,
             'itineraryDetail' => $itineraryDetail,
-            'paymentMethods' => $paymentMethods
+            'paymentMethods' => $paymentMethods,
+            'riskAnalysis' => $riskAnalysis
         ));
     }
 

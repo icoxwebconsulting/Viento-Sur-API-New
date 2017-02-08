@@ -185,6 +185,8 @@
                             {{ form_widget(attribute(formNewPay.payments, 'card-token0'), { 'attr': {'class': 'hidden'}, 'value' : formChoice.payments.credit_cards[0].card.token.metadata.public_key }) }}
                             {{ form_widget(attribute(formNewPay.payments, 'card_code0'), { 'attr': {'class': 'hidden'} }) }}
                             {{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}
+
+                            {{ form_widget(attribute(formNewPay.payments, 'session_id'), { 'value' : riskAnalysis.sessionId }) }}
                         {% endfor %}
                     </div>
                 </div>
@@ -567,6 +569,16 @@
     <script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/flight-payment-form.js?a=6') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
+    {#A#}
+    <script src="https://h.online-metrix.net/fp/tags.js?org_id={{ riskAnalysis.a.orgId }}&session_id={{ riskAnalysis.sessionId }}"></script>
+    <noscript>
+        <iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;" src="https://h.online-metrix.net/tags?org_id={{ riskAnalysis.a.orgId }}&session_id={{ riskAnalysis.sessionId }}"></iframe>
+    </noscript>
+    {#B#}
+    <script src="https://h.online-metrix.net/fp/tags.js?org_id={{ riskAnalysis.b.orgId }}&session_id={{ riskAnalysis.sessionId }}"></script>
+    <noscript>
+        <iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;" src="https://h.online-metrix.net/tags?org_id={{ riskAnalysis.b.orgId }}&session_id={{ riskAnalysis.sessionId }}"></iframe>
+    </noscript>
 {% endblock %}
 
 {% block stylesheets %}

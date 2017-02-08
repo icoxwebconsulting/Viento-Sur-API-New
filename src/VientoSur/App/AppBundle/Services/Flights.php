@@ -78,6 +78,17 @@ class Flights
             }
         }
 
+        //Agrego campo para la sesión usada en las métricas
+        $this->formNewPay->add(
+            $this->paymentsForm->add(
+                'session_id',
+                'hidden',
+                array(
+                    'required' => true,
+                )
+            )
+        );
+
         return $this->formNewPay;
     }
 
@@ -287,11 +298,23 @@ class Flights
         return false;
     }
 
-    private function fillFormData($dvault, $formData, $booking)
+    private function fillFormData($dvault, $formData, $booking, $clientIp)
     {
+        $providers = [
+            [
+                "provider" => "threat_metrix",
+                "parameters" => [
+                    "offshore" => false,
+                    "session_id" => $formData['session_id']
+                ]
+            ]
+        ];
+
         $toCheckout = [
             'risk_analysis' => [
-                'additional_evaluators' => []
+                'additional_evaluators' => $providers,
+                'sem_info' => 'string',
+                'client_ip' => $clientIp
             ],
             'booking_information' => [
                 'payments' => [
@@ -377,7 +400,7 @@ class Flights
         $type = 'ADULT';
         $typeField = 'adults';
         for ($i = 1; $i <= $booking['passengers']['metadata']['quantity']; $i++) {
-            if ($j >= $childCount) {
+            if ($childCount > 0 && $j >= $childCount) {
                 $j = ($j == $adultCount) ? 1 : $j + 1;
                 $type = 'CHILDREN';
                 $typeField = 'children';
@@ -403,9 +426,9 @@ class Flights
         return $toCheckout;
     }
 
-    public function processReservation($dvault, $formData, $booking)
+    public function processReservation($dvault, $formData, $booking, $clientIp)
     {
-        $fillData = $this->fillFormData($dvault, $formData, $booking);
+        $fillData = $this->fillFormData($dvault, $formData, $booking, $clientIp);
 
         $bookingInfo = $this->despegar->postFlightBookings($fillData);
 
@@ -424,7 +447,8 @@ class Flights
             $reservation->setCreated(new \DateTime());
             $this->em->persist($reservation);
 
-            foreach ($fillData['passengers'] as $key => $value) {
+            foreach ($fillData['booking_information']['passengers'] as $key => $value) {
+
                 $passenger = new FlightPassengers();
                 $passenger->setName($fillData['first_name' . $key]);
                 $passenger->setLastName($fillData['last_name' . $key]);
