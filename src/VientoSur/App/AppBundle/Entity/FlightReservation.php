@@ -61,15 +61,6 @@ class FlightReservation
      */
     private $created;
 
-    /**
-     * @ORM\Column(name="inbound", type="datetime", nullable=true)
-     */
-    private $inbound;
-
-    /**
-     * @ORM\Column(name="outbound", type="datetime", nullable=true)
-     */
-    private $outbound;
 
     /**
      * Get id
@@ -263,51 +254,5 @@ class FlightReservation
     public function getCreated()
     {
         return $this->created;
-    }
-
-    /**
-     * Set inbound
-     *
-     * @param \DateTime $inbound
-     * @return FlightReservation
-     */
-    public function setInbound($inbound)
-    {
-        $this->inbound = $inbound;
-
-        return $this;
-    }
-
-    /**
-     * Get inbound
-     *
-     * @return \DateTime 
-     */
-    public function getInbound()
-    {
-        return $this->inbound;
-    }
-
-    /**
-     * Set outbound
-     *
-     * @param \DateTime $outbound
-     * @return FlightReservation
-     */
-    public function setOutbound($outbound)
-    {
-        $this->outbound = $outbound;
-
-        return $this;
-    }
-
-    /**
-     * Get outbound
-     *
-     * @return \DateTime 
-     */
-    public function getOutbound()
-    {
-        return $this->outbound;
     }
 }
