@@ -286,11 +286,11 @@ class Flights
                 'seconds_to_live' => '600',
                 'holder_name' => $formNewPaySend['card-card_holder_name0'],
             ];
-
-            $response = $this->despegar->dVaultValidation($formNewPaySend['payments']['credit_cards'][0]['card']['token']['metadata']['public_key'], $params, true);
+            $key = $formNewPaySend['payments']['credit_cards'][0]['card']['token']['metadata']['public_key'];
+            $response = $this->despegar->dVaultValidation($key, $params, true);
 
             if ($response) {
-                $this->despegar->vaultPbdyy($formNewPaySend['tokenize_key'], $params, true);
+                return $this->despegar->vaultPbdyy($key, $params, true);
             }
         } catch (Exception $exception) {
             return false;

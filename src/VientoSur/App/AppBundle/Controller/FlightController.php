@@ -294,11 +294,10 @@ class FlightController extends Controller
 
                 //procesar pago mediante api de dvault
                 $dvault = $flightService->processdVault($formNewPaySend);
-                //TODO: verificar con despegar el error: invalid tokenize key
                 $status = 'ok';
 
-                if (!$dvault) {//TODO: quitar negación cuando se solucione el tema de dvault
-                    $reservation = $flightService->processReservation($dvault, $formNewPaySend, $booking, $request->getClientIp());
+                if ($dvault && isset($dvault->secure_token)) {
+                    $reservation = $flightService->processReservation($dvault->secure_token, $formNewPaySend, $booking, $request->getClientIp());
 
                     if (!$reservation) {
                         $status = 'fail';

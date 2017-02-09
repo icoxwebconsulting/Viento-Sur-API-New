@@ -15,6 +15,7 @@ class Despegar
     private $clientDespegar;
     private $isTest;
     private $urlVault;
+    private $urlVaultProd;
     private $apiKeyTest;
     private $apiKeyProd;
 
@@ -27,6 +28,7 @@ class Despegar
         $this->serviceVersion = $serviceVersion;
         $this->apiKeyTest = $apiKeyTest;
         $this->apiKeyProd = $apiKey;
+        $this->urlVaultProd = $vaultUrl;
         if ($isTest) {
             $this->urlVault = $vaultUrlTest;
             $this->apiKey = $apiKeyTest;
@@ -179,6 +181,7 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest && $isFlight) {
+            $url = $this->urlVaultProd . '/vault/pbdyy/validation';
             $header = [
                 'Content-Type: application/json',
                 'X-Tokenize-Key: ' . $tokenizeKey,
@@ -211,6 +214,7 @@ class Despegar
 
     public function vaultPbdyy($tokenizeKey, $params, $isFlight = false)
     {
+        $url = $this->urlVault . '/vault/pbdyy';
         $header = [
             'Content-Type: application/json',
             'X-Tokenize-Key: ' . $tokenizeKey,
@@ -219,6 +223,7 @@ class Despegar
         ];
 
         if ($this->isTest && $isFlight) {
+            $url = $this->urlVaultProd . '/vault/pbdyy';
             $header = [
                 'Content-Type: application/json',
                 'X-Tokenize-Key: ' . $tokenizeKey,
@@ -231,7 +236,7 @@ class Despegar
         //step1
         $params = json_encode($params);
         $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $this->urlVault . '/vault/pbdyy');
+        curl_setopt($cSession, CURLOPT_URL, $url);
         curl_setopt($cSession, CURLOPT_POST, true);
         curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
         curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
@@ -308,7 +313,10 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST: true';
+            $header = [
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
         }
 
         return $this->curlExec($url, $header, 'GET');
@@ -349,6 +357,12 @@ class Despegar
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
+        if ($this->isTest) {
+            $header = [
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
+        }
         /**
          * Hay un header extra: XDESP-FLIGHTS_KEEPER-MOCK-VITO
          * Descripción: Header to mock the integration with Vito and use a known itinerary
@@ -367,6 +381,12 @@ class Despegar
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
+        if ($this->isTest) {
+            $header = [
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
+        }
         /**
          * Hay un header extra: XDESP-FLIGHTS_KEEPER-MOCK-VITO
          * Descripción: Header to mock the integration with Vito and use a known itinerary
@@ -509,14 +529,18 @@ class Despegar
 
     public function postFlightBookings($params)
     {
-        $url = $this->getServiceUrl() . "flights/checkouts" . (($this->isTest) ? '?example=true' : '');
+        $url = $this->getServiceUrl() . "flights/checkouts";
         $header = [
             'Content-Type: application/json',
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
         if ($this->isTest) {
-            $header[] = 'XDESP-TEST: true';
+            $header = [
+                'Content-Type: application/json',
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
         }
 
         return $this->curlExec($url, $header, 'POST', json_encode($params));
