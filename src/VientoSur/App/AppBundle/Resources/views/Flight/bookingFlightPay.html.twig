@@ -204,7 +204,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control'}}) }}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control', 'pattern': '^(20|27|30|23|33|24|34)(-|)[0-9]{8}(-|)[0-9]$', 'title': 'Debe coincidir con el patrón: Ej: 20-12345678-4'}}) }}
                                 </div>
                             </div>
                             <div class="row">
@@ -214,7 +214,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Ciudad:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-street' ~ loop.index0 %}
@@ -236,7 +236,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Nombre comercial:', 'attr': {'placeholder': 'En caso necesario', 'class': 'form-control'}}) }}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Nombre comercial:', 'attr': {'placeholder': 'Personas naturales colocar nombre', 'class': 'form-control'}}) }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -270,11 +270,11 @@
                                     {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'País:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
-                                    {% set fieldName = 'phones-number' ~ loop.index0 %}
+                                    {% set fieldName = 'phones-area_code' ~ loop.index0 %}
                                     {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Área:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
-                                    {% set fieldName = 'phones-area_code' ~ loop.index0 %}
+                                    {% set fieldName = 'phones-number' ~ loop.index0 %}
                                     {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Número:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>

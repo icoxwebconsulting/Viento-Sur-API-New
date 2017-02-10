@@ -28,5 +28,9 @@ parameters:
     service_url:       https://api.despegar.com
     service_vault_url: https://pbdyy2.despegar.com
     service_vault_url_test: https://www.despegar.com/sandbox
+
+    #Agent code de despegar
+    agent_code: AG32502
+
     # Le indica al servicio si utiliza la key de test
     is_test:           true

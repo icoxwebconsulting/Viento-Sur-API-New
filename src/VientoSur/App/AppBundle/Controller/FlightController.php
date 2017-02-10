@@ -372,7 +372,7 @@ class FlightController extends Controller
                 $status = 'ok';
 
                 if ($dvault && isset($dvault->secure_token)) {
-                    $reservation = $flightService->processReservation($dvault->secure_token, $formNewPaySend, $booking, $request->getClientIp());
+                    $reservation = $flightService->processReservation($dvault->secure_token, $formNewPaySend, $booking, $request->getClientIp(), $params);
 
                     if (!$reservation) {
                         $status = 'fail';

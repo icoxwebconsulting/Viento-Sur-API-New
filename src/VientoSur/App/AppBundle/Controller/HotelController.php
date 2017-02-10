@@ -460,7 +460,7 @@ class HotelController extends Controller
                 "context_language" => "es",
                 "shown_currency" => "ARS",
                 "threat_metrix_id" => "25",
-                "agent_code" => 'AG32502',
+                "agent_code" => $this->getParameter('agent_code'),
                 "client_ip" => $request->getClientIp(),
                 "user_agent" => $request->headers->get('User-Agent')
             ),

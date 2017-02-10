@@ -527,9 +527,9 @@ class Despegar
         return $results;
     }
 
-    public function postFlightBookings($params)
+    public function postFlightBookings($params, $urlParams)
     {
-        $url = $this->getServiceUrl() . "flights/checkouts";
+        $url = $this->getServiceUrl() . "flights/checkouts" . '?' . http_build_query($urlParams);
         $header = [
             'Content-Type: application/json',
             'X-Client: ' . $this->apiKey,

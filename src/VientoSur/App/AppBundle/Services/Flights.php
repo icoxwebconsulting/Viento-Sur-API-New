@@ -17,6 +17,7 @@ class Flights
     private $passengersForm;
     private $paymentsForm;
     private $contact_infoForm;
+    private $agentCode;
     private $resources = [
         'LOCAL_DOCUMENT' => 'DNI',
         'FINAL' => 'Consumidor Final',
@@ -33,10 +34,11 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp, EntityManager $entityManager)
+    public function __construct(Despegar $dp, EntityManager $entityManager, $agentCode)
     {
         $this->despegar = $dp;
         $this->em = $entityManager;
+        $this->agentCode = $agentCode;
     }
 
     public function getCheckoutData($urlParams)
@@ -64,9 +66,9 @@ class Flights
             'legals' => []
         );
 
-        $this->passengersForm = $this->formNewPay->create('passengers', 'form', array('inherit_data' => true));
-        $this->paymentsForm = $this->formNewPay->create('payments', 'form', array('inherit_data' => true));
-        $this->contact_infoForm = $this->formNewPay->create('contact_info', 'form', array('inherit_data' => true));
+        $this->passengersForm = $this->formNewPay->create('passengers', 'form', array('inherit_data' => true, 'allow_extra_fields' => true));
+        $this->paymentsForm = $this->formNewPay->create('payments', 'form', array('inherit_data' => true, 'allow_extra_fields' => true));
+        $this->contact_infoForm = $this->formNewPay->create('contact_info', 'form', array('inherit_data' => true, 'allow_extra_fields' => true));
 
         foreach ($booking as $key => $item) {
             if ($key == 'passengers') {
@@ -252,7 +254,7 @@ class Flights
                         array(
                             'choices' => $optionField,
                             // *this line is important*
-                            'choices_as_values' => true,
+                            'choices_as_values' => false,
                         )
                     )
                 );
@@ -262,12 +264,11 @@ class Flights
 
     private function generateChoiceField($optionsArray)
     {
-        $optionField = array();
+        $optionField = [];
         foreach ($optionsArray as $item) {
             if (array_key_exists($item, $this->resources)) {
-                $item = $this->resources[$item];
+                $optionField[$item] = $this->resources[$item];
             }
-            $optionField[$item] = $item;
         }
 
         return $optionField;
@@ -326,7 +327,7 @@ class Flights
                     'children' => [],
                     'infants' => []
                 ],
-                'agent_code' => ''
+                'agent_code' => $this->agentCode
             ]
         ];
 
@@ -338,29 +339,25 @@ class Flights
                 "card_type" => "CREDIT",
                 "installments" => $formData['installments' . $j],
                 "contact_full_name" => $formData['card-card_holder_name' . $j],
-                'identification' => [
+                'card_holder_identification' => [
                     'type' => $formData['card_holder_identification-type' . $j],
                     'number' => $formData['card_holder_identification-number' . $j]
                 ],
                 'invoice' => [
-                    'address' => [
-                        "country_code" => "AR",
-                        "city" => $formData['invoice-city_id' . $j],
-                        "street" => $formData['invoice-street' . $j],
-                        "number" => $formData['invoice-number' . $j],
-                        "floor" => $formData['invoice-floor' . $j],
-                        "department" => $formData['invoice-department' . $j],
-                        "postal_code" => "" //TODO: revisar de donde lo sacan
+                    'address'=> [
+                        'state'=> 'BUE',
+                        'city_id'=> $formData['invoice-city_id' . $j],
+                        'postal_code'=> $formData['invoice-city_id' . $j],
+                        'street'=> $formData['invoice-street' . $j],
+                        'number'=> $formData['invoice-number' . $j]
                     ],
-                    'identification' => [
-                        'type' => $formData['card_holder_identification-type' . $j],
-                        'number' => $formData['card_holder_identification-number' . $j]
-                    ],
+
+                    'fiscal_id' => $formData['invoice-fiscal_id' . $j],
                     'fiscal_status' => $formData['invoice-fiscal_status' . $j],
                     'business_name' => $formData['invoice-business_name' . $j]
                 ],
                 'card' => [
-                    'token' => 'secure:\/\/' . '',//$dvault['secure_token'], //TODO: descomentar cuando se pasen los datos correctamente
+                    'token' => 'secure://' . $dvault,
                     'type' => 'CREDIT'
                 ]
             ];
@@ -426,11 +423,22 @@ class Flights
         return $toCheckout;
     }
 
-    public function processReservation($dvault, $formData, $booking, $clientIp)
+    public function processReservation($dvault, $formData, $booking, $clientIp, $params)
     {
         $fillData = $this->fillFormData($dvault, $formData, $booking, $clientIp);
 
-        $bookingInfo = $this->despegar->postFlightBookings($fillData);
+        $urlParams = [
+            'itinerary_id' => $params['item_id'],
+            'outbound' => $params['outbound'],
+            'language' => 'es',
+            'country' => 'AR',
+            'product_type' => 'FLIGHT'
+        ];
+        if (isset($params['inbound'])) {
+            $urlParams['inbound'] = $params['inbound'];
+        }
+
+        $bookingInfo = $this->despegar->postFlightBookings($fillData, $urlParams);
 
         if ($bookingInfo) {
             //TODO: guardar los datos de la reserva y pasajeros
