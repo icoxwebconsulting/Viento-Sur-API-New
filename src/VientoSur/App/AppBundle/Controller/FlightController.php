@@ -40,8 +40,12 @@ class FlightController extends Controller
 
         list($day, $month, $year) = explode("/", $request->get('start'));
         $fromDate = $year . '-' . $month . '-' . $day;
-        list($day, $month, $year) = explode("/", $request->get('end'));
-        $toDate = $year . '-' . $month . '-' . $day;
+        if ($request->get('only_out') == 'true') {
+            $toDate = null;
+        } else {
+            list($day, $month, $year) = explode("/", $request->get('end'));
+            $toDate = $year . '-' . $month . '-' . $day;
+        }
 
         $adults = $request->get('adultsPassengers');
         $childrens = $request->get('childrenPassengers');
@@ -67,7 +71,7 @@ class FlightController extends Controller
             'id' => $to
         ]);
 
-        return $this->redirectToRoute('viento_sur_send_flights', array(
+        $params = [
             'departure_date' => $fromDate,
             'return_date' => $toDate,
             'from' => $from,
@@ -75,7 +79,14 @@ class FlightController extends Controller
             'adults' => $adults,
             'childrens' => $childrenQty, // I para presentar infante en asiento, C para representar niño de 2 a 11 años, si hay más de uno, separados por guion "-"
             'infants' => $infantQty //cantidad de infantes en brazos
-        ));
+        ];
+        if ($toDate) {
+            $name = 'viento_sur_send_flights';
+        } else {
+            $name = 'viento_sur_send_flights_one_way';
+            unset($params['return_date']);
+        }
+        return $this->redirectToRoute($name, $params);
     }
 
 
@@ -89,6 +100,68 @@ class FlightController extends Controller
             "site" => "AR",
             "departure_date" => $departure_date,
             "return_date" => $return_date,
+            "language" => "es",
+            "from" => $from,
+            "to" => $to,
+            "adults" => $adults,
+            "children" => $childrens,
+            "infants" => $infants,
+            "offset" => '0',
+            "limit" => "10",
+            "currency" => "ARS"
+        ];
+
+        $results = $this->get('despegar')->getFlightItineraries($urlParams);
+
+        if (isset($results['items'])) {
+            $airlines = [];
+            foreach ($results['items'] as $item) {
+                if (isset($item['validating_carrier'])) {
+                    if (!in_array($item['validating_carrier'], $airlines)) {
+                        $airlines[] = $item['validating_carrier'];
+                    }
+                }
+                foreach ($item['outbound_choices'] as $outbound) {
+                    foreach ($outbound['segments'] as $segment) {
+                        if (!in_array($segment['airline'], $airlines)) {
+                            $airlines[] = $segment['airline'];
+                        }
+                    }
+                }
+                foreach ($item['inbound_choices'] as $inbound) {
+                    foreach ($inbound['segments'] as $segment) {
+                        if (!in_array($segment['airline'], $airlines)) {
+                            $airlines[] = $segment['airline'];
+                        }
+                    }
+                }
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+        $airlineData = [];
+        foreach ($airlineResults as $ar) {
+            $airlineData[$ar->getId()] = $ar->getName();
+        }
+
+        return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
+            'flightMenu' => true,
+            'items' => $results,
+            'airlineNames' => $airlineData
+        ));
+    }
+
+
+    /**
+     * @Route("/oneway/flights/results/{from}/{to}/{departure_date}/{adults}/{childrens}/{infants}", name="viento_sur_send_flights_one_way")
+     * @Method("GET")
+     */
+    public function sendFlightsItinerariesOneWayAction($from, $to, $departure_date, $adults, $childrens, $infants, Request $request)
+    {
+        $urlParams = [
+            "site" => "AR",
+            "departure_date" => $departure_date,
             "language" => "es",
             "from" => $from,
             "to" => $to,
@@ -236,7 +309,7 @@ class FlightController extends Controller
 
         $optionId = $fields['option_id'];
         $outbound = $fields['optionsRadiosOut' . $optionId];
-        $inbound = $fields['optionsRadiosIn' . $optionId];
+        $inbound = (isset($fields['optionsRadiosIn' . $optionId])) ? $fields['optionsRadiosIn' . $optionId] : null;
 
         return $this->redirect($this->generateUrl('viento_booking_flight_pay', array(
             'outbound' => $outbound,
@@ -255,11 +328,13 @@ class FlightController extends Controller
         $urlParams = [
             'itinerary_id' => $params['item_id'],
             'outbound' => $params['outbound'],
-            'inbound' => ((empty($params['inbound'])) ? '' : $params['inbound']),
             'language' => 'es',
             'tracker_id' => '',
             'country' => 'AR'
         ];
+        if (isset($params['inbound'])) {
+            $urlParams['inbound'] = $params['inbound'];
+        }
 
         $flightService = $this->get('flights_service');
 

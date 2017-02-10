@@ -198,7 +198,7 @@
                             {% endfor %}
                         </ul>
 
-                        {% if item.inbound_choices is defined %}
+                        {% if item.inbound_choices is defined  and item.inbound_choices is not empty %}
                         <div class="flight-data">
                             <span class="table-data-row">
                                 <span class="flight-type table-data-cell">

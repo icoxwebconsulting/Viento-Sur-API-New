@@ -71,4 +71,19 @@ $(document).ready(function () {
             $("#menorGroup").addClass('hidden');
         }
     });
+
+    if($('#only_out').is(':checked')){
+        $("#end-flight").removeAttr('required').hide();
+        $("#dummy-end-flight").removeClass('hidden');
+    }
+
+    $('#only_out').change(function() {
+        if($(this).is(':checked')) {
+            $("#end-flight").removeAttr('required').hide();
+            $("#dummy-end-flight").removeClass('hidden');
+        } else {
+            $("#dummy-end-flight").addClass('hidden');
+            $("#end-flight").show().attr("required");
+        }
+    });
 });

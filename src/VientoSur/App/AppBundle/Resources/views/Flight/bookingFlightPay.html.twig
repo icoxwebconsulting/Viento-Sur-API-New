@@ -448,6 +448,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% if itineraryDetail.inbound_choices is defined %}
                     <div class="booking-item-dates-change mb5">
                         <div class="row">
                             <div class="cold-md-12">
@@ -455,11 +456,9 @@
                                     <span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>
                                     <span> <b>VUELTA</b> </span>
                                     {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
-                                        <span style="float: right">PARADA {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
-
+                                        <span class="pull-right">PARADA {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
                                     {% else %}
-                                        <span style="float: right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} PARADAS</span>
-
+                                        <span class="pull-right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} PARADAS</span>
                                     {% endif %}
                                 </div>
                             </div>
@@ -553,6 +552,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
 

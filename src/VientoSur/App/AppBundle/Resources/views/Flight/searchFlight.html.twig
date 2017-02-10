@@ -35,8 +35,15 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                    <label>Regreso</label>
+                    <label>
+                        Regreso
+                        <span class="pull-right">
+                            <input type="checkbox" id="only_out" name="only_out" value="true">
+                            S&oacute;lo ida
+                        </span>
+                    </label>
                     <input class="form-control required" id="end-flight" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
+                    <input class="form-control hidden" id="dummy-end-flight" type="text" placeholder="Ha seleccionado sólo ida" readonly />
                 </div>
             </div>
         </div>
