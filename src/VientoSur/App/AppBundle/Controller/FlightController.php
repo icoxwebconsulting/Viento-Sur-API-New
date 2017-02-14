@@ -96,6 +96,14 @@ class FlightController extends Controller
      */
     public function sendFlightsItinerariesAction($from, $to, $departure_date, $return_date, $adults, $childrens, $infants, Request $request)
     {
+        $page = $request->query->get('page');
+        if (!$page) {
+            $page = 1;
+            $offset = 0;
+        } else {
+            $offset = ($page - 1) * 25;
+        }
+
         $urlParams = [
             "site" => "AR",
             "departure_date" => $departure_date,
@@ -106,12 +114,14 @@ class FlightController extends Controller
             "adults" => $adults,
             "children" => $childrens,
             "infants" => $infants,
-            "offset" => '0',
-            "limit" => "10",
-            "currency" => "ARS"
+            "currency" => "ARS",
+            "offset" => $offset,
+            "limit" => "25"
         ];
 
-        $results = $this->get('despegar')->getFlightItineraries($urlParams);
+        $results = $this->get('despegar')->getFlightItineraries($urlParams, $request->query->all());
+
+        $total = ceil($results['paging']['total'] / 25);
 
         if (isset($results['items'])) {
             $airlines = [];
@@ -133,6 +143,11 @@ class FlightController extends Controller
                         if (!in_array($segment['airline'], $airlines)) {
                             $airlines[] = $segment['airline'];
                         }
+                    }
+                }
+                foreach($results['facets'][1]['values'] as $detail) {
+                    if (!in_array($detail['value'], $airlines)) {
+                        $airlines[] = $detail['value'];
                     }
                 }
             }
@@ -148,7 +163,9 @@ class FlightController extends Controller
         return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
             'flightMenu' => true,
             'items' => $results,
-            'airlineNames' => $airlineData
+            'airlineNames' => $airlineData,
+            'total' => $total,
+            'page' => $page
         ));
     }
 
@@ -159,6 +176,14 @@ class FlightController extends Controller
      */
     public function sendFlightsItinerariesOneWayAction($from, $to, $departure_date, $adults, $childrens, $infants, Request $request)
     {
+        $page = $request->query->get('page');
+        if (!$page) {
+            $page = 1;
+            $offset = 0;
+        } else {
+            $offset = ($page - 1) * 25;
+        }
+
         $urlParams = [
             "site" => "AR",
             "departure_date" => $departure_date,
@@ -168,12 +193,12 @@ class FlightController extends Controller
             "adults" => $adults,
             "children" => $childrens,
             "infants" => $infants,
-            "offset" => '0',
-            "limit" => "10",
-            "currency" => "ARS"
+            "currency" => "ARS",
+            "offset" => $offset,
+            "limit" => "25"
         ];
 
-        $results = $this->get('despegar')->getFlightItineraries($urlParams);
+        $results = $this->get('despegar')->getFlightItineraries($urlParams, $request->query->all());
 
         if (isset($results['items'])) {
             $airlines = [];
@@ -190,11 +215,9 @@ class FlightController extends Controller
                         }
                     }
                 }
-                foreach ($item['inbound_choices'] as $inbound) {
-                    foreach ($inbound['segments'] as $segment) {
-                        if (!in_array($segment['airline'], $airlines)) {
-                            $airlines[] = $segment['airline'];
-                        }
+                foreach($results['facets'][1]['values'] as $detail) {
+                    if (!in_array($detail['value'], $airlines)) {
+                        $airlines[] = $detail['value'];
                     }
                 }
             }

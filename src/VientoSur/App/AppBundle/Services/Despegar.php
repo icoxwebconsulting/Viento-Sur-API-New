@@ -305,8 +305,14 @@ class Despegar
         return $this->curlExec($url, $header, 'GET');
     }
 
-    public function getFlightItineraries($urlParams)
+    public function getFlightItineraries($urlParams, $query)
     {
+        foreach ($query as $key => $param) {
+            if (in_array($key, ['stops', 'airlines'])) {
+                $urlParams += array($key => $param);
+            }
+        }
+
         $url = $this->getServiceUrl() . 'flights/itineraries?' . http_build_query($urlParams);
 
         $header = [

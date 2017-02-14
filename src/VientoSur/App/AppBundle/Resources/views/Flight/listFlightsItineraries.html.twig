@@ -15,7 +15,7 @@
             {% else %}
                 {% set destination = "" %}
             {% endif %}
-            <li><a href="#">{{ items.paging.total }} Vuelos de {{ origin[0] }} a {{ destination[0] }}</a></li>
+            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span> Vuelos de {{ origin[0] }} a {{ destination[0] }}</a></li>
         </ul>
 
         <br />
@@ -87,5 +87,162 @@
             var itemId = $(this).data('item');
             $('#flight-form-' + itemId).submit();
         });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            function asynLoad(queryParams, callback, callbackError) {
+                var url = window.location.pathname;
+                var obj = null;
+                for (var key in queryParams) {
+                    if (queryParams.hasOwnProperty(key)) {
+                        if (queryParams[key] != '') {
+                            obj = (!obj) ? $.query.set(key, queryParams[key]) : obj.set(key, queryParams[key]);
+                        } else {
+                            obj = (!obj) ? $.query.REMOVE(key) : obj.REMOVE(key);
+                        }
+                    }
+                }
+                var search = decodeURIComponent((!obj) ? $.query.toString() : obj.toString());
+
+                waitingDialog.show('Viento Sur, Cargando...');
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                $.ajax({
+                    url: url + search,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $(".booking-list").html(data.html);
+                    if (history.pushState) {
+                        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
+                        window.history.pushState({path: newurl}, '', newurl);
+                        $.query.parseNew(search);
+                    }
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                    pagination.bootpag({total: data.total, page: data.page, maxVisible: 10});
+                    $('.totalFlights').each(function () {
+                        $(this).text(data.paging.total_itineraries)
+                    })
+                }).fail(function () {
+                    if (typeof callbackError == 'function') {
+                        callbackError();
+                    }
+                }).always(function () {
+                    waitingDialog.hide();
+                });
+            }
+
+            var pagination = $("#pagination").bootpag({
+                total: {{ total }},
+                maxVisible:10,
+                page: {{ page }} ,
+                firstLastUse: true,
+                first: '←',
+                last: '→'
+            }).on("page", function(event, num){
+                asynLoad({
+                    'page': num
+                });
+            });
+
+            $('.nav-drop').dropit();
+
+            {#Filtro por rango de precios#}
+//            $('.total_price_range').each(function () {
+//                $(this).removeClass('hidden');
+//                var slider = $("#price-slider").ionRangeSlider({
+//                    type: 'double',
+//                    hasGrid: true,
+//                    prefix: "$",
+//                    onChange: function () {
+//                        $('#priceBtn').removeClass('disabled');
+//                    }
+//                });
+//                $('#priceBtn').on('click', function () {
+//                    if (!$(this).hasClass('disabled')) {
+//                        var range = $('#price-slider').val();
+//                        if (range.length > 0) {
+//                            range = range.replace(';', '-');
+//                            asynLoad({
+//                                'price_range': range
+//                            });
+//                        }
+//                    }
+//                })
+//            });
+
+            {#Orden de los elementos#}
+//            $('.nav-drop-menu-a').on('click', function () {
+//                var text = this.text;
+//                var category = $(this).data('category');
+//                if (text != $('#sortSelected').text()) {
+//                    asynLoad({
+//                        'sorting': $(this).data('value'),
+//                        'page': 1
+//                    }, function () {
+//                        $('.sort_name').text('Seleccione...').removeClass('vs-color-copy');
+//                        $('#sort_' + category).text(text).addClass('vs-color-copy');
+//                    })
+//                }
+//            });
+
+            {#Filtros mixtos, itera sobre c/u#}
+            $('.stops, .airlines').each(function () {
+                var type = $(this).data('type');
+                $(this).find('.i-check').iCheck({
+                    checkboxClass: 'i-check',
+                    handle: 'checkbox'
+                });
+                $(this).find('input').on('ifChecked', function (event, a) {
+                    var param = $.query.get(type);
+                    if (param != '') {
+                        param = param.toString().split(',');
+                        param.push(this.value);
+//                        if (type == 'stars') {
+//                            param.sort(function (a, b) {
+//                                return b - a
+//                            });
+//                        }
+                    } else {
+                        param = [this.value];
+                    }
+                    var obj = {'page': 1};
+                    if (type == 'stops') {
+                        obj.stops = param.toString()
+                    } else if (type == 'airlines') {
+                        obj.airlines = param.toString()
+                    }
+                    asynLoad(obj)
+                });
+                $(this).find('input').on('ifUnchecked', function (event, a) {
+                    var param = $.query.get(type);
+                    if (param != '') {
+                        param = param.toString().split(',');
+                        var idx = param.indexOf(this.value);
+                        if (idx != -1) {
+                            param.splice(idx, 1);
+                        }
+                    }
+                    var obj = {'page': 1};
+                    if (type == 'stops') {
+                        obj.stops = param.toString()
+                    } else if (type == 'airlines') {
+                        obj.airlines = param.toString()
+                    }
+                    asynLoad(obj)
+                });
+                $(this).removeClass('hidden');
+            });
+            /*
+            $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
+                var type = $(this).data('type');
+                var selector = '.' + type + ' .' + type + '-hidden';
+                $(selector).slideToggle();
+                $('.' + type + '-view-toggle').toggleClass('hide')
+            });
+            */
+        })
     </script>
 {% endblock %}

@@ -488,4 +488,9 @@ class Flights
             return false;
         }
     }
+
+    public function flightsItineraries()
+    {
+
+    }
 }

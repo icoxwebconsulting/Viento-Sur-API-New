@@ -154,6 +154,50 @@
 
         <input class="btn btn-primary btn-search" type="submit" value="Buscar" />
     </form>
+    {% if items.facets is defined %}
+        <aside class="booking-filters">
+            <h3 title="Vuelos - Filtros - VientoSur.net">Filtrar por:</h3>
+            <ul class="list booking-filters-list">
+                {% for facet in items.facets %}
+                    {% if facet.criteria == 'stops' %}
+                        <li class="stops hidden" data-type="stops">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Escalas - VientoSur.net">Escalas</h5>
+                            {% for type in facet.values %}
+                                {% set names = {
+                                    none: 'Directo',
+                                    one: '1 Escala',
+                                    more_than_one: '2 o más escalas'
+                                } %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        {{ attribute(names, type.value) }}
+                                        <span class="pull-right">({{ type.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                    {% if facet.criteria == 'airlines' %}
+                        <li class="airlines hidden" data-type="airlines">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Aerolíneas - VientoSur.net">Aerolíneas</h5>
+                            {% for type in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        {{ attribute(airlineNames, type.value) }}
+                                        {#{{ type.value }}#}
+                                        <span class="pull-right">({{ type.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {{ dump(items.facets) }}
+            </ul>
+        </aside>
+    {% endif %}
 </div>
 <div class="gap-small"></div>
 
