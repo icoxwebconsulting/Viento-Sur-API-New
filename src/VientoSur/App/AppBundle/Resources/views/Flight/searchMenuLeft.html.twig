@@ -185,8 +185,32 @@
                                 <div class="checkbox">
                                     <label>
                                         <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        <span class="filter-img-wrapper">
+                                            <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines/25x25/{{ type.value }}.png" alt="{{ attribute(airlineNames, type.value) }}">
+                                        </span>
                                         {{ attribute(airlineNames, type.value) }}
-                                        {#{{ type.value }}#}
+                                        <span class="pull-right">({{ type.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                    {% if facet.criteria == 'alliances' %}
+                        <li class="alliances hidden" data-type="alliances">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Alianzas - VientoSur.net">Alianzas</h5>
+                            {% for type in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        {% set allianceNames = {
+                                            OW : 'One World',
+                                            ST : 'Sky Team',
+                                            SA : 'Star Alliance'
+                                        } %}
+                                        <span class="filter-img-wrapper">
+                                            <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines-alliances/25x25/{{ type.value }}.png" alt="{{ attribute(allianceNames, type.value) }}">
+                                        </span>
+                                        {{ attribute(allianceNames, type.value) }}
                                         <span class="pull-right">({{ type.count }})</span>
                                     </label>
                                 </div>

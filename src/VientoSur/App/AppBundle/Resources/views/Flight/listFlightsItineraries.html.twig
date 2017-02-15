@@ -189,7 +189,7 @@
 //            });
 
             {#Filtros mixtos, itera sobre c/u#}
-            $('.stops, .airlines').each(function () {
+            $('.stops, .airlines, .alliances').each(function () {
                 var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
@@ -213,6 +213,8 @@
                         obj.stops = param.toString()
                     } else if (type == 'airlines') {
                         obj.airlines = param.toString()
+                    } else if (type == 'alliances') {
+                        obj.alliances = param.toString()
                     }
                     asynLoad(obj)
                 });
@@ -230,6 +232,8 @@
                         obj.stops = param.toString()
                     } else if (type == 'airlines') {
                         obj.airlines = param.toString()
+                    } else if (type == 'alliances') {
+                        obj.alliances = param.toString()
                     }
                     asynLoad(obj)
                 });

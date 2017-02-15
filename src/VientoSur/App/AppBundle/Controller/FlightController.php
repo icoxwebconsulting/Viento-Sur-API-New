@@ -145,7 +145,7 @@ class FlightController extends Controller
                         }
                     }
                 }
-                foreach($results['facets'][1]['values'] as $detail) {
+                foreach ($results['facets'][1]['values'] as $detail) {
                     if (!in_array($detail['value'], $airlines)) {
                         $airlines[] = $detail['value'];
                     }
@@ -160,13 +160,28 @@ class FlightController extends Controller
             $airlineData[$ar->getId()] = $ar->getName();
         }
 
-        return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
+        $viewParams = [
             'flightMenu' => true,
             'items' => $results,
             'airlineNames' => $airlineData,
             'total' => $total,
             'page' => $page
-        ));
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                array(
+                    'html' => $this->renderView('VientoSurAppAppBundle:Flight:listDetailFlights.html.twig',
+                        $viewParams
+                    ),
+                    'paging' => $results['paging'],
+                    'total' => $total,
+                    'page' => $page
+                )
+            );
+        } else {
+            return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', $viewParams);
+        }
     }
 
 
@@ -215,7 +230,7 @@ class FlightController extends Controller
                         }
                     }
                 }
-                foreach($results['facets'][1]['values'] as $detail) {
+                foreach ($results['facets'][1]['values'] as $detail) {
                     if (!in_array($detail['value'], $airlines)) {
                         $airlines[] = $detail['value'];
                     }
