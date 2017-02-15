@@ -217,6 +217,34 @@
                             {% endfor %}
                         </li>
                     {% endif %}
+                    {% if facet.criteria == 'outbound_airports' %}
+                        <li class="outbound_airports hidden" data-type="outbound_airports">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Aeropuertos, Ida - VientoSur.net">Aeropuertos Ida</h5>
+                            {% for type in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        {{ type.value }}
+                                        <span class="pull-right">({{ type.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                    {% if facet.criteria == 'inbound_airports' %}
+                        <li class="inbound_airports hidden" data-type="inbound_airports">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Alianzas - VientoSur.net">Aeropuertos Vuelta</h5>
+                            {% for type in facet.values %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
+                                        {{ type.value }}
+                                        <span class="pull-right">({{ type.count }})</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
                 {% endfor %}
                 {{ dump(items.facets) }}
             </ul>

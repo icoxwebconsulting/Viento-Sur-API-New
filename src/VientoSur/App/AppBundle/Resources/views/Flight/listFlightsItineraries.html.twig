@@ -189,7 +189,7 @@
 //            });
 
             {#Filtros mixtos, itera sobre c/u#}
-            $('.stops, .airlines, .alliances').each(function () {
+            $('.stops, .airlines, .alliances, .outbound_airports, .inbound_airports').each(function () {
                 var type = $(this).data('type');
                 $(this).find('.i-check').iCheck({
                     checkboxClass: 'i-check',
@@ -215,6 +215,10 @@
                         obj.airlines = param.toString()
                     } else if (type == 'alliances') {
                         obj.alliances = param.toString()
+                    } else if (type == 'outbound_airports') {
+                        obj.outbound_airports = param.toString()
+                    } else if (type == 'inbound_airports') {
+                        obj.inbound_airports = param.toString()
                     }
                     asynLoad(obj)
                 });
@@ -234,6 +238,10 @@
                         obj.airlines = param.toString()
                     } else if (type == 'alliances') {
                         obj.alliances = param.toString()
+                    } else if (type == 'outbound_airports') {
+                        obj.outbound_airports = param.toString()
+                    } else if (type == 'inbound_airports') {
+                        obj.inbound_airports = param.toString()
                     }
                     asynLoad(obj)
                 });
