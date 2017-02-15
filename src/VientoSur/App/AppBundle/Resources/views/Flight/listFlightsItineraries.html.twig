@@ -112,7 +112,7 @@
                     type: 'GET',
                     dataType: 'json'
                 }).done(function (data) {
-                    $(".booking-list").html(data.html);
+                    $(".flight-list").html(data.html);
                     if (history.pushState) {
                         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
                         window.history.pushState({path: newurl}, '', newurl);
