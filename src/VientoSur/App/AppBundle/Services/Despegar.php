@@ -308,7 +308,7 @@ class Despegar
     public function getFlightItineraries($urlParams, $query)
     {
         foreach ($query as $key => $param) {
-            if (in_array($key, ['stops', 'airlines', 'alliances', 'outbound_airports', 'inbound_airports'])) {
+            if (in_array($key, ['stops', 'airlines', 'alliances', 'outbound_airports', 'inbound_airports', 'total_price_range'])) {
                 $urlParams += array($key => $param);
             }
         }
