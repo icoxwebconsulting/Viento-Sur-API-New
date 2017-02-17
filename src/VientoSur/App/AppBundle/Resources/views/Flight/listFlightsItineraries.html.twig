@@ -151,23 +151,61 @@
 
             {#Filtro por rango de precios#}
             $('.total_price_range').each(function () {
+                var type = $(this).data('type');
+                var prefix = '$';
+                if (type == 'outbound_duration_range') {
+                    prefix = '';
+                }
                 $(this).removeClass('hidden');
-                var slider = $("#price-slider").ionRangeSlider({
+                var slider = $("#" + type + '-slider').ionRangeSlider({
                     type: 'double',
-                    hasGrid: true,
-                    prefix: "$",
+                    grid: true,
+                    prefix: prefix,
+                    force_edges: true,
+                    from_shadow: true,
                     onChange: function () {
-                        $('#priceBtn').removeClass('disabled');
+                        $('#' + type + '-btn').removeClass('disabled');
                     }
                 });
-                $('#priceBtn').on('click', function () {
+                $('#' + type + '-btn').on('click', function () {
                     if (!$(this).hasClass('disabled')) {
-                        var range = $('#price-slider').val();
+                        var range = $("#" + type + '-slider').val();
                         if (range.length > 0) {
                             range = range.replace(';', '-');
-                            asynLoad({
-                                'total_price_range': range
-                            });
+                            var obj = {};
+                            obj[type] = range;
+                            asynLoad(range);
+                        }
+                    }
+                })
+            });
+
+            {#Filtro de tiempo#}
+            $('.outbound_duration_range').each(function () {
+                var type = $(this).data('type');
+                $(this).removeClass('hidden');
+                var slider = $("#" + type + '-slider').ionRangeSlider({
+                    type: 'single',
+                    grid: true,
+                    from_shadow: true,
+                    step: 10,
+                    force_edges: true,
+                    onChange: function () {
+                        $('#' + type + '-btn').removeClass('disabled');
+                    },
+                    prettify: function(value){
+                        var hours = Math.floor( value / 60);
+                        var minutes = value % 60;
+                        return ((hours > 0)? hours + 'h' : '') +  ((minutes > 0)? minutes + 'm' : '');
+                    }
+                });
+                $('#' + type + '-btn').on('click', function () {
+                    if (!$(this).hasClass('disabled')) {
+                        var range = $("#" + type + '-slider').val();
+                        if (range.length > 0) {
+                            var obj = {};
+                            obj[type] = range;
+                            asynLoad(range);
                         }
                     }
                 })

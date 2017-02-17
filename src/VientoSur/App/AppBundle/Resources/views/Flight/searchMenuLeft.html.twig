@@ -219,7 +219,7 @@
                     {% endif %}
                     {% if facet.criteria == 'outbound_airports' %}
                         <li class="outbound_airports hidden" data-type="outbound_airports">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Aeropuertos, Ida - VientoSur.net">Aeropuertos Ida</h5>
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Aeropuertos, Ida - VientoSur.net">Aeropuertos - Ida</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -233,7 +233,7 @@
                     {% endif %}
                     {% if facet.criteria == 'inbound_airports' %}
                         <li class="inbound_airports hidden" data-type="inbound_airports">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Alianzas - VientoSur.net">Aeropuertos Vuelta</h5>
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Alianzas - VientoSur.net">Aeropuertos - Vuelta</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -245,23 +245,39 @@
                             {% endfor %}
                         </li>
                     {% endif %}
+
+                    {% if facet.criteria == 'outbound_duration_range' %}
+                        <li class="outbound_duration_range hidden" data-type="outbound_duration_range">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Duración - VientoSur.net">Duración - Ida</h5>
+                            {% if app.request.get('outbound_duration_range') is empty %}
+                                <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
+                            {% else %}
+                                {% set fromTo = app.request.get('outbound_duration_range')|split('-') %}
+                                <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
+                            {% endif %}
+                            <br/>
+                            <span class="btn btn-primary btn-sm disabled" id="outbound_duration_range-btn">Aplicar</span>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
                 {% set facet = items.facets[0] %}
                 {% if facet.criteria == 'total_price_range' %}
-                    <li class="total_price_range hidden">
+                    <li class="total_price_range hidden" data-type="total_price_range">
                         <h5 class="booking-filters-title" title="Vuelos - Filtro Precio - VientoSur.net">Precio</h5>
-                        {% if app.request.get('price_range') is empty %}
-                            <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
+                        {% if app.request.get('total_price_range') is empty %}
+                            <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
                                    data-max="{{ facet.max|round }}"/>
                         {% else %}
-                            {% set fromTo = app.request.get('price_range')|split('-') %}
-                            <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
+                            {% set fromTo = app.request.get('total_price_range')|split('-') %}
+                            <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
                                    data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
                                    data-to="{{ fromTo[1] }}"/>
                         {% endif %}
                         <br/>
-                        <span class="btn btn-primary btn-sm disabled" id="priceBtn">Aplicar</span>
+                        <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">Aplicar</span>
                     </li>
                 {% endif %}
                 {{ dump(items.facets) }}
