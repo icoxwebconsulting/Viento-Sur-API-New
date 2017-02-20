@@ -18,6 +18,16 @@ class Despegar
     private $urlVaultProd;
     private $apiKeyTest;
     private $apiKeyProd;
+    private $filters = [
+        'stops',
+        'airlines',
+        'alliances',
+        'outbound_airports',
+        'inbound_airports',
+        'total_price_range',
+        'outbound_duration_range',
+        'inbound_duration_range'
+    ];
 
     public function __construct($guzzleVault, $guzzleDespegar, $apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $vaultUrl, $vaultUrlTest, $isTest)
     {
@@ -308,7 +318,7 @@ class Despegar
     public function getFlightItineraries($urlParams, $query)
     {
         foreach ($query as $key => $param) {
-            if (in_array($key, ['stops', 'airlines', 'alliances', 'outbound_airports', 'inbound_airports', 'total_price_range'])) {
+            if (in_array($key, $this->filters)) {
                 $urlParams += array($key => $param);
             }
         }

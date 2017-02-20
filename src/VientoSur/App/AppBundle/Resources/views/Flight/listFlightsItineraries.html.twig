@@ -15,10 +15,11 @@
             {% else %}
                 {% set destination = "" %}
             {% endif %}
-            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span> Vuelos de {{ origin[0] }} a {{ destination[0] }}</a></li>
+            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span> Vuelos
+                    de {{ origin[0] }} a {{ destination[0] }}</a></li>
         </ul>
 
-        <br />
+        <br/>
 
         <div class="row">
 
@@ -106,7 +107,7 @@
                 var search = decodeURIComponent((!obj) ? $.query.toString() : obj.toString());
 
                 waitingDialog.show('Viento Sur, Cargando...');
-                $("html, body").animate({ scrollTop: 0 }, "slow");
+                $("html, body").animate({scrollTop: 0}, "slow");
                 $.ajax({
                     url: url + search,
                     type: 'GET',
@@ -136,12 +137,12 @@
 
             var pagination = $("#pagination").bootpag({
                 total: {{ total }},
-                maxVisible:10,
+                maxVisible: 10,
                 page: {{ page }} ,
                 firstLastUse: true,
                 first: '←',
                 last: '→'
-            }).on("page", function(event, num){
+            }).on("page", function (event, num) {
                 asynLoad({
                     'page': num
                 });
@@ -174,14 +175,14 @@
                             range = range.replace(';', '-');
                             var obj = {};
                             obj[type] = range;
-                            asynLoad(range);
+                            asynLoad(obj);
                         }
                     }
                 })
             });
 
             {#Filtro de tiempo#}
-            $('.outbound_duration_range').each(function () {
+            $('.outbound_duration_range, .inbound_duration_range').each(function () {
                 var type = $(this).data('type');
                 $(this).removeClass('hidden');
                 var slider = $("#" + type + '-slider').ionRangeSlider({
@@ -193,10 +194,10 @@
                     onChange: function () {
                         $('#' + type + '-btn').removeClass('disabled');
                     },
-                    prettify: function(value){
-                        var hours = Math.floor( value / 60);
+                    prettify: function (value) {
+                        var hours = Math.floor(value / 60);
                         var minutes = value % 60;
-                        return ((hours > 0)? hours + 'h' : '') +  ((minutes > 0)? minutes + 'm' : '');
+                        return ((hours > 0) ? hours + 'h' : '') + ((minutes > 0) ? minutes + 'm' : '');
                     }
                 });
                 $('#' + type + '-btn').on('click', function () {
@@ -204,8 +205,8 @@
                         var range = $("#" + type + '-slider').val();
                         if (range.length > 0) {
                             var obj = {};
-                            obj[type] = range;
-                            asynLoad(range);
+                            obj[type] = '0-' + range;
+                            asynLoad(obj);
                         }
                     }
                 })

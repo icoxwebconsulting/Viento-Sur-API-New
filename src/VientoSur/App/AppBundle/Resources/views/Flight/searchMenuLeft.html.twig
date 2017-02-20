@@ -261,6 +261,22 @@
                             <span class="btn btn-primary btn-sm disabled" id="outbound_duration_range-btn">Aplicar</span>
                         </li>
                     {% endif %}
+
+                    {% if facet.criteria == 'inbound_duration_range' %}
+                        <li class="inbound_duration_range hidden" data-type="inbound_duration_range">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Duración - VientoSur.net">Duración - Vuelta</h5>
+                            {% if app.request.get('inbound_duration_range') is empty %}
+                                <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
+                            {% else %}
+                                {% set fromTo = app.request.get('inbound_duration_range')|split('-') %}
+                                <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
+                            {% endif %}
+                            <br/>
+                            <span class="btn btn-primary btn-sm disabled" id="inbound_duration_range-btn">Aplicar</span>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
                 {% set facet = items.facets[0] %}
