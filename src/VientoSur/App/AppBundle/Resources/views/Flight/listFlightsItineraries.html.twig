@@ -154,9 +154,6 @@
             $('.total_price_range').each(function () {
                 var type = $(this).data('type');
                 var prefix = '$';
-                if (type == 'outbound_duration_range') {
-                    prefix = '';
-                }
                 $(this).removeClass('hidden');
                 var slider = $("#" + type + '-slider').ionRangeSlider({
                     type: 'double',
@@ -206,6 +203,44 @@
                         if (range.length > 0) {
                             var obj = {};
                             obj[type] = '0-' + range;
+                            asynLoad(obj);
+                        }
+                    }
+                })
+            });
+
+            {#Filtro por Horario#}
+            $('.outbound_time_range, .inbound_time_range').each(function () {
+                var type = $(this).data('type');
+                $(this).removeClass('hidden');
+                var slider = $("#" + type + '-slider').ionRangeSlider({
+                    type: 'double',
+                    grid: true,
+                    force_edges: true,
+                    from_shadow: true,
+                    step: 30,
+                    onChange: function () {
+                        $('#' + type + '-btn').removeClass('disabled');
+                    },
+                    prettify: function (value) {
+                        var hours = Math.floor(value / 60);
+                        var minutes = value % 60;
+                        return ((hours > 0) ? hours + 'h' : '0h ') + ((minutes > 0) ? minutes + 'm' : '00 m');
+                    }
+                });
+                $('#' + type + '-btn').on('click', function () {
+                    if (!$(this).hasClass('disabled')) {
+                        var range = $("#" + type + '-slider').val();
+                        if (range.length > 0) {
+                            range = range.split(';');
+                            var hours = Math.floor(range[0] / 60);
+                            var minutes = range[0] % 60;
+                            var result = ((hours < 10) ? '0' + hours : hours) + ':' +((minutes < 10) ? '0' + minutes : minutes);
+                            hours = Math.floor(range[1] / 60);
+                            minutes = range[1] % 60;
+                            result += '-' + ((hours < 10) ? '0' + hours : hours) + ':' + ((minutes < 10) ? '0' + minutes : minutes);
+                            var obj = {};
+                            obj[type] = result;
                             asynLoad(obj);
                         }
                     }

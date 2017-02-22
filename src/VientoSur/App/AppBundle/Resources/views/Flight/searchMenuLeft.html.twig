@@ -277,6 +277,45 @@
                             <span class="btn btn-primary btn-sm disabled" id="inbound_duration_range-btn">Aplicar</span>
                         </li>
                     {% endif %}
+
+                    {% if facet.criteria == 'outbound_time_range' %}
+                        <li class="outbound_time_range hidden" data-type="outbound_time_range">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Horario - VientoSur.net">Horario - Ida</h5>
+                            {% if app.request.get('outbound_time_range') is empty %}
+                                {% set temp = facet.min|split(':') %}
+                                {% set min = (temp[0] * 60) + temp[1] %}
+                                {% set temp = facet.max|split(':') %}
+                                {% set max = (temp[0] * 60) + temp[1] %}
+                                <input type="text" id="outbound_time_range-slider" data-min="0"
+                                       data-max="1439" data-from="{{ min|round }}" data-to="{{ max|round }}" />
+                            {% else %}
+                                {% set fromTo = app.request.get('outbound_time_range')|split('-') %}
+                                <input type="text" id="outbound_time_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" data-to="{{ fromTo[1] }}" />
+                            {% endif %}
+                            <br/>
+                            <span class="btn btn-primary btn-sm disabled" id="outbound_time_range-btn">Aplicar</span>
+                        </li>
+                    {% endif %}
+                    {% if facet.criteria == 'inbound_time_range' %}
+                        <li class="inbound_time_range hidden" data-type="inbound_time_range">
+                            <h5 class="booking-filters-title" title="Vuelos - Filtro Horario - VientoSur.net">Horario - Vuelta</h5>
+                            {% if app.request.get('inbound_time_range') is empty %}
+                                {% set temp = facet.min|split(':') %}
+                                {% set min = (temp[0] * 60) + temp[1] %}
+                                {% set temp = facet.max|split(':') %}
+                                {% set max = (temp[0] * 60) + temp[1] %}
+                                <input type="text" id="inbound_time_range-slider" data-min="{{ min }}"
+                                       data-max="{{ max }}" data-from="{{ min }}" data-to="{{ max }}" />
+                            {% else %}
+                                {% set fromTo = app.request.get('inbound_time_range')|split('-') %}
+                                <input type="text" id="inbound_time_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ min }}" data-to="{{ max }}" />
+                            {% endif %}
+                            <br/>
+                            <span class="btn btn-primary btn-sm disabled" id="inbound_time_range-btn">Aplicar</span>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
                 {% set facet = items.facets[0] %}
