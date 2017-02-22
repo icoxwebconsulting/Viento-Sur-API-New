@@ -317,6 +317,15 @@ class Despegar
         return $this->curlExec($url, $header, 'GET');
     }
 
+    public function autocompleteCity($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'cities?' . http_build_query($urlParams);
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        return $this->curlExec($url, $header, 'GET');
+    }
+
     public function getFlightItineraries($urlParams, $query)
     {
         foreach ($query as $key => $param) {
@@ -325,7 +334,7 @@ class Despegar
             }
         }
 
-        $url = $this->getServiceUrl() . 'flights/itineraries?' . http_build_query($urlParams);
+        $url = $this->getServiceUrl() . 'flights/itineraries?' . urldecode(http_build_query($urlParams));
 
         $header = [
             'X-ApiKey: ' . $this->apiKey
