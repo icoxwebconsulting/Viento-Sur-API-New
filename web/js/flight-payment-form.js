@@ -77,4 +77,33 @@ $(document).ready(function () {
 
     $('#form_payments_card-number0').payment('formatCardNumber');
     $('#form_payments_card-security_code0').payment('formatCardCVC');
+
+    var ac = $('#autocomplete-city').autocomplete({
+        serviceUrl: Routing.generate('city_autocomplete_argentina'),
+        onSelect: function (suggestion) {
+            $("#form_payments_invoice-city_id0").val(suggestion.data);
+            $("#form_payments_invoice-city_id0").data('name', suggestion.value);
+        },
+        onInvalidateSelection: function () {
+            $("#form_payments_invoice-city_id0").val('');
+        },
+        minChars: 3
+    });
+
+    $('#select-state').on('change', function () {
+        if(this.value != '') {
+            $("#form_payments_invoice-state0").val(this.value);
+            $('#autocomplete-city').removeProp('readonly').prop('placeholder', 'Buscar ciudad');
+            $('#autocomplete-city').autocomplete().setOptions({
+                serviceUrl: Routing.generate('city_autocomplete_argentina') + '/' + this.value
+            });
+        } else {
+            $('#autocomplete-city').prop('readonly', true);
+            $('#autocomplete-city').prop('placeholder', 'Buscar ciudad');
+        }
+    });
+
+    $('#autocomplete-state, #autocomplete-city').on("click", function () {
+        $(this).select();
+    });
 });

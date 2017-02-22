@@ -210,11 +210,45 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-state' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Provincia:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}
+                                    {{ form_label(attribute(formNewPay.payments, fieldName), 'Provincia:') }}
+                                    <select id="select-state" class="form-control">
+                                        <option value="">Seleccione...</option>
+                                        <option value="14061">Buenos Aires</option>
+                                        <option value="30078">Catamarca</option>
+                                        <option value="30083">Chaco</option>
+                                        <option value="12344">Chubut</option>
+                                        <option value="13028">Córdoba</option>
+                                        <option value="13662">Corrientes</option>
+                                        <option value="12548">Entre Ríos</option>
+                                        <option value="10047">Formosa</option>
+                                        <option value=30081"">Jujuy</option>
+                                        <option value="30082">La Pampa</option>
+                                        <option value="31654">La Rioja</option>
+                                        <option value="11817">Mendoza</option>
+                                        <option value="11542">Misiones</option>
+                                        <option value="10968">Neuquén</option>
+                                        <option value="13435">Río Negro</option>
+                                        <option value="12738">Salta</option>
+                                        <option value="10222">San Juan</option>
+                                        <option value="30080">San Luis</option>
+                                        <option value="11343">Santa Cruz</option>
+                                        <option value="10309">Santa Fe</option>
+                                        <option value="13857">Santiago del Estero</option>
+                                        <option value="30079">Tierra del Fuego</option>
+                                        <option value="14052">Tucumán</option>
+                                    </select>
+                                    {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class': 'hidden'}}) }}
+                                    {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Ciudad:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Ciudad:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}#}
+
+                                    {{ form_label(attribute(formNewPay.payments, fieldName), 'Ciudad:') }}
+                                    <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="Seleccione la Provincia" readonly required autocomplete="off" class="form-control" />
+                                    {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class' : 'hidden'}}) }}
+                                    {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
+
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-street' ~ loop.index0 %}
@@ -567,7 +601,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/flight-payment-form.js?a=6') }}"></script>
+    <script src="{{ asset('js/flight-payment-form.js?a=15') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
     {#A#}
     <script src="https://h.online-metrix.net/fp/tags.js?org_id={{ riskAnalysis.a.orgId }}&session_id={{ riskAnalysis.sessionId }}"></script>
