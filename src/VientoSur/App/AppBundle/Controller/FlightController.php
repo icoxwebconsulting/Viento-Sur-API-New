@@ -349,11 +349,14 @@ class FlightController extends Controller
         $outbound = $fields['optionsRadiosOut' . $optionId];
         $inbound = (isset($fields['optionsRadiosIn' . $optionId])) ? $fields['optionsRadiosIn' . $optionId] : null;
 
-        return $this->redirect($this->generateUrl('viento_booking_flight_pay', array(
+        $itineraryId = 'combination_' . $outbound . (($inbound) ? '_' . $inbound : '');
+
+        return $this->redirectToRoute('viento_booking_flight_pay', array(
             'outbound' => $outbound,
             'inbound' => $inbound,
-            'item_id' => $fields['item_id']
-        )));
+            'item_id' => $fields['item_id'],
+            'itinerary_id' => $fields[$itineraryId]
+        ));
     }
 
     /**
@@ -364,7 +367,7 @@ class FlightController extends Controller
         $params = $request->query->all();
 
         $urlParams = [
-            'itinerary_id' => $params['item_id'],
+            'itinerary_id' => $params['itinerary_id'],
             'outbound' => $params['outbound'],
             'language' => 'es',
             'tracker_id' => '',
@@ -383,8 +386,9 @@ class FlightController extends Controller
             if (isset($params['inbound'])) {
                 $options['inbound_choice'] = $params['inbound'];
             }
-            $itineraryDetail = $flightService->getItineraryDetail($options, $params['item_id']);
+            $itineraryDetail = $flightService->getItineraryDetail($options, $params['itinerary_id']);
 
+            $urlParams['itinerary_id'] = $params['item_id'];
             $booking = $flightService->getCheckoutData($urlParams);
             $request->getSession()->set('flightBooking', json_encode($booking));
             $request->getSession()->set('itineraryDetail', json_encode($itineraryDetail));

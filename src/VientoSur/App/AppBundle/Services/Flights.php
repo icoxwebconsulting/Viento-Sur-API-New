@@ -18,6 +18,7 @@ class Flights
     private $paymentsForm;
     private $contact_infoForm;
     private $agentCode;
+    private $emailService;
     private $resources = [
         'LOCAL_DOCUMENT' => 'DNI',
         'FINAL' => 'Consumidor Final',
@@ -34,9 +35,10 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp, EntityManager $entityManager, $agentCode)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode)
     {
         $this->despegar = $dp;
+        $this->emailService = $email;
         $this->em = $entityManager;
         $this->agentCode = $agentCode;
     }
@@ -475,12 +477,12 @@ class Flights
             try {
                 //TODO: cambiar por el método de vuelos
                 if ($fillData['email-']) {
-                    $this->get('email.service')->sendBookingFlightEmail($fillData['email-'], array(
+                    $this->emailService->sendBookingFlightEmail($fillData['email-'], array(
                         'pdf' => false
                     ));
                 }
             } catch (\Exception $e) {
-                $this->get('logger')->error('Booking Flight email error');
+                //$this->get('logger')->error('Booking Flight email error');
             }
 
             return true;

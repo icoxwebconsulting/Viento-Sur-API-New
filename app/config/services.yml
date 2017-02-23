@@ -12,6 +12,7 @@ services:
         class: VientoSur\App\AppBundle\Services\Flights
         arguments:
             "dp": "@despegar"
+            "email": "@email.service"
             "entityManager": "@doctrine.orm.entity_manager"
             "agentCode": "%agent_code%"
     despegar:
