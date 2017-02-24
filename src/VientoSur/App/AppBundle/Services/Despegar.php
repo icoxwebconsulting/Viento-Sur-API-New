@@ -401,9 +401,9 @@ class Despegar
         return $this->curlExec($url, $header, 'GET');
     }
 
-    public function getFlightItineraryDetail($urlParams, $id)
+    public function getFlightItineraryDetail($id)
     {
-        $url = $this->getServiceUrl() . 'flights/itineraries/' . $id . '?' . http_build_query($urlParams);
+        $url = $this->getServiceUrl() . 'flights/itineraries/' . $id;
 
         $header = [
             'X-ApiKey: ' . $this->apiKey

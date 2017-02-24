@@ -49,9 +49,9 @@ class Flights
         return $results;
     }
 
-    public function getItineraryDetail($urlParams, $id)
+    public function getItineraryDetail($id)
     {
-        $results = $this->despegar->getFlightItineraryDetail($urlParams, $id);
+        $results = $this->despegar->getFlightItineraryDetail($id);
         return $results;
     }
 

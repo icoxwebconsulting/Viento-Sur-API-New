@@ -376,13 +376,7 @@ class FlightController extends Controller
         $flightService = $this->get('flights_service');
 
         if ($request->getMethod() == 'GET') {
-            $options = [
-                'outbound_choice' => $params['outbound']
-            ];
-            if (isset($params['inbound'])) {
-                $options['inbound_choice'] = $params['inbound'];
-            }
-            $itineraryDetail = $flightService->getItineraryDetail($options, $params['itinerary_id']);
+            $itineraryDetail = $flightService->getItineraryDetail($params['itinerary_id']);
 
             $booking = $flightService->getCheckoutData($urlParams);
             $request->getSession()->set('flightBooking', json_encode($booking));
