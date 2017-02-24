@@ -368,14 +368,10 @@ class FlightController extends Controller
 
         $urlParams = [
             'itinerary_id' => $params['itinerary_id'],
-            'outbound' => $params['outbound'],
             'language' => 'es',
             'tracker_id' => '',
             'country' => 'AR'
         ];
-        if (isset($params['inbound'])) {
-            $urlParams['inbound'] = $params['inbound'];
-        }
 
         $flightService = $this->get('flights_service');
 
@@ -388,7 +384,6 @@ class FlightController extends Controller
             }
             $itineraryDetail = $flightService->getItineraryDetail($options, $params['itinerary_id']);
 
-            $urlParams['itinerary_id'] = $params['item_id'];
             $booking = $flightService->getCheckoutData($urlParams);
             $request->getSession()->set('flightBooking', json_encode($booking));
             $request->getSession()->set('itineraryDetail', json_encode($itineraryDetail));
