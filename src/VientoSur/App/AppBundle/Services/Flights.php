@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use VientoSur\App\AppBundle\Entity\FlightPassengers;
 use VientoSur\App\AppBundle\Entity\FlightReservation;
-
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class Flights
 {
@@ -19,6 +19,7 @@ class Flights
     private $contact_infoForm;
     private $agentCode;
     private $emailService;
+    private $logger;
     private $resources = [
         'LOCAL_DOCUMENT' => 'DNI',
         'FINAL' => 'Consumidor Final',
@@ -35,12 +36,13 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
         $this->em = $entityManager;
         $this->agentCode = $agentCode;
+        $this->logger = $logger;
     }
 
     public function getCheckoutData($urlParams)
@@ -344,12 +346,12 @@ class Flights
                     'number' => $formData['card_holder_identification-number' . $j]
                 ],
                 'invoice' => [
-                    'address'=> [
-                        'state'=> 'BUE',
-                        'city_id'=> $formData['invoice-city_id' . $j],
-                        'postal_code'=> $formData['invoice-city_id' . $j],
-                        'street'=> $formData['invoice-street' . $j],
-                        'number'=> $formData['invoice-number' . $j]
+                    'address' => [
+                        'state' => 'BUE',
+                        'city_id' => $formData['invoice-city_id' . $j],
+                        'postal_code' => $formData['invoice-city_id' . $j],
+                        'street' => $formData['invoice-street' . $j],
+                        'number' => $formData['invoice-number' . $j]
                     ],
 
                     'fiscal_id' => $formData['invoice-fiscal_id' . $j],
@@ -423,7 +425,7 @@ class Flights
         return $toCheckout;
     }
 
-    public function processReservation($dvault, $formData, $booking, $clientIp, $params)
+    public function processReservation($dvault, $formData, $booking, $clientIp, $params, $itineraryDetail, $origin, $destination)
     {
         $fillData = $this->fillFormData($dvault, $formData, $booking, $clientIp);
 
@@ -436,18 +438,18 @@ class Flights
 
         $bookingInfo = $this->despegar->postFlightBookings($fillData, $urlParams);
 
-        if ($bookingInfo) {
-            //TODO: guardar los datos de la reserva y pasajeros
+        if ($bookingInfo && $bookingInfo['status'] == 'SUCCESS') {
             $reservation = new FlightReservation();
-//            $reservation->setFlightId();
-//            $reservation->setReservationId();
-//            $reservation->setTotalPrice();
-//            $reservation->setCardType();
-//            $reservation->setHolderName();
-//            $reservation->setPhoneNumber();
-//            $reservation->setEmail();
-//            $reservation->setInbound();
-//            $reservation->setOutbound();
+            $reservation->setItineraryId($params['itinerary_id']);
+            $reservation->setReservationId($bookingInfo['id']);
+            $reservation->setTotalPrice($itineraryDetail['price_detail']['total']);
+            $reservation->setCardType($fillData['booking_information']['payments']['credit_cards'][0]['card_code']);
+            $reservation->setHolderName($fillData['booking_information']['payments']['credit_cards'][0]['contact_full_name']);
+            $phone = $fillData['booking_information']['contact_info']['phones'][0];
+            $reservation->setPhoneNumber($phone['country_code'] . ' ' . $phone['area_code'] . ' ' . $phone['number']);
+            $reservation->setEmail($fillData['booking_information']['contact_info']['email']);
+            $reservation->setOrigin($origin['id']);
+            $reservation->setDestination($destination['id']);
             $reservation->setCreated(new \DateTime());
             $this->em->persist($reservation);
 
@@ -465,28 +467,22 @@ class Flights
             }
             $this->em->flush();
 
-            //TODO: de ser necesario, traer los datos del vuelo y reserva
-
             //envío de correo
             try {
-                //TODO: cambiar por el método de vuelos
-                if ($fillData['email-']) {
-                    $this->emailService->sendBookingFlightEmail($fillData['email-'], array(
-                        'pdf' => false
+                $email = $fillData['booking_information']['contact_info']['email'];
+                if ($email) {
+                    $this->emailService->sendBookingFlightEmail($email, array(
+                        'pdf' => false,
+                        'reservation' => $reservation
                     ));
                 }
             } catch (\Exception $e) {
-                //$this->get('logger')->error('Booking Flight email error');
+                $this->logger->error('Booking Flight email error');
             }
 
-            return true;
+            return $reservation->getId();
         } else {
             return false;
         }
-    }
-
-    public function flightsItineraries()
-    {
-
     }
 }

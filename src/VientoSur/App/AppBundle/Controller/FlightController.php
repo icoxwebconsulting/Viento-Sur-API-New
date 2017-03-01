@@ -402,8 +402,9 @@ class FlightController extends Controller
                 $dvault = $flightService->processdVault($formNewPaySend);
                 $status = 'ok';
 
+                $reservation = 'none';
                 if ($dvault && isset($dvault->secure_token)) {
-                    $reservation = $flightService->processReservation($dvault->secure_token, $formNewPaySend, $booking, $request->getClientIp(), $params);
+                    $reservation = $flightService->processReservation($dvault->secure_token, $formNewPaySend, $booking, $request->getClientIp(), $params, $itineraryDetail, $request->getSession()->get('origin_flight'), $request->getSession()->get('destination_flight'));
 
                     if (!$reservation) {
                         $status = 'fail';
@@ -413,7 +414,9 @@ class FlightController extends Controller
                 }
 
                 return $this->redirectToRoute('viento_sur_app_booking_flight_summary', array(
-                    'status' => $status
+                    'status' => $status,
+                    'itinerary' => $params['itinerary_id'],
+                    'reservation' => $reservation
                 ));
             }
         }
@@ -457,25 +460,26 @@ class FlightController extends Controller
     public function payFlightBookingAction(Request $request)
     {
         $status = $request->get('status');
+        $itinerary = $request->get('itinerary');
+        $reservationId = $request->get('reservation');
 
         if ($status == 'ok') {
-//            $urlParams = array(
-//                'ids' => $hotelId,
-//                'language' => 'es',
-//                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
-//                'resolve' => 'merge_info',
-//                'catalog_info' => 'true'
-//            );
-//            $hotelDetails = $this->get('despegar')->getHotelsDetails($urlParams);
-//            $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
+
+            $itineraryDetail = $this->get('despegar')->getFlightItineraryDetail($itinerary);
+
+            $em = $this->getDoctrine()->getManager();
+            $reservationResult = $em->getRepository('VientoSurAppAppBundle:FlightReservation')->find($reservationId);
+
             return $this->render('VientoSurAppAppBundle:Flight:payFlightBooking.html.twig', array(
+                'flightMenu' => true,
+                'itineraryDetail' => $itineraryDetail,
                 'status' => $status,
-//                'itineraryDetail' => $itineraryDetail,
-//                'internal' => $reservation,
-//                'pasengers'=> $passengers,
+                'id' => $itinerary,
+                'reservation' => $reservationResult
             ));
         } else {
             return $this->render('VientoSurAppAppBundle:Flight:errorFlightBooking.html.twig', array(
+                'flightMenu' => true,
                 'status' => $status
             ));
         }

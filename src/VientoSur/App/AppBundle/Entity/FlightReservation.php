@@ -18,9 +18,9 @@ class FlightReservation
     private $id;
 
     /**
-     * @ORM\Column(name="flight_id", type="integer", nullable=true)
+     * @ORM\Column(name="itinerary_id", type="string", length=255, nullable=false)
      */
-    private $flightId;
+    private $itineraryId;
 
     /**
      * @ORM\Column(name="reservation_id", type="string", nullable=true)
@@ -57,6 +57,20 @@ class FlightReservation
     private $email;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="origin", type="string", length=50, nullable=false)
+     */
+    private $origin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destination", type="string", length=50, nullable=false)
+     */
+    private $destination;
+
+    /**
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     private $created;
@@ -65,34 +79,11 @@ class FlightReservation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set flightId
-     *
-     * @param integer $flightId
-     * @return FlightReservation
-     */
-    public function setFlightId($flightId)
-    {
-        $this->flightId = $flightId;
-
-        return $this;
-    }
-
-    /**
-     * Get flightId
-     *
-     * @return integer 
-     */
-    public function getFlightId()
-    {
-        return $this->flightId;
     }
 
     /**
@@ -111,7 +102,7 @@ class FlightReservation
     /**
      * Get reservationId
      *
-     * @return string 
+     * @return string
      */
     public function getReservationId()
     {
@@ -134,7 +125,7 @@ class FlightReservation
     /**
      * Get totalPrice
      *
-     * @return float 
+     * @return float
      */
     public function getTotalPrice()
     {
@@ -157,7 +148,7 @@ class FlightReservation
     /**
      * Get cardType
      *
-     * @return string 
+     * @return string
      */
     public function getCardType()
     {
@@ -180,7 +171,7 @@ class FlightReservation
     /**
      * Get holderName
      *
-     * @return string 
+     * @return string
      */
     public function getHolderName()
     {
@@ -203,7 +194,7 @@ class FlightReservation
     /**
      * Get phoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber()
     {
@@ -226,7 +217,7 @@ class FlightReservation
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -249,10 +240,79 @@ class FlightReservation
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * Set itineraryId
+     *
+     * @param string $itineraryId
+     * @return FlightReservation
+     */
+    public function setItineraryId($itineraryId)
+    {
+        $this->itineraryId = $itineraryId;
+
+        return $this;
+    }
+
+    /**
+     * Get itineraryId
+     *
+     * @return string 
+     */
+    public function getItineraryId()
+    {
+        return $this->itineraryId;
+    }
+
+    /**
+     * Set origin
+     *
+     * @param string $origin
+     * @return FlightReservation
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    /**
+     * Get origin
+     *
+     * @return string 
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
+
+    /**
+     * Set destination
+     *
+     * @param string $destination
+     * @return FlightReservation
+     */
+    public function setDestination($destination)
+    {
+        $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Get destination
+     *
+     * @return string 
+     */
+    public function getDestination()
+    {
+        return $this->destination;
     }
 }
