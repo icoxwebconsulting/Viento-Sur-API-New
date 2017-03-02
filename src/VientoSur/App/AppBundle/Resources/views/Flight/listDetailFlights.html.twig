@@ -15,12 +15,12 @@
                                 </span>
                                 <span class="departure-location table-data-cell">
                                     <span class="departure-from">{{ item.outbound_choices[0].segments[0].from }}</span>
-                                    <span class="departure-text"></span>
+                                    <span class="departure-text">{{ airportNames[item.outbound_choices[0].segments[0].from] }}</span>
                                 </span>
                                 <span class="arrival-location table-data-cell">
                                     {% set last = item.outbound_choices[0].segments|last %}
                                     <span class="arrival-from">{{ last.to }}</span>
-                                    <span class="arrival-text"></span>
+                                    <span class="arrival-text">{{ airportNames[last.to] }}</span>
                                 </span>
                             </span>
                         </div>
@@ -207,12 +207,12 @@
                                 </span>
                                 <span class="departure-location table-data-cell">
                                     <span class="departure-from">{{ item.inbound_choices[0].segments[0].from }}</span>
-                                    <span class="departure-text"></span>
+                                    <span class="departure-text">{{ airportNames[item.inbound_choices[0].segments[0].from] }}</span>
                                 </span>
                                 <span class="arrival-location table-data-cell">
                                     {% set last = item.inbound_choices[0].segments|last %}
                                     <span class="arrival-from">{{ last.to }}</span>
-                                    <span class="arrival-text"></span>
+                                    <span class="arrival-text">{{ airportNames[last.to] }}</span>
                                 </span>
                             </span>
                         </div>

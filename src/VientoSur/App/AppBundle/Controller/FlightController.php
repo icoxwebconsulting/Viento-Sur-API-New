@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use VientoSur\App\AppBundle\Entity\Airlines;
 use VientoSur\App\AppBundle\Entity\AirlineAlliance;
+use VientoSur\App\AppBundle\Entity\Airport;
 
 /**
  * Flight Controller
@@ -125,6 +126,7 @@ class FlightController extends Controller
 
         if (isset($results['items'])) {
             $airlines = [];
+            $airports = [];
             foreach ($results['items'] as $item) {
                 if (isset($item['validating_carrier'])) {
                     if (!in_array($item['validating_carrier'], $airlines)) {
@@ -136,6 +138,12 @@ class FlightController extends Controller
                         if (!in_array($segment['airline'], $airlines)) {
                             $airlines[] = $segment['airline'];
                         }
+                        if(!in_array($segment['from'], $airports)) {
+                            $airports[] = $segment['from'];
+                        }
+                        if(!in_array($segment['to'], $airports)) {
+                            $airports[] = $segment['to'];
+                        }
                     }
                 }
                 foreach ($item['inbound_choices'] as $inbound) {
@@ -143,12 +151,31 @@ class FlightController extends Controller
                         if (!in_array($segment['airline'], $airlines)) {
                             $airlines[] = $segment['airline'];
                         }
+                        if(!in_array($segment['from'], $airports)) {
+                            $airports[] = $segment['from'];
+                        }
+                        if(!in_array($segment['to'], $airports)) {
+                            $airports[] = $segment['to'];
+                        }
                     }
                 }
-                foreach ($results['facets'][1]['values'] as $detail) {
-                    if (!in_array($detail['value'], $airlines)) {
-                        $airlines[] = $detail['value'];
-                    }
+            }
+
+            foreach ($results['facets'][1]['values'] as $detail) {
+                if (!in_array($detail['value'], $airlines)) {
+                    $airlines[] = $detail['value'];
+                }
+            }
+
+            foreach ($results['facets'][3]['values'] as $detail) {
+                if (!in_array($detail['value'], $airports)) {
+                    $airports[] = $detail['value'];
+                }
+            }
+
+            foreach ($results['facets'][4]['values'] as $detail) {
+                if (!in_array($detail['value'], $airports)) {
+                    $airports[] = $detail['value'];
                 }
             }
         }
@@ -160,10 +187,17 @@ class FlightController extends Controller
             $airlineData[$ar->getId()] = $ar->getName();
         }
 
+        $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
+        $airportData = [];
+        foreach ($airportResults as $ap) {
+            $airportData[$ap->getCode()] = $ap->getName();
+        }
+
         $viewParams = [
             'flightMenu' => true,
             'items' => $results,
             'airlineNames' => $airlineData,
+            'airportNames' => $airportData,
             'total' => $total,
             'page' => $page
         ];
@@ -483,5 +517,37 @@ class FlightController extends Controller
                 'status' => $status
             ));
         }
+    }
+
+    /**
+     * @Route("/fill-airports", name="viento_sur_app_fill_airports")
+     */
+    public function fillAirportsAction()
+    {
+        $path = $this->get('kernel')->getRootDir() . '/../web' . '/airports_list.json';
+        $content = file_get_contents($path);
+        $airports = json_decode($content, true);
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($airports['airports'] as $airport) {
+            if ($airport['name'] != null) {
+                $obj = new Airport();
+                $obj->setCode($airport['code']);
+                $obj->setName($airport['name']);
+                $obj->setCity($airport['city']);
+                $obj->setCountry($airport['country']);
+                $obj->setTimezone($airport['timezone']);
+                $obj->setLatitude($airport['lat']);
+                $obj->setLongitude($airport['lng']);
+                $obj->setTerminal($airport['terminal']);
+                $obj->setGate($airport['gate']);
+                $em->persist($obj);
+            }
+        }
+        $em->flush();
+
+        return new JsonResponse([
+            'result' => 'Registros agregados'
+        ]);
     }
 }

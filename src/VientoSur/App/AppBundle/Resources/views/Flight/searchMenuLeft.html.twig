@@ -224,7 +224,7 @@
                                 <div class="checkbox">
                                     <label>
                                         <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        {{ type.value }}
+                                        <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
                                         <span class="pull-right">({{ type.count }})</span>
                                     </label>
                                 </div>
@@ -238,7 +238,7 @@
                                 <div class="checkbox">
                                     <label>
                                         <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        {{ type.value }}
+                                        <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
                                         <span class="pull-right">({{ type.count }})</span>
                                     </label>
                                 </div>
