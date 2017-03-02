@@ -117,7 +117,7 @@
                                                             {#<span class="night-flight ux-common-icon-night" tooltip="" tooltip-content="Vuelo nocturno" tooltip-id="night-flight-tooltip"></span>#}
                                                         </span>
                                                         <span class="inline-detail-airport-description">
-                                                            Ciudad - Aeropuerto ({{ segment.from }})
+                                                            {{ airportCities[segment.from] }} - {{ airportNames[segment.from] }}
                                                         </span>
                                                     </span>
 
@@ -137,7 +137,7 @@
                                                             <span class="inline-detail-airport-hour">06:45</span>
                                                         </span>
                                                         <span class="inline-detail-airport-description">
-                                                            Ciudad - Aeropuerto ({{ segment.to }})
+                                                            {{ airportCities[segment.to] }} - {{ airportNames[segment.to] }}
                                                         </span>
                                                     </span>
                                                 </span>
@@ -309,7 +309,7 @@
                                                             {#<span class="night-flight ux-common-icon-night" tooltip="" tooltip-content="Vuelo nocturno" tooltip-id="night-flight-tooltip"></span>#}
                                                         </span>
                                                         <span class="inline-detail-airport-description">
-                                                            Ciudad - Aeropuerto ({{ segment.from }})
+                                                            {{ airportCities[segment.from] }} - {{ airportNames[segment.from] }}
                                                         </span>
                                                     </span>
 
@@ -329,7 +329,7 @@
                                                             <span class="inline-detail-airport-hour">06:45</span>
                                                         </span>
                                                         <span class="inline-detail-airport-description">
-                                                            Ciudad - Aeropuerto ({{ segment.to }})
+                                                            {{ airportCities[segment.to] }} - {{ airportNames[segment.to] }}
                                                         </span>
                                                     </span>
                                                 </span>

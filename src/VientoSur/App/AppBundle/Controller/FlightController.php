@@ -189,8 +189,10 @@ class FlightController extends Controller
 
         $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
         $airportData = [];
+        $airportCity = [];
         foreach ($airportResults as $ap) {
             $airportData[$ap->getCode()] = $ap->getName();
+            $airportCity[$ap->getCode()] = $ap->getCity();
         }
 
         $viewParams = [
@@ -198,6 +200,7 @@ class FlightController extends Controller
             'items' => $results,
             'airlineNames' => $airlineData,
             'airportNames' => $airportData,
+            'airportCities' => $airportCity,
             'total' => $total,
             'page' => $page
         ];
