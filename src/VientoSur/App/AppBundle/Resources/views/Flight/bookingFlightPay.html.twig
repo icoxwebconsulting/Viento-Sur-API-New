@@ -31,22 +31,34 @@
                                     {% set fieldName = 'adults-nationality' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
+
+                                {% set fieldName = 'adults-type' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
                                 <div class="col-md-3">
-                                    {% set fieldName = 'adults-type' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
+                                {% endif %}
+
+                                {% set fieldName = 'adults-number' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
                                 <div class="col-md-3">
-                                    {% set fieldName = 'adults-number' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
                                 </div>
+                                {% endif %}
+
+                                {% set fieldName = 'adults-birthdate' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-birthdate' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
                                 </div>
+                                {% endif %}
+
+                                {% set fieldName = 'adults-gender' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
                                 <div class="col-md-6">
-                                    {% set fieldName = 'adults-gender' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
+                                {% endif %}
                             </div>
                         {% endfor %}
 
@@ -70,22 +82,34 @@
                                     {% set fieldName = 'children-nationality' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
+
+                                {% set fieldName = 'children-type' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
                                 <div class="col-md-3">
-                                    {% set fieldName = 'children-type' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
+                                {% endif %}
+
+                                {% set fieldName = 'children-number' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
                                 <div class="col-md-3">
-                                    {% set fieldName = 'children-number' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
                                 </div>
+                                {% endif %}
+
+                                {% set fieldName = 'children-birthdate' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
                                 <div class="col-md-6">
-                                    {% set fieldName = 'children-birthdate' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
                                 </div>
+                                {% endif %}
+
+                                {% set fieldName = 'children-gender' ~ loop.index %}
+                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
                                 <div class="col-md-6">
-                                    {% set fieldName = 'children-gender' ~ loop.index %}
                                     {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
                                 </div>
+                                {% endif %}
                             </div>
                         {% endfor %}
                         {% endif %}
