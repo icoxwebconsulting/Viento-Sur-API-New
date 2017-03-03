@@ -32,5 +32,11 @@ parameters:
     #Agent code de despegar
     agent_code: AG32502
 
+    #Risk providers
+    risk_provider_id_a: dtdgssmm
+    risk_provider_id_a_test: dtdgssmm
+    risk_provider_id_b: k8vif92e
+    risk_provider_id_b_test: 1snn5n9w
+
     # Le indica al servicio si utiliza la key de test
     is_test:           true
