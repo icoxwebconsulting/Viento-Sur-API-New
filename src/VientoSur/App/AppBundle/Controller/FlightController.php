@@ -319,7 +319,7 @@ class FlightController extends Controller
                     'value' => $item["description"],
                     'data' => [
                         'category' => $category,
-                        'id' => $item["facet"] . '-' . $item["code"]
+                        'id' => $item["code"]
                     ]
                 ];
             }
