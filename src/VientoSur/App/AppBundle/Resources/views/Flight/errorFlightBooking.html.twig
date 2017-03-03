@@ -1,0 +1,35 @@
+{% extends 'VientoSurAppAppBundle::layoutFlight.html.twig' %}
+
+{% block content %}
+
+    <div class="container bs-docs-container">
+        <table class="table">
+            <tr>
+                <th>
+                    <b>
+                        <h3>Ha ocurrido un error al momento de realizar su reservación.</h3>
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        Código del error: {{ status }}
+                    </b>
+                    {% if detail.causes is defined %}
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul>
+                                    {% for cause in detail.causes %}
+                                        <li>{{ cause }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}

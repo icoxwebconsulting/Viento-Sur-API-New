@@ -15,8 +15,21 @@ class Despegar
     private $clientDespegar;
     private $isTest;
     private $urlVault;
+    private $urlVaultProd;
     private $apiKeyTest;
     private $apiKeyProd;
+    private $flightFilters = [
+        'stops',
+        'airlines',
+        'alliances',
+        'outbound_airports',
+        'inbound_airports',
+        'total_price_range',
+        'outbound_duration_range',
+        'inbound_duration_range',
+        'outbound_time_range',
+        'inbound_time_range'
+    ];
 
     public function __construct($guzzleVault, $guzzleDespegar, $apiKey, $apiKeyTest, $serviceVersion, $serviceUrl, $vaultUrl, $vaultUrlTest, $isTest)
     {
@@ -27,6 +40,7 @@ class Despegar
         $this->serviceVersion = $serviceVersion;
         $this->apiKeyTest = $apiKeyTest;
         $this->apiKeyProd = $apiKey;
+        $this->urlVaultProd = $vaultUrl;
         if ($isTest) {
             $this->urlVault = $vaultUrlTest;
             $this->apiKey = $apiKeyTest;
@@ -169,7 +183,7 @@ class Despegar
         return $this->curlExec($url, $header, 'PATCH', json_encode($params));
     }
 
-    public function dVaultValidation($tokenizeKey, $params)
+    public function dVaultValidation($tokenizeKey, $params, $isFlight = false)
     {
         $url = $this->urlVault . '/vault/pbdyy/validation';
         $header = [
@@ -178,6 +192,16 @@ class Despegar
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
+        if ($this->isTest && $isFlight) {
+            $url = $this->urlVaultProd . '/vault/pbdyy/validation';
+            $header = [
+                'Content-Type: application/json',
+                'X-Tokenize-Key: ' . $tokenizeKey,
+                'X-Client: ' . $this->apiKeyTest,
+                'X-ApiKey: ' . $this->apiKeyTest,
+                'XDESP-TEST: true'
+            ];
+        }
 
         $cSession = curl_init();
         curl_setopt($cSession, CURLOPT_URL, $url);
@@ -198,6 +222,44 @@ class Despegar
         } else {
             return false;
         }
+    }
+
+    public function vaultPbdyy($tokenizeKey, $params, $isFlight = false)
+    {
+        $url = $this->urlVault . '/vault/pbdyy';
+        $header = [
+            'Content-Type: application/json',
+            'X-Tokenize-Key: ' . $tokenizeKey,
+            'X-Client: ' . $this->apiKey,
+            'X-ApiKey: ' . $this->apiKey
+        ];
+
+        if ($this->isTest && $isFlight) {
+            $url = $this->urlVaultProd . '/vault/pbdyy';
+            $header = [
+                'Content-Type: application/json',
+                'X-Tokenize-Key: ' . $tokenizeKey,
+                'X-Client: ' . $this->apiKeyTest,
+                'X-ApiKey: ' . $this->apiKeyTest,
+                'XDESP-TEST: true'
+            ];
+        }
+
+        //step1
+        $params = json_encode($params);
+        $cSession = curl_init();
+        curl_setopt($cSession, CURLOPT_URL, $url);
+        curl_setopt($cSession, CURLOPT_POST, true);
+        curl_setopt($cSession, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($cSession, CURLOPT_HEADER, false);
+        //step3
+        $results = curl_exec($cSession);
+        //step4
+        curl_close($cSession);
+
+        return json_decode($results);
     }
 
     public function dVault($formNewPaySend)
@@ -250,17 +312,116 @@ class Despegar
     {
         $url = $this->getServiceUrl() . 'autocomplete?' . http_build_query($urlParams);
         $header = [
-            'X-ApiKey: ' . $this->apiKey
+            'X-ApiKey: ' . $this->apiKeyProd
         ];
         return $this->curlExec($url, $header, 'GET');
     }
 
-    public function getFlightItineraries($urlParams)
+    public function autocompleteCity($urlParams)
     {
-        $url = $this->getServiceUrl() . 'flights/itineraries?' . http_build_query($urlParams);
+        $url = $this->getServiceUrl() . 'cities?' . http_build_query($urlParams);
+        $header = [
+            'X-ApiKey: ' . $this->apiKeyProd
+        ];
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getFlightItineraries($urlParams, $query)
+    {
+        foreach ($query as $key => $param) {
+            if (in_array($key, $this->flightFilters)) {
+                $urlParams += array($key => $param);
+            }
+        }
+
+        $url = $this->getServiceUrl() . 'flights/itineraries?' . urldecode(http_build_query($urlParams));
+
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
+        if ($this->isTest) {
+            $header = [
+                'X-ApiKey: ' . $this->apiKeyTest,
+                'XDESP-TEST: true'
+            ];
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getFlightAirlines($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'airlines?' . http_build_query($urlParams);
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST: true';
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getFlightAirlineDetail($code, $urlParams)
+    {
+        $url = $this->getServiceUrl() . 'airlines/' . $code . '?' . http_build_query($urlParams);
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST: true';
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getFlightCheckoutHints($urlParams)
+    {
+        $url = $this->getServiceUrl() . 'flights/checkout-hints?' . http_build_query($urlParams);
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header = [
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
+        }
+        /**
+         * Hay un header extra: XDESP-FLIGHTS_KEEPER-MOCK-VITO
+         * Descripción: Header to mock the integration with Vito and use a known itinerary
+         */
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST: true';
+        }
+
+        return $this->curlExec($url, $header, 'GET');
+    }
+
+    public function getFlightItineraryDetail($id)
+    {
+        $url = $this->getServiceUrl() . 'flights/itineraries/' . $id;
+
+        $header = [
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header = [
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
+        }
+        /**
+         * Hay un header extra: XDESP-FLIGHTS_KEEPER-MOCK-VITO
+         * Descripción: Header to mock the integration with Vito and use a known itinerary
+         */
+        if ($this->isTest) {
+            $header[] = 'XDESP-TEST: true';
+        }
+
         return $this->curlExec($url, $header, 'GET');
     }
 
@@ -391,5 +552,24 @@ class Despegar
         curl_close($cSession);
         $results = json_decode($results, true);
         return $results;
+    }
+
+    public function postFlightBookings($params, $urlParams)
+    {
+        $url = $this->getServiceUrl() . "flights/checkouts" . '?' . http_build_query($urlParams);
+        $header = [
+            'Content-Type: application/json',
+            'X-Client: ' . $this->apiKey,
+            'X-ApiKey: ' . $this->apiKey
+        ];
+        if ($this->isTest) {
+            $header = [
+                'Content-Type: application/json',
+                'X-ApiKey: ' . $this->apiKeyProd,
+                'XDESP-TEST: true'
+            ];
+        }
+
+        return $this->curlExec($url, $header, 'POST', json_encode($params));
     }
 }

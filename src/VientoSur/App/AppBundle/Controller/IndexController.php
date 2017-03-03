@@ -198,6 +198,39 @@ class IndexController extends Controller
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
     }
 
+
+    /**
+     *
+     * @Route("/autocomplete-city-arg/{state}", name="city_autocomplete_argentina")
+     * @Method("GET")
+     */
+    public function autoCompleteCityArgentinaAction($state, Request $request)
+    {
+        $type = 'HOTELS';
+        $urlParams = [
+            'query' => $request->get('query'),
+            'product' => $type,
+            'locale' => 'es-AR',
+            'city_result' => '10',
+            //'language' => 'ES',
+            'political_divisions_to_filter_results' => $state,
+            'country_id' => '20010'
+        ];
+
+        $results = $this->get('despegar')->autocomplete($urlParams);
+        $response = [];
+        if ($results && !isset($results['code'])) {
+            foreach ($results as $item) {
+                $city = [
+                    'value' => $item["description"],
+                    'data' => $item['item']["id"]
+                ];
+                $response[] = $city;
+            }
+        }
+        return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
+    }
+
     /**
      *
      * @Route("/pdf", name="pdf_test")

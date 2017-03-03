@@ -1,143 +1,334 @@
 {% extends '@VientoSurAppApp/layoutFlight.html.twig' %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="#">Viento Sur</a></li>
+            <li><a href="#">Vuelos</a></li>
+            {% if app.session.get('origin_flight').text is defined %}
+                {% set origin = app.session.get('origin_flight').text|split(',') %}
+            {% else %}
+                {% set origin = "" %}
+            {% endif %}
+            {% if app.session.get('destination_flight').text is defined %}
+                {% set destination = app.session.get('destination_flight').text|split(',') %}
+            {% else %}
+                {% set destination = "" %}
+            {% endif %}
+            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span> Vuelos
+                    de {{ origin[0] }} a {{ destination[0] }}</a></li>
+        </ul>
+
+        <br/>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+            </div>
+
+            <div class="col-md-9">
+                <div class="flight-filter">
+
+                </div>
+
+                <ul class="flight-list">
+                    {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
+                </ul>
+
+                {#{{ dump(items) }}#}
+
+            </div>
         </div>
 
-        <div class="col-md-9">
-            {#booking-list#}
-            <ul class="booking-list">
-            {% for item in items.items %}
-                <li>
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ loop.index }}
-                        </div>
-                        <div class="col-md-5">
-                            {{ loop.index }}
-                        </div>
-                        <div class="col-md-3">
-                            {{ loop.index }}
-                        </div>
-                    </div>
-                </li>
-                {#Itinerario : {{ loop.index }}#}
-                {#Salida:#}
-                {#{% for outbound_choice in item.outbound_choices %}#}
-                    {#<table border="1">#}
-                        {#<tr>#}
-                            {#<td>Duracion:</td>#}
-                            {#<td>opcion: {{ loop.index }}</td>#}
-                        {#</tr>#}
-                        {#<tr>#}
-                            {#<td>{{ outbound_choice.duration }}</td>#}
-                            {#<td>#}
-                                {#{% for segment in outbound_choice.segments %}#}
-                                    {#<table>#}
-                                        {#<tr>#}
-                                            {#Escala: {{ loop.index }}#}
-                                            {#Aeropuerto salida: {{ segment.from }}#}
-                                            {#Aeropuerto llegada: {{ segment.to }}#}
-                                            {#fecha salida : {{ segment.departure_datetime }}#}
-                                            {#fecha llegada : {{ segment.arrival_datetime }}#}
-                                            {#duration: {{ segment.duration }}#}
-                                            {#airline: {{ segment.airline }}#}
-                                        {#</tr>#}
-                                    {#</table>#}
-                                {#{% endfor %}#}
-
-                            {#</td>#}
-
-                        {#</tr>#}
-                    {#</table>#}
-                {#{% endfor %}#}
-                {#Retorno:#}
-                {#{% for inbound_choice in item.inbound_choices %}#}
-                    {#<table border="1">#}
-                        {#<tr>#}
-                            {#<td>Duracion:</td>#}
-                            {#<td>Opcion: {{ loop.index }}</td>#}
-                        {#<tr>#}
-                            {#<td>{{ inbound_choice.duration }}</td>#}
-                            {#<td>#}
-                                {#{% for segment in inbound_choice.segments %}#}
-                                    {#<table>#}
-                                        {#<tr>#}
-                                            {#Escala: {{ loop.index }}#}
-                                            {#Aeropuerto salida: {{ segment.from }}#}
-                                            {#Aeropuerto llegada: {{ segment.to }}#}
-                                            {#fecha salida : {{ segment.departure_datetime }}#}
-                                            {#fecha llegada : {{ segment.arrival_datetime }}#}
-                                            {#duration: {{ segment.duration }}#}
-                                            {#airline: {{ segment.airline }}#}
-                                        {#</tr>#}
-                                    {#</table>#}
-                                {#{% endfor %}#}
-
-                            {#</td>#}
-                        {#</tr>#}
-                    {#</table>#}
-                {#{% endfor %}#}
-                {#<table>#}
-                {#<tr>#}
-                {#currency:{{ item.price_detail.currency }}#}
-                {#charges:{{item.price_detail.charges}}#}
-                {#adult_base:{{ item.price_detail.adult_base }}#}
-                {#adults_subtotal:{{ item.price_detail.adults_subtotal }}#}
-                {#total:{{ item.price_detail.total }}#}
-                {#</tr>#}
-                {#</table>#}
-                {#<br>#}
-                {#<hr>#}
-            {% endfor %}
-            </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="pagination" id="pagination">
-            </ul>
-        </div>
-    </div>
-
-    {#Div row solo para pruebas#}
-    {#<div class="row">#}
-        {#<div class="col-md-12">#}
-            {#{{ dump(items) }}#}
+        {#Div row solo para pruebas#}
+        {#<div class="row">#}
+            {#<div class="col-md-12">#}
+                {#{{ dump(items) }}#}
+            {#</div>#}
         {#</div>#}
-    {#</div>#}
-    {#Div row solo para pruebas#}
-</div>
+        {#Div row solo para pruebas#}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(function () {
-            $("#pagination").bootpag({
-                total: {{ (items.paging.total / 10) }},
-                maxVisible: 15,
-                page: {{ limit }} ,
-                firstLastUse: true,
-                first: '←',
-                last: '→'
+        {#$(function () {#}
+            {#$("#pagination").bootpag({#}
+                {#total: {{ (items.paging.total / 10) }},#}
+                {#maxVisible: 15,#}
+                {#page: {{ limit }} ,#}
+                {#firstLastUse: true,#}
+                {#first: '←',#}
+                {#last: '→'#}
 
-            }).on("page", function (event, num) {
-                var offset = (num * 10) - 1;
-                var limit = num;
-                var URLdomain = window.location.host;
-                var url2 = Routing.generate('viento_sur_send_flights');
-                var URLsearch = window.location.search;
+            {#}).on("page", function (event, num) {#}
+                {#var offset = (num * 10) - 1;#}
+                {#var limit = num;#}
+                {#var URLdomain = window.location.host;#}
+                {#var url2 = Routing.generate('viento_sur_send_flights');#}
+                {#var URLsearch = window.location.search;#}
 
-                window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);
-            });
+                {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
+            {#});#}
 //            $("#field-hotel-checkin").datepicker({
 //                "setDate": new Date()
 //            });
+//        });
+        $('.flight-list').on('click', '.booking-prices', function (event) {
+            event.stopPropagation();
+            var itemId = $(this).data('item');
+            $('#flight-form-' + itemId).submit();
         });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            function asynLoad(queryParams, callback, callbackError) {
+                var url = window.location.pathname;
+                var obj = null;
+                for (var key in queryParams) {
+                    if (queryParams.hasOwnProperty(key)) {
+                        if (queryParams[key] != '') {
+                            obj = (!obj) ? $.query.set(key, queryParams[key]) : obj.set(key, queryParams[key]);
+                        } else {
+                            obj = (!obj) ? $.query.REMOVE(key) : obj.REMOVE(key);
+                        }
+                    }
+                }
+                var search = decodeURIComponent((!obj) ? $.query.toString() : obj.toString());
+
+                waitingDialog.show('Viento Sur, Cargando...');
+                $("html, body").animate({scrollTop: 0}, "slow");
+                $.ajax({
+                    url: url + search,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $(".flight-list").html(data.html);
+                    if (history.pushState) {
+                        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
+                        window.history.pushState({path: newurl}, '', newurl);
+                        $.query.parseNew(search);
+                    }
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                    pagination.bootpag({total: data.total, page: data.page, maxVisible: 10});
+                    $('.totalFlights').each(function () {
+                        $(this).text(data.paging.total_itineraries)
+                    })
+                }).fail(function () {
+                    if (typeof callbackError == 'function') {
+                        callbackError();
+                    }
+                }).always(function () {
+                    waitingDialog.hide();
+                });
+            }
+
+            var pagination = $("#pagination").bootpag({
+                total: {{ total }},
+                maxVisible: 10,
+                page: {{ page }} ,
+                firstLastUse: true,
+                first: '←',
+                last: '→'
+            }).on("page", function (event, num) {
+                asynLoad({
+                    'page': num
+                });
+            });
+
+            $('.nav-drop').dropit();
+
+            {#Filtro por rango de precios#}
+            $('.total_price_range').each(function () {
+                var type = $(this).data('type');
+                var prefix = '$';
+                $(this).removeClass('hidden');
+                var slider = $("#" + type + '-slider').ionRangeSlider({
+                    type: 'double',
+                    grid: true,
+                    prefix: prefix,
+                    force_edges: true,
+                    from_shadow: true,
+                    onChange: function () {
+                        $('#' + type + '-btn').removeClass('disabled');
+                    }
+                });
+                $('#' + type + '-btn').on('click', function () {
+                    if (!$(this).hasClass('disabled')) {
+                        var range = $("#" + type + '-slider').val();
+                        if (range.length > 0) {
+                            range = range.replace(';', '-');
+                            var obj = {};
+                            obj[type] = range;
+                            asynLoad(obj);
+                        }
+                    }
+                })
+            });
+
+            {#Filtro de tiempo#}
+            $('.outbound_duration_range, .inbound_duration_range').each(function () {
+                var type = $(this).data('type');
+                $(this).removeClass('hidden');
+                var slider = $("#" + type + '-slider').ionRangeSlider({
+                    type: 'single',
+                    grid: true,
+                    from_shadow: true,
+                    step: 10,
+                    force_edges: true,
+                    onChange: function () {
+                        $('#' + type + '-btn').removeClass('disabled');
+                    },
+                    prettify: function (value) {
+                        var hours = Math.floor(value / 60);
+                        var minutes = value % 60;
+                        return ((hours > 0) ? hours + 'h' : '') + ((minutes > 0) ? minutes + 'm' : '');
+                    }
+                });
+                $('#' + type + '-btn').on('click', function () {
+                    if (!$(this).hasClass('disabled')) {
+                        var range = $("#" + type + '-slider').val();
+                        if (range.length > 0) {
+                            var obj = {};
+                            obj[type] = '0-' + range;
+                            asynLoad(obj);
+                        }
+                    }
+                })
+            });
+
+            {#Filtro por Horario#}
+            $('.outbound_time_range, .inbound_time_range').each(function () {
+                var type = $(this).data('type');
+                $(this).removeClass('hidden');
+                var slider = $("#" + type + '-slider').ionRangeSlider({
+                    type: 'double',
+                    grid: true,
+                    force_edges: true,
+                    from_shadow: true,
+                    step: 30,
+                    onChange: function () {
+                        $('#' + type + '-btn').removeClass('disabled');
+                    },
+                    prettify: function (value) {
+                        var hours = Math.floor(value / 60);
+                        var minutes = value % 60;
+                        return ((hours > 0) ? hours + 'h' : '0h ') + ((minutes > 0) ? minutes + 'm' : '00 m');
+                    }
+                });
+                $('#' + type + '-btn').on('click', function () {
+                    if (!$(this).hasClass('disabled')) {
+                        var range = $("#" + type + '-slider').val();
+                        if (range.length > 0) {
+                            range = range.split(';');
+                            var hours = Math.floor(range[0] / 60);
+                            var minutes = range[0] % 60;
+                            var result = ((hours < 10) ? '0' + hours : hours) + ':' +((minutes < 10) ? '0' + minutes : minutes);
+                            hours = Math.floor(range[1] / 60);
+                            minutes = range[1] % 60;
+                            result += '-' + ((hours < 10) ? '0' + hours : hours) + ':' + ((minutes < 10) ? '0' + minutes : minutes);
+                            var obj = {};
+                            obj[type] = result;
+                            asynLoad(obj);
+                        }
+                    }
+                })
+            });
+
+            {#Orden de los elementos#}
+//            $('.nav-drop-menu-a').on('click', function () {
+//                var text = this.text;
+//                var category = $(this).data('category');
+//                if (text != $('#sortSelected').text()) {
+//                    asynLoad({
+//                        'sorting': $(this).data('value'),
+//                        'page': 1
+//                    }, function () {
+//                        $('.sort_name').text('Seleccione...').removeClass('vs-color-copy');
+//                        $('#sort_' + category).text(text).addClass('vs-color-copy');
+//                    })
+//                }
+//            });
+
+            {#Filtros mixtos, itera sobre c/u#}
+            $('.stops, .airlines, .alliances, .outbound_airports, .inbound_airports').each(function () {
+                var type = $(this).data('type');
+                $(this).find('.i-check').iCheck({
+                    checkboxClass: 'i-check',
+                    handle: 'checkbox'
+                });
+                $(this).find('input').on('ifChecked', function (event, a) {
+                    var param = $.query.get(type);
+                    if (param != '') {
+                        param = param.toString().split(',');
+                        param.push(this.value);
+//                        if (type == 'stars') {
+//                            param.sort(function (a, b) {
+//                                return b - a
+//                            });
+//                        }
+                    } else {
+                        param = [this.value];
+                    }
+                    var obj = {'page': 1};
+                    if (type == 'stops') {
+                        obj.stops = param.toString()
+                    } else if (type == 'airlines') {
+                        obj.airlines = param.toString()
+                    } else if (type == 'alliances') {
+                        obj.alliances = param.toString()
+                    } else if (type == 'outbound_airports') {
+                        obj.outbound_airports = param.toString()
+                    } else if (type == 'inbound_airports') {
+                        obj.inbound_airports = param.toString()
+                    }
+                    asynLoad(obj)
+                });
+                $(this).find('input').on('ifUnchecked', function (event, a) {
+                    var param = $.query.get(type);
+                    if (param != '') {
+                        param = param.toString().split(',');
+                        var idx = param.indexOf(this.value);
+                        if (idx != -1) {
+                            param.splice(idx, 1);
+                        }
+                    }
+                    var obj = {'page': 1};
+                    if (type == 'stops') {
+                        obj.stops = param.toString()
+                    } else if (type == 'airlines') {
+                        obj.airlines = param.toString()
+                    } else if (type == 'alliances') {
+                        obj.alliances = param.toString()
+                    } else if (type == 'outbound_airports') {
+                        obj.outbound_airports = param.toString()
+                    } else if (type == 'inbound_airports') {
+                        obj.inbound_airports = param.toString()
+                    }
+                    asynLoad(obj)
+                });
+                $(this).removeClass('hidden');
+            });
+            /*
+            $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
+                var type = $(this).data('type');
+                var selector = '.' + type + ' .' + type + '-hidden';
+                $(selector).slideToggle();
+                $('.' + type + '-view-toggle').toggleClass('hide')
+            });
+            */
+        })
     </script>
 {% endblock %}

@@ -1,0 +1,421 @@
+{% if items.message is defined %}
+    <li>No se encontraron vuelos disponibles</li>
+{% elseif items.items|length > 0 %}
+    {% for item in items.items %}
+        <li>
+            <form name="flight-form-{{ loop.index }}" id="flight-form-{{ loop.index }}" action="{{ path('viento_sur_send_flight_booking') }}" method="post">
+            <span class="booking-item"> <!--cursor-pointer-->
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="flight-data">
+                            <span class="table-data-row">
+                                <span class="flight-type table-data-cell">
+                                    <span class="flight-bound">IDA</span>
+                                    <span class="flight-bound-text">{{ item.outbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span>
+                                </span>
+                                <span class="departure-location table-data-cell">
+                                    <span class="departure-from">{{ item.outbound_choices[0].segments[0].from }}</span>
+                                    <span class="departure-text">{{ airportNames[item.outbound_choices[0].segments[0].from] }}</span>
+                                </span>
+                                <span class="arrival-location table-data-cell">
+                                    {% set last = item.outbound_choices[0].segments|last %}
+                                    <span class="arrival-from">{{ last.to }}</span>
+                                    <span class="arrival-text">{{ airportNames[last.to] }}</span>
+                                </span>
+                            </span>
+                        </div>
+
+                        <ul class="list-group">
+                            {% for outbound in item.outbound_choices %}
+                                <li class="list-group-item">
+                                    <div class="flight-list">
+                                        <div class="table-data-row">
+                                            <span class="table-data-cell">
+                                                <input type="radio" name="optionsRadiosOut{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ outbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
+                                            </span>
+                                            <span class="airline-logo table-data-cell">
+                                                {% set airlines = [] %}
+                                                {% for segment in outbound.segments %}
+                                                    {% if segment.airline not in airlines %}
+                                                        <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}"/>
+                                                        {% set airlines = airlines|merge([segment.airline]) %}
+                                                        {% if loop.length == 1 %}
+                                                            {{ airlineNames[segment.airline] }}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                            <span class="departure-time table-data-cell">
+                                                {{ outbound.segments[0].departure_datetime|date("H:i") }}
+                                            </span>
+                                            <span class="scales table-data-cell">
+                                                {% set totalSeg = outbound.segments|length - 1 %}
+                                                {% if totalSeg == 0 %}
+                                                    Directo
+                                                {% elseif totalSeg == 1 %}
+                                                    {{ totalSeg }} escala
+                                                {% else %}
+                                                    {{ totalSeg }} escalas
+                                                {% endif %}
+                                            </span>
+                                            <span class="arrival-time table-data-cell">
+                                                {% set lastSeg = outbound.segments|last %}
+                                                {{ lastSeg.arrival_datetime|date("H:i") }}
+                                                <!--falta diferencia en días desde la partida-->
+                                            </span>
+                                            <span class="duration table-data-cell">
+                                                {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
+                                            </span>
+                                            <span class="table-data-cell">
+                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="gap-small"></div>
+                                    <div id="detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="active">
+                                                    <td>
+                                                        <div style="width: 50%; float: left;">
+                                                            {% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text|split(',')[0] }}{% endif %} -
+                                                            {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text|split(',')[0] }}{% endif %}
+                                                        </div>
+                                                        <div class="text-right" style="width: 50%; float: right;">
+                                                            Duración total: {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            {% for segment in outbound.segments %}
+                                                <div class="inline-detail-airline">
+                                                    <div class="inline-detail-airline-wrapper">
+                                                        <span class="inline-detail-airline-logo">
+                                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                                        </span>
+                                                        <span class="inline-detail-airline-description review-text">
+                                                            <span>
+                                                                <b>{{ airlineNames[segment.airline] }}</b>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="inline-detail-data">
+                                                <span class="inline-detail-route-data">
+                                                    <span class="inline-detail-airport">
+                                                        <span class="inline-detail-airport-date">
+                                                            <span>
+                                                                <span class="inline-detail-airport-date-text">Sale:</span>
+                                                                <span>{{ segment.departure_datetime|date("d/m/Y", false) }}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-code-wrapper">
+                                                            <span class="inline-detail-airport-code">{{ segment.from }}</span>
+                                                            <span class="inline-detail-airport-hour">{{ segment.departure_datetime|date("H:i", false) }}</span>
+                                                            {#<span class="night-flight ux-common-icon-night" tooltip="" tooltip-content="Vuelo nocturno" tooltip-id="night-flight-tooltip"></span>#}
+                                                        </span>
+                                                        <span class="inline-detail-airport-description">
+                                                            {{ airportCities[segment.from] }} - {{ airportNames[segment.from] }}
+                                                        </span>
+                                                    </span>
+
+                                                    <span class="inline-detail-airport-separator">
+                                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                    </span>
+
+                                                    <span class="inline-detail-airport">
+                                                        <span class="inline-detail-airport-date">
+                                                            <span>
+                                                                <span class="inline-detail-airport-date-text">Llega:</span>
+                                                                <span>{{ segment.arrival_datetime|date("d/m/Y", false) }}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-code-wrapper">
+                                                            <span class="inline-detail-airport-code">{{ segment.to }}</span>
+                                                            <span class="inline-detail-airport-hour">06:45</span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-description">
+                                                            {{ airportCities[segment.to] }} - {{ airportNames[segment.to] }}
+                                                        </span>
+                                                    </span>
+                                                </span>
+
+                                                <span class="inline-detail-flight">
+                                                    <span>
+                                                        <span class="inline-detail-flight-data">
+                                                            <span>
+                                                                <span class="inline-detail-flight-data-title">DURACIÓN</span>
+                                                                <span class="inline-detail-flight-data-description">{{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-data">
+                                                        <span>
+                                                            <span class="inline-detail-flight-data-title">VUELO N°</span>
+                                                            <span class="inline-detail-flight-data-description">{{ segment.flight_id }}</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-data inline-detail-flight-cabinType">
+                                                        <span class="inline-detail-flight-data-title">CLASE</span>
+                                                        <span class="inline-detail-flight-data-description">{{ segment.cabin_type }}</span>
+                                                    </span>
+                                                    <!--<span class="inline-detail-flight-airline">
+                                                        <span class="airplane-name">
+                                                            <i class="fa fa-plane" aria-hidden="true"></i>
+                                                            Aeronave
+                                                        </span>
+                                                    </span>-->
+                                                </span>
+                                            </div>
+                                            <!--
+                                            <span>
+                                                <span class="time detail-time">
+                                                    <span class="detail-time-wrapper">
+                                                        <span class="connection">
+                                                            <span class="text">
+                                                                <span class="ux-common-icon-last-buy"></span>
+                                                                Espera de <b>1h 35m</b>&nbsp;en  (PUJ)
+                                                            </span>
+                                                            <span class="connection-type">
+                                                                <span>
+                                                                    <span class="icons">
+                                                                        <span class="main-sprite icon-detail-plane icon"></span>
+                                                                    </span>
+                                                                    (Mismo avión)
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            -->
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        {% if item.inbound_choices is defined  and item.inbound_choices is not empty %}
+                        <div class="flight-data">
+                            <span class="table-data-row">
+                                <span class="flight-type table-data-cell">
+                                    <span class="flight-bound">VUELTA</span>
+                                    <span class="flight-bound-text">{{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span>
+                                </span>
+                                <span class="departure-location table-data-cell">
+                                    <span class="departure-from">{{ item.inbound_choices[0].segments[0].from }}</span>
+                                    <span class="departure-text">{{ airportNames[item.inbound_choices[0].segments[0].from] }}</span>
+                                </span>
+                                <span class="arrival-location table-data-cell">
+                                    {% set last = item.inbound_choices[0].segments|last %}
+                                    <span class="arrival-from">{{ last.to }}</span>
+                                    <span class="arrival-text">{{ airportNames[last.to] }}</span>
+                                </span>
+                            </span>
+                        </div>
+
+                        <ul class="list-group">
+                            {% for inbound in item.inbound_choices %}
+                                <li class="list-group-item">
+                                    <div class="flight-list">
+                                        <div class="table-data-row">
+                                            <span class="table-data-cell">
+                                                <input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
+                                            </span>
+                                            <span class="airline-logo table-data-cell">
+                                                {% set airlines = [] %}
+                                                {% for segment in inbound.segments %}
+                                                    {% if segment.airline not in airlines %}
+                                                        <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}"/>
+                                                        {% set airlines = airlines|merge([segment.airline]) %}
+                                                        {% if loop.length == 1 %}
+                                                            {{ airlineNames[segment.airline] }}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                            <span class="departure-time table-data-cell">
+                                                {{ inbound.segments[0].departure_datetime|date("H:i") }}
+                                            </span>
+                                            <span class="scales table-data-cell">
+                                                {% set totalSeg = inbound.segments|length - 1 %}
+                                                {% if totalSeg == 0 %}
+                                                    Directo
+                                                {% elseif totalSeg == 1 %}
+                                                    {{ totalSeg }} escala
+                                                {% else %}
+                                                    {{ totalSeg }} escalas
+                                                {% endif %}
+                                            </span>
+                                            <span class="arrival-time table-data-cell">
+                                                {% set lastSeg = inbound.segments|last %}
+                                                {{ lastSeg.arrival_datetime|date("H:i") }}
+                                                <!--falta diferencia en días desde la partida-->
+                                            </span>
+                                            <span class="duration table-data-cell">
+                                                {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
+                                            </span>
+                                            <span class="table-data-cell">
+                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="gap-small"></div>
+                                    <div id="detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="active">
+                                                    <td>
+                                                        <div style="width: 50%; float: left;">
+                                                            {% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text|split(',')[0] }}{% endif %} -
+                                                            {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text|split(',')[0] }}{% endif %}
+                                                        </div>
+                                                        <div class="text-right" style="width: 50%; float: right;">
+                                                            Duración total: {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            {% for segment in inbound.segments %}
+                                                <div class="inline-detail-airline">
+                                                    <div class="inline-detail-airline-wrapper">
+                                                        <span class="inline-detail-airline-logo">
+                                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                                        </span>
+                                                        <span class="inline-detail-airline-description review-text">
+                                                            <span>
+                                                                <b>{{ airlineNames[segment.airline] }}</b>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="inline-detail-data">
+                                                <span class="inline-detail-route-data">
+                                                    <span class="inline-detail-airport">
+                                                        <span class="inline-detail-airport-date">
+                                                            <span>
+                                                                <span class="inline-detail-airport-date-text">Sale:</span>
+                                                                <span>{{ segment.departure_datetime|date("d/m/Y", false) }}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-code-wrapper">
+                                                            <span class="inline-detail-airport-code">{{ segment.from }}</span>
+                                                            <span class="inline-detail-airport-hour">{{ segment.departure_datetime|date("H:i", false) }}</span>
+                                                            {#<span class="night-flight ux-common-icon-night" tooltip="" tooltip-content="Vuelo nocturno" tooltip-id="night-flight-tooltip"></span>#}
+                                                        </span>
+                                                        <span class="inline-detail-airport-description">
+                                                            {{ airportCities[segment.from] }} - {{ airportNames[segment.from] }}
+                                                        </span>
+                                                    </span>
+
+                                                    <span class="inline-detail-airport-separator">
+                                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                    </span>
+
+                                                    <span class="inline-detail-airport">
+                                                        <span class="inline-detail-airport-date">
+                                                            <span>
+                                                                <span class="inline-detail-airport-date-text">Llega:</span>
+                                                                <span>{{ segment.arrival_datetime|date("d/m/Y", false) }}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-code-wrapper">
+                                                            <span class="inline-detail-airport-code">{{ segment.to }}</span>
+                                                            <span class="inline-detail-airport-hour">06:45</span>
+                                                        </span>
+                                                        <span class="inline-detail-airport-description">
+                                                            {{ airportCities[segment.to] }} - {{ airportNames[segment.to] }}
+                                                        </span>
+                                                    </span>
+                                                </span>
+
+                                                <span class="inline-detail-flight">
+                                                    <span>
+                                                        <span class="inline-detail-flight-data">
+                                                            <span>
+                                                                <span class="inline-detail-flight-data-title">DURACIÓN</span>
+                                                                <span class="inline-detail-flight-data-description">{{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-data">
+                                                        <span>
+                                                            <span class="inline-detail-flight-data-title">VUELO N°</span>
+                                                            <span class="inline-detail-flight-data-description">{{ segment.flight_id }}</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="inline-detail-flight-data inline-detail-flight-cabinType">
+                                                        <span class="inline-detail-flight-data-title">CLASE</span>
+                                                        <span class="inline-detail-flight-data-description">{{ segment.cabin_type }}</span>
+                                                    </span>
+                                                    <!--<span class="inline-detail-flight-airline">
+                                                        <span class="airplane-name">
+                                                            <i class="fa fa-plane" aria-hidden="true"></i>
+                                                            Aeronave
+                                                        </span>
+                                                    </span>-->
+                                                </span>
+                                            </div>
+                                                <!--
+                                                <span>
+                                                    <span class="time detail-time">
+                                                        <span class="detail-time-wrapper">
+                                                            <span class="connection">
+                                                                <span class="text">
+                                                                    <span class="ux-common-icon-last-buy"></span>
+                                                                    Espera de <b>1h 35m</b>&nbsp;en  (PUJ)
+                                                                </span>
+                                                                <span class="connection-type">
+                                                                    <span>
+                                                                        <span class="icons">
+                                                                            <span class="main-sprite icon-detail-plane icon"></span>
+                                                                        </span>
+                                                                        (Mismo avión)
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                -->
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        {#{{ dump(item) }}#}
+
+                    </div>
+                    <div class="col-md-3 booking-prices align-center cursor-pointer" data-item="{{ loop.index }}">
+                        <div class="booking-align-vertical"> <span class="booking-item-price-night">Precio Total Final</span>
+                            <span class="booking-item-price">
+                                {% if item.price_detail.total is defined %}
+                                    $ {{ item.price_detail.total|round|number_format(0, '.', '.') }}
+                                {% endif %}
+                            </span>
+                            <span class="btn btn-primary">Comprar</span>
+                        </div>
+                        <input type="hidden" name="item_id" value="{{ item.id }}" />
+                        {% for b_info in item.booking_info %}
+                            {% if b_info.inbound_choice is defined %}
+                                <input type="hidden" name="combination_{{ b_info.outbound_choice }}_{{ b_info.inbound_choice }}"  value="{{ b_info.itinerary_id }}" />
+                            {% else %}
+                                <input type="hidden" name="combination_{{ b_info.outbound_choice }}"  value="{{ b_info.itinerary_id }}" />
+                            {% endif %}
+                        {% endfor %}
+                        <input type="hidden" name="option_id" value="{{ loop.index }}" />
+                    </div>
+                </div>
+            </span>
+            </form>
+        </li>
+    {%endfor%}
+{%endif%}
