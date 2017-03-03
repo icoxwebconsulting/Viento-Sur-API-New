@@ -39,7 +39,7 @@ class Despegar
         $this->serviceUrl = $serviceUrl;
         $this->serviceVersion = $serviceVersion;
         $this->apiKeyTest = $apiKeyTest;
-        $this->apiKeyProd = $apiKeyTest;
+        $this->apiKeyProd = $apiKey;
         $this->urlVaultProd = $vaultUrl;
         if ($isTest) {
             $this->urlVault = $vaultUrlTest;
@@ -197,8 +197,8 @@ class Despegar
             $header = [
                 'Content-Type: application/json',
                 'X-Tokenize-Key: ' . $tokenizeKey,
-                'X-Client: ' . $this->apiKeyProd,
-                'X-ApiKey: ' . $this->apiKeyProd,
+                'X-Client: ' . $this->apiKeyTest,
+                'X-ApiKey: ' . $this->apiKeyTest,
                 'XDESP-TEST: true'
             ];
         }
@@ -239,8 +239,8 @@ class Despegar
             $header = [
                 'Content-Type: application/json',
                 'X-Tokenize-Key: ' . $tokenizeKey,
-                'X-Client: ' . $this->apiKeyProd,
-                'X-ApiKey: ' . $this->apiKeyProd,
+                'X-Client: ' . $this->apiKeyTest,
+                'X-ApiKey: ' . $this->apiKeyTest,
                 'XDESP-TEST: true'
             ];
         }
@@ -312,7 +312,7 @@ class Despegar
     {
         $url = $this->getServiceUrl() . 'autocomplete?' . http_build_query($urlParams);
         $header = [
-            'X-ApiKey: ' . $this->apiKey
+            'X-ApiKey: ' . $this->apiKeyProd
         ];
         return $this->curlExec($url, $header, 'GET');
     }
@@ -321,7 +321,7 @@ class Despegar
     {
         $url = $this->getServiceUrl() . 'cities?' . http_build_query($urlParams);
         $header = [
-            'X-ApiKey: ' . $this->apiKey
+            'X-ApiKey: ' . $this->apiKeyProd
         ];
         return $this->curlExec($url, $header, 'GET');
     }
@@ -341,7 +341,7 @@ class Despegar
         ];
         if ($this->isTest) {
             $header = [
-                'X-ApiKey: ' . $this->apiKeyProd,
+                'X-ApiKey: ' . $this->apiKeyTest,
                 'XDESP-TEST: true'
             ];
         }

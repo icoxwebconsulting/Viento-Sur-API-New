@@ -473,7 +473,8 @@ class Flights
                 if ($email) {
                     $this->emailService->sendBookingFlightEmail($email, array(
                         'pdf' => false,
-                        'reservation' => $reservation
+                        'reservation' => $reservation,
+                        'itineraryDetail' => $itineraryDetail
                     ));
                 }
             } catch (\Exception $e) {
