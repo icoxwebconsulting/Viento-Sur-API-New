@@ -38,10 +38,10 @@ class IndexController extends Controller
 
         $languages['es']['icon'] = 'bundles/vientosurappapp/images/fl-ar.png';
         $languages['es']['name'] = 'Español';
-        //$languages['en']['icon'] = 'bundles/vientosurappapp/images/fl-en.png';
-        //$languages['en']['name'] = 'English';
-        //$languages['pt']['icon'] = 'bundles/vientosurappapp/images/flag_pt.png';
-        //$languages['pt']['name'] = 'Portuguese';
+        $languages['en']['icon'] = 'bundles/vientosurappapp/images/fl-en.png';
+        $languages['en']['name'] = 'English';
+        $languages['pt']['icon'] = 'bundles/vientosurappapp/images/fl_br.png';
+        $languages['pt']['name'] = 'Portuguese';
 
         $currencies['ars']['name'] = "AR$";
         //$currencies['usd']['name'] = "USD";
