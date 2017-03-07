@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{_locale}", name="homepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction()

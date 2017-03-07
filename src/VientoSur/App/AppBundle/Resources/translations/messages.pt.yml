@@ -1,0 +1,17 @@
+index:
+    hotels: HOTÉIS
+    flights: VOOS
+    search_text: Pesquisa
+    search:
+        hotel:
+           title: Procurar alojamento com as melhores taxas
+           from: Introduzir destino ou nome do alojamento
+           from_placeholder: Onde você está indo
+           checkin_date: Data de entrada
+           checkout_date: Data de saída
+           rooms: Quartos
+           room: Quarto
+           adults: Adultos
+           childs: Criança
+           childs_ages: Idade das crianças
+           age: Idade

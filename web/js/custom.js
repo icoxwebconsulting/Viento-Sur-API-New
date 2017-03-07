@@ -2,6 +2,13 @@
 
 $(document).ready(function () {
 
+    $('.nav-drop').dropit();
+
+    $('.top-user-area .language').on('click', function () {
+        console.log("hicieron click");
+        window.location = this.href;
+    });
+
     $('html').niceScroll({
         cursorcolor: "#000",
         cursorborder: "0px solid #fff",

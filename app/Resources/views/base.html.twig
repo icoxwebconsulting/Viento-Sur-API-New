@@ -59,8 +59,8 @@
                 <div class="container">
                     <div class="nav">
                         <ul class="slimmenu" id="slimmenu">
-                            <li class="hotel {% if flightMenu is not defined %} active {% endif %}"><a href="javascript:void(0);"> <span><i class="fa fa-building-o"></i> HOTELES</span></a></li>
-                            <li class="flight {% if flightMenu is defined %} active {% endif %}"><a href="javascript:void(0);"><span><i class="fa fa-plane"></i> VUELOS</span></a></li>
+                            <li class="hotel {% if flightMenu is not defined %} active {% endif %}"><a href="javascript:void(0);"> <span><i class="fa fa-building-o"></i> {{ 'index.hotels' | trans }}</span></a></li>
+                            <li class="flight {% if flightMenu is defined %} active {% endif %}"><a href="javascript:void(0);"><span><i class="fa fa-plane"></i> {{ 'index.flights' | trans }}</span></a></li>
                             <!--<li><a href="#">AUTOS</a></li>
                             <li><a href="#">PAQUETES</a></li>
                             <li><a href="#">COMPRA SEGURA</a></li>-->

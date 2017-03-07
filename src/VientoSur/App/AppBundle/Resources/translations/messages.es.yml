@@ -1,0 +1,17 @@
+index:
+    hotels: HOTELES
+    flights: VUELOS
+    search_text: Buscar
+    search:
+        hotel:
+           title: Buscá Alojamientos con las mejores tarifas
+           from: Ingresar destino o nombre del alojamiento
+           from_placeholder: Dónde vas
+           checkin_date: Fecha de entrada
+           checkout_date: Fecha de salida
+           rooms: Habitaciones
+           room: Habitación
+           adults: Adultos
+           childs: Menores
+           childs_ages: Edad de los menores
+           age: Edad

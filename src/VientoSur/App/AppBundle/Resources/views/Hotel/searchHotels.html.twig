@@ -1,54 +1,53 @@
-<h2 title="Busca Alojamientos con las mejores tarifas - VientoSur.net"><b>Busca Alojamientos con las mejores tarifas</b></h2>
+<h2 title="Busca Alojamientos con las mejores tarifas - VientoSur.net"><b>{{ 'index.search.hotel.title' | trans }}</b></h2>
 
 <form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels')}}" method="POST">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                <label>Ingresar destino o nombre del alojamiento</label>
+                <label>{{ 'index.search.hotel.from' | trans }}</label>
                 {% if isTest %}
-                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas" style="color: #003580;">
+                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}" style="color: #003580;">
                     <input id="destinationCity" name="cityInput" type="hidden" />
                 {% else %}
-                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas" style="color: #003580;">
+                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}" style="color: #003580;">
                     <input id="destinationCity" name="cityInput" type="hidden" required />
                 {% endif %}
             </div>
         </div>
 
         <div class="col-md-8">
-            <div > <!--class="input-daterange" data-date-format="d M, D"-->
+            <div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                            <label>Fecha de Entrada</label>
+                            <label>{{ 'index.search.hotel.checkin_date' | trans }}</label>
                             <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                            <label>Fecha de Salida</label>
+                            <label>{{ 'index.search.hotel.checkout_date' | trans }}</label>
                             <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group form-group-sm">
-                <label for="roomsQty">Habitaciones</label>
+                <label for="roomsQty">{{ 'index.search.hotel.rooms' | trans }}</label>
                 <select id="roomsQty" class="form-control" name="habitacionesCant">
-                    <option value="1">1 Habitación</option>
-                    <option value="2">2 Habitaciones</option>
-                    <option value="3">3 Habitaciones</option>
-                    <option value="4">4 Habitaciones</option>
+                    <option value="1">1 {{ 'index.search.hotel.room' | trans }}</option>
+                    <option value="2">2 {{ 'index.search.hotel.rooms' | trans }}</option>
+                    <option value="3">3 {{ 'index.search.hotel.rooms' | trans }}</option>
+                    <option value="4">4 {{ 'index.search.hotel.rooms' | trans }}</option>
                 </select>
             </div>
         </div>
         <div id="room">
             <div class="col-md-4">
                 <div class="form-group form-group-sm">
-                    <label for="adults">Adultos</label>
+                    <label for="adults">{{ 'index.search.hotel.adults' | trans }}</label>
                     <input type="hidden" value="0" id="adultsRoom">
                     <select id="adults" class="form-control coupled" data-couple="childrenRoom.0" name="adultsSelector">
                         <option value="1" selected="selected">1</option>
@@ -64,7 +63,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group form-group-sm">
-                    <label for="childrenRoom">Menores</label>
+                    <label for="childrenRoom">{{ 'index.search.hotel.childs' | trans }}</label>
                     <select id="childrenRoom" class="form-control coupled" data-couple="adults.1" name="childrenRoomSelector">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -80,11 +79,11 @@
             </div>
             <div class="col-md-12 hide" id="ageBlock">
                     <div class="form-group form-group-sm">
-                    <label>Edad de los menores</label>
+                    <label>{{ 'index.search.hotel.childs_ages' | trans }}</label>
                 <div class="row">
                     <div class="col-md-1 childAge1room">
                         <select id="childAge1room" class="form-control" name="childAgeSelector-1">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -107,7 +106,7 @@
                     </div>
                     <div class="col-md-1 childAge2room">
                         <select id="childAge2room" class="sb-age form-control" name="childAgeSelector-2">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -130,7 +129,7 @@
                     </div>
                     <div class="col-md-1 childAge3room">
                         <select id="childAge3room" class="sb-age form-control" name="childAgeSelector-3">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -153,7 +152,7 @@
                     </div>
                     <div class="col-md-1 childAge4room">
                         <select id="childAge4room" class="sb-age form-control" name="childAgeSelector-4">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -176,7 +175,7 @@
                     </div>
                     <div class="col-md-1 childAge5room">
                         <select id="childAge5room" class="sb-age form-control" name="childAgeSelector-5">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -199,7 +198,7 @@
                     </div>
                     <div class="col-md-1 childAge6room">
                         <select id="childAge6room" class="sb-age form-control" name="childAgeSelector-6">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -222,7 +221,7 @@
                     </div>
                     <div class="col-md-1 childAge7room">
                         <select id="childAge7room" class="sb-age form-control" name="childAgeSelector-7">
-                            <option value="" selected="selected">Edad</option>
+                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -254,12 +253,12 @@
         <div class="col-md-6">
             <div class="room1" style="background-color:#f5f5f5">
                 <div class="row">
-                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">Habitación 1</label></div></div>
+                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 1</label></div></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="adults1">Adultos</label>
+                            <label for="adults1">{{ 'index.search.hotel.adults' | trans }}</label>
                             <input type="hidden" value="0" id="adultsRoom1">
                             <select id="adults1" class="form-control coupled" data-couple="childrenRoom1.0" name="adultsSelector1">
                                 <option value="1" selected="selected">1</option>
@@ -276,7 +275,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="childrenRoom1">Menores</label>
+                            <label for="childrenRoom1">{{ 'index.search.hotel.childs' | trans }}</label>
                             <select id="childrenRoom1" class="form-control coupled" data-couple="adults1.1" name="childrenRoomSelector1">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -295,11 +294,11 @@
                 <div class="row hide" id="menor-room1">
                     <div class="col-md-12">
                         <div class="form-group form-group-sm">
-                            <label id="lblAge1">Edad de los menores</label>
+                            <label id="lblAge1">{{ 'index.search.hotel.childs_ages' | trans }}</label>
                             <div class="row">
                                 <div class="col-md-2 childAge11" style="margin-left:0px;">
                                     <select id="childAge11" class="sb-age form-control required" name="childAgeSelector-1-1">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -322,7 +321,7 @@
                                 </div>
                                 <div class="col-md-2 childAge21">
                                     <select id="childAge21" class="sb-age form-control required" name="childAgeSelector-1-2">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -345,7 +344,7 @@
                                 </div>
                                 <div class="col-md-2 childAge31">
                                     <select id="childAge31" class="sb-age form-control required" name="childAgeSelector-1-3">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -368,7 +367,7 @@
                                 </div>
                                 <div class="col-md-2 childAge41">
                                     <select id="childAge41" class="sb-age form-control required" name="childAgeSelector-1-4">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -391,7 +390,7 @@
                                 </div>
                                 <div class="col-md-2 childAge51">
                                     <select id="childAge51" class="sb-age form-control required" name="childAgeSelector-1-5">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -414,7 +413,7 @@
                                 </div>
                                 <div class="col-md-2 childAge61">
                                     <select id="childAge61" class="sb-age form-control required" name="childAgeSelector-1-6">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -437,7 +436,7 @@
                                 </div>
                                 <div class="col-md-2 childAge71">
                                     <select id="childAge71" class="sb-age form-control required" name="childAgeSelector-1-7">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -468,12 +467,12 @@
         <div class="col-md-6">
             <div class="room2">
                 <div class="row">
-                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">Habitación 2</label></div></div>
+                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 2</label></div></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="adults2">Adultos</label>
+                            <label for="adults2">{{ 'index.search.hotel.adults' | trans }}</label>
                             <input type="hidden" value="0" id="adultsRoom2">
                             <select id="adults2" class="form-control coupled" data-couple="childrenRoom2.0" name="adultsSelector2">
                                 <option value="1" selected="selected">1</option>
@@ -489,7 +488,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="childrenRoom2">Menores</label>
+                            <label for="childrenRoom2">{{ 'index.search.hotel.childs' | trans }}</label>
                             <select id="childrenRoom2" class="form-control coupled" data-couple="adults2.1" name="childrenRoomSelector2">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -507,11 +506,11 @@
                 <div class="row hide" id="menor-room2">
                     <div class="col-md-12">
                         <div class="form-group form-group-sm">
-                            <label id="lblAge2">Edad de los menores</label>
+                            <label id="lblAge2">{{ 'index.search.hotel.childs_ages' | trans }}</label>
                             <div class="row">
                                 <div class="col-md-2 childAge12" style="margin-left:0px;">
                                     <select id="childAge12" class="sb-age form-control required" name="childAgeSelector-2-1">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -534,7 +533,7 @@
                                 </div>
                                 <div class="col-md-2 childAge22">
                                     <select id="childAge22" class="sb-age form-control required" name="childAgeSelector-2-2">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -557,7 +556,7 @@
                                 </div>
                                 <div class="col-md-2 childAge32">
                                     <select id="childAge32" class="sb-age form-control required" name="childAgeSelector-2-3">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -580,7 +579,7 @@
                                 </div>
                                 <div class="col-md-2 childAge42">
                                     <select id="childAge42" class="sb-age form-control required" name="childAgeSelector-2-4">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -603,7 +602,7 @@
                                 </div>
                                 <div class="col-md-2 childAge52">
                                     <select id="childAge52" class="sb-age form-control required" name="childAgeSelector-2-5">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -626,7 +625,7 @@
                                 </div>
                                 <div class="col-md-2 childAge62">
                                     <select id="childAge62" class="sb-age form-control required" name="childAgeSelector-2-6">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -649,7 +648,7 @@
                                 </div>
                                 <div class="col-md-2 childAge72">
                                     <select id="childAge72" class="sb-age form-control required" name="childAgeSelector-2-7">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -680,12 +679,12 @@
         <div class="col-md-6">
             <div class="room3">
                 <div class="row">
-                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">Habitación 3</label></div></div>
+                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 3</label></div></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="adults3">Adultos</label>
+                            <label for="adults3">{{ 'index.search.hotel.adults' | trans }}</label>
                             <input type="hidden" value="0" id="adultsRoom3">
                             <select id="adults3" class="form-control coupled" data-couple="childrenRoom3.0" name="adultsSelector3">
                                 <option value="1" selected="selected">1</option>
@@ -701,7 +700,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="childrenRoom3">Menores</label>
+                            <label for="childrenRoom3">{{ 'index.search.hotel.childs' | trans }}</label>
                             <select id="childrenRoom3" class="form-control coupled" data-couple="adults3.0" name="childrenRoomSelector3">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -719,11 +718,11 @@
                 <div class="row hide" id="menor-room3">
                     <div class="col-md-12">
                         <div class="form-group form-group-sm">
-                            <label id="lblAge3">Edad de los menores</label>
+                            <label id="lblAge3">{{ 'index.search.hotel.childs_ages' | trans }}</label>
                             <div class="row">
                                 <div class="col-md-2 childAge13" style="margin-left:0px;">
                                     <select id="childAge13" class="sb-age form-control required" name="childAgeSelector-3-1">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -746,7 +745,7 @@
                                 </div>
                                 <div class="col-md-2 childAge23">
                                     <select id="childAge23" class="sb-age form-control required" name="childAgeSelector-3-2">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -769,7 +768,7 @@
                                 </div>
                                 <div class="col-md-2 childAge33">
                                     <select id="childAge33" class="sb-age form-control required" name="childAgeSelector-3-3">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -792,7 +791,7 @@
                                 </div>
                                 <div class="col-md-2 childAge43">
                                     <select id="childAge43" class="sb-age form-control required" name="childAgeSelector-3-4">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -815,7 +814,7 @@
                                 </div>
                                 <div class="col-md-2 childAge53">
                                     <select id="childAge53" class="sb-age form-control required" name="childAgeSelector-3-5">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -838,7 +837,7 @@
                                 </div>
                                 <div class="col-md-2 childAge63">
                                     <select id="childAge63" class="sb-age form-control required" name="childAgeSelector-3-6">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -861,7 +860,7 @@
                                 </div>
                                 <div class="col-md-2 childAge73">
                                     <select id="childAge73" class="sb-age form-control required" name="childAgeSelector-3-7">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -892,12 +891,12 @@
         <div class="col-md-6">
             <div class="room4" style="background-color:#f5f5f5">
                 <div class="row">
-                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">Habitación 4</label></div></div>
+                    <div class="col-md-12"><div class="form-group form-group-sm"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 4</label></div></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="adults4">Adultos</label>
+                            <label for="adults4">{{ 'index.search.hotel.adults' | trans }}</label>
                             <input type="hidden" value="0" id="adultsRoom4">
                             <select id="adults4" class="form-control coupled" data-couple="childrenRoom4.0" name="adultsSelector4">
                                 <option value="1" selected="selected">1</option>
@@ -913,7 +912,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-sm">
-                            <label for="childrenRoom4">Menores</label>
+                            <label for="childrenRoom4">{{ 'index.search.hotel.childs' | trans }}</label>
                             <select id="childrenRoom4" class="form-control coupled" data-couple="adults4.0" name="childrenRoomSelector4">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -931,11 +930,11 @@
                 <div class="row hide" id="menor-room4">
                     <div class="col-md-12">
                         <div class="form-group form-group-sm">
-                            <label id="lblAge4">Edad de los menores</label>
+                            <label id="lblAge4">{{ 'index.search.hotel.childs_ages' | trans }}</label>
                             <div class="row">
                                 <div class="col-md-2 childAge14" style="margin-left:0px;">
                                     <select id="childAge14" class="sb-age form-control required" name="childAgeSelector-4-1">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -958,7 +957,7 @@
                                 </div>
                                 <div class="col-md-2 childAge24">
                                     <select id="childAge24" class="sb-age form-control required" name="childAgeSelector-4-2">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -981,7 +980,7 @@
                                 </div>
                                 <div class="col-md-2 childAge34">
                                     <select id="childAge34" class="sb-age form-control required" name="childAgeSelector-4-3">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -1004,7 +1003,7 @@
                                 </div>
                                 <div class="col-md-2 childAge44">
                                     <select id="childAge44" class="sb-age form-control required" name="childAgeSelector-4-4">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -1027,7 +1026,7 @@
                                 </div>
                                 <div class="col-md-2 childAge54">
                                     <select id="childAge54" class="sb-age form-control required" name="childAgeSelector-4-5">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -1050,7 +1049,7 @@
                                 </div>
                                 <div class="col-md-2 childAge64">
                                     <select id="childAge64" class="sb-age form-control required" name="childAgeSelector-4-6">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -1073,7 +1072,7 @@
                                 </div>
                                 <div class="col-md-2 childAge74">
                                     <select id="childAge74" class="sb-age form-control required" name="childAgeSelector-4-7">
-                                        <option value="" selected="selected">Edad</option>
+                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -1104,6 +1103,6 @@
         <!--</div>-->
     </div>
     <div class="text-right">
-        <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
+        <button class="btn btn-primary btn-lg" type="submit">{{ 'index.search_text' | trans }}</button>
     </div>
 </form>

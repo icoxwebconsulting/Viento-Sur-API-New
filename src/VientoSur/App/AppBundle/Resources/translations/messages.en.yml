@@ -1,0 +1,17 @@
+index:
+    hotels: HOTELS
+    flights: FLIGHTS
+    search_text: Search
+    search:
+        hotel:
+           title: Find Hotels with the best rates
+           from: Enter destination or hotel name
+           from_placeholder: Where are you going
+           checkin_date: Checkin Date
+           checkout_date: Checkout Date
+           rooms: Rooms
+           room: Room
+           adults: Adults
+           childs: Childs
+           childs_ages: Childs ages
+           age: Age

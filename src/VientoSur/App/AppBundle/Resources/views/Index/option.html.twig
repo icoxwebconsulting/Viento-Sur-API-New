@@ -16,20 +16,42 @@
             {#</ul>#}
         {#</li>#}
         <li class="top-user-area-lang nav-drop">
-            <a href="#">
-                Español<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" />
-            </a>
+            {% if app.request.locale == 'en' %}
+                <a title="English" href="{{ path('homepage', {'_locale': 'en'}) }}">
+                    English<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" />
+                </a>
+            {% elseif app.request.locale == 'pt' %}
+                <a title="Portuguese" href="{{ path('homepage', {'_locale': 'pt'}) }}">
+                    Portuguese<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Portuguese" title="Portuguese" />
+                </a>
+            {% else %}
+                <a href="{{ path('homepage', {'_locale': 'es'}) }}">
+                    Español<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" />
+                </a>
+            {% endif %}
+
             <ul class="list nav-drop-menu">
+                {% if app.request.locale != 'es' %}
                 <li>
-                    <a title="English" href="#">
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" /><span class="right">Español</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if app.request.locale != 'en' %}
+                <li>
+                    <a title="English" href="{{ path('homepage', {'_locale': 'en'}) }}" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English</span>
                     </a>
                 </li>
+                {% endif %}
+                {% if app.request.locale != 'pt' %}
                 <li>
-                    <a title="Portuguese" href="#">
+                    <a title="Portuguese" href="{{ path('homepage', {'_locale': 'pt'}) }}" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese</span>
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </li>
     </ul>
