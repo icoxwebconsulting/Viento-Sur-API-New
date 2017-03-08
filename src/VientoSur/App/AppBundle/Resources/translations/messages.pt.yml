@@ -12,6 +12,34 @@ index:
            rooms: Quartos
            room: Quarto
            adults: Adultos
-           childs: Criança
+           childs: Crianças
            childs_ages: Idade das crianças
            age: Idade
+        flight:
+           title: Buscá tu vuelo
+           from: Fonte
+           from_placeholder: Sinal de onde você viajar
+           to: Destino
+           to_placeholder: Enter para onde viajar
+           start: Partida
+           end: Retorno
+           one_way: Apenas ida
+           one_way_placeholder: Ha seleccionado apenas ida
+           childs_ages: Idade das crianças no final da viagem
+           children: Criança
+           0_24_arm: 0 a 24 meses (em armas)
+           0_24:seat: 0 a 24 meses (En assento)
+           2_11: 2 a 11 anos
+           12_more: 12 ou mais
+    slogan: Reserve a sua viagem para qualquer lugar do mundo,
+    slogan_2: encontrar todas as ofertas em um só lugar
+    answer_head: Tenha uma pergunta?
+    answer_text: Se você quiser nos enviar uma consulta entre em contato conosco através de nosso formulário de contato
+    contact: Contato
+    consult: Consultar
+    footer_copy: Operador responsável: Viento Sur Operadores Turísticos leg. 10380 Disp. 1295/98
+    consult:
+        text: Consultas
+        name: Nome e sobrenome
+        cancel: Cancelar
+        send: Enviar

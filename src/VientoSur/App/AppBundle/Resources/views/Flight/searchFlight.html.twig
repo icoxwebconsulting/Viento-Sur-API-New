@@ -1,27 +1,27 @@
-<h2><b>Buscá tu vuelo</b></h2>
+<h2><b>{{ 'index.search.flight.title' | trans }}</b></h2>
 
 <form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights' ) }}" method="POST">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                <label>Origen</label>
+                <label>{{ 'index.search.flight.from' | trans }}</label>
                 {% if isTest %}
-                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="Ingresa desde dónde viajas" type="text"/>
+                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text"/>
                     <input id="originFlight" name="originFlight" type="hidden"/>
                 {% else %}
-                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="Ingresa desde dónde viajas" type="text" required />
+                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" required />
                     <input id="originFlight" name="originFlight" type="hidden" required />
                 {% endif %}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
-                <label>Destino</label>
+                <label>{{ 'index.search.flight.to' | trans }}</label>
                 {% if isTest %}
-                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="Ingresa hacia dónde viajas" type="text"/>
+                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text"/>
                     <input id="destinationFlight" name="destinationFlight" type="hidden" />
                 {% else %}
-                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="Ingresa hacia dónde viajas" type="text" required />
+                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" required />
                     <input id="destinationFlight" name="destinationFlight" type="hidden" required />
                 {% endif %}
             </div>
@@ -29,27 +29,27 @@
         <div> <!--class="input-daterange" data-date-format="d M, D"-->
             <div class="col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                    <label>Partida</label>
+                    <label>{{ 'index.search.flight.start' | trans }}</label>
                     <input class="form-control required" id="start-flight" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                     <label>
-                        Regreso
+                        {{ 'index.search.flight.end' | trans }}
                         <span class="pull-right">
                             <input type="checkbox" id="only_out" name="only_out" value="true">
-                            S&oacute;lo ida
+                            {{ 'index.search.flight.one_way' | trans }}
                         </span>
                     </label>
                     <input class="form-control required" id="end-flight" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
-                    <input class="form-control hidden" id="dummy-end-flight" type="text" placeholder="Ha seleccionado sólo ida" readonly />
+                    <input class="form-control hidden" id="dummy-end-flight" type="text" placeholder="{{ 'index.search.flight.one_way_placeholder' | trans }}" readonly />
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group form-group-sm">
-                <label for="adultsPassengers">Adultos</label>
+                <label for="adultsPassengers">{{ 'index.search.hotel.adults' | trans }}</label>
                 <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
                     <option value="1" selected="selected">1</option>
                     <option value="2" >2</option>
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group form-group-sm">
-                <label for="childrenPassengers">Menores</label>
+                <label for="childrenPassengers">{{ 'index.search.hotel.childs' | trans }}</label>
                 <select id="childrenPassengers" class="form-control coupled" name="childrenPassengers" data-couple="adultsPassengers.1">
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -80,16 +80,16 @@
         <!--se abre si hay menores-->
         <div class="col-md-12 hidden" id="menorGroup">
             <div class="form-group form-group-sm">
-                <label for="field-hotel-adult">Edad de los menores al finalizar el viaje</label>
+                <label for="field-hotel-adult">{{ 'index.search.flight.childs_ages' | trans }}</label>
                 <div class="row">
                     <div class="col-md-3 field-menor-1">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-1" class="form-control " name="field-menor-1">
-                                <option value="">Menor 1</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 1</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -97,11 +97,11 @@
                     <div class="col-md-3 field-menor-2">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-2" class="form-control " name="field-menor-2">
-                                <option value="">Menor 2</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 2</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -109,11 +109,11 @@
                     <div class="col-md-3 field-menor-3">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-3" class="form-control " name="field-menor-3">
-                                <option value="">Menor 3</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 3</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -121,11 +121,11 @@
                     <div class="col-md-3 field-menor-4">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-4" class="form-control " name="field-menor-4">
-                                <option value="">Menor 4</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 4</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -133,11 +133,11 @@
                     <div class="col-md-3 field-menor-5">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-5" class="form-control " name="field-menor-5">
-                                <option value="">Menor 5</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 5</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -145,11 +145,11 @@
                     <div class="col-md-3 field-menor-6">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-6" class="form-control " name="field-menor-6">
-                                <option value="">Menor 6</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 6</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -157,11 +157,11 @@
                     <div class="col-md-3 field-menor-7">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-7" class="form-control " name="field-menor-7">
-                                <option value="">Menor 7</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 7</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -170,6 +170,6 @@
         </div>
     </div>
     <div class="text-right">
-        <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
+        <button class="btn btn-primary btn-lg" type="submit">{{ 'index.search_text' | trans }}</button>
     </div>
 </form>

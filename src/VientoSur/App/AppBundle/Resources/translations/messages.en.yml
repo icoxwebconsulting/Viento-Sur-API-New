@@ -2,6 +2,7 @@ index:
     hotels: HOTELS
     flights: FLIGHTS
     search_text: Search
+    slogan:
     search:
         hotel:
            title: Find Hotels with the best rates
@@ -15,3 +16,31 @@ index:
            childs: Childs
            childs_ages: Childs ages
            age: Age
+        flight:
+           title: Buscá tu vuelo
+           from: Origin
+           from_placeholder: Enter from where you travel
+           to: Destination
+           to_placeholder: Enter where you travel
+           start: Departure
+           end: Return
+           one_way: One way
+           one_way_placeholder: You have selected one way
+           childs_ages: Age of children at the end of the trip
+           children: Children
+           0_24_arm: 0 to 24 months (in arms)
+           0_24:seat: 0 to 24 months (in seat)
+           2_11: 2 to 11 years
+           12_more: 12 or more
+    slogan: Book your trip to any part of the world,
+    slogan_2: finding all the offers in one place
+    answer_head: Have a questions?
+    answer_text: If you want to send us an inquiry contact us through our contact form
+    contact: Contact
+    consult: Consult
+    footer_copy: Responsible Operator: Viento Sur Tour Operators leg. 10380 Disp. 1295/98
+    consult:
+        text: Consults
+        name: Name and Surname
+        cancel: Cancel
+        send: Send

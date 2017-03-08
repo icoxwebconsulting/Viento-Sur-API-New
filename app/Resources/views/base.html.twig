@@ -82,7 +82,7 @@
                             <a class="logo" href="{{ path('homepage')}}">
                                 <img src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-invert.png') }}" alt="Viento Sur" title="" />
                             </a>
-                            <p class="mb20">Reserva tu viaje a cualquier parte del <br> mundo, encontrando todas las ofertas en un solo lugar</p>
+                            <p class="mb20">{{ 'index.slogan' | trans }} <br> {{ 'index.slogan_2' | trans }}</p>
                             <ul class="list list-horizontal list-space">
                                 <li>
                                     <a class="fa fa-facebook box-icon-md round animate-icon-bottom-to-top" href="https://www.facebook.com/vientosur.net/"></a>
@@ -114,10 +114,10 @@
                         </div>
 
                         <div class="col-md-4">
-                            <h4 title="¿Tenés consultas? - VientoSur.net">¿Tenés consultas?</h4>
-                            <p>Si querés enviarnos una consulta contactanos a través de nuestro formulario de contacto</p>
+                            <h4 title="¿Tenés consultas? - VientoSur.net">{{ 'index.answer_head' | trans }}</h4>
+                            <p>{{ 'index.answer_text' | trans }}</p>
                             <!--<input type="submit" class="btn btn-primary" value="Contacto">-->
-                            <a href="#" title="Consultar" class="btn btn-primary" data-path="{{ path('viento_sur_app_consult') }}" data-toggle="modal" data-target="#submitConsult" data-title="Consultar">Contacto</a>
+                            <a href="#" title="{{ 'index.consult' | trans }}" class="btn btn-primary" data-path="{{ path('viento_sur_app_consult') }}" data-toggle="modal" data-target="#submitConsult" data-title="{{ 'index.consult' | trans }}">{{ 'index.contact' | trans }}</a>
                         </div>
 
                     </div>
@@ -137,7 +137,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <p class="footer-copy">Operador Responsable: Viento Sur Operadores Turísticos leg. 10380 Disp. 1295/98</p>
+                        <p class="footer-copy">{{ 'index.footer_copy' | trans }}</p>
                     </div>
 
                 </div>
@@ -151,7 +151,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" title="Consultas - VientoSur.net"></h4>
+                        <h4 class="modal-title" title="{{ 'index.consult.text' | trans }} - VientoSur.net"></h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" id="formConsult" role="form">
@@ -160,7 +160,7 @@
                                 <!--<label for="nombre_apellido" class="col-sm-2 control-label">Nombre y Apellido</label>-->
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nombre_apellido" id="fullnameField" placeholder="Nombre y Apellido"/>
+                                    <input type="text" class="form-control" name="nombre_apellido" id="fullnameField" placeholder="{{ 'index.consult.name' | trans }}"/>
                                     <!--<textarea class="form-control" id="observacion" rows="5" style="resize: none;" required ></textarea>-->
                                 </div>
                             </div>
@@ -177,14 +177,14 @@
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-10">
                                     <!--<input type="text" class="form-control" name="email" placeholder="Email"/>-->
-                                    <textarea class="form-control" id="messageField" rows="5" style="resize: none;" required placeholder="Consulta"></textarea>
+                                    <textarea class="form-control" id="messageField" rows="5" style="resize: none;" required placeholder="{{ 'index.consult.text' | trans }}"></textarea>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmConsult">Enviar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'index.consult.cancel' | trans }}</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmConsult">{{ 'index.consult.send' | trans }}</button>
                     </div>
                 </div>
             </div>
@@ -207,9 +207,19 @@
     <script src="{{ asset('js/jquery.query-object.js') }}"></script>
     <script>
         var dateFormat = "dd/mm/yy";
-        var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
-        var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        var monthNamesShort = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+        {% if app.request.locale == 'en' %}
+            var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+            var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            var monthNamesShort = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+        {% else if app.request.locale == 'pt' %}
+            var dayNamesMin = ["Do", "Se", "Te", "Qu", "Qa", "Se", "Sa"];
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var monthNamesShort = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+        {% else %}
+            var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
+            var monthNames = ["Janeiro", "Fevereiro", "March", "Abril", "Maio", "June", "Julho", "August", "September", "Outubro", "November", "Dezembro"];
+            var monthNamesShort = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Aug", "Sep", "Out", "Nov", "Dez" ];
+        {% endif %}
         function getDate(element) {
             var date;
             try {
