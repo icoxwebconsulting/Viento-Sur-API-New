@@ -19,7 +19,7 @@ use VientoSur\App\AppBundle\Services\PaymentMethods;
 /**
  * Hotel controller.
  *
- * @Route("/hotel")
+ * @Route("/{_locale}/hotel", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class HotelController extends Controller
 {
@@ -170,11 +170,14 @@ class HotelController extends Controller
             $offset = ($page - 1) * 25;
         }
 
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
+
         $session = $request->getSession();
         if (!$session->has('destination')) {
             $cityResponse = $this->get('despegar')->getCityInformation($destination, [
                 'product' => 'HOTELS',
-                'language' => 'ES'
+                'language' => 'ES,PT,EN'
             ]);
             if (isset($cityResponse['code']) && $cityResponse['code'] == 500) {
                 $destinationData = [
@@ -183,7 +186,7 @@ class HotelController extends Controller
                 ];
             } else {
                 $destinationData = [
-                    'text' => $cityResponse['descriptions']['es'],
+                    'text' => $cityResponse['descriptions'][$lang],
                     'id' => $destination
                 ];
             }
@@ -211,7 +214,7 @@ class HotelController extends Controller
             "checkout_date" => $checkout_date,
             "destination" => $destination,
             "distribution" => $distribution,
-            "language" => "es",
+            "language" => $lang,
             "radius" => "200",
             "currency" => "ARS",
             "sorting" => $sorting,
@@ -261,7 +264,7 @@ class HotelController extends Controller
 
         $hotelsDetails = $this->get('despegar')->getHotelsDetails(array(
             'ids' => implode(',', $idsHotels),
-            'language' => 'es',
+            'language' => $lang,
             'options' => 'pictures',
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
@@ -276,17 +279,19 @@ class HotelController extends Controller
 
         $total = ceil($results['paging']['total'] / 25);
 
+        $translator = $this->get('translator');
+
         $sortMapping = [
-            "subtotal_price_ascending" => "Precio: menor a mayor",//
-            "subtotal_price_descending" => "Precio: mayor a menor",//
-            "rate_descending" => "Mejor puntuación",//
-            "location_descending" => "Mejor ubicación",//
-            "quality_price_descending" => "Mejor precio / calidad",//
-            "logged_user_descending" => "Descuentos exclusivos",//
-            "cross_selling_descending" => "Nuevos descuentos",//
-            "best_selling_descending" => "Más elegidos",//
-            "stars_descending" => "Estrellas: Mayor a menor",//
-            "stars_ascending" => "Estrellas: Menor a mayor"//
+            "subtotal_price_ascending" => $translator->trans('hotels.order.subtotal_price_ascending'),
+            "subtotal_price_descending" => $translator->trans('hotels.order.subtotal_price_descending'),
+            "rate_descending" => $translator->trans('hotels.order.rate_descending'),
+            "location_descending" => $translator->trans('hotels.order.location_descending'),
+            "quality_price_descending" => $translator->trans('hotels.order.quality_price_descending'),
+            "logged_user_descending" => $translator->trans('hotels.order.logged_user_descending'),
+            "cross_selling_descending" => $translator->trans('hotels.order.cross_selling_descending'),
+            "best_selling_descending" => $translator->trans('hotels.order.best_selling_descending'),
+            "stars_descending" => $translator->trans('hotels.order.stars_descending'),
+            "stars_ascending" => $translator->trans('hotels.order.stars_ascending')
         ];
 
         $sortArray = [

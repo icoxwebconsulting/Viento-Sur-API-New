@@ -2,6 +2,7 @@ index:
     hotels: HOTÉIS
     flights: VOOS
     search_text: Pesquisa
+    loading: Carregando
     search:
         hotel:
            title: Procurar alojamento com as melhores taxas
@@ -16,7 +17,7 @@ index:
            childs_ages: Idade das crianças
            age: Idade
         flight:
-           title: Buscá tu vuelo
+           title: Encontre o seu voo
            from: Fonte
            from_placeholder: Sinal de onde você viajar
            to: Destino
@@ -43,3 +44,62 @@ index:
         name: Nome e sobrenome
         cancel: Cancelar
         send: Enviar
+hotels:
+    not_found: Não foram encontrados hotéis
+    last_room: Última Disponibilidade quarto
+    lasts: Últimas
+    choose_room: Escolha quarto
+    room_per_night: Quarto por noite
+    hotels_in: Hotéis em
+    hotel_availabilities: Hotéis disponíveis nestas datas
+    hotel_availabilities: hoteles disponibles para estas fechas en %place% con mejor precio disponível para essas datas em% place% hotéis com melhor preço
+    select: Seleccionar
+    price: Preço
+    stars: Stars
+    by_price: por preço
+    by_stars: pela Star
+    by_features: por Recursos
+    by_others: por Outras opções
+    found_hotels: hotéis encontrados
+    map_view: Vista do mapa
+    order:
+        subtotal_price_ascending: Precio: menor a mayor
+        subtotal_price_descending:
+        rate_descending:
+        location_descending:
+        quality_price_descending:
+        logged_user_descending:
+        cross_selling_descending:
+        best_selling_descending: Más elegidos
+        stars_descending:
+        stars_ascending:
+    search_menu:
+        destiny: Destino/Nome do hotel
+        city_placeholder: Destino, Código Postal
+        filter_by: Filtrar por
+        hotel_name: Nome do Hotel
+        hotel_name_placeholder: Insira o nome do hotel
+        apply: Aplicar
+        view_more: Ver mais
+        view_less: Ver menos
+        category: Categoria
+        others: Outros
+        payment_choices: Pagamento alternativo
+        zones: Áreas
+        services: Serviços
+        type: Tipo de alojamento
+        hotel_chain: Rede Hoteleira
+        diet: Dieta
+        breakfast: Desayuno
+        only_hosting: Única hospedagem
+        travel_profile: Perfil de viaje
+        filters: Filtros
+        filter_hotel_name: Filtro Nome do hotel
+        filter_price: Filtro Preço
+        filter_category: Filtro Categoría
+        filter_payment_choices: Filtro de pagamento alternativo
+        filter_zones: Filtro Áreas
+        filter_type: Filtro tipo de alojamento
+        filter_hotel_chain: Filtros Rede Hoteleira
+        filter_diet: Filtro dieta
+        filter_travel_profile: Filtro Perfil de viaje

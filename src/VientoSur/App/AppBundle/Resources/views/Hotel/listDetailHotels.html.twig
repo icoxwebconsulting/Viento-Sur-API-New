@@ -1,9 +1,9 @@
 {% if items.message is defined %}
-    <li>No se encontraron hoteles disponibles</li>
+    <li>{{ 'hotels.not_found' | trans }}</li>
 {% elseif items.items|length > 0 %}
     {% for item in items.items %}
         <li>
-            <span class="booking-item cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+            <span class="booking-item cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="booking-item-img-wrap">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="booking-item-rating">
-                            <h2 class="booking-item-title" title="{{item.hotel.name}} - Hoteles en {{ app.session.get('destination').text }} - VientoSur.net">{{item.hotel.name}}</h2>
+                            <h2 class="booking-item-title" title="{{item.hotel.name}} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">{{item.hotel.name}}</h2>
                             <ul class="icon-group booking-item-rating-stars">
                                 {% for i in 1..5 %}
                                     {% if i <= item.hotel.stars %}
@@ -31,16 +31,16 @@
                         </div>
                         <p class="booking-item-address">
                             {#A 600 metros del centro#}
-                            <i class="fa fa-map-marker" data-prevent="modal" data-latitude="{{ item.hotel.location.latitude }}" data-longitude="{{ item.hotel.location.longitude }}" data-name="{{ item.hotel.name }}"> Ver mapa</i>
+                            <i class="fa fa-map-marker" data-prevent="modal" data-latitude="{{ item.hotel.location.latitude }}" data-longitude="{{ item.hotel.location.longitude }}" data-name="{{ item.hotel.name }}"> {{ 'hotels.map_view' | trans }}</i>
                         </p>
                         {% for key, room_availability in item.roompacks %}
                             {% if room_availability.rooms[0].availability is defined %}
                                 {% if  room_availability.rooms[0].availability < 6 %}
                                     <p class="booking-item-last-booked">
                                         {% if room_availability.rooms[0].availability == 1 %}
-                                            Última habitaci&oacute;n disponible
+                                            {{ 'hotels.last_room' | trans }}
                                         {% else %}
-                                            Últimas {{ room_availability.rooms[0].availability }} habitaciones
+                                            {{ 'hotels.lasts' | trans }} {{ room_availability.rooms[0].availability }} {{ 'index.search.hotel.rooms' | trans }}
                                         {% endif %}
                                     </p>
                                 {% endif %}
@@ -52,15 +52,15 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <div class="col-md-3 booking-prices align-center cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+                    <div class="col-md-3 booking-prices align-center cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
 
-                        <div class="booking-align-vertical"> <span class="booking-item-price-night">Habitación por noche</span>
+                        <div class="booking-align-vertical"> <span class="booking-item-price-night">{{ 'hotels.room_per_night' | trans }}</span>
                             <span class="booking-item-price">
                                 {%for price in item.roompacks%}
                                     $&nbsp;{{price.price_detail.nightly.subtotal|round|number_format(0, '.', '.')}}
                                 {%endfor%}
                             </span>
-                            <span class="btn btn-primary">Elige habitación</span>
+                            <span class="btn btn-primary">{{ 'hotels.choose_room' | trans }}</span>
                             <!--<span class="booking-item-benefit mt20">Cancele gratis</span>-->
                         </div>
 

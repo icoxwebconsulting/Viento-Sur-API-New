@@ -2,7 +2,7 @@ index:
     hotels: HOTELS
     flights: FLIGHTS
     search_text: Search
-    slogan:
+    loading: Loading
     search:
         hotel:
            title: Find Hotels with the best rates
@@ -17,7 +17,7 @@ index:
            childs_ages: Childs ages
            age: Age
         flight:
-           title: Buscá tu vuelo
+           title: Find your Flight
            from: Origin
            from_placeholder: Enter from where you travel
            to: Destination
@@ -44,3 +44,62 @@ index:
         name: Name and Surname
         cancel: Cancel
         send: Send
+hotels:
+    not_found: No available hotels
+    last_room: Last room available
+    lasts: Lasts
+    choose_room: Choose room
+    room_per_night: Habitación por noche
+    hotels_in: Hotels in
+    hotel_availabilities: Hotels available for these dates in %place% with best price
+    select: Select
+    price: Precio
+    stars: Stars
+    by_price: by Price
+    by_stars: by Stars
+    by_features: by Features
+    by_others: by other options
+    found_hotels: found hotels
+    map_view: Map view
+    order:
+        subtotal_price_ascending: Price: ascending
+        subtotal_price_descending: Price: descending
+        rate_descending: Rate: descending
+        location_descending: Location: descending
+        quality_price_descending: Best Price/ Quality
+        logged_user_descending: Discounts
+        cross_selling_descending: New discounts
+        best_selling_descending: Best Selling descending
+        stars_descending: Stars descending
+        stars_ascending: Stars ascending
+    search_menu:
+        destiny: Destination/Hotel name
+        city_placeholder: Destination, Zip Code
+        filter_by: Filter by
+        hotel_name: Hotel name
+        hotel_name_placeholder: Enter the name of the hotel
+        apply: Apply
+        view_more: View more
+        view_less: View less
+        category: Category
+        others: Others
+        payment_choices: Payment choices
+        zones: Zones
+        services: Services
+        type: Type of accommodation
+        hotel_chain: Hotel Chains
+        diet: Diet
+        breakfast: Breakfast
+        only_hosting: Only Hosting
+        travel_profile: Perfil de viaje
+        filters: Filters
+        filter_hotel_name: Hotel Name Filter
+        filter_price: Price Filter
+        filter_category: Category Filter
+        filter_payment_choices: Payment choices Filter
+        filter_zones: Zone filters
+        filter_services: Service filters
+        filter_type: Type of accomodation filters
+        filter_hotel_chain: Hotel Chains filters
+        filter_diet: Filter diet
+        filter_travel_profile: Filtro Perfil de viaje

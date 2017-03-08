@@ -1,6 +1,6 @@
 <h2><b>{{ 'index.search.flight.title' | trans }}</b></h2>
 
-<form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights' ) }}" method="POST">
+<form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights', {'_locale': app.request.locale} ) }}" method="POST">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
