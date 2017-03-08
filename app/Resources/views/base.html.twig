@@ -209,15 +209,15 @@
         var dateFormat = "dd/mm/yy";
         {% if app.request.locale == 'en' %}
             var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-            var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var monthNamesShort = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
-        {% else if app.request.locale == 'pt' %}
+        {% elseif app.request.locale == 'pt' %}
             var dayNamesMin = ["Do", "Se", "Te", "Qu", "Qa", "Se", "Sa"];
             var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var monthNamesShort = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
         {% else %}
             var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
-            var monthNames = ["Janeiro", "Fevereiro", "March", "Abril", "Maio", "June", "Julho", "August", "September", "Outubro", "November", "Dezembro"];
+            var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             var monthNamesShort = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Aug", "Sep", "Out", "Nov", "Dez" ];
         {% endif %}
         function getDate(element) {
