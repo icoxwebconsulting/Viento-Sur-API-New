@@ -49,18 +49,23 @@ hotels:
     last_room: Last room available
     lasts: Lasts
     choose_room: Choose room
-    room_per_night: Habitación por noche
+    room_per_night: Room per night
     hotels_in: Hotels in
     hotel_availabilities: Hotels available for these dates in %place% with best price
     select: Select
-    price: Precio
+    price: Price
     stars: Stars
     by_price: by Price
     by_stars: by Stars
     by_features: by Features
     by_others: by other options
-    found_hotels: found hotels
+    found_hotels: hotels found
     map_view: Map view
+    best: Best
+    price_per_night: Price per night
+    show_rooms: Show rooms
+    pictures: Pictures
+    map: Mapa
     order:
         subtotal_price_ascending: Price: ascending
         subtotal_price_descending: Price: descending
@@ -103,3 +108,38 @@ hotels:
         filter_hotel_chain: Hotel Chains filters
         filter_diet: Filter diet
         filter_travel_profile: Filtro Perfil de viaje
+    number_of_rooms: Number of rooms
+    available_rooms: Availables rooms
+    max_capacity: Maximum capacity
+    food_regime: Food regime
+    cancellation_policies: Cancellation policies
+    drinks_included: Drinks included
+    american_breakfast: American breakfast
+    breakfast_carte: Breakfast a la carte
+    breakfast_buffet: Breakfast buffet
+    breakfast_continental: Continental breakfast
+    half_pension: Half pension
+    full_pension: Full pension
+    book: Book
+    rooms_unavailables: Rooms unavailables
+    services: Services
+    activities: Activities
+    generals: Generals
+    hotel_reviews: Reviews about this hotel
+    close: Close
+    thanks_booking: Thanks, %name%! Your reservation is confirmed
+    address: Address
+    description: Description
+    phone: Phone
+    unavailable: Unavailable
+    your_reservation: Your reservation
+    night: Night
+    reservation_number: Reservation number
+    reservation_by: Reservation made by
+    can_cancel_to: You can cancel up to
+    hours_before: hours before checkin
+    cancellation_amount: The amount for canceling is
+    whitout_charges: Without cancellation charges
+    total_price: Total price
+    download_pdf: Download PDF
+    edit_reservation: Edit reservation

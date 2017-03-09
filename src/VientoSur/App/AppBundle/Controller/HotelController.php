@@ -394,8 +394,10 @@ class HotelController extends Controller
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $checkin_date, $checkout_date, $distribution, $latitude, $longitude)
     {
         $session = $request->getSession();
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
         $urlParams = array(
-            'language' => 'es',
+            'language' => $lang,
             'country_code' => 'AR',
             'currency' => 'ARS',
             //'destination' => $destination,
@@ -411,7 +413,7 @@ class HotelController extends Controller
 
         $hotelDetails = $despegar->getHotelsDetails(array(
             'ids' => $idHotel,
-            'language' => 'es',
+            'language' => $lang,
             'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
             'resolve' => 'merge_info',
             'catalog_info' => 'true'
@@ -456,13 +458,16 @@ class HotelController extends Controller
      */
     public function sendHotelBookingAction(Request $request)
     {
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
+
         $params = $request->query->all();
         $postParams = array(
             "source" => array(
                 "country_code" => "AR"
             ),
             "reservation_context" => array(
-                "context_language" => "es",
+                "context_language" => $lang,
                 "shown_currency" => "ARS",
                 "threat_metrix_id" => "25",
                 "agent_code" => $this->getParameter('agent_code'),
@@ -528,7 +533,8 @@ class HotelController extends Controller
         $despegar = $this->get('despegar');
         $sessionForm = $request->getSession();
         $sessionForm->set('url_detail_form', $despegar->getHotelsBookingsNextStepUrl($bookingId));
-
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
         if ($request->getMethod() == 'GET') {
             $formBooking = $despegar->hotelsBookingsNextStep($bookingId);
             $session->set('formBooking', json_encode($formBooking));
@@ -602,7 +608,7 @@ class HotelController extends Controller
 
                         $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
                             'ids' => $hotelAvailabilities->hotel->id,
-                            'language' => 'es',
+                            'language' => $lang,
                             'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
                             'resolve' => 'merge_info',
                             'catalog_info' => 'true'
@@ -613,7 +619,7 @@ class HotelController extends Controller
                             $detail['reservation_id'],
                             array(
                                 'email' => 'info@vientosur.net',
-                                'language' => 'es',
+                                'language' => $lang,
                                 'site' => 'AR'
                             ), $this->getParameter('is_test')
                         );

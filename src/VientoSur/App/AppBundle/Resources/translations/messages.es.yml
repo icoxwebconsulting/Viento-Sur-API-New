@@ -61,6 +61,11 @@ hotels:
     by_others: por Otras opciones
     found_hotels: hoteles encontrados
     map_view: Vista de mapa
+    best: Mejor
+    price_per_night: Precio por noche
+    show_rooms: Ver habitaciones
+    pictures: Fotos
+    map: Mapa
     order:
         subtotal_price_ascending: Precio: menor a mayor
         subtotal_price_descending: Precio: mayor a menor
@@ -103,3 +108,38 @@ hotels:
         filter_hotel_chain: Filtro Cadena Hotelera
         filter_diet: Filtro Régimen
         filter_travel_profile: Filtro Perfil de viaje
+    number_of_rooms: Número de habitaciones
+    available_rooms: Habitaciones disponibles
+    max_capacity: Capacidad máxima
+    food_regime: Régimen de comida
+    cancellation_policies: Políticas de cancelación
+    drinks_included: Bebidas incluidas
+    american_breakfast: Desayuno americano
+    breakfast_carte: Desayuno a la carta
+    breakfast_buffet: Desayuno buffet
+    breakfast_continental: Desayuno continental
+    half_pension: Media pensión
+    full_pension: Pensión completa
+    book: Reservar
+    rooms_unavailables: Habitaciones no disponibles
+    services: Servicios
+    activities: Actividades
+    generals: Generales
+    hotel_reviews: Opiniones acerca de este hotel
+    close: Cerrar
+    thanks_booking: ¡Gracias, %name%! Tu reservación está; confirmada
+    address: Dirección
+    description: Descripción
+    phone: Teléfono
+    unavailable: No disponible
+    your_reservation: Tu reserva
+    night: Noche
+    reservation_number: Número de reserva
+    reservation_by: Reserva realizada por
+    can_cancel_to: Puede cancelar  hasta
+    hours_before: horas antes del checking
+    cancellation_amount: El cargo por cancelar es
+    whitout_charges: Sin cargos por cancelación
+    total_price: Precio total
+    download_pdf: Descargar PDF
+    edit_reservation: Editar reservación

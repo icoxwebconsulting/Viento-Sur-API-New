@@ -3,7 +3,7 @@
         <tr>
             <th colspan="2">
                 <b>
-                    <h3>&iexcl;Gracias, {{ internal.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>
+                    <h3>{{ 'hotels.thanks_booking' | trans({'%name%': internal.holderName}) }}</h3>
                 </b>
             </th>
         </tr>
@@ -23,24 +23,24 @@
         </tr>
         <tr>
             <th width="15%">
-                Direcci&oacute;n:
+                {{ 'hotels.address' | trans }}:
             </th>
             <td>
                 {{ hotelDetails.location.address }}.
             </td>
         </tr>
         <tr>
-            <th width="15%">Descripci&oacute;n</th>
+            <th width="15%">{{ 'hotels.description' | trans }}</th>
             <td class="text-justify">
-                {{ hotelDetails.information.es }}
+                {{ hotelDetails.information.[app.request.locale] }}
             </td>
         </tr>
         <tr>
             <th>
-                Tel&eacute;fono:
+                {{ 'hotels.phone' | trans }}:
             </th>
             <td>
-                No disponible
+                {{ 'hotels.unavailable' | trans }}
             </td>
         </tr>
     </table>
@@ -49,7 +49,7 @@
         <tbody>
         <tr>
             <th width="20%">
-                Tu reserva:
+                {{ 'hotels.your_reservation' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.night_count }} noche(s). {{ reservationDetails.rooms|length }} Habitacion(es).
@@ -57,7 +57,7 @@
         </tr>
         <tr>
             <th>
-                Entrada:
+                {{ 'index.search.hotel.checkin_date' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.checkin_date|date("d/m/Y") }}
@@ -65,7 +65,7 @@
         </tr>
         <tr>
             <th>
-                Salida:
+                {{ 'index.search.hotel.checkout_date' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.checkout_date|date("d/m/Y") }}
@@ -73,7 +73,7 @@
         </tr>
         <tr>
             <th>
-                N&uacute;mero de reserva:
+                {{ 'hotels.reservation_number' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.id }}
@@ -81,7 +81,7 @@
         </tr>
         <tr>
             <th>
-                Reserva realizada por:
+                {{ 'hotels.reservation_by' | trans }}:
             </th>
             <td>
                 {{ internal.email }}, {{ internal.holderName }}
@@ -89,22 +89,22 @@
         </tr>
         <tr>
             <th>
-                Habitaci&oacute;n(es):
+                {{ 'index.search.hotel.room' | trans }}(s):
             </th>
             <td>
                 {% for room in reservationDetails.rooms %}
-                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} Adulto(s) {% if room.children > 0 %}{{ room.children }} Niño(s){% endif %}</li>
+                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.[app.request.locale] }}, {% endif %}{{ room.adults }} {{ 'index.search.hotel.adults' | trans }}(s) {% if room.children > 0 %}{{ room.children }} {{ 'index.search.hotel.childs' | trans }}(s){% endif %}</li>
                 {% endfor %}
             </td>
         </tr>
         <tr>
             <th>
-                Pol&iacute;tica de cancelaci&oacute;n:
+                {{ 'hotels.cancellation_policies' | trans }}:
             </th>
             <td>
                 <ul>
-                    {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>Puede cancelar  hasta {{ reservationDetails.hours_before_checkin_penalty }} horas antes del checking.{% endif %}
-                    <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} El cargo por cancelar es $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} Sin cargos por cancelación.{% endif %}</li>
+                    {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.{% endif %}
+                    <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} {{ 'hotels.whitout_charges' | trans }}.{% endif %}</li>
                 </ul>
             </td>
         </tr>
@@ -115,12 +115,12 @@
         <table class="table table-condensed">
             <tr>
                 <td colspan="2">
-                    {{ reservationDetails.rooms|length }} Habitacio(nes)
+                    {{ reservationDetails.rooms|length }} {{ 'index.search.hotel.rooms' | trans }}
                 </td>
             </tr>
             <tr>
                 <th>
-                    Precio total:
+                    {{ 'hotels.total_price' | trans }}:
                 </th>
                 <td>
                     {{ reservationDetails.site_currency.code }} {{ internal.totalPrice }}
@@ -130,12 +130,12 @@
             <tr>
                 <td>
                     <a href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
-                        Descargar PDF
+                        {{ 'hotels.download_pdf' | trans }}
                     </a>
                 </td>
                 <td>
                     <a href="{{ url('viento_sur_app_edit_reservation', {'id': reservationId}) }}">
-                        Editar reservaci&oacute;n
+                        {{ 'hotels.edit_reservation' | trans }}
                     </a>
                 </td>
             </tr>

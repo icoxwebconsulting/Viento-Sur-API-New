@@ -29,7 +29,7 @@
                         </ul>
                     </div>
                     <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_features' | trans }} - VientoSur.net"><a href="#">Mejor: <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                        <h5 class="booking-sort-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_features' | trans }} - VientoSur.net"><a href="#">{{ 'hotels.best' | trans }}: <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
                         <ul class="nav-drop-menu">
                             {{ sortArray.best|raw }}
                         </ul>
@@ -179,7 +179,7 @@
                         'sorting': $(this).data('value'),
                         'page': 1
                     }, function () {
-                        $('.sort_name').text('Seleccione...').removeClass('vs-color-copy');
+                        $('.sort_name').text('{{ 'hotels.select' | trans }}...').removeClass('vs-color-copy');
                         $('#sort_' + category).text(text).addClass('vs-color-copy');
                     })
                 }
