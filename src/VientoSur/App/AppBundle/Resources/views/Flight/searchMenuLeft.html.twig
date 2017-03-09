@@ -3,25 +3,25 @@
 
         <div class="form-group form-group-icon-left form-icon-lg">
             <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-            <label class="mfont">Origen</label>
-            <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="Desde dónde viajas" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
+            <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+            <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
             <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
         </div>
 
         <div class="form-group form-group-icon-left form-icon-lg">
             <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-            <label class="mfont">Destino</label>
-            <input id="to-flight" name="to-flight" type="text" class="form-control" data-provide="typeahead" placeholder="Hacia dónde viajas" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
+            <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+            <input id="to-flight" name="to-flight" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
             <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
         </div>
 
         <div> <!--class="input-daterange" data-date-format="d M, D"-->
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">Partida</label>
+                <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
                 <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
             </div>
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">Regeso</label>
+                <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
                 <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="adultsPassengers">Adultos</label>
+                    <label for="adultsPassengers">{{ 'index.search.hotel.adults' | trans }}</label>
                     <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
                         <option value="1" selected="selected">1</option>
                         <option value="2">2</option>
@@ -45,7 +45,7 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="childrenPassengers">Menores</label>
+                    <label for="childrenPassengers">{{ 'index.search.hotel.childs' | trans }}</label>
                     <select id="childrenPassengers" class="form-control coupled" name="childrenPassengers" data-couple="adultsPassengers.1">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -63,16 +63,16 @@
         <!--se abre si hay menores-->
         <div class="col-md-12 hidden" id="menorGroup">
             <div class="form-group">
-                <label for="field-hotel-adult">Edad de los menores al finalizar el viaje</label>
+                <label for="field-hotel-adult">{{ 'index.search.flight.childs_ages' | trans }}</label>
                 <div class="row">
                     <div class="col-md-6 field-menor-1">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-1" class="form-control " name="field-menor-1">
-                                <option value="">Menor 1</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 1</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -80,11 +80,11 @@
                     <div class="col-md-6 field-menor-2">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-2" class="form-control " name="field-menor-2">
-                                <option value="">Menor 2</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 2</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -92,11 +92,11 @@
                     <div class="col-md-6 field-menor-3">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-3" class="form-control " name="field-menor-3">
-                                <option value="">Menor 3</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 3</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -104,11 +104,11 @@
                     <div class="col-md-6 field-menor-4">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-4" class="form-control " name="field-menor-4">
-                                <option value="">Menor 4</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 4</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -116,11 +116,11 @@
                     <div class="col-md-6 field-menor-5">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-5" class="form-control " name="field-menor-5">
-                                <option value="">Menor 5</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 5</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -128,11 +128,11 @@
                     <div class="col-md-6 field-menor-6">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-6" class="form-control " name="field-menor-6">
-                                <option value="">Menor 6</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 6</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -140,11 +140,11 @@
                     <div class="col-md-6 field-menor-7">
                         <div class="form-group form-group-sm form-group-select-plus">
                             <select id="field-menor-7" class="form-control " name="field-menor-7">
-                                <option value="">Menor 7</option>
-                                <option value="M">0 a 24 meses (en brazos)</option>
-                                <option value="I">0 a 24 meses (en asiento)</option>
-                                <option value="C">2 a 11 años</option>
-                                <option value="A">12 años o más</option>
+                                <option value="">{{ 'index.search.flight.children' | trans }} 7</option>
+                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
                             </select>
                         </div>
                     </div>
@@ -152,21 +152,24 @@
             </div>
         </div>
 
-        <input class="btn btn-primary btn-search" type="submit" value="Buscar" />
+        <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
     </form>
     {% if items.facets is defined %}
         <aside class="booking-filters">
-            <h3 title="Vuelos - Filtros - VientoSur.net">Filtrar por:</h3>
+            <h3 title="{{ 'flights.flights' | trans }} - {{ 'hotels.search_menu.filters' | trans }} - VientoSur.net">{{ 'hotels.search_menu.filter_by' | trans }}:</h3>
             <ul class="list booking-filters-list">
                 {% for facet in items.facets %}
                     {% if facet.criteria == 'stops' %}
                         <li class="stops hidden" data-type="stops">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Escalas - VientoSur.net">Escalas</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.scales' | trans }} - VientoSur.net">{{ 'flights.scales' | trans }}</h5>
                             {% for type in facet.values %}
+                                {% set none = {{ 'flights.scale_0' | trans }} %}
+                                {% set one = {{ 'flights.scale_1' | trans }} %}
+                                {% set more_than_one = {{ 'flights.scale_2' | trans }} %}
                                 {% set names = {
-                                    none: 'Directo',
-                                    one: '1 Escala',
-                                    more_than_one: '2 o más escalas'
+                                    none: none,
+                                    one: one,
+                                    more_than_one: more_than_one
                                 } %}
                                 <div class="checkbox">
                                     <label>
@@ -180,7 +183,7 @@
                     {% endif %}
                     {% if facet.criteria == 'airlines' %}
                         <li class="airlines hidden" data-type="airlines">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Aerolíneas - VientoSur.net">Aerolíneas</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airlines' | trans }} - VientoSur.net">{{ 'flights.airlines' | trans }}</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -197,7 +200,7 @@
                     {% endif %}
                     {% if facet.criteria == 'alliances' %}
                         <li class="alliances hidden" data-type="alliances">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Alianzas - VientoSur.net">Alianzas</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.alliances' | trans }} - VientoSur.net">{{ 'flights.alliances' | trans }}</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -219,7 +222,7 @@
                     {% endif %}
                     {% if facet.criteria == 'outbound_airports' %}
                         <li class="outbound_airports hidden" data-type="outbound_airports">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Aeropuertos, Ida - VientoSur.net">Aeropuertos - Ida</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.going' | trans }}</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -233,7 +236,7 @@
                     {% endif %}
                     {% if facet.criteria == 'inbound_airports' %}
                         <li class="inbound_airports hidden" data-type="inbound_airports">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Alianzas - VientoSur.net">Aeropuertos - Vuelta</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.return' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.return' | trans }}</h5>
                             {% for type in facet.values %}
                                 <div class="checkbox">
                                     <label>
@@ -248,7 +251,7 @@
 
                     {% if facet.criteria == 'outbound_duration_range' %}
                         <li class="outbound_duration_range hidden" data-type="outbound_duration_range">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Duración - VientoSur.net">Duración - Ida</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.going' | trans }}</h5>
                             {% if app.request.get('outbound_duration_range') is empty %}
                                 <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
                                        data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
@@ -258,13 +261,13 @@
                                        data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
                             {% endif %}
                             <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="outbound_duration_range-btn">Aplicar</span>
+                            <span class="btn btn-primary btn-sm disabled" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
                         </li>
                     {% endif %}
 
                     {% if facet.criteria == 'inbound_duration_range' %}
                         <li class="inbound_duration_range hidden" data-type="inbound_duration_range">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Duración - VientoSur.net">Duración - Vuelta</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.return' | trans }}</h5>
                             {% if app.request.get('inbound_duration_range') is empty %}
                                 <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
                                        data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
@@ -274,13 +277,13 @@
                                        data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
                             {% endif %}
                             <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="inbound_duration_range-btn">Aplicar</span>
+                            <span class="btn btn-primary btn-sm disabled" id="inbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
                         </li>
                     {% endif %}
 
                     {% if facet.criteria == 'outbound_time_range' %}
                         <li class="outbound_time_range hidden" data-type="outbound_time_range">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Horario - VientoSur.net">Horario - Ida</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.going' | trans }}</h5>
                             {% if app.request.get('outbound_time_range') is empty %}
                                 {% set temp = facet.min|split(':') %}
                                 {% set min = (temp[0] * 60) + temp[1] %}
@@ -294,12 +297,12 @@
                                        data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" data-to="{{ fromTo[1] }}" />
                             {% endif %}
                             <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="outbound_time_range-btn">Aplicar</span>
+                            <span class="btn btn-primary btn-sm disabled" id="outbound_time_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
                         </li>
                     {% endif %}
                     {% if facet.criteria == 'inbound_time_range' %}
                         <li class="inbound_time_range hidden" data-type="inbound_time_range">
-                            <h5 class="booking-filters-title" title="Vuelos - Filtro Horario - VientoSur.net">Horario - Vuelta</h5>
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.return' | trans }}</h5>
                             {% if app.request.get('inbound_time_range') is empty %}
                                 {% set temp = facet.min|split(':') %}
                                 {% set min = (temp[0] * 60) + temp[1] %}
@@ -313,7 +316,7 @@
                                        data-max="{{ facet.max|round }}" data-from="{{ min }}" data-to="{{ max }}" />
                             {% endif %}
                             <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="inbound_time_range-btn">Aplicar</span>
+                            <span class="btn btn-primary btn-sm disabled" id="inbound_time_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
                         </li>
                     {% endif %}
                 {% endfor %}
@@ -321,7 +324,7 @@
                 {% set facet = items.facets[0] %}
                 {% if facet.criteria == 'total_price_range' %}
                     <li class="total_price_range hidden" data-type="total_price_range">
-                        <h5 class="booking-filters-title" title="Vuelos - Filtro Precio - VientoSur.net">Precio</h5>
+                        <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h5>
                         {% if app.request.get('total_price_range') is empty %}
                             <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
                                    data-max="{{ facet.max|round }}"/>
@@ -332,10 +335,9 @@
                                    data-to="{{ fromTo[1] }}"/>
                         {% endif %}
                         <br/>
-                        <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">Aplicar</span>
+                        <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
                     </li>
                 {% endif %}
-                {#{{ dump(items.facets) }}#}
             </ul>
         </aside>
     {% endif %}

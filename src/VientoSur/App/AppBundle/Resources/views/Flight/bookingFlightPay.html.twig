@@ -10,54 +10,64 @@
 
                 <!--Pasajeros-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Pasajeros</div>
+                    <div class="panel-heading">{{ 'flights.passengers' | trans }}</div>
                     <div class="panel-body">
                         {% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}
                             {% if loop.index0 > 0 %}
                                 <hr/>
                             {% endif %}
-                            <h5>Adulto {{ loop.index }}</h5>
+                            <h5>{{ 'flights.adult' | trans }} {{ loop.index }}</h5>
 
                             <div class="row">
                                 <div class="col-md-6">
                                     {% set fieldName = 'adults-first_name' ~ loop.index %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.name' | trans %}
+                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'adults-last_name' ~ loop.index %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.lastname' | trans %}
+                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'adults-nationality' ~ loop.index %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'flights.labels.residence' | trans %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
 
                                 {% set fieldName = 'adults-type' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                <div class="col-md-3">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
-                                </div>
+                                    {% set label = 'hotels.labels.type' | trans %}
+                                    <div class="col-md-3">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': labels, 'attr': {'class': 'form-control'}}) }}
+                                    </div>
                                 {% endif %}
 
                                 {% set fieldName = 'adults-number' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                <div class="col-md-3">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
-                                </div>
+                                    {% set label = 'hotels.labels.lastname' | trans %}
+                                    {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
+                                    <div class="col-md-3">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                    </div>
                                 {% endif %}
 
                                 {% set fieldName = 'adults-birthdate' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                <div class="col-md-6">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
-                                </div>
+                                    {% set label = 'flights.labels.birthdate' | trans %}
+                                    <div class="col-md-6">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                    </div>
                                 {% endif %}
 
                                 {% set fieldName = 'adults-gender' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                <div class="col-md-6">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
-                                </div>
+                                    {% set label = 'hotels.labels.owner_gender' | trans %}
+                                    <div class="col-md-6">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                    </div>
                                 {% endif %}
                             </div>
                         {% endfor %}
@@ -67,48 +77,58 @@
                             {% if loop.index0 > 0 %}
                                 <hr/>
                             {% endif %}
-                            <h5>Niño {{ loop.index }}</h5>
+                            <h5>{{ 'flights.labels.child' | trans }} {{ loop.index }}</h5>
 
                             <div class="row">
                                 <div class="col-md-6">
                                     {% set fieldName = 'children-first_name' ~ loop.index %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Nombre(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.name' | trans %}
+                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'children-last_name' ~ loop.index %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Apellido(s):', 'attr': {'placeholder': 'Como aparece en el documento de viaje', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.lastname' | trans %}
+                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'children-nationality' ~ loop.index %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Residencia:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'flights.labels.residence' | trans %}
+                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
 
                                 {% set fieldName = 'children-type' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                <div class="col-md-3">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
-                                </div>
+                                    {% set label = 'hotels.labels.type' | trans %}
+                                    <div class="col-md-3">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                    </div>
                                 {% endif %}
 
                                 {% set fieldName = 'children-number' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                <div class="col-md-3">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': 'Como aparece en el documento', 'class': 'form-control'}}) }}
-                                </div>
+                                    {% set label = 'hotels.labels.number' | trans %}
+                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                    <div class="col-md-3">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                    </div>
                                 {% endif %}
 
                                 {% set fieldName = 'children-birthdate' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                <div class="col-md-6">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Fecha de nacimiento:', 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
-                                </div>
+                                    {% set label = 'flights.labels.birthdate' | trans %}
+                                    <div class="col-md-6">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                    </div>
                                 {% endif %}
 
                                 {% set fieldName = 'children-gender' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                <div class="col-md-6">
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Sexo:', 'attr': {'class': 'form-control'}}) }}
-                                </div>
+                                    {% set label = 'hotels.labels.owner_gender' | trans %}
+                                    <div class="col-md-6">
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                    </div>
                                 {% endif %}
                             </div>
                         {% endfor %}
@@ -117,17 +137,17 @@
                 </div>
                 <!--/Pasajeros-->
 
-                <div class="alert alert-info" role="alert">Para seleccionar una tarjeta haga click sobre ella, en caso de un banco se desplegará un listado con las tarjetas.</div>
+                <div class="alert alert-info" role="alert">{{ 'flights.payment_msg' | trans }}.</div>
                 <!--Formas de pago-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Formas de pago</div>
+                    <div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>
                     <div class="panel-body">
                         <div class="list-group">
                             {% for cuotas, bank in paymentMethods %}
                             <a href="javascript:void(0)" class="list-group-item">
                                 <h4 class="list-group-item-heading">
                                     <input type="radio" name="paymentOption" value="{{ cuotas }}" required>
-                                    <b style="font-weight: bold !important;">{{ cuotas }}</b> Cuota{% if cuotas > 1 %}s{% endif %}
+                                    <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
                                 </h4>
                                 <p class="list-group-item-text">
                                     <div class="radio">
@@ -166,47 +186,47 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'card-type' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Tarjeta seleccionada:', 'attr': {'class': 'hidden'}}) }}
+                                    {% set label = 'hotels.selected_card' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'hidden'}}) }}
                                     <input type="text" value="" id="card-selected" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'card-number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de Tarjeta:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.card_number' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'card-security_code' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Código de seguridad:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.security_code' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'card-expiration' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Vencimiento:'}) }}
+                                    {% set label = 'hotels.labels.expiration' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label}) }}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'card-card_holder_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Titular de la tarjeta:', 'attr': {'placeholder': 'Como aparece en la tarjeta', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.cardholder' | trans %}
+                                    {% set placeholder = 'hotels.labels.such_as_card' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'card_holder_identification-type' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Tipo:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.type' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
                                     {% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de documento:', 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número de documento:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.owner_documentnumber' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
-                            {#<div class="row">#}
-                                {#<div class="col-md-6">#}
-                                    {#{{ dump(credit_card) }}#}
-                                {#</div>#}
-                            {#</div>#}
+
                             {{ form_widget(attribute(formNewPay.payments, 'card-token0'), { 'attr': {'class': 'hidden'}, 'value' : formChoice.payments.credit_cards[0].card.token.metadata.public_key }) }}
                             {{ form_widget(attribute(formNewPay.payments, 'card_code0'), { 'attr': {'class': 'hidden'} }) }}
                             {{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}
@@ -219,13 +239,14 @@
 
                 <!--Facturación-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Datos para facturación</div>
+                    <div class="panel-heading">{{ 'flights.invoice_data' | trans }}</div>
                     <div class="panel-body">
                         {% for invoice in formChoice.payments.credit_cards %}
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'invoice-fiscal_status' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Situación fiscal:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.tax_status' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}
@@ -237,7 +258,7 @@
                                     {% set fieldName = 'invoice-state' ~ loop.index0 %}
                                     {{ form_label(attribute(formNewPay.payments, fieldName), 'Provincia:') }}
                                     <select id="select-state" class="form-control">
-                                        <option value="">Seleccione...</option>
+                                        <option value="">{{ 'hotels.select' | trans }}...</option>
                                         <option value="14061">Buenos Aires</option>
                                         <option value="30078">Catamarca</option>
                                         <option value="30083">Chaco</option>
@@ -267,35 +288,39 @@
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
-                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Ciudad:', 'attr': {'placeholder': 'Escriba para completar', 'class': 'form-control'}}) }}#}
-
-                                    {{ form_label(attribute(formNewPay.payments, fieldName), 'Ciudad:') }}
-                                    <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="Seleccione la Provincia" readonly required autocomplete="off" class="form-control" />
+                                    {% set label = 'hotels.labels.city' | trans %}
+                                    {{ form_label(attribute(formNewPay.payments, fieldName), label) }}
+                                    <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ 'flights.select_state' | trans }}" readonly required autocomplete="off" class="form-control" />
                                     {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class' : 'hidden'}}) }}
                                     {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
 
                                 </div>
                                 <div class="col-md-6">
                                     {% set fieldName = 'invoice-street' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Calle:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.street' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
                                     {% set fieldName = 'invoice-number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Número:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.number' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
                                     {% set fieldName = 'invoice-floor' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Piso:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.floor' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
                                     {% set fieldName = 'invoice-department' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Depto:', 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.department' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'Nombre comercial:', 'attr': {'placeholder': 'Personas naturales colocar nombre', 'class': 'form-control'}}) }}
+                                    {% set label = 'flights.business_name_placeholder' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': label, 'class': 'form-control'}}) }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -305,7 +330,7 @@
 
                 <!--Contacto-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Datos de Contacto</div>
+                    <div class="panel-heading">{{ 'hotels.contact_info' | trans }}</div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -322,19 +347,23 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     {% set fieldName = 'phones-type' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Teléfono:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.phone' | trans %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-3">
                                     {% set fieldName = 'phones-country_code' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'País:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.country' | trans %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
                                     {% set fieldName = 'phones-area_code' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Área:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.area_code' | trans %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-2">
                                     {% set fieldName = 'phones-number' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': 'Número:', 'attr': {'class': 'form-control'}}) }}
+                                    {% set label = 'hotels.labels.number' | trans %}
+                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -344,31 +373,28 @@
 
                 <div class="gap"></div>
                 <div class="mod-searchbutton">
-                    <button class="btn btn-primary btn-lg" type="submit">Comprar</button>
-                    <span>Por favor, antes de finalizar, revise los datos ingresados.</span>
+                    <button class="btn btn-primary btn-lg" type="submit">{{ 'hotels.buy' | trans }}</button>
+                    <span>{{ 'hotels.buy_alert' | trans }}</span>
                 </div>
                 <div class="gap"></div>
                 {{ form_rest(formNewPay) }}
                 {{ form_end(formNewPay) }}
                 {{ form_errors(formNewPay) }}
-                {#{{ dump(formNewPay) }}#}
-                {#{{ dump(formChoice) }}#}
-                {#{{ dump(paymentMethods) }}#}
             </div>
 
             <div class="col-md-5 col-md-pull-7">
                 <div class="content-sidebar">
                     <div class="booking-item-dates-change mb5">
-                        <h5><b>Detalle de su compra</b></h5>
+                        <h5><b>{{ 'flights.buy_detail' | trans }}</b></h5>
                         <div class="row alert alert-warning">
                             <div class="col-md-offset-1 col-md-10 ">
                                 <div class="row" style="font-size: 2rem; padding-bottom: 10px">
-                                    <span style="float: left;">Tarifa por adulto</span>
+                                    <span style="float: left;">{{ 'flights.rate_per_adult' | trans }}</span>
                                     <span style="float: right;">{{ itineraryDetail.price_detail.adult_base | number_format(2, ',', '.') }}</span>
                                     <span style="float: right;">$ </span>
                                 </div>
                                 <div class="row">
-                                    <span style="float: left;">Adulto</span>
+                                    <span style="float: left;">{{ 'flights.adult' | trans }}</span>
                                     <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
                                     <span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>
                                     <span style="float: right;">$ </span>
@@ -376,7 +402,7 @@
 
                                 {% if itineraryDetail.passenger_distribution.children > 0 %}
                                     <div class="row">
-                                        <span style="float: left;">Niño</span>
+                                        <span style="float: left;">{{ 'flights.labels.child' | trans }}</span>
                                         <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.children }})</span>
                                         <span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>
                                         <span style="float: right;">$ </span>
@@ -384,12 +410,12 @@
                                 {% endif %}
 
                                 <div class="row">
-                                    <span style="float: left;">Impuestos y tasas</span>
+                                    <span style="float: left;">{{ 'hotels.taxes_and_rates' | trans }}</span>
                                     <span style="float: right;">{{ itineraryDetail.price_detail.taxes | number_format(2, ',', '.') }}</span>
                                     <span style="float: right;">$ </span>
                                 </div>
                                 <div class="row">
-                                    <span style="float: left;">Cargos</span>
+                                    <span style="float: left;">{{ 'flights.charges' | trans }}</span>
                                     <span style="float: right;">{{ itineraryDetail.price_detail.fees | number_format(2, ',', '.') }}</span>
                                     <span style="float: right;">$ </span>
                                 </div>
@@ -407,12 +433,12 @@
                             <div class="col-md-12">
                                 <div class="header-outbound">
                                     <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
-                                    <span> <b>IDA</b> </span>
+                                    <span> <b>{{ 'flights.going' | trans }}</b> </span>
                                     {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
-                                        <span style="float: right">PARADA {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
+                                        <span style="float: right">{{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
 
                                     {% else %}
-                                        <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} PARADAS</span>
+                                        <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s</span>
 
                                     {% endif %}
                                 </div>
@@ -432,7 +458,7 @@
                                     <div class="flight-details-container col-md-5 align-center">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <span class="item-label">Salida</span>
+                                                <span class="item-label">{{ 'flights.departure' | trans }}</span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -473,7 +499,7 @@
                                     <div class="flight-details-container col-md-5 align-center">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <span class="item-label">Llegada</span>
+                                                <span class="item-label">{{ 'flights.arrival' | trans }}</span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -500,7 +526,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 alert alert-warning">
-                                        <span style="float: left">Tiempo de espera</span>
+                                        <span style="float: left">{{ 'flights.waiting_time' | trans }}</span>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -513,11 +539,11 @@
                             <div class="cold-md-12">
                                 <div class="header-outbound">
                                     <span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>
-                                    <span> <b>VUELTA</b> </span>
+                                    <span> <b>{{ 'flights.return' | trans }}</b> </span>
                                     {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
-                                        <span class="pull-right">PARADA {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
+                                        <span class="pull-right">{{ 'flights.stop' | trans }} {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
                                     {% else %}
-                                        <span class="pull-right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} PARADAS</span>
+                                        <span class="pull-right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} {{ 'flights.stop' | trans }}s</span>
                                     {% endif %}
                                 </div>
                             </div>
@@ -536,7 +562,7 @@
                                         <div class="flight-details-container col-md-5 align-center">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span class="item-label">Salida</span>
+                                                    <span class="item-label">{{ 'flights.outgoing' | trans }}</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -577,7 +603,7 @@
                                         <div class="flight-details-container col-md-5 align-center">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span class="item-label">Llegada</span>
+                                                    <span class="item-label">{{ 'flights.incoming' | trans }}</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -604,7 +630,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 alert alert-warning">
-                                            <span style="float: left">Tiempo de espera</span>
+                                            <span style="float: left">{{ 'flights.waiting_time' | trans }}</span>
                                         </div>
                                     </div>
                                 {% endfor %}

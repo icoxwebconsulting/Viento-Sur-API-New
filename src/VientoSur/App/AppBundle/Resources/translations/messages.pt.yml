@@ -3,6 +3,7 @@ index:
     flights: VOOS
     search_text: Pesquisa
     loading: Carregando
+    filter: Filtro
     search:
         hotel:
            title: Procurar alojamento com as melhores taxas
@@ -186,23 +187,67 @@ hotels:
         floor: Andar:
         department: Departamento:
         postal_code: ZIP:
-        billing_address: Dirección de facturación:
-        invoice_name: Nombre para facturación:
+        billing_address: Endereço para cobrança:
+        invoice_name: Nome de faturamento:
         fiscal_document: Documento Fiscal:
-        tax_status: Situación fiscal:
+        tax_status: Situação Fiscal:
         fiscal_document_type: Tipo de documento Fiscal:
         fiscal_document_prefix_verification_code: Dígito de verificación:
-        entity_type: Tipo de entidad:
+        entity_type: Tipo de entidade:
         document_issuing_country_code: Código de país del emisor:
-        business_type: Tipo de negocio:
-        economical_activity: Actividad económica:
+        business_type: Tipo de Negócio:
+        economical_activity: Actividade económica:
         billing_addressnumber: Nro:
-        find_state: Buscar Provincia
-        fill_state: Rellene la Provincia
-        country_code: Código de país:
+        find_state: Pesquisa Province
+        fill_state: Encha a Província
+        country_code: Código do país:
         type: Tipo:
         area_code: Código de área:
         number: Número:
         comment: Comentarios:
-        subscribe_newsletter: Subscribir a noticias:
-        travel_assistance: Asistencia en viaje:
+        subscribe_newsletter: Inscrever-se para a notícia:
+        travel_assistance: Assistência em Viagem:
+flights:
+    flights: Voos
+    flight: Voo
+    not_found: Não existem voos disponíveis
+    flights_from_to: Voos de %origin% para %destination%
+    scales: Balança
+    scale_0: Directo
+    scale_1: 1 Escala
+    scale_2: 2 o más escalas
+    airlines: Airlines
+    alliances: Parcerias
+    going: Ida
+    return: Retorno
+    airports: Aeroportos
+    duration: Duração
+    schedule: Horário
+    detail: Detalhe
+    direct: Direto
+    scale: Balança
+    total_duration: Duração total
+    departure: Folhas
+    arrival: Chega
+    class: Classe
+    final_total_price: Total Preço Final
+    adult: Adulto
+    passengers: Passageiros
+    labels:
+        name_placeholder: Como mostrado no documento de viagem
+        residence: Residência:
+        birthdate: Data de nascimento:
+        child: Niño:
+    payment_msg: Para selecionar um cartão clique sobre ele, se uma lista de banco será exibido com cartões
+    quota: Cuota:
+    invoice_data: Dados de faturamento
+    select_state: Selecione a província
+    business_name: Nome comercial
+    business_name_placeholder: Pessoas, nome
+    buy_detail: Detalle de su compra
+    rate_per_adult: Tarifa por adulto
+    charges: Cargos
+    stop: Parar
+    waiting_time: Tempo de espera
+    outgoing: Saída
+    incoming: Chegada

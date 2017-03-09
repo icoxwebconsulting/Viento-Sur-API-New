@@ -3,6 +3,7 @@ index:
     flights: VUELOS
     search_text: Buscar
     loading: Cargando
+    filter: Filtro
     search:
         hotel:
            title: Buscá Alojamientos con las mejores tarifas
@@ -206,3 +207,47 @@ hotels:
         comment: Comentarios:
         subscribe_newsletter: Subscribir a noticias:
         travel_assistance: Asistencia en viaje:
+flights:
+    flights: Vuelos
+    flight: Vuelo
+    not_found: No se encontraron vuelos disponibles
+    flights_from_to: Vuelos de %origin% a %destination%
+    scales: Escalas
+    scale_0: Directo
+    scale_1: 1 Escala
+    scale_2: 2 o más escalas
+    airlines: Aerolíneas
+    alliances: Alianzas
+    going: Ida
+    return: Vuelta
+    airports: Aeropuertos
+    duration: Duración
+    schedule: Horario
+    detail: Detalle
+    direct: Directo
+    scale: Escala
+    total_duration: Duración total
+    departure: Sale
+    arrival: Llega
+    class: Clase
+    final_total_price: Precio Total Final
+    adult: Adulto
+    passengers: Pasajeros
+    labels:
+        name_placeholder: Como aparece en el documento de viaje
+        residence: Residencia:
+        birthdate: Fecha de nacimiento:
+        child: Niño:
+    payment_msg: Para seleccionar una tarjeta haga click sobre ella, en caso de un banco se desplegará un listado con las tarjetas
+    quota: Cuota:
+    invoice_data: Datos para facturación
+    select_state: Seleccione la provincia
+    business_name: Nombre comercial
+    business_name_placeholder: Personas colocar nombre
+    buy_detail: Detalle de su compra
+    rate_per_adult: Tarifa por adulto
+    charges: Cargos
+    stop: Parada
+    waiting_time: Tiempo de espera
+    outgoing: Salida
+    incoming: Llegada

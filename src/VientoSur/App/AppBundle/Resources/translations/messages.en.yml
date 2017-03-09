@@ -3,6 +3,7 @@ index:
     flights: FLIGHTS
     search_text: Search
     loading: Loading
+    filter: Filter
     search:
         hotel:
            title: Find Hotels with the best rates
@@ -186,23 +187,67 @@ hotels:
         floor: Floor:
         department: Department:
         postal_code: Postal code:
-        billing_address: Dirección de facturación:
-        invoice_name: Nombre para facturación:
-        fiscal_document: Documento Fiscal:
-        tax_status: Situación fiscal:
-        fiscal_document_type: Tipo de documento Fiscal:
-        fiscal_document_prefix_verification_code: Dígito de verificación:
-        entity_type: Tipo de entidad:
-        document_issuing_country_code: Código de país del emisor:
-        business_type: Tipo de negocio:
-        economical_activity: Actividad económica:
-        billing_addressnumber: Nro:
-        find_state: Buscar Provincia
-        fill_state: Rellene la Provincia
-        country_code: Código de país:
-        type: Tipo:
-        area_code: Código de área:
-        number: Número:
-        comment: Comentarios:
-        subscribe_newsletter: Subscribir a noticias:
-        travel_assistance: Asistencia en viaje:
+        billing_address: Billing address:
+        invoice_name: Invoice name:
+        fiscal_document: fiscal document:
+        tax_status: Tax status:
+        fiscal_document_type: Fiscal document type:
+        fiscal_document_prefix_verification_code: Verification code:
+        entity_type: Entity type:
+        document_issuing_country_code: Doc issuing country code:
+        business_type: Business Type:
+        economical_activity: Economical activity:
+        billing_addressnumber: Number:
+        find_state: Find State
+        fill_state: Fill state
+        country_code: Country code:
+        type: Type:
+        area_code: Area code:
+        number: Number:
+        comment: Comments:
+        subscribe_newsletter: Subscribe to newsletter:
+        travel_assistance: Travel assistance:
+flights:
+    flights: Flights
+    flight: Flight
+    not_found: No flights were found available
+    flights_from_to: Flights from %origin% to %destination%
+    scales: Scales
+    scale_0: Directo
+    scale_1: 1 Escala
+    scale_2: 2 o más escalas
+    airlines: Airlines
+    alliances: Alianzas
+    going: Going
+    return: Return
+    airports: Airports
+    duration: Duration
+    schedule: Schedule
+    detail: Detail
+    direct: Direct
+    scale: Scale
+    total_duration: Total Duration
+    departure: Departure
+    arrival: Arrival
+    class: Class
+    final_total_price: Final total price
+    adult: Adult
+    passengers: Passengers
+    labels:
+        name_placeholder: As it appears in the travel document
+        residence: Residence:
+        birthdate: Birthdate:
+        child: Niño:
+    payment_msg: To select a card click on it, in the case of a bank a list will be displayed with the cards
+    quota: Cuota:
+    invoice_data: Invoice data
+    select_state: Select state
+    business_name: Business Name
+    business_name_placeholder: Or person name
+    buy_detail: Detalle de su compra
+    rate_per_adult: Tarifa por adulto
+    charges: Charges
+    stop: Stop
+    waiting_time: Waiting time
+    outgoing: Outgoing
+    incoming: Llegada

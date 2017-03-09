@@ -4,7 +4,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
-            <li><a href="#">Vuelos</a></li>
+            <li><a href="#">{{ 'flights.flights' | trans }}</a></li>
             {% if app.session.get('origin_flight').text is defined %}
                 {% set origin = app.session.get('origin_flight').text|split(',') %}
             {% else %}
@@ -15,8 +15,9 @@
             {% else %}
                 {% set destination = "" %}
             {% endif %}
-            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span> Vuelos
-                    de {{ origin[0] }} a {{ destination[0] }}</a></li>
+            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
+                    {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
+                </a></li>
         </ul>
 
         <br/>
@@ -106,7 +107,7 @@
                 }
                 var search = decodeURIComponent((!obj) ? $.query.toString() : obj.toString());
 
-                waitingDialog.show('Viento Sur, Cargando...');
+                waitingDialog.show('Viento Sur, {{ 'index.loading' | trans }}...');
                 $("html, body").animate({scrollTop: 0}, "slow");
                 $.ajax({
                     url: url + search,

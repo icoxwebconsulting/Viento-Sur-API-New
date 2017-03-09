@@ -1,5 +1,5 @@
 {% if items.message is defined %}
-    <li>No se encontraron vuelos disponibles</li>
+    <li>{{ 'flights.not_found' | trans }}</li>
 {% elseif items.items|length > 0 %}
     {% for item in items.items %}
         <li>
@@ -10,7 +10,7 @@
                         <div class="flight-data">
                             <span class="table-data-row">
                                 <span class="flight-type table-data-cell">
-                                    <span class="flight-bound">IDA</span>
+                                    <span class="flight-bound">{{ 'flights.going' | trans }}</span>
                                     <span class="flight-bound-text">{{ item.outbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span>
                                 </span>
                                 <span class="departure-location table-data-cell">
@@ -51,11 +51,11 @@
                                             <span class="scales table-data-cell">
                                                 {% set totalSeg = outbound.segments|length - 1 %}
                                                 {% if totalSeg == 0 %}
-                                                    Directo
+                                                    {{ 'flights.direct' | trans }}
                                                 {% elseif totalSeg == 1 %}
-                                                    {{ totalSeg }} escala
+                                                    {{ totalSeg }} {{ 'flights.scale' | trans }}
                                                 {% else %}
-                                                    {{ totalSeg }} escalas
+                                                    {{ totalSeg }} {{ 'flights.scales' | trans }}
                                                 {% endif %}
                                             </span>
                                             <span class="arrival-time table-data-cell">
@@ -67,7 +67,7 @@
                                                 {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
                                             </span>
                                             <span class="table-data-cell">
-                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</span>
+                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">{{ 'flights.detail' | trans }}</span>
                                             </span>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                                             {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text|split(',')[0] }}{% endif %}
                                                         </div>
                                                         <div class="text-right" style="width: 50%; float: right;">
-                                                            Duración total: {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
+                                                            {{ 'flights.total_duration' | trans }}: {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -107,7 +107,7 @@
                                                     <span class="inline-detail-airport">
                                                         <span class="inline-detail-airport-date">
                                                             <span>
-                                                                <span class="inline-detail-airport-date-text">Sale:</span>
+                                                                <span class="inline-detail-airport-date-text">{{ 'flights.departure' | trans }}:</span>
                                                                 <span>{{ segment.departure_datetime|date("d/m/Y", false) }}</span>
                                                             </span>
                                                         </span>
@@ -128,7 +128,7 @@
                                                     <span class="inline-detail-airport">
                                                         <span class="inline-detail-airport-date">
                                                             <span>
-                                                                <span class="inline-detail-airport-date-text">Llega:</span>
+                                                                <span class="inline-detail-airport-date-text">{{ 'flights.arrival' | trans }}:</span>
                                                                 <span>{{ segment.arrival_datetime|date("d/m/Y", false) }}</span>
                                                             </span>
                                                         </span>
@@ -146,19 +146,19 @@
                                                     <span>
                                                         <span class="inline-detail-flight-data">
                                                             <span>
-                                                                <span class="inline-detail-flight-data-title">DURACIÓN</span>
+                                                                <span class="inline-detail-flight-data-title">{{ 'flights.duration' | trans }}</span>
                                                                 <span class="inline-detail-flight-data-description">{{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m</span>
                                                             </span>
                                                         </span>
                                                     </span>
                                                     <span class="inline-detail-flight-data">
                                                         <span>
-                                                            <span class="inline-detail-flight-data-title">VUELO N°</span>
+                                                            <span class="inline-detail-flight-data-title">{{ 'flights.flight' | trans }} N°</span>
                                                             <span class="inline-detail-flight-data-description">{{ segment.flight_id }}</span>
                                                         </span>
                                                     </span>
                                                     <span class="inline-detail-flight-data inline-detail-flight-cabinType">
-                                                        <span class="inline-detail-flight-data-title">CLASE</span>
+                                                        <span class="inline-detail-flight-data-title">{{ 'flights.class' | trans }}</span>
                                                         <span class="inline-detail-flight-data-description">{{ segment.cabin_type }}</span>
                                                     </span>
                                                     <!--<span class="inline-detail-flight-airline">
@@ -202,7 +202,7 @@
                         <div class="flight-data">
                             <span class="table-data-row">
                                 <span class="flight-type table-data-cell">
-                                    <span class="flight-bound">VUELTA</span>
+                                    <span class="flight-bound">{{ 'flights.return' | trans }}</span>
                                     <span class="flight-bound-text">{{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span>
                                 </span>
                                 <span class="departure-location table-data-cell">
@@ -259,7 +259,7 @@
                                                 {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
                                             </span>
                                             <span class="table-data-cell">
-                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">Detalle</span>
+                                                <span class="btn btn-primary" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" style="float: right">{{ 'flights.detail' | trans }}</span>
                                             </span>
                                         </div>
                                     </div>
@@ -274,7 +274,7 @@
                                                             {% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text|split(',')[0] }}{% endif %}
                                                         </div>
                                                         <div class="text-right" style="width: 50%; float: right;">
-                                                            Duración total: {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
+                                                            {{ 'flights.total_duration' | trans }}: {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -299,7 +299,7 @@
                                                     <span class="inline-detail-airport">
                                                         <span class="inline-detail-airport-date">
                                                             <span>
-                                                                <span class="inline-detail-airport-date-text">Sale:</span>
+                                                                <span class="inline-detail-airport-date-text">{{ 'flights.departure' | trans }}:</span>
                                                                 <span>{{ segment.departure_datetime|date("d/m/Y", false) }}</span>
                                                             </span>
                                                         </span>
@@ -320,7 +320,7 @@
                                                     <span class="inline-detail-airport">
                                                         <span class="inline-detail-airport-date">
                                                             <span>
-                                                                <span class="inline-detail-airport-date-text">Llega:</span>
+                                                                <span class="inline-detail-airport-date-text">{{ 'flights.arrival' | trans }}:</span>
                                                                 <span>{{ segment.arrival_datetime|date("d/m/Y", false) }}</span>
                                                             </span>
                                                         </span>
@@ -338,19 +338,19 @@
                                                     <span>
                                                         <span class="inline-detail-flight-data">
                                                             <span>
-                                                                <span class="inline-detail-flight-data-title">DURACIÓN</span>
+                                                                <span class="inline-detail-flight-data-title">{{ 'flights.duration' | trans }}</span>
                                                                 <span class="inline-detail-flight-data-description">{{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m</span>
                                                             </span>
                                                         </span>
                                                     </span>
                                                     <span class="inline-detail-flight-data">
                                                         <span>
-                                                            <span class="inline-detail-flight-data-title">VUELO N°</span>
+                                                            <span class="inline-detail-flight-data-title">{{ 'flights.flight' | trans }} N°</span>
                                                             <span class="inline-detail-flight-data-description">{{ segment.flight_id }}</span>
                                                         </span>
                                                     </span>
                                                     <span class="inline-detail-flight-data inline-detail-flight-cabinType">
-                                                        <span class="inline-detail-flight-data-title">CLASE</span>
+                                                        <span class="inline-detail-flight-data-title">{{ 'flights.class' | trans }}</span>
                                                         <span class="inline-detail-flight-data-description">{{ segment.cabin_type }}</span>
                                                     </span>
                                                     <!--<span class="inline-detail-flight-airline">
@@ -395,13 +395,13 @@
 
                     </div>
                     <div class="col-md-3 booking-prices align-center cursor-pointer" data-item="{{ loop.index }}">
-                        <div class="booking-align-vertical"> <span class="booking-item-price-night">Precio Total Final</span>
+                        <div class="booking-align-vertical"> <span class="booking-item-price-night">{{ 'flights.final_total_price' | trans }}</span>
                             <span class="booking-item-price">
                                 {% if item.price_detail.total is defined %}
                                     $ {{ item.price_detail.total|round|number_format(0, '.', '.') }}
                                 {% endif %}
                             </span>
-                            <span class="btn btn-primary">Comprar</span>
+                            <span class="btn btn-primary">{{ 'hotels.buy' | trans }}</span>
                         </div>
                         <input type="hidden" name="item_id" value="{{ item.id }}" />
                         {% for b_info in item.booking_info %}

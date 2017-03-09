@@ -17,7 +17,7 @@ use VientoSur\App\AppBundle\Entity\Airport;
 /**
  * Flight Controller
  *
- * @Route("/vuelos")
+ * @Route("/{_locale}/vuelos", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class FlightController extends Controller
 {
@@ -105,11 +105,14 @@ class FlightController extends Controller
             $offset = ($page - 1) * 25;
         }
 
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
+
         $urlParams = [
             "site" => "AR",
             "departure_date" => $departure_date,
             "return_date" => $return_date,
-            "language" => "es",
+            "language" => $lang,
             "from" => $from,
             "to" => $to,
             "adults" => $adults,
@@ -236,10 +239,13 @@ class FlightController extends Controller
             $offset = ($page - 1) * 25;
         }
 
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
+
         $urlParams = [
             "site" => "AR",
             "departure_date" => $departure_date,
-            "language" => "es",
+            "language" => $lang,
             "from" => $from,
             "to" => $to,
             "adults" => $adults,
@@ -403,9 +409,12 @@ class FlightController extends Controller
     {
         $params = $request->query->all();
 
+        $locale = $request->getLocale();
+        $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
+
         $urlParams = [
             'itinerary_id' => $params['itinerary_id'],
-            'language' => 'es',
+            'language' => $lang,
             'tracker_id' => '',
             'country' => 'AR'
         ];
