@@ -143,3 +143,22 @@ hotels:
     total_price: Preço tota
     download_pdf: Baixar PDF
     edit_reservation: Editar reserva
+    room_holder: Titular do Quarto
+    payment_methods: Formas de pagamento
+    interest: interesse
+    whitout_interest: Sem interesse
+    pay: Pagamento
+    pay_in_destiny: Pagamento à chegada
+    bank: BANCO
+    card: CARTãO
+    contact_info: Dados de contato
+    contact_msg: Telefone: Alojamento precisa dele para validar a sua reserva
+    contact_confirm: Nós enviar a sua confirmação de reserva para este endereço
+    vouchers: Cupons
+    additional_data: Dados adicionais
+    additional_msg: Faça seus pedidos em Inglês ou Espanhol. Os pedidos especiais não podem ser garantidos, mas o alojamento vai fazer o seu melhor para satisfazer o seu pedido
+    buy: Comprar
+    buy_alert: Por favor, antes de finalizar, verifique os dados inseridos
+    paying: Você está pagando
+    taxes_and_rates: Impostos e taxas
+    paying_msg: O montante é de aproximadamente $ preço foi calculado com o câmbio em vigor hoje. O emitente de sua empresa de cartão pode cobrar uma taxa para a troca

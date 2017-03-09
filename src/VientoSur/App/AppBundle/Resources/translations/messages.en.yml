@@ -143,3 +143,22 @@ hotels:
     total_price: Total price
     download_pdf: Download PDF
     edit_reservation: Edit reservation
+    room_holder: Room holder
+    payment_methods: Payment methods
+    interest: interest
+    whitout_interest: Whitout interest
+    pay: Pay
+    pay_in_destiny: Payment on destination
+    bank: BANK
+    card: CARD
+    contact_info: Contact information
+    contact_msg: Phone: The hotel needs to validate your reservation
+    contact_confirm: We will send the confirmation of your reservation to this address
+    vouchers: Vouchers
+    additional_data: Additional data
+    additional_msg: Write your requests in English or Spanish. Special requests can not be guaranteed and may incur additional charges.
+    buy: Buy
+    buy_alert: Please, before submit, check the entered data
+    paying: You are paying
+    taxes_and_rates: Taxes an rates
+    paying_msg: The amount in $ is an approximate price that has been calculated with the current exchange rate. The issuer of your card could charge you a commission for the change of currency

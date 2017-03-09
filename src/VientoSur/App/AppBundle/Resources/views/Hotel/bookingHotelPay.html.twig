@@ -10,7 +10,7 @@
 
                 <!--Pasajeros-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Titular de habitación</div>
+                    <div class="panel-heading">{{ 'hotels.room_holder' | trans }}</div>
                     <div class="panel-body">
                         {#{{ form_row(formNewPay.passengers) }}#}
                         {% for passenger in formChoice.passengers %}
@@ -18,7 +18,7 @@
                                 <hr/>
                             {% endif %}
                             {% set temp = attribute(rooms, loop.index0) %}
-                            <h5>Habitación {{ loop.index }}: {{ temp.name }}</h5>
+                            <h5>{{ 'index.search.hotel.room' | trans }} {{ loop.index }}: {{ temp.name }}</h5>
 
                             <div class="row">
                                 <div class="col-md-4">
@@ -42,12 +42,10 @@
                     </div>
                 </div>
                 <!--/Pasajeros-->
-                {#{{ dump(paymentMethods) }}#}
-                {#{{ dump(paymentMethods2) }}#}
-                {#{{ dump(formNewPay.payment.paymentMethod) }}#}
+
                 <!--Formas de pago-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Formas de pago</div>
+                    <div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>
                     <div class="panel-body">
                         <div class="list-group">
                             {% for paymentMethod in paymentMethods %}
@@ -62,15 +60,15 @@
                                             <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}
                                             {% if paymentMethod.amounts.total_interest_amount > 0 %}
                                                 <span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}
-                                                    (interés)</span>
+                                                    ({{ 'hotels.interest' | trans }})</span>
                                             {% else %}
-                                                <span class="b-interest">Sin interés</span>
+                                                <span class="b-interest">{{ 'hotels.whitout_interest' | trans }}</span>
                                             {% endif %}
                                         {% else %}
-                                            Pago
+                                            {{ 'hotels.pay' | trans }}
                                         {% endif %}
                                     {% elseif type == 'at_destination' %}
-                                        Pago en destino
+                                        {{ 'hotels.pay_in_destiny' | trans }}
                                     {% endif %}
                                 </h4>
                                 <p class="list-group-item-text">
@@ -132,8 +130,8 @@
                                                         {% set countBank = 1 %}
                                                         <table class="table table-bordered">
                                                             <tr>
-                                                                <th class="text-center">BANCO</th>
-                                                                <th class="text-center">TARJETA</th>
+                                                                <th class="text-center">{{ 'hotels.bank' | trans }}</th>
+                                                                <th class="text-center">{{ 'hotels.card' | trans }}</th>
                                                             </tr>
                                                         {% for key, list in cardsList %}
                                                             {% if key != '*' %}
@@ -301,7 +299,7 @@
 
                 <!--Contacto-->
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Datos de Contacto</div>
+                    <div class="panel-heading">{{ 'hotels.contact_info' | trans }}</div>
                     <div class="panel-body">
                         {#{{ form_row(formNewPay.contact) }}#}
                         <div class="row">
@@ -332,13 +330,13 @@
                             {% endfor %}
                         </div>
                         <div class="row">
-                            <div class="col-md-10 top-buffer"><div class="alert alert-success" role="alert">Teléfono: El alojamiento lo necesita para validar tu reserva.</div></div>
+                            <div class="col-md-10 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_msg' | trans }}.</div></div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 {{ form_row(formNewPay.contact.email, {'label': 'Email:', 'attr': {'class': 'form-control'}}) }}
                             </div>
-                            <div class="col-md-6 top-buffer"><div class="alert alert-success" role="alert">Enviaremos la confirmación de tu reserva a esta dirección.</div></div>
+                            <div class="col-md-6 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_confirm' | trans }}.</div></div>
                         </div>
                     </div>
                 </div>
@@ -347,7 +345,7 @@
                 <!--Vouchers-->
                 {% if formNewPay.vouchers is defined %}
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Cupones</div>
+                        <div class="panel-heading">{{ 'hotels.vouchers' | trans }}</div>
                         <div class="panel-body">
                             {#{{ form_row(formNewPay.vouchers) }}#}
                             <div class="row">
@@ -366,7 +364,7 @@
                 <!--Datos adicionales-->
                 {% if formNewPay.additionalData is defined %}
                     <div class="panel panel-primary">
-                        <div class="panel-heading">Datos adicionales</div>
+                        <div class="panel-heading">{{ 'hotels.additional_data' | trans }}</div>
                         <div class="panel-body">
                             {#{{ form_row(formNewPay.additionalData) }}#}
                             <div class="row">
@@ -376,7 +374,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="alert alert-success" role="alert">Escribe tus peticiones en inglés o en español. Las peticiones especiales no se pueden garantizar, pero el alojamiento hará todo lo posible por satisfacer tu petición.</div>
+                                        <div class="alert alert-success" role="alert">{{ 'hotels.additional_msg' | trans }}.</div>
                                     </div>
                                 {% endif %}
 
@@ -399,8 +397,8 @@
 
                 <div class="gap"></div>
                 <div class="mod-searchbutton">
-                    <button class="btn btn-primary btn-lg" type="submit">Comprar</button>
-                    <span>Por favor, antes de finalizar, revise los datos ingresados.</span>
+                    <button class="btn btn-primary btn-lg" type="submit">{{ 'hotels.buy' | trans }}</button>
+                    <span>{{ 'hotels.buy_alert' | trans }}.</span>
                 </div>
                 <input type="hidden" name="roompack_choice" value="{{ roompack_choice }}">
                 <div class="gap"></div>
@@ -426,8 +424,8 @@
             </div>
 
             <div class="booking-item-dates-change">
-                <h5><b>Usted está pagando:</b></h5>
-                {{ reservationDays }} noche{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}habitación{% else %} habitaciones{% endif %}<br/>
+                <h5><b>{{ 'hotels.paying' | trans }}:</b></h5>
+                {{ reservationDays }} {{ 'hotels.night' | trans }}{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}{{ 'index.search.hotel.room' | trans }}{% else %} {{ 'index.search.hotel.rooms' | trans }}{% endif %}<br/>
                 <p>
                     {% for room in rooms %}
                         {% set temp = attribute(rooms, loop.index0) %}
@@ -441,13 +439,13 @@
             </div>
             <div class="booking-item-dates-change">
 
-                Habitación por noche: $ {{ price_detail.nightly.subtotal|number_format(0, ',', '.') }}<br/>
-                Impuestos y tasas: $ {{ (price_detail.taxes + price_detail.fee)|number_format(0, ',', '.') }}<br/>
+                {{ 'hotels.room_per_night' | trans }}: $ {{ price_detail.nightly.subtotal|number_format(0, ',', '.') }}<br/>
+                {{ 'hotels.taxes_and_rates' | trans }}: $ {{ (price_detail.taxes + price_detail.fee)|number_format(0, ',', '.') }}<br/>
                 <b>Total: $ {{ price_detail.total|number_format(0, ',', '.') }}</b><br/>
             </div>
 
             <div class="" style="padding: 0 5px 0 5px">
-                <div class="alert alert-success text-justify" role="alert">El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</div>
+                <div class="alert alert-success text-justify" role="alert">{{ 'hotels.paying_msg' | trans }}.</div>
             </div>
             {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
 
@@ -458,10 +456,6 @@
             <div class="errors">
                 {#{{ dump(errors) }}#}
             </div>
-            {#{{ dump(formNewPay) }}#}
-            {#{{ dump(formChoice) }}#}
-            {#{{ dump(paymentMethods) }}#}
-            {#{{ dump(cardsGroup) }}#}
         </div>
     </div>
 {% endblock %}
