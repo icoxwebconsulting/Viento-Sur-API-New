@@ -162,3 +162,47 @@ hotels:
     paying: You are paying
     taxes_and_rates: Taxes an rates
     paying_msg: The amount in $ is an approximate price that has been calculated with the current exchange rate. The issuer of your card could charge you a commission for the change of currency
+    your_accommodation: Your accommodation
+    invoice: Invoice
+    selected_card: Selected card
+    labels:
+        name: Name(s):
+        name_placeholder: As it appears in the document
+        lastname: Lastname(s):
+        document: Document
+        card_number: Card number:
+        expiration: Expiration:
+        security_code: Security code:
+        cardholder: Cardholder:
+        such_as_card: As it appears on the card
+        owner_doc: Owner document:
+        owner_documenttype: Document type:
+        owner_documentnumber: Document number:
+        owner_gender: Gender:
+        country: Country
+        state: Provincia:
+        city: City:
+        street: Street:
+        floor: Floor:
+        department: Department:
+        postal_code: Postal code:
+        billing_address: Dirección de facturación:
+        invoice_name: Nombre para facturación:
+        fiscal_document: Documento Fiscal:
+        tax_status: Situación fiscal:
+        fiscal_document_type: Tipo de documento Fiscal:
+        fiscal_document_prefix_verification_code: Dígito de verificación:
+        entity_type: Tipo de entidad:
+        document_issuing_country_code: Código de país del emisor:
+        business_type: Tipo de negocio:
+        economical_activity: Actividad económica:
+        billing_addressnumber: Nro:
+        find_state: Buscar Provincia
+        fill_state: Rellene la Provincia
+        country_code: Código de país:
+        type: Tipo:
+        area_code: Código de área:
+        number: Número:
+        comment: Comentarios:
+        subscribe_newsletter: Subscribir a noticias:
+        travel_assistance: Asistencia en viaje:

@@ -1,68 +1,78 @@
 {% if formChoice.payment.invoice is defined %}
     <hr/>
-    <h3>Facturación:</h3>
+    <h3>{{ 'hotels.invoice' | trans }}:</h3>
     <div class="row">
         {% if formNewPay.payment.billing_address is defined %}
+            {% set label = 'hotels.labels.billing_address' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_address, {'label': 'Dirección de facturación:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_address, {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.invoice_name is defined %}
+            {% set label = 'hotels.labels.invoice_name' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.invoice_name, {'label': 'Nombre para facturación:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.invoice_name, {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.fiscal_document is defined %}
+            {% set label = 'hotels.labels.fiscal_document' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.fiscal_document, {'label': 'Documento Fiscal:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.fiscal_document, {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.tax_status is defined %}
+            {% set label = 'hotels.labels.tax_status' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.tax_status , {'label': 'Situación fiscal:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.tax_status , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
 
     <div class="row">
         {% if formNewPay.payment.fiscal_document_type is defined %}
+            {% set label = 'hotels.labels.fiscal_document_type' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.fiscal_document_type, {'label': 'Tipo de documento Fiscal:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.fiscal_document_type, {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.fiscal_document_prefix_verification_code is defined %}
+            {% set label = 'hotels.labels.fiscal_document_prefix_verification_code' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.fiscal_document_prefix_verification_code , {'label': 'Dígito de verificación:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.fiscal_document_prefix_verification_code , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.entity_type is defined %}
+            {% set label = 'hotels.labels.entity_type' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.entity_type , {'label': 'Tipo de entidad:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.entity_type , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
 
     <div class="row">
         {% if formNewPay.payment.document_issuing_country_code is defined %}
+            {% set label = 'hotels.labels.document_issuing_country_code' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.document_issuing_country_code , {'label': 'Código de país del emisor:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.document_issuing_country_code , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.business_type is defined %}
+            {% set label = 'hotels.labels.business_type' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.business_type , {'label': 'Tipo de negocio:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.business_type , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.economical_activity is defined %}
+            {% set label = 'hotels.labels.economical_activity' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.economical_activity , {'label': 'Actividad económica:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.economical_activity , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
@@ -73,41 +83,48 @@
     <h3>Dirección de Facturación:</h3>
     <div class="row">
         {% if formNewPay.payment.billing_addresscountry is defined %}
+            {% set label = 'hotels.labels.country' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addresscountry , {'label': 'País:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_addresscountry , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressstreet is defined %}
+            {% set label = 'hotels.labels.street' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressstreet , {'label': 'Calle:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_addressstreet , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressnumber is defined %}
+            {% set label = 'hotels.labels.billing_addressnumber' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressnumber , {'label': 'Nro:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_addressnumber , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressfloor is defined %}
+            {% set label = 'hotels.labels.floor' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressfloor , {'label': 'Piso:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_addressfloor , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>
 
     <div class="row">
         {% if formNewPay.payment.billing_addressdepartment is defined %}
+            {% set label = 'hotels.labels.department' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addressdepartment , {'label': 'Departamento:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_addressdepartment , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressstate_id is defined %}
             <div class="col-md-3">
-                {{ form_label(formNewPay.payment.billing_addressstate_id, 'Provincia:') }}
-                <input type="text" id="autocomplete-state" data-provide="typeahead" placeholder="Buscar Provincia" required autocomplete="off" class="form-control" />
+                {% set label = 'hotels.labels.state' | trans %}
+                {{ form_label(formNewPay.payment.billing_addressstate_id, label) }}
+                {% set label = 'hotels.labels.find_state' | trans %}
+                <input type="text" id="autocomplete-state" data-provide="typeahead" placeholder="{{ label }}" required autocomplete="off" class="form-control" />
                 {{ form_widget(formNewPay.payment.billing_addressstate_id , {'attr': {'class': 'hide'}}) }}
                 {{ form_errors(formNewPay.payment.billing_addressstate_id) }}
             </div>
@@ -115,16 +132,19 @@
 
         {% if formNewPay.payment.billing_addresscity_id is defined %}
             <div class="col-md-3">
-                {{ form_label(formNewPay.payment.billing_addresscity_id, 'Ciudad:') }}
-                <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="Rellene la Provincia" readonly required autocomplete="off" class="form-control" />
+                {% set label = 'hotels.labels.city' | trans %}
+                {{ form_label(formNewPay.payment.billing_addresscity_id, label) }}
+                {% set label = 'hotels.labels.fill_state' | trans %}
+                <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ label }}" readonly required autocomplete="off" class="form-control" />
                 {{ form_widget(formNewPay.payment.billing_addresscity_id , {'attr': {'class' : 'hide'}}) }}
                 {{ form_errors(formNewPay.payment.billing_addresscity_id) }}
             </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addresspostal_code is defined %}
+            {% set label = 'hotels.labels.postal_code' | trans %}
             <div class="col-md-3">
-                {{ form_row(formNewPay.payment.billing_addresspostal_code , {'label': 'Código postal:', 'attr': {'class': 'form-control'}}) }}
+                {{ form_row(formNewPay.payment.billing_addresspostal_code , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
     </div>

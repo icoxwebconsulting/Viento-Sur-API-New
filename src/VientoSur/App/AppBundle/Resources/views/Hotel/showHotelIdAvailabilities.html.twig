@@ -46,7 +46,7 @@
             var ser = '', rel = '', add = '';
             for (var i = 0; i < amenities.length; i++) {
                 console.log(amenities[i].descriptions.es, amenities[i].amenity_category.id)
-                var temp = '<li><i class="glyphicon glyphicon-ok"></i> ' + amenities[i].descriptions.es + '</li>';
+                var temp = '<li><i class="glyphicon glyphicon-ok"></i> ' + amenities[i].descriptions.[{{ app.request.locale }}] + '</li>';
                 if(amenities[i].amenity_category.id == 'SER') {
                     ser += temp;
                 } else if (amenities[i].amenity_category.id == 'REL') {

@@ -73,8 +73,9 @@ class FormHelper
                         $this->processSimpleElement($key, $option);
                     } else {
                         //manejando payment
-                        foreach ($option as $item) {
-                            if (is_array($item)) {
+                        foreach ($option as $clave => $item) {
+                            //TODO: chequear necesidad de overriden information
+                            if (is_array($item) && $clave != 'overridden_information') {
                                 $this->processSimpleElement($key, $item);
                             }
                         }

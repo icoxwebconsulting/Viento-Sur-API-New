@@ -162,3 +162,47 @@ hotels:
     paying: Você está pagando
     taxes_and_rates: Impostos e taxas
     paying_msg: O montante é de aproximadamente $ preço foi calculado com o câmbio em vigor hoje. O emitente de sua empresa de cartão pode cobrar uma taxa para a troca
+    your_accommodation: Seu alojamento
+    invoice: Faturamento
+    selected_card: Cartão selecionado
+    labels:
+        name: Nome(s):
+        name_placeholder: Como mostrado no documento
+        lastname: Sobrenomes(s):
+        document: Identidade
+        card_number: Número do cartão:
+        expiration: Maturidade:
+        security_code: Código de segurança:
+        cardholder: Titular do cartão:
+        such_as_card: Como aparece no cartão
+        owner_doc: Documento de Identidade do Titular:
+        owner_documenttype: Tipo de documento:
+        owner_documentnumber: Nro. do documento:
+        owner_gender: Gênero:
+        country: País:
+        state: Província:
+        city: Cidade:
+        street: Rua:
+        floor: Andar:
+        department: Departamento:
+        postal_code: ZIP:
+        billing_address: Dirección de facturación:
+        invoice_name: Nombre para facturación:
+        fiscal_document: Documento Fiscal:
+        tax_status: Situación fiscal:
+        fiscal_document_type: Tipo de documento Fiscal:
+        fiscal_document_prefix_verification_code: Dígito de verificación:
+        entity_type: Tipo de entidad:
+        document_issuing_country_code: Código de país del emisor:
+        business_type: Tipo de negocio:
+        economical_activity: Actividad económica:
+        billing_addressnumber: Nro:
+        find_state: Buscar Provincia
+        fill_state: Rellene la Provincia
+        country_code: Código de país:
+        type: Tipo:
+        area_code: Código de área:
+        number: Número:
+        comment: Comentarios:
+        subscribe_newsletter: Subscribir a noticias:
+        travel_assistance: Asistencia en viaje:

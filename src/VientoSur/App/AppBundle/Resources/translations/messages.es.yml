@@ -162,3 +162,47 @@ hotels:
     paying: Usted está pagando
     taxes_and_rates: Impuestos y tasas
     paying_msg: El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda
+    your_accommodation: Su alojamiento
+    invoice: Facturación
+    selected_card: Tarjeta seleccionada
+    labels:
+        name: Nombre(s):
+        name_placeholder: Como aparece en el documento
+        lastname: Apellido(s):
+        document: Documento de Identidad:
+        card_number: Número de tarjeta:
+        expiration: Vencimiento:
+        security_code: Código de seguridad:
+        cardholder: Titular de la tarjeta:
+        such_as_card: Como aparece en la tarjeta
+        owner_doc: Documento de Identidad del titular:
+        owner_documenttype: Tipo de documento:
+        owner_documentnumber: Nro. de documento:
+        owner_gender: Género:
+        country: País:
+        state: Provincia:
+        city: Ciudad:
+        street: Calle:
+        floor: Piso:
+        department: Departamento:
+        postal_code: Código postal:
+        billing_address: Dirección de facturación:
+        invoice_name: Nombre para facturación:
+        fiscal_document: Documento Fiscal:
+        tax_status: Situación fiscal:
+        fiscal_document_type: Tipo de documento Fiscal:
+        fiscal_document_prefix_verification_code: Dígito de verificación:
+        entity_type: Tipo de entidad:
+        document_issuing_country_code: Código de país del emisor:
+        business_type: Tipo de negocio:
+        economical_activity: Actividad económica:
+        billing_addressnumber: Nro:
+        find_state: Buscar Provincia
+        fill_state: Rellene la Provincia
+        country_code: Código de país:
+        type: Tipo:
+        area_code: Código de área:
+        number: Número:
+        comment: Comentarios:
+        subscribe_newsletter: Subscribir a noticias:
+        travel_assistance: Asistencia en viaje:
