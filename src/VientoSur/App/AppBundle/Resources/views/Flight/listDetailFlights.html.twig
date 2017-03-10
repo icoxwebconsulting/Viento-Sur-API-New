@@ -134,7 +134,7 @@
                                                         </span>
                                                         <span class="inline-detail-airport-code-wrapper">
                                                             <span class="inline-detail-airport-code">{{ segment.to }}</span>
-                                                            <span class="inline-detail-airport-hour">06:45</span>
+                                                            <span class="inline-detail-airport-hour">{{ segment.arrival_datetime|date("H:i", false) }}</span>
                                                         </span>
                                                         <span class="inline-detail-airport-description">
                                                             {{ airportCities[segment.to] }} - {{ airportNames[segment.to] }}
@@ -326,7 +326,7 @@
                                                         </span>
                                                         <span class="inline-detail-airport-code-wrapper">
                                                             <span class="inline-detail-airport-code">{{ segment.to }}</span>
-                                                            <span class="inline-detail-airport-hour">06:45</span>
+                                                            <span class="inline-detail-airport-hour">{{ segment.arrival_datetime|date("H:i", false) }}</span>
                                                         </span>
                                                         <span class="inline-detail-airport-description">
                                                             {{ airportCities[segment.to] }} - {{ airportNames[segment.to] }}

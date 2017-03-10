@@ -163,11 +163,11 @@
                         <li class="stops hidden" data-type="stops">
                             <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.scales' | trans }} - VientoSur.net">{{ 'flights.scales' | trans }}</h5>
                             {% for type in facet.values %}
-                                {% set none = {{ 'flights.scale_0' | trans }} %}
-                                {% set one = {{ 'flights.scale_1' | trans }} %}
-                                {% set more_than_one = {{ 'flights.scale_2' | trans }} %}
+                                {% set zero =  'flights.scale_0' | trans  %}
+                                {% set one = 'flights.scale_1' | trans  %}
+                                {% set more_than_one = 'flights.scale_2' | trans %}
                                 {% set names = {
-                                    none: none,
+                                    none: zero,
                                     one: one,
                                     more_than_one: more_than_one
                                 } %}
