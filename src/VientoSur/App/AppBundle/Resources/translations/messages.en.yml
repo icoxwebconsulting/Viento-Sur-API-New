@@ -224,7 +224,7 @@ flights:
     scale_1: 1 Scale
     scale_2: 2 or more
     airlines: Airlines
-    alliances: Alianzas
+    alliances: Alliances
     going: Going
     return: Return
     airports: Airports
