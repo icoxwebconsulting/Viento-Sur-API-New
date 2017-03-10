@@ -47,10 +47,10 @@
 
                                 {% set fieldName = 'adults-number' ~ loop.index %}
                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                    {% set label = 'hotels.labels.lastname' | trans %}
+                                    {% set label = 'hotels.labels.number' | trans %}
                                     {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
                                     <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': 'Número:', 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 

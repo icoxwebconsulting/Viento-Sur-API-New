@@ -4,6 +4,12 @@ index:
     search_text: Pesquisa
     loading: Carregando
     filter: Filtro
+    reservation: Reserva
+    reservation_error: Ocorreu um erro ao fazer sua reserva
+    error_code: Código de erro
+    cancellation_proceed: Seu pedido de cancelamento foi processado
+    cancellation_msg: Cancelamos uma reserva Com as seguintes Características
+    cancellation_number: Número de cancelamento
     search:
         hotel:
            title: Procurar alojamento com as melhores taxas
@@ -68,6 +74,7 @@ hotels:
     show_rooms: Ver quartos
     pictures: Fotos
     map: Mapa
+    entry: Entrada
     order:
         subtotal_price_ascending: Precio: menor a mayor
         subtotal_price_descending:
@@ -251,3 +258,4 @@ flights:
     waiting_time: Tempo de espera
     outgoing: Saída
     incoming: Chegada
+    reservation_data: Dados de reserva

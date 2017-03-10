@@ -3,20 +3,20 @@
         <div class="container bs-docs-container">
             <br>
             <b>
-                <h3>&iexcl;Gracias, {{ reservation.holderName }}&#33; Tu reservaci&oacute;n est&aacute; confirmada.</h3>
+                <h3>{{ 'hotels.thanks_booking' | trans({'%name%': reservation.holderName}) }}</h3>
             </b>
 
             <div class="booking-item-dates-change mb5">
-                <h5><b>Detalle de su compra</b></h5>
+                <h5><b>{{ 'flights.buy_detail' | trans }}</b></h5>
                 <div class="row alert alert-warning">
                     <div class="col-md-offset-1 col-md-10 ">
                         <div class="row" style="font-size: 2rem; padding-bottom: 10px">
-                            <span style="float: left;">Tarifa por adulto</span>
+                            <span style="float: left;">{{ 'flights.rate_per_adult' | trans }}</span>
                             <span style="float: right;">{{ itineraryDetail.price_detail.adult_base | number_format(2, ',', '.') }}</span>
                             <span style="float: right;">$ </span>
                         </div>
                         <div class="row">
-                            <span style="float: left;">Adulto</span>
+                            <span style="float: left;">{{ 'flights.adult' | trans }}</span>
                             <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
                             <span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>
                             <span style="float: right;">$ </span>
@@ -24,7 +24,7 @@
 
                         {% if itineraryDetail.passenger_distribution.children > 0 %}
                             <div class="row">
-                                <span style="float: left;">Niño</span>
+                                <span style="float: left;">{{ 'index.search.hotel.childs' | trans }}</span>
                                 <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.children }})</span>
                                 <span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>
                                 <span style="float: right;">$ </span>
@@ -32,12 +32,12 @@
                         {% endif %}
 
                         <div class="row">
-                            <span style="float: left;">Impuestos y tasas</span>
+                            <span style="float: left;">{{ 'hotels.taxes_and_rates' | trans }}</span>
                             <span style="float: right;">{{ itineraryDetail.price_detail.taxes | number_format(2, ',', '.') }}</span>
                             <span style="float: right;">$ </span>
                         </div>
                         <div class="row">
-                            <span style="float: left;">Cargos</span>
+                            <span style="float: left;">{{ 'flights.charges' | trans }}</span>
                             <span style="float: right;">{{ itineraryDetail.price_detail.fees | number_format(2, ',', '.') }}</span>
                             <span style="float: right;">$ </span>
                         </div>
@@ -52,12 +52,12 @@
                     <div class="col-md-12">
                         <div class="header-outbound">
                             <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
-                            <span> <b>IDA</b> </span>
+                            <span> <b>{{ 'flights.going' | trans }}</b> </span>
                             {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
-                                <span style="float: right">PARADA {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
+                                <span style="float: right">{{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
 
                             {% else %}
-                                <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} PARADAS</span>
+                                <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s</span>
 
                             {% endif %}
                         </div>
@@ -77,7 +77,7 @@
                                 <div class="flight-details-container col-md-5 align-center">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <span class="item-label">Salida</span>
+                                            <span class="item-label">{{ 'flights.outgoing' | trans }}</span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -118,7 +118,7 @@
                                 <div class="flight-details-container col-md-5 align-center">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <span class="item-label">Llegada</span>
+                                            <span class="item-label">{{ 'flights.incoming' | trans }}</span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -145,7 +145,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 alert alert-warning">
-                                    <span style="float: left">Tiempo de espera</span>
+                                    <span style="float: left">{{ 'flights.waiting_time' | trans }}</span>
                                 </div>
                             </div>
                         {% endfor %}
@@ -159,7 +159,7 @@
                         <div class="cold-md-12">
                             <div class="header-outbound">
                                 <span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>
-                                <span> <b>VUELTA</b> </span>
+                                <span> <b>{{ 'flights.return' | trans }}</b> </span>
                                 {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
                                     <span class="pull-right">PARADA {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
                                 {% else %}
@@ -182,7 +182,7 @@
                                     <div class="flight-details-container col-md-5 align-center">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <span class="item-label">Salida</span>
+                                                <span class="item-label">{{ 'flights.outgoing' | trans }}</span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -223,7 +223,7 @@
                                     <div class="flight-details-container col-md-5 align-center">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <span class="item-label">Llegada</span>
+                                                <span class="item-label">{{ 'flights.incoming' | trans }}</span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 alert alert-warning">
-                                        <span style="float: left">Tiempo de espera</span>
+                                        <span style="float: left">{{ 'flights.waiting_time' | trans }}</span>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -266,12 +266,12 @@
                     <tbody>
                     <tr>
                         <th width="100">
-                            Datos de la reserva
+                            {{ 'flights.reservation_data' | trans }}
                         </th>
                         <td>
                             <ul>
-                                <li>N&uacute;mero de reserva: {{ reservation.reservationId }}</li>
-                                <li>Reserva realizada por:  {{ reservation.email }}, {{ reservation.holderName }}</li>
+                                <li>{{ 'hotels.reservation_number' | trans }}: {{ reservation.reservationId }}</li>
+                                <li>{{ 'hotels.reservation_by' | trans }}:  {{ reservation.email }}, {{ reservation.holderName }}</li>
                             </ul>
                         </td>
                     </tr>

@@ -7,14 +7,14 @@
             <tr>
                 <th>
                     <b>
-                        <h3>Ha ocurrido un error al momento de realizar su reservación.</h3>
+                        <h3>{{ 'index.reservation_error' | trans }}.</h3>
                     </b>
                 </th>
             </tr>
             <tr>
                 <td>
                     <b>
-                        Código del error: {{ status }}
+                        {{ 'index.error_code' | trans }}: {{ status }}
                     </b>
                     {% if detail.causes is defined %}
                         <div class="row">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Viento Sur - Reservaci&oacute;n</title>
+    <title>Viento Sur - {{ 'index.reservation' | trans }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .header-top {
@@ -45,7 +45,7 @@
         <tr>
             <th colspan="2">
                 <b>
-                    <h3>Su solicitud de cancelación ha sido procesada.</h3>
+                    <h3>{{ 'index.cancellation_proceed' | trans }}.</h3>
                 </b>
             </th>
         </tr>
@@ -65,7 +65,7 @@
         </tr>
         <tr>
             <th width="15%">
-                Direcci&oacute;n:
+                {{ 'hotels.address' | trans }}:
             </th>
             <td>
                 {{ hotelDetails.location.address }}.
@@ -75,18 +75,18 @@
 
     <table class="table table-bordered">
         <tbody>
-        <caption>Hemos cancelado una reservación con las siguientes características: </caption>
+        <caption>{{ 'index.cancellation_msg' | trans }}: </caption>
         <tr>
             <th width="20%">
-                Tu reserva:
+                {{ 'hotels.your_reservation' | trans }}:
             </th>
             <td>
-                {{ reservationDetails.night_count }} noche(s). {{ reservationDetails.rooms|length }} Habitacion(es).
+                {{ reservationDetails.night_count }} {{ 'hotels.night' | trans }}(s). {{ reservationDetails.rooms|length }} {{ 'index.search.hotel.room' | trans }}(s).
             </td>
         </tr>
         <tr>
             <th>
-                Entrada:
+                {{ 'hotels.entry' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.checkin_date|date("d/m/Y") }}
@@ -94,7 +94,7 @@
         </tr>
         <tr>
             <th>
-                Salida:
+                {{ 'flights.outgoing' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.checkout_date|date("d/m/Y") }}
@@ -102,7 +102,7 @@
         </tr>
         <tr>
             <th>
-                N&uacute;mero de reserva:
+                {{ 'hotels.reservation_number' | trans }}:
             </th>
             <td>
                 {{ reservationDetails.id }}
@@ -110,19 +110,19 @@
         </tr>
         <tr>
             <th>
-                Habitaci&oacute;n(es):
+                {{ 'index.search.hotel.room' | trans }}(s):
             </th>
             <td>
                 <ul>
                     {% for room in reservationDetails.rooms %}
-                        <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} Adulto(s) {% if room.children > 0 %}{{ room.children }} Niño(s){% endif %}</li>
+                        <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} {{ 'flights.adult' | trans }}(s) {% if room.children > 0 %}{{ room.children }} {{ 'index.search.hotel.childs' | trans }}(s){% endif %}</li>
                     {% endfor %}
                 </ul>
             </td>
         </tr>
         <tr>
             <th>
-                Número de cancelación
+                {{ 'can' | trans }}
             </th>
             <td>
                 <li>{{ idCancellation }}</li>

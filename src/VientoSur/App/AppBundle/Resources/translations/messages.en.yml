@@ -4,6 +4,12 @@ index:
     search_text: Search
     loading: Loading
     filter: Filter
+    reservation: Reservation
+    reservation_error: An error occurred when making your reservation
+    error_code: Error code
+    cancellation_proceed: Your cancellation request has been processed
+    cancellation_msg: We have canceled a reservation with the following characteristics
+    cancellation_number: Cancellation Number
     search:
         hotel:
            title: Find Hotels with the best rates
@@ -67,6 +73,7 @@ hotels:
     show_rooms: Show rooms
     pictures: Pictures
     map: Mapa
+    entry: Entry
     order:
         subtotal_price_ascending: Price: ascending
         subtotal_price_descending: Price: descending
@@ -251,3 +258,4 @@ flights:
     waiting_time: Waiting time
     outgoing: Outgoing
     incoming: Llegada
+    reservation_data: Reservation data
