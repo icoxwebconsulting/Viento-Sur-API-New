@@ -41,7 +41,7 @@
                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
                                     {% set label = 'hotels.labels.type' | trans %}
                                     <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': labels, 'attr': {'class': 'form-control'}}) }}
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 {% endif %}
 
