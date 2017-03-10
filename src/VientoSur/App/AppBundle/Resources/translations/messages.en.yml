@@ -188,7 +188,7 @@ hotels:
         owner_documentnumber: Document number:
         owner_gender: Gender:
         country: Country
-        state: Provincia:
+        state: State:
         city: City:
         street: Street:
         floor: Floor:
@@ -220,9 +220,9 @@ flights:
     not_found: No flights were found available
     flights_from_to: Flights from %origin% to %destination%
     scales: Scales
-    scale_0: Directo
-    scale_1: 1 Escala
-    scale_2: 2 o más escalas
+    scale_0: Direct
+    scale_1: 1 Scale
+    scale_2: 2 or more
     airlines: Airlines
     alliances: Alianzas
     going: Going
@@ -244,18 +244,18 @@ flights:
         name_placeholder: As it appears in the travel document
         residence: Residence:
         birthdate: Birthdate:
-        child: Niño:
+        child: Child:
     payment_msg: To select a card click on it, in the case of a bank a list will be displayed with the cards
     quota: Cuota:
     invoice_data: Invoice data
     select_state: Select state
     business_name: Business Name
     business_name_placeholder: Or person name
-    buy_detail: Detalle de su compra
-    rate_per_adult: Tarifa por adulto
+    buy_detail: Purchase Detail
+    rate_per_adult: Rate per adult
     charges: Charges
     stop: Stop
     waiting_time: Waiting time
     outgoing: Outgoing
-    incoming: Llegada
+    incoming: Incoming
     reservation_data: Reservation data
