@@ -2,6 +2,10 @@
 
 $(document).ready(function () {
 
+    $('.top-user-area .language').on('click', function () {
+        window.location = this.href;
+    });
+
     $('html').niceScroll({
         cursorcolor: "#000",
         cursorborder: "0px solid #fff",
