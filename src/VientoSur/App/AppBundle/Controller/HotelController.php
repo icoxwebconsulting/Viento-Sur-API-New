@@ -329,7 +329,7 @@ class HotelController extends Controller
             }
         }
 
-        $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution);
+        $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution, $lang);
         $viewParams = array(
             'items' => $results,
             'hotelsDetails' => $hotelsDetails,
@@ -435,7 +435,7 @@ class HotelController extends Controller
         }
 
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
-        $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution);
+        $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution, $lang);
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                 'dispoHotel' => $dispoHotel,
@@ -686,7 +686,7 @@ class HotelController extends Controller
             }
         }
 
-        $travellers = $this->get('booking_helper')->getSearchText($checkin, $checkout, $distribution);
+        $travellers = $this->get('booking_helper')->getSearchText($checkin, $checkout, $distribution, $lang);
 
         return array(
             'formBooking' => $formBooking,

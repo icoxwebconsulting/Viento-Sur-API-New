@@ -46,7 +46,7 @@ index:
     contact: Contato
     consult: Consultar
     footer_copy: Operador responsável: Viento Sur Operadores Turísticos leg. 10380 Disp. 1295/98
-    consult:
+    popup:
         text: Consultas
         name: Nome e sobrenome
         cancel: Cancelar

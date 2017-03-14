@@ -46,7 +46,7 @@ index:
     contact: Contact
     consult: Consult
     footer_copy: Responsible Operator: Viento Sur Tour Operators leg. 10380 Disp. 1295/98
-    consult:
+    popup:
         text: Consults
         name: Name and Surname
         cancel: Cancel

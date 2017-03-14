@@ -13,31 +13,57 @@ class BookingHelper
 
     }
 
-    public function getSearchText($checkin_date, $checkout_date, $distribution)
+    public function getSearchText($checkin_date, $checkout_date, $distribution, $lang = 'es')
     {
         $checkin_date = new \DateTime($checkin_date);
         $checkout_date = new \DateTime($checkout_date);
 
-        $months = [
-            'Jan' => 'Ene',
-            'Feb' => 'Feb',
-            'Mar' => 'Mar',
-            'Apr' => 'Abr',
-            'May' => 'May',
-            'Jun' => 'Jun',
-            'Jul' => 'Jul',
-            'Aug' => 'Ago',
-            'Sep' => 'Sep',
-            'Oct' => 'Oct',
-            'Nov' => 'Nov',
-            'Dec' => 'Dic'
+        $trad = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        $transText = [
+            'entry' => 'Entrada',
+            'exit' => 'Salida',
+            'adults' => 'Adulto(s)',
+            'childs' => 'Menor(es)'
         ];
 
-        $str = '<b>Entrada:</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '<br />';
-        $str .= ' <b>Salida:</b> ' . $checkout_date->format('d') . ' ' . $months[$checkin_date->format('M')];
+        if ($lang == 'en') {
+            $trad = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            $transText = [
+                'entry' => 'Entry',
+                'exit' => 'Exit',
+                'adults' => 'Adult(s)',
+                'childs' => 'Child(s)'
+            ];
+        } else if ($lang == 'pt') {
+            $trad = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            $transText = [
+                'entry' => 'Entrada',
+                'exit' => 'Saída',
+                'adults' => 'Adulto(s)',
+                'childs' => 'Criança(s)'
+            ];
+        }
+
+        $months = [
+            'Jan' => $trad[0],
+            'Feb' => $trad[1],
+            'Mar' => $trad[2],
+            'Apr' => $trad[3],
+            'May' => $trad[4],
+            'Jun' => $trad[5],
+            'Jul' => $trad[6],
+            'Aug' => $trad[7],
+            'Sep' => $trad[8],
+            'Oct' => $trad[9],
+            'Nov' => $trad[10],
+            'Dec' => $trad[11]
+        ];
+
+        $str = '<b>' . $transText['entry'] . ':</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '<br />';
+        $str .= ' <b>' . $transText['exit'] . ':</b> ' . $checkout_date->format('d') . ' ' . $months[$checkin_date->format('M')];
         $travellers = $this->processDistribution($distribution);
-        $str .= '<br /> <b>' . $travellers['adults'] . ' adulto' . (($travellers['adults'] > 1) ? 's' : '') . '</b>';
-        $str .= (($travellers['childs'] > 0) ? $travellers['childs'] . ' menor' . (($travellers['childs'] > 1) ? 'es' : '') : '');
+        $str .= '<br /> <b>' . $travellers['adults'] . ' ' . $transText['adults'] . (($travellers['adults'] > 1) ? 's' : '') . '</b>';
+        $str .= (($travellers['childs'] > 0) ? $travellers['childs'] : '');
 
         return $str;
     }
