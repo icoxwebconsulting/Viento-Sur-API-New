@@ -22,7 +22,7 @@ class IndexController extends Controller
      * @Route("/{_locale}", name="homepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         return array(
             'isTest' => $this->getParameter('is_test')

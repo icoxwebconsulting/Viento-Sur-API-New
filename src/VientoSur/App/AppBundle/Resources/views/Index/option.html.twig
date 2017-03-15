@@ -31,24 +31,120 @@
             {% endif %}
 
             <ul class="list nav-drop-menu">
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Argentina" title="Argentina" data-cc="ar" /><span class="right">Argentina</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-bo.png') }}" alt="Bolivia" title="Bolivia" data-cc="bo" /><span class="right">Bolivia</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-cl.png') }}" alt="Chile" title="Chile" data-cc="bo" /><span class="right">Chile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-co.png') }}" alt="Colombia" title="Colombia" data-cc="co" /><span class="right">Colombia</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-cr.png') }}" alt="Costa Rica" title="Costa Rica" data-cc="cr" /><span class="right">Costa Rica</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-cu.png') }}" alt="Cuba" title="Cuba" data-cc="cu" /><span class="right">Cuba</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ec.png') }}" alt="Ecuador" title="Ecuador" data-cc="ec" /><span class="right">Ecuador</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-sv.png') }}" alt="El Salvador" title="El Salvador" data-cc="sv" /><span class="right">El Salvador</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-gt.png') }}" alt="Guatemala" title="Guatemala" data-cc="gt" /><span class="right">Guatemala</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ht.png') }}" alt="Haití" title="Haití" data-cc="ht" /><span class="right">Haití</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-hn.png') }}" alt="Honduras" title="Honduras" data-cc="hn" /><span class="right">Honduras</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-mx.png') }}" alt="México" title="México" data-cc="mx" /><span class="right">México</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ni.png') }}" alt="Nicaragua" title="Nicaragua" data-cc="ni" /><span class="right">Nicaragua</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-pa.png') }}" alt="Panamá" title="Panamá" data-cc="pa" /><span class="right">Panamá</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-py.png') }}" alt="Paraguay" title="Paraguay" data-cc="py" /><span class="right">Paraguay</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-pe.png') }}" alt="Perú" title="Perú" data-cc="pe" /><span class="right">Perú</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-do.png') }}" alt="R Dominicana" title="R Dominicana" data-cc="do" /><span class="right">R Dominicana</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-uy.png') }}" alt="Uruguay" title="Uruguay" data-cc="uy" /><span class="right">Uruguay</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ve.png') }}" alt="Venezuela" title="Venezuela" data-cc="ve" /><span class="right">Venezuela</span>
+                    </a>
+                </li>
+
                 {% if app.request.locale != 'es' %}
                 <li>
                     <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" /><span class="right">Español</span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" /><span class="right">Español </span>
                     </a>
                 </li>
                 {% endif %}
                 {% if app.request.locale != 'en' %}
                 <li>
                     <a title="English" href="{{ path('homepage', {'_locale': 'en'}) }}" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English</span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English </span>
                     </a>
                 </li>
                 {% endif %}
                 {% if app.request.locale != 'pt' %}
                 <li>
                     <a title="Portuguese" href="{{ path('homepage', {'_locale': 'pt'}) }}" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese</span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese </span>
                     </a>
                 </li>
                 {% endif %}
