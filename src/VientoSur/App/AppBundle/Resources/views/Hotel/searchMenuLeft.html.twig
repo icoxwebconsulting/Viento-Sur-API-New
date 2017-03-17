@@ -1128,15 +1128,17 @@
                     {% if facet.criteria == 'zones' %}
                         <li class="zones hidden" data-type="zones">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_zones' | trans }} - VientoSur.net">{{ 'hotels.search_menu.zones' | trans }}</h5>
-                            {% for zone in facet.values %}
-                                <div class="checkbox {% if loop.index > 5 %}zones-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if zone.selected %}checked="checked"{% endif %} value="{{ zone.value }}" />
-                                        {{ zone.label }}
-                                        <span class="pull-right">({{ zone.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
+                            {% if facet.values is defined %}
+                                {% for zone in facet.values %}
+                                    <div class="checkbox {% if loop.index > 5 %}zones-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
+                                        <label>
+                                            <input class="i-check" type="checkbox" {% if zone.selected %}checked="checked"{% endif %} value="{{ zone.value }}" />
+                                            {{ zone.label }}
+                                            <span class="pull-right">({{ zone.count }})</span>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             <div class="checkbox">
                                 <label style="color:#008CD1" class="zones-view-toggle" data-type="zones">{{ 'hotels.search_menu.view_more' | trans }} <i class="glyphicon glyphicon-chevron-down"></i></label>
                                 <label style="color:#008CD1" class="zones-view-toggle hide" data-type="zones">{{ 'hotels.search_menu.view_less' | trans }} <i class="glyphicon glyphicon-chevron-up"></i></label>
