@@ -402,7 +402,6 @@ class HotelController extends Controller
     }
 
     /**
-     *
      * @Route("/show/{idHotel}/availabilities/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id", defaults={"latitude": -0.0, "longitude": -0.0})
      * @Method("GET")
      */
