@@ -244,6 +244,9 @@
                                 {% endif %}
                             </div>
 
+                            {{ form_widget(attribute(formNewPay.payment, 'id0'), { 'attr': {'class': 'hidden'} }) }}
+                            {{ form_widget(attribute(formNewPay.payment, 'amount0'), { 'attr': {'class': 'hidden'} }) }}
+
                             {##}
                             {% if formNewPay.payment.country is defined %}
                                 <hr/>

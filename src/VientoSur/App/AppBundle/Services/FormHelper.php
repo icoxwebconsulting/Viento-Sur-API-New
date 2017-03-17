@@ -77,7 +77,10 @@ class FormHelper
                             //TODO: chequear necesidad de overriden information
                             if (is_array($item) && $clave != 'overridden_information') {
                                 $this->processSimpleElement($key, $item);
-                            }
+                           } else if ($clave == 'overridden_information'){
+                                $this->processNestedElement($key, $item['fees']);
+                                $this->processSimpleElement($key, $item['shown_total_amount']);
+                          }
                         }
                     }
                 } else {
@@ -123,6 +126,12 @@ class FormHelper
 
                     case 'payment':
                         $temp = $this->fillSimpleElement($key, $option);
+                        if(isset($temp['overridden_information'])) {
+                            $temp['overridden_information']['fees'] = [
+//                                'id' => null,
+//                                'amount' => null
+                            ];
+                        }
                         if (isset($temp['credit_card'])) {
                             unset($temp['credit_card']['number']);
                             unset($temp['credit_card']['expiration']);
@@ -239,7 +248,11 @@ class FormHelper
                                 if ($key2 == 'expiration') {
                                     $temp2[$key2] = $this->expDate;
                                 } else {
-                                    $temp2[$key2] = $this->dataFill[$key2];
+                                    if($key2 != 'shown_total_amount'){
+                                        $temp2[$key2] = $this->dataFill[$key2];
+                                    } else {
+                                        $temp2[$key2] = null;
+                                    }
                                 }
                             } else {
                                 if (is_array($item)) {

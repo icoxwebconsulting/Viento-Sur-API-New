@@ -32,7 +32,7 @@
         <tr>
             <th width="15%">{{ 'hotels.description' | trans }}</th>
             <td class="text-justify">
-                {{ hotelDetails.information.[app.request.locale] }}
+                {{ hotelDetails.information.es }}
             </td>
         </tr>
         <tr>
@@ -93,7 +93,7 @@
             </th>
             <td>
                 {% for room in reservationDetails.rooms %}
-                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.[app.request.locale] }}, {% endif %}{{ room.adults }} {{ 'index.search.hotel.adults' | trans }}(s) {% if room.children > 0 %}{{ room.children }} {{ 'index.search.hotel.childs' | trans }}(s){% endif %}</li>
+                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} {{ 'index.search.hotel.adults' | trans }}(s) {% if room.children > 0 %}{{ room.children }} {{ 'index.search.hotel.childs' | trans }}(s){% endif %}</li>
                 {% endfor %}
             </td>
         </tr>
