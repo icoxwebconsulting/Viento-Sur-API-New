@@ -385,10 +385,25 @@ class HotelController extends Controller
         return new JsonResponse(array("status" => 'success'));
     }
 
+    /**
+     * @Route("/show/{idHotel}/availabilities/{checkin_date}/{checkout_date}/{distribution}", name="viento_sur_app_app_homepage_show_hotel_id_short")
+     * @Method("GET")
+     */
+    public function showHotelIdAvailabilitiesShortAction(Request $request, $idHotel, $checkin_date, $checkout_date, $distribution)
+    {
+        return $this->redirectToRoute('viento_sur_app_app_homepage_show_hotel_id', array(
+            'idHotel' => $idHotel,
+            'checkin_date' => $checkin_date,
+            'checkout_date' => $checkout_date,
+            'distribution' => $distribution,
+            'latitude' => '-0',
+            'longitude' => '-0'
+        ));
+    }
 
     /**
      *
-     * @Route("/show/{idHotel}/availabilities/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id")
+     * @Route("/show/{idHotel}/availabilities/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_hotel_id", defaults={"latitude": -0.0, "longitude": -0.0})
      * @Method("GET")
      */
     public function showHotelIdAvailabilitiesAction(Request $request, $idHotel, $checkin_date, $checkout_date, $distribution, $latitude, $longitude)
@@ -409,6 +424,11 @@ class HotelController extends Controller
 
         $despegar = $this->get('despegar');
         $dispoHotel = $despegar->getHotelsAvailabilitiesDetail($idHotel, $urlParams);
+        if(isset($dispoHotel['code'])) {
+            return $this->render('VientoSurAppAppBundle:Hotel:errorHotel.html.twig', array(
+            )
+        );
+        }
         $session->set('hotelAvailabilities', json_encode($dispoHotel));
 
         $hotelDetails = $despegar->getHotelsDetails(array(
