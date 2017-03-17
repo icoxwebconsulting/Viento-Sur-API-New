@@ -24,6 +24,9 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $country = $request->get('country', null);
+        $this->get('session')->set('country', ($country) ? $country : 'ar');
+
         return array(
             'isTest' => $this->getParameter('is_test')
         );
@@ -99,7 +102,7 @@ class IndexController extends Controller
                         'value' => $item["description"],
                         'data' => [
                             'category' => 'Hoteles',
-                            'id' => 'HOTEL-'  . $item["hotel_id"]
+                            'id' => 'HOTEL-' . $item["hotel_id"]
                         ]
                     ];
                 }
@@ -128,7 +131,7 @@ class IndexController extends Controller
         $response = [];
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {
-                $temp = explode(',',$item["description"]);
+                $temp = explode(',', $item["description"]);
                 $response[] = [
                     'value' => $temp[0],
                     'data' => $item["hotel_id"]
@@ -239,15 +242,15 @@ class IndexController extends Controller
     public function pdfTestAction(Request $request)
     {
         $html = $this->renderView('VientoSurAppAppBundle:Email:booking2.html.twig', array(
-            'some'  => 1
+            'some' => 1
         ));
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
             array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'inline; filename="reservacion.pdf"'
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="reservacion.pdf"'
             )
         );
     }
