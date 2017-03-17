@@ -31,14 +31,14 @@
                 <div class="form-group">
                     <label for="adultsPassengers">{{ 'index.search.hotel.adults' | trans }}</label>
                     <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
-                        <option value="1" selected="selected">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
+                        <option value="1" {% if adults == 1 %}selected="selected"{% endif %}>1</option>
+                        <option value="2" {% if adults == 2 %}selected="selected"{% endif %}>2</option>
+                        <option value="3" {% if adults == 3 %}selected="selected"{% endif %}>3</option>
+                        <option value="4" {% if adults == 4 %}selected="selected"{% endif %}>4</option>
+                        <option value="5" {% if adults == 5 %}selected="selected"{% endif %}>5</option>
+                        <option value="6" {% if adults == 6 %}selected="selected"{% endif %}>6</option>
+                        <option value="7" {% if adults == 7 %}selected="selected"{% endif %}>7</option>
+                        <option value="8" {% if adults == 8 %}selected="selected"{% endif %}>8</option>
                     </select>
                 </div>
             </div>

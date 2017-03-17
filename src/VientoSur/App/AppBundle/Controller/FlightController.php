@@ -205,7 +205,8 @@ class FlightController extends Controller
             'airportNames' => $airportData,
             'airportCities' => $airportCity,
             'total' => $total,
-            'page' => $page
+            'page' => $page,
+            'adults' => $adults
         ];
 
         if ($request->isXmlHttpRequest()) {
