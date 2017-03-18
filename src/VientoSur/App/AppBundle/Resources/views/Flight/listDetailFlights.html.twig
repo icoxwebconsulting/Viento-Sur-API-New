@@ -1,5 +1,5 @@
 {% if items.message is defined %}
-    <li>{{ 'flights.not_found' | trans }}</li>
+    <li class="mfont">{{ 'flights.not_found' | trans }}</li>
 {% elseif items.items|length > 0 %}
     {% for item in items.items %}
         <li>
@@ -418,4 +418,6 @@
             </form>
         </li>
     {%endfor%}
-{%endif%}
+{% else %}
+    <li class="mfont">{{ 'flights.not_found' | trans }}</li>
+{% endif %}

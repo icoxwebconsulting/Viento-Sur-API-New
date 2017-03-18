@@ -127,9 +127,9 @@ class FlightController extends Controller
 
         $total = ceil($results['paging']['total'] / 25);
 
+        $airlines = [];
+        $airports = [];
         if (isset($results['items'])) {
-            $airlines = [];
-            $airports = [];
             foreach ($results['items'] as $item) {
                 if (isset($item['validating_carrier'])) {
                     if (!in_array($item['validating_carrier'], $airlines)) {
@@ -141,10 +141,10 @@ class FlightController extends Controller
                         if (!in_array($segment['airline'], $airlines)) {
                             $airlines[] = $segment['airline'];
                         }
-                        if(!in_array($segment['from'], $airports)) {
+                        if (!in_array($segment['from'], $airports)) {
                             $airports[] = $segment['from'];
                         }
-                        if(!in_array($segment['to'], $airports)) {
+                        if (!in_array($segment['to'], $airports)) {
                             $airports[] = $segment['to'];
                         }
                     }
@@ -154,48 +154,55 @@ class FlightController extends Controller
                         if (!in_array($segment['airline'], $airlines)) {
                             $airlines[] = $segment['airline'];
                         }
-                        if(!in_array($segment['from'], $airports)) {
+                        if (!in_array($segment['from'], $airports)) {
                             $airports[] = $segment['from'];
                         }
-                        if(!in_array($segment['to'], $airports)) {
+                        if (!in_array($segment['to'], $airports)) {
                             $airports[] = $segment['to'];
                         }
                     }
                 }
             }
 
-            foreach ($results['facets'][1]['values'] as $detail) {
-                if (!in_array($detail['value'], $airlines)) {
-                    $airlines[] = $detail['value'];
+            if (count($results['facets']) > 0) {
+                foreach ($results['facets'][1]['values'] as $detail) {
+                    if (!in_array($detail['value'], $airlines)) {
+                        $airlines[] = $detail['value'];
+                    }
                 }
-            }
 
-            foreach ($results['facets'][3]['values'] as $detail) {
-                if (!in_array($detail['value'], $airports)) {
-                    $airports[] = $detail['value'];
+                foreach ($results['facets'][3]['values'] as $detail) {
+                    if (!in_array($detail['value'], $airports)) {
+                        $airports[] = $detail['value'];
+                    }
                 }
-            }
 
-            foreach ($results['facets'][4]['values'] as $detail) {
-                if (!in_array($detail['value'], $airports)) {
-                    $airports[] = $detail['value'];
+                foreach ($results['facets'][4]['values'] as $detail) {
+                    if (!in_array($detail['value'], $airports)) {
+                        $airports[] = $detail['value'];
+                    }
                 }
             }
         }
 
         $em = $this->getDoctrine()->getManager();
-        $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+
         $airlineData = [];
-        foreach ($airlineResults as $ar) {
-            $airlineData[$ar->getId()] = $ar->getName();
+        if (!empty($airlines)) {
+            $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+            foreach ($airlineResults as $ar) {
+                $airlineData[$ar->getId()] = $ar->getName();
+            }
         }
 
-        $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
         $airportData = [];
         $airportCity = [];
-        foreach ($airportResults as $ap) {
-            $airportData[$ap->getCode()] = $ap->getName();
-            $airportCity[$ap->getCode()] = $ap->getCity();
+        if (!empty($airports)) {
+            $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
+            foreach ($airportResults as $ap) {
+                $airportData[$ap->getCode()] = $ap->getName();
+                $airportCity[$ap->getCode()] = $ap->getCity();
+            }
         }
 
         $viewParams = [

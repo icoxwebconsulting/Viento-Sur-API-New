@@ -154,7 +154,7 @@
 
         <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
     </form>
-    {% if items.facets is defined %}
+    {% if items.facets is defined and items.facets is not empty %}
         <aside class="booking-filters">
             <h3 title="{{ 'flights.flights' | trans }} - {{ 'hotels.search_menu.filters' | trans }} - VientoSur.net">{{ 'hotels.search_menu.filter_by' | trans }}:</h3>
             <ul class="list booking-filters-list">
@@ -321,22 +321,24 @@
                     {% endif %}
                 {% endfor %}
 
-                {% set facet = items.facets[0] %}
-                {% if facet.criteria == 'total_price_range' %}
-                    <li class="total_price_range hidden" data-type="total_price_range">
-                        <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h5>
-                        {% if app.request.get('total_price_range') is empty %}
-                            <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
-                                   data-max="{{ facet.max|round }}"/>
-                        {% else %}
-                            {% set fromTo = app.request.get('total_price_range')|split('-') %}
-                            <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
-                                   data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
-                                   data-to="{{ fromTo[1] }}"/>
-                        {% endif %}
-                        <br/>
-                        <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                    </li>
+                {% if items.facets[0] is defined %}
+                    {% set facet = items.facets[0] %}
+                    {% if facet.criteria == 'total_price_range' %}
+                        <li class="total_price_range hidden" data-type="total_price_range">
+                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h5>
+                            {% if app.request.get('total_price_range') is empty %}
+                                <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}"/>
+                            {% else %}
+                                {% set fromTo = app.request.get('total_price_range')|split('-') %}
+                                <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
+                                       data-to="{{ fromTo[1] }}"/>
+                            {% endif %}
+                            <br/>
+                            <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
+                        </li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </aside>
