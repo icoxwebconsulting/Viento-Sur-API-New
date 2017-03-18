@@ -217,7 +217,7 @@ hotels:
 flights:
     flights: Vuelos
     flight: Vuelo
-    not_found: No se encontraron vuelos disponibles
+    not_found: ¡Ups! Para la fecha y ruta indicada, no se encontraron vuelos disponibles puedes intentar realizar otra búsqueda
     flights_from_to: Vuelos de %origin% a %destination%
     scales: Escalas
     scale_0: Directo

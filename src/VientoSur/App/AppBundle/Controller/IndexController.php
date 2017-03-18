@@ -20,13 +20,14 @@ class IndexController extends Controller
 {
     /**
      * @Route("/{_locale}", name="homepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
+     * * @Route("//{_locale}", name="example_route_double_slash", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction(Request $request)
     {
         $country = $request->get('country', null);
         $this->get('session')->set('country', ($country) ? $country : 'ar');
-
+        $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
         return array(
             'isTest' => $this->getParameter('is_test')
         );

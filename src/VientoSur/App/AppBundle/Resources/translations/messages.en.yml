@@ -217,7 +217,7 @@ hotels:
 flights:
     flights: Flights
     flight: Flight
-    not_found: No flights were found available
+    not_found: Ops! For the date and destiny no flights were found available
     flights_from_to: Flights from %origin% to %destination%
     scales: Scales
     scale_0: Direct

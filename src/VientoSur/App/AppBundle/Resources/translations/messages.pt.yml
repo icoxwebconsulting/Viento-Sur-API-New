@@ -217,7 +217,7 @@ hotels:
 flights:
     flights: Voos
     flight: Voo
-    not_found: Não existem voos disponíveis
+    not_found: Ups! para a data e rota indicada não existem voos disponíveis
     flights_from_to: Voos de %origin% para %destination%
     scales: Balança
     scale_0: Directo
