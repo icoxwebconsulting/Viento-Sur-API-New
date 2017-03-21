@@ -20,7 +20,6 @@ class IndexController extends Controller
 {
     /**
      * @Route("/{_locale}", name="homepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
-     * * @Route("//{_locale}", name="example_route_double_slash", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction(Request $request)
