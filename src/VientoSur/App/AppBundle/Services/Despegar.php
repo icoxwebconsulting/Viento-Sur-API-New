@@ -73,10 +73,10 @@ class Despegar
         //step4
         curl_close($cSession);
         // do anything you want with your response
-        //$results = json_decode($results, true);
-//        if (isset($results['code']) && $results['code'] == 403) {
-//            return false;
-//        }
+        $results = json_decode($results, true);
+        if (isset($results['code']) && $results['code'] == 403) {
+            return false;
+        }
         return $results;
     }
 
