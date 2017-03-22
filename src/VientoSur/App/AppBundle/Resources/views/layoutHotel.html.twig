@@ -3,7 +3,7 @@
 {% block title %}Viento Sur{% endblock %}
 
 {% block stylesheets %}
-    <link href="{{ asset('css/ionRangeSlider.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/ionRangeSlider.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
 {% block javascripts %}
     <script src="{{ asset('js/hotels.js') }}"></script>
     {#<script src="{{ asset('bundles/vientosurappapp/js/AutoComplete/jquery.mockjax.js')}}" ></script>#}
-    <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/nicescroll.js') }}"></script>
     <script src="{{ asset('js/dropit.js') }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/ionrangeslider.js') }}"></script>
@@ -28,7 +28,7 @@
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootpag/lib/jquery.bootpag.min.js') }}"></script>
     <script>
-        $(function() {
+        $(function () {
             var url = Routing.generate('search_hotel_autocomplete');
             $('#autocomplete').on('click', function () {
                 $(this).select();
@@ -68,7 +68,7 @@
 
 
         $('#submitConsult').find('.modal-footer #confirmConsult').on('click', function () {
-            if ($('#observacion').val()==="") {
+            if ($('#observacion').val() === "") {
                 // invalid
                 $("#requerido").text("Debe indicar una observación");
                 return false;
@@ -84,7 +84,7 @@
                     type: 'post',
                     url: url,
                     data: data,
-                    success: function(data) {
+                    success: function (data) {
                         //$('#submitConsult').modal('hide');
                         //location.reload();
                         $('#submitConsult').modal('hide');
@@ -108,10 +108,12 @@
                 defaultDate: "+1w",
                 numberOfMonths: 2,
                 minDate: 0,
-                onClose: function( selectedDate ) {
+                onClose: function (selectedDate) {
                     var minDate = $(this).datepicker('getDate');
-                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
-                    $( "#field-hotel-checkout" ).datepicker( "option", "minDate", newMin );
+                    if (minDate) {
+                        var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                        $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
+                    }
                 }
             });
             var to = $("#field-hotel-checkout").datepicker({
@@ -125,10 +127,11 @@
             });
         });
     </script>
-    <script>(function(d, s, id) {
+    <script>(function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
+            js = d.createElement(s);
+            js.id = id;
             js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.7";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));

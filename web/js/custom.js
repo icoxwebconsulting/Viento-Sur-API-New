@@ -64,7 +64,7 @@ $(document).ready(function () {
 
 
 $('ul.slimmenu').slimmenu({
-    resizeWidth: '992',
+    resizeWidth: '300',
     collapserTitle: 'Main Menu',
     animSpeed: 250,
     indentChildren: true,

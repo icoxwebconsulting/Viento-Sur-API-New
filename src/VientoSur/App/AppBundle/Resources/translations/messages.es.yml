@@ -53,7 +53,7 @@ index:
         send: Enviar
 hotels:
     not_found: No se encontraron hoteles disponibles
-    last_room: Última habitaci&oacute;n disponible
+    last_room: Última habitación disponible
     lasts: Últimas
     choose_room: Elige habitación
     room_per_night: Habitación por noche
