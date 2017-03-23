@@ -363,7 +363,22 @@
                             <div class="col-md-4">
                                 {{ form_row(formNewPay.contact.email, {'label': 'Email:', 'attr': {'class': 'form-control'}}) }}
                             </div>
-                            <div class="col-md-6 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_confirm' | trans }}.</div></div>
+                            <div class="col-md-4">
+                                <div>
+                                    <label for="form_contact_info_email-" class="required">Confirme su Email:</label>
+                                    <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-8 top-buffer hide" id="errorEmail">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    Las direcciones de email no coinciden.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_confirm' | trans }}.</div></div>
                         </div>
                     </div>
                 </div>
