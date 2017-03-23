@@ -106,4 +106,19 @@ $(document).ready(function () {
     $('#autocomplete-state, #autocomplete-city').on("click", function () {
         $(this).select();
     });
+
+    $('#form_contact_info_email-1').on('blur', function () {
+        if($('#form_contact_info_email-').val() != $('#form_contact_info_email-1').val()) {
+            $('#errorEmail').removeClass('hide');
+        } else {
+            $('#errorEmail').addClass('hide');
+        }
+    });
+
+    $('.booking-form').on('submit', function (event) {
+        if($('#form_contact_info_email-').val() != $('#form_contact_info_email-1').val()) {
+            event.preventDefault();
+            $('#errorEmail').removeClass('hide');
+        }
+    })
 });

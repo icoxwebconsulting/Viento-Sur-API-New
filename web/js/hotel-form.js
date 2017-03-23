@@ -137,4 +137,19 @@ $(document).ready(function () {
     $('.list-group-item').on('click', function () {
         $($(this).find('input:radio')[0]).prop("checked", true);
     })
+
+    $('#form_contact_info_email-1').on('blur', function () {
+        if($('#form_contact_email').val() != $('#form_contact_info_email-1').val()) {
+            $('#errorEmail').removeClass('hide');
+        } else {
+            $('#errorEmail').addClass('hide');
+        }
+    });
+    
+    $('.booking-form').on('submit', function (event) {
+        if($('#form_contact_email').val() != $('#form_contact_info_email-1').val()) {
+            event.preventDefault();
+            $('#errorEmail').removeClass('hide');
+        }
+    })
 });

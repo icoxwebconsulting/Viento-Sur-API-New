@@ -194,7 +194,7 @@ hotels:
         city: Ciudad:
         street: Calle:
         floor: Piso:
-        department: Departamento:
+        department: Depto:
         postal_code: Código postal:
         billing_address: Dirección de facturación:
         invoice_name: Nombre para facturación:
@@ -211,7 +211,7 @@ hotels:
         fill_state: Rellene la Provincia
         country_code: Código de país:
         type: Tipo:
-        area_code: Código de área:
+        area_code: Cód. área:
         number: Número:
         comment: Comentarios:
         subscribe_newsletter: Subscribir a noticias:
