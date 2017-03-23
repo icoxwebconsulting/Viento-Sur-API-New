@@ -126,6 +126,34 @@
                 from.datepicker("option", "maxDate", getDate(this));
             });
         });
+        function moveProgressBar(elem) {
+            var width = 1;
+            var id = setInterval(frame, 40);
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                }
+            }
+        }
+        $('#submitHotel').on('click', function () {
+            var form = $('#search-hotels')[0];
+            if(form.checkValidity()){
+                $('#search-hotels').hide();
+                $('#searchHotelMsg').removeClass('hide');
+                moveProgressBar($('#hotel_pb')[0]);
+            }
+        });
+        $('#submitHotel, #submitFlight').on('click', function () {
+            var form = $('#search-flights')[0];
+            if(form.checkValidity()){
+                $('#search-flights').hide();
+                $('#searchFlightMsg').removeClass('hide');
+                moveProgressBar($('#flight_pb')[0]);
+            }
+        });
     </script>
     <script>(function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];

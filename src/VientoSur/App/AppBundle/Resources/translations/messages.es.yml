@@ -23,6 +23,7 @@ index:
            childs: Menores
            childs_ages: Edad de los menores
            age: Edad
+           searching: Buscando Alojamientos...
         flight:
            title: Buscá tu vuelo
            from: Origen
@@ -39,6 +40,7 @@ index:
            0_24:seat: 0 a 24 meses (en asiento)
            2_11: 2 a 11 años
            12_more: 12 años o más
+           searching: Buscando vuelos...
     slogan: Reserva tu viaje a cualquier parte del
     slogan_2: mundo, encontrando todas las ofertas en un solo lugar
     answer_head: ¿Tenés consultas?

@@ -23,6 +23,7 @@ index:
            childs: Childs
            childs_ages: Childs ages
            age: Age
+           searching: Searching Hotels...
         flight:
            title: Find your Flight
            from: Origin
@@ -39,6 +40,7 @@ index:
            0_24:seat: 0 to 24 months (in seat)
            2_11: 2 to 11 years
            12_more: 12 or more
+           searching: Searching Flights...
     slogan: Book your trip to any part of the world,
     slogan_2: finding all the offers in one place
     answer_head: Have a questions?

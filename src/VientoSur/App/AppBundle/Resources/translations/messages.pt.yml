@@ -23,6 +23,7 @@ index:
            childs: Crianças
            childs_ages: Idade das crianças
            age: Idade
+           searching: Procurando por hotéis
         flight:
            title: Encontre o seu voo
            from: Fonte
@@ -39,6 +40,7 @@ index:
            0_24:seat: 0 a 24 meses (En assento)
            2_11: 2 a 11 anos
            12_more: 12 ou mais
+           searching: Procurando voos...
     slogan: Reserve a sua viagem para qualquer lugar do mundo,
     slogan_2: encontrar todas as ofertas em um só lugar
     answer_head: Tenha uma pergunta?
