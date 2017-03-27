@@ -137,7 +137,7 @@ hotels:
     generals: Generales
     hotel_reviews: Opiniones acerca de este hotel
     close: Cerrar
-    thanks_booking: ¡Gracias, %name%! Tu reservación está; confirmada
+    thanks_booking: ¡Gracias, %name%! Tu reservación está confirmada
     address: Dirección
     description: Descripción
     phone: Teléfono
