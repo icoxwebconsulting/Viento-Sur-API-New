@@ -1229,4 +1229,7 @@ form.booking-form label {
   color: #003580;
 }
 
+.input-ccv {
+ width: auto !important;
+}
 

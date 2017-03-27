@@ -198,14 +198,14 @@
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="col-md-4">
-                                    {% set fieldName = 'card-security_code' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.security_code' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
                                     {% set fieldName = 'card-expiration' ~ loop.index0 %}
                                     {% set label = 'hotels.labels.expiration' | trans %}
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label}) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {% set fieldName = 'card-security_code' ~ loop.index0 %}
+                                    {% set label = 'hotels.labels.security_code' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control input-ccv', 'size': '5'}}) }}
                                 </div>
                             </div>
                             <div class="row">

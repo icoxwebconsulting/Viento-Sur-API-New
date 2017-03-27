@@ -195,7 +195,7 @@
                                 {% if formNewPay.payment.security_code is defined %}
                                     {% set label = 'hotels.labels.security_code' | trans %}
                                     <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.security_code, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                        {{ form_row(formNewPay.payment.security_code, {'label': label, 'attr': {'class': 'form-control input-ccv' , 'size': '5'}}) }}
                                     </div>
                                 {% endif %}
                             </div>
