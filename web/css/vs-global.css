@@ -1066,7 +1066,7 @@ form.booking-form label {
 }
 
 .inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-date .inline-detail-airport-date-text {
-  color: #888;
+  color: #003580;
 }
 
 .inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-code-wrapper {
@@ -1077,7 +1077,7 @@ form.booking-form label {
 .inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-code-wrapper .inline-detail-airport-code {
   font-size: 20px;
   letter-spacing: -1px;
-  color: #AAA;
+  color: #003580;
   font-weight: 700;
   margin-right: 5px;
 }
@@ -1092,7 +1092,7 @@ form.booking-form label {
 .inline-detail-data .inline-detail-route-data .inline-detail-airport .inline-detail-airport-description {
   display: block;
   font-size: 11px;
-  color: #888;
+  color: #003580;
   line-height: normal;
 }
 
@@ -1118,7 +1118,7 @@ form.booking-form label {
 
 .inline-detail-data .inline-detail-flight .inline-detail-flight-data .inline-detail-flight-data-title {
   font-size: 11px;
-  color: #AAA;
+  color: #003580;
   display: block;
   margin-bottom: 10px;
 }
@@ -1190,6 +1190,7 @@ form.booking-form label {
 
 .departure-location .departure-text {
   display: block;
+  color: #003580;
 }
 
 .arrival-location {
@@ -1205,6 +1206,7 @@ form.booking-form label {
 
 .arrival-location .arrival-text {
   display: block;
+  color: #003580;
 }
 
 .flight-type .flight-bound {
@@ -1224,6 +1226,7 @@ form.booking-form label {
 .flight-list {
   display: table;
   width: 100%;
+  color: #003580;
 }
 
 
