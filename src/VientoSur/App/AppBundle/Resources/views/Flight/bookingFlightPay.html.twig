@@ -319,8 +319,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
-                                    {% set label = 'flights.business_name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': label, 'class': 'form-control'}}) }}
+                                    {% set label = 'flights.business_name' | trans %}
+                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                 </div>
                             </div>
                         {% endfor %}

@@ -248,7 +248,7 @@ flights:
         birthdate: Birthdate:
         child: Child:
     payment_msg: To select a card click on it, in the case of a bank a list will be displayed with the cards
-    quota: Cuota:
+    quota: Quota
     invoice_data: Invoice data
     select_state: Select state
     business_name: Business Name

@@ -406,6 +406,7 @@ class Flights
             } else {
                 $j += 1;
             }
+            $birthdate = $formData[$typeField . '-birthdate' . $j]->format('Y-m-d');
             $passenger = [
                 "identification" => [
                     "number" => $formData[$typeField . '-number' . $j],
@@ -415,7 +416,7 @@ class Flights
                 "type" => $type,
                 "first_name" => $formData[$typeField . '-first_name' . $j],
                 "last_name" => $formData[$typeField . '-last_name' . $j],
-                "birthdate" => $formData[$typeField . '-birthdate' . $j]->format('Y-m-d'),
+                "birthdate" => $birthdate,
                 "gender" => $formData[$typeField . '-gender' . $j],
                 "nationality" => "AR"
             ];
