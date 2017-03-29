@@ -246,7 +246,7 @@ flights:
         birthdate: Fecha de nacimiento:
         child: Niño:
     payment_msg: Para seleccionar una tarjeta haga click sobre ella, en caso de un banco se desplegará un listado con las tarjetas
-    quota: Cuota:
+    quota: Cuota
     invoice_data: Datos para facturación
     select_state: Seleccione la provincia
     business_name: Nombre comercial
