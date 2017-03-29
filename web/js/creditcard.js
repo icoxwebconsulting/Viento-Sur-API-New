@@ -69,7 +69,7 @@ function checkCreditCard (cardnumber, cardname) {
                checkdigit: true};
   cards [1] = {name: "MasterCard", 
                length: "16", 
-               prefixes: "51,52,53,54,55",
+               prefixes: "50,51,52,53,54,55",
                checkdigit: true};
   cards [2] = {name: "DinersClub", 
                length: "14,16", 
@@ -115,6 +115,10 @@ function checkCreditCard (cardnumber, cardname) {
                length: "16,17,18,19", 
                prefixes: "6304,6706,6771,6709",
                checkdigit: true};
+  cards [13] = {name: "Cabal",
+               length: "16,17,18,19",
+               prefixes: "58",
+               checkdigit: false};
                
   // Establish card type
   var cardType = -1;
