@@ -10,6 +10,21 @@ $(document).ready(function () {
         'NV': 'Tarjeta Nevada'
     };
 
+    function checkCard(cc) {
+        var cardBrand = $('#card-selected').val();
+
+        if (checkCreditCard(cc, cardBrand)) {
+            $('#card-error').addClass('hidden');
+            $('#buyBtn').prop('disabled', false);
+        } else {
+            var cardArray = ['Visa', 'MasterCard', 'American Express', 'Diners Club', 'Cabal'];
+            if (cardArray.indexOf(cardBrand) != -1) {
+                $('#card-error').text(ccErrors[ccErrorNo]).removeClass('hidden');
+                $('#buyBtn').prop('disabled', true);
+            }
+        }
+    }
+
     $(".birth-input").datepicker({
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
@@ -32,8 +47,13 @@ $(document).ready(function () {
         var cardId = $(this).data('card-id');
         var cardCode = $(this).data('card-code');
         var bank = $(this).data('bank-code');
-
-        $('#card-selected').val(cardsObject[cardCode]);
+        var cc = $('#form_payments_card-number0').val();
+        if (cc != '') {
+            $('#card-selected').val(cardsObject[cardCode]);
+            checkCard(cc);
+        } else {
+            $('#card-selected').val(cardsObject[cardCode]);
+        }
         $('#form_payments_card-type0').val(cardCode);
         $('#form_payments_card_code0').val(cardId);
         $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
@@ -105,5 +125,9 @@ $(document).ready(function () {
 
     $('#autocomplete-state, #autocomplete-city').on("click", function () {
         $(this).select();
+    });
+
+    $('#form_payments_card-number0').on('blur', function () {
+        checkCard(this.value);
     });
 });
