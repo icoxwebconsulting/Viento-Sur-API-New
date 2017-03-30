@@ -503,7 +503,8 @@ class FlightController extends Controller
             'formChoice' => $booking,
             'itineraryDetail' => $itineraryDetail,
             'paymentMethods' => $paymentMethods,
-            'riskAnalysis' => $riskAnalysis
+            'riskAnalysis' => $riskAnalysis,
+            'cardList' => $this->get('app.card')->getCards()
         ));
     }
 

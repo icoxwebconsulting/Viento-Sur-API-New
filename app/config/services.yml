@@ -24,3 +24,5 @@ services:
         arguments: [@mailer,@templating]
     booking_helper:
         class: VientoSur\App\AppBundle\Services\BookingHelper
+    app.card:
+        class: VientoSur\App\AppBundle\Utils\Card
