@@ -20,12 +20,12 @@
                             {#</ul>#}
                             <div class="tab-content">
                                 <!-- hoteles -->
-                                <div class="tab-pane  in active" id="tab-1">
+                                <div class="tab-pane  in {% if flightMenu is not defined  %}active{% endif %}" id="tab-1">
                                     {% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}
                                 </div>
 
                                 <!-- vuelos -->
-                                <div class="tab-pane " id="tab-2">
+                                <div class="tab-pane {% if flightMenu is defined  %}active{% endif %}" id="tab-2">
                                     {% include 'VientoSurAppAppBundle:Flight:searchFlight.html.twig' %}
                                 </div>
 

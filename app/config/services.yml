@@ -26,3 +26,5 @@ services:
         class: VientoSur\App\AppBundle\Services\BookingHelper
     app.card:
         class: VientoSur\App\AppBundle\Utils\Card
+    app.bank:
+        class: VientoSur\App\AppBundle\Utils\Bank

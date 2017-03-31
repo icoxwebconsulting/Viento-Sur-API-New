@@ -1,3 +1,13 @@
+var bodyEle = $("body").get(0);
+if (bodyEle.addEventListener) {
+    bodyEle.addEventListener("click", function () {
+    }, true);
+} else if (bodyEle.attachEvent) {
+    document.attachEvent("onclick", function () {
+        var event = window.event;
+    });
+}
+
 function checkCard(cc) {
     var cardBrand = $('#select-card').val();
     var cardName = $('#select-card option:selected').text();
@@ -16,10 +26,6 @@ function checkCard(cc) {
     }
 }
 
-function hideOptCards() {
-    $('#select-card optgroup').addClass('hide');
-}
-
 function selectInList(cardId, cardCode, bank, elementId) {
     var cc = $('#form_payments_card-number0').val();
     checkCard(cc);
@@ -34,10 +40,6 @@ function selectInList(cardId, cardCode, bank, elementId) {
     } else {
         $('#elm-' + elementId).addClass('selected-p-card');
     }
-}
-
-function updateCardSelect(cardId, cardCode, bank) {
-
 }
 
 $(document).ready(function () {
@@ -59,16 +61,20 @@ $(document).ready(function () {
     var cardId = $('.eva-card-container:first').attr('data-card-id');
     console.log(cardId);
 
-    hideOptCards();
+    $('#select-card optgroup.others').addClass('hide');
 
-    $('input[type=radio][name=paymentOption]').on('change', function () {
-        console.log(this.value);
-        //seleccionar primer elemento del listado de tarjetas (banco o individual)
-        //ocultar el optgroup
-        //mostrar el optgroup valido par la seleccion
+    $('.list-group-item').on('click', function (e) {
+        console.log('evt in list-group-item');
+        $($(this).find('input:radio')[0]).prop("checked", true);
+        //update select
+        var cuota = $('input[type=radio][name=paymentOption]:checked').val();
+        $('#select-card optgroup').addClass('hide');
+        $('#select-card optgroup.opt-' + cuota).removeClass('hide');
+        $($('#select-card optgroup.opt-' + cuota + ' option')[0]).prop('selected', true);
     });
 
     $('#select-card').on('change', function () {
+        console.log('cambio #select-card');
         var optSelected = $("option:selected", this);
         var cardId = $(optSelected).data('card-id');
         var cardCode = this.value;
@@ -78,16 +84,21 @@ $(document).ready(function () {
         console.log(optSelected, cardId, cardCode, bank, elementId)
     });
 
-    $('.list-group').on('click', '.clickable-card', function () {
+    $('.list-group .clickable-card').on('click', function (e) {
+        e.stopPropagation();
+        console.log('evt in .clickable-card');
         var cardId = $(this).data('card-id');
         var cardCode = $(this).data('card-code');
         var bank = $(this).data('bank-code');
         var parent = $(this).data('parent-id');
-        if(parent == undefined) {
+        if (parent == undefined) {
             parent = cardId;
         }
         selectInList(cardId, cardCode, bank, parent);
-        updateCardSelect(cardId, cardCode, bank);
+    });
+
+    $('.clickable-bank').on('click', function (e) {
+        e.stopPropagation();
     });
 
     $('.clickable-bank').popover({
@@ -96,16 +107,14 @@ $(document).ready(function () {
         content: function () {
             return $(this).find('.card-content').html();
         }
-    }).on('show.bs.popover', function () {
+    }).on('show.bs.popover', function (e) {
+        e.stopPropagation();
+        console.log('evt in clickable-bank');
         $(this).find('.clickable-card').each(function () {
-            if ($('#form_payments_card_code0').val() == $(this).data('card-id')) {
+            if ($('#select-card').find(":selected").data('card-id') == $(this).data('card-id')) {
                 $(this).addClass('selected-p-card');
             }
         })
-    });
-
-    $('.list-group-item').on('click', function () {
-        $($(this).find('input:radio')[0]).prop("checked", true);
     });
 
     $("#form_contact_info_phones-country_code0").on('keydown', function (e) {

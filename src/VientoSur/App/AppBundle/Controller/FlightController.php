@@ -504,7 +504,8 @@ class FlightController extends Controller
             'itineraryDetail' => $itineraryDetail,
             'paymentMethods' => $paymentMethods,
             'riskAnalysis' => $riskAnalysis,
-            'cardList' => $this->get('app.card')->getCards()
+            'cardList' => $this->get('app.card')->getCards(),
+            'bankList' => $this->get('app.bank')->getBanks()
         ));
     }
 
