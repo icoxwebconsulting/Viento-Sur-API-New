@@ -157,7 +157,7 @@
                                                 {% for card in cards  %}
                                                     <label class="card-selector vs-cs-label">
                                                         <div class="eva-card-container clickable-card"
-                                                             data-card-id="{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" id="elm-{{ card.generic_card_code }}">
+                                                             data-card-id="{{ cuotas }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" id="{{ cuotas }}-{{ card.card_code }}">
                                                             <span class="eva-card-body {{ card.card_code }}"></span>
                                                         </div>
                                                     </label>
@@ -167,7 +167,7 @@
                                                     <span class="eva-card-body {{ key }}"></span>
                                                     <div class="card-content hide">
                                                         {% for card in cards  %}
-                                                            <div class="eva-card-container clickable-card" data-card-id="{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                            <div class="eva-card-container clickable-card card-click-2" data-cuotas="{{ cuotas }}" id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
                                                                 <span class="eva-card-body {{ card.generic_card_code }}"></span>
                                                             </div>
                                                         {% endfor %}
@@ -686,7 +686,7 @@
     <script>
         var cardsObjs = {{ cardList|json_encode()|raw }};
     </script>
-    <script src="{{ asset('js/flight-payment-form.js?a=80') }}"></script>
+    <script src="{{ asset('js/flight-payment-form.js?a=92') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
     {#A#}
     <script src="https://h.online-metrix.net/fp/tags.js?org_id={{ riskAnalysis.a.orgId }}&session_id={{ riskAnalysis.sessionId }}"></script>

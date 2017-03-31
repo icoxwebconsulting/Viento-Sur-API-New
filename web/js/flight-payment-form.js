@@ -34,12 +34,7 @@ function selectInList(cardId, cardCode, bank, elementId) {
     $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
     $('.card-list .eva-card-container').removeClass('selected-p-card');
 
-    if (bank) {
-        console.log(elementId);
-        $('#' + elementId).addClass('selected-p-card');
-    } else {
-        $('#elm-' + elementId).addClass('selected-p-card');
-    }
+    $('#' + elementId).addClass('selected-p-card');
 }
 
 $(document).ready(function () {
@@ -91,7 +86,7 @@ $(document).ready(function () {
         var cardCode = $(this).data('card-code');
         var bank = $(this).data('bank-code');
         var parent = $(this).data('parent-id');
-        if (parent == undefined) {
+        if (parent === undefined) {
             parent = cardId;
         }
         selectInList(cardId, cardCode, bank, parent);
@@ -99,6 +94,25 @@ $(document).ready(function () {
 
     $('.clickable-bank').on('click', function (e) {
         e.stopPropagation();
+    });
+
+    $('.list-group').on('click', '.card-click-2', function (e) {
+        e.stopPropagation();
+        var cardId = $(this).data('card-id');
+        var cardCode = $(this).data('card-code');
+        var bank = $(this).data('bank-code');
+        var cuotas = $(this).data('cuotas');
+        var parent = $(this).data('parent-id');
+        if (parent === undefined) {
+            parent = cardId;
+        }
+        var elemt = $('#select-card .opt-' + cuotas + '[data-bank="' + bank + '"]')[0];
+        console.log('#select-card .opt-' + cuotas + '[data-bank="' + bank + '"]')
+        var opt = $(elemt).find('option[value=' + cardCode + ']')[0];
+        $(opt).prop('selected', true);
+        console.log(cardId, cardCode, bank, parent);
+        console.log(elemt);
+        selectInList(cardId, cardCode, bank, parent);
     });
 
     $('.clickable-bank').popover({
