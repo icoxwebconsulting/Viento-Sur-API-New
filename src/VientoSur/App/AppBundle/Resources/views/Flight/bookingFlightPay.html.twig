@@ -146,7 +146,7 @@
                             {% for cuotas, bank in paymentMethods %}
                             <a href="javascript:void(0)" class="list-group-item">
                                 <h4 class="list-group-item-heading">
-                                    <input type="radio" name="paymentOption" value="{{ cuotas }}" required>
+                                    <input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>
                                     <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
                                 </h4>
                                 <p class="list-group-item-text">
@@ -157,7 +157,7 @@
                                                 {% for card in cards  %}
                                                     <label class="card-selector vs-cs-label">
                                                         <div class="eva-card-container clickable-card"
-                                                             data-card-id="{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}">
+                                                             data-card-id="{{ cuotas }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" id="{{ cuotas }}-{{ card.card_code }}">
                                                             <span class="eva-card-body {{ card.card_code }}"></span>
                                                         </div>
                                                     </label>
@@ -167,7 +167,7 @@
                                                     <span class="eva-card-body {{ key }}"></span>
                                                     <div class="card-content hide">
                                                         {% for card in cards  %}
-                                                            <div class="eva-card-container clickable-card" data-card-id="{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                            <div class="eva-card-container clickable-card card-click-2" data-cuotas="{{ cuotas }}" id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
                                                                 <span class="eva-card-body {{ card.generic_card_code }}"></span>
                                                             </div>
                                                         {% endfor %}
@@ -184,11 +184,26 @@
 
                         {% for credit_card in formChoice.payments.credit_cards %}
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     {% set fieldName = 'card-type' ~ loop.index0 %}
                                     {% set label = 'hotels.selected_card' | trans %}
                                     {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'hidden'}}) }}
-                                    <input type="text" value="" id="card-selected" class="form-control" readonly>
+                                    {#<input type="text" value="" id="card-selected" class="form-control" readonly>#}
+                                    <select id="select-card" class="form-control" title="{{ label }}">
+                                        {% for cuotas, bank in paymentMethods %}
+                                            {% for key, cards in bank %}
+                                                <optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">
+                                                    {% for card in cards  %}
+                                                        {% if key == 'generic' %}
+                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}">{{ cardList[card.generic_card_code] }}</option>
+                                                        {% else %}
+                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -668,7 +683,10 @@
     {{ parent() }}
     <script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/creditcard.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/flight-payment-form.js?a=19') }}"></script>
+    <script>
+        var cardsObjs = {{ cardList|json_encode()|raw }};
+    </script>
+    <script src="{{ asset('js/flight-payment-form.js?a=92') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
     {#A#}
     <script src="https://h.online-metrix.net/fp/tags.js?org_id={{ riskAnalysis.a.orgId }}&session_id={{ riskAnalysis.sessionId }}"></script>

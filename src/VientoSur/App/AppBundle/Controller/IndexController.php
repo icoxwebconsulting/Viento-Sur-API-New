@@ -28,7 +28,25 @@ class IndexController extends Controller
         $this->get('session')->set('country', ($country) ? $country : 'ar');
         $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
         return array(
-            'isTest' => $this->getParameter('is_test')
+            'isTest' => $this->getParameter('is_test'),
+            'isIndex' => true
+        );
+    }
+
+
+    /**
+     * @Route("/vuelos/{_locale}", name="homepage_flight", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
+     * @Template("VientoSurAppAppBundle:Index:index.html.twig")
+     */
+    public function indexFlightAction(Request $request)
+    {
+        $country = $request->get('country', null);
+        $this->get('session')->set('country', ($country) ? $country : 'ar');
+        $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
+        return array(
+            'isTest' => $this->getParameter('is_test'),
+            'flightMenu' => true,
+            'isIndex' => true
         );
     }
 

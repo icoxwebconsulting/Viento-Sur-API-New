@@ -1,29 +1,43 @@
-$(document).ready(function () {
-    var cardsObject = {
-        'VI': 'Visa',
-        'VIS': 'Visa Signature',
-        'CA': 'MasterCard',
-        'AX': 'American Express',
-        'DC': 'Diners Club',
-        'CL': 'Cabal',
-        'TN': 'Tarjeta Naranja',
-        'NV': 'Tarjeta Nevada'
-    };
+var bodyEle = $("body").get(0);
+if (bodyEle.addEventListener) {
+    bodyEle.addEventListener("click", function () {
+    }, true);
+} else if (bodyEle.attachEvent) {
+    document.attachEvent("onclick", function () {
+        var event = window.event;
+    });
+}
 
-    function checkCard(cc) {
-        var cardBrand = $('#card-selected').val();
+function checkCard(cc) {
+    var cardBrand = $('#select-card').val();
+    var cardName = $('#select-card option:selected').text();
 
-        if (checkCreditCard(cc, cardBrand)) {
+    if (checkCreditCard(cc, cardName)) {
+        $('#card-error').addClass('hidden');
+        $('#buyBtn').prop('disabled', false);
+    } else {
+        if (cardsObjs.hasOwnProperty(cardBrand)) {
             $('#card-error').addClass('hidden');
             $('#buyBtn').prop('disabled', false);
         } else {
-            var cardArray = ['Visa', 'MasterCard', 'American Express', 'Diners Club', 'Cabal'];
-            if (cardArray.indexOf(cardBrand) != -1) {
-                $('#card-error').text(ccErrors[ccErrorNo]).removeClass('hidden');
-                $('#buyBtn').prop('disabled', true);
-            }
+            $('#card-error').text(ccErrors[ccErrorNo]).removeClass('hidden');
+            $('#buyBtn').prop('disabled', true);
         }
     }
+}
+
+function selectInList(cardId, cardCode, bank, elementId) {
+    var cc = $('#form_payments_card-number0').val();
+    checkCard(cc);
+    $('#form_payments_card-type0').val(cardCode);
+    $('#form_payments_card_code0').val(cardId);
+    $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
+    $('.card-list .eva-card-container').removeClass('selected-p-card');
+
+    $('#' + elementId).addClass('selected-p-card');
+}
+
+$(document).ready(function () {
 
     $(".birth-input").datepicker({
         dayNamesMin: dayNamesMin,
@@ -41,31 +55,64 @@ $(document).ready(function () {
     $('.eva-card-container:first').addClass('selected-p-card');
     var cardId = $('.eva-card-container:first').attr('data-card-id');
     console.log(cardId);
-    $('#card-selected').val(cardsObject[cardId]);
 
-    $('.list-group').on('click', '.clickable-card', function () {
+    $('#select-card optgroup.others').addClass('hide');
+
+    $('.list-group-item').on('click', function (e) {
+        console.log('evt in list-group-item');
+        $($(this).find('input:radio')[0]).prop("checked", true);
+        //update select
+        var cuota = $('input[type=radio][name=paymentOption]:checked').val();
+        $('#select-card optgroup').addClass('hide');
+        $('#select-card optgroup.opt-' + cuota).removeClass('hide');
+        $($('#select-card optgroup.opt-' + cuota + ' option')[0]).prop('selected', true);
+    });
+
+    $('#select-card').on('change', function () {
+        console.log('cambio #select-card');
+        var optSelected = $("option:selected", this);
+        var cardId = $(optSelected).data('card-id');
+        var cardCode = this.value;
+        var bank = $(optSelected).data('bank-code');
+        var elementId = $(optSelected).data('element');
+        selectInList(cardId, cardCode, bank, elementId);
+        console.log(optSelected, cardId, cardCode, bank, elementId)
+    });
+
+    $('.list-group .clickable-card').on('click', function (e) {
+        e.stopPropagation();
+        console.log('evt in .clickable-card');
         var cardId = $(this).data('card-id');
         var cardCode = $(this).data('card-code');
         var bank = $(this).data('bank-code');
-        var cc = $('#form_payments_card-number0').val();
-        if (cc != '') {
-            $('#card-selected').val(cardsObject[cardCode]);
-            checkCard(cc);
-        } else {
-            $('#card-selected').val(cardsObject[cardCode]);
+        var parent = $(this).data('parent-id');
+        if (parent === undefined) {
+            parent = cardId;
         }
-        $('#form_payments_card-type0').val(cardCode);
-        $('#form_payments_card_code0').val(cardId);
-        $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
-        $('.card-list .eva-card-container').removeClass('selected-p-card');
+        selectInList(cardId, cardCode, bank, parent);
+    });
 
-        if (bank) {
-            var parentId = $(this).data('parent-id');
-            console.log(parentId);
-            $('#' + parentId).addClass('selected-p-card');
-        } else {
-            $(this).addClass('selected-p-card');
+    $('.clickable-bank').on('click', function (e) {
+        e.stopPropagation();
+    });
+
+    $('.list-group').on('click', '.card-click-2', function (e) {
+        e.stopPropagation();
+        var cardId = $(this).data('card-id');
+        var cardCode = $(this).data('card-code');
+        var bank = $(this).data('bank-code');
+        var cuotas = $(this).data('cuotas');
+        var parent = $(this).data('parent-id');
+        if (parent === undefined) {
+            parent = cardId;
         }
+        var elemt = $('#select-card .opt-' + cuotas + '[data-bank="' + bank + '"]')[0];
+        console.log('#select-card .opt-' + cuotas + '[data-bank="' + bank + '"]')
+        var opt = $(elemt).find('option[value=' + cardCode + ']')[0];
+        $(opt).prop('selected', true);
+        console.log(cardId, cardCode, bank, parent);
+        console.log(elemt);
+        selectInList(cardId, cardCode, bank, parent);
     });
 
     $('.clickable-bank').popover({
@@ -74,16 +121,14 @@ $(document).ready(function () {
         content: function () {
             return $(this).find('.card-content').html();
         }
-    }).on('show.bs.popover', function () {
-           $(this).find('.clickable-card').each(function () {
-               if ($('#form_payments_card_code0').val() == $(this).data('card-id')) {
-                   $(this).addClass('selected-p-card');
-               }
-           })
-    });
-
-    $('.list-group-item').on('click', function () {
-        $($(this).find('input:radio')[0]).prop("checked", true);
+    }).on('show.bs.popover', function (e) {
+        e.stopPropagation();
+        console.log('evt in clickable-bank');
+        $(this).find('.clickable-card').each(function () {
+            if ($('#select-card').find(":selected").data('card-id') == $(this).data('card-id')) {
+                $(this).addClass('selected-p-card');
+            }
+        })
     });
 
     $("#form_contact_info_phones-country_code0").on('keydown', function (e) {
@@ -111,7 +156,7 @@ $(document).ready(function () {
     });
 
     $('#select-state').on('change', function () {
-        if(this.value != '') {
+        if (this.value != '') {
             $("#form_payments_invoice-state0").val(this.value);
             $('#autocomplete-city').removeProp('readonly').prop('placeholder', 'Buscar ciudad');
             $('#autocomplete-city').autocomplete().setOptions({
