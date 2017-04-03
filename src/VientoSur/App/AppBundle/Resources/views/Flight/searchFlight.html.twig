@@ -5,11 +5,11 @@
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>{{ 'index.search.flight.from' | trans }}</label>
                 {% if isTest %}
-                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text"/>
-                    <input id="originFlight" name="originFlight" type="hidden"/>
+                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
+                    <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
                 {% else %}
-                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" required />
-                    <input id="originFlight" name="originFlight" type="hidden" required />
+                    <input class="form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" required value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
+                    <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
                 {% endif %}
             </div>
         </div>
@@ -17,19 +17,19 @@
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>{{ 'index.search.flight.to' | trans }}</label>
                 {% if isTest %}
-                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text"/>
-                    <input id="destinationFlight" name="destinationFlight" type="hidden" />
+                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
+                    <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
                 {% else %}
-                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" required />
-                    <input id="destinationFlight" name="destinationFlight" type="hidden" required />
+                    <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" required value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
+                    <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
                 {% endif %}
             </div>
         </div>
-        <div> <!--class="input-daterange" data-date-format="d M, D"-->
+        <div>
             <div class="col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
                     <label>{{ 'index.search.flight.start' | trans }}</label>
-                    <input class="form-control required" id="start-flight" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
+                    <input class="form-control required" id="start-flight" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}" />
                 </div>
             </div>
             <div class="col-md-6">
@@ -41,7 +41,7 @@
                             {{ 'index.search.flight.one_way' | trans }}
                         </span>
                     </label>
-                    <input class="form-control required" id="end-flight" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
+                    <input class="form-control required" id="end-flight" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}" />
                     <input class="form-control hidden" id="dummy-end-flight" type="text" placeholder="{{ 'index.search.flight.one_way_placeholder' | trans }}" readonly />
                 </div>
             </div>

@@ -15,7 +15,7 @@
             <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
         </div>
 
-        <div> <!--class="input-daterange" data-date-format="d M, D"-->
+        <div>
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
                 <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
                 <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
