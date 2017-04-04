@@ -406,20 +406,40 @@ class Flights
             } else {
                 $j += 1;
             }
-            $birthdate = $formData[$typeField . '-birthdate' . $j]->format('Y-m-d');
-            $passenger = [
-                "identification" => [
+            $passenger = [];
+
+            if (isset($booking['passengers']['adults'][0]['identification'])) {
+                $passenger["identification"] = [
                     "number" => $formData[$typeField . '-number' . $j],
                     "issuing_country" => "AR",
                     "type" => $formData[$typeField . '-type' . $j]
-                ],
-                "type" => $type,
-                "first_name" => $formData[$typeField . '-first_name' . $j],
-                "last_name" => $formData[$typeField . '-last_name' . $j],
-                "birthdate" => $birthdate,
-                "gender" => $formData[$typeField . '-gender' . $j],
-                "nationality" => "AR"
-            ];
+                ];
+            }
+
+            if (isset($booking['passengers']['adults'][0]['type'])) {
+                $passenger["type"] = $type;
+            }
+
+            if (isset($booking['passengers']['adults'][0]['first_name'])) {
+                $passenger["first_name"] = $formData[$typeField . '-first_name' . $j];
+            }
+
+            if (isset($booking['passengers']['adults'][0]['last_name'])) {
+                $passenger["last_name"] = $formData[$typeField . '-last_name' . $j];
+            }
+
+            if (isset($booking['passengers']['adults'][0]['birthdate'])) {
+                $passenger["birthdate"] = $formData[$typeField . '-birthdate' . $j]->format('Y-m-d');
+            }
+
+            if (isset($booking['passengers']['adults'][0]['gender'])) {
+                $passenger["gender"] = $formData[$typeField . '-gender' . $j];
+            }
+
+            if (isset($booking['passengers']['adults'][0]['nationality'])) {
+                $passenger["nationality"] = "AR";
+            }
+
             $toCheckout['booking_information']['passengers'][$typeField][] = $passenger;
         }
 

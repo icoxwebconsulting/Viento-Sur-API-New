@@ -29,8 +29,12 @@ function checkCard(cc) {
 function selectInList(cardId, cardCode, bank, elementId) {
     var cc = $('#form_payments_card-number0').val();
     checkCard(cc);
-    $('#form_payments_card-type0').val(cardCode);
-    $('#form_payments_card_code0').val(cardId);
+    var cardType = cardCode;
+    if (bank) {
+        cardType += '_' + bank;
+    }
+    $('#form_payments_card-type0').val(cardType);
+    $('#form_payments_card_code0').val(cardCode);
     $('#form_payments_installments0').val($('input[name=paymentOption]:checked').val());
     $('.card-list .eva-card-container').removeClass('selected-p-card');
 

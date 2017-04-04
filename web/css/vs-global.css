@@ -86,7 +86,7 @@ h3 {
   font-size: 20px;
 }
 .form-control {
-  color: #999;
+  color: #003580;
 }
 .garantias {
   padding: 40px 0;
@@ -278,7 +278,7 @@ footer#main-footer .form-control:focus {
 }
 .content-sidebar {
   background: #ebebeb;
-  color: #003580;
+  color: #003580 !important;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
