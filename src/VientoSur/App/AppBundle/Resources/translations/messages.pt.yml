@@ -261,3 +261,4 @@ flights:
     outgoing: Saída
     incoming: Chegada
     reservation_data: Dados de reserva
+    first_pay: 1º pagamento de %first% + %quota% quotas de %last%

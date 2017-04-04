@@ -195,15 +195,20 @@
                                                 <optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">
                                                     {% for card in cards  %}
                                                         {% if key == 'generic' %}
-                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}">{{ cardList[card.generic_card_code] }}</option>
+                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}" data-pay-text="">{{ cardList[card.generic_card_code] }}</option>
                                                         {% else %}
-                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
+                                                            {% set first_pay = 'flights.first_pay' | trans({'%first%': card.first_installment_amount, '%quota%': (card.installments - 1), '%last%': card.other_installments_amount}) %}
+                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}" data-pay-text="{{ first_pay }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </optgroup>
                                             {% endfor %}
                                         {% endfor %}
                                     </select>
+                                </div>
+                                <div class="col-md-6" style="height: 60px;">
+                                    <br />
+                                    <b id="pay-text"></b>
                                 </div>
                             </div>
                             <div class="row">
@@ -257,6 +262,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                {{ dump(paymentMethods) }}
                 <!--/Formas de pago-->
 
                 <!--Facturación-->
@@ -686,7 +692,7 @@
     <script>
         var cardsObjs = {{ cardList|json_encode()|raw }};
     </script>
-    <script src="{{ asset('js/flight-payment-form.js?a=93') }}"></script>
+    <script src="{{ asset('js/flight-payment-form.js?a=95') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
     {#A#}
     <script src="https://h.online-metrix.net/fp/tags.js?org_id={{ riskAnalysis.a.orgId }}&session_id={{ riskAnalysis.sessionId }}"></script>

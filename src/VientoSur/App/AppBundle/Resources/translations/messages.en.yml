@@ -261,3 +261,4 @@ flights:
     outgoing: Outgoing
     incoming: Incoming
     reservation_data: Reservation data
+    first_pay: 1st payment of %first% + %quota% dues of %last%
