@@ -5,10 +5,10 @@
             <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                 <label>{{ 'index.search.hotel.from' | trans }}</label>
                 {% if isTest %}
-                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}" style="color: #003580;">
+                    <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}">
                     <input id="destinationCity" name="cityInput" type="hidden" />
                 {% else %}
-                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}" style="color: #003580;">
+                    <input id="autocomplete" required name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}">
                     <input id="destinationCity" name="cityInput" type="hidden" required />
                 {% endif %}
             </div>
