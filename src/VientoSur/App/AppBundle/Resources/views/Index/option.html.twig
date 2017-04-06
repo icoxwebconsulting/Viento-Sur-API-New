@@ -176,7 +176,7 @@
 
                 {% if app.request.locale != 'es' %}
                 <li>
-                    <a href="{{ path('homepage', {'_locale': 'es'}) }}" class="language">
+                    <a href="javascript:changePage('es', 'ar');" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" /><span class="right">Español </span>
                     </a>
                 </li>

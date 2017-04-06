@@ -24,7 +24,7 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $country = $request->get('country', null);
+        $country = $this->get('session')->get('country');
         $this->get('session')->set('country', ($country) ? $country : 'ar');
         $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
         return array(
@@ -271,5 +271,21 @@ class IndexController extends Controller
                 'Content-Disposition' => 'inline; filename="reservacion.pdf"'
             )
         );
+    }
+
+    /**
+     *
+     * @Route("/set-country", name="home_set_country")
+     * @Method("GET")
+     */
+    public function setCountryAction (Request $request)
+    {
+        $country = $request->get('country', null);
+        $this->get('session')->set('country', ($country) ? $country : 'ar');
+
+        return new JsonResponse([
+            'country' => $this->get('session')->get('country'),
+            'locale' => $request->getLocale()
+        ]);
     }
 }
