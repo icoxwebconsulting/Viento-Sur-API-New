@@ -49,8 +49,19 @@
                         {% for key, amenity in item.hotel.amenity_ids %}
                             {% if amenity == 'INGRAH' %}
                                 <span class="booking-services"><i class="fa fa-wifi"></i></span>
+                            {% elseif amenity == 'AIR' %}
+                                <span class="booking-services"><img src="{{ asset('img/air-conditioner.png') }}" /></span>
+                            {% elseif amenity == 'BAG' %}
+                                <span class="booking-services"><i class="fa fa-suitcase"></i></span>
+                            {% elseif amenity == 'BSNSC' %}
+                                <span class="booking-services"><i class="fa fa-users"></i></span>
+                            {% elseif amenity == 'ELEV' %}
+                                <span class="booking-services"><img src="{{ asset('img/elevator.png') }}" /></span>
+                            {% elseif amenity == 'GIM' %}
+                                <span class="booking-services"><img src="{{ asset('img/weight.png') }}" /></span>
                             {% endif %}
                         {% endfor %}
+                        {{ dump(item.hotel.amenity_ids)}}
                     </div>
                     <div class="col-md-3 booking-prices align-center cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
 
