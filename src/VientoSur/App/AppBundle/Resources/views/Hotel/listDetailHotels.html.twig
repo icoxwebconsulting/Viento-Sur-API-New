@@ -48,17 +48,27 @@
                         {% endfor %}
                         {% for key, amenity in item.hotel.amenity_ids %}
                             {% if amenity == 'INGRAH' %}
-                                <span class="booking-services"><i class="fa fa-wifi"></i></span>
+                                <span class="booking-services" title="{{ 'amenities.INGRAH' | trans }}"><i class="fa fa-wifi"></i></span>
                             {% elseif amenity == 'AIR' %}
-                                <span class="booking-services"><img src="{{ asset('img/air-conditioner.png') }}" /></span>
+                                <span class="booking-services" title="{{ 'amenities.AIR' | trans }}"><img src="{{ asset('img/air-conditioner.png') }}" /></span>
                             {% elseif amenity == 'BAG' %}
-                                <span class="booking-services"><i class="fa fa-suitcase"></i></span>
+                                <span class="booking-services" title="{{ 'amenities.BAG' | trans }}"><i class="fa fa-suitcase"></i></span>
                             {% elseif amenity == 'BSNSC' %}
-                                <span class="booking-services"><i class="fa fa-users"></i></span>
+                                <span class="booking-services" title="{{ 'amenities.BSNSC' | trans }}"><i class="fa fa-users"></i></span>
                             {% elseif amenity == 'ELEV' %}
-                                <span class="booking-services"><img src="{{ asset('img/elevator.png') }}" /></span>
+                                <span class="booking-services" title="{{ 'amenities.ELEV' | trans }}"><img src="{{ asset('img/elevator.png') }}" /></span>
                             {% elseif amenity == 'GIM' %}
-                                <span class="booking-services"><img src="{{ asset('img/weight.png') }}" /></span>
+                                <span class="booking-services" title="{{ 'amenities.GIM' | trans }}"><img src="{{ asset('img/weight.png') }}" /></span>
+                            {% elseif amenity == 'HOT' %}
+                                <span class="booking-services" title="{{ 'amenities.HOT' | trans }}"><i class="fa fa-fire"></i></span>
+                            {% elseif amenity == 'LASESU' %}
+                                <span class="booking-services" title="{{ 'amenities.LASESU' | trans }}"><img src="{{ asset('img/washer-machine.png') }}" /></span>
+                            {% elseif amenity == 'LIPA' %}
+                                <span class="booking-services" title="{{ 'amenities.LIPA' | trans }}"><img src="{{ asset('img/washer-machine.png') }}" /></span>
+                            {% elseif amenity == 'MEETROOM' %}
+                                <span class="booking-services" title="{{ 'amenities.MEETROOM' | trans }}"><img src="{{ asset('img/business-people-meeting.png') }}" /></span>
+                            {% elseif amenity == 'OUSWPOSE' %}
+                                <span class="booking-services" title="{{ 'amenities.OUSWPOSE' | trans }}"><img src="{{ asset('img/swimming-pool.png') }}" /></span>
                             {% endif %}
                         {% endfor %}
                         {{ dump(item.hotel.amenity_ids)}}

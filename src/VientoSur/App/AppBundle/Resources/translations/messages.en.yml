@@ -262,3 +262,15 @@ flights:
     incoming: Incoming
     reservation_data: Reservation data
     first_pay: 1st payment of %first% + %quota% dues of %last%
+amenities:
+    INGRAH: FREE WI-FI
+    AIR: Air Conditioning
+    BAG: Bellhop Service
+    BSNSC: Business Center
+    ELEV: Elevator
+    GIM: Gym / Fitness Center
+    HOT: Heating
+    LASESU: Laundry Service with Additional Cost
+    LIPA: Limited Parking
+    MEETROOM: Meeting Room(s)
+    OUSWPOSE: Outdoor Pool (seasonal)
