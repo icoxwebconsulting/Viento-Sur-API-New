@@ -71,7 +71,6 @@
                                 <span class="booking-services" title="{{ 'amenities.OUSWPOSE' | trans }}"><img src="{{ asset('img/swimming-pool.png') }}" /></span>
                             {% endif %}
                         {% endfor %}
-                        {{ dump(item.hotel.amenity_ids)}}
                     </div>
                     <div class="col-md-3 booking-prices align-center cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
 
