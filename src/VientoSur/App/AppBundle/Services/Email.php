@@ -20,7 +20,7 @@ class Email
         $message = \Swift_Message::newInstance(null)
             ->setSubject("Consulta web Viento Sur")
             ->setFrom("not-reply@vientosur.net")
-            ->setTo("info@vientosur.net")
+            ->setTo("web@vientosur.net")
             ->setBody(
                 $html,
                 'text/html'
@@ -34,7 +34,7 @@ class Email
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
             ->setFrom('no-responder@vientosur.net')
-            ->setTo($email)
+            ->setTo([$email, 'dario@vientosur.net'])
             ->setBody(
                 $this->templating->render(
                     'VientoSurAppAppBundle:Email:booking.html.twig',

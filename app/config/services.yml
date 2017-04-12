@@ -16,6 +16,15 @@ services:
             "entityManager": "@doctrine.orm.entity_manager"
             "agentCode": "%agent_code%"
             "logger": "@logger"
+    hotel_service:
+        class: VientoSur\App\AppBundle\Services\Hotel
+        arguments:
+            "dp": "@despegar"
+            "email": "@email.service"
+            "entityManager": "@doctrine.orm.entity_manager"
+            "logger": "@logger"
+            "form": "@form_helper"
+            "isTest": "%is_test%"
     despegar:
         class: VientoSur\App\AppBundle\Services\Despegar
         arguments: [@guzzle.client.api_vault,@guzzle.client.api_despegar,"%api_key%", "%api_key_test%", "%service_version%", "%service_url%", "%service_vault_url%", "%service_vault_url_test%", "%is_test%"]
