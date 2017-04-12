@@ -563,7 +563,7 @@ class HotelController extends Controller
         }
 
         /* start form */
-        $formNewPay = $this->createFormBuilder($formBooking);
+        $formNewPay = $this->createFormBuilder($formBooking, ['allow_extra_fields' => true]);
         $formHelper = $this->get('form_helper');
         $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice, $roompack->payment_methods);
         $formNewPaySend = $formNewPay->getForm();
@@ -577,110 +577,32 @@ class HotelController extends Controller
                 $formNewPaySend = $formNewPaySend->getData();
                 $session->set('email', $formNewPaySend['email']);
 
-                //procesar formulario recibido
-                $response = $despegar->dVault($formNewPaySend);
-                $status = 'ok';
-                $detail = [];
-                if ($response && isset($response->secure_token)) {
-                    //obtengo los valores ya seteados según la selección
-                    $fillData = $formHelper->fillFormData($formBooking, $formNewPaySend);
-                    $selectedPack = $formHelper->getSelectedPack();
-                    $form_id_booking = $selectedPack['id'];
+                $hotelService = $this->get('hotel_service');
 
-                    $patchParams = [];
-                    $patchParams['payment_method_choice'] = $formNewPaySend['paymentMethod'];
-                    $patchParams['secure_token_information'] = array('secure_token' => $response->secure_token);
-                    $patchParams['form'] = $fillData;
+                $booking = $hotelService->bookingHotel(
+                    $formBooking,
+                    $formNewPaySend,
+                    $bookingId,
+                    $hotelAvailabilities->hotel->id,
+                    $priceDetail,
+                    $request->getSession()->get('checkin_date'),
+                    $request->getSession()->get('checkout_date'),
+                    $lang,
+                    $request->getSession()->get('email')
+                );
 
-                    $detail = $despegar->patchHotelsBookings($bookingId, $form_id_booking, $patchParams);
-                    if (isset($detail['code'])) {
-                        $status = 'patch';
-                    }
-
-                    if ($status == 'ok') {
-                        $em = $this->getDoctrine()->getManager();
-
-                        $reservation = new Reservation();
-                        $reservation->setHotelId($hotelAvailabilities->hotel->id);
-                        $reservation->setReservationId($detail['reservation_id']);
-                        $reservation->setTotalPrice($priceDetail['total']);
-                        $reservation->setCardType($formNewPaySend['card_code']);
-                        $reservation->setHolderName($formNewPaySend['owner_name']);
-                        $reservation->setPhoneNumber($formNewPaySend['country_code0'] . '-' . $formNewPaySend['area_code0'] . '-' . $formNewPaySend['number0']);
-                        $reservation->setEmail($formNewPaySend['email']);
-                        $reservation->setComments($formNewPaySend['comment']);
-                        $checkin = explode("/", $request->getSession()->get('checkin_date'));
-                        $checkout = explode("/", $request->getSession()->get('checkout_date'));
-                        $reservation->setCheckin(new \DateTime($checkin[1] . '/' . $checkin[0] . '/' . $checkin[2]));
-                        $reservation->setCheckout(new \DateTime($checkout[1] . '/' . $checkout[0] . '/' . $checkout[2]));
-                        $em->persist($reservation);
-
-                        foreach ($fillData['passengers'] as $key => $value) {
-                            $passenger = new Passengers();
-                            $passenger->setName($formNewPaySend['first_name' . $key]);
-                            $passenger->setLastName($formNewPaySend['last_name' . $key]);
-                            $passenger->setDocument($formNewPaySend['document_number' . $key]);
-                            $passenger->setReservation($reservation);
-                            $em->persist($passenger);
-                        }
-                        $em->flush();
-
-                        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
-                            'ids' => $hotelAvailabilities->hotel->id,
-                            'language' => $lang,
-                            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
-                            'resolve' => 'merge_info',
-                            'catalog_info' => 'true'
-                        ));
-                        $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
-
-                        $reservationDetails = $this->get('despegar')->getReservationDetails(
-                            $detail['reservation_id'],
-                            array(
-                                'email' => 'info@vientosur.net',
-                                'language' => $lang,
-                                'site' => 'AR'
-                            ), $this->getParameter('is_test')
-                        );
-
-                        //envío de correo
-                        try {
-                            if ($request->getSession()->get('email')) {
-                                $this->get('email.service')->sendBookingEmail($request->getSession()->get('email'), array(
-                                    'hotelDetails' => $hotelDetails,
-                                    'reservationDetails' => $reservationDetails,
-                                    'reservationId' => base64_encode($reservation->getId()),
-                                    'detail' => $detail,
-                                    'hotelId' => $hotelAvailabilities->hotel->id,
-                                    'internal' => $reservation,
-                                    'pdf' => false
-                                ));
-                            }
-                        } catch (\Exception $e) {
-                            $this->get('logger')->error('Booking email error');
-                        }
-
-                        return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
-                            'hotelDetails' => $hotelDetails,
-                            'reservationDetails' => $reservationDetails,
-                            'reservationId' => base64_encode($reservation->getId()),
-                            'detail' => $detail,
-                            'hotelId' => $hotelAvailabilities->hotel->id,
-                            'internal' => $reservation,
-                            'status' => $status,
-                            'pdf' => false
-                        ));
-                    }
-                } else {
-                    $status = 'dvault';
-                }
-
-                return $this->redirect($this->generateUrl('viento_sur_app_booking_hotel_summary', array(
-                    'status' => $status,
-                    'hotel_id' => $hotelAvailabilities->hotel->id,
-                    'detail' => $detail,
-                    'email' => $formNewPaySend['email']
-                )));
+                return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
+                    'hotelDetails' => $booking['hotelDetails'],
+                    'reservationDetails' => $booking['reservationDetails'],
+                    'reservationId' => base64_encode($booking['reservationDetails']['id']),
+                    'detail' => $booking['booking'],
+                    'hotelId' => $hotelAvailabilities->hotel->id,
+                    'internal' => $booking['reservation'],
+                    'status' => 'ok',
+                    'pdf' => false
+                ));
+            } else {
+                $test = $formNewPaySend->getErrors();
             }
         }
 

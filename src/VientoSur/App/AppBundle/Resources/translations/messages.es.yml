@@ -261,3 +261,16 @@ flights:
     outgoing: Salida
     incoming: Llegada
     reservation_data: Datos de la reserva
+    first_pay: 1er pago de %first% + %quota% cuotas de %last%
+amenities:
+    INGRAH: WIFI gratis
+    AIR: Aire Acondicionado
+    BAG: Servicio de Maletero
+    BSNSC: Centro de Negocios
+    ELEV: Ascensor
+    GIM: Gimnasio
+    HOT: Calefacción
+    LASESU: Servicio de Lavandería con Costo Adicional
+    LIPA: Estacionamiento Rotativo
+    MEETROOM: Sala de Reuniones
+    OUSWPOSE: Piscina al Aire Libre (de Temporada)

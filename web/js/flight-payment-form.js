@@ -69,7 +69,10 @@ $(document).ready(function () {
         var cuota = $('input[type=radio][name=paymentOption]:checked').val();
         $('#select-card optgroup').addClass('hide');
         $('#select-card optgroup.opt-' + cuota).removeClass('hide');
-        $($('#select-card optgroup.opt-' + cuota + ' option')[0]).prop('selected', true);
+        var obj = $('#select-card optgroup.opt-' + cuota + ' option')[0];
+        $(obj).prop('selected', true);
+        var payText = $(obj).data('pay-text');
+        $('#pay-text').text(payText);
     });
 
     $('#select-card').on('change', function () {
@@ -79,7 +82,9 @@ $(document).ready(function () {
         var cardCode = this.value;
         var bank = $(optSelected).data('bank-code');
         var elementId = $(optSelected).data('element');
+        var payText = $(optSelected).data('pay-text');
         selectInList(cardId, cardCode, bank, elementId);
+        $('#pay-text').text(payText);
         console.log(optSelected, cardId, cardCode, bank, elementId)
     });
 

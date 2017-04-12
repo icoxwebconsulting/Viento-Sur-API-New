@@ -442,7 +442,7 @@ class FlightController extends Controller
         }
 
 
-        $formNewPay = $this->createFormBuilder($booking);
+        $formNewPay = $this->createFormBuilder($booking, ['allow_extra_fields' => true]);
         $formNewPay = $flightService->initForm($booking, $formNewPay);
         $formNewPaySend = $formNewPay->getForm();
 
