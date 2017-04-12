@@ -563,7 +563,7 @@ class HotelController extends Controller
         }
 
         /* start form */
-        $formNewPay = $this->createFormBuilder($formBooking);
+        $formNewPay = $this->createFormBuilder($formBooking, ['allow_extra_fields' => true]);
         $formHelper = $this->get('form_helper');
         $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice, $roompack->payment_methods);
         $formNewPaySend = $formNewPay->getForm();
@@ -601,6 +601,8 @@ class HotelController extends Controller
                     'status' => 'ok',
                     'pdf' => false
                 ));
+            } else {
+                $test = $formNewPaySend->getErrors();
             }
         }
 
