@@ -53,6 +53,7 @@ index:
         name: Name and Surname
         cancel: Cancel
         send: Send
+    invalid_cc: Invalid Credit Card
 hotels:
     not_found: No available hotels
     last_room: Last room available

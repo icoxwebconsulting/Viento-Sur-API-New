@@ -568,28 +568,62 @@ class HotelController extends Controller
         $formNewPay = $formHelper->initForm($formBooking, $formNewPay, $roompackChoice, $roompack->payment_methods);
         $formNewPaySend = $formNewPay->getForm();
 
+        $selectedPack = $formHelper->getSelectedPack();
+        $formChoice = $formBooking['dictionary']['form_choices'][$selectedPack['form_choice']];
+
+        $paymentMethods = $roompack->payment_methods;
+        $travellers = $this->get('booking_helper')->getSearchText($checkin, $checkout, $distribution, $lang);
+        $hotelService = $this->get('hotel_service');
+
         if ($request->getMethod() == 'POST') {
 
             $formNewPaySend->handleRequest($request);
 
             if ($formNewPaySend->isValid()) {
 
-                $formNewPaySend = $formNewPaySend->getData();
-                $session->set('email', $formNewPaySend['email']);
+                $formData = $formNewPaySend->getData();
+                $session->set('email', $formData['email']);
 
-                $hotelService = $this->get('hotel_service');
-
-                $booking = $hotelService->bookingHotel(
-                    $formBooking,
-                    $formNewPaySend,
-                    $bookingId,
-                    $hotelAvailabilities->hotel->id,
-                    $priceDetail,
-                    $request->getSession()->get('checkin_date'),
-                    $request->getSession()->get('checkout_date'),
-                    $lang,
-                    $request->getSession()->get('email')
-                );
+                try {
+                    $booking = $hotelService->bookingHotel(
+                        $formBooking,
+                        $formData,
+                        $bookingId,
+                        $hotelAvailabilities->hotel->id,
+                        $priceDetail,
+                        $request->getSession()->get('checkin_date'),
+                        $request->getSession()->get('checkout_date'),
+                        $lang,
+                        $request->getSession()->get('email')
+                    );
+                } catch (\Exception $e) {
+                    if ($e->getMessage() == 'CREDIT_CARD') {
+                        $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
+                        $this->get('session')->getFlashBag()->add(
+                            'card_msg',
+                            'Se han guardado los cambios.'
+                        );
+                        return array(
+                            'formBooking' => $formBooking,
+                            'formChoice' => $formChoice,
+                            'price_detail' => $priceDetail,
+                            'formUrl' => $formUrl,
+                            'roompack_choice' => $roompackChoice,
+                            'booking_id' => $booking_id,
+                            'formNewPay' => $formNewPaySend->createView(),
+                            'paymentMethods' => $paymentMethods,
+                            'rooms' => $roompack->rooms,
+                            'cardsGroup' => $cardsGroup,
+                            'reservationDays' => $reservationTime->days,
+                            'roomNumbers' => count(explode("!", $distribution)),
+                            'errors' => $formNewPaySend->getErrors(),
+                            'travellers' => $travellers,
+                            'hotelBrief' => $session->get('hotel_brief')
+                        );
+                    } else {
+                        throw new \Exception($e);
+                    }
+                }
 
                 return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
                     'hotelDetails' => $booking['hotelDetails'],
@@ -601,33 +635,11 @@ class HotelController extends Controller
                     'status' => 'ok',
                     'pdf' => false
                 ));
-            } else {
-                $test = $formNewPaySend->getErrors();
             }
         }
-
-        $selectedPack = $formHelper->getSelectedPack();
-        $formChoice = $formBooking['dictionary']['form_choices'][$selectedPack['form_choice']];
-
-        $paymentMethods = $roompack->payment_methods;
-        //Muestra métodos de prueba:
-        //$paymentMethods = (new PaymentMethods())->getTestMethods();
 
         //procesado de métodos de pago agrupados por Banco
-        $cardsGroup = [];
-        foreach ($paymentMethods as $pm) {
-            $temp = [];
-            if (isset($pm->card_ids)) {
-                foreach ($pm->card_ids as $cardId) {
-                    $cardParts = explode("-", $cardId);
-                    $bank = $cardParts[2];
-                    $temp[$bank][] = $cardId;
-                }
-                $cardsGroup[$pm->choice] = $temp;
-            }
-        }
-
-        $travellers = $this->get('booking_helper')->getSearchText($checkin, $checkout, $distribution, $lang);
+        $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
 
         return array(
             'formBooking' => $formBooking,

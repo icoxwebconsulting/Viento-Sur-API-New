@@ -315,6 +315,16 @@
                                 {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
                             {% endif %}
 
+                            {% for flashMessage in app.session.flashbag.get('card_msg') %}
+                                <div class="row">
+                                    <div class="col-md-10 top-buffer">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span>{{ 'index.invalid_cc' | trans }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
                         {% endif %}
                     </div>
                 </div>
