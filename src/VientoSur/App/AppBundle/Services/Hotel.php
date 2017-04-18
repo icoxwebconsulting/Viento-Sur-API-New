@@ -45,6 +45,10 @@ class Hotel
 
         $booking = $this->patchHotelsBooking($bookingId, $formIdBooking, $patchParams);
 
+        if (isset($booking['status']) && $booking['status'] == 'NEW_CREDIT_CARD') {
+            throw new \Exception('CREDIT_CARD');
+        }
+
         $reservation = $this->saveReservation($hotelId, $booking, $priceDetail, $formPay, $checkinDate, $checkoutDate, $fillData['passengers']);
 
         $hotelDetails = $this->despegar->getHotelsDetails(array(
@@ -147,5 +151,23 @@ class Hotel
         } catch (\Exception $e) {
             $this->logger->error('Booking email error: ' . $email);
         }
+    }
+
+    public function getCardsGroup($paymentMethods)
+    {
+        $cardsGroup = [];
+        foreach ($paymentMethods as $pm) {
+            $temp = [];
+            if (isset($pm->card_ids)) {
+                foreach ($pm->card_ids as $cardId) {
+                    $cardParts = explode("-", $cardId);
+                    $bank = $cardParts[2];
+                    $temp[$bank][] = $cardId;
+                }
+                $cardsGroup[$pm->choice] = $temp;
+            }
+        }
+
+        return $cardsGroup;
     }
 }

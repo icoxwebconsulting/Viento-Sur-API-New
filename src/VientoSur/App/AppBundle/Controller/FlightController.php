@@ -446,45 +446,7 @@ class FlightController extends Controller
         $formNewPay = $flightService->initForm($booking, $formNewPay);
         $formNewPaySend = $formNewPay->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $formNewPaySend->handleRequest($request);
-
-            if ($formNewPaySend->isValid()) {
-                $formNewPaySend = $formNewPaySend->getData();
-
-                //procesar pago mediante api de dvault
-                $dvault = $flightService->processdVault($formNewPaySend);
-                $status = 'ok';
-
-                $reservation = 'none';
-                if ($dvault && isset($dvault->secure_token)) {
-                    $reservation = $flightService->processReservation($dvault->secure_token, $formNewPaySend, $booking, $request->getClientIp(), $params, $itineraryDetail, $request->getSession()->get('origin_flight'), $request->getSession()->get('destination_flight'));
-
-                    if (!$reservation) {
-                        $status = 'fail';
-                    }
-                } else {
-                    $status = 'dvault';
-                }
-
-                return $this->redirectToRoute('viento_sur_app_booking_flight_summary', array(
-                    'status' => $status,
-                    'itinerary' => $params['itinerary_id'],
-                    'reservation' => $reservation
-                ));
-            }
-        }
-
-        $paymentMethods = [];
-        foreach ($itineraryDetail['payment_methods'] as $element) {
-            $value = $element['installments'];
-            if (isset($element['bank_code'])) {
-                $paymentMethods[$value][$element['bank_code']][] = $element;
-            } else {
-                $paymentMethods[$value]['generic'][] = $element;
-            }
-        }
-        ksort($paymentMethods, SORT_NUMERIC);
+        $paymentMethods = $flightService->getPaymentMethods($itineraryDetail);
 
         $string = bin2hex(random_bytes(16));
         $riskAnalysis = [
@@ -496,6 +458,52 @@ class FlightController extends Controller
             ],
             'sessionId' => $string
         ];
+
+        if ($request->getMethod() == 'POST') {
+            $formNewPaySend->handleRequest($request);
+
+            if ($formNewPaySend->isValid()) {
+                $formData = $formNewPaySend->getData();
+
+                $status = 'ok';
+                try {
+                    $reservation = $flightService->processReservation(
+                        $formData,
+                        $booking,
+                        $request->getClientIp(),
+                        $params, $itineraryDetail,
+                        $request->getSession()->get('origin_flight'),
+                        $request->getSession()->get('destination_flight')
+                    );
+
+                } catch (\Exception $e) {
+                    if ($e->getMessage() == 'CREDIT_CARD') {
+                        $this->get('session')->getFlashBag()->add(
+                            'card_msg',
+                            ''
+                        );
+                        return $this->render('VientoSurAppAppBundle:Flight:bookingFlightPay.html.twig', array(
+                            'flightMenu' => true,
+                            'formNewPay' => $formNewPaySend->createView(),
+                            'formChoice' => $booking,
+                            'itineraryDetail' => $itineraryDetail,
+                            'paymentMethods' => $paymentMethods,
+                            'riskAnalysis' => $riskAnalysis,
+                            'cardList' => $this->get('app.card')->getCards(),
+                            'bankList' => $this->get('app.bank')->getBanks()
+                        ));
+                    } else {
+                        throw new \Exception($e);
+                    }
+                }
+
+                return $this->redirectToRoute('viento_sur_app_booking_flight_summary', array(
+                    'status' => $status,
+                    'itinerary' => $params['itinerary_id'],
+                    'reservation' => $reservation
+                ));
+            }
+        }
 
         return $this->render('VientoSurAppAppBundle:Flight:bookingFlightPay.html.twig', array(
             'flightMenu' => true,

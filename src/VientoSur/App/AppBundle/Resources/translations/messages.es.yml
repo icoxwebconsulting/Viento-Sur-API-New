@@ -53,6 +53,7 @@ index:
         name: Nombre y Apellido
         cancel: Cancelar
         send: Enviar
+    invalid_cc: Tarjeta inválida, por favor intruzca otra.
 hotels:
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible

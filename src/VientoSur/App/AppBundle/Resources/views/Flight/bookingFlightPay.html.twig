@@ -259,6 +259,16 @@
                             {{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}
 
                             {{ form_widget(attribute(formNewPay.payments, 'session_id'), { 'value' : riskAnalysis.sessionId }) }}
+
+                            {% for flashMessage in app.session.flashbag.get('card_msg') %}
+                                <div class="row">
+                                    <div class="col-md-10 top-buffer">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span>{{ 'index.invalid_cc' | trans }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         {% endfor %}
                     </div>
                 </div>

@@ -16,66 +16,54 @@
             {#</ul>#}
         {#</li>#}
         <li class="top-user-area-lang nav-drop">
-            {% if app.request.locale == 'en' %}
-                <a title="English" href="{{ path('homepage', {'_locale': 'en'}) }}">
-                    English<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" />
-                </a>
-            {% elseif app.request.locale == 'pt' %}
-                <a title="Portuguese" href="{{ path('homepage', {'_locale': 'pt'}) }}">
-                    Portuguese<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Portuguese" title="Portuguese" />
-                </a>
-            {% else %}
-                {% set country = app.session.get('country') %}
-                <a href="{{ path('homepage', {'_locale': 'es'}) }}">
-                    {% if country == '' %}
-                        {% set country = 'ar' %}
-                    {% endif %}
+            {% set country = app.session.get('country') %}
+            <a href="{{ path('homepage', {'_locale': 'es'}) }}">
+                {% if country == '' %}
+                    {% set country = 'ar' %}
+                {% endif %}
+                {% set textCountry = 'Argentina' %}
+                {% if country == 'ar' %}
                     {% set textCountry = 'Argentina' %}
-                    {% if country == 'ar' %}
-                        {% set textCountry = 'Argentina' %}
-                    {% elseif country == 'bo' %}
-                        {% set textCountry = 'Bolivia' %}
-                    {% elseif country == 'cl' %}
-                        {% set textCountry = 'Chile' %}
-                    {% elseif country == 'co' %}
-                        {% set textCountry = 'Colombia' %}
-                    {% elseif country == 'cr' %}
-                        {% set textCountry = 'Costa Rica' %}
-                    {% elseif country == 'cu' %}
-                        {% set textCountry = 'Cuba' %}
-                    {% elseif country == 'ec' %}
-                        {% set textCountry = 'Ecuador' %}
-                    {% elseif  country == 'sv' %}
-                        {% set textCountry = 'El Salvador' %}
-                    {% elseif  country == 'gt' %}
-                        {% set textCountry = 'Guatemala' %}
-                    {% elseif  country == 'ht' %}
-                        {% set textCountry = 'Haití' %}
-                    {% elseif  country == 'hn' %}
-                        {% set textCountry = 'Honduras' %}
-                    {% elseif  country == 'mx' %}
-                        {% set textCountry = 'México' %}
-                    {% elseif  country == 'ni' %}
-                        {% set textCountry = 'Nicaragua' %}
-                    {% elseif  country == 'pa' %}
-                        {% set textCountry = 'Panamá' %}
-                    {% elseif  country == 'py' %}
-                        {% set textCountry = 'Paraguay' %}
-                    {% elseif  country == 'pe' %}
-                        {% set textCountry = 'Perú' %}
-                    {% elseif  country == 'do' %}
-                        {% set textCountry = 'R Dominicana' %}
-                    {% elseif  country == 'uy' %}
-                        {% set textCountry = 'Uruguay' %}
-                    {% elseif  country == 've' %}
-                        {% set textCountry = 'Venezuela' %}
-                    {% endif %}
-                    {% set src =  'bundles/vientosurappapp/images/fl-' ~ country ~ '.png' %}
-                    {{ textCountry }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img
-                            src="{{ asset(src) }}" alt="{{ textCountry }}"
-                            title="{{ country }}"/>
-                </a>
-            {% endif %}
+                {% elseif country == 'bo' %}
+                    {% set textCountry = 'Bolivia' %}
+                {% elseif country == 'cl' %}
+                    {% set textCountry = 'Chile' %}
+                {% elseif country == 'co' %}
+                    {% set textCountry = 'Colombia' %}
+                {% elseif country == 'cr' %}
+                    {% set textCountry = 'Costa Rica' %}
+                {% elseif country == 'ec' %}
+                    {% set textCountry = 'Ecuador' %}
+                {% elseif  country == 'mx' %}
+                    {% set textCountry = 'México' %}
+                {% elseif  country == 'pa' %}
+                    {% set textCountry = 'Panamá' %}
+                {% elseif  country == 'py' %}
+                    {% set textCountry = 'Paraguay' %}
+                {% elseif  country == 'pe' %}
+                    {% set textCountry = 'Perú' %}
+                {% elseif  country == 'do' %}
+                    {% set textCountry = 'R Dominicana' %}
+                {% elseif  country == 'uy' %}
+                    {% set textCountry = 'Uruguay' %}
+                {% elseif  country == 've' %}
+                    {% set textCountry = 'Venezuela' %}
+                {% elseif  country == 'es' %}
+                    {% set textCountry = 'España' %}
+                {% elseif  country == 'us' %}
+                    {% set textCountry = 'United States' %}
+                {% elseif  country == 'nz' %}
+                    {% set textCountry = 'New Zealand' %}
+                {% elseif  country == 'au' %}
+                    {% set textCountry = 'Australia' %}
+                {% elseif  country == 'uk' %}
+                    {% set textCountry = 'United kingdom' %}
+                {% endif %}
+                {% set src =  'bundles/vientosurappapp/images/fl-' ~ country ~ '.png' %}
+                {{ textCountry }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img
+                        src="{{ asset(src) }}" alt="{{ textCountry }}"
+                        title="{{ country }}"/>
+            </a>
 
             <ul class="list nav-drop-menu">
                 <li>
@@ -104,43 +92,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:changePage('es', 'cu');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-cu.png') }}" alt="Cuba" title="Cuba" data-cc="cu" /><span class="right">Cuba</span>
-                    </a>
-                </li>
-                <li>
                     <a href="javascript:changePage('es', 'ec');" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-ec.png') }}" alt="Ecuador" title="Ecuador" data-cc="ec" /><span class="right">Ecuador</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:changePage('es', 'sv');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-sv.png') }}" alt="El Salvador" title="El Salvador" data-cc="sv" /><span class="right">El Salvador</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'gt');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-gt.png') }}" alt="Guatemala" title="Guatemala" data-cc="gt" /><span class="right">Guatemala</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'ht');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ht.png') }}" alt="Haití" title="Haití" data-cc="ht" /><span class="right">Haití</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'hn');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-hn.png') }}" alt="Honduras" title="Honduras" data-cc="hn" /><span class="right">Honduras</span>
-                    </a>
-                </li>
-                <li>
                     <a href="javascript:changePage('es', 'mx');" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-mx.png') }}" alt="México" title="México" data-cc="mx" /><span class="right">México</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'ni');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ni.png') }}" alt="Nicaragua" title="Nicaragua" data-cc="ni" /><span class="right">Nicaragua</span>
                     </a>
                 </li>
                 <li>
@@ -173,28 +131,36 @@
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-ve.png') }}" alt="Venezuela" title="Venezuela" data-cc="ve" /><span class="right">Venezuela</span>
                     </a>
                 </li>
-
-                {% if app.request.locale != 'es' %}
                 <li>
-                    <a href="javascript:changePage('es', 'ar');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Español" title="Español" /><span class="right">Español </span>
+                    <a href="javascript:changePage('es', 'es');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-es.png') }}" alt="España" title="España" data-cc="es" /><span class="right">España</span>
                     </a>
                 </li>
-                {% endif %}
-                {% if app.request.locale != 'en' %}
                 <li>
-                    <a title="English" href="javascript:changePage('en');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-en.png') }}" alt="English" title="English" /><span class="right">English </span>
+                    <a href="javascript:changePage('en', 'us');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-us.png') }}" alt="United States" title="United States" data-cc="us" /><span class="right">United States</span>
                     </a>
                 </li>
-                {% endif %}
-                {% if app.request.locale != 'pt' %}
                 <li>
-                    <a title="Portuguese" href="javascript:changePage('pt');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Portuguese" title="Portuguese" /><span class="right">Portuguese </span>
+                    <a href="javascript:changePage('en', 'nz');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-nz.png') }}" alt="New Zealand" title="New Zealand" data-cc="nz" /><span class="right">New Zealand</span>
                     </a>
                 </li>
-                {% endif %}
+                <li>
+                    <a href="javascript:changePage('en', 'au');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-au.png') }}" alt="Australia" title="Australia" data-cc="au" /><span class="right">Australia</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:changePage('en', 'uk');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-uk.png') }}" alt="United kingdom" title="United kingdom" /><span class="right">United kingdom </span>
+                    </a>
+                </li>
+                <li>
+                    <a title="Portuguese" href="javascript:changePage('pt', 'br');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Brasil" title="Brasil" /><span class="right">Brasil </span>
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>
