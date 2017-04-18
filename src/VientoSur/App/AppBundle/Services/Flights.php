@@ -446,8 +446,29 @@ class Flights
         return $toCheckout;
     }
 
-    public function processReservation($dvault, $formData, $booking, $clientIp, $params, $itineraryDetail, $origin, $destination)
+    private function postFlightBooking($fillData, $urlParams)
     {
+        $bookingInfo = $this->despegar->postFlightBookings($fillData, $urlParams);
+
+        if (isset($bookingInfo['status']) && $bookingInfo['status'] !== 'SUCCESS') {
+            throw new \Exception($bookingInfo['status']);
+        }
+    }
+
+    private function getVaultToken($formData)
+    {
+        $response = $this->processdVault($formData);
+        if ($response && isset($response->secure_token)) {
+            return $response->secure_token;
+        } else {
+            throw new \Exception('Algo no ha salido bien con el pago.');
+        }
+    }
+
+    public function processReservation($formData, $booking, $clientIp, $params, $itineraryDetail, $origin, $destination)
+    {
+        $dvault = $this->getVaultToken($formData);
+
         $fillData = $this->fillFormData($dvault, $formData, $booking, $clientIp);
 
         $urlParams = [
@@ -458,6 +479,10 @@ class Flights
         ];
 
         $bookingInfo = $this->despegar->postFlightBookings($fillData, $urlParams);
+
+        if (isset($bookingInfo['status']) && $bookingInfo['status'] == 'NEW_CREDIT_CARD') {
+            throw new \Exception('CREDIT_CARD');
+        }
 
         if ($bookingInfo && $bookingInfo['status'] == 'SUCCESS') {
             $reservation = new FlightReservation();
@@ -499,12 +524,27 @@ class Flights
                     ));
                 }
             } catch (\Exception $e) {
-                $this->logger->error('Booking Flight email error');
+                $this->logger->error('Booking Flight email error: ' . $e->getMessage());
             }
 
             return $reservation->getId();
         } else {
             return false;
         }
+    }
+
+    public function getPaymentMethods($itineraryDetail)
+    {
+        $paymentMethods = [];
+        foreach ($itineraryDetail['payment_methods'] as $element) {
+            $value = $element['installments'];
+            if (isset($element['bank_code'])) {
+                $paymentMethods[$value][$element['bank_code']][] = $element;
+            } else {
+                $paymentMethods[$value]['generic'][] = $element;
+            }
+        }
+        ksort($paymentMethods, SORT_NUMERIC);
+        return $paymentMethods;
     }
 }

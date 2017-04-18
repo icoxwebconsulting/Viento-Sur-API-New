@@ -601,7 +601,7 @@ class HotelController extends Controller
                         $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
                         $this->get('session')->getFlashBag()->add(
                             'card_msg',
-                            'Se han guardado los cambios.'
+                            ''
                         );
                         return array(
                             'formBooking' => $formBooking,
