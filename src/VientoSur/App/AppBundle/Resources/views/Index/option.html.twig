@@ -58,6 +58,10 @@
                     {% set textCountry = 'Australia' %}
                 {% elseif  country == 'uk' %}
                     {% set textCountry = 'United kingdom' %}
+                {% elseif  country == 'br' %}
+                    {% set textCountry = 'Brasil' %}
+                {% elseif  country == 'por' %}
+                    {% set textCountry = 'Portugal' %}
                 {% endif %}
                 {% set src =  'bundles/vientosurappapp/images/fl-' ~ country ~ '.png' %}
                 {{ textCountry }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img
@@ -71,66 +75,66 @@
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Argentina" title="Argentina" data-cc="ar" /><span class="right">Argentina</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:changePage('es', 'bo');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-bo.png') }}" alt="Bolivia" title="Bolivia" data-cc="bo" /><span class="right">Bolivia</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'cl');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-cl.png') }}" alt="Chile" title="Chile" data-cc="cl" /><span class="right">Chile</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'co');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-co.png') }}" alt="Colombia" title="Colombia" data-cc="co" /><span class="right">Colombia</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'cr');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-cr.png') }}" alt="Costa Rica" title="Costa Rica" data-cc="cr" /><span class="right">Costa Rica</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'ec');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ec.png') }}" alt="Ecuador" title="Ecuador" data-cc="ec" /><span class="right">Ecuador</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'mx');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-mx.png') }}" alt="México" title="México" data-cc="mx" /><span class="right">México</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'pa');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-pa.png') }}" alt="Panamá" title="Panamá" data-cc="pa" /><span class="right">Panamá</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'py');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-py.png') }}" alt="Paraguay" title="Paraguay" data-cc="py" /><span class="right">Paraguay</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'pe');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-pe.png') }}" alt="Perú" title="Perú" data-cc="pe" /><span class="right">Perú</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'do');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-do.png') }}" alt="R Dominicana" title="R Dominicana" data-cc="do" /><span class="right">R Dominicana</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 'uy');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-uy.png') }}" alt="Uruguay" title="Uruguay" data-cc="uy" /><span class="right">Uruguay</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('es', 've');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ve.png') }}" alt="Venezuela" title="Venezuela" data-cc="ve" /><span class="right">Venezuela</span>
-                    </a>
-                </li>
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'bo');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-bo.png') }}" alt="Bolivia" title="Bolivia" data-cc="bo" /><span class="right">Bolivia</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'cl');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-cl.png') }}" alt="Chile" title="Chile" data-cc="cl" /><span class="right">Chile</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'co');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-co.png') }}" alt="Colombia" title="Colombia" data-cc="co" /><span class="right">Colombia</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'cr');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-cr.png') }}" alt="Costa Rica" title="Costa Rica" data-cc="cr" /><span class="right">Costa Rica</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'ec');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-ec.png') }}" alt="Ecuador" title="Ecuador" data-cc="ec" /><span class="right">Ecuador</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'mx');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-mx.png') }}" alt="México" title="México" data-cc="mx" /><span class="right">México</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'pa');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-pa.png') }}" alt="Panamá" title="Panamá" data-cc="pa" /><span class="right">Panamá</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'py');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-py.png') }}" alt="Paraguay" title="Paraguay" data-cc="py" /><span class="right">Paraguay</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'pe');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-pe.png') }}" alt="Perú" title="Perú" data-cc="pe" /><span class="right">Perú</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'do');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-do.png') }}" alt="R Dominicana" title="R Dominicana" data-cc="do" /><span class="right">R Dominicana</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 'uy');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-uy.png') }}" alt="Uruguay" title="Uruguay" data-cc="uy" /><span class="right">Uruguay</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('es', 've');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-ve.png') }}" alt="Venezuela" title="Venezuela" data-cc="ve" /><span class="right">Venezuela</span>#}
+                    {#</a>#}
+                {#</li>#}
                 <li>
                     <a href="javascript:changePage('es', 'es');" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-es.png') }}" alt="España" title="España" data-cc="es" /><span class="right">España</span>
@@ -141,16 +145,16 @@
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-us.png') }}" alt="United States" title="United States" data-cc="us" /><span class="right">United States</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:changePage('en', 'nz');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-nz.png') }}" alt="New Zealand" title="New Zealand" data-cc="nz" /><span class="right">New Zealand</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:changePage('en', 'au');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-au.png') }}" alt="Australia" title="Australia" data-cc="au" /><span class="right">Australia</span>
-                    </a>
-                </li>
+                {#<li>#}
+                    {#<a href="javascript:changePage('en', 'nz');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-nz.png') }}" alt="New Zealand" title="New Zealand" data-cc="nz" /><span class="right">New Zealand</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="javascript:changePage('en', 'au');" class="language">#}
+                        {#<img src="{{ asset('bundles/vientosurappapp/images/fl-au.png') }}" alt="Australia" title="Australia" data-cc="au" /><span class="right">Australia</span>#}
+                    {#</a>#}
+                {#</li>#}
                 <li>
                     <a href="javascript:changePage('en', 'uk');" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-uk.png') }}" alt="United kingdom" title="United kingdom" /><span class="right">United kingdom </span>
@@ -159,6 +163,11 @@
                 <li>
                     <a title="Portuguese" href="javascript:changePage('pt', 'br');" class="language">
                         <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Brasil" title="Brasil" /><span class="right">Brasil </span>
+                    </a>
+                </li>
+                <li>
+                    <a title="Portuguese" href="javascript:changePage('pt', 'por');" class="language">
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-por.png') }}" alt="Portugal" title="Portugal" /><span class="right">Portugal </span>
                     </a>
                 </li>
             </ul>
