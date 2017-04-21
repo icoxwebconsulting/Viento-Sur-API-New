@@ -178,7 +178,51 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>{{ 'hotels.selected_card' | trans }}:</label>
-                                    <input type="text" value="" id="card-selected" class="form-control" readonly>
+                                    {% if paymentMethods|length > 1 %}
+                                        <input type="hidden" value="" id="card-selected" class="form-control" readonly>
+                                        <select id="select-card3" class="form-control" title="">
+                                            {% for cuotas, bank in paymentMethods %}
+                                                <optgroup label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
+                                                    {% for key in bank.card_ids %}
+
+                                                        {% set cardType = key | split('-') %}
+                                                        {% set label = '' %}
+                                                        {% for cardKey, cardValue in cardList %}
+                                                            {% if cardType[1] == cardKey %}
+                                                                {% set label = cardValue %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if cardType[2] != '*' %}
+
+                                                            {% for bankKey, bankValue in bankList %}
+                                                                {% if bankKey == cardType[2] %}
+                                                                <option value="{{ key }}">{{ label }} {{ bankValue }}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+
+                                                        {% else %}
+                                                            <option value="{{ key }}">{{ label }}</option>
+                                                        {% endif %}
+
+                                                    {% endfor %}
+                                                </optgroup>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <select id="select-card2" class="form-control" title="">
+                                            {% for card in paymentMethods[0].card_ids %}
+                                                {% set cardData = card|split('-') %}
+
+                                                {% set label = '' %}
+                                                {% for cardKey, cardValue in cardList %}
+                                                    {% if cardData[1] == cardKey %}
+                                                        {% set label = cardValue %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <option value="{{ card }}">{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
                                 </div>
                                 {% if formNewPay.payment.number is defined %}
                                     {% set label = 'hotels.labels.card_number' | trans %}
@@ -535,7 +579,6 @@
         });
         $('#form_payment_number').on('blur', function () {
             var cardBrand = $('#card-selected').val();
-
             if (checkCreditCard(this.value, cardBrand)) {
                 $('#card-error').addClass('hidden')
             } else {
@@ -545,7 +588,17 @@
                 }
             }
         });
-
+        $('#select-card2').on('change', function(){
+            $('.card-list .eva-card-container').removeClass('selected-p-card');
+            var data = this.value;
+            $('.clickable-card[data-card-id=\"'+data+'\"]').click();
+        });
+        $('#select-card3').on('change', function(){
+//            $('.eva-card-container').removeClass('selected-p-card');
+//            $('.card-list .eva-card-container').removeClass('selected-p-card');
+            var data = this.value;
+            $('.clickable-card[data-card-id=\"'+data+'\"]').click();
+        });
         $('#card-selected').on('change', function () {
             var cardNumber = $('#form_payment_number').val();
             if (cardNumber.length < 1) {
