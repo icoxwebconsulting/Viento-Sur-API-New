@@ -2,28 +2,29 @@
     <ul class="top-user-area-list list list-horizontal list-border">
         <!--<li><a href="#">Iniciar Sesión</a></li>-->
         <!--<li><a href="#">Registrarse</a></li>-->
-        {#<li class="nav-drop">#}
-            {#<a href="#">#}
-                {#AR $<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i>#}
-            {#</a>#}
-            {#<ul class="list nav-drop-menu">#}
-                {#{% for currency in currencies %}#}
-                {#<li>#}
-
-                    {#<a href="#">{{ currency.name }}</a>#}
-                {#</li>#}
-                {#{% endfor %}#}
-            {#</ul>#}
-        {#</li>#}
+        <li class="nav-drop">
+            <a href="#">
+                {% set currency = app.session.get('targetCurrency') %}
+                {{ currency }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i>
+            </a>
+            <ul class="list nav-drop-menu">
+                <li>
+                    <a onclick="change('USD')" href="#">USD</a>
+                </li>
+                <li>
+                    <a onclick="change('ARS')" href="#">ARS</a>
+                </li>
+            </ul>
+        </li>
         <li class="top-user-area-lang nav-drop">
             {% set country = app.session.get('country') %}
             <a href="{{ path('homepage', {'_locale': 'es'}) }}">
                 {% if country == '' %}
                     {% set country = 'ar' %}
                 {% endif %}
-                {% set textCountry = 'Argentina' %}
+                {% set textCountry = 'Español' %}
                 {% if country == 'ar' %}
-                    {% set textCountry = 'Argentina' %}
+                    {% set textCountry = 'Español' %}
                 {% elseif country == 'bo' %}
                     {% set textCountry = 'Bolivia' %}
                 {% elseif country == 'cl' %}
@@ -49,30 +50,29 @@
                 {% elseif  country == 've' %}
                     {% set textCountry = 'Venezuela' %}
                 {% elseif  country == 'es' %}
-                    {% set textCountry = 'España' %}
+                    {% set textCountry = 'Español' %}
                 {% elseif  country == 'us' %}
-                    {% set textCountry = 'United States' %}
+                    {% set textCountry = 'English' %}
                 {% elseif  country == 'nz' %}
                     {% set textCountry = 'New Zealand' %}
                 {% elseif  country == 'au' %}
                     {% set textCountry = 'Australia' %}
                 {% elseif  country == 'uk' %}
-                    {% set textCountry = 'United kingdom' %}
+                    {% set textCountry = 'English' %}
                 {% elseif  country == 'br' %}
-                    {% set textCountry = 'Brasil' %}
+                    {% set textCountry = 'Português' %}
                 {% elseif  country == 'por' %}
-                    {% set textCountry = 'Portugal' %}
+                    {% set textCountry = 'Português' %}
                 {% endif %}
                 {% set src =  'bundles/vientosurappapp/images/fl-' ~ country ~ '.png' %}
                 {{ textCountry }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i><img
                         src="{{ asset(src) }}" alt="{{ textCountry }}"
                         title="{{ country }}"/>
             </a>
-
             <ul class="list nav-drop-menu">
                 <li>
                     <a href="javascript:changePage('es', 'ar');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Argentina" title="Argentina" data-cc="ar" /><span class="right">Argentina</span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-ar.png') }}" alt="Argentina" title="Argentina" data-cc="ar" /><span class="right">Español</span>
                     </a>
                 </li>
                 {#<li>#}
@@ -137,12 +137,12 @@
                 {#</li>#}
                 <li>
                     <a href="javascript:changePage('es', 'es');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-es.png') }}" alt="España" title="España" data-cc="es" /><span class="right">España</span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-es.png') }}" alt="España" title="España" data-cc="es" /><span class="right">Español</span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript:changePage('en', 'us');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-us.png') }}" alt="United States" title="United States" data-cc="us" /><span class="right">United States</span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-us.png') }}" alt="United States" title="United States" data-cc="us" /><span class="right">English</span>
                     </a>
                 </li>
                 {#<li>#}
@@ -157,17 +157,17 @@
                 {#</li>#}
                 <li>
                     <a href="javascript:changePage('en', 'uk');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-uk.png') }}" alt="United kingdom" title="United kingdom" /><span class="right">United kingdom </span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-uk.png') }}" alt="United kingdom" title="United kingdom" /><span class="right">English </span>
                     </a>
                 </li>
                 <li>
                     <a title="Portuguese" href="javascript:changePage('pt', 'br');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Brasil" title="Brasil" /><span class="right">Brasil </span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-br.png') }}" alt="Brasil" title="Brasil" /><span class="right">Português </span>
                     </a>
                 </li>
                 <li>
                     <a title="Portuguese" href="javascript:changePage('pt', 'por');" class="language">
-                        <img src="{{ asset('bundles/vientosurappapp/images/fl-por.png') }}" alt="Portugal" title="Portugal" /><span class="right">Portugal </span>
+                        <img src="{{ asset('bundles/vientosurappapp/images/fl-por.png') }}" alt="Portugal" title="Portugal" /><span class="right">Português </span>
                     </a>
                 </li>
             </ul>

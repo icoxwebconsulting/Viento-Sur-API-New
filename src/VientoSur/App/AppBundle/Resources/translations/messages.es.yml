@@ -172,7 +172,7 @@ hotels:
     buy_alert: Por favor, antes de finalizar, revise los datos ingresados
     paying: Usted está pagando
     taxes_and_rates: Impuestos y tasas
-    paying_msg: El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda
+    paying_msg: El importe en %currency% es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda
     your_accommodation: Su alojamiento
     invoice: Facturación
     selected_card: Tarjeta seleccionada
