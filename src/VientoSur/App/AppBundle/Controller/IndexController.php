@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -287,5 +288,16 @@ class IndexController extends Controller
             'country' => $this->get('session')->get('country'),
             'locale' => $request->getLocale()
         ]);
+    }
+
+    /**
+     * @param $currency
+     * @Route("change/{currency}", name="change_currency")
+     * @return response
+     */
+    public function setCurrencyAction($currency)
+    {
+        $this->get('session')->set('targetCurrency', $currency);
+        return new Response("true");
     }
 }

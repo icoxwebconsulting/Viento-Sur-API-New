@@ -171,7 +171,7 @@ hotels:
     buy_alert: Por favor, antes de finalizar, verifique os dados inseridos
     paying: Você está pagando
     taxes_and_rates: Impostos e taxas
-    paying_msg: O montante é de aproximadamente $ preço foi calculado com o câmbio em vigor hoje. O emitente de sua empresa de cartão pode cobrar uma taxa para a troca
+    paying_msg: O montante é de aproximadamente %currency% preço foi calculado com o câmbio em vigor hoje. O emitente de sua empresa de cartão pode cobrar uma taxa para a troca
     your_accommodation: Seu alojamento
     invoice: Faturamento
     selected_card: Cartão selecionado

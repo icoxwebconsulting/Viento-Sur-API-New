@@ -172,7 +172,7 @@ hotels:
     buy_alert: Please, before submit, check the entered data
     paying: You are paying
     taxes_and_rates: Taxes an rates
-    paying_msg: The amount in $ is an approximate price that has been calculated with the current exchange rate. The issuer of your card could charge you a commission for the change of currency
+    paying_msg: The amount in %currency% is an approximate price that has been calculated with the current exchange rate. The issuer of your card could charge you a commission for the change of currency
     your_accommodation: Your accommodation
     invoice: Invoice
     selected_card: Selected card

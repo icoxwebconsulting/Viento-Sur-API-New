@@ -123,7 +123,8 @@
                     {{ 'hotels.total_price' | trans }}:
                 </th>
                 <td>
-                    {{ reservationDetails.site_currency.code }} {{ internal.totalPrice }}
+                    {#{{ reservationDetails.site_currency.code }} {{ internal.totalPrice }}#}
+                    {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal)| replace({',': '.','.':','})}}
                 </td>
             </tr>
             {% if not pdf %}

@@ -534,6 +534,8 @@ class HotelController extends Controller
         $distribution = $request->get('distribution');
         $reservationTime = $diff = date_diff(new \DateTime($checkin), new \Datetime($checkout));
         $hotelAvailabilities = json_decode($session->get('hotelAvailabilities'));
+        $cards = $this->get('app.card')->getCards();
+        $bankList = $this->get('app.bank')->getBanks();
 
         $roompack = null;
         foreach ($hotelAvailabilities->roompacks as $item) {
@@ -656,7 +658,9 @@ class HotelController extends Controller
             'roomNumbers' => count(explode("!", $distribution)),
             'errors' => $formNewPaySend->getErrors(),
             'travellers' => $travellers,
-            'hotelBrief' => $session->get('hotel_brief')
+            'hotelBrief' => $session->get('hotel_brief'),
+            'cardList' => $cards,
+            'bankList' => $bankList
         );
     }
 
