@@ -124,7 +124,7 @@
                 </th>
                 <td>
                     {#{{ reservationDetails.site_currency.code }} {{ internal.totalPrice }}#}
-                    {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal)| replace({',': '.','.':','})}}
+                    {{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(2, ',', '.')}}
                 </td>
             </tr>
             {% if not pdf %}
