@@ -5,14 +5,19 @@
         <li class="nav-drop">
             <a href="#">
                 {% set currency = app.session.get('targetCurrency') %}
-                {{ currency }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i>
+                {% if currency == 'USD' %}
+                    {% set symbol = 'US$' %}
+                {% elseif currency == 'ARS' %}
+                    {% set symbol = 'AR$' %}
+                {% endif %}
+                {{ symbol }}<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i>
             </a>
             <ul class="list nav-drop-menu">
                 <li>
-                    <a onclick="change('USD')" href="#">USD</a>
+                    <a onclick="change('USD')" href="#">US$</a>
                 </li>
                 <li>
-                    <a onclick="change('ARS')" href="#">ARS</a>
+                    <a onclick="change('ARS')" href="#">AR$</a>
                 </li>
             </ul>
         </li>

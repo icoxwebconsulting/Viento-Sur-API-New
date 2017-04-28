@@ -95,8 +95,8 @@ knp_snappy:
 
 lexik_currency:
     currencies:
-        default: USD              # [required] the default currency
-        managed: [USD, ARS]  # [required] all currencies used in your app
+        default: ARS              # [required] the default currency
+        managed: [ARS, USD]  # [required] all currencies used in your app
     decimal_part:
         precision:  0                           # number of digits for the decimal part
 #        round_mode: down                          # round mode to use (up|down|even|odd)
