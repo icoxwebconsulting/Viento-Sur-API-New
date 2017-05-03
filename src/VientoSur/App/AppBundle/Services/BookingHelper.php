@@ -60,7 +60,7 @@ class BookingHelper
         ];
 
         $str = '<b>' . $transText['entry'] . ':</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '<br />';
-        $str .= ' <b>' . $transText['exit'] . ':</b> ' . $checkout_date->format('d') . ' ' . $months[$checkin_date->format('M')];
+        $str .= ' <b>' . $transText['exit'] . ':</b> ' . $checkout_date->format('d') . ' ' . $months[$checkout_date->format('M')];
         $travellers = $this->processDistribution($distribution);
         $str .= '<br /> <b>' . $travellers['adults'] . ' ' . $transText['adults'] . (($travellers['adults'] > 1) ? 's' : '') . '</b>';
         $str .= (($travellers['childs'] > 0) ? $travellers['childs'] : '');
