@@ -332,10 +332,13 @@ class Despegar
             if (in_array($key, $this->flightFilters)) {
                 $urlParams += array($key => $param);
             }
+
         }
-
+//        echo "<pre>".print_r($urlParams,true)."</pre>";
+//        die();
         $url = $this->getServiceUrl() . 'flights/itineraries?' . urldecode(http_build_query($urlParams));
-
+//        echo "<pre>".print_r($url)."</pre>";
+//        die();
         $header = [
             'X-ApiKey: ' . $this->apiKey
         ];
