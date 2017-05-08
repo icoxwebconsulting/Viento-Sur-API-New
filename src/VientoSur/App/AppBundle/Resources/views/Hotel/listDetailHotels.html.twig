@@ -77,7 +77,8 @@
                         <div class="booking-align-vertical"> <span class="booking-item-price-night">{{ 'hotels.room_per_night' | trans }}</span>
                             <span class="booking-item-price">
                                 {%for price in item.roompacks%}
-                                    $&nbsp;{{price.price_detail.nightly_subtotal|round|number_format(0, '.', '.')}}
+                                    {#$&nbsp;{{price.price_detail.nightly_subtotal|round|number_format(0, '.', '.') |  currency_convert_format(targetCurrency)}}#}
+                                    {{ symbol }} {{price.price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}
                                 {%endfor%}
                             </span>
                             <span class="btn btn-primary">{{ 'hotels.choose_room' | trans }}</span>

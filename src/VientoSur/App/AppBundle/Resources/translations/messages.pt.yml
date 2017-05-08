@@ -31,6 +31,8 @@ index:
            to: Destino
            to_placeholder: Enter para onde viajar
            start: Partida
+           remove_stretch: Remova o estiramento
+           add_stretch: Adicionar alongamento
            end: Retorno
            one_way: Apenas ida
            one_way_placeholder: Ha seleccionado apenas ida
@@ -41,6 +43,7 @@ index:
            2_11: 2 a 11 anos
            12_more: 12 ou mais
            searching: Procurando voos...
+           multiple_destinations: Múltiplos destinos
     slogan: Reserve a sua viagem para qualquer lugar do mundo,
     slogan_2: encontrar todas as ofertas em um só lugar
     answer_head: Tenha uma pergunta?
@@ -171,7 +174,7 @@ hotels:
     buy_alert: Por favor, antes de finalizar, verifique os dados inseridos
     paying: Você está pagando
     taxes_and_rates: Impostos e taxas
-    paying_msg: O montante é de aproximadamente $ preço foi calculado com o câmbio em vigor hoje. O emitente de sua empresa de cartão pode cobrar uma taxa para a troca
+    paying_msg: O montante é de aproximadamente %currency% preço foi calculado com o câmbio em vigor hoje. O emitente de sua empresa de cartão pode cobrar uma taxa para a troca
     your_accommodation: Seu alojamento
     invoice: Faturamento
     selected_card: Cartão selecionado

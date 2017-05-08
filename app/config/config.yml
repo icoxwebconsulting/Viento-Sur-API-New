@@ -92,3 +92,12 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
         options:    []
+
+lexik_currency:
+    currencies:
+        default: ARS              # [required] the default currency
+        managed: [ARS, USD]  # [required] all currencies used in your app
+    decimal_part:
+        precision:  0                           # number of digits for the decimal part
+#        round_mode: down                          # round mode to use (up|down|even|odd)
+    default_adapter: doctrine_currency_adapter

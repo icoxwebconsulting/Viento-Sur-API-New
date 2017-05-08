@@ -31,6 +31,8 @@ index:
            to: Destino
            to_placeholder: Ingresa hacia dónde viajas
            start: Partida
+           remove_stretch: Eliminar tramo
+           add_stretch: Agregar tramo
            end: Regreso
            one_way: Sólo ida
            one_way_placeholder: Ha seleccionado sólo ida
@@ -41,6 +43,7 @@ index:
            2_11: 2 a 11 años
            12_more: 12 años o más
            searching: Buscando vuelos...
+           multiple_destinations: Múltiple destinos
     slogan: Reserva tu viaje a cualquier parte del
     slogan_2: mundo, encontrando todas las ofertas en un solo lugar
     answer_head: ¿Tenés consultas?
@@ -172,7 +175,7 @@ hotels:
     buy_alert: Por favor, antes de finalizar, revise los datos ingresados
     paying: Usted está pagando
     taxes_and_rates: Impuestos y tasas
-    paying_msg: El importe en $ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda
+    paying_msg: El importe en %currency% es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda
     your_accommodation: Su alojamiento
     invoice: Facturación
     selected_card: Tarjeta seleccionada

@@ -125,7 +125,8 @@
                                         {{ 'hotels.price_per_night' | trans }}
                                     </p>
                                     <div class="text-lg">
-                                        $&nbsp;{{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}
+                                        {#$&nbsp;{{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}#}
+                                        {{ symbol }} {{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
                                     </div>
                                     <a href="#">
                                         <!--<span class="btn btn-primary mt15">Reservar ahora</span>-->
@@ -253,7 +254,8 @@
                                                                 {{ room.cancellation_policy.text }}
                                                             </td>
                                                             <td style="min-width: 80px;">
-                                                                <span><b>$ {{ room.price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}</b></span>
+                                                                {#<span><b>$ {{ room.price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}</b></span>#}
+                                                                <span><b>{{ symbol }} {{ room.price_detail.nightly_subtotal|round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</b></span>
                                                             </td>
                                                             <td>
                                                                 <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking', {'_locale': app.request.locale})}}?{{ reservation|url_encode }}" method="POST" >

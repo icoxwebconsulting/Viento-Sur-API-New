@@ -31,6 +31,8 @@ index:
            to: Destination
            to_placeholder: Enter where you travel
            start: Departure
+           remove_stretch: Remove stretch
+           add_stretch: Add stretch
            end: Return
            one_way: One way
            one_way_placeholder: You have selected one way
@@ -41,6 +43,7 @@ index:
            2_11: 2 to 11 years
            12_more: 12 or more
            searching: Searching Flights...
+           multiple_destinations: Multiple destinations
     slogan: Book your trip to any part of the world,
     slogan_2: finding all the offers in one place
     answer_head: Have a questions?
@@ -172,7 +175,7 @@ hotels:
     buy_alert: Please, before submit, check the entered data
     paying: You are paying
     taxes_and_rates: Taxes an rates
-    paying_msg: The amount in $ is an approximate price that has been calculated with the current exchange rate. The issuer of your card could charge you a commission for the change of currency
+    paying_msg: The amount in %currency% is an approximate price that has been calculated with the current exchange rate. The issuer of your card could charge you a commission for the change of currency
     your_accommodation: Your accommodation
     invoice: Invoice
     selected_card: Selected card

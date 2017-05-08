@@ -398,7 +398,8 @@
                         <div class="booking-align-vertical"> <span class="booking-item-price-night">{{ 'flights.final_total_price' | trans }}</span>
                             <span class="booking-item-price">
                                 {% if item.price_detail.total is defined %}
-                                    $ {{ item.price_detail.total|round|number_format(0, '.', '.') }}
+                                    {#$ {{ item.price_detail.total|round|number_format(0, '.', '.') }}#}
+                                    {{ symbol }} {{ item.price_detail.total|round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.') }}
                                 {% endif %}
                             </span>
                             <span class="btn btn-primary">{{ 'hotels.buy' | trans }}</span>

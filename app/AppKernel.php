@@ -23,7 +23,8 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-            
+            new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(),
+
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
         );

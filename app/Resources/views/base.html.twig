@@ -37,6 +37,17 @@
     </script>
 {% endblock %}
     {% block body %}
+        {% if (app.session.get('targetCurrency') is not defined) or (app.session.get('targetCurrency') == null) %}
+            {{ app.session.set('targetCurrency', 'ARS') }}
+        {% endif %}
+        {% set targetCurrency = app.session.get('targetCurrency') %}
+
+        {% if targetCurrency == 'USD' %}
+            {% set symbol = 'US$' %}
+        {% elseif targetCurrency == 'ARS' %}
+            {% set symbol = 'AR$' %}
+        {% endif %}
+        {% set decimal =false %}
         <div class="global-wrap">
             <header id="main-header">
                 <div class="header-top">
@@ -267,6 +278,19 @@
                     })
                 }
             }
+        }
+        function change(currency){
+            var url = Routing.generate('change_currency', { 'currency': currency });
+            console.log('url', url);
+            $.ajax({
+                type: "GET",
+                url: url
+            }).done(function( result ) {
+                if (result == 'true'){
+                    window.location.reload();
+                }
+                console.log(result)
+            });
         }
     </script>
 {% block javascripts %}
