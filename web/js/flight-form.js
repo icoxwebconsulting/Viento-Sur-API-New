@@ -144,6 +144,7 @@ $(document).ready(function () {
         $('#multidestination-from-flight1').attr('required', 'true');
         $('#multidestination-to-flight1').attr('required', 'true');
         $('#start-flight1').attr('required', 'true');
+        $('#tab-2').css({'overflow': 'auto', 'height': '313px'});
     });
     $('#multipledestination').val(false);
 
@@ -250,8 +251,7 @@ $(document).ready(function () {
             $('#multidestination-to-flight1').removeAttr('required');
             $('#start-flight0').removeAttr('required');
             $('#start-flight1').removeAttr('required');
-
-
+            $('#tab-2').css({'overflow': '', 'height': ''});
         }
     });
     $("#childrenPassengers").change(function () {
