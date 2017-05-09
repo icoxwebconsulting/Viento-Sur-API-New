@@ -130,6 +130,9 @@ $(document).ready(function () {
             $("#destinationFlight").val('');
         }
     });
+    $('#search-multidestination').click(function () {
+        $('#multipledestination').val(true);
+    });
     $('#multiple-destinations').click(function(){
         $('.wrapper').show();
         $('#add-stretch').show();
@@ -161,14 +164,14 @@ $(document).ready(function () {
                                             '<div class="multiple-destinations-wrapper col-md-6 ">'+
                                                 '<div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>'+
                                                     '<label>'+labelFrom+'</label>'+
-                                                    '<input class="form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][from-flight]" data-provide="typeahead" required type="text" />'+
+                                                    '<input class="form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" data-provide="typeahead" required type="text" />'+
                                                     '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" value="" />'+
                                                 '</div>'+
                                             '</div>'+
                                             '<div class="multiple-destinations-wrapper col-md-6 ">'+
                                                 '<div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>'+
                                                     '<label>'+labelTo+'</label>'+
-                                                    '<input class="form-control" id="multidestination-to-flight'+count+'" name="multidestination['+count+'][to-flight]" data-provide="typeahead" required type="text" />'+
+                                                    '<input class="form-control" id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" data-provide="typeahead" required type="text" />'+
                                                     '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
                                                 '</div>'+
                                             '</div>'+
