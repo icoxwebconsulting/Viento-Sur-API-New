@@ -1,30 +1,77 @@
 <div class="content-sidebar">
     <form class="booking-item-dates-change mb5" name="searchFlight" id="search-flights" action ="{{ path('viento_sur_process_search_flights') }}" method="POST">
 
-        <div class="form-group form-group-icon-left form-icon-lg">
+        {% if app.session.get('multipledestinations') is defined %}
+            {% set destinations = app.session.get('multipledestinations') %}
+            {% for destiny in destinations %}
+                <input type="text"  id="multipledestination" name="multipledestination" value='true' style="display: none">
+                <input type="text"  id="" name="hidden" value="{{app.session.get('departure_date')}}" style="display: none">
+                <h2>{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</h2>
+                {% if loop.index0 < 1 %}
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+                        <input class="form-control" id="multidestination-from-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][fromFlight]" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"  value="{{ app.session.get('multipledestinations')[loop.index0].fromFlight }}" />
+                        <input id="multidestination-originFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][originFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].originFlight }}" />
+                    </div>
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+                        <input id="multidestination-to-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{{ app.session.get('multipledestinations')[loop.index0].toFlight }}" />
+                        <input id="multidestination-destinationFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][destinationFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}" />
+                    </div>
+                    <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                        <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                        <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                    </div>
+                {% else %}
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+                        <input class="form-control" id="multidestination-from-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][fromFlight]" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"  value="{{ app.session.get('multipledestinations')[loop.index0].fromFlight }}" />
+                        <input id="multidestination-originFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][originFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].originFlight }}" />
+                    </div>
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+                        <input id="multidestination-to-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{{ app.session.get('multipledestinations')[loop.index0].toFlight }}" />
+                        <input id="multidestination-destinationFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][destinationFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}" />
+                    </div>
+                    <div>
+                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                            <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                            <input id="start-flight{{ loop.index0 }}" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        {% else %}
+            <div class="form-group form-group-icon-left form-icon-lg">
             <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
             <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
             <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
             <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
-        </div>
+            </div>
 
-        <div class="form-group form-group-icon-left form-icon-lg">
+            <div class="form-group form-group-icon-left form-icon-lg">
             <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
             <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
             <input id="to-flight" name="to-flight" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
             <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
-        </div>
+            </div>
+            <div>
+                <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                    <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                    <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                </div>
+                <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                    <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
+                    <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
+                </div>
+            </div>
+        {% endif %}
 
-        <div>
-            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
-            </div>
-            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
-                <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-6">
@@ -152,7 +199,7 @@
             </div>
         </div>
 
-        <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
+        <input class="btn btn-primary btn-search" type="submit"  id="{% if app.session.get('multipledestinations') %}search-multidestination{% endif %}"value="{{ 'index.search_text' | trans }}" />
     </form>
     {% if items.facets is defined and items.facets is not empty %}
         <aside class="booking-filters">
