@@ -623,20 +623,54 @@ class HotelController extends Controller
                             'hotelBrief' => $session->get('hotel_brief')
                         );
                     } else {
+//                        cuando la tarjeta falla el error aparece aqui
                         throw new \Exception($e);
                     }
                 }
+                if (isset($booking['code']) and $booking['code'] == 500){
+                    foreach ($booking['causes'] as $cause){
+                        if(strpos($cause, 'INVALID_LENGTH') !== false){
+                            $this->addFlash(
+                                'danger',
+                                $this->get('translator')->trans('index.invalid_document')
+                            );
+                        }
 
-                return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
-                    'hotelDetails' => $booking['hotelDetails'],
-                    'reservationDetails' => $booking['reservationDetails'],
-                    'reservationId' => base64_encode($booking['reservationDetails']['id']),
-                    'detail' => $booking['booking'],
-                    'hotelId' => $hotelAvailabilities->hotel->id,
-                    'internal' => $booking['reservation'],
-                    'status' => 'ok',
-                    'pdf' => false
-                ));
+                    }
+                    //procesado de métodos de pago agrupados por Banco
+                    $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
+
+                    return array(
+                        'formBooking' => $formBooking,
+                        'formChoice' => $formChoice,
+                        'price_detail' => $priceDetail,
+                        'formUrl' => $formUrl,
+                        'roompack_choice' => $roompackChoice,
+                        'booking_id' => $booking_id,
+                        'formNewPay' => $formNewPaySend->createView(),
+                        'paymentMethods' => $paymentMethods,
+                        'rooms' => $roompack->rooms,
+                        'cardsGroup' => $cardsGroup,
+                        'reservationDays' => $reservationTime->days,
+                        'roomNumbers' => count(explode("!", $distribution)),
+                        'errors' => $formNewPaySend->getErrors(),
+                        'travellers' => $travellers,
+                        'hotelBrief' => $session->get('hotel_brief'),
+                        'cardList' => $cards,
+                        'bankList' => $bankList
+                    );
+                }else{
+                    return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
+                        'hotelDetails' => $booking['hotelDetails'],
+                        'reservationDetails' => $booking['reservationDetails'],
+                        'reservationId' => base64_encode($booking['reservationDetails']['id']),
+                        'detail' => $booking['booking'],
+                        'hotelId' => $hotelAvailabilities->hotel->id,
+                        'internal' => $booking['reservation'],
+                        'status' => 'ok',
+                        'pdf' => false
+                    ));
+                }
             }
         }
 

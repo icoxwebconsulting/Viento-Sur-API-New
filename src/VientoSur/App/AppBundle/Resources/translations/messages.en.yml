@@ -1,4 +1,7 @@
 index:
+    error: Error
+    invalid_document: Invalid identity document
+    fail_purchase: Purchase could not be made
     hotels: HOTELS
     flights: FLIGHTS
     search_text: Search

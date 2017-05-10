@@ -1,4 +1,7 @@
 index:
+    error: Error
+    invalid_document: Documento de identidad inválido
+    fail_purchase: No se pudo hacer la compra
     hotels: HOTELES
     flights: VUELOS
     search_text: Buscar
