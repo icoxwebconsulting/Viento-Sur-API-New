@@ -95,7 +95,7 @@
                                                 {% for card in cardI %}
                                                     <label class="card-selector vs-cs-label">
                                                         {% set cardData = card|split('-') %}
-                                                        <div class="eva-card-container clickable-card"
+                                                        <div class="eva-card-container clickable-card" data-data-cuote="{{ loop.parent.loop.parent.loop.index }}"
                                                              data-card-id="{{ card }}">
                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                         </div>
@@ -114,7 +114,7 @@
                                                                 <div class="card-content hide">
                                                                     {% for card in list  %}
                                                                         {% set cardData = card|split('-') %}
-                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}"  data-data-cuote="{{ loop.parent.loop.parent.loop.index }}">
                                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                                         </div>
                                                                     {% endfor %}
@@ -153,7 +153,7 @@
                                                                         <td>
                                                                             {% for card in list  %}
                                                                                 {% set cardData = card|split('-') %}
-                                                                                <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group">
+                                                                                <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group"  data-data-cuote="{{ loop.parent.loop.parent.loop.index }}">
                                                                                     <span class="eva-card-body {{ cardData[1] }}"></span>
                                                                                 </div>
                                                                             {% endfor %}
@@ -185,7 +185,8 @@
                                         <input type="hidden" value="" id="card-selected" class="form-control" readonly>
                                         <select id="select-card3" class="form-control" title="">
                                             {% for cuotas, bank in paymentMethods %}
-                                                <optgroup label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
+                                                {% set n = loop.index %}
+                                                <optgroup id="{{ loop.index }}" label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
                                                     {% for key in bank.card_ids %}
 
                                                         {% set cardType = key | split('-') %}
@@ -199,12 +200,12 @@
 
                                                             {% for bankKey, bankValue in bankList %}
                                                                 {% if bankKey == cardType[2] %}
-                                                                <option value="{{ key }}">{{ label }} {{ bankValue }}</option>
+                                                                <option id="{{ n }}-{{ key }}" value="{{ key }}">{{ label }} {{ bankValue }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
 
                                                         {% else %}
-                                                            <option value="{{ key }}">{{ label }}</option>
+                                                            <option id="{{ n }}-{{ key }}" value="{{ key }}">{{ label }}</option>
                                                         {% endif %}
 
                                                     {% endfor %}

@@ -1,6 +1,7 @@
 index:
     error: Error
     invalid_document: Invalid identity document
+    invalid_creditcard: Invalid credit card for selected roompack
     fail_purchase: Purchase could not be made
     hotels: HOTELS
     flights: FLIGHTS

@@ -77,6 +77,7 @@ class HotelController extends Controller
     {
         if ($this->getParameter('is_test')) {
             $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
+//            $destinationText = 'Arbatax Park Resort Borgo Cala Moresca, Tortoli, Italia';
             $destination = 'CITY-982';
         } else {
             $destinationText = $request->get('autocomplete');
@@ -635,7 +636,12 @@ class HotelController extends Controller
                                 $this->get('translator')->trans('index.invalid_document')
                             );
                         }
-
+                        if(strpos($cause, 'Invalid credit card for selected roompack ') !== false){
+                            $this->addFlash(
+                                'danger',
+                                $this->get('translator')->trans('index.invalid_creditcard')
+                            );
+                        }
                     }
                     //procesado de métodos de pago agrupados por Banco
                     $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
