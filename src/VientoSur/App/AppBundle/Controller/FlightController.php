@@ -316,18 +316,16 @@ class FlightController extends Controller
     }
 
     /**
-     * @param $from
-     * @param $to
      * @param $departure_date
      * @param $adults
      * @param $childrens
      * @param $infants
      * @param $request
-     * @Route("/multi-destination/flights/results/{from}/{to}/{departure_date}/{adults}/{childrens}/{infants}", name="viento_sur_send_flights_multi_destination")
+     * @Route("/multi-destination/flights/results/{departure_date}/{adults}/{childrens}/{infants}", name="viento_sur_send_flights_multi_destination")
      * @Method("GET")
      * @return array
      */
-    public function sendFlightsItinerariesMultiDestinationAction($from, $to, $departure_date, $adults, $childrens, $infants, Request $request)
+    public function sendFlightsItinerariesMultiDestinationAction($departure_date, $adults, $childrens, $infants, Request $request)
     {
         $page = $request->query->get('page');
         if (!$page) {
@@ -344,8 +342,8 @@ class FlightController extends Controller
             "site" => "AR",
             "departure_date" => $departure_date,
             "language" => $lang,
-            "from" => $from,
-            "to" => $to,
+//            "from" => $from,
+//            "to" => $to,
             "adults" => $adults,
             "children" => $childrens,
             "infants" => $infants,
@@ -362,7 +360,14 @@ class FlightController extends Controller
             $i++;
 
             foreach ($data as $key => $value){
-                if($i >1){
+                if($i == 1){
+                    if ($key == "originFlight"){
+                        $urlParams["from"] = $value;
+                    }
+                    if ($key == "destinationFlight"){
+                        $urlParams["to"] = $value;
+                    }
+                }elseif($i >1){
                     if ($key == "originFlight"){
                         $urlParams["from".$i] = $value;
                     }
