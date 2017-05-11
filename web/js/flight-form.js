@@ -301,8 +301,16 @@ $(document).ready(function () {
         $('#start-flight1').attr('required', 'true');
         $('#tab-2').css({'overflow': 'auto', 'height': '313px'});
     });
-    $('#multipledestination').val(false);
+    $('#multidestination-lateral').click(function () {
+        $('.multi-flight').show();
+        $('#remove-stretch-lateral').show();
+        $('#add-stretch-lateral').show();
+        $('.normal-flight').hide();
+        $('#multidestination-lateral').hide();
+        $('#multipledestination').val(true);
+    });
     $('#add-stretch-lateral').click(function () {
+        $('.normal-flight').hide();
         var lenght = $('.wrapper-lateral').length;
         var count = $('.wrapper-lateral').length;
 
@@ -315,7 +323,7 @@ $(document).ready(function () {
         lenght++;
         console.log(lenght);
         if (lenght < 7){
-            $('#remove-stretch-lateral').before('<div class="wrapper-lateral">'+
+            $('.wrapper-lateral').last().after('<div class="wrapper-lateral">'+
                     '<h2>'+labelStretch+' '+lenght+'</h2>'+
                 '<div class="form-group form-group-icon-left form-icon-lg">'+
                     '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
@@ -386,8 +394,9 @@ $(document).ready(function () {
                 }
             });
             count++;
-        }else{
-            $('#add-stretch-lateral').hide();
+            if (lenght == 6){
+                $('#add-stretch-lateral').hide();
+            }
         }
     });
     $('#remove-stretch-lateral').click(function () {
@@ -395,8 +404,14 @@ $(document).ready(function () {
         console.log(lenght);
         if (lenght > 2){
             $('.wrapper-lateral').last().remove();
+            $('#add-stretch-lateral').show();
         }else{
             $('#remove-stretch-lateral').hide();
+            $('#add-stretch-lateral').hide();
+            $('.normal-flight').show();
+            $('.multi-flight').hide();
+            $('#multidestination-lateral').show();
+            $('#multipledestination').val(false);
         }
     });
     $('#add-stretch').click(function(){
