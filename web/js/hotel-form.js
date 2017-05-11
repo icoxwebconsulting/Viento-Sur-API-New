@@ -26,7 +26,13 @@ $(document).ready(function () {
         var bank = $(this).data('bank-id');
         var splitCard = cardId.split("-");
         var idOption = cuote+'-'+cardId;
-        $('#select-card3 option[id='+idOption+']').attr("selected", "selected");
+        if (cuote == 1){
+            // $("#select-card2").find('option').removeAttr("selected");
+            $('#select-card2 option[id="'+idOption+'"]').attr("selected", "selected");
+        }else{
+            // $("#select-card3").find('option').removeAttr("selected");
+            $('#select-card3 option[id='+idOption+']').attr("selected", "selected");
+        }
         $(cuote+'-'+cardId).attr('selected', 'selected');
 
         $('#form_payment_bank_code').val(cardId);
