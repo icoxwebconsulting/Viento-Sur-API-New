@@ -635,11 +635,15 @@ class HotelController extends Controller
                                 'danger',
                                 $this->get('translator')->trans('index.invalid_document')
                             );
-                        }
-                        if(strpos($cause, 'Invalid credit card for selected roompack ') !== false){
+                        }elseif(strpos($cause, 'Invalid credit card for selected roompack ') !== false){
                             $this->addFlash(
                                 'danger',
                                 $this->get('translator')->trans('index.invalid_creditcard')
+                            );
+                        }else{
+                            $this->addFlash(
+                                'danger',
+                                $this->get('translator')->trans('index.fail_purchase')
                             );
                         }
                     }
