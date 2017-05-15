@@ -409,6 +409,7 @@
                             <span class="btn btn-primary">{{ 'hotels.buy' | trans }}</span>
                         </div>
                         <input type="hidden" name="item_id" value="{{ item.id }}" />
+                        <input type="hidden" name="item_multiple" value="true" />
                         {#{% for b_info in item.booking_info %}#}
                             {#{% if b_info.inbound_choice is defined %}#}
                                 {#<input type="hidden" name="combination_{{ b_info.outbound_choice }}_{{ b_info.inbound_choice }}"  value="{{ b_info.itinerary_id }}" />#}

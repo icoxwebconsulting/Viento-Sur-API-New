@@ -584,10 +584,16 @@ class FlightController extends Controller
     public function sendFlightBookingAction(Request $request)
     {
         $fields = $request->request->all();
+        if (isset($fields['item_multiple'])){
+            $date = new \DateTime();
+            //id del itinerario
+            $itineraryId = 'combination_' . $fields['item_id'] .'-'. $date->format('Y-m-d H:i:s');
 
-//        echo "<pre>".print_r($fields,true)."</pre>";
-//        die();
-        if (in_array('optionsRadiosOut', $fields)){
+            return $this->redirectToRoute('viento_booking_flight_pay_multi_destination', array(
+                'item_id' => $fields['item_id'],
+                'itinerary_id' => $fields['item_id'],
+            ));
+        }else{
             $optionId = $fields['option_id'];
             $outbound = $fields['optionsRadiosOut' . $optionId];
             $inbound = (isset($fields['optionsRadiosIn' . $optionId])) ? $fields['optionsRadiosIn' . $optionId] : null;
@@ -599,18 +605,6 @@ class FlightController extends Controller
                 'inbound' => $inbound,
                 'item_id' => $fields['item_id'],
                 'itinerary_id' => $fields[$itineraryId]
-            ));
-        }else{
-            $date = new \DateTime();
-            //id del itinerario
-            $itineraryId = 'combination_' . $fields['item_id'] .'-'. $date->format('Y-m-d H:i:s');
-
-//            echo "<pre>".print_r($fields['item_id'],true)."</pre>";
-//            die();
-            return $this->redirectToRoute('viento_booking_flight_pay_multi_destination', array(
-                'item_id' => $fields['item_id'],
-                'itinerary_id' => $fields['item_id'],
-//                'itinerary_id' => $fields[$itineraryId]
             ));
         }
     }
@@ -789,12 +783,12 @@ class FlightController extends Controller
                     );
 
                 } catch (\Exception $e) {
-                    if ($e->getMessage() == 'CREDIT_CARD') {
+//                    if ($e->getMessage() == 'CREDIT_CARD') {
                         $this->get('session')->getFlashBag()->add(
                             'card_msg',
                             ''
                         );
-                        return $this->render('VientoSurAppAppBundle:Flight/MultiDestination:bookingFlightPay.html.twig.html.twig', array(
+                        return $this->render('@VientoSurAppApp/Flight/MultiDestination/bookingFlightPay.html.twig', array(
                             'flightMenu' => true,
                             'formNewPay' => $formNewPaySend->createView(),
                             'formChoice' => $booking,
@@ -802,11 +796,13 @@ class FlightController extends Controller
                             'paymentMethods' => $paymentMethods,
                             'riskAnalysis' => $riskAnalysis,
                             'cardList' => $this->get('app.card')->getCards(),
-                            'bankList' => $this->get('app.bank')->getBanks()
+                            'bankList' => $this->get('app.bank')->getBanks(),
+                            'e' => $e
                         ));
-                    } else {
-                        throw new \Exception($e);
-                    }
+//                    } else {
+//                        mostrar error de pago
+//                        throw new \Exception($e);
+//                    }
                 }
 
                 return $this->redirectToRoute('viento_sur_app_booking_flight_summary', array(

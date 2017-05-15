@@ -481,6 +481,7 @@
                                 </div>#}
                             </div>
                         </div>
+                        {#{% set multipledestinations = app.session.get('multipledestinations') %}#}
                         {% for item in itineraryDetail.routes %}
                             <div class="row">
                                 <div class="col-md-12">
@@ -517,7 +518,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <span class="item-location-code">{{  app.session.get('multipledestinations')[loop.index0].fromFlight|split(',')[1] }}</span>
+                                                        {#<span class="item-location-code">{{  multipledestinations[loop.index0].fromFlight }}</span>#}
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -556,7 +557,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <span class="item-location-code">{{  app.session.get('multipledestinations')[loop.index0].toFlight|split(',')[1] }}</span>
+                                                        {#<span class="item-location-code">{{ multipledestinations[loop.index0].toFlight }}</span>#}
                                                     </div>
                                                 </div>
                                                 <div class="row">

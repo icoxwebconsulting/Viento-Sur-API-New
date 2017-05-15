@@ -20,7 +20,7 @@
                             <span style="float: left;">{{ 'flights.adult' | trans }}</span>
                             <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
                             {#<span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>#}
-                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.base | round| currency_convert_format(targetCurrency,decimal,, false)| number_format(2, ',', '.') }}</span>
+                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.base | round| currency_convert_format(targetCurrency,decimal, false)| number_format(2, ',', '.') }}</span>
                             {#<span style="float: right;">$ </span>#}
                         </div>
 
@@ -54,6 +54,108 @@
                         </div>
                     </div>
                 </div>
+                {% if itineraryDetail.routes is defined %}
+                   {% for item in itineraryDetail.routes %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="header-outbound">
+                                <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
+                                <span> <b>{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</b> </span>
+                                {% if item.segments | length < 1 %}
+                                    <span style="float: right">{{ 'flights.stop' | trans }} {{ item.segments | length }}</span>
+                                {% else %}
+                                    <span style="float: right">{{ item.segments | length -1}} {{ 'flights.stop' | trans }}s</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% for segment in item.segments %}
+                        <div class="outbound">
+                            <div class="row">
+                                <div class="segment-header col-md-12">
+                                    <span>{{ segment.cabin_type | capitalize }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="flight-details-container col-md-5 align-center">
+                                    {#Salida#}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-label">{{ 'flights.departure' | trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-city-code">{{ segment.from }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {#<span class="item-location-code">{{  multipledestinations[loop.index0].fromFlight }}</span>#}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-date">{{ segment.departure_datetime | date("D d F Y") }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-time">{{ segment.departure_datetime | date("H:i") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 align-center media-middle">
+                                    {#Vuelo#}
+                                    <div class="row">
+                                        <div class="col-md-12 airline-data-col">
+                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                            <span class="airline-data">{{ segment.flight_id }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flight-details-container col-md-5 align-center">
+                                    {#Llegada#}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-label">{{ 'flights.arrival' | trans }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-city-code">{{ segment.to }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {#<span class="item-location-code">{{ multipledestinations[loop.index0].toFlight }}</span>#}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-date">{{ segment.arrival_datetime | date("D d F Y") }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="item-time">{{ segment.arrival_datetime | date("H:i") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-md-12 alert alert-warning">
+                            <span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% else %}
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="header-outbound">
@@ -79,7 +181,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                {# Salida #}
+                                 {#Salida #}
                                 <div class="flight-details-container col-md-5 align-center">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -91,11 +193,11 @@
                                             <span class="item-city-code">{{ item.from }}</span>
                                         </div>
                                     </div>
-                                    {#<div class="row">
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <span class="item-location-code">Buenos Aires</span>
                                         </div>
-                                    </div>#}
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
@@ -113,7 +215,7 @@
 
                                     <div class="row">
                                         <div class="col-md-12 airline-data-col">
-                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
+                                            <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" />
                                             <span class="airline-data">{{ item.flight_id }}</span>
                                         </div>
                                     </div>
@@ -132,11 +234,11 @@
                                             <span class="item-city-code">{{ item.to }}</span>
                                         </div>
                                     </div>
-                                    {#<div class="row">
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <span class="item-location-code">Buenos Aires</span>
                                         </div>
-                                    </div>#}
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
@@ -184,7 +286,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    {# Salida #}
+                                     {#Salida#}
                                     <div class="flight-details-container col-md-5 align-center">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -196,11 +298,11 @@
                                                 <span class="item-city-code">{{ item.from }}</span>
                                             </div>
                                         </div>
-                                        {#<div class="row">
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <span class="item-location-code">Buenos Aires</span>
                                             </div>
-                                        </div>#}
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
@@ -218,7 +320,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12 airline-data-col">
-                                                <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
+                                                <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png"  />
                                                 <span class="airline-data">{{ item.flight_id }}</span>
                                             </div>
                                         </div>
@@ -237,11 +339,11 @@
                                                 <span class="item-city-code">{{ item.to }}</span>
                                             </div>
                                         </div>
-                                        {#<div class="row">
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <span class="item-location-code">Buenos Aires</span>
                                             </div>
-                                        </div>#}
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
@@ -264,7 +366,7 @@
                     </div>
                 </div>
             {% endif %}
-
+        {% endif %}
             <!-- -->
 
             <div class="col-lg-6" style="margin-top: 15px">
