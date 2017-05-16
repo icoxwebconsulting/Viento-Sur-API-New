@@ -140,8 +140,8 @@ class Hotel
 
     private function sendBookingEmail($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails)
     {
-        try {
-            if ($email) {
+//        try {
+//            if ($email) {
                 $this->emailService->sendBookingEmail($email, array(
                     'hotelDetails' => $hotelDetails,
                     'reservationDetails' => $reservationDetails,
@@ -151,10 +151,10 @@ class Hotel
                     'internal' => $reservation,
                     'pdf' => false
                 ));
-            }
-        } catch (\Exception $e) {
-            $this->logger->error('Booking email error: ' . $email);
-        }
+//            }
+//        } catch (\Exception $e) {
+//            $this->logger->error('Booking email error: ' . $email);
+//        }
     }
 
     public function getCardsGroup($paymentMethods)

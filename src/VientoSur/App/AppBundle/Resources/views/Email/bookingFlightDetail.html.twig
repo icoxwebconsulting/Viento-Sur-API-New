@@ -1,4 +1,11 @@
 {% block content %}
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% elseif targetCurrency == 'ARS' %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
     <div class="container">
         <div class="container bs-docs-container">
             <br>
@@ -20,7 +27,7 @@
                             <span style="float: left;">{{ 'flights.adult' | trans }}</span>
                             <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
                             {#<span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>#}
-                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.base | round| currency_convert_format(targetCurrency,decimal,, false)| number_format(2, ',', '.') }}</span>
+                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.base | round| currency_convert_format(targetCurrency,decimal, false)| number_format(2, ',', '.') }}</span>
                             {#<span style="float: right;">$ </span>#}
                         </div>
 

@@ -514,18 +514,18 @@ class Flights
             $this->em->flush();
 
             //envío de correo
-            try {
+//            try {
                 $email = $fillData['booking_information']['contact_info']['email'];
-                if ($email) {
+//                if ($email) {
                     $this->emailService->sendBookingFlightEmail($email, array(
                         'pdf' => false,
                         'reservation' => $reservation,
                         'itineraryDetail' => $itineraryDetail
                     ));
-                }
-            } catch (\Exception $e) {
-                $this->logger->error('Booking Flight email error: ' . $e->getMessage());
-            }
+//                }
+//            } catch (\Exception $e) {
+//                $this->logger->error('Booking Flight email error: ' . $e->getMessage());
+//            }
 
             return $reservation->getId();
         } else {

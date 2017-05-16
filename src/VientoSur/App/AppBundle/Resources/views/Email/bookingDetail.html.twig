@@ -1,3 +1,10 @@
+{% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% elseif targetCurrency == 'ARS' %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
 <div class="container bs-docs-container">
     <table class="table">
         <tr>
