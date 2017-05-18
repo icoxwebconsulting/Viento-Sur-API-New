@@ -1180,7 +1180,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'hotel_chains' %}
+                    {% if facet.criteria == 'hotel_chains' and facet.values is defined %}
                         <li class="hotel_chains hidden" data-type="hotel_chains">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'cha' | trans }} - VientoSur.net">{{ 'hotels.search_menu.hotel_chain' | trans }}</h5>
                             {% for hotel_chains in facet.values %}
