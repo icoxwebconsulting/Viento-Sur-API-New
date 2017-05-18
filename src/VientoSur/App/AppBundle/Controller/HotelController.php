@@ -129,10 +129,11 @@ class HotelController extends Controller
         ]);
 
         $destination = explode('-', $destination);
+        $destiny = trim($destination[1]);
 
         if ($destination[0] == 'CITY') {
             return $this->redirectToRoute('viento_sur_send_hotels', array(
-                'destination' => $destination[1],
+                'destination' => $destiny,
                 'checkin_date' => $fromCalendarHotel,
                 "checkout_date" => $toCalendarHotel,
                 'distribution' => $distribution
@@ -140,13 +141,13 @@ class HotelController extends Controller
         } else {
             //show/{idHotel}/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}
             $hotelDetail = $this->get('despegar')->getHotelsDetails(array(
-                'ids' => $destination[1],
+                'ids' => $destiny,
                 'language' => 'es',
                 'resolve' => 'merge_info',
                 'catalog_info' => 'true'
             ));
             return $this->redirectToRoute('viento_sur_app_app_homepage_show_hotel_id', array(
-                'idHotel' => $destination[1],
+                'idHotel' => $destiny,
                 'checkin_date' => $fromCalendarHotel,
                 'checkout_date' => $toCalendarHotel,
                 'distribution' => $distribution,
@@ -163,6 +164,9 @@ class HotelController extends Controller
      */
     public function sendHotelsAvailabilitiesAction($destination, $checkin_date, $checkout_date, $distribution, Request $request)
     {
+
+//        echo"<pre>".print_r($destination)."</pre>";
+//        die();
         $page = $request->query->get('page');
         if (!$page) {
             $page = 1;

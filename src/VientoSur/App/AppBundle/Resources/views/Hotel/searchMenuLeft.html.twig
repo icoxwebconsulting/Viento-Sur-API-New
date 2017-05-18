@@ -4,7 +4,7 @@
             <label class="mfont">{{ 'hotels.search_menu.destiny' | trans }}</label>
             <!--colocar valor por defecto que trae la busqueda inicial-->
             <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal" value="{% if app.session.get('destination').text is defined %} {{ app.session.get('destination').text }} {% endif %}" />
-            <input id="destinationCity" name="cityInput" type="hidden" value="{% if app.session.get('destination').text is defined %} {{ app.session.get('destination').text }}## {{ app.session.get('destination').id }} {% endif %}" />
+            <input id="destinationCity" name="cityInput" type="hidden" value="{% if app.session.get('destination').text is defined %}{{ app.session.get('destination').id }} {% endif %}" />
         </div>
         <div > <!--class="input-daterange" data-date-format="d M, D"-->
             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
@@ -1089,7 +1089,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'stars' %}
+                    {% if facet.criteria == 'stars' and facet.values is defined %}
                         <li class="stars hidden" data-type="stars">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_category' | trans }} - VientoSur.net">{{ 'hotels.search_menu.category' | trans }}</h5>
                             {% for stars in facet.values %}
@@ -1110,7 +1110,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'payment_type' %}
+                    {% if facet.criteria == 'payment_type' and facet.values is defined %}
                         <li class="payment_type hidden" data-type="payment_type">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_payment_choices' | trans }} - VientoSur.net">{{ 'hotels.search_menu.payment_choices' | trans }}</h5>
                             {% for type in facet.values %}
@@ -1146,7 +1146,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'amenities' %}
+                    {% if facet.criteria == 'amenities' and facet.values is defined %}
                         <li class="amenities hidden" data-type="amenities">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_services' | trans }} - VientoSur.net">{{ 'hotels.search_menu.services' | trans }}</h5>
                             {% for amenity in facet.values %}
@@ -1165,7 +1165,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'hotel_type' %}
+                    {% if facet.criteria == 'hotel_type' and facet.values is defined %}
                         <li class="hotel_type hidden" data-type="hotel_type">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_type' | trans }} - VientoSur.net">{{ 'hotels.search_menu.type' | trans }}</h5>
                             {% for hotel_type in facet.values %}
@@ -1199,7 +1199,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'meal_plans' %}
+                    {% if facet.criteria == 'meal_plans' and facet.values is defined %}
                         <li class="meal_plans hidden" data-type="meal_plans">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_diet' | trans }} - VientoSur.net">{{ 'hotels.search_menu.diet' | trans }}</h5>
                             {% for meal_plans in facet.values %}
@@ -1214,7 +1214,7 @@
                         </li>
                     {% endif %}
 
-                    {% if facet.criteria == 'profiles' %}
+                    {% if facet.criteria == 'profiles' and facet.values is defined %}
                         <li class="profiles hidden" data-type="profiles">
                             <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_travel_profile' | trans }} - VientoSur.net">{{ 'hotels.search_menu.travel_profile' | trans }}</h5>
                             {% for profiles in facet.values %}
