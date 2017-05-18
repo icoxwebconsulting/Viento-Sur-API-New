@@ -371,6 +371,7 @@ class HotelController extends Controller
      */
     public function consultAction(Request $request)
     {
+        $email = $request->request->get('email');
         $html = $this->renderView(
             'VientoSurAppAppBundle:Email:contact.html.twig',
             array(
@@ -380,7 +381,7 @@ class HotelController extends Controller
             )
         );
 
-        $this->get('email.service')->sendCommentsEmail($html);
+        $this->get('email.service')->sendCommentsEmail($html, $email);
 
         $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
         return new JsonResponse(array("status" => 'success'));

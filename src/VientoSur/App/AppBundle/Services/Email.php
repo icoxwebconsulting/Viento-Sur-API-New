@@ -15,12 +15,12 @@ class Email
         $this->templating = $templating;
     }
 
-    public function sendCommentsEmail($html)
+    public function sendCommentsEmail($html, $email= 'web@vientosur.net')
     {
         $message = \Swift_Message::newInstance(null)
             ->setSubject("Consulta web Viento Sur")
-            ->setFrom("not-reply@vientosur.net")
-            ->setTo("web@vientosur.net")
+            ->setFrom('no-responder@vientosur.net','info@vientosur.net')
+            ->setTo($email)
             ->setBody(
                 $html,
                 'text/html'
@@ -34,7 +34,7 @@ class Email
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
             ->setFrom('no-responder@vientosur.net','info@vientosur.net')
-            ->setTo([$email, 'dario@vientosur.net'])
+            ->setTo([$email])
             ->setBody(
                 $this->templating->render(
                     'VientoSurAppAppBundle:Email:booking.html.twig',
@@ -59,7 +59,7 @@ class Email
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Cancelación de reserva')
-            ->setFrom('no-responder@vientosur.net')
+            ->setFrom('no-responder@vientosur.net','info@vientosur.net')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(
