@@ -26,7 +26,7 @@ class Email
                 'text/html'
             );
 
-        $this->get('mailer')->send($message);
+        $this->mailer->send($message);
     }
 
     public function sendBookingEmail($email, $data)
