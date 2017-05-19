@@ -98,12 +98,15 @@ class HotelController extends Controller
 
         $habitacionesCant = $request->get('habitacionesCant');
         $distribution = '';
+        $dataTravelers = array();
 
         if ($habitacionesCant == 1) {
             $distribution = $request->get('adultsSelector');
             $childrens = $request->get('childrenRoomSelector');
             $childAges = '';
+            $dataTravelers['room'][1]['adults'] = $request->get('adultsSelector');
             for ($i = 1; $i <= $childrens; $i++) {
+                $dataTravelers['room'][1]['children'][$i] = $request->get('childAgeSelector-' . $i);
                 $childAges .= '-' . $request->get('childAgeSelector-' . $i);
             }
             $distribution .= $childAges;
@@ -112,7 +115,9 @@ class HotelController extends Controller
                 $adults = $request->get('adultsSelector' . $h);
                 $childrens = $request->get('childrenRoomSelector' . $h);
                 $childAges = '';
+                $dataTravelers['room'][$h]['adults'] = $request->get('adultsSelector' . $h);
                 for ($i = 1; $i <= $childrens; $i++) {
+                    $dataTravelers['room'][$h]['children'][$i] = $request->get('childAgeSelector-' . $h . '-' . $i);
                     $childAges .= '-' . $request->get('childAgeSelector-' . $h . '-' . $i);
                 }
                 $distribution .= (($h > 1) ? '!' : '') . $adults . $childAges;
@@ -120,6 +125,7 @@ class HotelController extends Controller
         }
 
         $session = $request->getSession();
+        $session->set('data_travelers', $dataTravelers['room']);
         $session->set('checkin_date', $request->get('start'));
         $session->set('checkout_date', $request->get('end'));
         $session->set('distribution', $distribution);
