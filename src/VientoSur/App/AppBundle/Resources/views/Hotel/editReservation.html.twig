@@ -154,7 +154,7 @@
             var $btn = $(this).button('loading');
 
             $.ajax({
-                url: Routing.generate('viento_sur_app_edit_patch_reservation') + '/{{ internal.id }}',
+                url: Routing.generate('viento_sur_app_edit_patch_reservation') + '/{{ internal.id }}'+'/{{ internal.reservationId }}',
                 type: 'PATCH',
                 dataType: 'json'
             }).done(function (data) {

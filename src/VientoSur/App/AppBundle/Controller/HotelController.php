@@ -847,10 +847,10 @@ class HotelController extends Controller
     }
 
     /**
-     * @Route("/booking/edit/{id}", name="viento_sur_app_edit_patch_reservation")
+     * @Route("/booking/edit/{internalId}/{id}", name="viento_sur_app_edit_patch_reservation")
      * @Method("PATCH")
      */
-    public function patchEditReservationAction($id, Request $request)
+    public function patchEditReservationAction($internalId, $id, Request $request)
     {
         $despegar = $this->get('despegar');
         $cancel = $despegar->cancelReservation($id);
@@ -859,7 +859,7 @@ class HotelController extends Controller
         if ($cancel && isset($cancel['id'])) {
             $result = true;
             $em = $this->getDoctrine()->getManager();
-            $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
+            $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($internalId);
 
             if ($internal != null) {
                 $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(
