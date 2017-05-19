@@ -1,3 +1,4 @@
+{% set symbol = '' %}
 {% set targetCurrency = app.session.get('targetCurrency') %}
     {% if targetCurrency == 'USD' %}
         {% set symbol = 'US$' %}
