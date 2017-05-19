@@ -212,8 +212,8 @@
                                             <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}">
                                                 {% if roomTypes[key].pictures is defined %}
                                                     <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}" title="" />
+                                                    <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
                                                 {% endif %}
-                                                <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
                                             </div>
                                             <div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> {{ 'hotels.max_capacity' | trans }}</div>
                                         </div>
