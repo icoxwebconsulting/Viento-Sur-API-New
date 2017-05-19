@@ -19,8 +19,8 @@ class Email
     {
         $message = \Swift_Message::newInstance(null)
             ->setSubject("Consulta web Viento Sur")
-            ->setFrom('no-responder@vientosur.net','info@vientosur.net')
-            ->setTo($email)
+            ->setFrom($email, $email)
+            ->setTo('no-responder@vientosur.net','info@vientosur.net')
             ->setBody(
                 $html,
                 'text/html'
