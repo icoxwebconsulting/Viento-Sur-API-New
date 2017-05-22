@@ -23,7 +23,7 @@
                     <input class="form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" required value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
                     <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
                 {% endif %}
-                <label for="multiple-destinations" style="display:none;">
+                <label for="multiple-destinations">
                     <span class="pull-right">
                         <a id="multiple-destinations">{{ 'index.search.flight.multiple_destinations' | trans }}</a>
                         <input type="hidden"  id="multipledestination" name="multipledestination" value=false>
