@@ -35,6 +35,7 @@ index:
            to: Destino
            to_placeholder: Enter para onde viajar
            start: Partida
+           stretch: Alongamento
            remove_stretch: Remova o estiramento
            add_stretch: Adicionar alongamento
            end: Retorno

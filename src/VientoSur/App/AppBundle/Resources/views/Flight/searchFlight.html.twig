@@ -53,18 +53,19 @@
             </div>
         </div>
         <div class="wrapper col-md-12" style="display: none">
-            <label class="multiple-destinations-label">Tramo 1</label>
+            <label class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }} 1</label>
+            <label id="label-stretch" style="display: none">{{ 'index.search.flight.stretch' | trans }}</label>
             <div class="multiple-destinations-wrapper col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                     <label>{{ 'index.search.flight.from' | trans }}</label>
-                    <input class="form-control" id="multidestination-from-flight0" name="multidestination[0][from-flight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
+                    <input class="form-control" id="multidestination-from-flight0" name="multidestination[0][fromFlight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
                     <input id="multidestination-originFlight0" name="multidestination[0][originFlight]" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
                 </div>
             </div>
             <div class="multiple-destinations-wrapper col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                     <label>{{ 'index.search.flight.to' | trans }}</label>
-                    <input class="form-control" id="multidestination-to-flight0" name="multidestination[0][to-flight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
+                    <input class="form-control" id="multidestination-to-flight0" name="multidestination[0][toFlight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
                     <input id="multidestination-destinationFlight0" name="multidestination[0][destinationFlight]" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
                 </div>
             </div>
@@ -78,18 +79,18 @@
             </div>
         </div>
         <div class="wrapper col-md-12" style="display: none">
-            <label class="multiple-destinations-label">Tramo 2</label>
+            <label class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }} 2</label>
             <div class="multiple-destinations-wrapper col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                     <label>{{ 'index.search.flight.from' | trans }}</label>
-                    <input class="form-control" id="multidestination-from-flight1" name="multidestination[1][from-flight]" data-provide="typeahead" type="text" />
+                    <input class="form-control" id="multidestination-from-flight1" name="multidestination[1][fromFlight]" data-provide="typeahead" type="text" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" />
                     <input id="multidestination-originFlight1" name="multidestination[1][originFlight]" type="hidden" value="" />
                 </div>
             </div>
             <div class="multiple-destinations-wrapper col-md-6">
                 <div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
                     <label>{{ 'index.search.flight.to' | trans }}</label>
-                    <input class="form-control" id="multidestination-to-flight1" name="multidestination[1][to-flight]" data-provide="typeahead" type="text" />
+                    <input class="form-control" id="multidestination-to-flight1" name="multidestination[1][toFlight]" data-provide="typeahead" type="text" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" />
                     <input id="multidestination-destinationFlight1" name="multidestination[1][destinationFlight]" type="hidden" value="" />
                 </div>
             </div>

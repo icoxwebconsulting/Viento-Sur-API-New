@@ -1,158 +1,244 @@
 <div class="content-sidebar">
     <form class="booking-item-dates-change mb5" name="searchFlight" id="search-flights" action ="{{ path('viento_sur_process_search_flights') }}" method="POST">
+            {% if app.session.get('multipledestinations') is defined  and  app.session.get('multipledestinations') is not null  %}
+                {% set destinations = app.session.get('multipledestinations') %}
+                {#{{ dump(app.session.get('multipledestinations')) }}#}
+                <input type="text"  id="multipledestination-multiple" name="multipledestination" style="display: none" value="true">
 
-        <div class="form-group form-group-icon-left form-icon-lg">
-            <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-            <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
-            <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
-            <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
-        </div>
+                <div class="multi-flight">
+                    {% for destiny in destinations %}
+                        <div class="wrapper-lateral">
+                            <h2>{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</h2>
+                            <h2 id="label-stretch" style="display: none">{{ 'index.search.flight.stretch' | trans }}</h2>
+                            {% if loop.index0 < 1 %}
+                                <div class="form-group form-group-icon-left form-icon-lg">
+                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                    <label id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+                                    <input class="form-control" id="multidestination-from-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][fromFlight]" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"  value="{{ app.session.get('multipledestinations')[loop.index0].fromFlight }}" />
+                                    <input id="multidestination-originFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][originFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].originFlight }}" />
+                                </div>
+                                <div class="form-group form-group-icon-left form-icon-lg">
+                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                    <label id="label-to" class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+                                    <input id="to-flight" name="to-flight" type="hidden" class="form-control" data-provide="typeahead" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}"/>
 
-        <div class="form-group form-group-icon-left form-icon-lg">
-            <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-            <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
-            <input id="to-flight" name="to-flight" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
-            <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
-        </div>
+                                    <input id="multidestination-to-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{{ app.session.get('multipledestinations')[loop.index0].toFlight }}" />
+                                    <input id="multidestination-destinationFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][destinationFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}" />
+                                </div>
+                                <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                    <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                                    <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                                </div>
+                            {% else %}
+                                <div class="form-group form-group-icon-left form-icon-lg">
+                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                    <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+                                    <input class="form-control" id="multidestination-from-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][fromFlight]" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"  value="{{ app.session.get('multipledestinations')[loop.index0].fromFlight }}" />
+                                    <input id="multidestination-originFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][originFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].originFlight }}" />
+                                </div>
+                                <div class="form-group form-group-icon-left form-icon-lg">
+                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                                    <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+                                    <input id="multidestination-to-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{{ app.session.get('multipledestinations')[loop.index0].toFlight }}" />
+                                    <input id="multidestination-destinationFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][destinationFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}" />
+                                </div>
+                                <div>
+                                    <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                                        <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                                        <input id="start-flight{{ loop.index0 }}" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <a id="multidestination-lateral" style="display: none;">{{ 'index.search.flight.multiple_destinations' | trans }}</a>
+                <a id="remove-stretch-lateral" class="menu-lateral btn btn-danger" style="display: inline-block;width: 48%;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
+                <a id="add-stretch-lateral" class="menu-lateral btn btn-success" style="display: inline-block;width: 48%;">{{ 'index.search.flight.add_stretch' | trans }}</a>
+                <div class="normal-flight" style="display: none">
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+                        <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" />
+                        <input id="originFlight" name="originFlight" type="hidden" />
+                    </div>
 
-        <div>
-            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label id="label-to" class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+                        <input id="to-flight-test" name="to-flight" type="text" class="form-control test-to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}"/>
+                        <input id="destinationFlight" name="destinationFlight" type="hidden" />
+                    </div>
+                    <div>
+                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                            <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                            <input id="start-flight-test" class="form-control required" name="start" type="text" placeholder="dd/mm/yyyy"  value="{{app.session.get('departure_date')}}" />
+                        </div>
+                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                            <label id="label-end" class="sfont">{{ 'index.search.flight.end' | trans }}</label>
+                            <input id="end-flight-test" class="form-control required" name="end" type="text" placeholder="dd/mm/yyyy"/>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <a id="multidestination-lateral" class="multidestination-lateral-btn" style="display: block;">{{ 'index.search.flight.multiple_destinations' | trans }}</a>
+                <span id="label-stretch" style="display: none;">{{ 'index.search.flight.stretch' | trans }}</span>
+                <a id="remove-stretch-lateral" class="menu-lateral btn btn-danger" style="display: none;width: 48%;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
+                <a id="add-stretch-lateral" class="menu-lateral btn btn-success" style="display: none;width: 48%;">{{ 'index.search.flight.add_stretch' | trans }}</a>
+                <div class="normal-flight">
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label  id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
+                        <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
+                        <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
+                    </div>
+
+                    <div class="form-group form-group-icon-left form-icon-lg">
+                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                        <label id="label-to"  class="mfont">{{ 'index.search.flight.to' | trans }}</label>
+                        <input id="to-flight" name="to-flight" type="text" class="form-control test" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
+                        <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
+                    </div>
+                    <div>
+                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                            <label  id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                            <input id="start-flight" class="form-control required test" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                        </div>
+                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                            <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
+                            <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="adultsPassengers">{{ 'index.search.hotel.adults' | trans }}</label>
+                        <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
+                            <option value="1" {% if adults == 1 %}selected="selected"{% endif %}>1</option>
+                            <option value="2" {% if adults == 2 %}selected="selected"{% endif %}>2</option>
+                            <option value="3" {% if adults == 3 %}selected="selected"{% endif %}>3</option>
+                            <option value="4" {% if adults == 4 %}selected="selected"{% endif %}>4</option>
+                            <option value="5" {% if adults == 5 %}selected="selected"{% endif %}>5</option>
+                            <option value="6" {% if adults == 6 %}selected="selected"{% endif %}>6</option>
+                            <option value="7" {% if adults == 7 %}selected="selected"{% endif %}>7</option>
+                            <option value="8" {% if adults == 8 %}selected="selected"{% endif %}>8</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="childrenPassengers">{{ 'index.search.hotel.childs' | trans }}</label>
+                        <select id="childrenPassengers" class="form-control coupled" name="childrenPassengers" data-couple="adultsPassengers.1">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
-                <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
+            <!--se abre si hay menores-->
+            <div class="col-md-12 hidden" id="menorGroup">
                 <div class="form-group">
-                    <label for="adultsPassengers">{{ 'index.search.hotel.adults' | trans }}</label>
-                    <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
-                        <option value="1" {% if adults == 1 %}selected="selected"{% endif %}>1</option>
-                        <option value="2" {% if adults == 2 %}selected="selected"{% endif %}>2</option>
-                        <option value="3" {% if adults == 3 %}selected="selected"{% endif %}>3</option>
-                        <option value="4" {% if adults == 4 %}selected="selected"{% endif %}>4</option>
-                        <option value="5" {% if adults == 5 %}selected="selected"{% endif %}>5</option>
-                        <option value="6" {% if adults == 6 %}selected="selected"{% endif %}>6</option>
-                        <option value="7" {% if adults == 7 %}selected="selected"{% endif %}>7</option>
-                        <option value="8" {% if adults == 8 %}selected="selected"{% endif %}>8</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="childrenPassengers">{{ 'index.search.hotel.childs' | trans }}</label>
-                    <select id="childrenPassengers" class="form-control coupled" name="childrenPassengers" data-couple="adultsPassengers.1">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!--se abre si hay menores-->
-        <div class="col-md-12 hidden" id="menorGroup">
-            <div class="form-group">
-                <label for="field-hotel-adult">{{ 'index.search.flight.childs_ages' | trans }}</label>
-                <div class="row">
-                    <div class="col-md-6 field-menor-1">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-1" class="form-control " name="field-menor-1">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 1</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                    <label for="field-hotel-adult">{{ 'index.search.flight.childs_ages' | trans }}</label>
+                    <div class="row">
+                        <div class="col-md-6 field-menor-1">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-1" class="form-control " name="field-menor-1">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 1</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 field-menor-2">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-2" class="form-control " name="field-menor-2">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 2</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                        <div class="col-md-6 field-menor-2">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-2" class="form-control " name="field-menor-2">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 2</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 field-menor-3">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-3" class="form-control " name="field-menor-3">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 3</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                        <div class="col-md-6 field-menor-3">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-3" class="form-control " name="field-menor-3">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 3</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 field-menor-4">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-4" class="form-control " name="field-menor-4">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 4</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                        <div class="col-md-6 field-menor-4">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-4" class="form-control " name="field-menor-4">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 4</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 field-menor-5">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-5" class="form-control " name="field-menor-5">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 5</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                        <div class="col-md-6 field-menor-5">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-5" class="form-control " name="field-menor-5">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 5</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 field-menor-6">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-6" class="form-control " name="field-menor-6">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 6</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                        <div class="col-md-6 field-menor-6">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-6" class="form-control " name="field-menor-6">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 6</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 field-menor-7">
-                        <div class="form-group form-group-sm form-group-select-plus">
-                            <select id="field-menor-7" class="form-control " name="field-menor-7">
-                                <option value="">{{ 'index.search.flight.children' | trans }} 7</option>
-                                <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
-                                <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
-                            </select>
+                        <div class="col-md-6 field-menor-7">
+                            <div class="form-group form-group-sm form-group-select-plus">
+                                <select id="field-menor-7" class="form-control " name="field-menor-7">
+                                    <option value="">{{ 'index.search.flight.children' | trans }} 7</option>
+                                    <option value="M">{{ 'index.search.flight.0_24_arm' | trans }}</option>
+                                    <option value="I">{{ 'index.search.flight.0_24:seat' | trans }}</option>
+                                    <option value="C">{{ 'index.search.flight.2_11' | trans }}</option>
+                                    <option value="A">{{ 'index.search.flight.12_more' | trans }}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
+            <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
     </form>
     {% if items.facets is defined and items.facets is not empty %}
         <aside class="booking-filters">
@@ -167,9 +253,9 @@
                                 {% set one = 'flights.scale_1' | trans  %}
                                 {% set more_than_one = 'flights.scale_2' | trans %}
                                 {% set names = {
-                                    none: zero,
-                                    one: one,
-                                    more_than_one: more_than_one
+                                none: zero,
+                                one: one,
+                                more_than_one: more_than_one
                                 } %}
                                 <div class="checkbox">
                                     <label>
@@ -206,9 +292,9 @@
                                     <label>
                                         <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
                                         {% set allianceNames = {
-                                            OW : 'One World',
-                                            ST : 'Sky Team',
-                                            SA : 'Star Alliance'
+                                        OW : 'One World',
+                                        ST : 'Sky Team',
+                                        SA : 'Star Alliance'
                                         } %}
                                         <span class="filter-img-wrapper">
                                             <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines-alliances/25x25/{{ type.value }}.png" alt="{{ attribute(allianceNames, type.value) }}">
