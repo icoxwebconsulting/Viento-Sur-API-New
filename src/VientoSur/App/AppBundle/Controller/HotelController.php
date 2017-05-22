@@ -783,13 +783,15 @@ class HotelController extends Controller
             'site' => 'AR'
         ), $this->getParameter('is_test'));
 
-
+        $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
+        
         $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
             'hotelDetails' => $hotelDetails[0],
             'reservationDetails' => $reservationDetails,
             'detail' => $detail,
             'hotelId' => $hotelId,
             'internal' => $reservation,
+            'logoUrl' => $logoUrl,
             'pdf' => true
         ));
 
