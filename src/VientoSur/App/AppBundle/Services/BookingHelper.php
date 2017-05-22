@@ -60,11 +60,10 @@ class BookingHelper
         ];
 
         $str = '<b>' . $transText['entry'] . ':</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '<br />';
-        $str .= ' <b>' . $transText['exit'] . ':</b> ' . $checkout_date->format('d') . ' ' . $months[$checkin_date->format('M')];
+        $str .= ' <b>' . $transText['exit'] . ':</b> ' . $checkout_date->format('d') . ' ' . $months[$checkout_date->format('M')];
         $travellers = $this->processDistribution($distribution);
         $str .= '<br /> <b>' . $travellers['adults'] . ' ' . $transText['adults'] . (($travellers['adults'] > 1) ? 's' : '') . '</b>';
-        $str .= (($travellers['childs'] > 0) ? $travellers['childs'] : '');
-
+        $str .= '<br /> <b>' .(($travellers['childrenCount'] > 0) ? $travellers['childrenCount'] : '').' '. $transText['childs'] . '</b>';
         return $str;
     }
 
@@ -78,15 +77,33 @@ class BookingHelper
 
         if (strpos($distribution, '!')) {
             $temp = explode('!', $distribution);
+
             $result['rooms'] = count($temp);
         } else {
             $temp[0] = $distribution;
             $result['rooms'] = 1;
         }
-
+        $childCount = 0;
         foreach ($temp as $item) {
             if (strpos($item, '-')) {
                 $temp2 = explode('-', $item);
+                if(isset($temp2[1])){
+                    $childCount++;
+                }
+                if(isset($temp2[2])){
+                    $childCount++;
+                }if(isset($temp2[3])){
+                    $childCount++;
+                }if(isset($temp2[4])){
+                    $childCount++;
+                }if(isset($temp2[5])){
+                    $childCount++;
+                }if(isset($temp2[6])){
+                    $childCount++;
+                }
+                if(isset($temp2[7])){
+                    $childCount++;
+                }
                 foreach ($temp2 as $key => $item2) {
                     if ($key == 0) {
                         $result['adults'] += $item2;
@@ -98,6 +115,7 @@ class BookingHelper
                 $result['adults'] += $item;
             }
         }
+        $result['childrenCount'] = $childCount;
 
         return $result;
     }

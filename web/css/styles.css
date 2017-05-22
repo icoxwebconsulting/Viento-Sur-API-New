@@ -10843,3 +10843,11 @@ img.mfp-img {
   }
   
 }
+.multiple-destinations-wrapper.col-md-6, .multiple-destinations-wrapper.col-md-12{
+  padding-left: 0px;
+}
+
+.multiple-destinations-wrapper >.col-md-6{
+  padding-left: 0px;
+  padding-right: 7px;
+}

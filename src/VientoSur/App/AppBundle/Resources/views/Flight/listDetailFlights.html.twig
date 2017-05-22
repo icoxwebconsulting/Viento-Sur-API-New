@@ -1,6 +1,13 @@
 {% if items.message is defined %}
     <li class="mfont">{{ 'flights.not_found' | trans }}</li>
 {% elseif items.items|length > 0 %}
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% elseif targetCurrency == 'ARS' %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
     {% for item in items.items %}
         <li>
             <form target="_blank" name="flight-form-{{ loop.index }}" id="flight-form-{{ loop.index }}" action="{{ path('viento_sur_send_flight_booking') }}" method="post">

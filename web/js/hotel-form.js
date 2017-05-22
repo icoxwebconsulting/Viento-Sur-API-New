@@ -22,8 +22,19 @@ $(document).ready(function () {
 
     $('.list-group').on('click', '.clickable-card', function () {
         var cardId = $(this).data('card-id');
+        var cuote = $(this).data('data-cuote');
         var bank = $(this).data('bank-id');
         var splitCard = cardId.split("-");
+        var idOption = cuote+'-'+cardId;
+        if (cuote == 1){
+            // $("#select-card2").find('option').removeAttr("selected");
+            $('#select-card2 option[id="'+idOption+'"]').attr("selected", "selected");
+        }else{
+            // $("#select-card3").find('option').removeAttr("selected");
+            $('#select-card3 option[id='+idOption+']').attr("selected", "selected");
+        }
+        $(cuote+'-'+cardId).attr('selected', 'selected');
+
         $('#form_payment_bank_code').val(cardId);
         $('#form_payment_card_code').val(splitCard[1]);
         $('#form_payment_card_type').val(splitCard[3]);

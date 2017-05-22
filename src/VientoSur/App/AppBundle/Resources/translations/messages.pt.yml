@@ -1,4 +1,8 @@
 index:
+    error: Erro
+    invalid_document: Documento de identidade inválido
+    fail_purchase: A compra não pôde ser feita
+    invalid_creditcard: Cartão de crédito inválido para roompack selecionado
     hotels: HOTÉIS
     flights: VOOS
     search_text: Pesquisa
@@ -31,6 +35,8 @@ index:
            to: Destino
            to_placeholder: Enter para onde viajar
            start: Partida
+           remove_stretch: Remova o estiramento
+           add_stretch: Adicionar alongamento
            end: Retorno
            one_way: Apenas ida
            one_way_placeholder: Ha seleccionado apenas ida
@@ -41,6 +47,7 @@ index:
            2_11: 2 a 11 anos
            12_more: 12 ou mais
            searching: Procurando voos...
+           multiple_destinations: Múltiplos destinos
     slogan: Reserve a sua viagem para qualquer lugar do mundo,
     slogan_2: encontrar todas as ofertas em um só lugar
     answer_head: Tenha uma pergunta?

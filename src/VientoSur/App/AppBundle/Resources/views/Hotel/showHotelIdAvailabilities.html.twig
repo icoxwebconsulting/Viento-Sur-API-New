@@ -85,6 +85,13 @@
 {% endblock %}
 
 {% block content %}
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% elseif targetCurrency == 'ARS' %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
@@ -203,8 +210,10 @@
                                         <div class="col-md-3">
                                             <div><b>{{ roomTypes[key].despegar_names[app.request.locale] }}</b></div>
                                             <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}">
-                                                <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}" title="" />
-                                                <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
+                                                {% if roomTypes[key].pictures is defined %}
+                                                    <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}" title="" />
+                                                    <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
+                                                {% endif %}
                                             </div>
                                             <div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> {{ 'hotels.max_capacity' | trans }}</div>
                                         </div>

@@ -44,7 +44,9 @@ class Hotel
         $patchParams['form'] = $fillData;
 
         $booking = $this->patchHotelsBooking($bookingId, $formIdBooking, $patchParams);
-
+        if (isset($booking['code'])){
+            return $booking;
+        }
         if (isset($booking['status']) && $booking['status'] == 'NEW_CREDIT_CARD') {
             throw new \Exception('CREDIT_CARD');
         }
@@ -94,11 +96,13 @@ class Hotel
         $booking = $this->despegar->patchHotelsBookings($bookingId, $formIdBooking, $params);
 
         if (isset($booking['code'])) {
+            array_push($booking,$params);
             $resultLog = new ResultLog();
             $resultLog->setData(json_encode($booking));
             $this->em->persist($resultLog);
             $this->em->flush();
-            throw new \Exception('No se ha podido realizar la reserva exitosamente.');
+//            throw new \Exception('No se ha podido realizar la reserva exitosamente.');
+            return $booking;
         } else {
             return $booking;
         }
@@ -136,8 +140,8 @@ class Hotel
 
     private function sendBookingEmail($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails)
     {
-        try {
-            if ($email) {
+//        try {
+//            if ($email) {
                 $this->emailService->sendBookingEmail($email, array(
                     'hotelDetails' => $hotelDetails,
                     'reservationDetails' => $reservationDetails,
@@ -147,10 +151,10 @@ class Hotel
                     'internal' => $reservation,
                     'pdf' => false
                 ));
-            }
-        } catch (\Exception $e) {
-            $this->logger->error('Booking email error: ' . $email);
-        }
+//            }
+//        } catch (\Exception $e) {
+//            $this->logger->error('Booking email error: ' . $email);
+//        }
     }
 
     public function getCardsGroup($paymentMethods)

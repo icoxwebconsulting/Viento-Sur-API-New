@@ -1,4 +1,8 @@
 index:
+    error: Error
+    invalid_document: Invalid identity document
+    invalid_creditcard: Invalid credit card for selected roompack
+    fail_purchase: Purchase could not be made
     hotels: HOTELS
     flights: FLIGHTS
     search_text: Search
@@ -31,6 +35,8 @@ index:
            to: Destination
            to_placeholder: Enter where you travel
            start: Departure
+           remove_stretch: Remove stretch
+           add_stretch: Add stretch
            end: Return
            one_way: One way
            one_way_placeholder: You have selected one way
@@ -41,6 +47,7 @@ index:
            2_11: 2 to 11 years
            12_more: 12 or more
            searching: Searching Flights...
+           multiple_destinations: Multiple destinations
     slogan: Book your trip to any part of the world,
     slogan_2: finding all the offers in one place
     answer_head: Have a questions?
