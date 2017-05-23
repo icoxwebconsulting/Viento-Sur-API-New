@@ -136,111 +136,129 @@ class FlightController extends Controller
         ];
 
         $results = $this->get('despegar')->getFlightItineraries($urlParams, $request->query->all());
+        if(isset($results['status'])){
+            $airlineData = [];
+            $airportData = [];
+            $airportCity = [];
+            $total = 1;
+            $viewParams = [
+                'flightMenu' => true,
+                'items' => $results,
+                'airlineNames' => $airlineData,
+                'airportNames' => $airportData,
+                'airportCities' => $airportCity,
+                'total' => $total,
+                'page' => $page,
+                'adults' => $adults
+            ];
 
-        $total = ceil($results['paging']['total'] / 25);
+            return $this->render('@VientoSurAppApp/Flight/listFlightsItineraries.html.twig', $viewParams);
+        }else{
+            $total = ceil($results['paging']['total'] / 25);
 
-        $airlines = [];
-        $airports = [];
-        if (isset($results['items'])) {
-            foreach ($results['items'] as $item) {
-                if (isset($item['validating_carrier'])) {
-                    if (!in_array($item['validating_carrier'], $airlines)) {
-                        $airlines[] = $item['validating_carrier'];
+            $airlines = [];
+            $airports = [];
+            if (isset($results['items'])) {
+                foreach ($results['items'] as $item) {
+                    if (isset($item['validating_carrier'])) {
+                        if (!in_array($item['validating_carrier'], $airlines)) {
+                            $airlines[] = $item['validating_carrier'];
+                        }
+                    }
+                    foreach ($item['outbound_choices'] as $outbound) {
+                        foreach ($outbound['segments'] as $segment) {
+                            if (!in_array($segment['airline'], $airlines)) {
+                                $airlines[] = $segment['airline'];
+                            }
+                            if (!in_array($segment['from'], $airports)) {
+                                $airports[] = $segment['from'];
+                            }
+                            if (!in_array($segment['to'], $airports)) {
+                                $airports[] = $segment['to'];
+                            }
+                        }
+                    }
+                    foreach ($item['inbound_choices'] as $inbound) {
+                        foreach ($inbound['segments'] as $segment) {
+                            if (!in_array($segment['airline'], $airlines)) {
+                                $airlines[] = $segment['airline'];
+                            }
+                            if (!in_array($segment['from'], $airports)) {
+                                $airports[] = $segment['from'];
+                            }
+                            if (!in_array($segment['to'], $airports)) {
+                                $airports[] = $segment['to'];
+                            }
+                        }
                     }
                 }
-                foreach ($item['outbound_choices'] as $outbound) {
-                    foreach ($outbound['segments'] as $segment) {
-                        if (!in_array($segment['airline'], $airlines)) {
-                            $airlines[] = $segment['airline'];
-                        }
-                        if (!in_array($segment['from'], $airports)) {
-                            $airports[] = $segment['from'];
-                        }
-                        if (!in_array($segment['to'], $airports)) {
-                            $airports[] = $segment['to'];
+
+                if (count($results['facets']) > 0) {
+                    foreach ($results['facets'][1]['values'] as $detail) {
+                        if (!in_array($detail['value'], $airlines)) {
+                            $airlines[] = $detail['value'];
                         }
                     }
-                }
-                foreach ($item['inbound_choices'] as $inbound) {
-                    foreach ($inbound['segments'] as $segment) {
-                        if (!in_array($segment['airline'], $airlines)) {
-                            $airlines[] = $segment['airline'];
+
+                    foreach ($results['facets'][3]['values'] as $detail) {
+                        if (!in_array($detail['value'], $airports)) {
+                            $airports[] = $detail['value'];
                         }
-                        if (!in_array($segment['from'], $airports)) {
-                            $airports[] = $segment['from'];
-                        }
-                        if (!in_array($segment['to'], $airports)) {
-                            $airports[] = $segment['to'];
+                    }
+
+                    foreach ($results['facets'][4]['values'] as $detail) {
+                        if (!in_array($detail['value'], $airports)) {
+                            $airports[] = $detail['value'];
                         }
                     }
                 }
             }
 
-            if (count($results['facets']) > 0) {
-                foreach ($results['facets'][1]['values'] as $detail) {
-                    if (!in_array($detail['value'], $airlines)) {
-                        $airlines[] = $detail['value'];
-                    }
-                }
+            $em = $this->getDoctrine()->getManager();
 
-                foreach ($results['facets'][3]['values'] as $detail) {
-                    if (!in_array($detail['value'], $airports)) {
-                        $airports[] = $detail['value'];
-                    }
-                }
-
-                foreach ($results['facets'][4]['values'] as $detail) {
-                    if (!in_array($detail['value'], $airports)) {
-                        $airports[] = $detail['value'];
-                    }
+            $airlineData = [];
+            if (!empty($airlines)) {
+                $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+                foreach ($airlineResults as $ar) {
+                    $airlineData[$ar->getId()] = $ar->getName();
                 }
             }
-        }
 
-        $em = $this->getDoctrine()->getManager();
-
-        $airlineData = [];
-        if (!empty($airlines)) {
-            $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
-            foreach ($airlineResults as $ar) {
-                $airlineData[$ar->getId()] = $ar->getName();
+            $airportData = [];
+            $airportCity = [];
+            if (!empty($airports)) {
+                $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
+                foreach ($airportResults as $ap) {
+                    $airportData[$ap->getCode()] = $ap->getName();
+                    $airportCity[$ap->getCode()] = $ap->getCity();
+                }
             }
-        }
 
-        $airportData = [];
-        $airportCity = [];
-        if (!empty($airports)) {
-            $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
-            foreach ($airportResults as $ap) {
-                $airportData[$ap->getCode()] = $ap->getName();
-                $airportCity[$ap->getCode()] = $ap->getCity();
+            $viewParams = [
+                'flightMenu' => true,
+                'items' => $results,
+                'airlineNames' => $airlineData,
+                'airportNames' => $airportData,
+                'airportCities' => $airportCity,
+                'total' => $total,
+                'page' => $page,
+                'adults' => $adults
+            ];
+
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(
+                    array(
+                        'html' => $this->renderView('VientoSurAppAppBundle:Flight:listDetailFlights.html.twig',
+                            $viewParams
+                        ),
+                        'paging' => $results['paging'],
+                        'total' => $total,
+                        'page' => $page
+                    )
+                );
+            } else {
+                return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', $viewParams);
             }
-        }
-
-        $viewParams = [
-            'flightMenu' => true,
-            'items' => $results,
-            'airlineNames' => $airlineData,
-            'airportNames' => $airportData,
-            'airportCities' => $airportCity,
-            'total' => $total,
-            'page' => $page,
-            'adults' => $adults
-        ];
-
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(
-                array(
-                    'html' => $this->renderView('VientoSurAppAppBundle:Flight:listDetailFlights.html.twig',
-                        $viewParams
-                    ),
-                    'paging' => $results['paging'],
-                    'total' => $total,
-                    'page' => $page
-                )
-            );
-        } else {
-            return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', $viewParams);
         }
     }
 
@@ -384,111 +402,132 @@ class FlightController extends Controller
         }
 
         $results = $this->get('despegar')->getFlightItineraries($urlParams, $request->query->all());
-        $total = ceil($results['paging']['total'] / 25);
+        if(isset($results['status'])){
 
-        $airlines = [];
-        $airports = [];
-        if (isset($results['items'])) {
-            foreach ($results['items'] as $item) {
-                if (isset($item['validating_carrier'])) {
-                    if (!in_array($item['validating_carrier'], $airlines)) {
-                        $airlines[] = $item['validating_carrier'];
-                    }
-                }
-                foreach ($item['routes'] as $routes) {
-                    foreach ($routes['segments'] as $segment) {
-                        if (!in_array($segment['airline'], $airlines)) {
-                            $airlines[] = $segment['airline'];
-                        }
-                        if (!in_array($segment['from'], $airports)) {
-                            $airports[] = $segment['from'];
-                        }
-                        if (!in_array($segment['to'], $airports)) {
-                            $airports[] = $segment['to'];
-                        }
-                    }
-                }
-//                foreach ($item['inbound_choices'] as $inbound) {
-//                    foreach ($inbound['segments'] as $segment) {
-//                        if (!in_array($segment['airline'], $airlines)) {
-//                            $airlines[] = $segment['airline'];
-//                        }
-//                        if (!in_array($segment['from'], $airports)) {
-//                            $airports[] = $segment['from'];
-//                        }
-//                        if (!in_array($segment['to'], $airports)) {
-//                            $airports[] = $segment['to'];
-//                        }
-//                    }
-//                }
-            }
-
-            if (count($results['facets']) > 0) {
-                foreach ($results['facets'][1]['values'] as $detail) {
-                    if (!in_array($detail['value'], $airlines)) {
-                        $airlines[] = $detail['value'];
-                    }
-                }
-
-                foreach ($results['facets'][3]['values'] as $detail) {
-                    if (!in_array($detail['value'], $airports)) {
-                        $airports[] = $detail['value'];
-                    }
-                }
-
-//                foreach ($results['facets'][4]['values'] as $detail) {
-//                    if (!in_array($detail['value'], $airports)) {
-//                        $airports[] = $detail['value'];
-//                    }
-//                }
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $airlineData = [];
-        if (!empty($airlines)) {
-            $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
-            foreach ($airlineResults as $ar) {
-                $airlineData[$ar->getId()] = $ar->getName();
-            }
-        }
-
-        $airportData = [];
-        $airportCity = [];
-        if (!empty($airports)) {
-            $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
-            foreach ($airportResults as $ap) {
-                $airportData[$ap->getCode()] = $ap->getName();
-                $airportCity[$ap->getCode()] = $ap->getCity();
-            }
-        }
-
-        $viewParams = [
-            'flightMenu' => true,
-            'items' => $results,
-            'airlineNames' => $airlineData,
-            'airportNames' => $airportData,
-            'airportCities' => $airportCity,
-            'total' => $total,
-            'page' => $page,
-            'adults' => $adults,
-            'multidestination' => $multidestination,
-        ];
-
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(
-                array(
-                    'html' => $this->renderView('VientoSurAppAppBundle:Flight/MultiDestination:listDetailFlights.html.twig',
-                        $viewParams
-                    ),
-                    'paging' => $results['paging'],
-                    'total' => $total,
-                    'page' => $page
-                )
-            );
-        } else {
+            $airlineData = [];
+            $airportData = [];
+            $airportCity = [];
+            $total = 1;
+            $viewParams = [
+                'flightMenu' => true,
+                'items' => $results,
+                'airlineNames' => $airlineData,
+                'airportNames' => $airportData,
+                'airportCities' => $airportCity,
+                'total' => $total,
+                'page' => $page,
+                'adults' => $adults,
+                'multidestination' => $multidestination,
+            ];
             return $this->render('VientoSurAppAppBundle:Flight/MultiDestination:listFlightsItineraries.html.twig', $viewParams);
+
+        }else{
+            $total = ceil($results['paging']['total'] / 25);
+
+            $airlines = [];
+            $airports = [];
+            if (isset($results['items'])) {
+                foreach ($results['items'] as $item) {
+                    if (isset($item['validating_carrier'])) {
+                        if (!in_array($item['validating_carrier'], $airlines)) {
+                            $airlines[] = $item['validating_carrier'];
+                        }
+                    }
+                    foreach ($item['routes'] as $routes) {
+                        foreach ($routes['segments'] as $segment) {
+                            if (!in_array($segment['airline'], $airlines)) {
+                                $airlines[] = $segment['airline'];
+                            }
+                            if (!in_array($segment['from'], $airports)) {
+                                $airports[] = $segment['from'];
+                            }
+                            if (!in_array($segment['to'], $airports)) {
+                                $airports[] = $segment['to'];
+                            }
+                        }
+                    }
+    //                foreach ($item['inbound_choices'] as $inbound) {
+    //                    foreach ($inbound['segments'] as $segment) {
+    //                        if (!in_array($segment['airline'], $airlines)) {
+    //                            $airlines[] = $segment['airline'];
+    //                        }
+    //                        if (!in_array($segment['from'], $airports)) {
+    //                            $airports[] = $segment['from'];
+    //                        }
+    //                        if (!in_array($segment['to'], $airports)) {
+    //                            $airports[] = $segment['to'];
+    //                        }
+    //                    }
+    //                }
+                }
+
+                if (count($results['facets']) > 0) {
+                    foreach ($results['facets'][1]['values'] as $detail) {
+                        if (!in_array($detail['value'], $airlines)) {
+                            $airlines[] = $detail['value'];
+                        }
+                    }
+
+                    foreach ($results['facets'][3]['values'] as $detail) {
+                        if (!in_array($detail['value'], $airports)) {
+                            $airports[] = $detail['value'];
+                        }
+                    }
+
+    //                foreach ($results['facets'][4]['values'] as $detail) {
+    //                    if (!in_array($detail['value'], $airports)) {
+    //                        $airports[] = $detail['value'];
+    //                    }
+    //                }
+                }
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+            $airlineData = [];
+            if (!empty($airlines)) {
+                $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+                foreach ($airlineResults as $ar) {
+                    $airlineData[$ar->getId()] = $ar->getName();
+                }
+            }
+
+            $airportData = [];
+            $airportCity = [];
+            if (!empty($airports)) {
+                $airportResults = $em->getRepository('VientoSurAppAppBundle:Airport')->findAirportsIn($airports);
+                foreach ($airportResults as $ap) {
+                    $airportData[$ap->getCode()] = $ap->getName();
+                    $airportCity[$ap->getCode()] = $ap->getCity();
+                }
+            }
+
+            $viewParams = [
+                'flightMenu' => true,
+                'items' => $results,
+                'airlineNames' => $airlineData,
+                'airportNames' => $airportData,
+                'airportCities' => $airportCity,
+                'total' => $total,
+                'page' => $page,
+                'adults' => $adults,
+                'multidestination' => $multidestination,
+            ];
+
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(
+                    array(
+                        'html' => $this->renderView('VientoSurAppAppBundle:Flight/MultiDestination:listDetailFlights.html.twig',
+                            $viewParams
+                        ),
+                        'paging' => $results['paging'],
+                        'total' => $total,
+                        'page' => $page
+                    )
+                );
+            } else {
+                return $this->render('VientoSurAppAppBundle:Flight/MultiDestination:listFlightsItineraries.html.twig', $viewParams);
+            }
         }
     }
 

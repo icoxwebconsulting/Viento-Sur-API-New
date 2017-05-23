@@ -16,9 +16,11 @@
             {% else %}
                 {% set destination = "" %}
             {% endif %}
+            {% if items.status is not defined %}
             <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
                     {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
                 </a></li>
+            {% endif %}
         </ul>
 
         <br/>
