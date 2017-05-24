@@ -207,6 +207,7 @@ hotels:
         billing_address: Billing address:
         invoice_name: Invoice name:
         fiscal_document: fiscal document:
+        invalid_fiscal_document: Ivalid fiscal document
         tax_status: Tax status:
         fiscal_document_type: Fiscal document type:
         fiscal_document_prefix_verification_code: Verification code:

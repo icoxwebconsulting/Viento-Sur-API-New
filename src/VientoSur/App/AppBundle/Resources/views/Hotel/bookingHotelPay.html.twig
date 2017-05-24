@@ -588,6 +588,18 @@
     <script src="{{ asset('js/hotel-form.js') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
     <script>
+        $(document).ready(function(){
+            $("#form_payment_fiscal_document").change(function(){
+                var cuit = $(this).val();
+                if (cuit.match(/^\d{2}\-\d{8}\-\d{1}$/)){
+                    console.log('cuit valido')
+                    $("#errorCuit").hide();
+                }else{
+                    console.log('cuit not valido')
+                    $("#errorCuit").show();
+                }
+            });
+        });
         $("#form_contact_country_code0").intlTelInput({
             autoHideDialCode: false,
             nationalMode: false,
