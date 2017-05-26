@@ -361,7 +361,7 @@ class FlightController extends Controller
 
         $urlParams = [
             "site" => "AR",
-            "departure_date" => $departure_date,
+//            "departure_date" => $departure_date,
             "language" => $lang,
 //            "from" => $from,
 //            "to" => $to,
@@ -387,6 +387,11 @@ class FlightController extends Controller
                     }
                     if ($key == "destinationFlight"){
                         $urlParams["to"] = $value;
+                    }
+                    if ($key == "start"){
+                        list($day, $month, $year) = explode("/", $value);
+                        $date = $year . '-' . $month . '-' . $day;
+                        $urlParams["departure_date"] = $date;
                     }
                 }elseif($i >1){
                     if ($key == "originFlight"){

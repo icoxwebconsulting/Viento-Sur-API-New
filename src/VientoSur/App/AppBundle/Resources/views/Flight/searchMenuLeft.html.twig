@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
                                     <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                                    <input id="start-flight" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                                    <input id="start-flight" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
                                 </div>
                             {% else %}
                                 <div class="form-group form-group-icon-left form-icon-lg">
