@@ -207,6 +207,7 @@ hotels:
         billing_address: Endereço para cobrança:
         invoice_name: Nome de faturamento:
         fiscal_document: Documento Fiscal:
+        invalid_fiscal_document: Documento fiscal inválido
         tax_status: Situação Fiscal:
         fiscal_document_type: Tipo de documento Fiscal:
         fiscal_document_prefix_verification_code: Dígito de verificación:

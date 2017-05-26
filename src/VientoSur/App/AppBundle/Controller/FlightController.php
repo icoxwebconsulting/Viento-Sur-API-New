@@ -54,7 +54,9 @@ class FlightController extends Controller
         $childrens = $request->get('childrenPassengers');
         $childrenQty = 0;
         $infantQty = 0;
+        $dataPassengers['adults'] = $request->get('adultsPassengers');;
         for ($i = 1; $i <= $childrens; $i++) {
+            $dataPassengers['children'][$i] = $request->get('field-menor-' . $i);
             if ($request->get('field-menor-' . $i) == 'A') {
                 $infantQty++;
             } else {
@@ -63,6 +65,7 @@ class FlightController extends Controller
         }
 
         $session = $request->getSession();
+        $session->set('data_passengers', $dataPassengers);
         $session->set('departure_date', $request->get('start'));
         $session->set('return_date', $request->get('end'));
         $session->set('origin_flight', [
