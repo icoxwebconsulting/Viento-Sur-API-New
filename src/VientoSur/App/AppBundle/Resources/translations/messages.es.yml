@@ -35,6 +35,7 @@ index:
            to: Destino
            to_placeholder: Ingresa hacia dónde viajas
            start: Partida
+           stretch: Tramo
            remove_stretch: Eliminar tramo
            add_stretch: Agregar tramo
            end: Regreso

@@ -1,15 +1,7 @@
 {% extends '@VientoSurAppApp/layoutFlight.html.twig' %}
 
 {% block content %}
-
-    {% set targetCurrency = app.session.get('targetCurrency') %}
-    {% if targetCurrency == 'USD' %}
-        {% set symbol = 'US$' %}
-    {% elseif targetCurrency == 'ARS' %}
-        {% set symbol = 'AR$' %}
-    {% endif %}
-    {% set decimal =false %}
-
+    {#{{ dump() }}#}
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
@@ -45,7 +37,7 @@
                 </div>
 
                 <ul class="flight-list">
-                    {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
+                    {% include 'VientoSurAppAppBundle:Flight/MultiDestination:listDetailFlights.html.twig' %}
                 </ul>
 
                 {#{{ dump(items) }}#}
@@ -63,31 +55,32 @@
     </div>
 {% endblock %}
 
+
 {% block javascripts %}
     {{ parent() }}
     <script>
         {#$(function () {#}
-            {#$("#pagination").bootpag({#}
-                {#total: {{ (items.paging.total / 10) }},#}
-                {#maxVisible: 15,#}
-                {#page: {{ limit }} ,#}
-                {#firstLastUse: true,#}
-                {#first: '←',#}
-                {#last: '→'#}
+        {#$("#pagination").bootpag({#}
+        {#total: {{ (items.paging.total / 10) }},#}
+        {#maxVisible: 15,#}
+        {#page: {{ limit }} ,#}
+        {#firstLastUse: true,#}
+        {#first: '←',#}
+        {#last: '→'#}
 
-            {#}).on("page", function (event, num) {#}
-                {#var offset = (num * 10) - 1;#}
-                {#var limit = num;#}
-                {#var URLdomain = window.location.host;#}
-                {#var url2 = Routing.generate('viento_sur_send_flights');#}
-                {#var URLsearch = window.location.search;#}
+        {#}).on("page", function (event, num) {#}
+        {#var offset = (num * 10) - 1;#}
+        {#var limit = num;#}
+        {#var URLdomain = window.location.host;#}
+        {#var url2 = Routing.generate('viento_sur_send_flights');#}
+        {#var URLsearch = window.location.search;#}
 
-                {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
-            {#});#}
-//            $("#field-hotel-checkin").datepicker({
-//                "setDate": new Date()
-//            });
-//        });
+        {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
+        {#});#}
+        //            $("#field-hotel-checkin").datepicker({
+        //                "setDate": new Date()
+        //            });
+        //        });
         $('.flight-list').on('click', '.booking-prices', function (event) {
             event.stopPropagation();
             var itemId = $(this).data('item');
@@ -327,13 +320,13 @@
                 $(this).removeClass('hidden');
             });
             /*
-            $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
-                var type = $(this).data('type');
-                var selector = '.' + type + ' .' + type + '-hidden';
-                $(selector).slideToggle();
-                $('.' + type + '-view-toggle').toggleClass('hide')
-            });
-            */
+             $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
+             var type = $(this).data('type');
+             var selector = '.' + type + ' .' + type + '-hidden';
+             $(selector).slideToggle();
+             $('.' + type + '-view-toggle').toggleClass('hide')
+             });
+             */
         })
     </script>
 {% endblock %}
