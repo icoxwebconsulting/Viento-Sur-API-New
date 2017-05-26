@@ -29,7 +29,16 @@
                 {{ form_row(formNewPay.payment.tax_status , {'label': label, 'attr': {'class': 'form-control'}}) }}
             </div>
         {% endif %}
-    </div>
+        {% if formNewPay.payment.fiscal_document is defined %}
+            <div class="col-md-8 top-buffer" id="errorCuit" style="display: none;">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{ 'hotels.labels.invalid_fiscal_document' | trans }}
+                </div>
+            </div>
+        {% endif %}
+        </div>
 
     <div class="row">
         {% if formNewPay.payment.fiscal_document_type is defined %}

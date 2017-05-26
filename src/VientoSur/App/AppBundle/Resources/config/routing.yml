@@ -9,3 +9,7 @@ viento_sur_hotel:
 viento_sur_flight:
     resource: "@VientoSurAppAppBundle/Controller/FlightController.php"
     type:     annotation
+
+viento_sur_test:
+    resource: "@VientoSurAppAppBundle/Controller/TestController.php"
+    type:     annotation

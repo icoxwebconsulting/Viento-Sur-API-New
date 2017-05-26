@@ -1,4 +1,8 @@
 index:
+    error: Error
+    invalid_document: Invalid identity document
+    invalid_creditcard: Invalid credit card for selected roompack
+    fail_purchase: Purchase could not be made
     hotels: HOTELS
     flights: FLIGHTS
     search_text: Search
@@ -204,6 +208,7 @@ hotels:
         billing_address: Billing address:
         invoice_name: Invoice name:
         fiscal_document: fiscal document:
+        invalid_fiscal_document: Ivalid fiscal document
         tax_status: Tax status:
         fiscal_document_type: Fiscal document type:
         fiscal_document_prefix_verification_code: Verification code:

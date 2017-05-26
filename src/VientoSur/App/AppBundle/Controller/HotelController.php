@@ -77,6 +77,7 @@ class HotelController extends Controller
     {
         if ($this->getParameter('is_test')) {
             $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
+//            $destinationText = 'Arbatax Park Resort Borgo Cala Moresca, Tortoli, Italia';
             $destination = 'CITY-982';
         } else {
             $destinationText = $request->get('autocomplete');
@@ -97,12 +98,15 @@ class HotelController extends Controller
 
         $habitacionesCant = $request->get('habitacionesCant');
         $distribution = '';
+        $dataTravelers = array();
 
         if ($habitacionesCant == 1) {
             $distribution = $request->get('adultsSelector');
             $childrens = $request->get('childrenRoomSelector');
             $childAges = '';
+            $dataTravelers['room'][1]['adults'] = $request->get('adultsSelector');
             for ($i = 1; $i <= $childrens; $i++) {
+                $dataTravelers['room'][1]['children'][$i] = $request->get('childAgeSelector-' . $i);
                 $childAges .= '-' . $request->get('childAgeSelector-' . $i);
             }
             $distribution .= $childAges;
@@ -111,7 +115,9 @@ class HotelController extends Controller
                 $adults = $request->get('adultsSelector' . $h);
                 $childrens = $request->get('childrenRoomSelector' . $h);
                 $childAges = '';
+                $dataTravelers['room'][$h]['adults'] = $request->get('adultsSelector' . $h);
                 for ($i = 1; $i <= $childrens; $i++) {
+                    $dataTravelers['room'][$h]['children'][$i] = $request->get('childAgeSelector-' . $h . '-' . $i);
                     $childAges .= '-' . $request->get('childAgeSelector-' . $h . '-' . $i);
                 }
                 $distribution .= (($h > 1) ? '!' : '') . $adults . $childAges;
@@ -119,6 +125,7 @@ class HotelController extends Controller
         }
 
         $session = $request->getSession();
+        $session->set('data_travelers', $dataTravelers['room']);
         $session->set('checkin_date', $request->get('start'));
         $session->set('checkout_date', $request->get('end'));
         $session->set('distribution', $distribution);
@@ -128,10 +135,11 @@ class HotelController extends Controller
         ]);
 
         $destination = explode('-', $destination);
+        $destiny = trim($destination[1]);
 
         if ($destination[0] == 'CITY') {
             return $this->redirectToRoute('viento_sur_send_hotels', array(
-                'destination' => $destination[1],
+                'destination' => $destiny,
                 'checkin_date' => $fromCalendarHotel,
                 "checkout_date" => $toCalendarHotel,
                 'distribution' => $distribution
@@ -139,13 +147,13 @@ class HotelController extends Controller
         } else {
             //show/{idHotel}/availabilities/{destination}/{checkin_date}/{checkout_date}/{distribution}/{latitude}/{longitude}
             $hotelDetail = $this->get('despegar')->getHotelsDetails(array(
-                'ids' => $destination[1],
+                'ids' => $destiny,
                 'language' => 'es',
                 'resolve' => 'merge_info',
                 'catalog_info' => 'true'
             ));
             return $this->redirectToRoute('viento_sur_app_app_homepage_show_hotel_id', array(
-                'idHotel' => $destination[1],
+                'idHotel' => $destiny,
                 'checkin_date' => $fromCalendarHotel,
                 'checkout_date' => $toCalendarHotel,
                 'distribution' => $distribution,
@@ -162,6 +170,9 @@ class HotelController extends Controller
      */
     public function sendHotelsAvailabilitiesAction($destination, $checkin_date, $checkout_date, $distribution, Request $request)
     {
+
+//        echo"<pre>".print_r($destination)."</pre>";
+//        die();
         $page = $request->query->get('page');
         if (!$page) {
             $page = 1;
@@ -370,6 +381,7 @@ class HotelController extends Controller
      */
     public function consultAction(Request $request)
     {
+        $email = $request->request->get('email');
         $html = $this->renderView(
             'VientoSurAppAppBundle:Email:contact.html.twig',
             array(
@@ -379,7 +391,7 @@ class HotelController extends Controller
             )
         );
 
-        $this->get('email.service')->sendCommentsEmail($html);
+        $this->get('email.service')->sendCommentsEmail($html, $email);
 
         $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
         return new JsonResponse(array("status" => 'success'));
@@ -623,20 +635,63 @@ class HotelController extends Controller
                             'hotelBrief' => $session->get('hotel_brief')
                         );
                     } else {
+//                        cuando la tarjeta falla el error aparece aqui
                         throw new \Exception($e);
                     }
                 }
+                if (isset($booking['code']) and $booking['code'] == 500){
+                    foreach ($booking['causes'] as $cause){
+                        if(strpos($cause, 'INVALID_LENGTH') !== false){
+                            $this->addFlash(
+                                'danger',
+                                $this->get('translator')->trans('index.invalid_document')
+                            );
+                        }elseif(strpos($cause, 'Invalid credit card for selected roompack ') !== false){
+                            $this->addFlash(
+                                'danger',
+                                $this->get('translator')->trans('index.invalid_creditcard')
+                            );
+                        }else{
+                            $this->addFlash(
+                                'danger',
+                                $this->get('translator')->trans('index.fail_purchase')
+                            );
+                        }
+                    }
+                    //procesado de métodos de pago agrupados por Banco
+                    $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
 
-                return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
-                    'hotelDetails' => $booking['hotelDetails'],
-                    'reservationDetails' => $booking['reservationDetails'],
-                    'reservationId' => base64_encode($booking['reservationDetails']['id']),
-                    'detail' => $booking['booking'],
-                    'hotelId' => $hotelAvailabilities->hotel->id,
-                    'internal' => $booking['reservation'],
-                    'status' => 'ok',
-                    'pdf' => false
-                ));
+                    return array(
+                        'formBooking' => $formBooking,
+                        'formChoice' => $formChoice,
+                        'price_detail' => $priceDetail,
+                        'formUrl' => $formUrl,
+                        'roompack_choice' => $roompackChoice,
+                        'booking_id' => $booking_id,
+                        'formNewPay' => $formNewPaySend->createView(),
+                        'paymentMethods' => $paymentMethods,
+                        'rooms' => $roompack->rooms,
+                        'cardsGroup' => $cardsGroup,
+                        'reservationDays' => $reservationTime->days,
+                        'roomNumbers' => count(explode("!", $distribution)),
+                        'errors' => $formNewPaySend->getErrors(),
+                        'travellers' => $travellers,
+                        'hotelBrief' => $session->get('hotel_brief'),
+                        'cardList' => $cards,
+                        'bankList' => $bankList
+                    );
+                }else{
+                    return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
+                        'hotelDetails' => $booking['hotelDetails'],
+                        'reservationDetails' => $booking['reservationDetails'],
+                        'reservationId' => base64_encode($booking['reservationDetails']['id']),
+                        'detail' => $booking['booking'],
+                        'hotelId' => $hotelAvailabilities->hotel->id,
+                        'internal' => $booking['reservation'],
+                        'status' => 'ok',
+                        'pdf' => false
+                    ));
+                }
             }
         }
 
@@ -728,13 +783,15 @@ class HotelController extends Controller
             'site' => 'AR'
         ), $this->getParameter('is_test'));
 
-
+        $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
+        
         $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
             'hotelDetails' => $hotelDetails[0],
             'reservationDetails' => $reservationDetails,
             'detail' => $detail,
             'hotelId' => $hotelId,
             'internal' => $reservation,
+            'logoUrl' => $logoUrl,
             'pdf' => true
         ));
 
@@ -792,10 +849,10 @@ class HotelController extends Controller
     }
 
     /**
-     * @Route("/booking/edit/{id}", name="viento_sur_app_edit_patch_reservation")
+     * @Route("/booking/edit/{internalId}/{id}", name="viento_sur_app_edit_patch_reservation")
      * @Method("PATCH")
      */
-    public function patchEditReservationAction($id, Request $request)
+    public function patchEditReservationAction($internalId, $id, Request $request)
     {
         $despegar = $this->get('despegar');
         $cancel = $despegar->cancelReservation($id);
@@ -804,7 +861,7 @@ class HotelController extends Controller
         if ($cancel && isset($cancel['id'])) {
             $result = true;
             $em = $this->getDoctrine()->getManager();
-            $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
+            $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($internalId);
 
             if ($internal != null) {
                 $reservation = $despegar->getReservationDetails($internal->getReservationId(), array(

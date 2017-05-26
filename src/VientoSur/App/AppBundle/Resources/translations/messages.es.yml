@@ -1,4 +1,8 @@
 index:
+    error: Error
+    invalid_document: Documento de identidad inválido
+    fail_purchase: No se pudo hacer la compra
+    invalid_creditcard: Tarjeta de crédito seleccionada no válida
     hotels: HOTELES
     flights: VUELOS
     search_text: Buscar
@@ -204,6 +208,7 @@ hotels:
         billing_address: Dirección de facturación:
         invoice_name: Nombre para facturación:
         fiscal_document: Documento Fiscal:
+        invalid_fiscal_document: Documento fiscal inválido
         tax_status: Situación fiscal:
         fiscal_document_type: Tipo de documento Fiscal:
         fiscal_document_prefix_verification_code: Dígito de verificación:
