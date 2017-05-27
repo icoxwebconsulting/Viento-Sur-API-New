@@ -3,7 +3,14 @@ index:
     invalid_document: Documento de identidade inválido
     fail_purchase: A compra não pôde ser feita
     invalid_creditcard: Cartão de crédito inválido para roompack selecionado
+    hotel: hotel
     hotels: HOTÉIS
+    flight_detail: Detalhe vôo
+    hotel_detail: Detalhes do hotel
+    flight_search: Pesquisa de voos
+    purchase_summary: Resumo de compra
+    rooms_available: Quartos de hotel:
+    flight: voar
     flights: VOOS
     search_text: Pesquisa
     loading: Carregando
@@ -256,6 +263,7 @@ flights:
         residence: Residência:
         birthdate: Data de nascimento:
         child: Niño:
+        infant: Infantil:
     payment_msg: Para selecionar um cartão clique sobre ele, se uma lista de banco será exibido com cartões
     quota: Cuota
     invoice_data: Dados de faturamento

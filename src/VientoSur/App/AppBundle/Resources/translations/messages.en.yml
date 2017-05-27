@@ -3,7 +3,15 @@ index:
     invalid_document: Invalid identity document
     invalid_creditcard: Invalid credit card for selected roompack
     fail_purchase: Purchase could not be made
+    hotel: hotel
     hotels: HOTELS
+    flight_detail: Flight detail
+    hotel_detail: Hotel detail
+    flight_search: Flight search
+    hotel_search: Hotel search
+    purchase_summary: Purchase summary
+    rooms_available: Rooms available for hotel:
+    flight: flight
     flights: FLIGHTS
     search_text: Search
     loading: Loading
@@ -257,6 +265,7 @@ flights:
         residence: Residence:
         birthdate: Birthdate:
         child: Child:
+        infant: Infant:
     payment_msg: To select a card click on it, in the case of a bank a list will be displayed with the cards
     quota: Quota
     invoice_data: Invoice data

@@ -1,4 +1,5 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% block title %}{{ 'index.hotel_detail' | trans }} {% endblock %}
 
 {% block content %}
     {% set targetCurrency = app.session.get('targetCurrency') %}

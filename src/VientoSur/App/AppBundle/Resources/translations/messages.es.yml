@@ -3,7 +3,15 @@ index:
     invalid_document: Documento de identidad inválido
     fail_purchase: No se pudo hacer la compra
     invalid_creditcard: Tarjeta de crédito seleccionada no válida
+    hotel: hotel
     hotels: HOTELES
+    flight_detail: Detalle de vuelo
+    hotel_detail: Detalle de hotel
+    flight_search: Búsqueda de vuelos
+    hotel_search: Búsqueda de hoteles
+    purchase_summary: Resumen de compra
+    rooms_available: Habitaciones disponibles para hotel:
+    flight: vuelo
     flights: VUELOS
     search_text: Buscar
     loading: Cargando
@@ -257,6 +265,7 @@ flights:
         residence: Residencia:
         birthdate: Fecha de nacimiento:
         child: Niño:
+        infant: Infante:
     payment_msg: Para seleccionar una tarjeta haga click sobre ella, en caso de un banco se desplegará un listado con las tarjetas
     quota: Cuota
     invoice_data: Datos para facturación
