@@ -9,8 +9,8 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
-    {{ dump(app.session.get('data_passengers')) }}
-{{ dump(formChoice.passengers) }}
+    {#{{ dump(app.session.get('data_passengers')) }}#}
+{#{{ dump(formChoice.passengers) }}#}
     <div class="container formBooking">
         <div class="row">
             <div class="gap"></div>
@@ -20,7 +20,7 @@
 
                 <!--Pasajeros-->
                 <div class="panel panel-primary">
-                    {{ dump(itineraryDetail) }}
+                    {#{{ dump(itineraryDetail) }}#}
                     <div class="panel-heading">{{ 'flights.passengers' | trans }}</div>
                     <div class="panel-body">
                         {% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}
