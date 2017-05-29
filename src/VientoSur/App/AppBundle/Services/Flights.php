@@ -99,18 +99,29 @@ class Flights
     private function processPassengers($passengers)
     {
         $adultQty = $passengers['adults'][0]['metadata']['quantity'];
+        $cantChildren = $passengers['children'][0]['metadata']['quantity'];
         $childrenQty = 0;
+        $cantInfant = $passengers['infants'][0]['metadata']['quantity'];
+        $infantQty = 0;
         for ($i = 1; $i <= $passengers['metadata']['quantity']; $i++) {
             if ($i <= $adultQty) {
                 $passenger = $passengers['adults'][0];
                 $type = 'adults';
                 $count = $i;
-            } else {
-                $passenger = $passengers['children'][0];
-                $type = 'children';
-                $childrenQty++;
-                $count = $childrenQty;
+            }else{
+                if ($childrenQty != $cantChildren){
+                    $passenger = $passengers['children'][0];
+                    $type = 'children';
+                    $childrenQty++;
+                    $count = $childrenQty;
+                }elseif ($infantQty != $cantInfant){
+                        $passenger = $passengers['infants'][0];
+                        $type = 'infants';
+                        $infantQty++;
+                        $count = $infantQty;
+                }
             }
+
             foreach ($passenger as $key => $item) {
                 if ($key != 'metadata' && $key != 'validations') {
                     switch ($key) {
@@ -395,16 +406,34 @@ class Flights
         //proceso de passengers
         $j = 0;
         $adultCount = $booking['passengers']['adults'][0]['metadata']['quantity'];
+        $adultQty = 0;
+        $childrenQty = 0;
+        $infantQty = 0;
+        $auxInfant = 0;
         $childCount = (isset($booking['passengers']['children'][0]['metadata']['quantity']) ? $booking['passengers']['children'][0]['metadata']['quantity'] : 0);
-        $type = 'ADULT';
-        $typeField = 'adults';
+        $infantCount = (isset($booking['passengers']['infants'][0]['metadata']['quantity']) ? $booking['passengers']['infants'][0]['metadata']['quantity'] : 0);
         for ($i = 1; $i <= $booking['passengers']['metadata']['quantity']; $i++) {
-            if ($childCount > 0 && $j >= $childCount) {
+            if($adultCount != 0 and $adultQty < $adultCount){
+                $type = 'ADULT';
+                $typeField = 'adults';
                 $j = ($j == $adultCount) ? 1 : $j + 1;
+                $adultQty++;
+            }elseif ($childCount != 0 and $childrenQty < $childCount){
                 $type = 'CHILDREN';
                 $typeField = 'children';
-            } else {
-                $j += 1;
+                $j = ($j == $adultCount) ? 1 : $j + 1;
+                $childrenQty++;
+            }elseif($infantCount != 0 and $infantQty <= $infantCount){
+                $type = 'INFANT';
+                $typeField = 'infants';
+                $sum = $childCount+ $adultCount;
+                if($i > $sum and $j < $infantCount){
+                    $j++;
+                }else{
+                    $j = 1;
+                }
+                $auxInfant++;
+                $infantQty++;
             }
             $passenger = [];
 
