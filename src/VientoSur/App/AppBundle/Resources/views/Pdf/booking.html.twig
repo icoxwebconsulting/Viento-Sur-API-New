@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Viento Sur - Reservaci&oacute;n</title>
+    <title>vientosur.net | {{ 'index.hotel' |trans }} - {{ 'index.reservation' | trans }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .header-top {
@@ -25,7 +25,18 @@
             padding: 5px 0;
             background: #404040;
         }
+        #map {
+            height: 428px;
+            width: 493px;
+        }
+        #main_picture > img{
+            width:100%;
+        }
     </style>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/3b7bfd9c44.js"></script>
 </head>
 <body>
 <header id="main-header">
@@ -36,13 +47,19 @@
                     <img src="{{ logoUrl }}" alt="Viento Sur" title="">
                 </a>
             </div>
+            <div class="col-md-9">
+              <p style="color:#FFFFFF; text-align: right; padding-top:15px;">{{ 'hotels.reservation_number' | trans }}:
+                  <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservationDetails.id }}</span>
+              </p>
+              <p style="color:#FFFFFF; text-align: right;">{{ 'hotels.room_number' | trans }}:
+                  <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ hotelDetails.number_of_rooms }}</span>
+              </p>
+            </div>
         </div>
     </div>
 </header>
 
 {% include 'VientoSurAppAppBundle:Email:bookingDetail.html.twig' %}
 
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

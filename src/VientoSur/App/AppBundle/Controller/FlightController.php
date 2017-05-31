@@ -54,15 +54,18 @@ class FlightController extends Controller
         $childrens = $request->get('childrenPassengers');
         $childrenQty = 0;
         $infantQty = 0;
-        $dataPassengers['adults'] = $request->get('adultsPassengers');;
         for ($i = 1; $i <= $childrens; $i++) {
-            $dataPassengers['children'][$i] = $request->get('field-menor-' . $i);
-            if ($request->get('field-menor-' . $i) == 'A') {
+            if ($request->get('field-menor-' . $i) == 'M' or $request->get('field-menor-' . $i) == 'I') {
                 $infantQty++;
-            } else {
+                $dataPassengers['children'][$i] = $request->get('field-menor-' . $i);
+            } else if($request->get('field-menor-' . $i) == 'C') {
                 $childrenQty++;
+                $dataPassengers['children'][$i] = $request->get('field-menor-' . $i);
+            }else{
+                $adults++;
             }
         }
+        $dataPassengers['adults'] = $adults;
 
         $session = $request->getSession();
         $session->set('data_passengers', $dataPassengers);
@@ -551,7 +554,7 @@ class FlightController extends Controller
             'query' => $request->get('query'),
             'product' => $type,
             'locale' => 'es-AR',
-            'city_result' => '5',
+//            'city_result' => '5',
             'airport_result' => '5'
         ];
 
@@ -560,9 +563,10 @@ class FlightController extends Controller
         if ($results && !isset($results['code'])) {
             foreach ($results as $item) {
                 $category = '';
-                if ($item['facet'] == 'CITY') {
-                    $category = 'Ciudades';
-                } else if ($item['facet'] == 'AIRPORT') {
+//                if ($item['facet'] == 'CITY') {
+//                    $category = 'Ciudades';
+//                } else
+                if ($item['facet'] == 'AIRPORT') {
                     $category = 'Aereopuertos';
                 }
                 $response[] = [

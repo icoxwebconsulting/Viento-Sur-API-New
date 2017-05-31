@@ -1,4 +1,5 @@
 {% extends '@VientoSurAppApp/layoutFlight.html.twig' %}
+{% block title %}{{ 'index.flight_detail' | trans }}{% endblock %}
 
 {% block content %}
     <div class="container formBooking">
@@ -124,6 +125,67 @@
                                     {% endif %}
 
                                     {% set fieldName = 'children-gender' ~ loop.index %}
+                                    {% if attribute(formNewPay.passengers, fieldName) is defined %}
+                                        {% set label = 'hotels.labels.owner_gender' | trans %}
+                                        <div class="col-md-6">
+                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if formChoice.passengers.infants is defined %}
+                            {% for i in 1..formChoice.passengers.infants[0].metadata.quantity %}
+                                {% if loop.index0 > 0 %}
+                                    <hr/>
+                                {% endif %}
+                                <h5>{{ 'flights.labels.infant' | trans }} {{ loop.index }}</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {% set fieldName = 'infants-first_name' ~ loop.index %}
+                                        {% set label = 'hotels.labels.name' | trans %}
+                                        {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% set fieldName = 'infants-last_name' ~ loop.index %}
+                                        {% set label = 'hotels.labels.lastname' | trans %}
+                                        {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% set fieldName = 'infants-nationality' ~ loop.index %}
+                                        {% set label = 'flights.labels.residence' | trans %}
+                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+
+                                    {% set fieldName = 'infants-type' ~ loop.index %}
+                                    {% if attribute(formNewPay.passengers, fieldName) is defined %}
+                                        {% set label = 'hotels.labels.type' | trans %}
+                                        <div class="col-md-3">
+                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% set fieldName = 'infants-number' ~ loop.index %}
+                                    {% if attribute(formNewPay.passengers, fieldName) is defined %}
+                                        {% set label = 'hotels.labels.number' | trans %}
+                                        {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                        <div class="col-md-3">
+                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% set fieldName = 'infants-birthdate' ~ loop.index %}
+                                    {% if attribute(formNewPay.passengers, fieldName) is defined %}
+                                        {% set label = 'flights.labels.birthdate' | trans %}
+                                        <div class="col-md-6">
+                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% set fieldName = 'infants-gender' ~ loop.index %}
                                     {% if attribute(formNewPay.passengers, fieldName) is defined %}
                                         {% set label = 'hotels.labels.owner_gender' | trans %}
                                         <div class="col-md-6">
