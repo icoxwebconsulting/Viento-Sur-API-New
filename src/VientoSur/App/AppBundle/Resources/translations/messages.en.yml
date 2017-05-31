@@ -32,7 +32,9 @@ index:
            rooms: Rooms
            room: Room
            adults: Adults
+           adult: Adult
            childs: Childs
+           child: Child
            childs_ages: Childs ages
            age: Age
            searching: Searching Hotels...
@@ -159,9 +161,12 @@ hotels:
     description: Description
     phone: Phone
     unavailable: Unavailable
+    gps_coordinates: GPS coordinates
+    your_group: Your group
     your_reservation: Your reservation
     night: Night
     reservation_number: Reservation number
+    room_number: Room number
     reservation_by: Reservation made by
     can_cancel_to: You can cancel up to
     hours_before: hours before checkin

@@ -32,7 +32,9 @@ index:
            rooms: Habitaciones
            room: Habitación
            adults: Adultos
+           adult: Adulto
            childs: Menores
+           child: Menor
            childs_ages: Edad de los menores
            age: Edad
            searching: Buscando Alojamientos...
@@ -159,9 +161,12 @@ hotels:
     description: Descripción
     phone: Teléfono
     unavailable: No disponible
+    gps_coordinates: Coordenandas GPS
+    your_group: Tu grupo
     your_reservation: Tu reserva
     night: Noche
     reservation_number: Número de reserva
+    room_number: Número de habitación
     reservation_by: Reserva realizada por
     can_cancel_to: Puede cancelar  hasta
     hours_before: horas antes del checking

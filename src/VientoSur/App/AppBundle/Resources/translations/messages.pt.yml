@@ -30,8 +30,8 @@ index:
            checkout_date: Data de saída
            rooms: Quartos
            room: Quarto
-           adults: Adultos
-           childs: Crianças
+           adult: Adulto
+           child: Criança
            childs_ages: Idade das crianças
            age: Idade
            searching: Procurando por hotéis
@@ -157,9 +157,12 @@ hotels:
     description: Descrição
     phone: Fone
     unavailable: Não disponível
+    gps_coordinates: Coordenandas GPS
+    your_group: Seu grupo
     your_reservation: Sua reserva
     night: Noite
     reservation_number: Número da reserva
+    room_number: Número da quarto
     reservation_by: Agendados por
     can_cancel_to: Você pode cancelar até
     hours_before: Horas antes do check-in
