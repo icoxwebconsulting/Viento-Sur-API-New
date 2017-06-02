@@ -73,10 +73,11 @@
             </th>
             <td>
                 {% if reservationDetails.rooms is defined %}
-                    {{ reservationDetails.rooms|length }}
-                    {% for room in reservationDetails.rooms %}
-                        {% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}
-                    {% endfor %}
+                    <ul>
+                        {% for room in reservationDetails.rooms %}
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}</li>
+                        {% endfor %}
+                    </ul>
                 {% endif %}
             </td>
         </tr>
