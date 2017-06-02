@@ -1,5 +1,8 @@
 index:
     error: Erro
+    class: Classe
+    flight_remember: Lembre-se no aeroporto 1 1/2 horas antes da hora de partida do seu voo.
+    contact_us: Se desejar, você pode contactar-nos em
     invalid_document: Documento de identidade inválido
     fail_purchase: A compra não pôde ser feita
     invalid_creditcard: Cartão de crédito inválido para roompack selecionado
@@ -267,6 +270,7 @@ flights:
         birthdate: Data de nascimento:
         child: Niño:
         infant: Infantil:
+        infants: Crianças
     payment_msg: Para selecionar um cartão clique sobre ele, se uma lista de banco será exibido com cartões
     quota: Cuota
     invoice_data: Dados de faturamento

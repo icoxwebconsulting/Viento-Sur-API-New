@@ -1,5 +1,8 @@
 index:
     error: Error
+    class: Class
+    flight_remember: Remember to show up at the airport 1 1/2 hours before your departure time.
+    contact_us: If you wish you can contact us at
     invalid_document: Invalid identity document
     invalid_creditcard: Invalid credit card for selected roompack
     fail_purchase: Purchase could not be made
@@ -271,6 +274,7 @@ flights:
         birthdate: Birthdate:
         child: Child:
         infant: Infant:
+        infants: Infants
     payment_msg: To select a card click on it, in the case of a bank a list will be displayed with the cards
     quota: Quota
     invoice_data: Invoice data

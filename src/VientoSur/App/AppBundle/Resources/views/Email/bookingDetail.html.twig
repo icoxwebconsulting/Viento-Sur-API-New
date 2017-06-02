@@ -67,6 +67,19 @@
                 {{ hotelDetails.location.address }}.
             </td>
         </tr>
+        <tr>
+            <th width="15%">
+                {{ 'index.search.hotel.rooms' | trans }}:
+            </th>
+            <td>
+                {% if reservationDetails.rooms is defined %}
+                    {{ reservationDetails.rooms|length }}
+                    {% for room in reservationDetails.rooms %}
+                        {% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
         {#<tr>#}
             {#<th width="15%">{{ 'hotels.description' | trans }}</th>#}
             {#<td class="text-justify">#}
@@ -97,10 +110,20 @@
                         <h3 style="margin: 0; padding: 0;">{{ reservationDetails.night_count }}</h3>
                     </div>
                     <div class="col-md-12">
-                        <h7>{{ 'hotels.your_group' | trans }}</h7>
-                        <h4>{% for room in reservationDetails.rooms %}
-                        {% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} {{ 'index.search.hotel.adult' | trans }}(s) {% if room.children > 0 %}{{ room.children }} {{ 'index.search.hotel.child' | trans }}(s){% endif %}
-                        {% endfor %}</h4>
+                        <h7 style="display: block;">{{ 'hotels.your_group' | trans }}</h7>
+                            {% for room in reservationDetails.rooms %}
+                                <div class="col-md-12">
+                                    {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
+                                </div>
+                                <div class="col-md-{% if room.children > 0 %}6{% else %}12{% endif %}">
+                                    <h5>{{ room.adults }} {{ 'index.search.hotel.adult' | trans }}(s)</h5>
+                                </div>
+                                {% if room.children > 0 %}
+                                    <div class="col-md-6">
+                                        <h5>{{ room.children }} {{ 'index.search.hotel.child' | trans }}(s)</h5>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                     </div>
                 </div>
             </td>
@@ -113,7 +136,7 @@
     </table>
     <table>
         <tr width="70%">
-            <th width="10%">{{ 'hotels.description' | trans }}</th>
+            <th width="10%">{{ 'hotels.description' | trans }}:</th>
             <td class="text-justify" style="width: 60%">
                 <p style="font-size: 11px">{{ hotelDetails.information.es }}</p>
             </td>
@@ -128,6 +151,7 @@
                 </ul>
             </td>
         </tr>
+        <tr><td><br></td></tr>
         <tr>
             <th>
                 {{ 'hotels.labels.comment' | trans }}
@@ -139,12 +163,17 @@
     </table>
 
     {% if not pdf %}
+        <div style="width: 48%; display: inline-block; text-align: center">
             <a class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
                 {{ 'hotels.download_pdf' | trans }}
             </a>
-            <a class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': 1}) }}">
+        </div>
+        <div style="width: 48%; display: inline-block; text-align: center">
+            <a class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
                 {{ 'hotels.edit_reservation' | trans }}
             </a>
+        </div>
+        <br><br><br>
     {% endif %}
 </div>
 <script>
