@@ -1,5 +1,8 @@
 index:
     error: Erro
+    class: Classe
+    flight_remember: Lembre-se no aeroporto 1 1/2 horas antes da hora de partida do seu voo.
+    contact_us: Se desejar, você pode contactar-nos em
     invalid_document: Documento de identidade inválido
     fail_purchase: A compra não pôde ser feita
     invalid_creditcard: Cartão de crédito inválido para roompack selecionado
@@ -30,8 +33,8 @@ index:
            checkout_date: Data de saída
            rooms: Quartos
            room: Quarto
-           adults: Adultos
-           childs: Crianças
+           adult: Adulto
+           child: Criança
            childs_ages: Idade das crianças
            age: Idade
            searching: Procurando por hotéis
@@ -157,9 +160,12 @@ hotels:
     description: Descrição
     phone: Fone
     unavailable: Não disponível
+    gps_coordinates: Coordenandas GPS
+    your_group: Seu grupo
     your_reservation: Sua reserva
     night: Noite
     reservation_number: Número da reserva
+    room_number: Número da quarto
     reservation_by: Agendados por
     can_cancel_to: Você pode cancelar até
     hours_before: Horas antes do check-in
@@ -264,6 +270,7 @@ flights:
         birthdate: Data de nascimento:
         child: Niño:
         infant: Infantil:
+        infants: Crianças
     payment_msg: Para selecionar um cartão clique sobre ele, se uma lista de banco será exibido com cartões
     quota: Cuota
     invoice_data: Dados de faturamento

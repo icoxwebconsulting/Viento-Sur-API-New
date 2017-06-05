@@ -1,0 +1,245 @@
+<body style="margin:0; padding:0;" bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+{% set targetCurrency = app.session.get('targetCurrency') %}
+{% if targetCurrency == 'USD' %}
+    {% set symbol = 'US$' %}
+{% else %}
+    {% set symbol = 'AR$' %}
+{% endif %}
+{% set decimal =false %}
+{% set price_detail = app.session.get('price_detail') %}
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+    <tr>
+        <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+            <!-- 600px container (white background) -->
+            <table border="0" width="900" cellpadding="0" cellspacing="0" class="container" style="width:900px;max-width:900px">
+                <tr>
+                    <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;font-size:24px;font-weight:bold;padding-bottom:12px;color:#DF4726;padding-left:24px;padding-right:24px">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="container-padding content" align="left" style="padding-left:24px;padding-right:24px;padding-top:0px;padding-bottom:12px;background-color:#ffffff">
+                        <!--<div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">Two Columns (simple)</div>-->
+                        <div class="body-text" style="background-color:#404040; font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#fff; padding: 20px;">
+                            <div style="width: 48%;text-align: left;display: inline-block;">
+                                <img src="https://ci3.googleusercontent.com/proxy/s3JvLhRMc-a9q5LWK1rgVD76d-316J2qJrYuGYO8Wy5PcEhLr_u0ItxJO31m26ftgohZAtJ-KbokV7zGW683XjqbpJ8Wi5xGBH-5EonOFySIEx1J6uUwMSvyoitq7wdkeQfG1-3i=s0-d-e1-ft#http://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png" alt="">
+                            </div>
+                            <div style="width: 48%;text-align: right;display: inline-block;">
+                                <p style="display: inline-block;margin: 0;">{{ 'hotels.reservation_number' | trans }}:</p>
+                                <h4 style="display: inline-block;margin: 0;">{{ internal.reservationId }}</h4><br>
+                                <p style="display: inline-block;margin: 0;">{{ 'hotels.room_number' | trans }}:</p>
+                                <h4 style="display: inline-block;margin: 0;">{{ hotelDetails.number_of_rooms }}</h4>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">
+                            {{ 'hotels.thanks_booking' | trans({'%name%': internal.holderName}) }}
+                        </div>
+
+                        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                        <br>
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr><td width="50%" valign="top"><![endif]-->
+                        <table width="900" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                    <div style="width: 49%;display: inline-block;">
+                                        <img style="width: 433px; height: 278px;" src="{{ hotelDetails.main_picture.url }}/" alt="Viento Sur" title="">
+                                    </div>
+                                    <div style="width: 49%;display: inline-block;">
+                                        <img style="width: 433px; height: 278px;" src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }} alt="">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <!-- example: two columns (simple) -->
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr><td width="50%" valign="top"><![endif]-->
+                        <table border="0" width="900" cellpadding="0" cellspacing="0" class="container" style="width:900px;max-width:900px">
+
+                            <tbody>
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;font-size:24px;font-weight:bold;color:#003580;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    {{ hotelDetails.name }}
+                                    <br>
+                                    {% for i in 1..hotelDetails.stars %}
+                                        <i class="fa fa-star fa-1x" style="color: #008cd1;" aria-hidden="true"></i>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>{{ 'hotels.phone' | trans }}:</strong> {{ 'hotels.unavailable' | trans }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>{{ 'hotels.gps_coordinates' | trans }}:</strong> Lat {{ hotelDetails.location.latitude }}, Long {{ hotelDetails.location.longitude }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }}
+                                </td>
+                            </tr>
+                            {% if reservationDetails.rooms is defined %}
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>{{ 'index.search.hotel.rooms' | trans }}:</strong>
+
+                                        <ul>
+                                            {% for room in reservationDetails.rooms %}
+                                            {% if room.descriptions.es is defined %}<li>{{ room.descriptions.es }}</li>{% else %} N/A {% endif %}
+                                            {% endfor %}
+                                        </ul>
+
+                                </td>
+                            </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+                        <!--[if mso]></td></tr></table><![endif]-->
+                        <!--/ end example -->
+                        <br>
+                        <div class="hr" style=" width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+
+                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    {{ 'index.search.hotel.checkin_date' | trans }}
+                                    <h3>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    {{ 'index.search.hotel.checkout_date' | trans }}
+                                    <h3>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="150" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    {% for room in reservationDetails.rooms %}
+                                        {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
+                                        <div class="col-md-6" style="{% if room.children > 0 %}width: 48%;{% else %}width:100%{% endif %}display: inline-block;">
+                                            <h7 style="margin: 0; padding: 0;text-align: center;display: block;">{{ 'index.search.hotel.adult' | trans }}(s) </h7>
+                                            <h3 style="text-align: center;">{{ room.adults }}</h3>
+                                        </div>
+                                        {% if room.children > 0 %}
+                                        <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                            <h7 style="margin: 0; padding: 0; text-align: center;display: block;">{{ 'index.search.hotel.child' | trans }}(s)</h7>
+                                            <h3 style="text-align: center;">{{ room.children }}</h3>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                        <h7 style="margin: 0; padding: 0;">{{ 'hotels.night' | trans }}(s).</h7>
+                                        <h3 style="margin: 0; padding: 0;">{{ reservationDetails.night_count }}</h3>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="300" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="height:150px;border-right: #eee 1px solid;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    <div style="padding: 0 45px">
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong style="font-size: 9px;">{{ 'hotels.room_per_night' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong style="font-size: 9px;">{{ 'hotels.taxes_and_rates' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong>{{ 'hotels.total_price' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.total|round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                    </div>
+                                    {#<strong>{{ 'hotels.total_price' | trans }}</strong>#}
+                                    {#<p>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</p>#}
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br><br>
+
+                        <div class="hr" style="width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                        <br>
+                        <table>
+                            <tbody><tr width="70%">
+                                <th width="10%">{{ 'hotels.description' | trans }}:</th>
+                                <td class="text-justify" style="width: 60%">
+                                    <p style="font-size: 11px">{{ hotelDetails.information.es }}</p>
+                                </td>
+                                <td style="text-align: center;">
+                                    <h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>
+                                    <p>{{ internal.email }}, {{ internal.holderName }}</p>
+                                    <br>
+                                    <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
+                                    <ul style="width: 70%; margin: auto;">
+                                        {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.{% endif %}
+                                        <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} {{ 'hotels.whitout_charges' | trans }}.{% endif %}</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'hotels.labels.comment' | trans }}
+                                </th>
+                                <td>
+                                    <p>{{ internal.comments }}</p>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                        <br>
+                        <div style="width: 48%; display: inline-block; text-align: center;">
+                            <a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #008cd1;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
+                                {{ 'hotels.download_pdf' | trans }}
+                            </a>
+                        </div>
+                        <div style="width: 48%; display: inline-block; text-align: center;">
+                            <a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #404040;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
+                                {{ 'hotels.edit_reservation' | trans }}
+                            </a>
+                        </div>
+                        <br>
+                        <br>
+                    </td>
+                </tr>
+            </table>
+        </table>
+            <!--/100% background wrapper-->
+</body>

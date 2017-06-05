@@ -99,9 +99,18 @@ class Flights
     private function processPassengers($passengers)
     {
         $adultQty = $passengers['adults'][0]['metadata']['quantity'];
-        $cantChildren = $passengers['children'][0]['metadata']['quantity'];
+        if(isset($passengers['children'])){
+            $cantChildren = $passengers['children'][0]['metadata']['quantity'];
+        }else{
+            $cantChildren = 0;
+        }
+        if(isset($passengers['infants'])){
+            $cantInfant = $passengers['infants'][0]['metadata']['quantity'];
+        }else{
+            $cantInfant = 0;
+        }
         $childrenQty = 0;
-        $cantInfant = $passengers['infants'][0]['metadata']['quantity'];
+
         $infantQty = 0;
         for ($i = 1; $i <= $passengers['metadata']['quantity']; $i++) {
             if ($i <= $adultQty) {
@@ -547,7 +556,7 @@ class Flights
                 $email = $fillData['booking_information']['contact_info']['email'];
 //                if ($email) {
                     $this->emailService->sendBookingFlightEmail($email, array(
-                        'pdf' => false,
+//                        'pdf' => false,
                         'reservation' => $reservation,
                         'itineraryDetail' => $itineraryDetail
                     ));

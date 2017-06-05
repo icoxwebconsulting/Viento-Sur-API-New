@@ -1,0 +1,433 @@
+<body style="margin:0; padding:0;" bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+{% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% else %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
+    {#{{ dump(itineraryDetail) }}#}
+    {#{{ dump(reservation) }}#}
+    {#{{ dump(app.session.get('multipledestinations')) }}#}
+    <!-- 100% background wrapper (grey background) -->
+    <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+        <tr>
+            <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+
+                <br>
+
+                <!-- 600px container (white background) -->
+                <table border="0" width="900" cellpadding="0" cellspacing="0" class="container" style="width:900px;max-width:900px">
+                    <tr>
+                        <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;font-size:24px;font-weight:bold;padding-bottom:12px;color:#DF4726;padding-left:24px;padding-right:24px">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="container-padding content" align="left" style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff">
+                            <br>
+                            <!--<div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">Two Columns (simple)</div>-->
+                            <br>
+
+                            <div class="body-text" style="background-color:#eee; font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333">
+                                <p style="text-align: center;">{{ 'index.contact_us' | trans }} +54 351 4877555 - 4877444</p>
+                            </div>
+
+                            <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                            <br>
+
+                            <!-- example: two columns (simple) -->
+
+                            <!--[if mso]>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr><td width="50%" valign="top"><![endif]-->
+                            <table width="264" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                        <img src="http://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png" alt="Viento Sur" title="">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!--[if mso]></td><td width="50%" valign="top"><![endif]-->
+
+                            <table width="264" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                        {{ 'hotels.reservation_number' | trans }}
+                                        <h3>{{ reservation.reservationId }}</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                            {% if itineraryDetail.outbound is defined %}
+                            <table width="264" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                        {{ 'index.flight' | trans }}
+                                        <h3>{{ app.session.get('origin_flight').text|split(',')[0] }}  -  {{ app.session.get('destination_flight').text|split(',')[0] }}</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                            {% endif %}
+                            <br>
+                            <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                            <br><br>
+                            <!--[if mso]></td></tr></table><![endif]-->
+                            <div class="subtitle" style="font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:600;color:#2469A0">
+                                {#{{ 'hotels.thanks_booking' | trans({'%name%': 'phils'}) }}#}
+                                {{ 'hotels.thanks_booking' | trans({'%name%': reservation.holderName}) }}
+                            </div>
+
+                            <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333">
+                                {{ 'hotels.phone' | trans }}:
+                                {{ reservation.phoneNumber }}
+                                 <br>
+                                Email:
+                                {{ reservation.email }} <br>
+                            </div>
+
+                            <br>
+
+                            <!--/ end example -->
+
+                            <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                            <br>
+
+                            <table width="350" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                        <div style="padding: 0 45px">
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'flights.rate_per_adult' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ itineraryDetail.price_detail.adult_base |round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.')}}</p>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'flights.adult' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ itineraryDetail.price_detail.adults_subtotal | round| currency_convert_format(targetCurrency,decimal, false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                            {% if itineraryDetail.passenger_distribution.children > 0 %}
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'index.search.hotel.childs' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;">{{ symbol }} {{ itineraryDetail.price_detail.children_subtotal | round| currency_convert_format(targetCurrency,decimal, false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                            {% endif %}
+                                            {% if itineraryDetail.passenger_distribution.infants > 0 %}
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'flights.labels.infants' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ itineraryDetail.price_detail.infants_subtotal | round| currency_convert_format(targetCurrency,decimal, false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                            {% endif %}
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'hotels.taxes_and_rates' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;">{{ symbol }} {{ itineraryDetail.price_detail.taxes | round| currency_convert_format(targetCurrency,decimal, false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'flights.charges' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;">{{ symbol }} {{ itineraryDetail.price_detail.fees | round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong>{{ 'hotels.total_price' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;">{{ symbol }} {{ itineraryDetail.price_detail.total | round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="150" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                        <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                            <h7 style="margin: 0; padding: 0;text-align: center;display: block;">{{ 'flights.adult' | trans }} </h7>
+                                            <h3 style="text-align: center;">{{ itineraryDetail.passenger_distribution.adults }}</h3>
+                                        </div>
+                                        {% if itineraryDetail.passenger_distribution.children > 0 %}
+                                        <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                            <h7 style="margin: 0; padding: 0; text-align: center;display: block;">{{ 'index.search.hotel.childs' | trans }}</h7>
+                                            <h3 style="text-align: center;">{{ itineraryDetail.passenger_distribution.children }}</h3>
+                                        </div>
+                                        {% endif %}
+                                        {% if itineraryDetail.passenger_distribution.infants > 0 %}
+                                        <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                            <h7 style="margin: 0; padding: 0; text-align: center;display: block;">{{ 'flights.labels.infants' | trans }}</h7>
+                                            <h3 style="text-align: center;">{{ itineraryDetail.passenger_distribution.infants }}</h3>
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                            {% if itineraryDetail.outbound_choices is defined %}
+                            <table width="150" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                        {{ 'flights.return' | trans }}
+                                        <h3>{{ itineraryDetail.inbound_choices[0].segments[0].departure_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                            {% endif %}
+                            {% if itineraryDetail.inbound_choices is defined %}
+                            <table width="150" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                        {{ 'flights.going' | trans }}
+                                        <h3>{{ itineraryDetail.outbound_choices[0].segments[0].departure_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                            {% endif %}
+                            {% if itineraryDetail.routes is defined %}
+                            <table width="300" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                        {% for routes in app.session.get('multipledestinations') %}
+                                        <div style="width: 100%;">
+                                            <h3 style="margin:0;">{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</h3>
+                                            <p style="margin:0;">{{ routes.fromFlight | split(',')[1] }} - {{ routes.toFlight | split(',')[1] }}</p>
+                                        </div>
+                                        {% endfor %}
+
+                                    </td>
+                                </tr>
+                            </table>
+                            {% endif %}
+                            <br>
+
+                            <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                            <br>
+                            {% if itineraryDetail.routes is defined %}
+                                {% for item in itineraryDetail.routes  %}
+                                <div class="subtitle" style="font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:600;color:#2469A0">
+                                    <i class="fa fa-plane"></i>  <p style="text-align: left;display: inline-block;">{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</p>
+                                    <p style="text-align: right;display: inline-block; float: right;">
+                                        {% if item.segments | length < 1 %}
+                                            {{ 'flights.stop' | trans }} {{ item.segments | length }}
+                                        {% else %}
+                                            {{ item.segments | length -1}} {{ 'flights.stop' | trans }}s
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                {#<div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>#}
+
+                                    {% for segment in item.segments %}
+                                        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                                        <br>
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                                    <div style="width:100%;">
+                                                        <strong>{{ 'flights.waiting_time' | trans }}</strong>:
+                                                        {{ segment.duration|split(':')[0] }}h {{ segment.duration|split(':')[1] }}m
+                                                    </div>
+                                                    <div style="width:100%;">
+                                                        <strong>{{ 'index.class' | trans }}</strong>:
+                                                        {{ segment.cabin_type | capitalize }}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                    {{ 'flights.incoming' | trans }}
+                                                    <h3 style="margin: 0;">{{ segment.to }}</h3>
+                                                    <h3 style="margin: 0;">{{ segment.arrival_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                                    <h3 style="margin: 0;">{{ segment.arrival_datetime | localizeddate('none', 'short', app.request.locale) }}</h3>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                    <div>
+                                                        <img style="display: block; margin: auto" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" />
+                                                        <span class="airline-data">{{ segment.flight_id }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                    {{ 'flights.outgoing' | trans }}
+                                                    <h3 style="margin: 0;">{{ segment.from }}</h3>
+                                                    <h3 style="margin: 0;">{{ segment.departure_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                                    <h3 style="margin: 0;">{{ segment.departure_datetime | localizeddate('none', 'short', app.request.locale) }}</h3>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                        {% endfor %}
+                                    {% endfor %}
+                            {% else %}
+                                <div class="subtitle" style="font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:600;color:#2469A0">
+                                    <i class="fa fa-plane"></i>  <p style="text-align: left;display: inline-block;">{{ 'flights.going' | trans }}</p>
+                                    <p style="text-align: right;display: inline-block; float: right;">
+                                        {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
+                                            {{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}
+                                        {% else %}
+                                            {{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+                                {% if itineraryDetail.outbound_choices[0].segments | length > 0 %}
+                                    {% for item in itineraryDetail.outbound_choices[0].segments %}
+                                        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                                        <br>
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                                    <div style="width:100%;">
+                                                        <strong>{{ 'flights.waiting_time' | trans }}</strong>:
+                                                        {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m
+                                                    </div>
+                                                    <div style="width:100%;">
+                                                        <strong>{{ 'index.class' | trans }}</strong>:
+                                                        {{ item.cabin_type | capitalize }}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                    {{ 'flights.incoming' | trans }}
+                                                    <h3 style="margin: 0;">{{ item.to }}</h3>
+                                                    <h3 style="margin: 0;">{{ item.arrival_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                                    <h3 style="margin: 0;">{{ item.arrival_datetime | localizeddate('none', 'short', app.request.locale) }}</h3>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                   <div>
+                                                       <img style="display: block; margin: auto" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" />
+                                                        <span class="airline-data">{{ item.flight_id }}</span>
+                                                   </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                            <tr>
+                                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                    {{ 'flights.outgoing' | trans }}
+                                                    <h3 style="margin: 0;">{{ item.from }}</h3>
+                                                    <h3 style="margin: 0;">{{ item.departure_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                                    <h3 style="margin: 0;">{{ item.departure_datetime | localizeddate('none', 'short', app.request.locale) }}</h3>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% if itineraryDetail.inbound_choices is defined %}
+                                    <div class="subtitle" style="font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:600;color:#2469A0">
+                                        <i class="fa fa-plane"></i>  <p style="text-align: left;display: inline-block;">{{ 'flights.return' | trans }}</p>
+                                        <p style="text-align: right;display: inline-block; float: right;">
+                                            {% if itineraryDetail.inbound_choices[0].segments | length < 1 %}
+                                                {{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}
+                                            {% else %}
+                                                {{ itineraryDetail.inbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    {% if itineraryDetail.inbound_choices[0].segments | length > 0 %}
+                                        {% for item in itineraryDetail.inbound_choices[0].segments %}
+                                            <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                                            <br>
+                                            <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;">
+                                                <tr>
+                                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                                        <div style="width:100%;">
+                                                            <strong>{{ 'flights.waiting_time' | trans }}</strong>:
+                                                            {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m
+                                                        </div>
+                                                        <div style="width:100%;">
+                                                            <strong>{{ 'index.class' | trans }}</strong>:
+                                                            {{ item.cabin_type | capitalize }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;">
+                                                <tr>
+                                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                        {{ 'flights.incoming' | trans }}
+                                                        <h3 style="margin: 0;">{{ item.to }}</h3>
+                                                        <h3 style="margin: 0;">{{ item.arrival_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                                        <h3 style="margin: 0;">{{ item.arrival_datetime | localizeddate('none', 'short', app.request.locale) }}</h3>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                                <tr>
+                                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                        <div>
+                                                            <img style="display: block; margin: auto" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" />
+                                                            <span class="airline-data">{{ item.flight_id }}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <table width="200" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                                                <tr>
+                                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                                        {{ 'flights.outgoing' | trans }}
+                                                        <h3 style="margin: 0;">{{ item.from }}</h3>
+                                                        <h3 style="margin: 0;">{{ item.departure_datetime | localizeddate('long', 'none', app.request.locale) }}</h3>
+                                                        <h3 style="margin: 0;">{{ item.departure_datetime | localizeddate('none', 'short', app.request.locale) }}</h3>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <br>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                {% endif %}
+                            {% endif %}
+                            <br>
+                            <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                            {% if pdf is not defined  %}
+                                <br>
+                                <div class="subtitle" style="font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:600;color:#FFFFFF">
+                                    <a href="{{ url('viento_sur_app_booking_flight_pdf',{'itinerary':itineraryDetail.id, 'reservation': reservation.id}) }}" style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #008cd1;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;"><i class="fa fa-download"></i> {{ 'hotels.download_pdf' | trans }}</a>
+                                </div>
+                            {% endif %}
+                            <br>
+                                <br>
+                                <i class="fa fa-clock-o"></i> <em><small>{{ 'index.flight_remember' | trans }}</small></em>
+                            </div>
+
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+                <!--/600px container -->
+            </td>
+        </tr>
+    </table>
+    <!--/100% background wrapper-->
+    </body>

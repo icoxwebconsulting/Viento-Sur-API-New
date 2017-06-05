@@ -823,7 +823,7 @@ class HotelController extends Controller
     public function editReservationAction($id, Request $request)
     {
         $despegar = $this->get('despegar');
-        $id = base64_decode($id);
+//        $id = base64_decode($id);
         $em = $this->getDoctrine()->getManager();
         $internal = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($id);
 

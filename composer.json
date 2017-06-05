@@ -24,7 +24,8 @@
         "eightpoints/guzzle-bundle": "^5.0",
         "paragonie/random_compat": "1.2.*",
         "knplabs/knp-snappy-bundle": "^1.4",
-        "lexik/currency-bundle": "~2.0"
+        "lexik/currency-bundle": "~2.0",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
