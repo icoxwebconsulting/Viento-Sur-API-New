@@ -6,6 +6,7 @@
     {% set symbol = 'AR$' %}
 {% endif %}
 {% set decimal =false %}
+{% set price_detail = app.session.get('price_detail') %}
 <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
     <tr>
         <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
@@ -94,52 +95,55 @@
                                     <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }}
                                 </td>
                             </tr>
+                            {% if reservationDetails.rooms is defined %}
                             <tr>
                                 <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
                                     <br>
                                     <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
                                     <br>
                                     <strong>{{ 'index.search.hotel.rooms' | trans }}:</strong>
-                                    {% if reservationDetails.rooms is defined %}
+
                                         <ul>
                                             {% for room in reservationDetails.rooms %}
-                                            <li>{% if room.descriptions.es is defined %}- {{ room.descriptions.es }} {% endif %}</li>
+                                            {% if room.descriptions.es is defined %}<li>{{ room.descriptions.es }}</li>{% else %} N/A {% endif %}
                                             {% endfor %}
                                         </ul>
 
-                                    {% endif %}
                                 </td>
                             </tr>
+                            {% endif %}
                             </tbody>
                         </table>
 
                         <!--[if mso]></td></tr></table><![endif]-->
                         <!--/ end example -->
-                        <br><br>
-                        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
                         <br>
+                        <div class="hr" style=" width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
 
-                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">
                             <tr>
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
                                     {{ 'index.search.hotel.checkin_date' | trans }}
                                     <h3>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
                                 </td>
                             </tr>
                         </table>
 
-                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                        <table width="200" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;height:150px;">
                             <tr>
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
                                     {{ 'index.search.hotel.checkout_date' | trans }}
                                     <h3>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
                                 </td>
                             </tr>
                         </table>
 
-                        <table width="150" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;">
+                        <table width="150" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;height:150px;">
                             <tr>
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
                                     {% for room in reservationDetails.rooms %}
                                         {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
                                         <div class="col-md-6" style="{% if room.children > 0 %}width: 48%;{% else %}width:100%{% endif %}display: inline-block;">
@@ -160,18 +164,39 @@
                                 </td>
                             </tr>
                         </table>
-                        <table width="300" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
+                        <table width="300" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="height:150px;border-right: #eee 1px solid;">
                             <tr>
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
-                                    <strong>{{ 'hotels.total_price' | trans }}</strong>
-                                    <p>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</p>
+                                    <br>
+                                    <div style="padding: 0 45px">
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong style="font-size: 9px;">{{ 'hotels.room_per_night' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong style="font-size: 9px;">{{ 'hotels.taxes_and_rates' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong>{{ 'hotels.total_price' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.total|round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                    </div>
+                                    {#<strong>{{ 'hotels.total_price' | trans }}</strong>#}
+                                    {#<p>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</p>#}
                                 </td>
                             </tr>
                         </table>
                         <br>
                         <br><br>
 
-                        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+                        <div class="hr" style="width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
                         <br>
                         <table>
                             <tbody><tr width="70%">
@@ -201,12 +226,12 @@
                             </tbody></table>
                         <br>
                         <div style="width: 48%; display: inline-block; text-align: center;">
-                            <a class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
+                            <a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #008cd1;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
                                 {{ 'hotels.download_pdf' | trans }}
                             </a>
                         </div>
                         <div style="width: 48%; display: inline-block; text-align: center;">
-                            <a class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
+                            <a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #404040;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
                                 {{ 'hotels.edit_reservation' | trans }}
                             </a>
                         </div>

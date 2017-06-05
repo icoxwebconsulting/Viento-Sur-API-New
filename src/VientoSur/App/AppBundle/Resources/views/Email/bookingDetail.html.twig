@@ -8,6 +8,7 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
+{% set price_detail = app.session.get('price_detail') %}
 <div class="container bs-docs-container">
     <table class="table">
         <tr>
@@ -129,8 +130,12 @@
                 </div>
             </td>
             <td width="30%">
+                {{ 'hotels.room_per_night' | trans }}:<br>
+                <h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
+                {{ 'hotels.taxes_and_rates' | trans }}:<br>
+                <h5>{{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
                 {{ 'hotels.total_price' | trans }}:<br>
-                <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(2, ',', '.')}}</h2>
+                <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>
 
             </td>
         </tr>
