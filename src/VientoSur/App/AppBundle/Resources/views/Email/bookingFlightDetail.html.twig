@@ -27,7 +27,7 @@
                             <span style="float: left;">{{ 'flights.adult' | trans }}</span>
                             <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
                             {#<span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>#}
-                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.base | round| currency_convert_format(targetCurrency,decimal, false)| number_format(2, ',', '.') }}</span>
+                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.adults_subtotal | round| currency_convert_format(targetCurrency,decimal, false)| number_format(2, ',', '.') }}</span>
                             {#<span style="float: right;">$ </span>#}
                         </div>
 
@@ -40,11 +40,18 @@
                                 {#<span style="float: right;">$ </span>#}
                             </div>
                         {% endif %}
+                        {% if itineraryDetail.passenger_distribution.infants > 0 %}
+                            <div class="row">
+                                <span style="float: left;">{{ 'flights.labels.infants' | trans }}</span>
+                                <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.infants }})</span>
+                                <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.infants_subtotal | round| currency_convert_format(targetCurrency,decimal, false)| number_format(2, ',', '.') }}</span>
+                            </div>
+                        {% endif %}
 
                         <div class="row">
                             <span style="float: left;">{{ 'hotels.taxes_and_rates' | trans }}</span>
                             {#<span style="float: right;">{{ itineraryDetail.price_detail.taxes | number_format(2, ',', '.') }}</span>#}
-                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.taxes | round| currency_convert_format(targetCurrency,false)| number_format(2, ',', '.') }}</span>
+                            <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.taxes | round| currency_convert_format(targetCurrency,decimal, false)| number_format(2, ',', '.') }}</span>
                             {#<span style="float: right;">$ </span>#}
                         </div>
                         <div class="row">
@@ -261,6 +268,7 @@
                             <div class="row">
                                 <div class="col-md-12 alert alert-warning">
                                     <span style="float: left">{{ 'flights.waiting_time' | trans }}</span>
+                                    {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m
                                 </div>
                             </div>
                         {% endfor %}
@@ -366,6 +374,7 @@
                                 <div class="row">
                                     <div class="col-md-12 alert alert-warning">
                                         <span style="float: left">{{ 'flights.waiting_time' | trans }}</span>
+                                        {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m
                                     </div>
                                 </div>
                             {% endfor %}

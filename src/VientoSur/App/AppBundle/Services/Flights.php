@@ -556,7 +556,7 @@ class Flights
                 $email = $fillData['booking_information']['contact_info']['email'];
 //                if ($email) {
                     $this->emailService->sendBookingFlightEmail($email, array(
-                        'pdf' => false,
+//                        'pdf' => false,
                         'reservation' => $reservation,
                         'itineraryDetail' => $itineraryDetail
                     ));
