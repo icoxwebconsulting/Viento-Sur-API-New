@@ -37,7 +37,7 @@ class Email
             ->setTo([$email])
             ->setBody(
                 $this->templating->render(
-                    'VientoSurAppAppBundle:Email:booking.html.twig',
+                    '@VientoSurAppApp/layoutEmailHotelPdf.html.twig',
                     $data
                 ),
                 'text/html'
@@ -89,7 +89,7 @@ class Email
             ->setTo($email)
             ->setBody(
                 $this->templating->render(
-                    'VientoSurAppAppBundle:Email:bookingFlight.html.twig',
+                    '@VientoSurAppApp/layoutEmailFligthPdf.html.twig',
                     $data
                 ),
                 'text/html'

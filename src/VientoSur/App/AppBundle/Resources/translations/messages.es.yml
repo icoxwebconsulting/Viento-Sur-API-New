@@ -1,5 +1,8 @@
 index:
     error: Error
+    class: Clase
+    flight_remember: Recuerda presentarse en el aeropuerto 1 1/2 horas antes del horario de salida de tu vuelo.
+    contact_us: Si lo deseas puedes contactarte con nosotros al
     invalid_document: Documento de identidad inválido
     fail_purchase: No se pudo hacer la compra
     invalid_creditcard: Tarjeta de crédito seleccionada no válida
@@ -271,6 +274,7 @@ flights:
         birthdate: Fecha de nacimiento:
         child: Niño:
         infant: Infante:
+        infants: Infantes
     payment_msg: Para seleccionar una tarjeta haga click sobre ella, en caso de un banco se desplegará un listado con las tarjetas
     quota: Cuota
     invoice_data: Datos para facturación

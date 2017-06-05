@@ -8,6 +8,7 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
+{% set price_detail = app.session.get('price_detail') %}
 <div class="container bs-docs-container">
     <table class="table">
         <tr>
@@ -28,7 +29,7 @@
                         </td>
                         <td>
 
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?center=-34.6037813, -58.3832932&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C-34.6037813,-58.3832932" alt="">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
                             {#<div id="map"></div>#}
                         </td>
                     </tr>
@@ -67,6 +68,20 @@
                 {{ hotelDetails.location.address }}.
             </td>
         </tr>
+        <tr>
+            <th width="15%">
+                {{ 'index.search.hotel.rooms' | trans }}:
+            </th>
+            <td>
+                {% if reservationDetails.rooms is defined %}
+                    <ul>
+                        {% for room in reservationDetails.rooms %}
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
         {#<tr>#}
             {#<th width="15%">{{ 'hotels.description' | trans }}</th>#}
             {#<td class="text-justify">#}
@@ -97,23 +112,37 @@
                         <h3 style="margin: 0; padding: 0;">{{ reservationDetails.night_count }}</h3>
                     </div>
                     <div class="col-md-12">
-                        <h7>{{ 'hotels.your_group' | trans }}</h7>
-                        <h4>{% for room in reservationDetails.rooms %}
-                        {% if room.descriptions.es is defined %}{{ room.descriptions.es }}, {% endif %}{{ room.adults }} {{ 'index.search.hotel.adult' | trans }}(s) {% if room.children > 0 %}{{ room.children }} {{ 'index.search.hotel.child' | trans }}(s){% endif %}
-                        {% endfor %}</h4>
+                        <h7 style="display: block;">{{ 'hotels.your_group' | trans }}</h7>
+                            {% for room in reservationDetails.rooms %}
+                                <div class="col-md-12">
+                                    {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
+                                </div>
+                                <div class="col-md-{% if room.children > 0 %}6{% else %}12{% endif %}">
+                                    <h5>{{ room.adults }} {{ 'index.search.hotel.adult' | trans }}(s)</h5>
+                                </div>
+                                {% if room.children > 0 %}
+                                    <div class="col-md-6">
+                                        <h5>{{ room.children }} {{ 'index.search.hotel.child' | trans }}(s)</h5>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                     </div>
                 </div>
             </td>
             <td width="30%">
+                {{ 'hotels.room_per_night' | trans }}:<br>
+                <h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
+                {{ 'hotels.taxes_and_rates' | trans }}:<br>
+                <h5>{{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
                 {{ 'hotels.total_price' | trans }}:<br>
-                <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(2, ',', '.')}}</h2>
+                <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>
 
             </td>
         </tr>
     </table>
     <table>
         <tr width="70%">
-            <th width="10%">{{ 'hotels.description' | trans }}</th>
+            <th width="10%">{{ 'hotels.description' | trans }}:</th>
             <td class="text-justify" style="width: 60%">
                 <p style="font-size: 11px">{{ hotelDetails.information.es }}</p>
             </td>
@@ -128,6 +157,7 @@
                 </ul>
             </td>
         </tr>
+        <tr><td><br></td></tr>
         <tr>
             <th>
                 {{ 'hotels.labels.comment' | trans }}
@@ -139,12 +169,17 @@
     </table>
 
     {% if not pdf %}
+        <div style="width: 48%; display: inline-block; text-align: center">
             <a class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
                 {{ 'hotels.download_pdf' | trans }}
             </a>
-            <a class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': 1}) }}">
+        </div>
+        <div style="width: 48%; display: inline-block; text-align: center">
+            <a class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
                 {{ 'hotels.edit_reservation' | trans }}
             </a>
+        </div>
+        <br><br><br>
     {% endif %}
 </div>
 <script>

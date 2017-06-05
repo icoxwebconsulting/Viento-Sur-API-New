@@ -6,6 +6,11 @@
     {{ parent() }}
     <link href="{{ asset('assets/vendor/ion.rangeSlider/css/ion.rangeSlider.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendor/ion.rangeSlider/css/ion.rangeSlider.skinHTML5.css') }}" rel="stylesheet" />
+    <style>
+        body > div.global-wrap > div.container.formBooking > div > div.col-md-7.col-md-push-5 > form > div:nth-child(9) {
+            display: none;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}

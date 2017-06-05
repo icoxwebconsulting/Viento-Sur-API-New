@@ -855,7 +855,7 @@ class FlightController extends Controller
 //                        throw new \Exception($e);
 //                    }
                 }
-
+//var_dump($reservation);die();
                 return $this->redirectToRoute('viento_sur_app_booking_flight_summary', array(
                     'status' => $status,
                     'itinerary' => $params['itinerary_id'],
@@ -907,6 +907,36 @@ class FlightController extends Controller
             ));
         }
     }
+
+    /**
+     * @Route("/booking/pdf/", name="viento_sur_app_booking_flight_pdf")
+     */
+    public function showPdfBookingAction(Request $request)
+    {
+        $itinerary = $request->get('itinerary');
+        $reservationId = $request->get('reservation');
+
+        $em = $this->getDoctrine()->getManager();
+        $itineraryDetail = $this->get('despegar')->getFlightItineraryDetail($itinerary);
+        $reservationResult = $em->getRepository('VientoSurAppAppBundle:FlightReservation')->find($reservationId);
+
+        $html = $this->renderView('@VientoSurAppApp/layoutEmailFligthPdf.html.twig', array(
+            'itineraryDetail' => $itineraryDetail,
+            'id' => $itinerary,
+            'reservation' => $reservationResult,
+            'pdf' => true
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="reservacion.pdf"'
+            )
+        );
+    }
+
 
     /**
      * @Route("/fill-airports", name="viento_sur_app_fill_airports")
