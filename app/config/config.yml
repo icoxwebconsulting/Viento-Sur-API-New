@@ -101,3 +101,24 @@ lexik_currency:
         precision:  0                           # number of digits for the decimal part
 #        round_mode: down                          # round mode to use (up|down|even|odd)
     default_adapter: doctrine_currency_adapter
+
+#FOSUserBundle
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: VientoSur\App\AppBundle\Entity\User
+    resetting:
+        email:
+            template:   email/password_resetting.email.twig
+            from_email:
+                address:        info@vientosur.net
+                sender_name:    info@vientosur.net
+
+#Stof Configuration
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+    orm:
+        default:
+            timestampable: true
+            loggable: true
+            softdeleteable: true

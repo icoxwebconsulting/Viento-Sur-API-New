@@ -23,7 +23,9 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-            new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(),
+            new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(), 
+            new FOS\UserBundle\FOSUserBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
@@ -34,6 +36,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
         return $bundles;
