@@ -302,3 +302,34 @@ amenities:
     LIPA: Limited Parking
     MEETROOM: Meeting Room(s)
     OUSWPOSE: Outdoor Pool (seasonal)
+admin:
+    sign_in_account: Sign In to your account
+    sign_in: Sign In
+    username: Username
+    password: Password
+    forgot_password: Forgot password
+    well_done: Well done
+    resetting_password: Resetting password
+    or: or
+    email: Email
+    reset_password: Reset password
+    resetting_account: Resetting your password
+    hello: Hello
+    can_reset_password_link: You can reset your password by accessing
+    greetings: Greetings
+    new_password: New password
+    repeat_new_password: Repeat new password
+    change_password: Change password
+    home: Home
+    profile: Profile
+    edit_profile: Edit profile
+    edit_password: Edit password
+    current_password: Current password
+    back: Back
+    change: Change
+    logout: Logout
+    navigation: Menu
+    first_name: First name
+    last_name: Last name
+    send: Send
+    user_update: User has been successfully updated!

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
+    <title>vientosur.net - {% block title %} Login {% endblock %}</title>
+
+    <!-- Icons -->
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/simple-line-icons.css') }}" rel="stylesheet">
+
+    <!-- Main styles for this application -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <style>
+        .alert-success {
+            margin-top: -24px;
+        }
+    </style>
+
+    <!-- Bootstrap and necessary plugins -->
+    <script src="{{ asset('assets/components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/components/tether/dist/js/tether.min.js') }}"></script>
+    <script src="{{ asset('assets/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/components/pace/pace.min.js') }}"></script>
+
+    {#<script src="{{ asset('assets/components/chart.js/dist/Chart.bundle.min.js') }}"></script>#}
+    <!-- Custom scripts required by this view -->
+    <script src="{{ asset('assets/js/views/main.js') }}"></script>
+
+    {% block extra_css %}{% endblock %}
+
+    {#<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>#}
+    {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&callback=initialize&sensor=false" async defer#}
+            {#type="text/javascript"></script>#}
+
+    {% block extra_js %}{% endblock %}
+</head>
+
+{% block body %}
+<body class="{% block body_class %}navbar-fixed sidebar-nav fixed-nav{% endblock %}">
+    <!-- header -->
+    <header class="navbar">
+        {% block header %}
+            {% embed ':_partial:header.html.twig' %}{% endembed %}
+        {% endblock %}
+    </header>
+    <!-- /header -->
+
+    <!-- left sidebar menu -->
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            {% block left_sidebar_menu %}
+                {% embed ':_partial:left_sidebar_menu.html.twig' %}{% endembed %}
+            {% endblock %}
+        </nav>
+    </div>
+    <!-- /sidebar -->
+
+    <!-- Main content -->
+    <main class="main">
+        <!-- Breadcrumb -->
+        {% block top_content %}
+            {% embed ':_partial:breadcrumb.html.twig' %}{% endembed %}
+        {% endblock %}
+
+        <!-- Messages flash -->
+        {% include '@VientoSurAppApp/messages/success.html.twig' %}
+
+        <div class="container-fluid">
+            <div class="animated fadeIn">
+                <div class="row">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- /Main Content -->
+
+    <!-- footer -->
+    <footer class="footer">
+        {% include ':_partial:footer.html.twig' %}
+    </footer>
+    <!-- /footer -->
+    {% include ':modals:delete.html.twig' %}
+
+    <!-- GenesisUI main scripts -->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+</body>
+{% endblock %}
+</html>
+

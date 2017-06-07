@@ -1,0 +1,104 @@
+<ul class="nav">
+    {#<li class="nav-item">#}
+        {#<a class="nav-link">{% if app.user.imageName %}#}
+            {#<img src="{{ asset(vich_uploader_asset(app.user, 'image')) }}" class="img-avatar" alt="{{ app.user.firstName }}" style="width: 30px;height: 30px;margin-right: 1px;">#}
+        {#{% else %}#}
+            {#<i class="fa fa-user"></i>#}
+        {#{% endif %}#}
+        {#{{ app.user.firstName }} {{ app.user.lastName }}</a>#}
+    {#</li>#}
+    {#{% if is_granted('ROLE_ADMIN') %}#}
+        {#<li class="nav-item">#}
+            {#<a class="nav-link" href="{{ path('dashboard') }}"><i class="icon-speedometer"></i> Dashboard</a>#}
+        {#</li>#}
+    {#{% else %}#}
+        {#<li class="nav-item">#}
+            {#<a class="nav-link" href="{{ path('dashboard_user') }}"><i class="icon-speedometer"></i> Dashboard</a>#}
+        {#</li>#}
+    {#{% endif %}#}
+    <li class="nav-title">
+        {{ 'admin.navigation' | trans }}
+    </li>
+    {#{% if is_granted('ROLE_ADMIN') %}#}
+    {#<li class="nav-item nav-dropdown">#}
+        {#<a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-warning"></i> {{ 'Content Reported' | trans }}</a>#}
+        {#<ul class="nav-dropdown-items">#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('user_report_list') }}"><i class="fa fa-warning"></i> {{ 'Users Reported' | trans }}</a>#}
+            {#</li>#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('news_report_list') }}"><i class="fa fa-warning"></i> {{ 'News Reported' | trans }}</a>#}
+            {#</li>#}
+        {#</ul>#}
+    {#</li>#}
+    {#<li class="nav-item nav-dropdown">#}
+        {#<a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-user"></i> {{ 'Users' | trans }}</a>#}
+        {#<ul class="nav-dropdown-items">#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="icons-font-awesome.html"><i class="fa fa-users"></i> {{ 'Users List' | trans }}</a>#}
+            {#</li>#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="icons-simple-line-icons.html"><i class="fa fa-user-plus"></i> {{ 'Add User' | trans }}</a>#}
+            {#</li>#}
+        {#</ul>#}
+    {#</li>#}
+    {#{% endif %}#}
+    {#{% if (app.user.roles[0] == 'ROLE_PRODUCER') %}#}
+    {#<li class="nav-item nav-dropdown">#}
+        {#<a href="#" class="nav-link nav-dropdown-toggle">{{ 'Agroecological Practice' | trans }}</a>#}
+        {#<ul class="nav-dropdown-items">#}
+            {#<li class="nav-item">#}
+                {#<a href="{{ path('agroecological_practice_list') }}" class="nav-link">{{ 'Practice List' | trans }}</a>#}
+            {#</li>#}
+            {#<li class="nav-item">#}
+                {#<a href="{{ path('agroecological_practice_new') }}" class="nav-link">{{ 'Add Practice' | trans }}</a>#}
+            {#</li>#}
+        {#</ul>#}
+    {#</li>#}
+    {#{% endif %}#}
+    {#<li class="nav-item nav-dropdown">#}
+        {#<a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'News' | trans }}</a>#}
+        {#<ul class="nav-dropdown-items">#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('news_list') }}"><i class="fa fa-list-alt"></i> {{ 'News List' | trans }}</a>#}
+            {#</li>#}
+            {#{% if not is_granted('ROLE_ADMIN') %}#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> {{ 'Add News' | trans }}</a>#}
+            {#</li>#}
+            {#{% endif %}#}
+            {#{% if is_granted('ROLE_ADMIN') %}#}
+            {#<li class="nav-item nav-dropdown">#}
+                {#<a href="#" class="nav-link nav-dropdown-toggle"><i class="icon-puzzle"></i>{{ 'Categories' | trans }}</a>#}
+                {#<ul class="nav-dropdown-items">#}
+                    {#<li class="nav-item">#}
+                        {#<a href="{{ path('category_list') }}" class="nav-link"><i class="icon-puzzle"></i>{{ 'Category List' | trans }}</a>#}
+                    {#</li>#}
+                    {#<li class="nav-item">#}
+                        {#<a href="{{ path('category_new') }}" class="nav-link"><i class="icon-puzzle"></i>{{ 'Add Category' | trans }}</a>#}
+                    {#</li>#}
+                {#</ul>#}
+            {#</li>#}
+            {#{% endif %}#}
+        {#</ul>#}
+    {#</li>#}
+    {#<li class="nav-item nav-dropdown">#}
+        {#<a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-file-o"></i> {{ 'Medias' | trans }}</a>#}
+        {#<ul class="nav-dropdown-items">#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('media_list') }}" target="_top"><i class="fa fa-files-o"></i> {{ 'Medias List' | trans }}</a>#}
+            {#</li>#}
+            {#{% if not is_granted('ROLE_ADMIN') %}#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('media_new') }}" target="_top"><i class="fa fa-upload"></i> {{ 'Add Media' | trans }}</a>#}
+            {#</li>#}
+            {#{% endif %}#}
+        {#</ul>#}
+    {#</li>#}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('fos_user_profile_show') }}"><i class="fa fa-pencil"></i> {{ 'admin.edit_profile' | trans }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-power-off fa-lg"></i> {{ 'admin.logout' | trans }}</a>
+    </li>
+</ul>

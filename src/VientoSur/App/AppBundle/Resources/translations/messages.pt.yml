@@ -299,3 +299,34 @@ amenities:
     LIPA: Estacionamento Rotativo
     MEETROOM: Sala de Reuniões
     OUSWPOSE: Piscina ao Ar Livre (sazonal)
+admin:
+    sign_in_account: Faça login em sua conta
+    sign_in: Assinar em
+    username: Nome de usuário
+    password: Senha
+    forgot_password: Esqueceu a senha
+    well_done: Bem feito
+    resetting_password: Redefinindo a senha
+    or: ou
+    email: e-mail
+    reset_password: Redefinir a senha
+    resetting_account: Repor a sua senha
+    hello: Olá
+    can_reset_password_link: Você pode redefinir sua senha acessando
+    greetings: Saudações
+    new_password: Nova senha
+    repeat_new_password: Repita a nova senha
+    change_password: Mudar senha
+    home: Iniciação
+    profile: Perfil
+    edit_profile: Editar perfil
+    edit_password: Editar senha
+    current_password: Senha atual
+    back: Retorno
+    change: Mudança
+    logout: Sair
+    navigation: Menu
+    first_name: Primeiro nome
+    last_name: Último nome
+    send: Enviar
+    user_update: O usuário foi atualizado com sucesso!

@@ -13,3 +13,11 @@ viento_sur_flight:
 viento_sur_test:
     resource: "@VientoSurAppAppBundle/Controller/TestController.php"
     type:     annotation
+
+viento_sur_admin:
+    resource: "@VientoSurAppAppBundle/Controller/DashboardController.php"
+    type:     annotation
+
+viento_sur_user:
+    resource: "@VientoSurAppAppBundle/Controller/UserController.php"
+    type:     annotation

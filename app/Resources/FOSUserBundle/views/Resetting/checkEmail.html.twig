@@ -1,0 +1,15 @@
+{% extends ":admin:base.html.twig" %}
+
+{% block body %}
+    <body {% block body_class %}{% endblock %}>
+    <div class="container d-table">
+        <div class="d-100vh-va-middle">
+            <div class="row">
+                {% block content %}
+                    <h4>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</h4>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}

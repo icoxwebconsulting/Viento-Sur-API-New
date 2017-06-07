@@ -302,3 +302,34 @@ amenities:
     LIPA: Estacionamiento Rotativo
     MEETROOM: Sala de Reuniones
     OUSWPOSE: Piscina al Aire Libre (de Temporada)
+admin:
+    sign_in_account: Inicia sesión con tu cuenta
+    sign_in: Inicia sesión
+    username: Nombre de usuario
+    password: Contraseña
+    forgot_password: Olvidé mi contraseña
+    well_done: Bien hecho
+    resetting_password: Reinicio de contraseña
+    or: o
+    email: Correo electrónico
+    reset_password: Reiniciar contraseña
+    resetting_account: Reinicio de su contraseña
+    hello: Hola
+    can_reset_password_link: Puede reiniciar su contraseña accediendo a
+    greetings: Saludos
+    new_password: Nueva contraseña
+    repeat_new_password: Repetir nueva contraseña
+    change_password: Cambiar contraseña
+    home: Inicio
+    profile: Perfil
+    edit_profile: Editar perfil
+    edit_password: Modificar contraseña
+    current_password: Contraseña actual
+    back: Regresar
+    change: Cambiar
+    logout: Salir
+    navigation: Menú
+    first_name: Primer nombre
+    last_name: Apellido
+    send: Enviar
+    user_update: El usuario ha sido actualizado exitosamente!

@@ -1,0 +1,31 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block body %}
+    <body {% block body_class %}{% endblock %}>
+    <div class="container d-table">
+        <div class="d-100vh-va-middle">
+            <div class="row">
+                {% block content %}
+                    <div class="col-md-6 offset-md-3">
+                        <div class="card mx-2">
+                            <div class="card-block p-2">
+                                <h1>{{ 'admin.forgot_password' | trans }}</h1>
+                                <p class="text-muted">{{ 'admin.resetting_password' | trans }}</p>
+                                <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+                                    <div class="input-group mb-1">
+                                        <input type="text" id="username" name="username" class="form-control" placeholder="{{ 'admin.username' | trans }} {{ 'admin.or' | trans }} {{ 'admin.email' | trans }}" required="required" />
+                                    </div>
+                                    {% if invalid_username is defined %}
+                                        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                                    {% endif %}
+                                    <button type="submit" class="btn btn-block btn-success">{{ 'admin.reset_password' | trans }}</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}

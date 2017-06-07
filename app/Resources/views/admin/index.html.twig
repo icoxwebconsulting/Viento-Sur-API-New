@@ -1,0 +1,135 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}Dashboard{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'List of last reported' | trans }}
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="callout callout-danger">
+                                        <small class="text-muted">{{ 'Lasted 10 news reported' | trans }}</small>
+                                        <br>
+                                    </div>
+                                </div>
+                                <!--/.col-->
+                            </div>
+                            <!--/.row-->
+                            <hr class="mt-0">
+                            <ul class="icons-list">
+                                {#{% for new in news %}#}
+                                    {#<li>#}
+                                        {#<i class="fa fa-newspaper-o"></i>#}
+                                        {#<div class="desc">#}
+                                            {#<div class="title">{{ new.title }}</div>#}
+                                            {#<div class="small text-muted">{{ new.subtitle }}</div>#}
+                                        {#</div>#}
+                                        {#<div class="value">#}
+                                            {#<div class="small text-muted">{{ 'Modified' | trans }}</div>#}
+                                            {#<p>{{ new.modified | date }}</p>#}
+                                        {#</div>#}
+                                    {#</li>#}
+                               {#{% endfor %}#}
+                            </ul>
+                        </div>
+                        <!--/.col-->
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="callout callout-primary">
+                                        <small class="text-muted">{{ 'Lasted 10 users reported' | trans }}</small>
+                                        <br>
+                                    </div>
+                                </div>
+                                <!--/.col-->
+                            </div>
+                            <!--/.row-->
+                            <hr class="mt-0">
+                            <ul class="icons-list">
+                                {#{% for user in users %}#}
+                                {#<li>#}
+                                    {#<img src="{{ asset(vich_uploader_asset(user, 'image') ) }}" width="35" height="35" style="overflow: hidden; position: absolute;left: 0; top: 0;" alt="">#}
+                                    {#<div class="desc">#}
+                                        {#<div class="title">{{ user.firstName }} {{ user.lastName }}</div>#}
+                                        {#<div class="small text-muted">{{ user.email }}</div>#}
+                                    {#</div>#}
+                                    {#<div class="value">#}
+                                        {#<div class="small text-muted">{{ 'Modified' | trans }}</div>#}
+                                        {#<p>{{ user.modified | date }}</p>#}
+                                    {#</div>#}
+                                {#</li>#}
+                                {#{% endfor %}#}
+                            </ul>
+                        </div>
+                        <!--/.col-->
+                    </div>
+                    <!--/.row-->
+                    <br>
+                    <table class="table table-hover table-outline mb-0 hidden-sm-down">
+                        <thead class="thead-default">
+                        <tr>
+                            <th class="text-xs-center"><i class="icon-people"></i>
+                            </th>
+                            <th>{{ 'User Reported' | trans }}</th>
+                            <th class="text-xs-center">{{ 'Description' | trans }}</th>
+                            <th>{{ 'Reported by' | trans }}</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {#{% for report in reports %}#}
+                        {#<tr>#}
+                            {#<td class="text-xs-center">#}
+                                {#<div class="avatar">#}
+                                    {#<img src="{{ asset(vich_uploader_asset(report.user, 'image')) }}" class="img-avatar">#}
+                                    {#<span class="avatar-status tag-success"></span>#}
+                                {#</div>#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#<div>{{ report.user.username }}</div>#}
+                                {#<div class="small text-muted">#}
+                                    {#{{ 'Registered' | trans}}: {{ report.user.created | date }}#}
+                                {#</div>#}
+                            {#</td>#}
+                            {#<td class="text-xs-center">#}
+                                {#<div>{{ report.description }}</div>#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#<div class="clearfix">#}
+                                    {#<div>{{ report.created_by.username }}</div>#}
+                                    {#<div class="float-xs-left">#}
+                                        {#<strong>50%</strong>#}
+                                    {#</div>#}
+                                    {#<div class="float-xs-right">#}
+                                        {#<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>#}
+                                    {#</div>#}
+                                {#</div>#}
+                                {#<progress class="progress progress-xs progress-success" value="50" max="100" style="margin:5px 0 0 0;">50%</progress>#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#<div class="small text-muted">{{ 'Last login' | trans }}</div>#}
+                                {#<strong>10 sec ago</strong>#}
+                            {#</td>#}
+                        {#</tr>#}
+                        {#{% endfor %}#}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+{% endblock %}
