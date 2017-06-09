@@ -21,3 +21,11 @@ viento_sur_admin:
 viento_sur_user:
     resource: "@VientoSurAppAppBundle/Controller/UserController.php"
     type:     annotation
+
+viento_sur_promotions:
+    resource: "@VientoSurAppAppBundle/Controller/PromotionsController.php"
+    type:     annotation
+
+viento_sur_promotion_sections:
+    resource: "@VientoSurAppAppBundle/Controller/PromotionSectionsController.php"
+    type:     annotation

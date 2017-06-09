@@ -1,0 +1,49 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.promotion_section_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.promotion_section_new' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ 'admin.promotion_section' | trans }}</strong>
+            </div>
+            {{ form_start(form, {'attr':{ 'class': 'form-horizontal'}}) }}
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.title' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.title, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.title) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.subtitle' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.subtitle, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.subtitle) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="email">Status</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.status, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.status) }}
+                </div>
+                {{ form_rest(form) }}
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('promotion_sections_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+            </div>
+            {{ form_end(form)}}
+        </div>
+    </div>
+{% endblock %}

@@ -330,3 +330,32 @@ admin:
     last_name: Último nome
     send: Enviar
     user_update: O usuário foi atualizado com sucesso!
+    promotions: Promoções
+    promotion: Promoção
+    promotions_list: Lista de promociones
+    promotion_section_list: Lista
+    promotion_new: Nova promoção
+    promotion_section_new: Nova seção de promoção
+    promotion_add: Adicionar promoção
+    add: Adicionar
+    promotions_manager: gestão de promoção
+    promotion_section_manager: Seção de promoção de gestão
+    period: Período
+    name: Nome
+    promotion_section: Seção de promoção
+    created_by: Criado por
+    actions: Ações
+    promotion_section: Seção de promoção
+    title: Título
+    subtitle: Subtítulo
+    messages:
+        promotion_sections_added: Foi acrescentado seção de promoção!
+        promotion_sections_updated: Com sucesso, ele atualizou a seção de promoção!
+        promotion_sections_deleted: Seção de promoção foi removido com sucesso!
+        promotion_added: Foi acrescentado promoção!
+        promotion_updated: Com sucesso, ele atualizou a promoção!
+        promotion_deleted: A promoção foi removido com sucesso!
+    confirmation: Confirmação
+    delete_element: Deseja excluir este elemento?
+    yes: Sim
+    image: Imagem

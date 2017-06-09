@@ -1,0 +1,30 @@
+<?php
+
+namespace VientoSur\App\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="status")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ */
+class Status
+{
+    use TimestampableTrait;
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string $name
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name;
+}

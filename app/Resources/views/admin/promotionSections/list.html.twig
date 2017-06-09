@@ -1,0 +1,50 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}{{ 'admin.promotion_section' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.promotion_section' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> {{ 'admin.promotion_section_manager' | trans }}
+            </div>
+            <div class="card-block">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'admin.period' | trans }}</th>
+                        <th>{{ 'admin.title' | trans }}</th>
+                        <th>{{ 'admin.subtitle' | trans }}</th>
+                        <th>Status</th>
+                        <th>{{ 'admin.created_by' | trans }}</th>
+                        <th>{{ 'admin.actions' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%  for entity in entities %}
+                        <tr>
+                            <td>{{ entity.id }}</td>
+                            <td>{{ entity.created | ago }}</td>
+                            <td>{{ entity.title }}</td>
+                            <td>{{ entity.subtitle }}</td>
+                            <td>{{ entity.status.name }}</td>
+                            <td>{{ entity.createdBy.username }}</td>
+                            <td>
+                                <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('promotion_sections_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>
+                                <a href="{{ path('promotion_sections_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

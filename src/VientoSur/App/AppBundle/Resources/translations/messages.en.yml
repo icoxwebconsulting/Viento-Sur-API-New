@@ -333,3 +333,32 @@ admin:
     last_name: Last name
     send: Send
     user_update: User has been successfully updated!
+    promotions: Promotions
+    promotion: Promotion
+    promotions_list: Promotions list
+    promotion_section_list: List
+    promotion_new: New promotion
+    promotion_section_new: New promotion section
+    promotion_add: Add promotion
+    add: Add
+    promotions_manager: Promotions manager
+    promotion_section_manager: Promotion section manager
+    period: Period
+    name: Name
+    promotion_section: Promotion section
+    created_by: Created by
+    actions: Actions
+    promotion_section: Promotion section
+    title: Title
+    subtitle: Subtitle
+    messages:
+        promotion_sections_added: Promotion sections has been successfully added!
+        promotion_sections_updated: Promotion sections has been successfully updated!
+        promotion_sections_deleted: Promotion sections has been successfully deleted!
+        promotion_added: Promotion has been successfully added!
+        promotion_updated: Promotion has been successfully updated!
+        promotion_deleted: Promotion has been successfully deleted!
+    confirmation: Confirmation
+    delete_element: Do you want to delete this element?
+    yes: Yes
+    image: Image

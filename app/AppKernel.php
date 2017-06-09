@@ -26,6 +26,8 @@ class AppKernel extends Kernel
             new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(), 
             new FOS\UserBundle\FOSUserBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
 
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
