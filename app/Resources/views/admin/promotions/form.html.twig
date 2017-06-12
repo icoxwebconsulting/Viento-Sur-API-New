@@ -1,0 +1,108 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.promotion_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.promotion_new' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ 'admin.promotion' | trans }}</strong>
+            </div>
+            {{ form_start(form, {'attr':{ 'class': 'form-horizontal'}}) }}
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">Link</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.link, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.link) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="appbundle_description">{{ 'hotels.description' | trans }}</label>
+                    <div class="col-md-12">
+                        {{ form_widget(form.description) }}
+                    </div>
+                    {{ form_errors(form.description) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="last-name">{{ 'image' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.image, { 'attr': { 'class': 'form-control', 'required': 'false'}}) }}
+                    </div>
+                    {{ form_errors(form.image) }}
+                </div>
+                {#<div class="form-group row">#}
+                    {#<label class="col-md-3 form-control-label" for="email">{{ 'Media Type' | trans }}</label>#}
+                    {#<div class="col-md-9">#}
+                        {#{{ form_widget(form.type, { 'attr': { 'class': 'form-control'}}) }}#}
+                    {#</div>#}
+                    {#{{ form_errors(form.type) }}#}
+                {#</div>#}
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="email">{{ 'admin.promotion_section' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.section, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.section) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="email">Status</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.status, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.status) }}
+                </div>
+
+                {{ form_rest(form) }}
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('promotion_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+            </div>
+            {{ form_end(form)}}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
+
+    <!-- Include Editor style. -->
+    <link href="{{ asset('assets/froala_editor/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/froala_editor/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Include external JS libs. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+    <!-- Include JS files. -->
+    <script type="text/javascript" src="{{ asset('assets/froala_editor/js/froala_editor.pkgd.min.js') }}"></script>
+
+    <!-- Include Language file if we want to use it. -->
+    <script type="text/javascript" src="{{ asset('assets/froala_editor/js/languages/es.js') }}"></script>
+
+    <!-- Initialize the editor. -->
+    <script>
+        $(function() {
+            $('#appbundle_promotions_description').froalaEditor({
+                height: 300
+            })
+        });
+    </script>
+{% endblock %}
