@@ -1,154 +1,31 @@
 <!-- hoteles -->
 <div class="container">
     <div class="gap-small"></div>
+    {% for section in sections %}
+        <h2>{{ section.title }}</h2>
+        <h4 class="mb20">{{ section.subtitle }}</h4>
 
-    <h2 class="mb20">Hoteles en promoción</h2>
-
-    <div class="row row-wrap">
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>
-                    <p class="mb5">Paris</small></p>
-                    <p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>
+        <div class="row row-wrap">
+            {% for promotion in promotions %}
+                {% if promotion.section.id == section.id %}
+            <div class="col-md-4">
+                <div class="thumb">
+                    <header class="thumb-header">
+                        <a class="hover-img" href="{{ promotion.link }}">
+                            <img style="width: 350px; height: 350px;" src="{{asset(vich_uploader_asset(promotion, 'image')) }}" alt="Hotel Chavanel" title="Reserva" />
+                            <h5 class="hover-title-center">Reserva</h5>
+                        </a>
+                    </header>
+                    <div class="thumb-caption">
+                        <h5 class="thumb-title mb5">{{ promotion.name }}</h5>
+                        <p class="mb5"><a href="{{ promotion.link }}">view more</a></p>
+                        <p class="mb0"><span class="text-lg lh1em text-color">{{ promotion.description | truncate(15, true) | raw  }}</span></p>
+                    </div>
                 </div>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>
-                    <p class="mb5">Paris</small></p>
-                    <p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>
-                    <p class="mb5">Paris</small></p>
-                    <p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Hotel Chavanel" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="thumb-title mb5"><a class="text-darken" href="#">Hotel Chavanel</a></h5>
-                    <p class="mb5">Paris</small></p>
-                    <p class="mb0"><span class="text-lg lh1em text-color">$354</span></p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="gap gap-small"></div>
-</div>
-
-<!-- paquetes -->
-<div class="container">
-    <div class="gap-small"></div>
-
-    <h2 class="mb20">Paquetes destacados</h2>
-
-    <div class="row row-wrap">
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>
-                    <p class="mb5"> 7 días / 6 noches</small></p>
-                    <p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>
-                    <p>Tarifa final <strong>$13245</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>
-                    <p class="mb5"> 7 días / 6 noches</small></p>
-                    <p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>
-                    <p>Tarifa final <strong>$13245</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>
-                    <p class="mb5"> 7 días / 6 noches</small></p>
-                    <p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>
-                    <p>Tarifa final <strong>$13245</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="thumb">
-                <header class="thumb-header">
-                    <a class="hover-img" href="#">
-                        <img src="{{ asset('bundles/vientosurappapp/images/img.jpg') }}" alt="Florianopolis" title="Reserva" />
-                        <h5 class="hover-title-center">Reserva</h5>
-                    </a>
-                </header>
-                <div class="thumb-caption">
-                    <h5 class="mb5 thumb-title"><a class="text-darken" href="#">Florianopolis</a></h5>
-                    <p class="mb5"> 7 días / 6 noches</small></p>
-                    <p class="mb5"><span class="text-lg lh1em text-color">18 cuotas de $1354</span></p>
-                    <p>Tarifa final <strong>$13245</strong></p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="gap gap-small"></div>
+        <div class="gap gap-small"></div>
+    {% endfor %}
 </div>

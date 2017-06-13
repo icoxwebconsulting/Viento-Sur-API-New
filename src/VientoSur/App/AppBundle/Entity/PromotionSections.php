@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\PromotionSectionsRepository")
  * @ORM\Table(name="promotion_sections")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

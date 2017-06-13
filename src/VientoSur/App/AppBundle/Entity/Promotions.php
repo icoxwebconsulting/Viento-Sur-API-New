@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\PromotionsRepository")
  * @ORM\Table(name="promotions")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Vich\Uploadable

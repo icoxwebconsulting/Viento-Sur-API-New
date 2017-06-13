@@ -28,9 +28,14 @@ class IndexController extends Controller
         $country = $this->get('session')->get('country');
         $this->get('session')->set('country', ($country) ? $country : 'ar');
         $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
+        $em = $this->getDoctrine()->getManager();
+        $promotionSections = $em->getRepository("VientoSurAppAppBundle:PromotionSections")->findPromotionSectionsAvailables();
+        $promotions = $em->getRepository("VientoSurAppAppBundle:Promotions")->findPromotionsAvailables();
         return array(
             'isTest' => $this->getParameter('is_test'),
-            'isIndex' => true
+            'isIndex' => true,
+            'sections' => $promotionSections,
+            'promotions' => $promotions
         );
     }
 
