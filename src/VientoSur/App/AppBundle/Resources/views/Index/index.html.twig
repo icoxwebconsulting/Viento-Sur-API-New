@@ -1,5 +1,5 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
-
+{% block title %}{{ 'index.hotels' | trans }} - {{ 'index.flights' | trans }}{% endblock %}
 {% block content %}
     <!-- TOP AREA -->
     <div class="top-area show-onload">
@@ -65,6 +65,11 @@
             <div class="bg-img hidden-lg" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto.jpg') }});"></div>
             <div class="bg-mask hidden-lg"></div>
         </div>
+        <div class="tab-content">
+            <div class="tab-pane in {% if flightMenu is not defined  %}active{% endif %}" id="tab-1-1">
+                {% include 'VientoSurAppAppBundle:Index:promotions.html.twig' %}
+            </div>
+        </div>
     </div>
     <!-- END TOP AREA  -->
 
@@ -106,14 +111,17 @@
             if (!$(this).hasClass('active')) {
                 var clase = 'flight';
                 var tab = '1';
+                var promo = '1-1';
                 if ($(this).hasClass('flight')) {
                     tab = '2';
                     clase = 'hotel'
+                    promo = '2-1';
                 }
                 $('.slimmenu li.' + clase).removeClass('active');
                 $(this).addClass('active');
                 $(".tab-content .active").removeClass("active");
                 $('#tab-' + tab).addClass('active')
+                $('#tab-' + promo).addClass('active')
             }
         });
     });
