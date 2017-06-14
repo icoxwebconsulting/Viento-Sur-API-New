@@ -1,9 +1,64 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.rooms_available' | trans }} {{hotelDetails.name}} {% endblock %}
 
+{% block meta_open_graph %}
+    {% for key, pictures in hotelDetails.pictures %}
+        {% if loop.index == 1 %}
+            {% set image = pictures.url %}
+            <meta property="og:image" content="{{ image }}" />
+        {% endif %}
+    {% endfor %}
+    <meta property="og:url"                content="https://vientosur.net{{ app.request.pathInfo }}" />
+    <meta property="og:title"              content="{{hotelDetails.name}}" />
+    <meta property="og:description"        content="{{ attribute(hotelDetails.information, app.request.locale) | truncate(200, true) }}" />
+{% endblock %}
+
+{% block gplus_script %}
+    <link rel="canonical" href="https://vientosur.net{{ app.request.pathInfo }}" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        {lang: '{{ app.request.locale }}' }
+    </script>
+{% endblock %}
+
+{% block shorter_script %}
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        function getUrlShorter(){
+            var long_url = "https://vientosur.net{{ app.request.pathInfo }}";
+            var url = "{{ path('get_url_shorter') }}";
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: 'long_url=' + long_url
+            }).done(function(data) {
+                console.log('url', data);
+                $('#shared-twitter').attr('data-url', data)
+            });
+        }
+        getUrlShorter();
+    </script>
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
 
+    <script>
+        window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                    t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+            console.log('twitter load');
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
     <script type="text/javascript">
         function initMap() {
             var myLatLng = {lat: {{ latitude }}, lng: {{ longitude }} };
@@ -86,6 +141,31 @@
 {% endblock %}
 
 {% block content %}
+    {% if app.request.locale == 'es' %}
+        {% set locale = 'es_LA' %}
+    {% elseif app.request.locale == 'pt' %}
+        {% set locale = 'pt_BR' %}
+    {% else %}
+        {% set locale = 'en_US' %}
+    {% endif %}
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/{{ locale }}/sdk.js#xfbml=1&version=v2.9&appId=1215654845212450";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <style>
+        .social-shared > div#___plusone_0,.fb-share-button.fb_iframe_widget,iframe#twitter-widget-0{
+            display:block;
+            margin-top:7px !important;
+        }
+        .booking-item-details .booking-item-header {
+            margin-bottom: -10px;
+        }
+    </style>
     {% set targetCurrency = app.session.get('targetCurrency') %}
     {% if targetCurrency == 'USD' %}
         {% set symbol = 'US$' %}
@@ -143,6 +223,28 @@
                                             {{ 'hotels.show_rooms' | trans }}
                                         </button>
                                     </a>
+                                    <br />
+                                    <div class="social-shared">
+                                        <g:plusone></g:plusone>
+                                        <div class="fb-share-button"
+                                             data-href="https://vientosur.net{{ app.request.pathInfo }}"
+                                             data-layout="button"
+                                             data-size="large"
+                                             data-mobile-iframe="true">
+                                            <a class="fb-xfbml-parse-ignore" target="_blank"
+                                               href="https://www.facebook.com/sharer/sharer.php?u=https://vientosur.net{{ app.request.pathInfo }}&src=sdkpreparse">
+                                                Compartir
+                                            </a>
+                                        </div>
+                                        <a id="shared-twitter" class="twitter-share-button"
+                                           href="https://twitter.com/intent/tweet"
+                                           data-via="vientosurnet"
+                                           data-text="Hotel {{hotelDetails.name}}"
+                                           data-lang="{{ app.request.locale }}"
+                                           data-hashtags="VientoSur"
+                                           data-size="large">
+                                        Tweet</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

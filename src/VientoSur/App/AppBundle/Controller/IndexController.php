@@ -305,4 +305,31 @@ class IndexController extends Controller
         $this->get('session')->set('targetCurrency', $currency);
         return new Response("true");
     }
+
+    /**
+     * @param $long_url
+     * @return mixed
+     * @Route("get-url-shorter", name="get_url_shorter")
+     */
+    public function getUrlShorter(Request $request){
+        $long = $request->query->get('long_url');
+        $long_url = $request->query->get('long_url');
+        $ch = curl_init($this->getParameter('google_url_shorter') . '?key=' . $this->getParameter('google_api_key_shorter'));
+
+        curl_setopt_array(
+            $ch,
+            array(
+                CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_TIMEOUT => 5,
+                CURLOPT_CONNECTTIMEOUT => 0,
+                CURLOPT_POST => 1,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_POSTFIELDS => '{"longUrl": "' . $long_url . '"}'
+            )
+        );
+        $json_response = json_decode(curl_exec($ch), true);
+        return new Response($json_response['id'] ? $json_response['id'] : $long_url);
+    }
 }

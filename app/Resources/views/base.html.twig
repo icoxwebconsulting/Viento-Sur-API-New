@@ -2,6 +2,7 @@
 <html>
 <head>
         <meta charset="UTF-8" />
+        {% block meta_open_graph %}{% endblock %}
         <title>vientosur.net | {% block title %}{% endblock %}</title>
         <!-- GOOGLE FONTS -->
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
@@ -16,6 +17,8 @@
         <link href="{{ asset('css/base/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- favicon -->
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block gplus_script %} {% endblock %}
+        {% block shorter_script %}{% endblock %}
         {% block stylesheets %}
         {% endblock %}
 
