@@ -124,6 +124,47 @@ header{
 }
 /*----- END SLIDER -----*/
 
+/*----- GO CONTENT INFO -----*/
+.promotions{
+	margin: 8.33vw 0 4.16vw 0;
+}
+
+.promotions .thumbs{
+	border: #d7d7d7 0.83vw solid;
+	border-radius: 5px;
+	height: 28.33vw;
+	margin-bottom: 4.16vw;
+	overflow: hidden;
+	position: relative;
+}
+
+.promotions .thumbs:hover{
+	border-color: #008cd0;
+}
+
+.promotions .thumbs .captionThumb{
+	position: absolute;
+	bottom: 0;
+	height: 7.08vw;
+	background: rgba(25,39,49,0.8);
+	width:100%;
+	padding: 1.25vw;
+}
+
+.promotions .thumbs .captionThumb h4{
+	font-family: 'latoregular';
+	font-size: 2vw;
+	color: #ffffff;
+	margin: 0;
+}
+.promotions .thumbs .captionThumb h5{
+	font-family: 'latolight';
+	font-size: 1.66vw;
+	color: #c3c3c3;
+	margin: 0;
+}
+/*----- END CONTENT INFO -----*/
+
 /*----- GO FOOTER  -----*/
 
 .footer{

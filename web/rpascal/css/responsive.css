@@ -50,6 +50,31 @@
     }
     /*-- END HEADER --*/
 
+    /*----- GO CONTENT INFO -----*/
+    .promotions{
+        margin: 100px 0 50px 0;
+    }
+
+    .promotions .thumbs{
+        border: #d7d7d7 10px solid;
+        height: 340px;
+        margin-bottom: 50px;
+    }
+
+    .promotions .thumbs .captionThumb{
+        height: 85px;
+        padding: 15px;
+    }
+
+    .promotions .thumbs .captionThumb h4{
+        font-size: 24px;
+    }
+
+    .promotions .thumbs .captionThumb h5{
+        font-size: 20px;
+    }
+    /*----- END CONTENT INFO -----*/
+
     /*----- GO FOOTER  -----*/
     .footer{
         height: 270px;
