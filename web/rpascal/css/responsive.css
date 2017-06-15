@@ -1,0 +1,164 @@
+/*==========  Mobile First Method  ==========*/
+
+/*Desktop*/
+@media only screen and (min-width: 1200px){
+    /*-- GO HEADER --*/
+    header{
+        height: 105px;
+    }
+
+    .logo img{
+        width: 170px;
+        padding-top: 25px;
+    }
+
+    .language{
+        padding: 10px 0;
+    }
+
+    .language select{
+        height: 30px;
+        width:130px;
+        font-size: 12px;
+        padding: 0 15px;
+        background-size: 15px;
+        margin: 0 50px 0 auto;
+    }
+
+    .language select option{
+        padding: 10px;
+    }
+
+    .socialMedia ul{
+        padding:10px 50px;
+    }
+
+    .socialMedia li{
+        margin-left: 25px;
+        height: 35px;
+        width: 35px;
+    }
+
+    .socialMedia li a{
+        height: 25px;
+        width: 25px;
+        top: 4px;
+        line-height: 25px;
+    }
+    .socialMedia li a i{
+        font-size: 13px;
+    }
+    /*-- END HEADER --*/
+
+    /*----- GO FOOTER  -----*/
+    .footer{
+        height: 270px;
+        padding: 30px 0;
+    }
+
+    .footer .logoFooter img{
+        width: 200px;
+    }
+
+    .footer h3{
+        font-size: 30px;
+        padding-bottom: 15px;
+    }
+
+    .footer p{
+        font-size: 19px;
+        margin-top: 22px;
+        line-height: 22px;
+    }
+
+    .footer .btnContact{
+        height: 43px;
+        width: 240px;
+        font-size: 16px;
+        padding: 10px 0;
+        margin-top: 27px;
+    }
+
+   .socialMediaFooter ul{
+        margin: 34px 0 0 0;
+    }
+
+    .socialMediaFooter li{
+        margin: 0 13px 0 0;
+        height: 35px;
+        width: 35px;
+    }
+
+    .socialMediaFooter li a{
+        height: 25px;
+        width: 25px;
+        top: 4px;
+        line-height: 25px;
+    }
+
+    .socialMediaFooter li a i{
+        font-size: 13px;
+    }
+
+    .associations{
+        height: 65px;
+    }
+
+    .associations ul{
+        padding: 15px 0 0 0;
+    }
+
+    .associations .linkConditions{
+        font-size: 12px;
+        padding: 25px 0 23px 0;
+    }
+
+    .copyright{
+        height: 60px;
+        padding-top: 23px;
+    }
+
+    .copyright p{
+        font-size: 12px;
+    }
+    /*----- END FOOTER -----*/
+}
+
+@media only screen and (max-width: 1199px){
+    .language select{
+        background-size: 2.2vw !important;
+    }
+}
+
+/*Tablets*/
+@media only screen and (min-width: 768px) and (max-width: 1023px){
+
+
+}
+
+/*Mobile*/
+@media only screen and (max-width: 1023px){
+    .associations .linkConditions{
+        float: none;
+    }
+
+    .associations{
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 767px){
+
+    .associations li img{
+        width: 10vw;
+        height: auto;
+    }
+
+    .footer .logoFooter img, .carousel-indicators{
+        display: none;
+    }
+
+    .socialMediaFooter li a{
+        top: 0.18vw;
+    }
+}

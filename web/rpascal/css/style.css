@@ -1,0 +1,254 @@
+
+/*----- GO RESET -------*/
+li{
+	list-style: none;
+}
+
+a, a:hover, a:focus{
+	text-decoration: none;
+	outline: none;
+}
+/*----- END RESET -------*/
+
+/*----- GO GENERALS -------*/
+.noPadding{
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.left{
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.textLeft{
+	text-align: left;
+}
+
+.textRight {
+	text-align: right;
+}
+/*----- END GENERALS -------*/
+
+/*----- GO HEADER -----*/
+header{
+	/*height: 8.75vw;*/
+	background: rgba(0,0,0,0.7);
+	position: absolute;
+	z-index: 9999;
+	width: 100%;
+}
+
+.logo{
+	text-align: center;
+}
+
+.logo img{
+	width: 14.16vw;
+	padding-top: 2.08vw;
+}
+
+.language{
+	border-bottom: #707070 1px solid;
+	padding: 0.83vw 0;
+}
+
+.language select{
+	height: 2.5vw;
+	width: 10.83vw;
+	border-radius: 25px;
+	border: #888888 1px solid;
+	background-color: rgba(17,17,17,0.2);
+	background: URL(../images/arrow-down.png) no-repeat 89% 50% !important;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	color: #fff;
+	font-family: 'latolight';
+	font-size: 1vw;
+	text-transform: uppercase;
+	cursor: pointer;
+	padding: 0 1.25vw;
+	margin: 0 4.16vw 0 auto;
+}
+
+.language select option{
+	padding: 0.83vw;
+}
+
+.socialMedia ul{
+	float: right;
+	padding: 0.83vw 4.16vw;
+	margin: 0;
+}
+
+.socialMedia li{
+	display: inline-block;
+	margin-left: 2.08vw;
+	background: rgba(17,17,17,0.2);
+	border-radius: 50%;
+	border: #888888 1px solid;
+	height: 2.91vw;
+	width: 2.91vw;
+	text-align: center;
+}
+
+.socialMedia li a{
+	display: block;
+	background: #008cd1 none repeat scroll 0 0;
+	border-radius: 50%;
+	height: 2.08vw;
+	width: 2.08vw;
+	margin: 0 auto;
+	position: relative;
+	top: 0.33vw;
+	line-height: 2.08vw;
+}
+
+.socialMedia li a i{
+	color: #ffffff;
+	font-size: 1.08vw;
+}
+/*----- END HEADER -----*/
+
+/*----- GO SLIDER -----*/
+.slide{
+	border-bottom: #008cd0 7px solid;
+}
+
+.carousel-inner .item img{
+	width: 100% !important;
+}
+/*----- END SLIDER -----*/
+
+/*----- GO FOOTER  -----*/
+
+.footer{
+	background: #222222;
+	padding: 2.5vw 0;
+}
+
+.footer .logoFooter{
+	text-align: center;
+}
+
+.footer .logoFooter img{
+	width: 16.66vw;
+	height: auto;
+	padding-top: 18%;
+}
+
+.footer h3{
+	font-size: 2.5vw;
+	color: #ffffff;
+	padding-bottom: 1.25vw;
+	border-bottom: #008cd1 1px solid;
+	font-family: 'latobold';
+	margin: 0;
+}
+
+.footer p{
+	font-size: 1.58vw;
+	color: #ffffff;
+	font-family: 'latoregular';
+	line-height: 1.83vw;
+	margin-top: 1.83vw;
+}
+
+.footer .btnContact{
+	height: 3.58vw;
+	width: 20vw;
+	border-radius: 25px;
+	border: #464646 1px solid;
+	background-color: rgba(0,0,0,0.2);
+	color: #fff;
+	font-family: 'latoregular';
+	font-size: 1.33vw;
+	text-transform: uppercase;
+	display: block;
+	text-align: center;
+	padding: 0.83vw 0;
+	margin-top: 2.25vw;
+}
+
+.socialMediaFooter ul{
+	padding: 0;
+	margin: 2.83vw 0 0 0;
+}
+
+.socialMediaFooter li{
+	display: inline-block;
+	margin: 0 1.08vw 0 0;
+	background: rgba(17,17,17,0.2);
+	border-radius: 50%;
+	border: #888888 1px solid;
+	height: 2.91vw;
+	width: 2.91vw;
+	text-align: center;
+}
+
+.socialMediaFooter li a{
+	display: block;
+	height: 2.08vw;
+	width: 2.08vw;
+	background: #008cd1 none repeat scroll 0 0;
+	border-radius: 50%;
+	position: relative;
+	top: 0.33vw;
+	margin: 0 auto;
+	line-height: 2.08vw;
+}
+
+.socialMediaFooter li a i{
+	color: #ffffff;
+	font-size: 1.08vw;
+}
+
+.associations{
+	background: #dddddd;
+	border-top: #ffffff 1px solid;
+	border-bottom: #ffffff 1px solid;
+}
+
+.associations ul{
+	padding: 1.25vw 0 0 0;
+	margin: 0;
+}
+
+.associations li{
+	display: inline-block;
+}
+
+.associations .linkConditions{
+	float: right;
+	color: #00224f;
+	text-transform: uppercase;
+	font-family: 'latoregular';
+	font-size: 1vw;
+	padding: 2.08vw 0 1.91vw 0;
+	display: block;
+}
+
+.copyright{
+	height: 5vw;
+	background: #222222;
+	text-align: center;
+	padding-top: 1.91vw;
+}
+
+.copyright p{
+	font-size: 1vw;
+	color: #999999;
+	font-family: 'latoregular';
+}
+
+.copyright p span{
+	color: #008cd1;
+	text-transform: uppercase;
+}
+/*----- END FOOTER -----*/
+
+
