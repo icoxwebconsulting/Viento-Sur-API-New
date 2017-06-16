@@ -83,19 +83,19 @@
         {#</ul>#}
     {#</li>#}
     <li class="nav-item nav-dropdown">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'admin.promotion_section' | trans }}</a>
-        <ul class="nav-dropdown-items">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('promotion_sections_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotion_section_list' | trans }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('promotion_sections_new') }}" target="_top"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>
-            </li>
-        </ul>
-    </li>
-    <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'admin.promotions' | trans }}</a>
         <ul class="nav-dropdown-items">
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'admin.promotion_section' | trans }}</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('promotion_sections_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotion_section_list' | trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('promotion_sections_new') }}" target="_top"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('promotion_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotions_list' | trans }}</a>
             </li>

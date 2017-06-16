@@ -342,10 +342,10 @@ admin:
     promotion_add: Agregar promoción
     add: Agregar
     promotions_manager: Gestor de promociones
-    promotion_section_manager: Gestor de sección de promociones
+    promotion_section_manager: Gestor de título general
     period: Período
     name: Nombre
-    promotion_section: Sección de promoción
+    promotion_section: Título general
     created_by: Creado por
     actions: Acciones
     promotion_section: Sección de promoción

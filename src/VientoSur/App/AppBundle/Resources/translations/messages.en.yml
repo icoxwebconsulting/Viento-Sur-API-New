@@ -342,10 +342,10 @@ admin:
     promotion_add: Add promotion
     add: Add
     promotions_manager: Promotions manager
-    promotion_section_manager: Promotion section manager
+    promotion_section_manager: General title manager
     period: Period
     name: Name
-    promotion_section: Promotion section
+    promotion_section: General title
     created_by: Created by
     actions: Actions
     promotion_section: Promotion section
