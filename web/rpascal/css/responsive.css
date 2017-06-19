@@ -50,6 +50,75 @@
     }
     /*-- END HEADER --*/
 
+    /*----- GO SLIDER -----*/
+    .search{
+        top: 130px;
+        left: 87px;
+    }
+
+    .search .nav-tabs{
+        margin: 0  0 1px 30px;
+    }
+
+    .search .nav-tabs li i{
+        margin-right: 5px;
+    }
+
+    .search .tab-content{
+        padding: 40px 20px 0 20px;
+    }
+
+    .search .tab-content h4{
+        font-size: 18px;
+        margin: 0 0 20px 0;
+    }
+
+    .search .tab-content h4 span{
+        font-size: 30px;
+        padding-right: 10px;
+    }
+
+    .search .tab-content .form-group-icon-left i{
+        font-size: 20px;
+        left: 15px;
+        top: 7px;
+    }
+
+    .search .tab-content .city-input{
+        height: 35px;
+        font-size: 16px;
+        padding: 0 0 0 35px;
+    }
+
+    .search .tab-content .input-group .form-control{
+        height: 35px;
+        padding: 0 0 0 40px;
+        font-size: 16px;
+    }
+
+    .search .tab-content .input-group i{
+        font-size: 16px;
+        left: 15px;
+        top: 9px;
+    }
+
+    .search .tab-content .selectMoney{
+        pad-bottom: 40px;
+    }
+
+    .search .tab-content .selectMoney select{
+        height: 35px;
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    .search .tab-content .btnSearch button{
+        height: 40px;
+        font-size: 16px;
+        width: 295px;
+    }
+    /*----- END SLIDER -----*/
+
     /*----- GO CONTENT INFO -----*/
     .promotions{
         margin: 100px 0 50px 0;
@@ -152,6 +221,10 @@
 @media only screen and (max-width: 1199px){
     .language select{
         background-size: 2.2vw !important;
+    }
+
+    .search .tab-content .selectMoney select{
+        background-size: 1.2vw !important;
     }
 }
 
