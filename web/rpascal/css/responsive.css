@@ -1,0 +1,262 @@
+/*==========  Mobile First Method  ==========*/
+
+/*Desktop*/
+@media only screen and (min-width: 1200px){
+    /*-- GO HEADER --*/
+    header{
+        height: 105px;
+    }
+
+    .logo img{
+        width: 170px;
+        padding-top: 25px;
+    }
+
+    .language{
+        padding: 10px 0;
+    }
+
+    .language select{
+        height: 30px;
+        width:130px;
+        font-size: 12px;
+        padding: 0 15px;
+        background-size: 15px;
+        margin: 0 50px 0 auto;
+    }
+
+    .language select option{
+        padding: 10px;
+    }
+
+    .socialMedia ul{
+        padding:10px 50px;
+    }
+
+    .socialMedia li{
+        margin-left: 25px;
+        height: 35px;
+        width: 35px;
+    }
+
+    .socialMedia li a{
+        height: 25px;
+        width: 25px;
+        top: 4px;
+        line-height: 25px;
+    }
+    .socialMedia li a i{
+        font-size: 13px;
+    }
+    /*-- END HEADER --*/
+
+    /*----- GO SLIDER -----*/
+    .search{
+        top: 130px;
+        left: 87px;
+    }
+
+    .search .nav-tabs{
+        margin: 0  0 1px 30px;
+    }
+
+    .search .nav-tabs li i{
+        margin-right: 5px;
+    }
+
+    .search .tab-content{
+        padding: 40px 20px 0 20px;
+    }
+
+    .search .tab-content h4{
+        font-size: 18px;
+        margin: 0 0 20px 0;
+    }
+
+    .search .tab-content h4 span{
+        font-size: 30px;
+        padding-right: 10px;
+    }
+
+    .search .tab-content .form-group-icon-left i{
+        font-size: 20px;
+        left: 15px;
+        top: 7px;
+    }
+
+    .search .tab-content .city-input{
+        height: 35px;
+        font-size: 16px;
+        padding: 0 0 0 35px;
+    }
+
+    .search .tab-content .input-group .form-control{
+        height: 35px;
+        padding: 0 0 0 40px;
+        font-size: 16px;
+    }
+
+    .search .tab-content .input-group i{
+        font-size: 16px;
+        left: 15px;
+        top: 9px;
+    }
+
+    .search .tab-content .selectMoney{
+        pad-bottom: 40px;
+    }
+
+    .search .tab-content .selectMoney select{
+        height: 35px;
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    .search .tab-content .btnSearch button{
+        height: 40px;
+        font-size: 16px;
+        width: 295px;
+    }
+    /*----- END SLIDER -----*/
+
+    /*----- GO CONTENT INFO -----*/
+    .promotions{
+        margin: 100px 0 50px 0;
+    }
+
+    .promotions .thumbs{
+        border: #d7d7d7 10px solid;
+        height: 340px;
+        margin-bottom: 50px;
+    }
+
+    .promotions .thumbs .captionThumb{
+        height: 85px;
+        padding: 15px;
+    }
+
+    .promotions .thumbs .captionThumb h4{
+        font-size: 24px;
+    }
+
+    .promotions .thumbs .captionThumb h5{
+        font-size: 20px;
+    }
+    /*----- END CONTENT INFO -----*/
+
+    /*----- GO FOOTER  -----*/
+    .footer{
+        height: 270px;
+        padding: 30px 0;
+    }
+
+    .footer .logoFooter img{
+        width: 200px;
+    }
+
+    .footer h3{
+        font-size: 30px;
+        padding-bottom: 15px;
+    }
+
+    .footer p{
+        font-size: 19px;
+        margin-top: 22px;
+        line-height: 22px;
+    }
+
+    .footer .btnContact{
+        height: 43px;
+        width: 240px;
+        font-size: 16px;
+        padding: 10px 0;
+        margin-top: 27px;
+    }
+
+   .socialMediaFooter ul{
+        margin: 34px 0 0 0;
+    }
+
+    .socialMediaFooter li{
+        margin: 0 13px 0 0;
+        height: 35px;
+        width: 35px;
+    }
+
+    .socialMediaFooter li a{
+        height: 25px;
+        width: 25px;
+        top: 4px;
+        line-height: 25px;
+    }
+
+    .socialMediaFooter li a i{
+        font-size: 13px;
+    }
+
+    .associations{
+        height: 65px;
+    }
+
+    .associations ul{
+        padding: 15px 0 0 0;
+    }
+
+    .associations .linkConditions{
+        font-size: 12px;
+        padding: 25px 0 23px 0;
+    }
+
+    .copyright{
+        height: 60px;
+        padding-top: 23px;
+    }
+
+    .copyright p{
+        font-size: 12px;
+    }
+    /*----- END FOOTER -----*/
+}
+
+@media only screen and (max-width: 1199px){
+    .language select{
+        background-size: 2.2vw !important;
+    }
+
+    .search .tab-content .selectMoney select{
+        background-size: 1.2vw !important;
+    }
+}
+
+/*Tablets*/
+@media only screen and (min-width: 768px) and (max-width: 1023px){
+
+
+}
+
+/*Mobile*/
+@media only screen and (max-width: 1023px){
+    .associations .linkConditions{
+        float: none;
+    }
+
+    .associations{
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 767px){
+
+    .associations li img{
+        width: 10vw;
+        height: auto;
+    }
+
+    .footer .logoFooter img, .carousel-indicators{
+        display: none;
+    }
+
+    .socialMediaFooter li a{
+        top: 0.18vw;
+    }
+}
