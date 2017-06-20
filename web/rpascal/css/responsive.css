@@ -2,6 +2,18 @@
 
 /*Desktop*/
 @media only screen and (min-width: 1200px){
+    /*-- GO GENERLS --*/
+
+    .marginBottom10{
+        margin-bottom: 10px !important;
+    }
+
+    .paddingSpecial{
+        padding: 0 15px 0 45px;
+    }
+
+    /*-- END GENERLS --*/
+
     /*-- GO HEADER --*/
     header{
         height: 105px;
@@ -45,6 +57,7 @@
         top: 4px;
         line-height: 25px;
     }
+
     .socialMedia li a i{
         font-size: 13px;
     }
@@ -93,13 +106,75 @@
     .search .tab-content .input-group .form-control{
         height: 35px;
         padding: 0 0 0 40px;
-        font-size: 16px;
+        font-size: 13px;
     }
 
     .search .tab-content .input-group i{
         font-size: 16px;
         left: 15px;
         top: 9px;
+    }
+
+    .search .tab-content .btnModal{
+        height: 35px;
+        font-size: 16px;
+        padding: 0 25px;
+    }
+
+    .search .tab-content .modal-dialog{
+        margin: 150px auto;
+        width: 800px;
+    }
+
+    .search .tab-content .modal-dialog .close i{
+        font-size: 23px;
+    }
+
+    .search .tab-content .modal-dialog .titleSection{
+        font-size: 18px;
+        padding-bottom: 10px;
+    }
+
+    .search .tab-content .modal-dialog .selectRoom {
+        padding-bottom: 20px;
+    }
+
+    .search .tab-content .modal-dialog .selectRoom .selectGroup{
+        width: 25%;
+        margin-right: 15px;
+    }
+
+    .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
+        font-size: 16px;
+    }
+
+    .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    .search .tab-content .modal-dialog .selectRoom select{
+        height: 35px;
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    .search .tab-content .modal-dialog .addRoom{
+        padding: 15px 0;
+    }
+
+    .search .tab-content .modal-dialog .addRoom a{
+        font-size: 18px;
+    }
+
+    .search .tab-content .selectPassengers  label {
+        font-size: 14px;
+    }
+
+    .search .tab-content .selectPassengers [type="radio"] + span:before {
+        width: 13px;
+        height: 13px;
+        margin-right: 9px;
     }
 
     .search .tab-content .selectMoney{
@@ -224,6 +299,10 @@
     }
 
     .search .tab-content .selectMoney select{
+        background-size: 1.2vw !important;
+    }
+
+    .search .tab-content .modal-dialog .selectRoom select{
         background-size: 1.2vw !important;
     }
 }
