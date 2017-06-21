@@ -68,7 +68,12 @@ index:
     answer_text: If you want to send us an inquiry contact us through our contact form
     contact: Contact
     consult: Consult
-    footer_copy: Responsible Operator: Viento Sur Tour Operators leg. 10380 Disp. 1295/98
+    contact_us2: Contact Us
+    follow_us: Follow Us
+    terms_conditions: Terms and Conditions
+    footer_copy:
+        responsible: Responsible Operator:
+        tour: Tour Operators leg. 10380 Disp. 1295/98
     popup:
         text: Consults
         name: Name and Surname

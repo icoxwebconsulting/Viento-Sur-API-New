@@ -65,7 +65,12 @@ index:
     answer_text: Se você quiser nos enviar uma consulta entre em contato conosco através de nosso formulário de contato
     contact: Contato
     consult: Consultar
-    footer_copy: Operador responsável: Viento Sur Operadores Turísticos leg. 10380 Disp. 1295/98
+    contact_us2: Contato
+    follow_us: Siga-nos
+    terms_conditions: Termos e Condições
+    footer_copy:
+        responsible: Operador responsável:
+        tour: Operadores Turísticos leg. 10380 Disp. 1295/98
     popup:
         text: Consultas
         name: Nome e sobrenome

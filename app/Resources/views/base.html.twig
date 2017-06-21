@@ -89,74 +89,69 @@
             {% block content %}
             {% endblock %}
 
-            <footer id="main-footer">
+            <!-- GO FOOTER -->
+            <footer>
+                <div class="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 logoFooter">
+                                <a href="{{ path('homepage') }}">
+                                    <img src="{{ asset('rpascal/images/logo.png') }}" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-sm-4">
+                                <h3>{{ 'index.follow_us' | trans }}</h3>
+                                <p>{{ 'index.slogan' | trans }} <br> {{ 'index.slogan_2' | trans }}</p>
+                                <div class="socialMediaFooter">
+                                    <ul>
+                                        <li><a href="https://www.facebook.com/vientosur.net/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://twitter.com/vientosurnet" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://plus.google.com/u/0/b/105288426610495873036/105288426610495873036/posts" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://ar.linkedin.com/in/viento-sur-81b159a5" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        <li><a href="https://www.instagram.com/vientosurnet/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                        <li><a href="http://weibo.com/6035165052/profile?topnav=1&wvr=6&is_all=1" target="_blank"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-4">
+                                <h3>{{ 'index.contact_us2' | trans }}</h3>
+                                <p>{{ 'index.answer_text' | trans }}</p>
+                                <a href="#" title="{{ 'index.consult' | trans }}" class="btnContact" data-path="{{ path('viento_sur_app_consult') }}" data-toggle="modal" data-target="#submitConsult" data-title="{{ 'index.consult' | trans }}">{{ 'index.contact' | trans }}</a>
 
-                <div class="container">
-                    <div class="row row-wrap">
-
-                        <div class="col-md-4">
-                            <a class="logo" href="{{ path('homepage')}}">
-                                <img src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-invert.png') }}" alt="Viento Sur" title="" />
-                            </a>
-                            <p class="mb20">{{ 'index.slogan' | trans }} <br> {{ 'index.slogan_2' | trans }}</p>
-                            <ul class="list list-horizontal list-space">
-                                <li>
-                                    <a class="fa fa-facebook box-icon-md round animate-icon-bottom-to-top" href="https://www.facebook.com/vientosur.net/"></a>
-                                </li>
-                                <li>
-                                    <a class="fa fa-twitter box-icon-md round animate-icon-bottom-to-top" href="https://twitter.com/vientosurnet"></a>
-                                </li>
-                                <li>
-                                    <a class="fa fa-google-plus box-icon-md round animate-icon-bottom-to-top" href="https://plus.google.com/u/0/b/105288426610495873036/105288426610495873036/posts"></a>
-                                </li>
-                                <li>
-                                    <a class="fa fa-linkedin box-icon-md round animate-icon-bottom-to-top" href="https://ar.linkedin.com/in/viento-sur-81b159a5"></a>
-                                </li>
-                                <li>
-                                    <a class="fa fa-instagram box-icon-md round animate-icon-bottom-to-top" href="https://www.instagram.com/vientosurnet/"></a>
-                                </li>
-                                <li>
-                                    <a class="fa fa-weibo box-icon-md round animate-icon-bottom-to-top" href="http://weibo.com/6035165052/profile?topnav=1&wvr=6&is_all=1"></a>
-                                </li>
-                            </ul>
+                            </div>
                         </div>
-
-                        <div class="col-md-4">
-                            <!--<h4>Newsletter</h4>
-                            <form>
-                                <input type="text" class="form-control mb10" placeholder="ingresa tu e-mail">
-                                <input type="submit" class="btn btn-primary" value="Suscribirse">
-                            </form>-->
+                    </div>
+                </div>
+                <div class="associations">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-9">
+                                <ul>
+                                    <li><a href="#"><img src="{{ asset('rpascal/images/logo1.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('rpascal/images/logo2.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('rpascal/images/logo3.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('rpascal/images/logo4.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('rpascal/images/logo5.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('rpascal/images/logo6.png') }}" alt=""></a></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <a href="#" class="linkConditions">{{ 'index.terms_conditions' | trans }}</a>
+                            </div>
                         </div>
-
-                        <div class="col-md-4">
-                            <h4 title="¿Tenés consultas? - VientoSur.net">{{ 'index.answer_head' | trans }}</h4>
-                            <p>{{ 'index.answer_text' | trans }}</p>
-                            <!--<input type="submit" class="btn btn-primary" value="Contacto">-->
-                            <a href="#" title="{{ 'index.consult' | trans }}" class="btn btn-primary" data-path="{{ path('viento_sur_app_consult') }}" data-toggle="modal" data-target="#submitConsult" data-title="{{ 'index.consult' | trans }}">{{ 'index.contact' | trans }}</a>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>{{ 'index.footer_copy.responsible' | trans }} <span>Viento Sur</span> {{ 'index.footer_copy.tour' | trans }}</p>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </footer>
-            <div class="logos-footer">
-                <div class="row" data-gutter="60">
-
-                    <div class="col-md-8">
-                        <img src="{{ asset('img/logo01.jpg') }}" style="height: 65px; width: 151px !important; padding-right: 30px;" />
-                        <a href="http://servicios.turismo.gob.ar/agencias/constancia/legajo/10380"  target="_turar">
-                            <img src="http://sara.turismo.gov.ar/regtur/publicweb/qr72481.png" border="0" style="height: 88px; width: 64px !important;" />
-                        </a>
-                        <img src="{{ asset('img/logo03.jpg') }}" style="height: 30px; width: 161px !important; padding: 0 30px 0 30px;" />
-                        <img src="{{ asset('img/logo04.jpg') }}" style="height: 54px; width: 95px !important; padding-right: 30px;" />
-                        <img src="{{ asset('img/logo05.jpg') }}" style="height: 34px; width: 87px !important;" />
-                    </div>
-
-                    <div class="col-md-4">
-                        <p class="footer-copy">{{ 'index.footer_copy' | trans }}</p>
-                    </div>
-
-                </div>
+            {#<!-- END FOOTER -->#}
             </div>
         </div>
 
