@@ -3,7 +3,7 @@
 /*Desktop*/
 @media only screen and (min-width: 1200px){
     /*-- GO HEADER --*/
-    header{
+    header.new-header{
         height: 105px;
     }
 

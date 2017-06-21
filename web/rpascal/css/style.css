@@ -34,7 +34,7 @@ a, a:hover, a:focus{
 /*----- END GENERALS -------*/
 
 /*----- GO HEADER -----*/
-header{
+header.new-header{
 	/*height: 8.75vw;*/
 	background: rgba(0,0,0,0.7);
 	position: absolute;
