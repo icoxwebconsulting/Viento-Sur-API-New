@@ -193,28 +193,72 @@
     }
     /*----- END SLIDER -----*/
 
+    /*----- GO BANNER -----*/
+    #banner{
+        height: 300px;
+    }
+    /*----- END BANNER -----*/
+
+    /*----- GO NAVBAR -----*/
+    #navBar{
+        height: 55px;
+        margin-bottom: 4px;
+    }
+
+    #navBar li a{
+        padding: 17px 40px;
+        font-size: 16px;
+    }
+
+    #navBar li a i{
+        font-size: 18px;
+        padding-right: 10px;
+    }
+
+    #navBar li.active:after{
+        bottom: -17px;
+        font-size: 30px;
+    }
+
+    /*----- END NAVBAR -----*/
+    /*----- GO BREADCRUMB -----*/
+    #breadcrumb{
+        padding: 15px 0;
+    }
+
+    #breadcrumb ol li a{
+        font-size: 16px;
+    }
+
+    #breadcrumb ol li.active{
+        font-size: 16px;
+    }
+
+    .breadcrumb li + li:before {
+        padding: 0 5px;
+        font-size: 14px;
+    }
+    /*----- END BREADCRUMB -----*/
+
+    /*-----  GO LIST SEARCH -----*/
+    #formSearch, #formFilters{
+        padding: 30px 20px;
+        margin-bottom: 40px;
+    }
+
+    #formSearch .results p{
+        font-size: 18px;
+    }
+    /*----- END LIST SEARCH -----*/
+
     /*----- GO CONTENT INFO -----*/
     .promotions{
-        margin: 100px 0 50px 0;
+        margin: 50px 0;
     }
 
-    .promotions .thumbs{
-        border: #d7d7d7 10px solid;
-        height: 340px;
-        margin-bottom: 50px;
-    }
-
-    .promotions .thumbs .captionThumb{
-        height: 85px;
-        padding: 15px;
-    }
-
-    .promotions .thumbs .captionThumb h4{
-        font-size: 24px;
-    }
-
-    .promotions .thumbs .captionThumb h5{
-        font-size: 20px;
+    .promotions h1{
+        font-size: 32px;
+        padding: 0 0 30px 0;
     }
     /*----- END CONTENT INFO -----*/
 
