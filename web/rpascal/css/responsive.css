@@ -241,15 +241,188 @@
     /*----- END BREADCRUMB -----*/
 
     /*-----  GO LIST SEARCH -----*/
+    .wrapperSearch{
+        padding-bottom: 90px;
+    }
+
+    .message{
+        padding: 40px 0;
+        font-size: 32px;
+    }
+
     #formSearch, #formFilters{
         padding: 30px 20px;
         margin-bottom: 40px;
     }
 
+    #formSearch .results{
+        margin-bottom: 50px;
+    }
+
     #formSearch .results p{
         font-size: 18px;
     }
+
+    #formSearch label{
+        font-size: 16px;
+    }
+
+    #formSearch .form-group{
+        margin-bottom: 30px;
+    }
+
+    #formSearch i{
+        bottom: 10px;
+        left: 30px;
+        font-size: 20px;
+    }
+
+    #formSearch input{
+        height: 40px;
+        font-size: 16px;
+        padding-left: 50px;
+    }
+
+    #formSearch .bottonSearch button{
+        height: 40px;
+        font-size: 16px;
+    }
+
+    #formFilters .titleFilters{
+        font-size: 34px;
+        margin: 0 0 40px 0;
+    }
+
+    #formFilters .boxFilter h4{
+        font-size: 16px;
+        padding: 20px 0 10px 0;
+        margin-bottom: 20px;
+    }
+
+    #formFilters .boxFilter ul li{
+        padding-right: 5px;
+    }
+
+    #formFilters .boxFilter label {
+        font-size: 14px;
+    }
+
+    #formFilters .boxFilter .checkbox {
+        margin: 0 0 15px 0;
+    }
+
+    #formFilters .boxFilter .checkbox span{
+        font-size: 14px;
+    }
+
+    #formFilters .boxFilter .checkbox .cr {
+        width: 24px;
+        height: 24px;
+        padding: 2px;
+        margin-right: 10px;
+    }
+
+    #formFilters .boxFilter .checkbox .cr .cr-icon {
+        font-size: 18px;
+    }
+
+    #formFilters .boxFilter .rangePrice{
+        margin-bottom: 25px;
+    }
     /*----- END LIST SEARCH -----*/
+
+    /*----- GO LIST THUMBS HOTELS -----*/
+    #thumbsSearch .filterThumb{
+        height: 60px;
+        margin-bottom: 40px;
+    }
+
+    #thumbsSearch .filterThumb .btnDropdown{
+        height: 53px;
+        padding: 0 30px;
+        font-size: 16px;
+    }
+
+    #thumbsSearch .filterThumb .caret {
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 7px solid;
+        margin-left: 5px;
+    }
+
+    #thumbsSearch .dropdown-menu li a{
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+
+    #thumbHotel{
+        height: 210px;
+        margin-bottom: 30px;
+        border: #e1e1e1 4px solid;
+    }
+
+    #thumbHotel .imgHotel{
+        height: 210px;
+    }
+
+    #thumbHotel .infoHotel{
+        margin: 15px 0;
+        padding: 0 15px;
+    }
+
+    #thumbHotel .infoHotel h4{
+        font-size: 22px;
+    }
+
+    #thumbHotel .infoHotel ul{
+        margin: 15px 0;
+    }
+
+    #thumbHotel .infoHotel li{
+        margin-right: 10px;
+    }
+
+    #thumbHotel .infoHotel li i{
+        font-size: 20px;
+    }
+
+    #thumbHotel .infoHotel a{
+        font-size: 16px;
+    }
+
+    #thumbHotel .priceRoom{
+        margin: 15px 0;
+        padding: 17px 15px;
+    }
+
+    #thumbHotel .priceRoom p{
+        font-size: 14px;
+    }
+
+    #thumbHotel .priceRoom h5{
+        font-size: 24px;
+        margin: 30px 0;
+    }
+
+    #thumbHotel .priceRoom button{
+        font-size: 12px;
+        border-radius: 25px;
+        padding: 5px 15px;
+    }
+
+    #thumbsSearch .paginationList li a{
+        font-size: 14px;
+        margin: 0 5px;
+    }
+
+    #thumbsSearch .paginationList li a.arrows{
+        padding: 10px;
+    }
+
+    #thumbsSearch .paginationList li a.arrows i{
+        font-size: 12px;
+    }
+    /*----- END LIST THUMBS HOTELS -----*/
 
     /*----- GO CONTENT INFO -----*/
     .promotions{
@@ -380,5 +553,49 @@
 
     .socialMediaFooter li a{
         top: 0.18vw;
+    }
+
+    #thumbHotel .infoHotel .modalMap {
+        line-height: 0;
+    }
+
+    #thumbHotel .infoHotel ul{
+        margin: 2.25vw 0;
+    }
+}
+
+@media only screen and (max-width: 415px){
+
+    #thumbHotel .priceRoom h5{
+        margin: 0;
+    }
+
+    #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
+        height: 5.33vw;
+    }
+
+    #formSearch .results p{
+        font-size: 2.5vw;
+    }
+
+    #formSearch label, #formFilters label, #formFilters .boxFilter h4, #formSearch button, #formFilters button{
+        font-size: 3.33vw;
+    }
+
+    #formSearch select{
+        font-size: 2.33vw;
+    }
+
+    #formFilters .boxFilter .checkbox span{
+        font-size: 2.16vw;
+    }
+
+    #formFilters .boxFilter label{
+        font-size: 3vw;
+    }
+
+    #formSearch .form-group i, #formFilters .form-group i {
+        bottom: 1.83vw;
+        left: 5.5vw;
     }
 }

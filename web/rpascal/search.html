@@ -17,6 +17,7 @@
 		<!-- CSS -->
 		<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 		<link href="bootstrap/css/datepicker.css" rel="stylesheet" type="text/css">
+		<link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css">
 		<link href="css/font-face.css" rel="stylesheet" type="text/css">
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<link href="css/responsive.css" rel="stylesheet" type="text/css">
@@ -101,7 +102,7 @@
 
 				<div class="row">
 					<!-- GO SIDE BAR -->
-					<div class="col-sm-4">
+					<div class="col-sm-4 col-xs-12">
 						<div id="sidebar">
 							<div id="formSearch">
 								<div class="results">
@@ -184,14 +185,455 @@
 									</div>
 								</form>
 							</div>
-							<div id="formFilters">filtros</div>
+							<div id="formFilters">
+								<h1 class="titleFilters">FILTRAR POR:</h1>
+								<form action="">
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>Destino/Nombre del hotel</label>
+											<i class="fa fa-map-marker input-icon"></i>
+											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
+										</div>
+									</div>
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>Aplicar</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="boxFilter col-xs-12">
+											<h4>SERVICIOS</h4>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Solo para adultos
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Aire acondicionado
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Desayuno
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Traslado hotel / aeropuerto / hotel
+												</label>
+												<span class="right">(10)</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="boxFilter col-xs-12">
+											<h4>categorias</h4>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													otros
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul><li><i class="fa fa-star" aria-hidden="true"></i></li></ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+													</ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+													</ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+													</ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="boxFilter col-xs-12">
+											<h4>precio</h4>
+											<div class="rangePrice">
+												price range
+											</div>
+										</div>
+									</div>
+
+
+
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>filtrar</button>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 					<!-- END SIDE BAR -->
 					<!-- GO THUMBS ITEMS -->
-					<div class="col-sm-8">
+					<div class="col-sm-8 col-xs-12">
 						<div id="thumbsSearch">
-							aqui
+							<div class="filterThumb">
+								<div class="btn-group">
+									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										PRECIO <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#">Más elegido</a></li>
+										<li><a href="#">Precio: menor a mayor</a></li>
+										<li><a href="#">Precio: mayor a menor</a></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										estrellas <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#">Estrellas: menor a mayor</a></li>
+										<li><a href="#">Estrellas: mayor a menor</a></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										mejor <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#">Mejor puntuación</a></li>
+										<li><a href="#">Mejor ubicación</a></li>
+										<li><a href="#">Mejor precio / calidad</a></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										otros <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#">Descuentos exclusivos</a></li>
+										<li><a href="#">Nuevos descuentos</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="ListHotel">
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 col-sm-5">
+										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
+										<ul>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+										</ul>
+										<div class="modalMap">
+											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul>
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+										</ul>
+									</div>
+									<div class="priceRoom col-xs-3">
+										<p>Habitación por noche</p>
+										<h5>AR$ 2.216</h5>
+										<button>Elegir Habitación</button>
+									</div>
+								</div>
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 col-sm-5">
+										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
+										<ul>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+										</ul>
+										<div class="modalMap">
+											<a href="#" data-toggle="modal" data-target="#modalMap2"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul>
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+										</ul>
+									</div>
+									<div class="priceRoom col-xs-3">
+										<p>Habitación por noche</p>
+										<h5>AR$ 2.216</h5>
+										<button>Elegir Habitación</button>
+									</div>
+								</div>
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 col-sm-5">
+										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
+										<ul>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+										</ul>
+										<div class="modalMap">
+											<a href="#" data-toggle="modal" data-target="#modalMap3"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul>
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+										</ul>
+									</div>
+									<div class="priceRoom col-xs-3">
+										<p>Habitación por noche</p>
+										<h5>AR$ 2.216</h5>
+										<button>Elegir Habitación</button>
+									</div>
+								</div>
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 col-sm-5">
+										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
+										<ul>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+										</ul>
+										<div class="modalMap">
+											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul>
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+										</ul>
+									</div>
+									<div class="priceRoom col-xs-3">
+										<p>Habitación por noche</p>
+										<h5>AR$ 2.216</h5>
+										<button>Elegir Habitación</button>
+									</div>
+								</div>
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 col-sm-5">
+										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
+										<ul>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+										</ul>
+										<div class="modalMap">
+											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul>
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+										</ul>
+									</div>
+									<div class="priceRoom col-xs-3">
+										<p>Habitación por noche</p>
+										<h5>AR$ 2.216</h5>
+										<button>Elegir Habitación</button>
+									</div>
+								</div>
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 col-sm-5">
+										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
+										<ul>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											<li><i class="fa fa-star" aria-hidden="true"></i></li>
+										</ul>
+										<div class="modalMap">
+											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul>
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+										</ul>
+									</div>
+									<div class="priceRoom col-xs-3">
+										<p>Habitación por noche</p>
+										<h5>AR$ 2.216</h5>
+										<button>Elegir Habitación</button>
+									</div>
+								</div>
+							</div>
+							<div class="paginationList">
+								<nav aria-label="">
+									<ul class="pagination">
+										<li class="disabled"><a class="arrows" href="#" aria-label="Previous"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+										<li class="active"><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a class="arrows" href="#" aria-label="Next"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+										</li>
+									</ul>
+								</nav>
+							</div>
 						</div>
 					</div>
 					<!-- END THUMBS ITEMS -->
@@ -267,8 +709,10 @@
 		<script type="text/javascript" src='js/jquery-3.1.1.min.js'></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
 		<script>
+			//SCRIPT DATEPICKER
             var nowTemp = new Date();
             var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
@@ -293,12 +737,14 @@
                 checkout.hide();
             }).data('datepicker');
 
+			//SCRIPT NAVBAR
             $(document).ready(function(){
                 $('ul li').click(function(){
                     $('li').removeClass("active");
                     $(this).addClass("active");
                 });
             });
+
 		</script>
 	</body>
 </html>
