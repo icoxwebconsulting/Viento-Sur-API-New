@@ -16,6 +16,10 @@ a, a:hover, a:focus{
 	padding-right: 0 !important;
 }
 
+.center{
+	text-align: center;
+}
+
 .left{
 	float: left;
 }
@@ -688,6 +692,189 @@ header{
 	margin-bottom: 2.08vw;
 }
 
+/*-----------------------------------------------------------------------------------------------------*/
+
+.wrapperHotelDatail{
+	padding-top: 2.5vw;
+}
+
+#descriptionHotel .titleHotel{
+	font-size: 2.33vw;
+	color: #233034;
+	font-family: 'latobold';
+	margin: 0;
+}
+
+#descriptionHotel .adress{
+	color: #979797;
+	font-size: 1.33vw;
+	font-family: 'latolight';
+	line-height: 3.16vw;
+}
+
+#descriptionHotel .adress a{
+	font-size: 1.33vw;
+	padding-left: 0.83vw;
+}
+
+#descriptionHotel ul.starsHotel{
+	padding: 0;
+	margin-top: 0.83vw;
+}
+
+#descriptionHotel ul.starsHotel li{
+	display: inline-block;
+	color: #008cd0;
+	font-size: 1.66vw;
+}
+
+#descriptionHotel .descriptionHotel{
+	margin: 2.5vw 0;
+}
+
+#descriptionHotel .descriptionHotel p{
+	font-family: 'latolight';
+	color: #233034;
+	font-size: 1.33vw;
+	margin-bottom: 0.83vw;
+	line-height: 2vw;
+}
+
+#descriptionHotel .descriptionHotel p span{
+	font-family: 'latobold';
+}
+
+#descriptionHotel .boxPrice p{
+	font-size: 1.16vw;
+	font-family: 'latoregular';
+	color: #233034;
+}
+
+#descriptionHotel .boxPrice h5{
+	color: #008cd0;
+	font-size: 2vw;
+	font-family: 'latoblack';
+	margin: 2.5vw 0;
+}
+
+#descriptionHotel .boxPrice button{
+	color: #233034;
+	font-size: 1vw;
+	text-align: center;
+	font-family: 'latolight';
+	background: transparent;
+	box-shadow: none;
+	border-radius: 25px;
+	border: #008cd0 1px solid;
+	padding: 0.41vw 1.25vw;
+}
+
+#descriptionHotel .galleryHotel{
+	margin-top: 20px;
+}
+
+#descriptionHotel .itemsHotel{
+	margin: 2.08vw 0;
+}
+
+#descriptionHotel .itemsHotel h5{
+	color: #192731;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+	padding-bottom: 0.83vw;
+	border-bottom: #008cd0 1px solid;
+	text-transform: uppercase;
+}
+
+#descriptionHotel .itemsHotel ul{
+	padding: 0;
+}
+
+#descriptionHotel .itemsHotel ul li{
+	color: #192731;
+	font-size: 1.33vw;
+	font-family: 'latolight';
+	padding-bottom: 0.83vw;
+}
+
+#descriptionHotel .itemsHotel ul li i{
+	color: #008cd0;
+	padding-right: 0.41vw;
+	vertical-align: middle;
+}
+
+#descriptionHotel .itemsHotel ul li i.iconRed{
+	color: #e0041f;
+}
+
+#descriptionHotel .titleSection{
+	font-family: 'latobold';
+	font-size: 2.33vw;
+	color: #233034;
+	padding-bottom: 0.83vw;
+	border-bottom: #008cd0 1px solid;
+	margin-top: 0;
+}
+
+#descriptionHotel .itemRoom{
+	border-radius: 5px;
+	border: #e1e1e1 0.33vw solid;
+	margin: 15px 0;
+	overflow: hidden;
+	background: #f5f5f5;
+}
+#descriptionHotel .itemRoom:hover{
+	border-color: #008cd0;
+}
+
+
+#descriptionHotel .itemRoom .titleRooms{
+	font-size: 20px;
+	font-family: 'latobold';
+	color: #008cd0;
+}
+
+#descriptionHotel .itemRoom img{
+	width: 100%;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+#descriptionHotel .itemRoom ul{
+	padding: 0;
+}
+
+#descriptionHotel .itemRoom ul li{
+	display: inline-block;
+}
+
+#descriptionHotel .itemRoom th{
+	font-family: 'latoregular';
+}
+
+#descriptionHotel .itemRoom td{
+	vertical-align: middle;
+	font-family: 'latolight';
+}
+
+#descriptionHotel .itemRoom td h5{
+	color: #008cd0;
+	font-family: 'latoblack';
+	font-size: 18px;
+}
+
+#descriptionHotel .itemRoom td button{
+	background: transparent none repeat scroll 0 0;
+	border: 1px solid #008cd0;
+	border-radius: 25px;
+	box-shadow: none;
+	color: #233034;
+	font-family: "latolight";
+	font-size: 12px;
+	padding: 3px 15px;
+	text-align: center;
+	margin-bottom: 5px;
+}
 /*------ GO LIST THUMBS HOTELS -----*/
 #thumbsSearch .filterThumb{
 	border-color: #008cd0;
@@ -882,6 +1069,7 @@ header{
 	border: none;
 	color: #ffffff;
 }
+
 /*----- END LIST THUMBS HOTELS-----*/
 
 /*----- END CONTENT LIST SEARCH -------------------------------------------------------------------------------*/

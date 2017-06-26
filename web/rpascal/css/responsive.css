@@ -424,6 +424,82 @@
     }
     /*----- END LIST THUMBS HOTELS -----*/
 
+    /*----- GO DETAIL HOTEL -----*/
+    .wrapperHotelDatail{
+        padding-top: 30px;
+    }
+
+    #descriptionHotel .titleHotel{
+        font-size: 28px;
+    }
+
+    #descriptionHotel .adress{
+        font-size: 16px;
+        line-height: 38px;
+    }
+
+    #descriptionHotel .adress a{
+        font-size: 16px;
+        padding-left: 10px;
+    }
+
+    #descriptionHotel ul.starsHotel{
+        margin-top: 10px;
+    }
+
+    #descriptionHotel ul.starsHotel li{
+        font-size: 20px;
+    }
+
+    #descriptionHotel .descriptionHotel{
+        margin: 30px 0;
+    }
+
+    #descriptionHotel .descriptionHotel p{
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 24px;
+    }
+
+    #descriptionHotel .boxPrice p{
+        font-size: 14px;
+    }
+
+    #descriptionHotel .boxPrice h5{
+        font-size: 24px;
+        margin: 30px 0;
+    }
+
+    #descriptionHotel .boxPrice button{
+        font-size: 12px;
+        border-radius: 25px;
+        padding: 5px 15px;
+    }
+
+    #descriptionHotel .itemsHotel{
+        margin: 25px 0;
+    }
+
+    #descriptionHotel .itemsHotel h5{
+        font-size: 16px;
+        padding-bottom: 10px;
+    }
+
+    #descriptionHotel .itemsHotel ul li{
+        font-size: 16px;
+        padding-bottom: 10px;
+    }
+
+    #descriptionHotel .itemsHotel ul li i{
+        padding-right: 5px;
+    }
+
+    #descriptionHotel .titleSection{
+        font-size: 28px;
+        padding-bottom: 10px;
+    }
+    /*----- END DETAIL HOTEL -----*/
+
     /*----- GO CONTENT INFO -----*/
     .promotions{
         margin: 50px 0;
@@ -510,6 +586,7 @@
 }
 
 @media only screen and (max-width: 1199px){
+
     .language select{
         background-size: 2.2vw !important;
     }
@@ -531,6 +608,7 @@
 
 /*Mobile*/
 @media only screen and (max-width: 1023px){
+
     .associations .linkConditions{
         float: none;
     }
