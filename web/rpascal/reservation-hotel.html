@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title>Viento Sur</title>
+		<meta name="description" content="Viento Sur">
+		<meta name="author" content="rjps.designer@gmail.com">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="images/favicon.png"/>
+
+		<!-- CSS -->
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="bootstrap/css/datepicker.css" rel="stylesheet" type="text/css">
+		<link href="css/font-face.css" rel="stylesheet" type="text/css">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link href="css/responsive.css" rel="stylesheet" type="text/css">
+		<link href="css/camera.css" rel="stylesheet" type="text/css">
+
+	</head>
+	<body>
+		<!-- GO HEADER -->
+		<header>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 col-sm-2 logo">
+						<a href="index.html"><img src="images/logo.png" alt=""></a>
+					</div>
+					<div class="col-xs-12 col-sm-10">
+						<div class="language">
+							<select class="form-control">
+								<option>Ingles</option>
+								<option>Español</option>
+								<option>Frances</option>
+								<option>Portugues</option>
+							</select>
+						</div>
+						<div class="socialMedia">
+							<ul>
+								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER -->
+
+		<!-- GO BANNER -->
+		<div id="banner"></div>
+		<!-- END BANNER -->
+
+		<!-- GO NAV -->
+		<nav id="navBar">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<ul>
+							<li class="active"><a href="#"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+							<li><a href="#"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- END NAV -->
+
+		<!-- GO BREADCRUMB -->
+		<div id="breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<ol class="breadcrumb">
+							<li><a href="index.html">inicio</a></li>
+							<li><a href="#">hoteles</a></li>
+							<li class="active">detalle hotel</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END BREADCRUMB -->
+
+		<!-- GO CONTENT INFO -->
+		<div class="wrapperReservation">
+			<div class="container">
+				<div class="row">
+					<!-- GO SIDE BAR -->
+					<div class="col-sm-4 col-xs-12">
+						<div id="sidebar">
+							<div id="infoReserva">
+								<h5 class="titleReserva">Su Alojamiento:</h5>
+								<img src="images/thumb-hotel-demo.jpg" alt="">
+								<ul>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+								</ul>
+								<p><span>Panamericano Buenos Aires</span></p>
+								<p>Carlos Pellegrini 551</p>
+								<p><span>Fecha de entrada:</span> 08 Jul</p>
+								<p><span>Fecha de salida:</span> 15 Jul</p>
+								<p><span>1 Adulto(s)</span></p>
+								<p><span>Menor(es)</span> </p>
+								<div class="datesPayment">
+									<h5>Usted está pagando:</h5>
+									<p>7 Noches - 1 Habitación</p>
+									<p><span>* Habitación Doble Estándar con Vista</span></p>
+									<h3>No permite cambios o cancelaciones</h3>
+									<p>Habitación por noche: AR$ 2.091</p>
+									<p>Impuestos y tasas: AR$ 2.459</p>
+									<p><span>Precio total: AR$ 18.772</span></p>
+									<aside>El importe en AR$ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</aside>
+								</div>
+							</div>
+							<div id="formSearch">
+								<form action="">
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>Destino/Nombre del hotel</label>
+											<i class="fa fa-map-marker input-icon"></i>
+											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
+										</div>
+									</div>
+									<div class="row">
+										<div class='form-group date col-xs-12' id='datetimepicker5'>
+											<label>Fecha de entrada</label>
+											<i class="fa fa-calendar" aria-hidden="true"></i>
+											<input type="text" class="form-control" value="" id="dpd5">
+										</div>
+									</div>
+									<div class="row">
+										<div class='form-group date col-xs-12' id='datetimepicker6'>
+											<label>Fecha de salida</label>
+											<<i class="fa fa-calendar" aria-hidden="true"></i>
+											<input type="text" class="form-control" value="" id="dpd6">
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>N° de habitaciones</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-6">
+											<label>Adultos</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Niños</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-6">
+											<label>Edad de los niños</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>buscar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- END SIDE BAR -->
+					<!-- GO RESERVATION HOTEL -->
+					<div class="col-sm-8 col-xs-12">
+						<div id="processPayment">
+							<form action="">
+								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Titular de habitación</h4>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<h5>Habitación 1: Habitación Doble Estándar con Vista</h5>
+												<div class="row">
+													<div class="col-sm-4">
+														<div class="form-group">
+															<label for="">Nombre(s):</label>
+															<input type="email" class="form-control" id="" placeholder="Como aparece en el documento">
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<label for="exampleInputEmail1">Apellido(s):</label>
+															<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Como aparece en el documento">
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<label for="exampleInputEmail1">Documento de identidad</label>
+															<input type="email" class="form-control" id="exampleInputEmail1">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Formas de pago</h4>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="datesPayment">
+													<h2>Formas de pago:</h2>
+													<div class="row">
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Tarjeta seleccionada:</label>
+																<select class="form-control">
+																	<optgroup label="Picnic">
+																		<option>Mustard</option>
+																		<option>Ketchup</option>
+																		<option>Relish</option>
+																	</optgroup>
+																	<optgroup label="Camping">
+																		<option>Tent</option>
+																		<option>Flashlight</option>
+																		<option>Toilet Paper</option>
+																	</optgroup>
+																</select>
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Número de tarjeta:</label>
+																<input type="email" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Vencimiento:</label>
+																<div class="row">
+																	<div class="col-xs-6">
+																		<select class="form-control">
+																				<option>Enero</option>
+																				<option>Febrero</option>
+																				<option>Marzo</option>
+																				<option>Abril</option>
+																				<option>Mayo</option>
+																				<option>Julio</option>
+																				<option>Agosto</option>
+																				<option>Septiembre</option>
+																				<option>Octubre</option>
+																				<option>Noviembre</option>
+																				<option>Diciembre</option>
+																		</select>
+																	</div>
+																	<div class="col-xs-6">
+																		<select class="form-control">
+																			<option>2017</option>
+																			<option>2016</option>
+																			<option>2015</option>
+																			<option>2014</option>
+																			<option>2013</option>
+																			<option>2012</option>
+																			<option>2011</option>
+																			<option>2010</option>
+																			<option>2009</option>
+																			<option>2008</option>
+																			<option>2007</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Código de seguridad:</label>
+																<input type="email" class="form-control" id="">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Titular de la tarjeta:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Tipo de documento:</label>
+																<select class="form-control">
+																	<option>Pasaporte</option>
+																	<option>Local</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Nro. de documento:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Género:</label>
+																<select class="form-control">
+																	<option>Femenino</option>
+																	<option>Masculino</option>
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="datesPayment">
+													<h2>Facturación:</h2>
+													<div class="row">
+														<div class="col-sm-4">
+															<div class="form-group">
+																<label for="">Nombre para facturación:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-4">
+															<div class="form-group">
+																<label for="">Documento Fiscal:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-4">
+															<div class="form-group">
+																<label for="">Situación fiscal:</label>
+																<select class="form-control">
+																	<option>Consumidor Final</option>
+																	<option>Responsable Inscripto</option>
+																	<option>Exento</option>
+																	<option>Monotributo</option>
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="datesPayment">
+													<h2>Dirección de Facturación:</h2>
+													<div class="row">
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">País:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Calle:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Nro:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Piso:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Depto:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Provincia:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Ciudad:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<label for="">Código postal:</label>
+																<input type="text" class="form-control" id="">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Datos de Contacto</h4>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-3">
+														<div class="form-group">
+															<label for="">Código de país:</label>
+															<select class="form-control">
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<label for="">Tipo:</label>
+															<select class="form-control">
+																<option>Celular</option>
+																<option>Casa</option>
+																<option>Trabajo</option>
+																<option>Fax</option>
+																<option>Otros</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label for="">Cód. área:</label>
+															<input type="email" class="form-control" id="">
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<label for="">Número:</label>
+															<input type="email" class="form-control" id="">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xs-12">
+														<p class="bg-success">Teléfono: El alojamiento lo necesita para validar tu reserva.</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="">Email:</label>
+															<input type="email" class="form-control" id="">
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="">Confirme su Email:</label>
+															<input type="email" class="form-control" id="" placeholder="confirme su email">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xs-12">
+														<p class="bg-success">Enviaremos la confirmación de tu reserva a esta dirección.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Cupones</h4>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-4">
+														<div class="form-group">
+															<label for="">Cupones:</label>
+															<input type="email" class="form-control" id="">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Datos adicionales</h4>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="form-group">
+															<label for="">Comentarios:</label>
+															<textarea class="form-control" ></textarea>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xs-12">
+														<p class="bg-success">Escribe tus peticiones en inglés o en español. Las peticiones especiales no se pueden garantizar, pero el alojamiento hará todo lo posible por satisfacer tu petición.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="buttonPayment center">
+									<button>Comprar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- END RESERVATION HOTEL -->
+				</div>
+			</div>
+		</div>
+		<!-- END CONTENT INFO -->
+		<!-- GO FOOTER -->
+		<footer>
+			<div class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 logoFooter">
+							<a href="index.html">
+								<img src="images/logo.png" alt="">
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4">
+							<h3>Siguenos</h3>
+							<p>Reserva tu viaje a cualquier parte del mundo, encontrando todas las ofertas en un solo lugar</p>
+							<div class="socialMediaFooter">
+								<ul>
+									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-4">
+							<h3>Contactanos</h3>
+							<p>Si querés enviarnos una consulta contactános a través de nuestro formulario de contacto</p>
+							<a class="btnContact" href="contact.html">contactanos</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="associations">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-md-9">
+							<ul>
+								<li><a href="#"><img src="images/logo1.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo2.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo3.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo4.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo5.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo6.png" alt=""></a></li>
+							</ul>
+						</div>
+						<div class="col-xs-12 col-md-3">
+							<a href="#" class="linkConditions">TERMINOS Y CONDICIONES</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<p>Operador Responsable: <span>Viento Sur</span> Operadores Turísticos leg. 10380 Disp. 1295/98</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- END FOOTER -->
+
+		<!--JAVASCRIPTS / JQUERY-->
+		
+		<script type="text/javascript" src='js/jquery-3.1.1.min.js'></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="js/camera.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script>
+			//SCRIPT DATEPICKER
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+            var checkin = $('#dpd1, #dpd3, #dpd5').datepicker({
+                onRender: function(date) {
+                    return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function(ev) {
+                if (ev.date.valueOf() > checkout.date.valueOf()) {
+                    var newDate = new Date(ev.date)
+                    newDate.setDate(newDate.getDate() + 1);
+                    checkout.setValue(newDate);
+                }
+                checkin.hide();
+                $('#dpd2, #dpd4, #dpd6')[0].focus();
+            }).data('datepicker');
+            var checkout = $('#dpd2, #dpd4, #dpd6').datepicker({
+                onRender: function(date) {
+                    return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function(ev) {
+                checkout.hide();
+            }).data('datepicker');
+
+			//SCRIPT NAVBAR
+            $(document).ready(function(){
+                $('ul li').click(function(){
+                    $('li').removeClass("active");
+                    $(this).addClass("active");
+                });
+            });
+
+            //SCRIPT GALLERY
+            jQuery(function(){
+
+                jQuery('#camera_wrap_3').camera({
+                    height: '56%',
+                    pagination: false,
+                    thumbnails: true,
+                    imagePath: 'images/gallery'
+                });
+
+            });
+		</script>
+	</body>
+</html>

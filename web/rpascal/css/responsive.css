@@ -425,7 +425,7 @@
     /*----- END LIST THUMBS HOTELS -----*/
 
     /*----- GO DETAIL HOTEL -----*/
-    .wrapperHotelDatail{
+    .wrapperHotelDatail, .wrapperReservation{
         padding-top: 30px;
     }
 
@@ -498,6 +498,29 @@
         font-size: 28px;
         padding-bottom: 10px;
     }
+
+    #descriptionHotel .itemRoom{
+        border: #e1e1e1 0.33vw solid;
+        margin: 15px 0;
+    }
+
+    #descriptionHotel .itemRoom .titleRooms{
+        font-size: 20px;
+    }
+
+    #descriptionHotel .itemRoom img{
+        margin-bottom: 10px;
+    }
+
+    #descriptionHotel .itemRoom td h5{
+        font-size: 18px;
+    }
+
+    #descriptionHotel .itemRoom td button{
+        font-size: 12px;
+        padding: 3px 15px;
+        margin-bottom: 5px;
+    }
     /*----- END DETAIL HOTEL -----*/
 
     /*----- GO CONTENT INFO -----*/
@@ -510,6 +533,95 @@
         padding: 0 0 30px 0;
     }
     /*----- END CONTENT INFO -----*/
+
+    /*----- GO PROCESS PAYMENT RESERVATION -----*/
+    #infoReserva{
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    #infoReserva .titleReserva, .datesPayment h5{
+        font-size: 18px;
+        margin: 15px 0;
+    }
+
+    #infoReserva img{
+        margin: 15px 0;
+    }
+
+    #infoReserva li{
+        font-size: 14px;
+        margin-right: 5px;
+    }
+
+    #infoReserva p{
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    #infoReserva h3{
+        padding: 15px;
+        font-size: 14px;
+        margin: 20px 0;
+
+    }
+
+    #infoReserva aside{
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    #processPayment .panel-default{
+        margin-bottom: 20px;
+    }
+
+    #processPayment .panel-heading{
+        padding: 20px 15px;
+    }
+
+    #processPayment .panel-title{
+        font-size: 18px;
+    }
+
+    #processPayment .panel-body h5{
+        font-size: 18px;
+    }
+
+    #processPayment .panel-body input{
+        height: 40px;
+        margin-top: 10px;
+    }
+
+    #processPayment .panel-body select{
+        height: 40px;
+        margin-top: 10px;
+    }
+
+    #processPayment .panel-body textarea{
+        min-height: 200px;
+        margin-top: 10px;
+    }
+
+    #processPayment .panel-body .bg-success{
+        padding: 15px 10px;
+        font-size: 14px;
+    }
+
+    #processPayment .buttonPayment button{
+        font-size: 16px;
+        height: 40px;
+        padding: 0 40px;
+    }
+
+    #processPayment .datesPayment{
+        margin-top: 20px;
+    }
+
+    #processPayment .datesPayment h2{
+        font-size: 26px;
+    }
+
+    /*----- GO PROCESS PAYMENT RESERVATION -----*/
 
     /*----- GO FOOTER  -----*/
     .footer{
