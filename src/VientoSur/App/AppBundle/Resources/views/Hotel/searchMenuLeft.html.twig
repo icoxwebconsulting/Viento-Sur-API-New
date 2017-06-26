@@ -36,7 +36,7 @@
                         <input type="hidden" value="0" id="adultsRoom">
                         <select id="adults" class="form-control coupled" data-couple="childrenRoom.0" name="adultsSelector">
                             {% for i in 1..8 %}
-                                <option value="{{ loop.index }}" {% if data_travelers[1].adults == loop.index %}selected="selected"{% endif %}>{{ loop.index }}</option>
+                                <option value="{{ loop.index }}" {% if data_travelers != null and data_travelers[1].adults == loop.index %}selected="selected"{% endif %}>{{ loop.index }}</option>
                             {% endfor %}
                         </select>
                     </div>

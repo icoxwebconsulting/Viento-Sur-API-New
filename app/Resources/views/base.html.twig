@@ -7,7 +7,7 @@
         <!-- GOOGLE FONTS -->
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
         <!-- bootstrap  -->
-        <link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        {#<link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />#}
         <!-- font Awesome -->
         <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
@@ -17,6 +17,8 @@
         <link href="{{ asset('css/base/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- favicon -->
         <link href="{{ asset('rpascal/css/font-face.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('rpascal/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('rpascal/bootstrap/css/datepicker.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('rpascal/css/style.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('rpascal/css/responsive.css') }}" rel="stylesheet" type="text/css">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -212,10 +214,13 @@
     {#<script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>#}
     <script src="{{ asset('js/jquery-ui-1.10.4.custom.js') }}"></script>
     {#<script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>#}
-    <script src="{{ asset('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>
+    {#<script src="{{ asset('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>#}
     <script src="{{ asset('assets/vendor/bootstrap-waitingfor/src/waitingfor.js') }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/nicescroll.js') }}"></script>
     <script src="{{ asset('js/jquery.query-object.js') }}"></script>
+    <script src="{{ asset('rpascal/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('rpascal/bootstrap/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('rpascal/js/script.js') }}"></script>
     <script>
         var dateFormat = "dd/mm/yy";
         {% if app.request.locale == 'en' %}
@@ -236,7 +241,7 @@
             try {
                 date = $.datepicker.parseDate(dateFormat, element.value);
             } catch (error) {
-                console.log(error);
+                console.log('error',error);
                 date = null;
             }
             return date;

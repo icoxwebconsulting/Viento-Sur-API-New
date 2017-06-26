@@ -31,6 +31,15 @@ a, a:hover, a:focus{
 .textRight {
 	text-align: right;
 }
+
+.marginBottom10{
+	margin-bottom: 0.83vw !important;
+}
+
+.paddingSpecial{
+	padding: 0 1.25vw 0 3.75vw;
+}
+
 /*----- END GENERALS -------*/
 
 /*----- GO HEADER -----*/
@@ -203,7 +212,6 @@ header.new-header{
 	color: #e3e3e3;
 	font-size: 1.33vw;
 	padding: 0 0 0 2.91vw;
-	height: auto;
 	height: 2.91vw;
 }
 
@@ -220,10 +228,147 @@ header.new-header{
 .search .tab-content .input-group i{
 	color: #e3e3e3;
 	font-size: 1.33vw;
-	left: 1.25vw;
+	left: 1.08vw;
 	position: absolute;
 	top: 0.75vw;
-	z-index: 9999;
+	z-index: 99;
+}
+
+.search .tab-content .btnModal{
+	height: 35px;
+	border-radius: 25px;
+	background: #192731;
+	color: #e3e3e3;
+	font-size: 1.33vw;
+	height: 2.91vw;
+	width: 100%;
+	border: none;
+	text-align: left;
+	padding: 0 2.08vw;
+}
+
+.search .tab-content .modal-dialog{
+	margin: 12.5vw auto;
+	width: 80%;
+}
+
+.search .tab-content .modal-dialog .modal-body{
+	padding-bottom: 0 !important;
+}
+
+.search .tab-content .modal-dialog h4{
+	margin: 0;
+}
+
+
+.search .tab-content .modal-dialog .close{
+	opacity: 1;
+}
+
+.search .tab-content .modal-dialog .close i{
+	color: #0181c0;
+	text-shadow: none;
+	font-size: 1.91vw;
+}
+
+.search .tab-content .modal-dialog .titleSection{
+	color: #1d2d33;
+	font-size: 1.5vw;
+	font-family: 'latobold';
+	padding-bottom: 0.83vw;
+	border-bottom: #0181c0 2px solid;
+}
+
+.search .tab-content .modal-dialog .selectRoom,.search .tab-content .modal-dialog .selectFlight{
+	padding-bottom: 1.66vw;
+}
+
+.search .tab-content .modal-dialog .selectRoom .selectGroup, .search .tab-content .modal-dialog .selectFlight .selectGroup{
+	width: 31%;
+	margin-right: 1.25vw;
+	display: inline-block;
+}
+
+.search .tab-content .modal-dialog .selectRoom .selectGroup h3, .search .tab-content .modal-dialog .selectFlight .selectGroup h3{
+	color: #1d2d33;
+	font-family: 'latobold';
+	font-size: 1.33vw;
+	text-transform: uppercase;
+}
+
+.search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
+	color: #929292;
+	font-family: 'latolight_italic';
+	font-size: 1.16vw;
+	text-transform: lowercase;
+	margin-left: 0.41vw;
+}
+
+.search .tab-content .modal-dialog .selectRoom select, .search .tab-content .modal-dialog .selectFlight select{
+	height: 2.91vw;
+	border-radius: 25px;
+	border: none;
+	background: url(../images/arrow-back-white.png) no-repeat 92% 50% #5e676e!important;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	color: #e3e3e3;
+	font-family: 'latolight';
+	font-size: 1.33vw;
+	cursor: pointer;
+	padding: 0 1.15vw;
+	width: 100%;
+}
+
+.search .tab-content .modal-dialog .selectRoom select option, search .tab-content .modal-dialog .selectFlight select option{
+	background: #fff;
+	color: #5e676e;
+}
+
+.search .tab-content .modal-dialog .addRoom{
+	padding: 15px 0;
+}
+
+.search .tab-content .modal-dialog .addRoom a{
+	color: #e0041f;
+	font-size: 1.5vw;
+	font-family: 'latoregular';
+}
+
+.search .tab-content .selectPassengers [type="radio"] {
+	border: 0;
+	height: 1px;
+	margin: -1px;
+	width: 1px;
+	display: none;
+}
+
+.search .tab-content .selectPassengers  label {
+	display: inline-block;
+	cursor: pointer;
+	font-size: 1.16vw;
+	float: left;
+	padding: 0;
+	color: #1d2d33;
+}
+
+.search .tab-content .selectPassengers [type="radio"] + span:before {
+	content: '';
+	display: inline-block;
+	width: 1.08vw;
+	height: 1.08vw;
+	vertical-align: middle;
+	border-radius: 50%;           /*hard border*/
+	border: 2px solid #0281c0;
+	margin-right: 0.75vw;
+	transition: 0.5s ease all;    /*animation here*/
+}
+
+/* the checked style using the :checked pseudo class */
+.search .tab-content .selectPassengers [type="radio"]:checked + span:before {
+	background: #0281c0;
+	box-shadow: 0 0 0 0.15em #0281c0;
+	border: 1px solid #fff;
 }
 
 .search .tab-content .selectMoney{

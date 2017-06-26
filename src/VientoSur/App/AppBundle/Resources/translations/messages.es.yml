@@ -28,6 +28,7 @@ index:
     search:
         hotel:
            title: Buscá Alojamientos con las mejores tarifas
+           destination: Destino
            from: Ingresar destino o nombre del alojamiento
            from_placeholder: Dónde vas
            checkin_date: Fecha de entrada

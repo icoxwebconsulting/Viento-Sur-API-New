@@ -2,6 +2,52 @@
 {% block title %}{{ 'index.hotels' | trans }} - {{ 'index.flights' | trans }}{% endblock %}
 {% block content %}
     <!-- TOP AREA -->
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="{{ asset('rpascal/images/banner-demo.jpg') }}" alt="slide1">
+            </div>
+            <div class="item">
+                <img src="{{ asset('rpascal/images/banner-demo2.JPG') }}" alt="slide2">
+            </div>
+            <div class="item">
+                <img src="{{ asset('rpascal/images/banner-demo3.JPG') }}" alt="slide3">
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" style="width: 5%;" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" style="width: 5%;" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        <!-- SEARCH -->
+        <div class="search">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#hoteles" onclick="showHotelItems()" aria-controls="hoteles" role="tab" data-toggle="tab" id="hotel-tab"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+                <li role="presentation"><a href="#vuelos" onclick="hideHotelItems()" aria-controls="vuelos" role="tab" data-toggle="tab" id="flight-tab"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane {% if flightMenu is not defined  %}active{% endif %} row" id="hoteles">
+                    {% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}
+                </div>
+                <div role="tabpanel" class="tab-pane {% if flightMenu is defined  %}active{% endif %}" id="vuelos">2</div>
+            </div>
+        </div>
+    </div>
     <div class="top-area show-onload">
         <div class="bg-holder full">
             <div class="bg-front bg-front-mob-rel">
@@ -9,20 +55,20 @@
                     <div class="search-tabs search-tabs-bg search-tabs-abs mt50">
                         <div class="tabbable">
                             {#<ul class="nav nav-tabs" id="myTab">#}
-                                {#<li class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Hoteles</span></a>#}
-                                {#</li>#}
-                                <!--<li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Vuelos</span></a>
-                                </li>-->
-                                <!--<li><a href="#tab-4" data-toggle="tab"><i class="fa fa-car"></i> <span >Autos</span></a>
-                                </li>
-                                <li><a href="#tab-5" data-toggle="tab"><i class="fa fa-suitcase"></i> <span >Paquetes</span></a>
-                                </li>-->
+                            {#<li class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Hoteles</span></a>#}
+                            {#</li>#}
+                            <!--<li><a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Vuelos</span></a>
+                            </li>-->
+                            <!--<li><a href="#tab-4" data-toggle="tab"><i class="fa fa-car"></i> <span >Autos</span></a>
+                            </li>
+                            <li><a href="#tab-5" data-toggle="tab"><i class="fa fa-suitcase"></i> <span >Paquetes</span></a>
+                            </li>-->
                             {#</ul>#}
                             <div class="tab-content">
                                 <!-- hoteles -->
-                                <div class="tab-pane  in {% if flightMenu is not defined  %}active{% endif %}" id="tab-1">
-                                    {% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}
-                                </div>
+                                {#<div class="tab-pane  in {% if flightMenu is not defined  %}active{% endif %}" id="tab-1">#}
+                                    {#{% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}#}
+                                {#</div>#}
 
                                 <!-- vuelos -->
                                 <div class="tab-pane {% if flightMenu is defined  %}active{% endif %}" id="tab-2">
@@ -45,28 +91,28 @@
                 </div>
             </div>
 
-            <div class="owl-carousel owl-slider owl-carousel-area visible-lg" id="owl-carousel-slider">
+            {#<div class="owl-carousel owl-slider owl-carousel-area visible-lg" id="owl-carousel-slider">#}
 
-                <div class="bg-holder full">
-                    <div class="bg-mask"></div>
-                    <div class="bg-img" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto.jpg') }});"></div>
-                </div>
+            {#<div class="bg-holder full">#}
+            {#<div class="bg-mask"></div>#}
+            {#<div class="bg-img" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto.jpg') }});"></div>#}
+            {#</div>#}
 
-                <div class="bg-holder full">
-                    <div class="bg-mask"></div>
-                    <div class="bg-img" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto2.jpg') }});"></div>
-                </div>
+            {#<div class="bg-holder full">#}
+            {#<div class="bg-mask"></div>#}
+            {#<div class="bg-img" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto2.jpg') }});"></div>#}
+            {#</div>#}
 
-                <div class="bg-holder full">
-                    <div class="bg-mask"></div>
-                    <div class="bg-img" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto3.jpg') }});"></div>
-                </div>
-            </div>
-            <div class="bg-img hidden-lg" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto.jpg') }});"></div>
-            <div class="bg-mask hidden-lg"></div>
+            {#<div class="bg-holder full">#}
+            {#<div class="bg-mask"></div>#}
+            {#<div class="bg-img" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto3.jpg') }});"></div>#}
+            {#</div>#}
+            {#</div>#}
+            {#<div class="bg-img hidden-lg" style="background-image:url({{ asset('bundles/vientosurappapp/images/foto.jpg') }});"></div>#}
+            {#<div class="bg-mask hidden-lg"></div>#}
         </div>
-        <div class="tab-content">
-            <div class="tab-pane in {% if flightMenu is not defined  %}active{% endif %}" id="tab-1-1">
+        <div class="tab-content"  id="tab-hotel-1">
+            <div class="tab-pane in {% if flightMenu is not defined  %}active{% endif %}">
                 {% include 'VientoSurAppAppBundle:Index:promotions.html.twig' %}
             </div>
         </div>
@@ -105,25 +151,75 @@
 {{ parent() }}
 <script src="{{ asset('js/flight-form.js') }}"></script>
 <script>
+    function optionChangeCurrency(currency){
+        change(currency);
+    }
+    function showHotelItems() {
+        $('#tab-hotel-1').show()
+    }
+    function hideHotelItems() {
+        $('#tab-hotel-1').hide()
+    }
     $(document).ready(function () {
-        $('.slimmenu li').on('click', function (event) {
+
+        $('.nav.nav-tabs li').on('click', function (event) {
             //event.preventDefault();
+            console.log('work');
             if (!$(this).hasClass('active')) {
+                console.log('click1')
                 var clase = 'flight';
                 var tab = '1';
-                var promo = '1-1';
+                var promo = 'hotel-1';
                 if ($(this).hasClass('flight')) {
                     tab = '2';
                     clase = 'hotel'
-                    promo = '2-1';
+                    promo = 'flight-1';
                 }
                 $('.slimmenu li.' + clase).removeClass('active');
                 $(this).addClass('active');
                 $(".tab-content .active").removeClass("active");
+                console.log(promo)
                 $('#tab-' + tab).addClass('active')
                 $('#tab-' + promo).addClass('active')
             }
         });
     });
+</script>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    {% if app.request.locale == 'en' %}
+    var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthNamesShort = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+    {% elseif app.request.locale == 'pt' %}
+    var dayNamesMin = ["Do", "Se", "Te", "Qu", "Qa", "Se", "Sa"];
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthNamesShort = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+    {% else %}
+    var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
+    var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    var monthNamesShort = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Aug", "Sep", "Out", "Nov", "Dez" ];
+    {% endif %}
+    var checkin = $('#dpd1, #dpd3').datepicker({
+        onRender: function(date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function(ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setValue(newDate);
+        }
+        checkin.hide();
+        $('#dpd2, #dpd4')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2, #dpd4').datepicker({
+        onRender: function(date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function(ev) {
+        checkout.hide();
+    }).data('datepicker');
 </script>
 {% endblock %}

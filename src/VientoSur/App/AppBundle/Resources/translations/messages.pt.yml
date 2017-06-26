@@ -27,6 +27,7 @@ index:
     search:
         hotel:
            title: Procurar alojamento com as melhores taxas
+           destination: Destino
            from: Introduzir destino ou nome do alojamento
            from_placeholder: Onde você está indo
            checkin_date: Data de entrada
