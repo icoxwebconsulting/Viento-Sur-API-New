@@ -104,7 +104,7 @@
 									<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas" autocomplete="on">
 								</div>
 							</div>
-							<div class="col-xs-4">
+							<div class="col-xs-4 paddingSpecial">
 								<h4><span>02</span> fecha</h4>
 								<div class="form-inline">
 									<div class='input-group date col-xs-5' id='datetimepicker1'>
@@ -119,6 +119,63 @@
 							</div>
 							<div class="col-xs-4">
 								<h4><span>03</span> habitaciones</h4>
+								<button type="button" class="btnModal marginBottom10" data-toggle="modal" data-target="#roomModal">
+									2 Adultos, 1 Niño, 1Habitación
+								</button>
+								<!-- Modal -->
+								<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+												<h4 class="modal-title" id="myModalLabel">Habitaciones</h4>
+											</div>
+											<div class="modal-body">
+												<div class="contectRoom">
+													<h5 class="titleSection">Habitacion 1</h5>
+													<div class="selectRoom">
+														<div class="selectGroup">
+															<h3>adultos <span>+12 años</span></h3>
+															<select>
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+															</select>
+														</div>
+														<div class="selectGroup">
+															<h3>niños / bebes <span>0 a 12 años</span></h3>
+															<select>
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+															</select>
+															</div>
+														<div class="selectGroup">
+															<h3>edad niños</h3>
+															<select>
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+															</select>
+														</div>
+													</div>
+													<div class="addRoom">
+														<a href="#">+ Agregar habitación</a>
+													</div>
+													<div class="btnSearch" data-dismiss="modal">
+														<button>Aplicar</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="col-xs-3 col-xs-offset-9 selectMoney">
 								<select class="form-control">
@@ -134,7 +191,118 @@
 							</div>
 						</form>
 					</div>
-					<div role="tabpanel" class="tab-pane" id="vuelos">2</div>
+					<div role="tabpanel" class="tab-pane row" id="vuelos">
+						<form action="">
+							<div class="col-xs-4">
+								<h4><span>01</span> donde</h4>
+								<div class="form-group-icon-left marginBottom10">
+									<i class="fa fa-map-marker input-icon"></i>
+									<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Origen" autocomplete="on">
+								</div>
+								<div class="form-group-icon-left marginBottom10">
+									<i class="fa fa-map-marker input-icon"></i>
+									<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino" autocomplete="on">
+								</div>
+							</div>
+							<div class="col-xs-4 paddingSpecial">
+								<h4><span>02</span> fecha</h4>
+								<div class="">
+									<div class='input-group date marginBottom10 col-xs-10' id='datetimepicker3'>
+										<i class="glyphicon glyphicon-calendar"></i>
+										<input type="text" class="form-control" value="" id="dpd3">
+									</div>
+									<div class='input-group date marginBottom10 col-xs-10' id='datetimepicker4'>
+										<i class="glyphicon glyphicon-calendar"></i>
+										<input type="text" class="form-control" value="" id="dpd4">
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<h4><span>03</span> cuantos</h4>
+								<div class="selectPassengers">
+									<div class="marginBottom10">
+										<button type="button" class="btnModal" data-toggle="modal" data-target="#flightsModal">
+											2 Pasajeros
+										</button>
+										<!-- Modal -->
+										<div class="modal fade" id="flightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+														<h4 class="modal-title" id="myModalLabel">Pasajeros</h4>
+													</div>
+													<div class="modal-body">
+														<div class="contentFlight">
+															<div class="selectFlight">
+																<div class="selectGroup">
+																	<h3>adultos</h3>
+																	<select>
+																		<option>1</option>
+																		<option>2</option>
+																		<option>3</option>
+																		<option>4</option>
+																		<option>5</option>
+																	</select>
+																</div>
+																<div class="selectGroup">
+																	<h3>menores</h3>
+																	<select>
+																		<option>1</option>
+																		<option>2</option>
+																		<option>3</option>
+																		<option>4</option>
+																		<option>5</option>
+																	</select>
+																</div>
+																<div class="selectGroup">
+																	<h3>edad menores</h3>
+																	<select>
+																		<option>0 a 24 meses (en brazos)</option>
+																		<option>0 a 24 meses (en asiento)</option>
+																		<option>2 a 11 años</option>
+																		<option>12 años o más</option>
+																	</select>
+																</div>
+															</div>
+															<div class="btnSearch" data-dismiss="modal">
+																<button>Aplicar</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="radioButton">
+										<label for="radio-one" class="radio-inline">
+											<input type="radio" value="radio-one" name="quality" id="radio-one"> <span>Solo Ida</span>
+										</label>
+
+										<label for="radio-two" class="radio-inline">
+											<input type="radio" value="radio-two" name="quality" id="radio-two"> <span>Ida y Vuelta</span>
+										</label>
+
+										<label for="radio-three" class="radio-inline">
+											<input type="radio" value="radio-two"  name="quality" id="radio-three" checked> <span>Multidestino</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-3 col-xs-offset-9 selectMoney">
+								<select class="form-control">
+									<option>USD - Us Dollar</option>
+									<option>USD - Us Dollar</option>
+									<option>USD - Us Dollar</option>
+									<option>USD - Us Dollar</option>
+									<option>USD - Us Dollar</option>
+								</select>
+							</div>
+							<div class="col-xs-12 btnSearch">
+								<button>buscar</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -145,37 +313,45 @@
 			<div class="promotions">
 				<div class="container">
 					<div class="row">
+						<div class="col-xs-12">
+							<h1>Disfruta de nuestras prociones de Invierno</h1>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-xs-4">
-							<div class="thumbs">
-								<img src="images/img-promtion-demo.jpg" alt="promo 1">
-								<div class="captionThumb">
-									<a href="#">
-										<h4>Grand Hotel Bagni Nouvi</h4>
-										<h5>Boston, Massachusetss</h5>
-									</a>
-								</div>
+							<div class="grid">
+								<figure class="effect-goliath">
+									<img src="images/img-promtion-demo.jpg" alt="imgDemo"/>
+									<figcaption>
+										<h2>Grand Hotel Bagni Nouvi</h2>
+										<p>When Goliath comes out, you should run.</p>
+										<a href="#"></a>
+									</figcaption>
+								</figure>
 							</div>
 						</div>
 						<div class="col-xs-4">
-							<div class="thumbs">
-								<img src="images/img-promtion-demo.jpg" alt="promo 1">
-								<div class="captionThumb">
-									<a href="#">
-										<h4>Grand Hotel Bagni Nouvi</h4>
-										<h5>Boston, Massachusetss</h5>
-									</a>
-								</div>
+							<div class="grid">
+								<figure class="effect-goliath">
+									<img src="images/img-promtion-demo.jpg" alt="imgDemo"/>
+									<figcaption>
+										<h2>Grand Hotel Bagni Nouvi</h2>
+										<p>When Goliath comes out, you should run.</p>
+										<a href="#"></a>
+									</figcaption>
+								</figure>
 							</div>
 						</div>
 						<div class="col-xs-4">
-							<div class="thumbs">
-								<img src="images/img-promtion-demo.jpg" alt="promo 1">
-								<div class="captionThumb">
-									<a href="#">
-										<h4>Grand Hotel Bagni Nouvi</h4>
-										<h5>Boston, Massachusetss</h5>
-									</a>
-								</div>
+							<div class="grid">
+								<figure class="effect-goliath">
+									<img src="images/img-promtion-demo.jpg" alt="imgDemo"/>
+									<figcaption>
+										<h2>Grand Hotel Bagni Nouvi</h2>
+										<p>When Goliath comes out, you should run.</p>
+										<a href="#">View more</a>
+									</figcaption>
+								</figure>
 							</div>
 						</div>
 					</div>
@@ -256,7 +432,7 @@
             var nowTemp = new Date();
             var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-            var checkin = $('#dpd1').datepicker({
+            var checkin = $('#dpd1, #dpd3').datepicker({
                 onRender: function(date) {
                     return date.valueOf() < now.valueOf() ? 'disabled' : '';
                 }
@@ -267,9 +443,9 @@
                     checkout.setValue(newDate);
                 }
                 checkin.hide();
-                $('#dpd2')[0].focus();
+                $('#dpd2, #dpd4')[0].focus();
             }).data('datepicker');
-            var checkout = $('#dpd2').datepicker({
+            var checkout = $('#dpd2, #dpd4').datepicker({
                 onRender: function(date) {
                     return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
                 }

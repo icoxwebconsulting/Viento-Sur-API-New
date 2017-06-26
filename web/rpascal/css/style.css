@@ -156,6 +156,7 @@ header.new-header{
 	margin-right: 2px;
 	background: #505152;
 	color: #ffffff;
+
 }
 
 .nav-tabs > li > a:hover {
@@ -408,49 +409,614 @@ header.new-header{
 }
 /*----- END SLIDER -----*/
 
-/*----- GO CONTENT INFO -----*/
-.promotions{
-	margin: 8.33vw 0 4.16vw 0;
+/*----- GO BANNER -----*/
+#banner{
+	height: 25vw;
+	overflow: hidden;
+	background: url("../images/banner-demo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+/*----- END BANNER -----*/
+
+/*----- GO NAVBAR -----*/
+#navBar{
+	background: #008cd0;
+	height: 4.58vw;
+	margin-bottom: 0.33vw;
 }
 
-.promotions .thumbs{
-	border: #d7d7d7 0.83vw solid;
-	border-radius: 5px;
-	height: 28.33vw;
-	margin-bottom: 4.16vw;
-	overflow: hidden;
+#navBar ul{
+	padding: 0;
+	margin: 0;
+}
+
+#navBar li{
+	float: left;
+	border-color: #fff;
+	border-style: solid;
+	border-width: 0 1px;
 	position: relative;
 }
 
-.promotions .thumbs:hover{
+#navBar li a{
+	display: block;
+	padding: 1.3vw 3.33vw;
+	color: #233034;
+	font-size: 1.33vw;
+	font-family: 'latoregular';
+	text-transform: uppercase;
+}
+
+#navBar li a i{
+	font-size: 1.5vw;
+	padding-right: 0.83vw;
+}
+
+#navBar li.active a, #navBar li.active a i{
+	color: #ffffff;
+}
+
+#navBar li.active:after{
+	bottom: -1.4vw;
+	content: "\f0d8";
+	font-family: "FontAwesome";
+	font-size: 2.5vw;
+	left: 43%;
+	position: absolute;
+	color: #ffffff;
+}
+
+#navBar li + li{
+	border-left: none !important;
+}
+/*----- END NAVBAR -----*/
+
+/*----- GO BREADCRUMB -----*/
+#breadcrumb{
+	padding: 1.25vw 0;
+	background: #e1e1e1;
+}
+
+#breadcrumb ol{
+	background: none;
+	margin: 0;
+	padding: 0;
+}
+
+#breadcrumb ol li a{
+	text-transform: uppercase;
+	color: #233034;
+	font-family: 'latobold';
+	font-size: 1.33vw;
+}
+
+#breadcrumb ol li a:hover{
+	text-decoration: underline;
+}
+
+#breadcrumb ol li.active{
+	font-family: 'latolight';
+	text-transform: uppercase;
+	color: #233034;
+	font-size: 1.33vw;
+}
+
+.breadcrumb li + li:before {
+	color: #727272;
+	content: "\f054";
+	padding: 0 0.41vw;
+	font-family: "FontAwesome";
+	font-size: 1.16vw;
+}
+/*----- END BREADCRUMB -----*/
+
+/*----- GO CONTENT LIST SEARCH --------------------------------------------------------------------------------*/
+.wrapperSearch{
+	padding-bottom: 7.5vw;
+}
+
+.message{
+	margin: 0;
+	padding: 3.33vw 0;
+	font-size: 2.66vw;
+	color: #233034;
+	font-family: 'latoitalic';
+}
+
+#formSearch, #formFilters{
+	border-radius: 10px;
+	background: #363636;
+	padding: 2.5vw 1.66vw;
+	margin-bottom: 3.33vw;
+}
+
+#formSearch .results{
+	margin-bottom: 4.16vw;
+}
+
+#formSearch .results p{
+	color: #ffffff;
+	font-size: 1.5vw;
+	font-family: 'latolight';
+}
+
+#formSearch .results p span{
+	font-family: 'latobold';
+}
+
+#formSearch label, #formFilters label{
+	color: #ffffff;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+}
+
+#formSearch .form-group, #formFilters .form-group{
+	margin-bottom: 2.5vw;
+}
+
+#formSearch .form-group i, #formFilters .form-group i{
+	bottom: 0.83vw;
+	color: #233034;
+	left: 2.5vw;
+	position: absolute;
+	font-size: 1.66vw;
+	z-index: 99;
+}
+
+#formSearch input, #formFilters input{
+	border-radius: 25px;
+	height: 3.33vw;
+	border: none;
+	box-shadow: none;
+	color: #233034;
+	font-size: 1.33vw;
+	font-family: 'latoregular';
+	position: relative;
+	padding-left: 4.16vw;
+}
+
+#formSearch button, #formFilters button{
+	border: none;
+	box-shadow: none;
+	border-radius: 25px;
+	height: 3.33vw;
+	width: 100%;
+	background: #0777ae;
+	text-align: center;
+	font-size: 1.33vw;
+	color: #e3e3e3;
+	font-family: 'latobold';
+	text-transform: uppercase;
+}
+
+#formSearch select{
+	background: url(../images/arrow-down-select.png) no-repeat 92% 50% #ffffff !important;
+	height: 3.33vw;
+	border: none;
+	border-radius: 25px;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	cursor: pointer;
+	font-size: 1.33vw;
+	padding: 0.5vw 1vw;
+}
+
+#formFilters .titleFilters{
+	color: #fcfeff;
+	text-transform: uppercase;
+	font-size: 2.83vw;
+	margin: 0 0 3.33vw 0;
+	font-family: 'latobold';
+}
+
+#formFilters .boxFilter h4{
+	color: #fcfeff;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+	padding: 1.66vw 0 0.83vw 0;
+	border-bottom: #7f7f7f 1px solid;
+	margin-bottom: 1.66vw;
+	text-transform: uppercase;
+}
+
+#formFilters .boxFilter ul{
+	padding: 0;
+	display: inline-block;
+}
+
+#formFilters .boxFilter ul li{
+	display: inline-block;
+	padding-right: 0.41vw;
+}
+
+#formFilters .boxFilter label {
+	padding-left: 0;
+	color: #fcfeff;
+	font-size: 1.16vw;
+	font-family: 'latolight';
+	vertical-align: top;
+}
+
+#formFilters .boxFilter .checkbox {
+	margin: 0 0 1.25vw 0;
+}
+
+#formFilters .boxFilter .checkbox span{
+	color: #fcfeff;
+	font-family: 'latolight';
+	font-size: 1.16vw;
+}
+
+#formFilters .boxFilter .checkbox .cr {
+	border: #ffffff 1px solid;
+	width: 2vw;
+	height: 2vw;
+	padding: 0.16vw;
+	display: inline-flex;
+	margin-right: 0.83vw;
+	vertical-align: middle;
+}
+
+#formFilters .boxFilter .checkbox .cr .cr-icon {
+	color: #00bce7;
+	font-size: 1.5vw;
+}
+
+#formFilters .boxFilter .checkbox label input[type="checkbox"] {
+	display: none;
+}
+
+#formFilters .boxFilter .checkbox label input[type="checkbox"] + .cr > .cr-icon {
+	transform: scale(3) rotateZ(-20deg);
+	opacity: 0;
+	transition: all 0.3s ease-in;
+}
+
+#formFilters .boxFilter .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon {
+	transform: scale(1) rotateZ(0deg);
+	opacity: 1;
+}
+
+#formFilters .boxFilter .checkbox label input[type="checkbox"]:disabled + .cr {
+	opacity: .5;
+}
+
+#formFilters .boxFilter .rangePrice{
+	margin-bottom: 2.08vw;
+}
+
+/*------ GO LIST THUMBS HOTELS -----*/
+#thumbsSearch .filterThumb{
+	border-color: #008cd0;
+	border-style: solid;
+	border-width: 6px 2px 2px 2px;
+	border-radius: 5px;
+	margin-bottom: 3.33vw;
+	line-height: 0;
+}
+
+#thumbsSearch .filterThumb .btnDropdown{
+	border-style: solid;
+	border-color: #008cd0;
+	border-width: 0 1px 0 0;
+	background: none;
+	height: 4.41vw;
+	padding: 0 2.5vw;
+	text-transform: uppercase;
+	color: #233034;
+	font-family: 'latobold';
+	font-size: 1.33vw;
+}
+
+#thumbsSearch .filterThumb .caret {
+	border-left: 0.58vw solid transparent;
+	border-right: 0.58vw solid transparent;
+	border-top: 0.58vw solid;
+	display: inline-block;
+	height: 0;
+	margin-left: 0.4vw;
+	vertical-align: middle;
+	width: 0;
+}
+
+.btn-group.open .dropdown-toggle{
+	box-shadow: none;
+}
+
+#thumbsSearch .dropdown-menu{
+	box-shadow: none;
+}
+
+#thumbsSearch .dropdown-menu li a{
+	padding: 0.41vw 1.66vw;
+	color: #233034;
+	font-size: 1.16vw;
+	font-family: 'latoregular';
+}
+
+#thumbsSearch .dropdown-menu li a:hover{
+	background-color: #008cd0;
+	text-decoration: none;
+	color: #ffffff;
+}
+
+#thumbHotel{
+	border-radius: 5px;
+	border: #e1e1e1 0.33vw solid;
+	height: 17.5vw;
+	margin-bottom: 2.5vw;
+	overflow: hidden;
+	background: #f5f5f5;
+}
+
+#thumbHotel:hover{
 	border-color: #008cd0;
 }
 
-.promotions .thumbs .captionThumb{
-	position: absolute;
-	bottom: 0;
-	height: 7.08vw;
-	background: rgba(25,39,49,0.8);
-	width:100%;
-	padding: 1.25vw;
+#thumbHotel .imgHotel{
+	overflow: hidden;
+	height: 17.5vw;
 }
 
-.promotions .thumbs .captionThumb h4{
+#thumbHotel .imgHotel img{
+	width: auto;
+	height: 100%;
+}
+
+#thumbHotel .infoHotel{
+	margin: 1.25vw 0;
+	padding: 0 1.25vw;
+}
+
+#thumbHotel .infoHotel h4{
+	color: #233034;
+	font-size: 1.83vw;
+	font-family: 'latobold';
+	margin: 0;
+}
+
+#thumbHotel .infoHotel ul{
+	padding: 0;
+	margin: 1.25vw 0;
+	line-height: 0;
+}
+
+#thumbHotel .infoHotel li{
+	display: inline-block;
+	margin-right: 0.83vw;
+}
+
+#thumbHotel .infoHotel li i{
+	font-size: 1.66vw;
+	color: #bbbbbb;
+}
+
+#thumbHotel .infoHotel li i.fa-star{
+	color: #008cd0;
+
+}
+
+#thumbHotel .infoHotel a{
+	font-size: 1.33vw;
+	font-family: 'latoregular';
+	color: #0777ae;
+}
+
+#thumbHotel .infoHotel a:hover{
+	text-decoration: none;
+	color: #233034;
+}
+
+#thumbHotel .priceRoom{
+	margin: 1.25vw 0;
+	padding: 1.41vw 1.25vw;
+	border-left: #ebebeb 1px solid;
+	text-align: center;
+}
+
+#thumbHotel .priceRoom p{
+	font-size: 1.16vw;
+	font-family: 'latoregular';
+	color: #233034;
+}
+
+#thumbHotel .priceRoom h5{
+	color: #008cd0;
+	font-size: 2vw;
+	font-family: 'latoblack';
+	margin: 2.5vw 0;
+}
+
+#thumbHotel .priceRoom button{
+	color: #233034;
+	font-size: 1vw;
+	text-align: center;
+	font-family: 'latolight';
+	background: transparent;
+	box-shadow: none;
+	border-radius: 25px;
+	border: #008cd0 1px solid;
+	padding: 0.41vw 1.25vw;
+}
+
+#thumbsSearch .paginationList{
+	text-align: center;
+}
+
+#thumbsSearch .paginationList li a{
+	border-radius: 50%;
+	color: #0777ae;
+	font-size: 1.16vw;
+	font-family: 'latoregular';
+	border: #0777ae 1px solid;
+	margin: 0 0.41vw;
+	float: none;
+	display: inline-block;
+	padding: 0.5vw 1vw;
+}
+
+#thumbsSearch .paginationList li a:hover, #thumbsSearch .paginationList li a:focus, #thumbsSearch .paginationList li.active a{
+	color: #ffffff;
+	background-color: #0777ae;
+}
+
+#thumbsSearch .paginationList li a.arrows{
+	background: #bbbbbb;
+	border: none;
+	color: #ffffff;
+	padding: 0.83vw;
+}
+
+#thumbsSearch .paginationList li a.arrows i{
+	font-size: 1vw;
+	color: #ffffff;
+	vertical-align: middle;
+	display: block;
+}
+
+#thumbsSearch .paginationList li a:hover.arrows{
+	background: #0777ae;
+	border: none;
+	color: #ffffff;
+}
+/*----- END LIST THUMBS HOTELS-----*/
+
+/*----- END CONTENT LIST SEARCH -------------------------------------------------------------------------------*/
+
+/*----- GO CONTENT INFO -----*/
+.promotions{
+	margin: 4.16vw 0;
+}
+
+.promotions h1{
+	margin: 0;
+	padding: 0 0 2.5vw 0;
+	text-align: center;
+	font-size: 2.66vw;
+	color: #233034;
+	font-family: 'latobold';
+}
+
+.grid figure {
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 15px;
+}
+
+.grid figure img {
+	position: relative;
+	display: block;
+	min-height: 100%;
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+.grid figure figcaption {
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+	pointer-events: none;
+}
+
+.grid figure figcaption,
+.grid figure figcaption > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.grid figure figcaption > a {
+	z-index: 1000;
+	text-indent: 200%;
+	white-space: nowrap;
+	font-size: 0;
+	opacity: 0;
+}
+
+.grid figure h2 {
 	font-family: 'latoregular';
 	font-size: 2vw;
 	color: #ffffff;
 	margin: 0;
+	background: rgba(0,0,0,0.6);
 }
-.promotions .thumbs .captionThumb h5{
-	font-family: 'latolight';
-	font-size: 1.66vw;
-	color: #c3c3c3;
+
+.grid figure p {
+	letter-spacing: 1px;
+	font-size: 68.5%;
 	margin: 0;
 }
+
+figure.effect-goliath {
+	background: #0777ae;
+	border: #d7d7d7 10px solid;
+}
+
+figure.effect-goliath img,
+figure.effect-goliath h2 {
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+}
+
+figure.effect-goliath img {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+figure.effect-goliath h2,
+figure.effect-goliath p {
+	position: absolute;
+	bottom: 0;
+	padding: 20px;
+}
+
+figure.effect-goliath p {
+	text-transform: none;
+	font-size: 90%;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(0,50px,0);
+	transform: translate3d(0,50px,0);
+}
+
+figure.effect-goliath:hover{
+	border: #0777ae 10px solid;
+}
+
+figure.effect-goliath:hover img {
+	-webkit-transform: translate3d(0,-80px,0);
+	transform: translate3d(0,-80px,0);
+}
+
+figure.effect-goliath:hover h2 {
+	-webkit-transform: translate3d(0,-100px,0);
+	transform: translate3d(0,-100px,0);
+}
+
+figure.effect-goliath:hover p {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	background: #0777ae;
+}
+
 /*----- END CONTENT INFO -----*/
 
 /*----- GO FOOTER  -----*/
-
 .footer{
 	background: #222222;
 	padding: 2.5vw 0;
