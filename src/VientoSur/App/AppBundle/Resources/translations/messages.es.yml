@@ -33,12 +33,20 @@ index:
            from_placeholder: Dónde vas
            checkin_date: Fecha de entrada
            checkout_date: Fecha de salida
+           date: Fecha
+           apply: Aplicar
+           add_room: Agregar habitación
+           delete_room: Eliminar habitación
+           us_dollar: Dólar Estadounidense
+           us_argentinian: Peso Argentino
            rooms: Habitaciones
            room: Habitación
            adults: Adultos
            adult: Adulto
-           childs: Menores
+           childs: Niños
            child: Menor
+           babies: Bebes
+           years: Años
            childs_ages: Edad de los menores
            age: Edad
            searching: Buscando Alojamientos...

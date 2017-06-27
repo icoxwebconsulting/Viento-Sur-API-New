@@ -14,6 +14,54 @@ $(document).ready(function () {
         }
     });
 
+    $("#add-room").click(function(){
+        var visibleRoom = $(".room:visible").length;
+        console.log('visible room', visibleRoom);
+
+        var countRoom = visibleRoom + 1;
+        console.log(countRoom);
+        $('.room'+countRoom).show();
+
+        if ((countRoom > 1) && (countRoom < 5)){
+            $('#delete-room').show();
+        }
+    });
+
+    $("#delete-room").click(function(){
+        var visibleRoom = $(".room:visible").length;
+        var id = "#childrenRoom"+visibleRoom;
+
+        if (visibleRoom > 1){
+            $('.room'+visibleRoom).hide();
+            $(id+" option:first-child").attr("selected", true);
+
+            if (visibleRoom == 2){
+                $('#delete-room').hide();
+            }
+        }
+    });
+
+    $("#data-travelers").click(function(){
+        var adults = 0;
+        var childs = 0;
+        var count = 0;
+        var visibleRoom = $(".room:visible").length;
+
+        for(var i=0; i<visibleRoom; i++){
+            console.log(i);
+            count++;
+            console.log('count', count);
+
+            adults = adults + parseInt($('#adults'+count).val());
+            childs = childs + parseInt($('#childrenRoom'+count).val());
+        }
+        $('#data-adults').text(adults);
+        $('#data-childs').text(childs);
+        $('#data-room').text(visibleRoom);
+
+        $('#roomsQty').val(visibleRoom);
+    });
+
     $("#roomsQty").change(function () {
         if (this.value == 1) {
             $('#room').show();

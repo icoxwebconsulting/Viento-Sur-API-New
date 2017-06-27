@@ -32,13 +32,21 @@ index:
            from: Enter destination or hotel name
            from_placeholder: Where are you going
            checkin_date: Checkin Date
+           date: Date
            checkout_date: Checkout Date
+           apply: Apply
+           add_room: Add room
+           delete_room: Remove room
+           us_dollar: US Dollar
+           us_argentinian: Argentinian peso
            rooms: Rooms
            room: Room
            adults: Adults
            adult: Adult
            childs: Childs
            child: Child
+           babies: Babies
+           years: Years
            childs_ages: Childs ages
            age: Age
            searching: Searching Hotels...

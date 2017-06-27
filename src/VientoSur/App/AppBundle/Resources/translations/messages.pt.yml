@@ -30,12 +30,21 @@ index:
            destination: Destino
            from: Introduzir destino ou nome do alojamento
            from_placeholder: Onde você está indo
+           date: Data
            checkin_date: Data de entrada
            checkout_date: Data de saída
+           apply: Aplicar
+           add_room: Quarto adicional
+           delete_room: Remover habitación
+           us_dollar: Dólar americano
+           us_argentinian: Peso Argentino
            rooms: Quartos
            room: Quarto
            adult: Adulto
            child: Criança
+           childs: Crianças
+           babies: Bebês
+           years: Anos
            childs_ages: Idade das crianças
            age: Idade
            searching: Procurando por hotéis
