@@ -92,7 +92,7 @@
             {% endblock %}
 
             <!-- GO FOOTER -->
-            <footer>
+            <footer id="main-footer">
                 <div class="footer">
                     <div class="container">
                         <div class="row">
@@ -204,8 +204,8 @@
         </div>
     {% endblock %}
 
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/modernizr.js') }}"></script>
@@ -214,15 +214,19 @@
     {#<script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>#}
     <script src="{{ asset('js/jquery-ui-1.10.4.custom.js') }}"></script>
     {#<script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>#}
-    {#<script src="{{ asset('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>#}
+    <script src="{{ asset('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-waitingfor/src/waitingfor.js') }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/nicescroll.js') }}"></script>
     <script src="{{ asset('js/jquery.query-object.js') }}"></script>
     {% block last_jquery %} {% endblock %}
     <script src="{{ asset('rpascal/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('rpascal/bootstrap/js/bootstrap-datepicker.js') }}"></script>
+    {#<script src="{{ asset('rpascal/bootstrap/js/bootstrap-datepicker.js') }}"></script>#}
     <script src="{{ asset('rpascal/js/script.js') }}"></script>
     <script>
+        $('#flag_modal').click(function() {
+            $('#roomModal').modal('show')
+        });
+
         var dateFormat = "dd/mm/yy";
         {% if app.request.locale == 'en' %}
             var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];

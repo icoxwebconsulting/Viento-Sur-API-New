@@ -27,7 +27,7 @@ index:
     cancellation_number: Cancellation Number
     search:
         hotel:
-            destination: Destination
+           destination: Destination
            title: Find Hotels with the best rates
            from: Enter destination or hotel name
            from_placeholder: Where are you going

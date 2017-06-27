@@ -12,17 +12,17 @@
         <div class="form-inline">
             <div class='input-group date col-xs-5' id='datetimepicker1'>
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input type="text" class="form-control" name="start"  required value="" id="dpd1" placeholder="dd/mm/yyyy">
+                <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" />
             </div>
             <div class='input-group date col-xs-5' id='datetimepicker2'>
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input type="text" class="form-control" name="end" required value="" id="dpd2" placeholder="dd/mm/yyyy">
+                <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" />
             </div>
         </div>
     </div>
     <div class="col-xs-4">
         <h4><span>03</span> {{ 'index.search.hotel.rooms' | trans }}</h4>
-        <button type="button" class="btnModal marginBottom10" data-toggle="modal" data-target="#roomModal">
+        <button type="button" class="btnModal marginBottom10" id="flag_modal">
             <span id="data-adults">0</span> {{ 'index.search.hotel.adults' | trans }},
             <span id="data-childs">0</span> {{ 'index.search.hotel.childs' | trans }},
             <span id="data-room">0</span> {{ 'index.search.hotel.room' | trans }}
@@ -35,7 +35,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
                         <h4 class="modal-title" id="myModalLabel">{{ 'index.search.hotel.rooms' | trans }}</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body room-body">
                         <input id="roomsQty" type="hidden" name="habitacionesCant">
                         <div class="contectRoom">
                             {% for i in 1..4 %}
