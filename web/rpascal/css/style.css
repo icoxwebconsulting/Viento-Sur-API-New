@@ -16,6 +16,10 @@ a, a:hover, a:focus{
 	padding-right: 0 !important;
 }
 
+.center{
+	text-align: center;
+}
+
 .left{
 	float: left;
 }
@@ -688,6 +692,7 @@ header.new-header{
 	margin-bottom: 2.08vw;
 }
 
+
 /*------ GO LIST THUMBS HOTELS -----*/
 #thumbsSearch .filterThumb{
 	border-color: #008cd0;
@@ -882,6 +887,7 @@ header.new-header{
 	border: none;
 	color: #ffffff;
 }
+
 /*----- END LIST THUMBS HOTELS-----*/
 
 /*----- END CONTENT LIST SEARCH -------------------------------------------------------------------------------*/
@@ -1015,6 +1021,343 @@ figure.effect-goliath:hover p {
 }
 
 /*----- END CONTENT INFO -----*/
+
+/*----- GO DETAIL HOTEL -----*/
+
+.wrapperHotelDatail, .wrapperReservation{
+	padding-top: 2.5vw;
+}
+
+#descriptionHotel .titleHotel{
+	font-size: 2.33vw;
+	color: #233034;
+	font-family: 'latobold';
+	margin: 0;
+}
+
+#descriptionHotel .adress{
+	color: #979797;
+	font-size: 1.33vw;
+	font-family: 'latolight';
+	line-height: 3.16vw;
+}
+
+#descriptionHotel .adress a{
+	font-size: 1.33vw;
+	padding-left: 0.83vw;
+}
+
+#descriptionHotel ul.starsHotel{
+	padding: 0;
+	margin-top: 0.83vw;
+}
+
+#descriptionHotel ul.starsHotel li{
+	display: inline-block;
+	color: #008cd0;
+	font-size: 1.66vw;
+}
+
+#descriptionHotel .descriptionHotel{
+	margin: 2.5vw 0;
+}
+
+#descriptionHotel .descriptionHotel p{
+	font-family: 'latolight';
+	color: #233034;
+	font-size: 1.33vw;
+	margin-bottom: 0.83vw;
+	line-height: 2vw;
+}
+
+#descriptionHotel .descriptionHotel p span{
+	font-family: 'latobold';
+}
+
+#descriptionHotel .boxPrice p{
+	font-size: 1.16vw;
+	font-family: 'latoregular';
+	color: #233034;
+}
+
+#descriptionHotel .boxPrice h5{
+	color: #008cd0;
+	font-size: 2vw;
+	font-family: 'latoblack';
+	margin: 2.5vw 0;
+}
+
+#descriptionHotel .boxPrice button{
+	color: #233034;
+	font-size: 1vw;
+	text-align: center;
+	font-family: 'latolight';
+	background: transparent;
+	box-shadow: none;
+	border-radius: 25px;
+	border: #008cd0 1px solid;
+	padding: 0.41vw 1.25vw;
+}
+
+#descriptionHotel .galleryHotel{
+	margin-top: 20px;
+}
+
+#descriptionHotel .itemsHotel{
+	margin: 2.08vw 0;
+}
+
+#descriptionHotel .itemsHotel h5{
+	color: #192731;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+	padding-bottom: 0.83vw;
+	border-bottom: #008cd0 1px solid;
+	text-transform: uppercase;
+}
+
+#descriptionHotel .itemsHotel ul{
+	padding: 0;
+}
+
+#descriptionHotel .itemsHotel ul li{
+	color: #192731;
+	font-size: 1.33vw;
+	font-family: 'latolight';
+	padding-bottom: 0.83vw;
+}
+
+#descriptionHotel .itemsHotel ul li i{
+	color: #008cd0;
+	padding-right: 0.41vw;
+	vertical-align: middle;
+}
+
+#descriptionHotel .itemsHotel ul li i.iconRed{
+	color: #e0041f;
+}
+
+#descriptionHotel .titleSection{
+	font-family: 'latobold';
+	font-size: 2.33vw;
+	color: #233034;
+	padding-bottom: 0.83vw;
+	border-bottom: #008cd0 1px solid;
+	margin-top: 0;
+}
+
+#descriptionHotel .itemRoom{
+	border-radius: 5px;
+	border: #e1e1e1 0.33vw solid;
+	margin: 1.25vw 0;
+	overflow: hidden;
+	background: #f5f5f5;
+}
+
+#descriptionHotel .itemRoom:hover{
+	border-color: #008cd0;
+}
+
+#descriptionHotel .itemRoom .titleRooms{
+	font-size: 1.66vw;
+	font-family: 'latobold';
+	color: #008cd0;
+}
+
+#descriptionHotel .itemRoom img{
+	width: 100%;
+	height: auto;
+	margin-bottom: 0.83vw;
+}
+
+#descriptionHotel .itemRoom ul{
+	padding: 0;
+}
+
+#descriptionHotel .itemRoom ul li{
+	display: inline-block;
+}
+
+#descriptionHotel .itemRoom th{
+	font-family: 'latoregular';
+}
+
+#descriptionHotel .itemRoom td{
+	vertical-align: middle;
+	font-family: 'latolight';
+}
+
+#descriptionHotel .itemRoom td h5{
+	color: #008cd0;
+	font-family: 'latoblack';
+	font-size: 1.5vw;
+}
+
+#descriptionHotel .itemRoom td button{
+	background: transparent none repeat scroll 0 0;
+	border: 1px solid #008cd0;
+	border-radius: 25px;
+	box-shadow: none;
+	color: #233034;
+	font-family: "latolight";
+	font-size: 1vw;
+	padding: 0.25vw 1.25vw;
+	text-align: center;
+	margin-bottom: 0.41vw;
+}
+/*----- END DETAIL HOTEL -----*/
+
+/*----- GO PROCESS PAYMENT RESERVATION -----*/
+#infoReserva{
+	border-radius: 10px;
+	background: #363636;
+	padding: 1.66vw 1.25vw;
+	margin-bottom: 20px;
+}
+
+#infoReserva .titleReserva, .datesPayment h5{
+	color: #008cd0;
+	font-size: 1.5vw;
+	font-family: 'latobold';
+	margin: 1.25vw 0;
+}
+
+#infoReserva img{
+	width: 40%;
+	height: auto;
+	margin: 1.25vw 0;
+	border: #fcfeff 2px solid;
+}
+
+#infoReserva ul{
+	padding: 0;
+}
+
+#infoReserva li{
+	display: inline-block;
+	color: #008cd0;
+	font-size: 1.16vw;
+	margin-right: 0.41vw;
+}
+
+#infoReserva p{
+	color: #fcfeff;
+	font-size: 1.33vw;
+	font-family: 'latolight';
+	margin-bottom: 0.41vw;
+}
+
+#infoReserva p span{
+	font-family: 'latobold';
+}
+
+#infoReserva h3{
+	padding: 1.25vw;
+	font-family: 'latoregular';
+	font-size: 1.16vw;
+	color: #008cd0;
+	text-transform: uppercase;
+	background-color: #fcfeff;
+	margin: 1.66vw 0;
+
+}
+
+#infoReserva aside{
+	font-family: 'latolight_italic';
+	color: #fcfeff;
+	font-size: 1.16vw;
+	margin-top: 1.66vw;
+}
+
+#processPayment .panel-default{
+	margin-bottom: 1.66vw;
+}
+
+#processPayment .panel-heading{
+	background-color: #008cd0;
+	padding: 1.66vw 1.25vw;
+}
+
+#processPayment .panel-title{
+	font-family: 'latoregular';
+	font-size: 1.5vw;
+	color: #fcfeff;
+}
+
+#processPayment .panel-body h5{
+	font-family: 'latoregular';
+	font-size: 1.5vw;
+	color: #233034;
+}
+
+#processPayment .panel-body input{
+	border-radius: 25px;
+	font-family: 'latolight';
+	height: 3.33vw;
+	color: #192731;
+	border: #192731 1px solid;
+	margin-top: 0.83vw;
+}
+
+#processPayment .panel-body select{
+	border-radius: 25px;
+	font-family: 'latolight';
+	height: 3.33vw;
+	color: #192731;
+	border: #192731 1px solid;
+	margin-top: 0.83vw;
+	background: url(../images/arrow-back-white.png) no-repeat 92% 50% #fff !important;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	cursor: pointer;
+}
+
+#processPayment .panel-body textarea{
+	border: #192731 1px solid;
+	border-radius: 25px;
+	font-family: 'latolight';
+	color: #192731;
+	resize: none;
+	height: 100%;
+	min-height: 16.66vw;
+	margin-top: 0.83vw;
+}
+
+#processPayment .panel-body .bg-success{
+	padding: 1.25vw 0.83vw;
+	background: #192731;
+	color: #fcfeff;
+	font-size: 1.16vw;
+	font-family: 'latolight';
+}
+
+#processPayment .buttonPayment button{
+	background: #0777ae none repeat scroll 0 0;
+	border: medium none;
+	border-radius: 25px;
+	box-shadow: none;
+	color: #e3e3e3;
+	font-family: "latobold";
+	font-size: 1.33vw;
+	height: 3.33vw;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 0 3.33vw;
+}
+
+#processPayment .datesPayment{
+	border-top: #192731 1px solid;
+	margin-top: 1.66vw;
+}
+
+#processPayment .datesPayment h2{
+	font-family: 'latoregular';
+	font-size: 2.16vw;
+	color: #233034;
+}
+
+/*----- GO PROCESS PAYMENT RESERVATION -----*/
 
 /*----- GO FOOTER  -----*/
 .footer{
