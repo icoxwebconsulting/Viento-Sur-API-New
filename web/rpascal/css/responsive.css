@@ -673,6 +673,35 @@
         font-size: 12px;
         padding: 5px 15px;
     }
+
+    #thumbsFlights .panel-heading h3{
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    #thumbsFlights .panel-heading h6{
+        font-size: 16px;
+    }
+
+    #thumbsFlights .panel-heading p{
+        font-size: 14px;
+    }
+
+    #thumbsFlights .panel-body button{
+        font-size: 12px;
+        padding: 5px 15px;
+    }
+
+    #thumbsFlights .panel-body  label {
+        font-size: 14px;
+    }
+
+    #thumbsFlights .panel-body [type="radio"] + span:before {
+        width: 13px;
+        height: 13px;
+        margin-right: 9px;
+    }
+
     /*----- END SEARCH VUELOS -----*/
 
     /*----- GO FOOTER  -----*/

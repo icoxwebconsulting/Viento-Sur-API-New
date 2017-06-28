@@ -1455,6 +1455,81 @@ figure.effect-goliath:hover p {
 	border: #008cd0 1px solid;
 	padding: 0.41vw 1.25vw;
 }
+
+#thumbsFlights .panel-heading h3{
+	background: #fcfeff;
+	padding: 0.41vw;
+	color: #008cd0;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+}
+
+#thumbsFlights .panel-heading h6{
+	color: #fcfeff;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+}
+
+#thumbsFlights .panel-heading p{
+	color: #fcfeff;
+	font-size: 1.16vw;
+	font-family: 'latolight';
+}
+
+#thumbsFlights .panel-body [type="radio"] {
+	border: 0;
+	height: 1px;
+	margin: -1px;
+	width: 1px;
+	display: none;
+}
+
+#thumbsFlights .panel-body  label {
+	display: inline-block;
+	cursor: pointer;
+	font-size: 1.16vw;
+	float: left;
+	padding: 0;
+	color: #1d2d33;
+}
+
+#thumbsFlights .panel-body [type="radio"] + span:before {
+	content: '';
+	display: inline-block;
+	width: 1.08vw;
+	height: 1.08vw;
+	vertical-align: middle;
+	border-radius: 50%;           /*hard border*/
+	border: 2px solid #0281c0;
+	margin-right: 0.75vw;
+	transition: 0.5s ease all;    /*animation here*/
+}
+
+#thumbsFlights .panel-body [type="radio"]:checked + span:before {
+	background: #0281c0;
+	box-shadow: 0 0 0 0.15em #0281c0;
+	border: 1px solid #fff;
+}
+
+#thumbsFlights .panel-body p{
+	color: #233034;
+	font-size: 14px;
+	font-family: 'latolight';
+}
+
+#thumbsFlights .panel-body button{
+	background: transparent none repeat scroll 0 0;
+	border: 1px solid #008cd0;
+	border-radius: 25px;
+	box-shadow: none;
+	color: #233034;
+	font-family: "latolight";
+	font-size: 1vw;
+	padding: 0.41vw 1.25vw;
+	text-align: center;
+}
+
+
 /*----- END SEARCH VUELOS -----*/
 
 /*----- GO FOOTER  -----*/
