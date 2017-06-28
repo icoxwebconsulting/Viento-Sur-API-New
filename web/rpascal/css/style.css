@@ -1024,8 +1024,8 @@ figure.effect-goliath:hover p {
 
 /*----- GO DETAIL HOTEL -----*/
 
-.wrapperHotelDatail, .wrapperReservation{
-	padding-top: 2.5vw;
+.wrapperHotelDatail, .wrapperReservation, .wrapperFlights{
+	padding: 2.5vw 0;
 }
 
 #descriptionHotel .titleHotel{
@@ -1269,6 +1269,50 @@ figure.effect-goliath:hover p {
 	margin-top: 1.66vw;
 }
 
+#infoReserva .totalPayment{
+	border-top: #fcfeff 1px solid;
+}
+
+#infoReserva .totalPayment h2{
+	font-size: 1.66vw;
+	font-family: 'latobold';
+	color: #fcfeff;
+}
+
+#infoReserva .headerDetail{
+	background: #008cd0;
+	padding: 0.41vw 0.83vw;
+	margin-top: 1.66vw;
+}
+
+#infoReserva .headerDetail p{
+	margin: 0;
+}
+
+#infoReserva .subHeaderDetail {
+	border-bottom: #008cd0 1px solid;
+	padding: 0.41vw 0;
+	margin-bottom: 0.83vw;
+}
+
+#infoReserva  .infoDetail{
+	text-align: center;
+}
+
+#infoReserva  .infoDetail h6{
+	text-transform: uppercase;
+	font-size:  1.5vw;
+	font-family: 'latobold';
+	color: #008cd0;
+}
+
+#infoReserva .imgAeroline{
+	margin-bottom: 0.83vw;
+	background: #fff;
+	border-radius: 50%;
+	padding: 0.41vw 0;
+}
+
 #processPayment .panel-default{
 	margin-bottom: 1.66vw;
 }
@@ -1358,6 +1402,135 @@ figure.effect-goliath:hover p {
 }
 
 /*----- GO PROCESS PAYMENT RESERVATION -----*/
+
+/*----- GO SEARCH VUELOS -----*/
+#thumbsFlights{
+	border-radius: 5px;
+	border: #e1e1e1 4px solid;
+	height: 100%;
+	margin-bottom: 2.5vw;
+	overflow: hidden;
+	background: #f5f5f5;
+	padding: 1.66vw 1.66vw 0 1.66vw;
+}
+
+#thumbsFlights:hover{
+	border-color: #008cd0;
+}
+
+#thumbsFlights .panel-heading{
+	background-color: #008cd0;
+	padding: 1.66vw 1.25vw;
+}
+
+#thumbsFlights .paymentFlight{
+	margin-top: 10%;
+	position: absolute;
+	right: 1.83vw;
+	text-align: center;
+	transform: translateY(-20%);
+}
+
+#thumbsFlights .paymentFlight p{
+	font-size: 1.16vw;
+	font-family: 'latoregular';
+	color: #233034;
+}
+
+#thumbsFlights .paymentFlight h5{
+	color: #008cd0;
+	font-size: 2vw;
+	font-family: 'latoblack';
+	margin: 2.5vw 0;
+}
+
+#thumbsFlights .paymentFlight button{
+	color: #233034;
+	font-size: 1vw;
+	text-align: center;
+	font-family: 'latolight';
+	background: transparent;
+	box-shadow: none;
+	border-radius: 25px;
+	border: #008cd0 1px solid;
+	padding: 0.41vw 1.25vw;
+}
+
+#thumbsFlights .panel-heading h3{
+	background: #fcfeff;
+	padding: 0.41vw;
+	color: #008cd0;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+}
+
+#thumbsFlights .panel-heading h6{
+	color: #fcfeff;
+	font-size: 1.33vw;
+	font-family: 'latobold';
+}
+
+#thumbsFlights .panel-heading p{
+	color: #fcfeff;
+	font-size: 1.16vw;
+	font-family: 'latolight';
+}
+
+#thumbsFlights .panel-body [type="radio"] {
+	border: 0;
+	height: 1px;
+	margin: -1px;
+	width: 1px;
+	display: none;
+}
+
+#thumbsFlights .panel-body  label {
+	display: inline-block;
+	cursor: pointer;
+	font-size: 1.16vw;
+	float: left;
+	padding: 0;
+	color: #1d2d33;
+}
+
+#thumbsFlights .panel-body [type="radio"] + span:before {
+	content: '';
+	display: inline-block;
+	width: 1.08vw;
+	height: 1.08vw;
+	vertical-align: middle;
+	border-radius: 50%;           /*hard border*/
+	border: 2px solid #0281c0;
+	margin-right: 0.75vw;
+	transition: 0.5s ease all;    /*animation here*/
+}
+
+#thumbsFlights .panel-body [type="radio"]:checked + span:before {
+	background: #0281c0;
+	box-shadow: 0 0 0 0.15em #0281c0;
+	border: 1px solid #fff;
+}
+
+#thumbsFlights .panel-body p{
+	color: #233034;
+	font-size: 14px;
+	font-family: 'latolight';
+}
+
+#thumbsFlights .panel-body button{
+	background: transparent none repeat scroll 0 0;
+	border: 1px solid #008cd0;
+	border-radius: 25px;
+	box-shadow: none;
+	color: #233034;
+	font-family: "latolight";
+	font-size: 1vw;
+	padding: 0.41vw 1.25vw;
+	text-align: center;
+}
+
+
+/*----- END SEARCH VUELOS -----*/
 
 /*----- GO FOOTER  -----*/
 .footer{

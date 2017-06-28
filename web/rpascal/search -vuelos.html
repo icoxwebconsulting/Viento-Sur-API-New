@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title>Viento Sur</title>
+		<meta name="description" content="Viento Sur">
+		<meta name="author" content="rjps.designer@gmail.com">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="images/favicon.png"/>
+
+		<!-- CSS -->
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="bootstrap/css/datepicker.css" rel="stylesheet" type="text/css">
+		<link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css">
+		<link href="css/font-face.css" rel="stylesheet" type="text/css">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link href="css/responsive.css" rel="stylesheet" type="text/css">
+
+	</head>
+	<body>
+		<!-- GO HEADER -->
+		<header>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 col-sm-2 logo">
+						<a href="index.html"><img src="images/logo.png" alt=""></a>
+					</div>
+					<div class="col-xs-12 col-sm-10">
+						<div class="language">
+							<select class="form-control">
+								<option>Ingles</option>
+								<option>Español</option>
+								<option>Frances</option>
+								<option>Portugues</option>
+							</select>
+						</div>
+						<div class="socialMedia">
+							<ul>
+								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER -->
+
+		<!-- GO BANNER -->
+		<div id="banner"></div>
+		<!-- END BANNER -->
+
+		<!-- GO NAV -->
+		<nav id="navBar">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<ul>
+							<li><a href="#"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+							<li class="active"><a href="#"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- END NAV -->
+
+		<!-- GO BREADCRUMB -->
+		<div id="breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<ol class="breadcrumb">
+							<li><a href="index.html">inicio</a></li>
+							<li><a href="#">vuelos</a></li>
+							<li class="active">detalle vuelos</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END BREADCRUMB -->
+
+		<!-- GO CONTENT INFO -->
+		<div class="wrapperFlights">
+			<div class="container">
+				<div class="row">
+					<!-- GO SIDE BAR -->
+					<div class="col-sm-4 col-xs-12">
+						<div id="sidebar">
+							<div id="formSearch">
+								<form action="">
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>Origen</label>
+											<i class="fa fa-map-marker input-icon"></i>
+											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>Destino</label>
+											<i class="fa fa-map-marker input-icon"></i>
+											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
+										</div>
+									</div>
+									<div class="row">
+										<div class='form-group date col-xs-12' id='datetimepicker5'>
+											<label>Partida</label>
+											<i class="fa fa-calendar" aria-hidden="true"></i>
+											<input type="text" class="form-control" value="" id="dpd5">
+										</div>
+									</div>
+									<div class="row">
+										<div class='form-group date col-xs-12' id='datetimepicker6'>
+											<label>Regreso</label>
+											<<i class="fa fa-calendar" aria-hidden="true"></i>
+											<input type="text" class="form-control" value="" id="dpd6">
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-6">
+											<label>Adultos</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Niños</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-6">
+											<label>Edad de los niños</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>buscar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div id="formFilters">
+								<h1 class="titleFilters">FILTRAR POR:</h1>
+								<form action="">
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>Destino/Nombre del hotel</label>
+											<i class="fa fa-map-marker input-icon"></i>
+											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
+										</div>
+									</div>
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>Aplicar</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="boxFilter col-xs-12">
+											<h4>SERVICIOS</h4>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Solo para adultos
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Aire acondicionado
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Desayuno
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Traslado hotel / aeropuerto / hotel
+												</label>
+												<span class="right">(10)</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="boxFilter col-xs-12">
+											<h4>categorias</h4>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													otros
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul><li><i class="fa fa-star" aria-hidden="true"></i></li></ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+													</ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+													</ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													<ul>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+														<li><i class="fa fa-star" aria-hidden="true"></i></li>
+													</ul>
+												</label>
+												<span class="right">(10)</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="boxFilter col-xs-12">
+											<h4>precio</h4>
+											<div class="rangePrice">
+												price range
+											</div>
+										</div>
+									</div>
+
+
+
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>filtrar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- END SIDE BAR -->
+					<!-- GO THUMBS ITEMS -->
+					<div class="col-sm-8 col-xs-12">
+						<div id="thumbsFlights">
+							<div class="row">
+								<div class="col-xs-9">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Ida</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-one" class="radio-inline">
+															<input type="radio" value="radio-one" name="quality" id="radio-one"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Vuelta</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-two" class="radio-inline">
+															<input type="radio" value="radio-two" name="quality" id="radio-two"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="paymentFlight col-xs-3">
+									<p>Precio Total Final</p>
+									<h5>AR$ 2.216</h5>
+									<button>Comprar</button>
+								</div>
+							</div>
+						</div>
+						<div id="thumbsFlights">
+							<div class="row">
+								<div class="col-xs-9">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Ida</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-one" class="radio-inline">
+															<input type="radio" value="radio-one" name="quality" id="radio-one"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Vuelta</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-two" class="radio-inline">
+															<input type="radio" value="radio-two" name="quality" id="radio-two"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="paymentFlight col-xs-3">
+									<p>Precio Total Final</p>
+									<h5>AR$ 2.216</h5>
+									<button>Comprar</button>
+								</div>
+							</div>
+						</div>
+						<div id="thumbsFlights">
+							<div class="row">
+								<div class="col-xs-9">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Ida</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-one" class="radio-inline">
+															<input type="radio" value="radio-one" name="quality" id="radio-one"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Vuelta</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-two" class="radio-inline">
+															<input type="radio" value="radio-two" name="quality" id="radio-two"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="paymentFlight col-xs-3">
+									<p>Precio Total Final</p>
+									<h5>AR$ 2.216</h5>
+									<button>Comprar</button>
+								</div>
+							</div>
+						</div>
+						<div id="thumbsFlights">
+							<div class="row">
+								<div class="col-xs-9">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Ida</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-one" class="radio-inline">
+															<input type="radio" value="radio-one" name="quality" id="radio-one"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="row">
+												<div class="col-xs-2">
+													<h3>Vuelta</h3>
+												</div>
+												<div class="col-xs-5">
+													<h6>COR</h6>
+													<p>Ambrosio L V Taravella</p>
+												</div>
+												<div class="col-xs-5">
+													<h6>AEP3</h6>
+													<p>Aeroparque Jorge Newbery</p>
+												</div>
+											</div>
+										</div>
+										<div id="collapse" class="panel-collapse">
+											<div class="panel-body">
+												<div class="col-xs-4">
+													<div class="radioButton">
+														<label for="radio-two" class="radio-inline">
+															<input type="radio" value="radio-two" name="quality" id="radio-two"> <span><img src="images/LA.png" alt=""> LATAM Airlines Group</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-5">
+													<p>09:25 Directo 10:55 01h 30m</p>
+												</div>
+												<div class="col-xs-3">
+													<button>detalle</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="paymentFlight col-xs-3">
+									<p>Precio Total Final</p>
+									<h5>AR$ 2.216</h5>
+									<button>Comprar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END THUMBS ITEMS -->
+				</div>
+			</div>
+		</div>
+		<!-- END CONTENT INFO -->
+		<!-- GO FOOTER -->
+		<footer>
+			<div class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 logoFooter">
+							<a href="index.html">
+								<img src="images/logo.png" alt="">
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4">
+							<h3>Siguenos</h3>
+							<p>Reserva tu viaje a cualquier parte del mundo, encontrando todas las ofertas en un solo lugar</p>
+							<div class="socialMediaFooter">
+								<ul>
+									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-4">
+							<h3>Contactanos</h3>
+							<p>Si querés enviarnos una consulta contactános a través de nuestro formulario de contacto</p>
+							<a class="btnContact" href="contact.html">contactanos</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="associations">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-md-9">
+							<ul>
+								<li><a href="#"><img src="images/logo1.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo2.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo3.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo4.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo5.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logo6.png" alt=""></a></li>
+							</ul>
+						</div>
+						<div class="col-xs-12 col-md-3">
+							<a href="#" class="linkConditions">TERMINOS Y CONDICIONES</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<p>Operador Responsable: <span>Viento Sur</span> Operadores Turísticos leg. 10380 Disp. 1295/98</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- END FOOTER -->
+
+		<!--JAVASCRIPTS / JQUERY-->
+		
+		<script type="text/javascript" src='js/jquery-3.1.1.min.js'></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script>
+			//SCRIPT DATEPICKER
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+            var checkin = $('#dpd1, #dpd3, #dpd5').datepicker({
+                onRender: function(date) {
+                    return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function(ev) {
+                if (ev.date.valueOf() > checkout.date.valueOf()) {
+                    var newDate = new Date(ev.date)
+                    newDate.setDate(newDate.getDate() + 1);
+                    checkout.setValue(newDate);
+                }
+                checkin.hide();
+                $('#dpd2, #dpd4, #dpd6')[0].focus();
+            }).data('datepicker');
+            var checkout = $('#dpd2, #dpd4, #dpd6').datepicker({
+                onRender: function(date) {
+                    return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function(ev) {
+                checkout.hide();
+            }).data('datepicker');
+
+			//SCRIPT NAVBAR
+            $(document).ready(function(){
+                $('ul li').click(function(){
+                    $('li').removeClass("active");
+                    $(this).addClass("active");
+                });
+            });
+
+		</script>
+	</body>
+</html>
