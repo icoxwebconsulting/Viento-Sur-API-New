@@ -317,10 +317,9 @@
                 <div class="boxFilter col-xs-12">
                     <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_category' | trans }} - VientoSur.net">{{ 'hotels.search_menu.category' | trans }}</h4>
                     {% for stars in facet.values %}
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"  {% if stars.selected %}checked="checked"{% endif %} value="{{ stars.value }}" >
-                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                    <div class="checkbox check-more-less">
+                        <label class="stars" data-type="stars">
+                            <input class="i-check" type="checkbox"  {% if stars.selected %}checked="checked"{% endif %} value="{{ stars.value }}" >
                             <ul>
                                 <li>{% if stars.value == '0' %}
                                         {{ 'hotels.search_menu.others' | trans }}
@@ -340,10 +339,9 @@
                 <div class="boxFilter col-xs-12">
                     <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_payment_choices' | trans }} - VientoSur.net">{{ 'hotels.search_menu.payment_choices' | trans }}</h4>
                     {% for type in facet.values %}
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
-                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                    <div class="checkbox check-more-less">
+                        <label class="hotel_type" data-type="hotel_type">
+                            <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
                             {{ type.label }}
                         </label>
                         <span class="right">({{ type.count }})</span>
@@ -395,10 +393,9 @@
                 <div class="boxFilter col-xs-12">
                     <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_type' | trans }} - VientoSur.net">{{ 'hotels.search_menu.type' | trans }}</h4>
                     {% for hotel_type in facet.values %}
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" {% if hotel_type.selected %}checked="checked"{% endif %} value="{{ hotel_type.value }}" />
-                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                    <div class="checkbox check-more-less">
+                        <label class="hotel_type" data-type="hotel_type">
+                            <input class="i-check" type="checkbox" {% if hotel_type.selected %}checked="checked"{% endif %} value="{{ hotel_type.value }}" />
                             {{ hotel_type.label }}
                         </label>
                         <span class="pull-right">({{ hotel_type.count }})</span>
@@ -406,7 +403,6 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-
                 {% if facet.criteria == 'hotel_chains' and facet.values is defined %}
                 <div class="boxFilter col-xs-12">
                     <li class="hotel_chains hidden" data-type="hotel_chains">
@@ -431,10 +427,9 @@
                 <div class="boxFilter col-xs-12">
                     <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_diet' | trans }} - VientoSur.net">{{ 'hotels.search_menu.diet' | trans }}</h4>
                     {% for meal_plans in facet.values %}
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" {% if meal_plans.selected %}checked="checked"{% endif %} value="{{ meal_plans.value }}" />
-                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                    <div class="checkbox check-more-less">
+                        <label class="meal_plans" data-type="meal_plans">
+                            <input class="i-check" type="checkbox" {% if meal_plans.selected %}checked="checked"{% endif %} value="{{ meal_plans.value }}" />
                             {% if meal_plans.value == 'B'%}{{ 'hotels.search_menu.breakfast' | trans }}{% else %}{{ 'hotels.search_menu.only_hosting' | trans }}{% endif %}
                         </label>
                         <span class="pull-right">({{ meal_plans.count }})</span>
