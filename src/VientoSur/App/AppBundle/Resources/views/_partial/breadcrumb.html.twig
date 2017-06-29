@@ -1,0 +1,15 @@
+<!-- GO BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('homepage') }}">{{ 'admin.home' | trans }}</a></li>
+                    <li><a href="#">{% block section %}{% endblock %}</a></li>
+                    <li class="active">{% block sub_section %}{% endblock %}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END BREADCRUMB -->

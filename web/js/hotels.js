@@ -29,11 +29,11 @@ $(document).ready(function () {
 
     $("#delete-room").click(function(){
         var visibleRoom = $(".room:visible").length;
-        var id = "#childrenRoom"+visibleRoom;
+        // var id = "#childrenRoom"+visibleRoom;
 
         if (visibleRoom > 1){
             $('.room'+visibleRoom).hide();
-            $(id+" option:first-child").attr("selected", true);
+            // $(id+" option:first-child").attr("selected", true);
 
             if (visibleRoom == 2){
                 $('#delete-room').hide();

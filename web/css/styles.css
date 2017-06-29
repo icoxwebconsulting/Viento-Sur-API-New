@@ -2376,7 +2376,7 @@ div.nav-drop {
 }
 footer#main-footer {
   background: #262626;
-  padding: 60px 0 30px 0;
+  /*padding: 60px 0 30px 0;*/
   color: #e6e6e6;
   font-size: 11px;
   line-height: 1.4em;
@@ -10850,4 +10850,7 @@ img.mfp-img {
 .multiple-destinations-wrapper >.col-md-6{
   padding-left: 0px;
   padding-right: 7px;
+}
+div#ui-datepicker-div {
+  z-index: 9999 !important;
 }

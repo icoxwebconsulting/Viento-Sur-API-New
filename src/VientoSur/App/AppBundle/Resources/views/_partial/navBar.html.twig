@@ -1,0 +1,14 @@
+<!-- GO NAV -->
+<nav id="navBar">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="{% if flightMenu is not defined %} active {% endif %}"><a href="{% if isIndex is defined %}javascript:void(0);{% else %}{{ path('homepage') }}{% endif %}"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+                    <li><a class="{% if flightMenu is defined %} active {% endif %}" href="{% if isIndex is defined %}javascript:void(0);{% else %}{{ path('homepage_flight') }}{% endif %}"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- END NAV -->

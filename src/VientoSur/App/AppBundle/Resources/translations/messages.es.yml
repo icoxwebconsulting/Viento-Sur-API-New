@@ -40,6 +40,7 @@ index:
            us_dollar: Dólar Estadounidense
            us_argentinian: Peso Argentino
            rooms: Habitaciones
+           number_rooms: N° de habitaciones
            room: Habitación
            adults: Adultos
            adult: Adulto
@@ -47,7 +48,7 @@ index:
            child: Menor
            babies: Bebes
            years: Años
-           childs_ages: Edad de los menores
+           childs_ages: Edad de los niños
            age: Edad
            searching: Buscando Alojamientos...
         flight:
@@ -105,7 +106,7 @@ hotels:
     by_features: por Características
     by_others: por Otras opciones
     found_hotels: hoteles encontrados
-    map_view: Vista de mapa
+    map_view: Ver mapa
     best: Mejor
     price_per_night: Precio por noche
     show_rooms: Ver habitaciones

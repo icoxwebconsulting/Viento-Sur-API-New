@@ -40,6 +40,7 @@ index:
            us_dollar: US Dollar
            us_argentinian: Argentinian peso
            rooms: Rooms
+           number_rooms: Number of rooms
            room: Room
            adults: Adults
            adult: Adult

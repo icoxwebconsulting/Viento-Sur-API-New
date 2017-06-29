@@ -414,10 +414,13 @@ header.new-header{
 /*----- END SLIDER -----*/
 
 /*----- GO BANNER -----*/
+
 #banner{
 	height: 25vw;
-	overflow: hidden;
-	background: url("../images/banner-demo.jpg");
+	/*overflow: hidden;*/
+	background: url("../images/banner-demo.jpg"),
+				url("http://127.0.0.1:8000/rpascal/images/banner-demo.jpg"),
+				url("https://vientosur.net/rpascal/images/banner-demo.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -568,7 +571,10 @@ header.new-header{
 	font-size: 1.66vw;
 	z-index: 99;
 }
-
+#formFilters .form-group i{
+	left: 2vw;
+	top:36px;
+}
 #formSearch input, #formFilters input{
 	border-radius: 25px;
 	height: 3.33vw;
@@ -835,7 +841,7 @@ header.new-header{
 	margin: 2.5vw 0;
 }
 
-#thumbHotel .priceRoom button{
+#thumbHotel .priceRoom a{
 	color: #233034;
 	font-size: 1vw;
 	text-align: center;
@@ -846,7 +852,10 @@ header.new-header{
 	border: #008cd0 1px solid;
 	padding: 0.41vw 1.25vw;
 }
-
+#thumbHotel .priceRoom a:hover, #descriptionHotel > div:nth-child(1) > div.boxPrice.col-xs-3 > button:hover {
+	background: #008cd0;
+	color: #fff;
+}
 #thumbsSearch .paginationList{
 	text-align: center;
 }
@@ -888,6 +897,16 @@ header.new-header{
 	color: #ffffff;
 }
 
+#thumbsSearch .paginationList li a:hover,#thumbsSearch .paginationList li.first a:hover ,#thumbsSearch .paginationList li.last a:hover {
+	background: #0777ae;
+	border: none;
+	color: #ffffff;
+}
+#thumbsSearch .paginationList li.first a,#thumbsSearch .paginationList li.last a {
+	background: #bbbbbb;
+	border: none;
+	color: #ffffff;
+}
 /*----- END LIST THUMBS HOTELS-----*/
 
 /*----- END CONTENT LIST SEARCH -------------------------------------------------------------------------------*/
@@ -1547,7 +1566,12 @@ figure.effect-goliath:hover p {
 	height: auto;
 	padding-top: 18%;
 }
-
+span.irs-to,span.irs-from{
+	color: #fff;
+}
+.check-more-less{
+	margin-left: 20px !important;
+}
 .footer h3{
 	font-size: 2.5vw;
 	color: #ffffff;

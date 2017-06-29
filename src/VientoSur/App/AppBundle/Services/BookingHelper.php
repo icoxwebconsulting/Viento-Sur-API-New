@@ -59,11 +59,11 @@ class BookingHelper
             'Dec' => $trad[11]
         ];
 
-        $str = '<b>' . $transText['entry'] . ':</b> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '<br />';
-        $str .= ' <b>' . $transText['exit'] . ':</b> ' . $checkout_date->format('d') . ' ' . $months[$checkout_date->format('M')];
+        $str = '<p><span>' . $transText['entry'] . ':</span> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '</p>';
+        $str .= '<p><span>' . $transText['exit'] . ':</span> ' . $checkout_date->format('d') . ' ' . $months[$checkout_date->format('M')].'</p>';
         $travellers = $this->processDistribution($distribution);
-        $str .= '<br /> <b>' . $travellers['adults'] . ' ' . $transText['adults'] . (($travellers['adults'] > 1) ? 's' : '') . '</b>';
-        $str .= '<br /> <b>' .(($travellers['childrenCount'] > 0) ? $travellers['childrenCount'] : '').' '. $transText['childs'] . '</b>';
+        $str .= '<p>' . $travellers['adults'] . ' ' . $transText['adults'] . '</p>';
+        $str .= '<p>' .(($travellers['childrenCount'] > 0) ? $travellers['childrenCount'].' '. $transText['childs']  : ''). '</p>';
         return $str;
     }
 

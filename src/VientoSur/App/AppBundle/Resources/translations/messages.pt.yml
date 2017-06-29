@@ -39,6 +39,7 @@ index:
            us_dollar: Dólar americano
            us_argentinian: Peso Argentino
            rooms: Quartos
+           number_rooms: Número de quartos
            room: Quarto
            adult: Adulto
            child: Criança
@@ -103,7 +104,7 @@ hotels:
     by_features: por Recursos
     by_others: por Outras opções
     found_hotels: hotéis encontrados
-    map_view: Vista do mapa
+    map_view: Ver mapa
     best: Melhor
     price_per_night: Preço por noite
     show_rooms: Ver quartos

@@ -1,0 +1,14 @@
+<!-- Modal -->
+<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.map_view' | trans }} - VientoSur.net">{{ 'hotels.map_view' | trans }}</h4>
+            </div>
+            <div class="modal-body text-center">
+                <div id="mapHotel" style="width:565px; height:500px;"></div>
+            </div>
+        </div>
+    </div>
+</div>

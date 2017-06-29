@@ -1,85 +1,45 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.hotel_search' | trans }}{% endblock %}
 
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
+
+{% block switch_service %}
+    {% include '@VientoSurAppApp/_partial/navBar.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}{{ 'index.hotels' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'index.hotel_search' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block content %}
+    {{ parent() }}
     <div class="container">
-        <ul class="breadcrumb">
-            <li><a href="#">Viento Sur</a></li>
-            <li><a href="#">{{ '' | trans }} {{ app.session.get('destination').text }} ({{ items.paging.total }})</a></li>
-        </ul>
-
-        <h4 class="booking s-title" title="{{ 'hotels.hotel_availabilities' | trans({'%place%': app.session.get('destination').text}) }} - VientoSur.net"><span class="totalHotels">{{ items.paging.total }}</span> {{ 'hotels.hotel_availabilities' | trans({'%place%': app.session.get('destination').text}) }}</h4>
-
-        <div class="row">
-
-            <div class="col-md-9 col-md-push-3 hotel-results">
-                <div class="sorting hotel_filter">
-                    {% if sortArray.price is not empty %}
-                        <div class="nav-drop booking-sort">
-                            <h5 class="booking-sort-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_price' | trans }} - VientoSur.net"><a href="#">{{ 'hotels.price' | trans }}: <span id="sort_price" class="sort_name">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
-                            <ul class="nav-drop-menu">
-                                {{ sortArray.price|raw }}
-                            </ul>
-                        </div>
-                    {% endif %}
-
-                    <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_stars' | trans }} - VientoSur.net"><a href="#">{{ 'hotels.stars' | trans }}: <span id="sort_star" class="sort_name">{% if sortArray.selected.category == 'star' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
-                        <ul class="nav-drop-menu">
-                            {{ sortArray.star|raw }}
-                        </ul>
-                    </div>
-                    <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_features' | trans }} - VientoSur.net"><a href="#">{{ 'hotels.best' | trans }}: <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
-                        <ul class="nav-drop-menu">
-                            {{ sortArray.best|raw }}
-                        </ul>
-                    </div>
-                    <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_others' | trans }} - VientoSur.net"><a href="#">{{ 'hotels.search_menu.others' | trans }}: <span id="sort_other" class="sort_name">{% if sortArray.selected.category == 'other' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span><i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
-                        <ul class="nav-drop-menu">
-                            {{ sortArray.other|raw }}
-                        </ul>
-                    </div>
-                </div>
-                <ul class="booking-list">
-                    {% include 'VientoSurAppAppBundle:Hotel:listDetailHotels.html.twig' %}
-                </ul>
+        <div class="wrapperSearch">
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <p class="sfont mb20"><span class="totalHotels">{{ items.paging.total }}</span> {{ 'hotels.found_hotels' | trans }}.</p>
-                        <ul class="pagination" id="pagination">
-                        </ul>
+                    <div class="col-xs-12">
+                        <h1 class="message" class="totalHotels">{{ items.paging.total }}  {{ 'hotels.hotel_availabilities' | trans({'%place%': app.session.get('destination').text|split(',')[0]}) }}</h1>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    {% include '@VientoSurAppApp/Hotel/searchMenuLeft.html.twig' %}
 
-            <div class="col-md-3 col-md-pull-9">
-                <div class="content-sidebar">
-                    <div style="padding: 10px 20px 0 20px;">
-                        {{ travellers|raw }}
-                    </div>
-                    {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
-                </div>
-            </div>
-        </div>
-        <div class="gap"></div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.map_view' | trans }} - VientoSur.net">{{ 'hotels.map_view' | trans }}</h4>
-                    </div>
-                    <div class="modal-body text-center">
-                        <div id="mapHotel" style="width:565px; height:500px;"></div>
+                    <div class="col-sm-8 col-xs-12">
+                        <div id="thumbsSearch">
+                            {% include '@VientoSurAppApp/Hotel/filterSortTop.html.twig' %}
+                            {% include '@VientoSurAppApp/Hotel/listDetailHotels.html.twig' %}
+                            {% include 'VientoSurAppAppBundle:_partial:pagination.html.twig' %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}
     </div>
 {% endblock %}
 
@@ -110,7 +70,7 @@
                     type: 'GET',
                     dataType: 'json'
                 }).done(function (data) {
-                    $(".booking-list").html(data.html);
+                    $(".ListHotel").html(data.html);
                     if (history.pushState) {
                         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + search;
                         window.history.pushState({path: newurl}, '', newurl);
@@ -137,8 +97,8 @@
                 maxVisible:10,
                 page: {{ page }} ,
                 firstLastUse: true,
-                first: '←',
-                last: '→'
+                first: '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+                last: '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
             }).on("page", function(event, num){
                 asynLoad({
                     'page': num
@@ -295,15 +255,17 @@
                 }
             });
 
-            $('.booking-list').on('click', '.booking-item, .booking-prices', function (event) {
+            $('.ListHotel').on('click', '.booking-item-address, .priceRoom', function (event) {
                 event.stopPropagation();
                 var element = event.target;
                 if ($(element).data('prevent') != 'modal') {
-                    window.open(this.dataset.href, '_blank');
+//                    window.open(this.dataset.href, '_blank');
                 } else {
                     latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
                     hotelName = $(element).data('name');
-                    $('#mapModal').modal('show')
+                    console.log(latLng);
+                    $('#mapModal').modal('show');
+                    $('#myModalLabel').text(hotelName);
                 }
             });
 
