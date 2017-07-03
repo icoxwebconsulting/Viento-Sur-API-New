@@ -109,7 +109,9 @@ hotels:
     map_view: Ver mapa
     best: Mejor
     price_per_night: Precio por noche
+    room_per_night: Habitación por noche
     show_rooms: Ver habitaciones
+    choose_room: Elegir habitación
     pictures: Fotos
     map: Mapa
     entry: Entrada
@@ -167,6 +169,7 @@ hotels:
     breakfast_continental: Desayuno continental
     half_pension: Media pensión
     full_pension: Pensión completa
+    all_inclusive: Todo incluido
     book: Reservar
     rooms_unavailables: Habitaciones no disponibles
     services: Servicios

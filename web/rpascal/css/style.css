@@ -852,7 +852,7 @@ header.new-header{
 	border: #008cd0 1px solid;
 	padding: 0.41vw 1.25vw;
 }
-#thumbHotel .priceRoom a:hover, #descriptionHotel > div:nth-child(1) > div.boxPrice.col-xs-3 > button:hover {
+#thumbHotel .priceRoom a:hover, #descriptionHotel > div:nth-child(1) > div.boxPrice.col-xs-3 > button:hover, #descriptionHotel > div > div > div > div > div > div > div.col-xs-9 > table > tbody > tr > td.center > form > button:hover{
 	background: #008cd0;
 	color: #fff;
 }

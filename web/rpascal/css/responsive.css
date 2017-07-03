@@ -509,7 +509,11 @@
     }
 
     #descriptionHotel .itemRoom img{
-        margin-bottom: 10px;
+        margin-bottom: 0px;
+    }
+
+    #descriptionHotel > div:nth-child(4) > div > div > div > div > div > div.col-xs-3 > ul {
+        margin-top: 10px;
     }
 
     #descriptionHotel .itemRoom td h5{

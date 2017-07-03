@@ -269,6 +269,16 @@
                 }
             });
 
+            $('#descriptionHotel').on('click', '.item-map-address', function (event) {
+                event.stopPropagation();
+                var element = event.target;
+                latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
+                hotelName = $(element).data('name');
+                console.log(latLng);
+                $('#mapModal').modal('show');
+                $('#myModalLabel').text(hotelName);
+            });
+
             $('#mapModal').on('shown.bs.modal', function (e) {
                 var map = new google.maps.Map(document.getElementById('mapHotel'), {
                     center: latLng,
