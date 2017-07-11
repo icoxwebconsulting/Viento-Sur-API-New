@@ -18,7 +18,7 @@
                                 <img style="width: 363px; height: 345px;" src="{{asset(vich_uploader_asset(promotion, 'image')) }}" alt="{{ promotion.name }}">
                                 <figcaption>
                                     <h2>{{ promotion.name }}</h2>
-                                    <p>{{ promotion.description | truncate(10, true) | raw  }}</p>
+                                    <p>{{ promotion.description | truncate(60, true) | raw  }}</p>
                                     <a href="{{ promotion.link }}"></a>
                                 </figcaption>
                             </figure>
