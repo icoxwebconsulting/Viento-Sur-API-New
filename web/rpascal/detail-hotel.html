@@ -60,21 +60,6 @@
 		<div id="banner"></div>
 		<!-- END BANNER -->
 
-		<!-- GO NAV -->
-		<nav id="navBar">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12">
-						<ul>
-							<li class="active"><a href="#"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
-							<li><a href="#"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
-		<!-- END NAV -->
-
 		<!-- GO BREADCRUMB -->
 		<div id="breadcrumb">
 			<div class="container">
@@ -96,7 +81,7 @@
 			<div class="container">
 				<div class="row">
 					<!-- GO SIDE BAR -->
-					<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-3 col-xs-12">
 						<div id="sidebar">
 							<div id="formSearch">
 								<form action="">
@@ -191,7 +176,7 @@
 									</div>
 									<div class="row">
 										<div class="boxFilter col-xs-12">
-											<h4>SERVICIOS</h4>
+											<h4>Servicios</h4>
 											<div class="checkbox">
 												<label>
 													<input type="checkbox" value="">
@@ -228,7 +213,7 @@
 									</div>
 									<div class="row">
 										<div class="boxFilter col-xs-12">
-											<h4>categorias</h4>
+											<h4>Categorias</h4>
 											<div class="checkbox">
 												<label>
 													<input type="checkbox" value="">
@@ -284,7 +269,7 @@
 									</div>
 									<div class="row">
 										<div class="boxFilter col-xs-12">
-											<h4>precio</h4>
+											<h4>Precio</h4>
 											<div class="rangePrice">
 												price range
 											</div>
@@ -304,7 +289,7 @@
 					</div>
 					<!-- END SIDE BAR -->
 					<!-- GO DETAIL HOTEL -->
-					<div class="col-sm-8 col-xs-12">
+					<div class="col-sm-9 col-xs-12">
 						<div id="descriptionHotel">
 							<div class="row">
 								<div class="col-xs-9">
@@ -316,21 +301,7 @@
 										<li><i class="fa fa-star" aria-hidden="true"></i></li>
 										<li><i class="fa fa-star" aria-hidden="true"></i></li>
 									</ul>
-									<p class="adress">Carlos Pellegrini 551, C1009ABK Buenos Aires, Argentina <a href="" data-toggle="modal" data-target="#modalDetailMap"><i class="fa fa-map-marker input-icon"></i> Ver mapa</a></p>
-									<!-- Modal -->
-									<div class="modal fade" id="modalDetailMap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
-												</div>
-												<div class="modal-body">
-													<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
-												</div>
-											</div>
-										</div>
-									</div>
+									<p class="adress">Carlos Pellegrini 551, C1009ABK Buenos Aires, Argentina</p>
 								</div>
 								<div class="boxPrice col-xs-3">
 									<p>Habitación por noche</p>
@@ -340,10 +311,22 @@
 							</div>
 							<div class="row">
 								<div class="galleryHotel col-xs-12">
-									<div class="camera_wrap camera_emboss" id="camera_wrap_3">
-										<div data-thumb="images/gallery/slides/thumbs/big_bunny_fake.jpg" data-src="images/gallery/slides/big_bunny_fake.jpg"></div>
-										<div data-thumb="images/gallery/slides/thumbs/leaf.jpg" data-src="images/gallery/slides/leaf.jpg"></div>
-										<div data-thumb="images/gallery/slides/thumbs/road.jpg" data-src="images/gallery/slides/road.jpg" data-time="1500" data-trasPeriod="4000" data-link="http://www.google.com/" data-target="_blank"></div>
+									<!-- Nav tabs -->
+									<ul class="nav nav-tabs" id="tabsDetail" role="tablist">
+										<li role="presentation" class="active"><a href="#fotos" aria-controls="fotos" role="tab" data-toggle="tab"><i class="fa fa-camera" aria-hidden="true"></i> Fotos</a></li>
+										<li role="presentation"><a href="#mapa" aria-controls="mapa" role="tab" data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> Mapa</a></li>
+									</ul>
+
+									<!-- Tab panes -->
+									<div class="tab-content">
+										<div role="tabpanel" class="tab-pane active" id="fotos">
+											<div class="camera_wrap camera_emboss" id="camera_wrap_3">
+												<div data-thumb="images/gallery/slides/thumbs/big_bunny_fake.jpg" data-src="images/gallery/slides/big_bunny_fake.jpg"></div>
+												<div data-thumb="images/gallery/slides/thumbs/leaf.jpg" data-src="images/gallery/slides/leaf.jpg"></div>
+												<div data-thumb="images/gallery/slides/thumbs/road.jpg" data-src="images/gallery/slides/road.jpg" data-time="1500" data-trasPeriod="4000" data-link="http://www.google.com/" data-target="_blank"></div>
+											</div>
+										</div>
+										<div role="tabpanel" class="tab-pane" id="mapa"> mapa</div>
 									</div>
 								</div>
 							</div>
@@ -502,7 +485,7 @@
 											<ul>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Recepción 24hs</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Estacionamiento Gratis</li>
-												<li><i class="fa fa-times iconRed" aria-hidden="true"></i> Alquiler de Coches</li>
+												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Alquiler de Coches</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Guardaequipajes Gratis</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Seguridad 24hs</li>
 											</ul>
@@ -513,7 +496,7 @@
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Centro de Negocios</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Gimnasio</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Piscina al Aire Libre</li>
-												<li><i class="fa fa-times iconRed" aria-hidden="true"></i> Solárium</li>
+												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Solárium</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Spa</li>
 											</ul>
 										</div>
@@ -522,7 +505,7 @@
 											<ul>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Desayuno</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Ascensor</li>
-												<li><i class="fa fa-times iconRed" aria-hidden="true"></i> Calefacción</li>
+												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Calefacción</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> Aire Acondicionado</li>
 												<li><i class="fa fa-check-square-o" aria-hidden="true"></i> WIFI gratis</li>
 											</ul>
@@ -657,8 +640,13 @@
                     thumbnails: true,
                     imagePath: 'images/gallery'
                 });
-
             });
+
+            //TABS DETAIL
+            $('#tabsDetail a').click(function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
 		</script>
 	</body>
 </html>

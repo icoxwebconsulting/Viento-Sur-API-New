@@ -46,9 +46,9 @@
     }
 
     .socialMedia li{
-        margin-left: 25px;
-        height: 35px;
-        width: 35px;
+        margin-left: 5px;
+        /*height: 35px;
+        width: 35px;*/
     }
 
     .socialMedia li a{
@@ -82,8 +82,8 @@
     }
 
     .search .tab-content h4{
-        font-size: 18px;
-        margin: 0 0 20px 0;
+        font-size: 14px;
+        margin: 0 0 10px 0;
     }
 
     .search .tab-content h4 span{
@@ -190,6 +190,7 @@
         height: 40px;
         font-size: 16px;
         width: 295px;
+        margin-bottom: 40px;
     }
     /*----- END SLIDER -----*/
 
@@ -260,11 +261,16 @@
     }
 
     #formSearch .results p{
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #formSearch label{
-        font-size: 16px;
+        font-size: 14px;
+    }
+
+    #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
+        height: 35px;
+        font-size: 14px;
     }
 
     #formSearch .form-group{
@@ -272,29 +278,27 @@
     }
 
     #formSearch i{
-        bottom: 10px;
-        left: 30px;
-        font-size: 20px;
+        /*bottom: 19%;
+        left: 5%;*/
+        font-size: 16px;
     }
 
     #formSearch input{
-        height: 40px;
-        font-size: 16px;
-        padding-left: 50px;
+        font-size: 14px;
     }
 
     #formSearch .bottonSearch button{
-        height: 40px;
-        font-size: 16px;
+        height: 35px;
+        font-size: 14px;
     }
 
     #formFilters .titleFilters{
-        font-size: 34px;
+        font-size: 20px;
         margin: 0 0 40px 0;
     }
 
     #formFilters .boxFilter h4{
-        font-size: 16px;
+        font-size: 14px;
         padding: 20px 0 10px 0;
         margin-bottom: 20px;
     }
@@ -304,7 +308,7 @@
     }
 
     #formFilters .boxFilter label {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #formFilters .boxFilter .checkbox {
@@ -312,18 +316,18 @@
     }
 
     #formFilters .boxFilter .checkbox span{
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #formFilters .boxFilter .checkbox .cr {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
         padding: 2px;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     #formFilters .boxFilter .checkbox .cr .cr-icon {
-        font-size: 18px;
+        font-size: 12px;
     }
 
     #formFilters .boxFilter .rangePrice{
@@ -333,20 +337,20 @@
 
     /*----- GO LIST THUMBS HOTELS -----*/
     #thumbsSearch .filterThumb{
-        height: 60px;
+        height: 40px;
         margin-bottom: 40px;
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        height: 53px;
+        height: 34px;
         padding: 0 30px;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #thumbsSearch .filterThumb .caret {
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        border-top: 7px solid;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid;
         margin-left: 5px;
     }
 
@@ -406,7 +410,6 @@
 
     #thumbHotel .priceRoom button{
         font-size: 12px;
-        border-radius: 25px;
         padding: 5px 15px;
     }
 
@@ -472,7 +475,6 @@
 
     #descriptionHotel .boxPrice button{
         font-size: 12px;
-        border-radius: 25px;
         padding: 5px 15px;
     }
 
@@ -541,7 +543,7 @@
     }
 
     #infoReserva .titleReserva, .datesPayment h5{
-        font-size: 18px;
+        font-size: 16px;
         margin: 15px 0;
     }
 
@@ -555,24 +557,24 @@
     }
 
     #infoReserva p{
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 5px;
     }
 
     #infoReserva h3{
         padding: 15px;
-        font-size: 14px;
+        font-size: 10px;
         margin: 20px 0;
 
     }
 
     #infoReserva aside{
-        font-size: 14px;
+        font-size: 12px;
         margin-top: 20px;
     }
 
     #infoReserva .totalPayment h2{
-        font-size: 20px;
+        font-size: 16px;
     }
 
     #infoReserva .headerDetail{
@@ -715,12 +717,12 @@
     }
 
     .footer h3{
-        font-size: 30px;
+        font-size: 23px;
         padding-bottom: 15px;
     }
 
     .footer p{
-        font-size: 19px;
+        font-size: 16px;
         margin-top: 22px;
         line-height: 22px;
     }
@@ -738,9 +740,9 @@
     }
 
     .socialMediaFooter li{
-        margin: 0 13px 0 0;
-        height: 35px;
-        width: 35px;
+        margin: 0 5px 0 0;
+        /*height: 35px;
+        width: 35px;*/
     }
 
     .socialMediaFooter li a{
@@ -759,11 +761,11 @@
     }
 
     .associations ul{
-        padding: 15px 0 0 0;
+        padding: 6px 0 0 0;
     }
 
     .associations .linkConditions{
-        font-size: 12px;
+        font-size: 10px;
         padding: 25px 0 23px 0;
     }
 
@@ -773,7 +775,7 @@
     }
 
     .copyright p{
-        font-size: 12px;
+        font-size: 10px;
     }
     /*----- END FOOTER -----*/
 }
@@ -839,10 +841,6 @@
 
     #thumbHotel .priceRoom h5{
         margin: 0;
-    }
-
-    #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
-        height: 5.33vw;
     }
 
     #formSearch .results p{
