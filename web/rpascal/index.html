@@ -18,6 +18,7 @@
 		<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 		<link href="bootstrap/css/datepicker.css" rel="stylesheet" type="text/css">
 		<link href="css/font-face.css" rel="stylesheet" type="text/css">
+		<link href="css/tabs.css" rel="stylesheet" type="text/css">
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<link href="css/responsive.css" rel="stylesheet" type="text/css">
 
@@ -89,10 +90,14 @@
 			<!-- SEARCH -->
 			<div class="search">
 				<!-- Nav tabs -->
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#hoteles" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
-					<li role="presentation"><a href="#vuelos" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
-				</ul>
+
+				<div class="tabbed round">
+					<ul role="tablist">
+						<li href="#vuelos" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+						<li class="active" href="#hoteles" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+					</ul>
+				</div>
+
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active row" id="hoteles">
@@ -432,6 +437,7 @@
 		<script type="text/javascript" src='js/jquery-3.1.1.min.js'></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="js/tabs.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
 		<script>
             var nowTemp = new Date();
