@@ -40,3 +40,6 @@ parameters:
 
     # Le indica al servicio si utiliza la key de test
     is_test:           true
+
+    google_url_shorter: 'https://www.googleapis.com/urlshortener/v1/url'
+    google_api_key_shorter: 'AIzaSyArVearZl_EkMJP1moq2Zksa5oZhHzlGt4'
