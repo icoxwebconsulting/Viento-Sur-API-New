@@ -1315,16 +1315,17 @@ figure.effect-goliath:hover p {
 
 #infoReserva h3{
 	padding: 1.25vw;
-	font-family: 'latoregular';
+    font-family: 'latobold';
 	font-size: 10px;
 	color: #fff;
 	text-transform: uppercase;
 	background-color: #ff5b5b;
 	margin: 1.66vw 0;
+    border-radius: 5px;
 }
 
 #infoReserva aside{
-	font-family: 'latolight_italic';
+    font-family: 'latobold_italic';
 	color: #febb02;
 	font-size: 12px;
 	margin-top: 1.66vw;
@@ -1436,7 +1437,8 @@ figure.effect-goliath:hover p {
 	background: #ff5b5b;
 	color: #fcfeff;
 	font-size: 1.16vw;
-	font-family: 'latolight';
+    font-family: 'latobold';
+    border-radius: 5px;
 }
 
 #processPayment .buttonPayment button{
