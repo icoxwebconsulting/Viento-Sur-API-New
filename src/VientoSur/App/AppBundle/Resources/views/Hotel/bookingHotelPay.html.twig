@@ -18,7 +18,7 @@
                 {% include '@VientoSurAppApp/messages/danger.html.twig' %}
 
                 <!--Pasajeros-->
-                <div class="panel panel-primary">
+                <div class="panel panel-primary passengers-panel">
                     <div class="panel-heading">{{ 'hotels.room_holder' | trans }}</div>
                     <div class="panel-body">
                         {#{{ form_row(formNewPay.passengers) }}#}
@@ -56,30 +56,33 @@
                     </div>
                 </div>
                 <!--/Pasajeros-->
-
                 <!--Formas de pago-->
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>
                     <div class="panel-body">
-                        <div class="list-group">
+                        <div class="list-group pay-methods-panel">
                             {% for paymentMethod in paymentMethods %}
                             <a href="javascript:void(0)" class="list-group-item">
                                 {% set type = paymentMethod.type %}
-                                <h4 class="list-group-item-heading">
+                                <h4 class="list-group-item-heading" onclick="selectCuote({{ loop.index }})">
                                     {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
                                     {% if paymentMethod.installment_quantity is defined %}
                                         {% if paymentMethod.installment_quantity == 1 %}
-                                            <b style="font-weight: bold !important;">1</b> Pago
+                                            <span id="span-text-{{ loop.index }}">
+                                                <b style="font-weight: bold !important;">1</b> Pago
+                                            </span>
                                         {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
                                             {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}#}
-                                            <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
-                                            {% if paymentMethod.amounts.total_interest_amount > 0 %}
-                                                {#<span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}#}
-                                                <span class="b-interest">{{ symbol }} {{ paymentMethod.amounts.total_interest_amount| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}
-                                                    ({{ 'hotels.interest' | trans }})</span>
-                                            {% else %}
-                                                <span class="b-interest">{{ 'hotels.whitout_interest' | trans }}</span>
-                                            {% endif %}
+                                            <span id="span-text-{{ loop.index }}">
+                                                <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
+                                                {% if paymentMethod.amounts.total_interest_amount > 0 %}
+                                                    {#<span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}#}
+                                                    <span class="b-interest">{{ symbol }} {{ paymentMethod.amounts.total_interest_amount| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}
+                                                        ({{ 'hotels.interest' | trans }})</span>
+                                                {% else %}
+                                                    <span class="b-interest">{{ 'hotels.whitout_interest' | trans }}</span>
+                                                {% endif %}
+                                            </span>
                                         {% else %}
                                             {{ 'hotels.pay' | trans }}
                                         {% endif %}
@@ -555,6 +558,8 @@
                 <div class="alert alert-warning" role="alert" style="margin-bottom: 0px;">{{ hotelBrief.room_cancellation }}</div>
             </div>
             <div class="booking-item-dates-change">
+                <b><span id="cuote"></span></b>
+                <br>
 
                 {#{{ 'hotels.room_per_night' | trans }}: $ {{ price_detail.nightly_subtotal|number_format(0, ',', '.') }}<br/>#}
                 {{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}<br/>
