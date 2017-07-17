@@ -764,7 +764,7 @@ $(document).ready(function () {
     //         }
     //     }
     // });
-    $(".col-md-5.col-md-pull-7").jScroll({speed : "fast"});
+    $(".col-md-5.col-md-pull-7").jScroll({speed : "slow"});
 
 });
 function selectCuote(id){

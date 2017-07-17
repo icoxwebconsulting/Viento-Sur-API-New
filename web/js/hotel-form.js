@@ -177,8 +177,11 @@ $(document).ready(function () {
             // }
         // }
     // });
-    $(".col-md-3.col-md-pull-9").jScroll({speed : "fast"});
+    $(".col-md-3.col-md-pull-9").jScroll({speed : "slow"});
 });
+// var $elt = $('.col-md-3.col-md-pull-9');
+//
+// $elt.unbind('jScroll', jScroll);
 
 function selectCuote(id){
 
