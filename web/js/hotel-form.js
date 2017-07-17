@@ -163,4 +163,23 @@ $(document).ready(function () {
             $('#errorEmail').removeClass('hide');
         }
     })
+    var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
+    $(window).scroll(function() {
+        var scrollVal = $(this).scrollTop();
+        if(limit > 400){
+            if (scrollVal > limit) {
+                $('.col-md-3.col-md-pull-9').css({'top': limit});
+                console.log('limit',limit)
+            }else{
+                $('.col-md-3.col-md-pull-9').css({'top': 0});
+            }
+        }
+    });
 });
+
+function selectCuote(id){
+
+    console.log('click');
+    console.log(this);
+    $('#cuote').text($('#span-text-'+id).text())
+}

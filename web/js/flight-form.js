@@ -740,4 +740,32 @@ $(document).ready(function () {
             $("#end-flight").show().attr("required");
         }
     });
+
+    var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
+    $(window).scroll(function() {
+        var scrollVal = $(this).scrollTop();
+        if(limit > 400){
+            if ( scrollVal > limit ) {
+                $('.content-sidebar').css({
+                    'top': limit,
+                    'position': 'relative'
+                });
+                $('.flight-detail').css({
+                    'display': 'none'
+                });
+            }else{
+                $('.content-sidebar').css({
+                    'top': 0,
+                    'position': 'initial'
+                });
+                $('.flight-detail').css({
+                    'display': 'block'
+                });
+            }
+        }
+    });
 });
+function selectCuote(id){
+    console.log('click');
+    $('#cuote').text($('#span-text-'+id).text())
+}
