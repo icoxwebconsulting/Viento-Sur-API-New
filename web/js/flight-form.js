@@ -741,29 +741,31 @@ $(document).ready(function () {
         }
     });
 
-    var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
-    $(window).scroll(function() {
-        var scrollVal = $(this).scrollTop();
-        if(limit > 400){
-            if ( scrollVal > limit ) {
-                $('.content-sidebar').css({
-                    'top': limit,
-                    'position': 'relative'
-                });
-                $('.flight-detail').css({
-                    'display': 'none'
-                });
-            }else{
-                $('.content-sidebar').css({
-                    'top': 0,
-                    'position': 'initial'
-                });
-                $('.flight-detail').css({
-                    'display': 'block'
-                });
-            }
-        }
-    });
+    // var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
+    // $(window).scroll(function() {
+    //     var scrollVal = $(this).scrollTop();
+    //     if(limit > 400){
+    //         if ( scrollVal > limit ) {
+    //             $('.content-sidebar').css({
+    //                 'top': limit,
+    //                 'position': 'relative'
+    //             });
+    //             $('.flight-detail').css({
+    //                 'display': 'none'
+    //             });
+    //         }else{
+    //             $('.content-sidebar').css({
+    //                 'top': 0,
+    //                 'position': 'initial'
+    //             });
+    //             $('.flight-detail').css({
+    //                 'display': 'block'
+    //             });
+    //         }
+    //     }
+    // });
+    $(".col-md-5.col-md-pull-7").jScroll({speed : "fast"});
+
 });
 function selectCuote(id){
     console.log('click');
