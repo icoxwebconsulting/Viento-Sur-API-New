@@ -30,9 +30,9 @@
 
     .language select{
         height: 30px;
-        width:130px;
+        width: 90px;
         font-size: 12px;
-        padding: 0 15px;
+        padding: 0 10px;
         background-size: 15px;
         margin: 0 50px 0 auto;
     }
@@ -66,7 +66,7 @@
     /*----- GO SLIDER -----*/
     .search{
         top: 130px;
-        left: 87px;
+        left: 180px;
     }
 
     .search .nav-tabs{
@@ -77,12 +77,12 @@
         margin-right: 5px;
     }
 
-    .search .tab-content{
+    .search .tab-pane{
         padding: 40px 20px 0 20px;
     }
 
     .search .tab-content h4{
-        font-size: 14px;
+        font-size: 12px;
         margin: 0 0 10px 0;
     }
 
@@ -99,7 +99,7 @@
 
     .search .tab-content .city-input{
         height: 35px;
-        font-size: 16px;
+        font-size: 13px;
         padding: 0 0 0 35px;
     }
 
@@ -117,7 +117,7 @@
 
     .search .tab-content .btnModal{
         height: 35px;
-        font-size: 16px;
+        font-size: 13px;
         padding: 0 25px;
     }
 
@@ -182,7 +182,7 @@
 
     .search .tab-content .selectMoney select{
         height: 35px;
-        font-size: 16px;
+        font-size: 13px;
         padding: 0 15px;
     }
 
@@ -224,11 +224,11 @@
     /*----- END NAVBAR -----*/
     /*----- GO BREADCRUMB -----*/
     #breadcrumb{
-        padding: 15px 0;
+        padding: 13px 0;
     }
 
     #breadcrumb ol li a{
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #breadcrumb ol li.active{
@@ -248,7 +248,7 @@
 
     .message{
         padding: 40px 0;
-        font-size: 32px;
+        font-size: 25px;
     }
 
     #formSearch, #formFilters{
@@ -362,7 +362,6 @@
     #thumbHotel{
         height: 210px;
         margin-bottom: 30px;
-        border: #e1e1e1 4px solid;
     }
 
     #thumbHotel .imgHotel{
@@ -531,7 +530,7 @@
     }
 
     .promotions h1{
-        font-size: 32px;
+        font-size: 25px;
         padding: 0 0 30px 0;
     }
     /*----- END CONTENT INFO -----*/
@@ -601,11 +600,11 @@
     }
 
     #processPayment .panel-heading{
-        padding: 20px 15px;
+        padding: 10px 15px;
     }
 
     #processPayment .panel-title{
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #processPayment .panel-body h5{
@@ -613,12 +612,10 @@
     }
 
     #processPayment .panel-body input{
-        height: 40px;
         margin-top: 10px;
     }
 
     #processPayment .panel-body select{
-        height: 40px;
         margin-top: 10px;
     }
 
@@ -643,7 +640,7 @@
     }
 
     #processPayment .datesPayment h2{
-        font-size: 26px;
+        font-size: 20px;
     }
 
     /*----- GO PROCESS PAYMENT RESERVATION -----*/
@@ -655,7 +652,7 @@
     }
 
     #thumbsFlights .panel-heading{
-        padding: 20px 15px;
+        padding: 0px 15px;
     }
 
     #thumbsFlights .paymentFlight{
@@ -717,7 +714,7 @@
     }
 
     .footer h3{
-        font-size: 23px;
+        font-size: 20px;
         padding-bottom: 15px;
     }
 
