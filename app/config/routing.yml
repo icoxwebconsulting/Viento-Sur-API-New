@@ -6,3 +6,12 @@ viento_sur_app_app:
         
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+api:
+  type : rest
+  resource: "@VientoSurApiBundle/Resources/config/routing.yml"
+  prefix : /api/v1
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

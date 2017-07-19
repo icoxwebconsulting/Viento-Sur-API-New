@@ -19,6 +19,7 @@ framework:
     csrf_protection: ~
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
+    serializer: true
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -101,3 +102,14 @@ lexik_currency:
         precision:  0                           # number of digits for the decimal part
 #        round_mode: down                          # round mode to use (up|down|even|odd)
     default_adapter: doctrine_currency_adapter
+
+
+#FOSRest Configuration
+fos_rest:
+    routing_loader:
+        default_format: json
+        include_format: false
+
+#NelmioApiDoc Configuratio
+nelmio_api_doc:
+    name: Viento Sur Api

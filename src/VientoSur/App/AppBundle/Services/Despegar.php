@@ -314,6 +314,8 @@ class Despegar
         $header = [
             'X-ApiKey: ' . $this->apiKeyProd
         ];
+        /*echo "<pre>".print_r($url,true)."</pre>";
+        die();*/
         return $this->curlExec($url, $header, 'GET');
     }
 

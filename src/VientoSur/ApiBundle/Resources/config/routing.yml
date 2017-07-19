@@ -1,0 +1,3 @@
+api_hotel:
+    type: rest
+    resource: VientoSurApiBundle:Hotel
