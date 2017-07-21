@@ -302,7 +302,7 @@ class FlightController extends Controller
 
         $results = $this->get('despegar')->getFlightItineraries($urlParams, $request->query->all());
 
-        if (isset($results['items'])) {
+        if (isset($results['items']) and !empty($results['items'])) {
             $airlines = [];
             foreach ($results['items'] as $item) {
                 if (isset($item['validating_carrier'])) {
@@ -323,20 +323,23 @@ class FlightController extends Controller
                     }
                 }
             }
+
+            $em = $this->getDoctrine()->getManager();
+            $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
+            $airlineData = [];
+            foreach ($airlineResults as $ar) {
+                $airlineData[$ar->getId()] = $ar->getName();
+            }
+            return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
+                'flightMenu' => true,
+                'items' => $results,
+                'airlineNames' => $airlineData
+            ));
+        }
+        if(empty($results['items'])){
+            return $this->render('@VientoSurAppApp/Flight/notFoundFlight.twig');
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $airlineResults = $em->getRepository('VientoSurAppAppBundle:Airlines')->findAirlinesIn($airlines);
-        $airlineData = [];
-        foreach ($airlineResults as $ar) {
-            $airlineData[$ar->getId()] = $ar->getName();
-        }
-
-        return $this->render('VientoSurAppAppBundle:Flight:listFlightsItineraries.html.twig', array(
-            'flightMenu' => true,
-            'items' => $results,
-            'airlineNames' => $airlineData
-        ));
     }
 
     /**
