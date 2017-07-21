@@ -36,6 +36,15 @@ class User extends BaseUser
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     protected $last_name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Hotel")
+     * @ORM\JoinTable(name="user_hotels",
+     *     joinColumns={@ORM\JoinColumn(name="hotel_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
+     */
+    protected $userHotels;
     
     /** Set first_name
     *
