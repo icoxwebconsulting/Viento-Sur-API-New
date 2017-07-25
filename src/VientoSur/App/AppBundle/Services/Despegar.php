@@ -99,6 +99,9 @@ class Despegar
         $header = [
             'X-ApiKey:' . $this->apiKey
         ];
+//        echo "<pre>" . print_r($urlParams, true) . "</pre>";
+//        echo "<pre>" . print_r($url, true) . "</pre>";
+//        die();
 //        $data = $this->clientVault->request('GET',"v3/hotels/availabilities", [
 //            'query' => http_build_query($urlParams),
 //            'headers' => [

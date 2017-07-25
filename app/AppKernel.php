@@ -24,13 +24,13 @@ class AppKernel extends Kernel
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(),
-            new \Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new \FOS\RestBundle\FOSRestBundle(),
-            new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
 
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
-            new \VientoSur\ApiBundle\VientoSurApiBundle(),
+            new VientoSur\ApiBundle\VientoSurApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
