@@ -8,6 +8,7 @@ use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\PromotionsRepository")
@@ -27,11 +28,13 @@ class Promotions
     protected $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     protected $name;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text")
      */
     protected $description;
@@ -74,6 +77,13 @@ class Promotions
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     protected $created_by;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
     /**
      * Get id
@@ -262,5 +272,10 @@ class Promotions
     public function getImageName()
     {
         return $this->imageName;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

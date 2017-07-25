@@ -3,15 +3,21 @@
 namespace VientoSur\App\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * Hotel
  *
  * @ORM\Table(name="hotels")
  * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\HotelRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Hotel
 {
+    use TimestampableTrait;
+
     /**
      * @var integer
      *
@@ -23,10 +29,17 @@ class Hotel
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
 
     /**
      * @var integer
@@ -77,6 +90,14 @@ class Hotel
      * @ORM\JoinColumn(name="hotel_types", referencedColumnName="id")
      */
     protected $hotelTypes;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
+
     /**
      * Get id
      *
@@ -223,5 +244,91 @@ class Hotel
     public function getPercentageGain()
     {
         return $this->percentageGain;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->amenityHotels = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add amenityHotels
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Amenity $amenityHotels
+     * @return Hotel
+     */
+    public function addAmenityHotel(\VientoSur\App\AppBundle\Entity\Amenity $amenityHotels)
+    {
+        $this->amenityHotels[] = $amenityHotels;
+
+        return $this;
+    }
+
+    /**
+     * Remove amenityHotels
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Amenity $amenityHotels
+     */
+    public function removeAmenityHotel(\VientoSur\App\AppBundle\Entity\Amenity $amenityHotels)
+    {
+        $this->amenityHotels->removeElement($amenityHotels);
+    }
+
+    /**
+     * Get amenityHotels
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAmenityHotels()
+    {
+        return $this->amenityHotels;
+    }
+
+    /**
+     * Set hotelTypes
+     *
+     * @param \VientoSur\App\AppBundle\Entity\HotelType $hotelTypes
+     * @return Hotel
+     */
+    public function setHotelTypes(\VientoSur\App\AppBundle\Entity\HotelType $hotelTypes = null)
+    {
+        $this->hotelTypes = $hotelTypes;
+
+        return $this;
+    }
+
+    /**
+     * Get hotelTypes
+     *
+     * @return \VientoSur\App\AppBundle\Entity\HotelType 
+     */
+    public function getHotelTypes()
+    {
+        return $this->hotelTypes;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Hotel
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

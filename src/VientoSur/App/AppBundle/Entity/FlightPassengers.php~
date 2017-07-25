@@ -186,4 +186,27 @@ class FlightPassengers
     {
         return $this->gender;
     }
+
+    /**
+     * Set flight_reservation
+     *
+     * @param \VientoSur\App\AppBundle\Entity\FlightReservation $flightReservation
+     * @return FlightPassengers
+     */
+    public function setFlightReservation(\VientoSur\App\AppBundle\Entity\FlightReservation $flightReservation = null)
+    {
+        $this->flight_reservation = $flightReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get flight_reservation
+     *
+     * @return \VientoSur\App\AppBundle\Entity\FlightReservation 
+     */
+    public function getFlightReservation()
+    {
+        return $this->flight_reservation;
+    }
 }

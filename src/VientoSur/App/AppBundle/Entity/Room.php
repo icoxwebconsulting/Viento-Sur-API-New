@@ -3,15 +3,22 @@
 namespace VientoSur\App\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
+
 
 /**
  * Room
  *
  * @ORM\Table(name="rooms")
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Room
 {
+    use TimestampableTrait;
+
     /**
      * @var integer
      *
@@ -23,7 +30,7 @@ class Room
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -58,7 +65,7 @@ class Room
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="cancellation_policity", type="string", length=255)
      */
     private $cancellationPolicity;
@@ -80,6 +87,13 @@ class Room
      * @ORM\JoinColumn(name="hotel  ", referencedColumnName="id")
      */
     protected $hotel;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
     /**
      * Get id
@@ -319,5 +333,10 @@ class Room
     public function getHotel()
     {
         return $this->hotel;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

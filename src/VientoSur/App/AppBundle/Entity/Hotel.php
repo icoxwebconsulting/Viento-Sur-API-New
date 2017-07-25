@@ -5,6 +5,7 @@ namespace VientoSur\App\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * Hotel
@@ -28,10 +29,17 @@ class Hotel
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
 
     /**
      * @var integer
@@ -82,6 +90,13 @@ class Hotel
      * @ORM\JoinColumn(name="hotel_types", referencedColumnName="id")
      */
     protected $hotelTypes;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
     /**
      * Get id
@@ -292,5 +307,33 @@ class Hotel
     public function getHotelTypes()
     {
         return $this->hotelTypes;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Hotel
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

@@ -3,18 +3,13 @@
 namespace VientoSur\App\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="status")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Status
 {
-    use TimestampableTrait;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -27,4 +22,41 @@ class Status
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     protected $name;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Status
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function __toString() {
+        return $this->name;
+    }
 }

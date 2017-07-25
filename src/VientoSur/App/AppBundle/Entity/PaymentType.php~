@@ -5,22 +5,29 @@ namespace VientoSur\App\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="amenities")
+ * PaymentType
+ *
+ * @ORM\Table(name="payment_type")
+ * @ORM\Entity
  */
-class Amenity
+class PaymentType
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $name;
+    private $name;
+
 
     /**
      * Get id
@@ -36,7 +43,7 @@ class Amenity
      * Set name
      *
      * @param string $name
-     * @return Amenity
+     * @return PaymentType
      */
     public function setName($name)
     {
