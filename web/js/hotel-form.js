@@ -163,19 +163,25 @@ $(document).ready(function () {
             $('#errorEmail').removeClass('hide');
         }
     })
-    var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
-    $(window).scroll(function() {
-        var scrollVal = $(this).scrollTop();
-        if(limit > 400){
-            if (scrollVal > limit) {
-                $('.col-md-3.col-md-pull-9').css({'top': limit});
-                console.log('limit',limit)
-            }else{
-                $('.col-md-3.col-md-pull-9').css({'top': 0});
-            }
-        }
-    });
+    // var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
+    // $(window).scroll(function() {
+    //     var scrollVal = $(this).scrollTop();
+    //     if(limit > 400){
+    //         if (scrollVal > limit) {
+    //             $('.col-md-3.col-md-pull-9').css({'top': limit});
+    //             console.log('limit',limit)
+    //         }else{
+    //
+    //             $('.col-md-3.col-md-pull-9').stop();
+                .css({'top': 0});
+            // }
+        // }
+    // });
+    $(".col-md-3.col-md-pull-9").jScroll({speed : "slow"});
 });
+// var $elt = $('.col-md-3.col-md-pull-9');
+//
+// $elt.unbind('jScroll', jScroll);
 
 function selectCuote(id){
 

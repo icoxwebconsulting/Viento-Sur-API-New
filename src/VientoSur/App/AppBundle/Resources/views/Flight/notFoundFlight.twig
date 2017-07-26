@@ -25,13 +25,13 @@
             {% else %}
                 {% set destination = "" %}
             {% endif %}
-            {% if items.status is not defined %}
-            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
-                    {% if origin  %}
-                        {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
-                    {% endif %}
-                </a></li>
-            {% endif %}
+            {#{% if items.status is not defined %}#}
+                {#<li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>#}
+                        {% if origin  %}
+                            {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
+                        {% endif %}
+                    {#</a></li>#}
+            {#{% endif %}#}
         </ul>
 
         <br/>
@@ -48,7 +48,7 @@
                 </div>
 
                 <ul class="flight-list">
-                    {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
+                    <li class="mfont">{{ 'flights.not_found' | trans }}</li>
                 </ul>
 
                 {#{{ dump(items) }}#}
@@ -70,27 +70,27 @@
     {{ parent() }}
     <script>
         {#$(function () {#}
-            {#$("#pagination").bootpag({#}
-                {#total: {{ (items.paging.total / 10) }},#}
-                {#maxVisible: 15,#}
-                {#page: {{ limit }} ,#}
-                {#firstLastUse: true,#}
-                {#first: '←',#}
-                {#last: '→'#}
+        {#$("#pagination").bootpag({#}
+        {#total: {{ (items.paging.total / 10) }},#}
+        {#maxVisible: 15,#}
+        {#page: {{ limit }} ,#}
+        {#firstLastUse: true,#}
+        {#first: '←',#}
+        {#last: '→'#}
 
-            {#}).on("page", function (event, num) {#}
-                {#var offset = (num * 10) - 1;#}
-                {#var limit = num;#}
-                {#var URLdomain = window.location.host;#}
-                {#var url2 = Routing.generate('viento_sur_send_flights');#}
-                {#var URLsearch = window.location.search;#}
+        {#}).on("page", function (event, num) {#}
+        {#var offset = (num * 10) - 1;#}
+        {#var limit = num;#}
+        {#var URLdomain = window.location.host;#}
+        {#var url2 = Routing.generate('viento_sur_send_flights');#}
+        {#var URLsearch = window.location.search;#}
 
-                {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
-            {#});#}
-//            $("#field-hotel-checkin").datepicker({
-//                "setDate": new Date()
-//            });
-//        });
+        {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
+        {#});#}
+        //            $("#field-hotel-checkin").datepicker({
+        //                "setDate": new Date()
+        //            });
+        //        });
         $('.flight-list').on('click', '.booking-prices', function (event) {
             event.stopPropagation();
             var itemId = $(this).data('item');
@@ -144,9 +144,9 @@
             }
 
             var pagination = $("#pagination").bootpag({
-                total: {{ total }},
+                total: 0,
                 maxVisible: 10,
-                page: {{ page }} ,
+                page: 0 ,
                 firstLastUse: true,
                 first: '←',
                 last: '→'
@@ -330,13 +330,13 @@
                 $(this).removeClass('hidden');
             });
             /*
-            $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
-                var type = $(this).data('type');
-                var selector = '.' + type + ' .' + type + '-hidden';
-                $(selector).slideToggle();
-                $('.' + type + '-view-toggle').toggleClass('hide')
-            });
-            */
+             $('.zones-view-toggle, .amenities-view-toggle, .hotel_chains-view-toggle, .profiles-view-toggle').on('click', function () {
+             var type = $(this).data('type');
+             var selector = '.' + type + ' .' + type + '-hidden';
+             $(selector).slideToggle();
+             $('.' + type + '-view-toggle').toggleClass('hide')
+             });
+             */
         })
     </script>
 {% endblock %}
