@@ -378,3 +378,12 @@ admin:
     delete_element: Deseja excluir este elemento?
     yes: Sim
     image: Imagem
+    hotel_type:
+        apt: Appart'hotels
+        bad: Bed And Breakfast
+        btq: Hotéis boutique
+        dpt: Departamentos
+        hot: Hotéis
+        hst: Albergues
+        mot: Motel
+        rsr: Refúgio

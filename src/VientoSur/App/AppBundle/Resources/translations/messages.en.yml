@@ -380,3 +380,12 @@ admin:
     delete_element: Do you want to delete this element?
     yes: Yes
     image: Image
+    hotel_type:
+        apt: Apart Hotels
+        bad: Bed And Breakfast
+        btq: Boutique Hotels
+        dpt: Departaments
+        hot: Hotels
+        hst: Hostels
+        mot: Motel
+        rsr: Resort
