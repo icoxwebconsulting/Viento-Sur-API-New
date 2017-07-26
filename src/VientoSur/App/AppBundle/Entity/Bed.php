@@ -35,17 +35,21 @@ class Bed
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="size", type="string", length=255)
-     */
-    private $size;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="beds")
      * @ORM\JoinColumn(name="room", referencedColumnName="id")
      */
     protected $room;
+    /**
+     * @ORM\ManyToOne(targetEntity="BedType", inversedBy="beds")
+     * @ORM\JoinColumn(name="bed_type", referencedColumnName="id")
+     */
+    protected $bed_type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     */
+    protected $created_by;
 
     /**
      * @Gedmo\Locale
@@ -136,5 +140,51 @@ class Bed
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * Set bed_type
+     *
+     * @param \VientoSur\App\AppBundle\Entity\BedType $bedType
+     * @return Bed
+     */
+    public function setBedType(\VientoSur\App\AppBundle\Entity\BedType $bedType = null)
+    {
+        $this->bed_type = $bedType;
+
+        return $this;
+    }
+
+    /**
+     * Get bed_type
+     *
+     * @return \VientoSur\App\AppBundle\Entity\BedType 
+     */
+    public function getBedType()
+    {
+        return $this->bed_type;
+    }
+
+    /**
+     * Set created_by
+     *
+     * @param \VientoSur\App\AppBundle\Entity\User $createdBy
+     * @return Bed
+     */
+    public function setCreatedBy(\VientoSur\App\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->created_by = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get created_by
+     *
+     * @return \VientoSur\App\AppBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 }

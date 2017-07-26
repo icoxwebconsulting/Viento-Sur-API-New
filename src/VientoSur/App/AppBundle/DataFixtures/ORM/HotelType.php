@@ -11,8 +11,12 @@ class HotelType extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $hotel_types = array(
+            'APT',
+            'BAD',
+            'BTQ',
             'DPT',
             'HOT',
+            'HST',
             'MOT',
             'RSR'
         );

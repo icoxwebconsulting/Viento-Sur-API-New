@@ -44,14 +44,14 @@ class Hotel
     /**
      * @var integer
      *
-     * @ORM\Column(name="stars", type="integer")
+     * @ORM\Column(name="stars", type="integer", nullable=true)
      */
     private $stars;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="origen", type="string", length=255)
+     * @ORM\Column(name="origen", type="string", length=255, nullable=true)
      */
     private $origen;
 
@@ -72,7 +72,7 @@ class Hotel
     /**
      * @var float
      *
-     * @ORM\Column(name="percentage_gain", type="float")
+     * @ORM\Column(name="percentage_gain", type="float", nullable=true)
      */
     private $percentageGain;
 
@@ -90,6 +90,12 @@ class Hotel
      * @ORM\JoinColumn(name="hotel_types", referencedColumnName="id")
      */
     protected $hotelTypes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     */
+    protected $created_by;
 
     /**
      * @Gedmo\Locale
@@ -335,5 +341,28 @@ class Hotel
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * Set created_by
+     *
+     * @param \VientoSur\App\AppBundle\Entity\User $createdBy
+     * @return Hotel
+     */
+    public function setCreatedBy(\VientoSur\App\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->created_by = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get created_by
+     *
+     * @return \VientoSur\App\AppBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 }

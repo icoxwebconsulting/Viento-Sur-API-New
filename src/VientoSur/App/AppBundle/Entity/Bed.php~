@@ -35,17 +35,21 @@ class Bed
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="size", type="string", length=255)
-     */
-    private $size;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="beds")
      * @ORM\JoinColumn(name="room", referencedColumnName="id")
      */
     protected $room;
+    /**
+     * @ORM\ManyToOne(targetEntity="BedType", inversedBy="beds")
+     * @ORM\JoinColumn(name="bed_type", referencedColumnName="id")
+     */
+    protected $bed_type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     */
+    protected $created_by;
 
     /**
      * @Gedmo\Locale
@@ -131,5 +135,10 @@ class Bed
     public function getRoom()
     {
         return $this->room;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

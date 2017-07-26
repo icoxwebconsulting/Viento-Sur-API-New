@@ -89,6 +89,12 @@ class Room
     protected $hotel;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     */
+    protected $created_by;
+
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -338,5 +344,28 @@ class Room
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * Set created_by
+     *
+     * @param \VientoSur\App\AppBundle\Entity\User $createdBy
+     * @return Room
+     */
+    public function setCreatedBy(\VientoSur\App\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->created_by = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get created_by
+     *
+     * @return \VientoSur\App\AppBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 }
