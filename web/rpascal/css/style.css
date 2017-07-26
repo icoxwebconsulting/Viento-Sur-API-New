@@ -791,10 +791,11 @@ header{
 #thumbHotel{
 	border-radius: 5px;
 	border: #e1e1e1 1px solid;
-	height: 17.5vw;
+	/*height: 17.5vw;*/
 	margin-bottom: 2.5vw;
 	overflow: hidden;
 	background: #f5f5f5;
+	padding: 15px 0;
 }
 
 #thumbHotel:hover{
@@ -805,51 +806,72 @@ header{
 }
 
 #thumbHotel .imgHotel{
-	overflow: hidden;
-	height: 17.5vw;
+	padding: 0 15px;
 }
 
 #thumbHotel .imgHotel img{
-	width: auto;
-	height: 100%;
-}
-
-#thumbHotel .infoHotel{
-	margin: 1.25vw 0;
-	padding: 0 1.25vw;
+	width: 100%;
+	height: auto;
 }
 
 #thumbHotel .infoHotel h4{
-	color: #233034;
-	font-size: 1.83vw;
+	margin: 0 0 5px 0;
+	display: flex;
+}
+
+#thumbHotel .infoHotel h4 a{
+	color: #008cd0;
+	font-size: 1.66vw;
 	font-family: 'latobold';
-	margin: 0;
+	float: left;
 }
 
 #thumbHotel .infoHotel ul{
 	padding: 0;
-	margin: 1.25vw 0;
-	line-height: 0;
+	margin: 0 0 0 10px;
+	float: left;
 }
 
 #thumbHotel .infoHotel li{
 	display: inline-block;
-	margin-right: 0.83vw;
-}
-
-#thumbHotel .infoHotel li i{
-	font-size: 1.66vw;
-	color: #0ab21b;
 }
 
 #thumbHotel .infoHotel li i.fa-star{
 	color: #febb02;
+	font-size: 1.25vw;
+}
+
+#thumbHotel .infoHotel .modalMap{
+	margin-bottom: 5px;
+}
+
+#thumbHotel .infoHotel .descriptionText{
+	padding-right: 10px;
+	font-size: 13px;
+}
+
+#thumbHotel .infoHotel .inDemand{
+	font-size: 12px;
+	color: #ff0202;
+}
+
+#thumbHotel .infoHotel .inDemand span{
+	font-size: 12px;
+	background: #ff6c6c;
+	padding: 3px 5px;
+	border-radius: 3px;
+	color: #ffffff;
+	margin-right: 5px;
 }
 
 #thumbHotel .infoHotel a{
-	font-size: 1.33vw;
+	font-size: 1.25vw;
 	font-family: 'latoregular';
 	color: #0777ae;
+}
+
+#thumbHotel .infoHotel a i{
+	margin: 0 5px;
 }
 
 #thumbHotel .infoHotel a:hover{
@@ -857,11 +879,43 @@ header{
 	color: #233034;
 }
 
-#thumbHotel .priceRoom{
-	margin: 1.25vw 0;
-	padding: 1.41vw 1.25vw;
-	border-left: #ebebeb 1px solid;
+#thumbHotel .infoHotel .servicesIcons{
+	padding: 0;
+	margin: 10px 0 0 0;
+	border-radius: 50%;
+}
+
+#thumbHotel .infoHotel .servicesIcons li{
+	border-radius: 50%;
+	background: #ffffff;
+	border: #008cd0 1px solid;
 	text-align: center;
+	width: 30px;
+	height: 30px;
+}
+
+#thumbHotel .infoHotel .servicesIcons li i{
+	color: #003580;
+	font-size: 12px;
+	vertical-align: sub;
+}
+
+#thumbHotel .infoHotel .servicesIcons span{
+	margin-left: 5px;
+	vertical-align: text-top;
+}
+
+#thumbHotel .priceRoom{
+	margin: 0;
+	padding: 0 15px 0 0;
+	text-align: right;
+}
+
+#thumbHotel .priceRoom h4{
+	margin: 0 0 5px 0;
+	color: #008cd0;
+	font-size: 1.66vw;
+	font-family: 'latobold';
 }
 
 #thumbHotel .priceRoom p{
@@ -871,10 +925,14 @@ header{
 }
 
 #thumbHotel .priceRoom h5{
-	color: #008cd0;
-	font-size: 2vw;
+	color: #233034;
+	font-size: 1.25vw;
 	font-family: 'latoblack';
-	margin: 2.5vw 0;
+	margin: 3.33vw 0 0 0;
+}
+
+#thumbHotel .priceRoom h5 span{
+	font-size: 1.41vw;
 }
 
 #thumbHotel .priceRoom button{
@@ -887,6 +945,7 @@ header{
 	border-radius: 5px;
 	border: #008cd0 1px solid;
 	padding: 0.41vw 1.25vw;
+	margin-top: 3.33vw;
 }
 
 #thumbHotel .priceRoom button:hover, #thumbsFlights .paymentFlight button:hover, #thumbsFlights .panel-body button:hover, #descriptionHotel .boxPrice button:hover{

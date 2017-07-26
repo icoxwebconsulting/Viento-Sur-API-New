@@ -360,42 +360,24 @@
     }
 
     #thumbHotel{
-        height: 210px;
+        /*height: 210px;*/
         margin-bottom: 30px;
     }
 
-    #thumbHotel .imgHotel{
-        height: 210px;
-    }
-
-    #thumbHotel .infoHotel{
-        margin: 15px 0;
-        padding: 0 15px;
-    }
-
-    #thumbHotel .infoHotel h4{
-        font-size: 22px;
-    }
-
-    #thumbHotel .infoHotel ul{
-        margin: 15px 0;
-    }
-
-    #thumbHotel .infoHotel li{
-        margin-right: 10px;
-    }
-
-    #thumbHotel .infoHotel li i{
+    #thumbHotel .infoHotel h4 a{
         font-size: 20px;
     }
 
-    #thumbHotel .infoHotel a{
-        font-size: 16px;
+    #thumbHotel .infoHotel li i.fa-star{
+        font-size: 15px;
     }
 
-    #thumbHotel .priceRoom{
-        margin: 15px 0;
-        padding: 17px 15px;
+    #thumbHotel .infoHotel a{
+        font-size: 15px;
+    }
+
+    #thumbHotel .priceRoom h4{
+        font-size: 20px;
     }
 
     #thumbHotel .priceRoom p{
@@ -403,13 +385,18 @@
     }
 
     #thumbHotel .priceRoom h5{
-        font-size: 24px;
-        margin: 30px 0;
+        font-size: 15px;
+        margin: 40px 0 0 0;
+    }
+
+    #thumbHotel .priceRoom h5 span{
+        font-size: 17px;
     }
 
     #thumbHotel .priceRoom button{
         font-size: 12px;
         padding: 5px 15px;
+        margin-top: 40px;
     }
 
     #thumbsSearch .paginationList li a{
