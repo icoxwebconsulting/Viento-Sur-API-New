@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class HotelController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * Get hotel availabilities
+     * Get hotels with available rooms
      *
      * @param Request $request
      * @return array
@@ -34,48 +34,55 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/availabilities/")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get all destinations",
+     *  description="Get hotels with available rooms",
      *  parameters={
      *     {
      *          "name"="country_code",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="AR",
      *          "description"="The country code in which the request is made."
      *      },
      *     {
      *          "name"="checkin_date",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="YYYY-MM-DD",
      *          "description"="Date of checkin."
      *      },
      *     {
      *          "name"="checkout_date",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="YYYY-MM-DD",
      *          "description"="Date of checkout."
      *      },
      *     {
      *          "name"="destination",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="0000",
      *          "description"="Id city or Id hotel"
      *      },
      *     {
      *          "name"="distribution",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="1-2-5!1-12-9",
      *          "description"="Room distribution."
      *      },
      *     {
      *          "name"="language",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="en, es, pt",
      *          "description"="Language of texts involved in the response."
      *      },
      *     {
      *          "name"="currency",
      *          "dataType"="string",
      *          "required"=true,
+     *          "format"="ARS, USD",
      *          "description"="The currency upon which the prices will be shown."
      *      },
      *     {
@@ -143,11 +150,11 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "dataType"="string",
      *          "required"=false,
      *          "description"="Limits the result to the given total price range (Nightly rate). ie: 120-270."
-     *      },
+     *      }
      *  },
      *  statusCodes={
      *     200="Returned when successful",
-     *     404="Destination not found"
+     *     404="Search not found"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
@@ -157,26 +164,6 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      */
     public function getAvailabilitiesAction(Request $request)
     {
-        /**
-         * Data demo initial
-         *
-         * Array
-         * (
-         * [country_code] => AR
-         * [checkin_date] => 2017-07-25
-         * [checkout_date] => 2017-07-29
-         * [destination] => 982
-         * [distribution] => 1
-         * [language] => es
-         * [radius] => 200
-         * [currency] => ARS
-         * [sorting] => best_selling_descending
-         * [classify_roompacks_by] => none
-         * [roompack_choices] => recommended
-         * [offset] => 0
-         * [limit] => 25
-         * )
-         */
 
         /**
          * Parameters
@@ -184,7 +171,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $countryCode        = $request->query->get('country_code');
         $checkinDate        = $request->query->get('checkin_date');
         $checkoutDate       = $request->query->get('checkout_date');
-        $distribution       = $request->query->get('distribution');
+        $distributions       = $request->query->get('distribution');
         $destination        = $request->query->get('destination');
         $language           = $request->query->get('language');
         $currency           = $request->query->get('currency');
@@ -202,7 +189,6 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         /**
          * Processed date
          */
-        $distributions = str_replace(',', '!', str_replace(' ', '', $distribution));
 
         if(!$currency){
             $currency = 'ARS';
@@ -247,5 +233,103 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $response = new JsonResponse($results);
 
         return $response;
+    }
+
+    /**
+     * Get room availability for hotel
+     *
+     * @param Request $request
+     * @param String $id
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/hotel/availabilities/{id}")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get room availability for hotel",
+     *  parameters={
+     *     {
+     *          "name"="language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts involved in the response."
+     *      },
+     *     {
+     *          "name"="country_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="AR",
+     *          "description"="The country code in which the request is made."
+     *      },
+     *     {
+     *          "name"="currency",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="ARS, USD",
+     *          "description"="The currency upon which the prices will be shown."
+     *      },
+     *     {
+     *          "name"="checkin_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkin."
+     *      },
+     *     {
+     *          "name"="checkout_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkout."
+     *      },
+     *     {
+     *          "name"="distribution",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="1-2-5!1-12-9",
+     *          "description"="Room distribution."
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Search not found"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getAvailabilitiesIdAction(Request $request, $id)
+    {
+        /**
+         * Parameters
+         */
+        $countryCode        = $request->query->get('country_code');
+        $checkinDate        = $request->query->get('checkin_date');
+        $checkoutDate       = $request->query->get('checkout_date');
+        $distributions       = $request->query->get('distribution');
+        $language           = $request->query->get('language');
+        $currency           = $request->query->get('currency');
+
+        /**
+         * Processed date
+         */
+
+        $urlParams = array(
+            'language' => $language,
+            'country_code' => $countryCode,
+            'currency' => $currency,
+            'checkin_date' => $checkinDate,
+            'checkout_date' => $checkoutDate,
+            'distribution' => $distributions,
+            'classify_roompacks_by' => 'rate_plan',
+        );
+
+        $results = $this->get('despegar')->getHotelsAvailabilitiesDetail($id, $urlParams);
+        $response = new JsonResponse($results);
+
+        return $response;
+
     }
 }
