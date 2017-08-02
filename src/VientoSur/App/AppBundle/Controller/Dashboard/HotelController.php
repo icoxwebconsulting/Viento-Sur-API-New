@@ -19,6 +19,20 @@ use VientoSur\App\AppBundle\Form\PictureType;
  */
 class HotelController extends Controller
 {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/", name="hotel_list")
+     * @Method("GET")
+     * @return response
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
+        return $this->render(':admin/hotel:list.html.twig', array(
+            'entities' => $entities
+        ));
+    }
 
     /**
      * @param Request $request

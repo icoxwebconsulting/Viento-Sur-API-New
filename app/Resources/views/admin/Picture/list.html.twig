@@ -1,0 +1,69 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}{{ 'admin.gallery_photo' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.gallery_photo' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> {{ 'admin.photo_manager' | trans }}
+            </div>
+            <div class="card-block">
+                <form action="{{ path('hotel_picture_new') }}" class="dropzone">
+                </form>
+                {#<table class="table">#}
+                    {#<thead>#}
+                    {#<tr>#}
+                        {#<th>#</th>#}
+                        {#<th>{{ 'admin.name' | trans }}</th>#}
+                        {#<th>hotel name</th>#}
+                        {#<th>room name</th>#}
+                        {#<th>position</th>#}
+                        {#<th>{{ 'admin.actions' | trans }}</th>#}
+                    {#</tr>#}
+                    {#</thead>#}
+                    {#<tbody>#}
+                    {#{%  for entity in entities %}#}
+                        {#<tr>#}
+                            {#<td>{{ entity.id }}</td>#}
+                            {#<td>{{ entity.created | ago }}</td>#}
+                            {#<td>{{ entity.name }}</td>#}
+                            {#<td>{{ entity.description }}</td>#}
+                            {#<td>{{ entity.stars }}</td>#}
+                            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                                {#<td>{{ entity.percentageGain }}</td>#}
+                                {#<td>{{ entity.origen }}</td>#}
+                            {#{% endif %}#}
+                            {#<td>#}
+                                {#{% if entity.hotelTypes %}#}
+                                    {#{% set label = 'admin.hotel_type.'~entity.hotelTypes.name %}#}
+                                    {#{{ label | trans  }}#}
+                                {#{% endif %}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{% if entity.createdBy %}#}
+                                    {#{{ entity.createdBy.username }}#}
+                                {#{% endif %}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#<a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('promotion_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>#}
+                                {#<a href="{{ path('promotion_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>#}
+                                {#<a href="#"><i class="fa fa-picture-o"></i></a>#}
+                            {#</td>#}
+                        {#</tr>#}
+                    {#{% endfor %}#}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
