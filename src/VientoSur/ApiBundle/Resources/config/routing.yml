@@ -1,7 +1,7 @@
-api_hotel:
-    type: rest
-    resource: VientoSurApiBundle:Hotel
-
 api_autocomplete:
     type: rest
     resource: VientoSurApiBundle:Autocomplete
+
+api_hotel:
+    type: rest
+    resource: VientoSurApiBundle:Hotel

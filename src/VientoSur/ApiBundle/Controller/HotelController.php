@@ -236,7 +236,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Get room availability for hotel
+     * Get id for booking form
      *
      * @param Request $request
      * @param String $id
@@ -312,10 +312,6 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $language           = $request->query->get('language');
         $currency           = $request->query->get('currency');
 
-        /**
-         * Processed date
-         */
-
         $urlParams = array(
             'language' => $language,
             'country_code' => $countryCode,
@@ -327,6 +323,88 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         );
 
         $results = $this->get('despegar')->getHotelsAvailabilitiesDetail($id, $urlParams);
+        $response = new JsonResponse($results);
+
+        return $response;
+
+    }
+
+
+    /**
+     * Get room availability for hotel
+     *
+     * @param Request $request
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/hotel/booking/")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get room availability for hotel",
+     *  parameters={
+     *     {
+     *          "name"="country_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="AR",
+     *          "description"="The country code in which the request is made."
+     *      },
+     *     {
+     *          "name"="context_language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts"
+     *      },
+     *     {
+     *          "name"="availability_token",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Token booking."
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Search not found"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function postHotelBookingAction(Request $request)
+    {
+        /**
+         * Parameters
+         */
+        $params = $this->getRequest()->request->all();
+
+        $countryCode        = $params['country_code'];
+        $language           = $params['context_language'];
+        $availabilityToken  = $params['availability_token'];
+        $clientIp           = $request->getClientIp();
+        $agentCode          = $this->getParameter('agent_code');
+        $userAgent          = $request->headers->get('User-Agent');
+
+        $urlParams = array(
+            "source" => array(
+                "country_code" => $countryCode
+            ),
+            "reservation_context" => array(
+                "context_language" => $language,
+                "shown_currency" => "ARS",
+                "threat_metrix_id" => "25",
+                "agent_code" => $agentCode,
+                "client_ip" => $clientIp,
+                "user_agent" => $userAgent
+            ),
+            "keys" => array(
+                "availability_token" => $availabilityToken
+            )
+        );
+
+        $results = $this->get('despegar')->postHotelsBookings($urlParams);
         $response = new JsonResponse($results);
 
         return $response;
