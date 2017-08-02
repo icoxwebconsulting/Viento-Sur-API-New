@@ -45,7 +45,13 @@ a, a:hover, a:focus{
 }
 
 .paddingSpecial{
-	padding: 0 1.25vw 0 3.75vw;
+	padding: 0 0 0 2.5vw;
+	margin: 0 3.58vw;
+}
+
+.paddingModif{
+	padding: 0 3.33vw;
+	margin: 0 3.58vw;
 }
 
 .inputError{
@@ -445,7 +451,7 @@ header{
 	font-size: 1.33vw;
 	color: #e3e3e3;
 	font-family: 'latoregular';
-	width: 24.58vw;
+	width: 10.83vw;
 	border: none;
 	box-shadow: none;
 	text-transform: uppercase;
@@ -680,7 +686,7 @@ header{
 	padding-left: 0;
 	color: #fcfeff;
 	font-size: 12px;
-	font-family: 'latolight';
+	font-family: 'latoregular';
 	vertical-align: top;
 }
 
@@ -737,7 +743,7 @@ header{
 #thumbsSearch .filterThumb{
 	border-color: #008cd0;
 	border-style: solid;
-	border-width: 6px 2px 2px 2px;
+	border-width: 4px 2px 2px 2px;
 	border-radius: 5px;
 	margin-bottom: 3.33vw;
 	line-height: 0;
@@ -749,11 +755,12 @@ header{
 	border-width: 0 1px 0 0;
 	background: none;
 	height: 4.41vw;
-	padding: 0 2.5vw;
+	text-align: center;
 	text-transform: uppercase;
 	color: #233034;
 	font-family: 'latobold';
 	font-size: 1.33vw;
+	width: 100%;
 }
 
 #thumbsSearch .filterThumb .caret {
@@ -936,20 +943,21 @@ header{
 }
 
 #thumbHotel .priceRoom button{
-	color: #233034;
+	color: #fff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latolight';
-	background: transparent;
+	font-family: 'latoregular';
+	background: #008cd0;
 	box-shadow: none;
 	border-radius: 5px;
-	border: #008cd0 1px solid;
 	padding: 0.41vw 1.25vw;
 	margin-top: 3.33vw;
+	border: none;
 }
 
 #thumbHotel .priceRoom button:hover, #thumbsFlights .paymentFlight button:hover, #thumbsFlights .panel-body button:hover, #descriptionHotel .boxPrice button:hover{
 	background: #008cd0;
+	border-radius: 10px;
 	color: #ffffff;
 }
 
@@ -1167,6 +1175,7 @@ figure.effect-goliath:hover p {
 
 #descriptionHotel .descriptionHotel{
 	margin: 2.5vw 0;
+	text-align: justify;
 }
 
 #descriptionHotel .descriptionHotel p{
@@ -1195,14 +1204,14 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .boxPrice button{
-	color: #233034;
+	color: #ffffff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latolight';
-	background: transparent;
+	font-family: 'latoregular';
+	background: #008cd0;
 	box-shadow: none;
 	border-radius: 5px;
-	border: #008cd0 1px solid;
+	border: none;
 	padding: 0.41vw 1.25vw;
 }
 
@@ -1275,12 +1284,12 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel table td button{
-	background: transparent none repeat scroll 0 0;
-	border: 1px solid #008cd0;
+	background: #008cd0;
+	border: none;
 	border-radius: 5px;
 	box-shadow: none;
-	color: #233034;
-	font-family: "latolight";
+	color: #ffffff;
+	font-family: 'latoregular';
 	font-size: 13px;
 	padding: 5px;
 	text-align: center;
@@ -1288,12 +1297,13 @@ figure.effect-goliath:hover p {
 
 #descriptionHotel table td button:hover{
 	background: #008cd0;
+	border-radius: 10px;
 	color: #ffffff;
 }
 
 #descriptionHotel table td select{
 	height: 30px;
-	width: 100px;
+	width: 55px;
 	border-radius: 5px;
 	border: #192731 1px solid;
 	background: url(../images/arrow-down-select.png) no-repeat 92% 50% !important;
@@ -1583,29 +1593,31 @@ figure.effect-goliath:hover p {
 }
 
 #thumbsFlights .paymentFlight button{
-	color: #233034;
+	color: #ffffff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latolight';
-	background: transparent;
+	font-family: 'latoregular';
+	background: #008cd0;
 	box-shadow: none;
 	border-radius: 5px;
-	border: #008cd0 1px solid;
+	border: none;
 	padding: 0.41vw 1.25vw;
 }
 
 #thumbsFlights .panel-heading h3{
-	background: #fcfeff;
+	background: #333;
 	padding: 0.41vw;
-	color: #008cd0;
+	color: #fff;
 	font-size: 1.33vw;
 	font-family: 'latobold';
+	margin: 1vw 0;
 }
 
 #thumbsFlights .panel-heading h6{
 	color: #fcfeff;
 	font-size: 1.33vw;
 	font-family: 'latobold';
+	margin-bottom: 0;
 }
 
 #thumbsFlights .panel-heading p{
@@ -1656,12 +1668,12 @@ figure.effect-goliath:hover p {
 }
 
 #thumbsFlights .panel-body button{
-	background: transparent none repeat scroll 0 0;
-	border: 1px solid #008cd0;
+	background: #008cd0;
+	border: none;
 	border-radius: 5px;
 	box-shadow: none;
-	color: #233034;
-	font-family: "latolight";
+	color: #ffffff;
+	font-family: 'latoregular';
 	font-size: 1vw;
 	padding: 0.41vw 1.25vw;
 	text-align: center;
@@ -1696,7 +1708,7 @@ figure.effect-goliath:hover p {
 }
 
 .footer p{
-	font-size: 1.16vw;
+	font-size: 1.08vw;
 	color: #ffffff;
 	font-family: 'latoregular';
 	line-height: 1.83vw;
