@@ -52,7 +52,7 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="capacity", type="string", length=255)
+     * @ORM\Column(name="capacity", type="integer")
      */
     private $capacity;
 
@@ -93,6 +93,11 @@ class Room
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     protected $created_by;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Picture", mappedBy="rooms", cascade={"persist", "remove"})
+     */
+    private $picture;
 
     /**
      * @Gedmo\Locale
@@ -367,5 +372,45 @@ class Room
     public function getCreatedBy()
     {
         return $this->created_by;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add picture
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Picture $picture
+     * @return Room
+     */
+    public function addPicture(\VientoSur\App\AppBundle\Entity\Picture $picture)
+    {
+        $this->picture[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Picture $picture
+     */
+    public function removePicture(\VientoSur\App\AppBundle\Entity\Picture $picture)
+    {
+        $this->picture->removeElement($picture);
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

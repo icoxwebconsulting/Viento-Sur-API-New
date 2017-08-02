@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller;
+namespace VientoSur\App\AppBundle\Controller\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,17 +45,17 @@ class DashboardController extends Controller
 //        $room->setNightlyPrice(40);
 //        $em->persist($room);
 
-        $room->setName('ingles');
-        $room->setCancellationPolicity('cancelacion ingles');
-        $room->setTranslatableLocale('en');
-        $em->persist($room);
-//
-        $room->setName('portugues');
-        $room->setCancellationPolicity('cancelacion portugues');
-        $room->setTranslatableLocale('pt');
-        $em->persist($room);
+//        $room->setName('ingles');
+//        $room->setCancellationPolicity('cancelacion ingles');
+//        $room->setTranslatableLocale('en');
+//        $em->persist($room);
 
-        $em->flush();
+//        $room->setName('portugues');
+//        $room->setCancellationPolicity('cancelacion portugues');
+//        $room->setTranslatableLocale('pt');
+//        $em->persist($room);
+//
+//        $em->flush();
 
         $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
         $translations = $repository->findTranslations($room);

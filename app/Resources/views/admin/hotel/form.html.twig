@@ -1,0 +1,235 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {{ dump(form.children.hotelTypes) }}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }}</strong>
+            </div>
+            {{ form_start(form, {'attr':{ 'class': 'form-horizontal'}}) }}
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'hotels.description' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.description, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.description) }}
+                </div>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="stars">{{ 'admin.percentage_gain' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.percentageGain, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.percentageGain) }}
+                </div>
+                {% endif %}
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="stars">{{ 'hotels.stars' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.stars, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.stars) }}
+                </div>
+                {#<div class="form-group row">#}
+                    {#<label class="col-md-3 form-control-label" for="last-name">{{ 'image' | trans }}</label>#}
+                    {#<div class="col-md-9">#}
+                        {#{{ form_widget(form.image, { 'attr': { 'class': 'form-control', 'required': 'false'}}) }}#}
+                    {#</div>#}
+                    {#{{ form_errors(form.image) }}#}
+                {#</div>#}
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="email">{{ 'hotels.search_menu.type' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.hotelTypes, { 'attr': { 'class': 'form-control'}}) }}
+                    {#</div>#}
+                    {#{{ form_errors(form.hotelTypes) }}#}
+                </div>
+                   {#<div class="form-group row">#}
+                    {#<div class="col-md-9">#}
+                        {#{% for hotelTypes in form.hotelTypes.children %}#}
+                            {#{{ form_widget(hotelTypes, {'attr' : {'checked':false}}) }}#}
+                            {#{{ form_label(hotelTypes) }}#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+               {#{% set label = '' %}#}
+               {#{% set labelb = '' %}#}
+    {#{% for choice in form.hotelTypes.vars.choices %}#}
+    {#{{ dump(choice) }}#}
+        {#{% if choice.value == form.hotelTypes.vars.value %}#}
+            {#{% set label = 'admin.hotel_type.'~choice.label %}#}
+            {#{% set labelb = label | trans %}#}
+        {#{% endif %}#}
+    {#{% endfor %}#}
+
+
+    {#<h1 id="test">{{ labelb }}</h1>#}
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="col-md-3 form-control-label" for="search-address">{{ 'hotels.address' | trans }}</label>
+                        <span class="help-block">{{ 'admin.pick_address' | trans }}</span>
+                    </div>
+                    <div class="col-md-9">
+                        {{ form_widget(form.address, { 'attr': {'class': 'form-control controls', 'required': 'required'}}) }}
+                        {{ form_widget(form.latitude) }}
+                        {{ form_widget(form.longitude) }}
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 0rem;">
+                    <div class="col-md-12">
+                        <div id="map-canvas"></div>
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('hotel_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+            </div>
+            {{ form_end(form)}}
+            {{ form_start(formb) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        #map-canvas {
+            height: 400px;
+            width: 100%;
+        }
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        #appbundle_hotel_address {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+        }
+        #appbundle_hotel_address:focus {
+            border-color: #4d90fe;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        function initialize() {
+            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+                center: {lat: 0, lng: 0},
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById("appbundle_hotel_address");
+            var myLatLng = new google.maps.LatLng( 0, 0);
+            marker = new google.maps.Marker( {position: myLatLng, map: map, draggable: true } );
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                document.getElementById("appbundle_hotel_latitude").value = this.getPosition().lat();
+                document.getElementById("appbundle_hotel_longitude").value = this.getPosition().lng();
+                console.log("lat->",this.getPosition().lat());
+                console.log("long->",this.getPosition().lng());
+            });
+            marker.setMap( map );
+
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // [START region_getplaces]
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+                console.log(places[0].geometry);
+                document.getElementById("appbundle_hotel_latitude").value = places[0].geometry.viewport.f.b;
+                document.getElementById("appbundle_hotel_longitude").value = places[0].geometry.viewport.b.b;
+                console.log("auto complete lat->",places[0].geometry.viewport.f.b);
+                console.log("auto complete long->",places[0].geometry.viewport.b.b);
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        title: place.name,
+                        position: place.geometry.location,
+                        draggable: true,
+                    });
+                    // Create a marker for each place.
+                    markers.push(marker);
+
+                    google.maps.event.addListener(marker, 'dragend', function (event) {
+                        document.getElementById("appbundle_hotel_latitude").value = this.getPosition().lat();
+                        document.getElementById("appbundle_hotel_longitude").value = this.getPosition().lng();
+                        console.log("lat->",this.getPosition().lat());
+                        console.log("long->",this.getPosition().lng());
+                    });
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            // [END region_getplaces]
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>
+{% endblock %}

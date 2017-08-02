@@ -1,21 +1,4 @@
 <ul class="nav">
-    {#<li class="nav-item">#}
-        {#<a class="nav-link">{% if app.user.imageName %}#}
-            {#<img src="{{ asset(vich_uploader_asset(app.user, 'image')) }}" class="img-avatar" alt="{{ app.user.firstName }}" style="width: 30px;height: 30px;margin-right: 1px;">#}
-        {#{% else %}#}
-            {#<i class="fa fa-user"></i>#}
-        {#{% endif %}#}
-        {#{{ app.user.firstName }} {{ app.user.lastName }}</a>#}
-    {#</li>#}
-    {#{% if is_granted('ROLE_ADMIN') %}#}
-        {#<li class="nav-item">#}
-            {#<a class="nav-link" href="{{ path('dashboard') }}"><i class="icon-speedometer"></i> Dashboard</a>#}
-        {#</li>#}
-    {#{% else %}#}
-        {#<li class="nav-item">#}
-            {#<a class="nav-link" href="{{ path('dashboard_user') }}"><i class="icon-speedometer"></i> Dashboard</a>#}
-        {#</li>#}
-    {#{% endif %}#}
     <li class="nav-title">
         {{ 'admin.navigation' | trans }}
     </li>
@@ -56,34 +39,19 @@
         {#</ul>#}
     {#</li>#}
     {#{% endif %}#}
-    {#<li class="nav-item nav-dropdown">#}
-        {#<a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'News' | trans }}</a>#}
-        {#<ul class="nav-dropdown-items">#}
-            {#<li class="nav-item">#}
-                {#<a class="nav-link" href="{{ path('news_list') }}"><i class="fa fa-list-alt"></i> {{ 'News List' | trans }}</a>#}
-            {#</li>#}
-            {#{% if not is_granted('ROLE_ADMIN') %}#}
-            {#<li class="nav-item">#}
-                {#<a class="nav-link" href="{{ path('news_new') }}"><i class="fa fa-plus"></i> {{ 'Add News' | trans }}</a>#}
-            {#</li>#}
-            {#{% endif %}#}
-            {#{% if is_granted('ROLE_ADMIN') %}#}
-            {#<li class="nav-item nav-dropdown">#}
-                {#<a href="#" class="nav-link nav-dropdown-toggle"><i class="icon-puzzle"></i>{{ 'Categories' | trans }}</a>#}
-                {#<ul class="nav-dropdown-items">#}
-                    {#<li class="nav-item">#}
-                        {#<a href="{{ path('category_list') }}" class="nav-link"><i class="icon-puzzle"></i>{{ 'Category List' | trans }}</a>#}
-                    {#</li>#}
-                    {#<li class="nav-item">#}
-                        {#<a href="{{ path('category_new') }}" class="nav-link"><i class="icon-puzzle"></i>{{ 'Add Category' | trans }}</a>#}
-                    {#</li>#}
-                {#</ul>#}
-            {#</li>#}
-            {#{% endif %}#}
-        {#</ul>#}
-    {#</li>#}
     <li class="nav-item nav-dropdown">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'admin.promotions' | trans }}</a>
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-building"></i> {{ 'index.hotels' | trans }}</a>
+        <ul class="nav-dropdown-items">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('hotel_list') }}"><i class="fa fa-list-alt"></i> {{ 'admin.hotels_list' | trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('hotel_new') }}"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-certificate"></i> {{ 'admin.promotions' | trans }}</a>
         <ul class="nav-dropdown-items">
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-newspaper-o"></i> {{ 'admin.promotion_section' | trans }}</a>
@@ -97,7 +65,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('promotion_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotions_list' | trans }}</a>
+                <a class="nav-link" href="{{ path('promotion_list') }}" target="_top"><i class="fa fa-certificate"></i> {{ 'admin.promotions_list' | trans }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('promotion_new') }}" target="_top"><i class="fa fa-plus"></i> {{ 'admin.promotion_add' | trans }}</a>

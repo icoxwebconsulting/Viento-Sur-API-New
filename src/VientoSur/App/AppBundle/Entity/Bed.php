@@ -35,6 +35,12 @@ class Bed
     private $description;
 
     /**
+     * @var string
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    private $quantity;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="beds")
      * @ORM\JoinColumn(name="room", referencedColumnName="id")
      */
@@ -186,5 +192,28 @@ class Bed
     public function getCreatedBy()
     {
         return $this->created_by;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return Bed
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

@@ -30,13 +30,17 @@
     <!-- Custom scripts required by this view -->
     <script src="{{ asset('assets/js/views/main.js') }}"></script>
 
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}
+        <style>
+            .table thead th {
+                font-size: 13px;
+            }
+        </style>
+    {% endblock %}
 
     {#<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>#}
     {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&callback=initialize&sensor=false" async defer#}
             {#type="text/javascript"></script>#}
-
-    {% block extra_js %}{% endblock %}
 </head>
 
 {% block body %}
@@ -88,6 +92,7 @@
 
     <!-- GenesisUI main scripts -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 {% endblock %}
 </html>

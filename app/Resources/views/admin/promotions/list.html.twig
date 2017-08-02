@@ -46,8 +46,16 @@
                                     <img src="{{asset(vich_uploader_asset(entity, 'image')) }}" style="width: 100px; height: 100px;" alt="" class="img-avatar">
                                 {% endif %}
                             </td>
-                            <td>{{ entity.status.name }}</td>
-                            <td>{{ entity.createdBy.username }}</td>
+                            <td>
+                            {% if entity.status %}
+                                {{ entity.status.name }}
+                            {% endif %}
+                            </td>
+                            <td>
+                            {% if entity.createdBy %}
+                                {{ entity.createdBy.username }}
+                            {% endif %}
+                            </td>
                             <td>
                                 <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('promotion_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>
                                 <a href="{{ path('promotion_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>

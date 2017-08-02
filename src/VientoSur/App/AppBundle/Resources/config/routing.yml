@@ -15,7 +15,7 @@ viento_sur_test:
     type:     annotation
 
 viento_sur_admin:
-    resource: "@VientoSurAppAppBundle/Controller/DashboardController.php"
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/DashboardController.php"
     type:     annotation
 
 viento_sur_user:
@@ -23,9 +23,17 @@ viento_sur_user:
     type:     annotation
 
 viento_sur_promotions:
-    resource: "@VientoSurAppAppBundle/Controller/PromotionsController.php"
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/PromotionsController.php"
     type:     annotation
 
 viento_sur_promotion_sections:
-    resource: "@VientoSurAppAppBundle/Controller/PromotionSectionsController.php"
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/PromotionSectionsController.php"
+    type:     annotation
+
+viento_sur_dashboard_hotel:
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/HotelController.php"
+    type:     annotation
+
+viento_sur_dashboard_picture:
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/PictureController.php"
     type:     annotation

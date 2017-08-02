@@ -352,13 +352,16 @@ admin:
     promotions: Promoções
     promotion: Promoção
     promotions_list: Lista de promociones
+    hotels_list: Lista de hotéis
     promotion_section_list: Lista
     promotion_new: Nova promoção
+    hotel_new: Novo hotel
     promotion_section_new: Nova seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar
     promotions_manager: gestão de promoção
     promotion_section_manager: Gerente título geral
+    photo_manager: Gerente de fotos
     period: Período
     name: Nome
     promotion_section: Título geral
@@ -374,6 +377,9 @@ admin:
         promotion_added: Foi acrescentado promoção!
         promotion_updated: Com sucesso, ele atualizou a promoção!
         promotion_deleted: A promoção foi removido com sucesso!
+        added: Foi acrescentado!
+        updated: Com sucesso, ele atualizou!
+        deleted: Foi removido com sucesso!
     confirmation: Confirmação
     delete_element: Deseja excluir este elemento?
     yes: Sim
@@ -387,3 +393,7 @@ admin:
         hst: Albergues
         mot: Motel
         rsr: Refúgio
+    percentage_gain: Ganho percentual
+    origin: Fonte
+    pick_address: Digite o endereço do hotel e mover o marcador
+    gallery_photo: Galeria de fotos

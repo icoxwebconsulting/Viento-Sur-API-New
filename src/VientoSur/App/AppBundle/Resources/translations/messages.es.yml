@@ -354,13 +354,17 @@ admin:
     promotions: Promociones
     promotion: Promoción
     promotions_list: Lista de promociones
+    hotels_list: Lista de hoteles
     promotion_section_list: Lista
     promotion_new: Nueva promoción
+    hotel_new: Nuevo hotel
     promotion_section_new: Nueva sección de promoción
     promotion_add: Agregar promoción
     add: Agregar
     promotions_manager: Gestor de promociones
+    hotels_manager: Gestor de hoteles
     promotion_section_manager: Gestor de título general
+    photo_manager: Gestor de fotos
     period: Período
     name: Nombre
     promotion_section: Título general
@@ -376,16 +380,23 @@ admin:
         promotion_added: Se ha agregado correctamente la promoción!
         promotion_updated: Se ha actualizado correctamente la promoción!
         promotion_deleted: La promoción se ha eliminado correctamente!
+        added: Se ha agregado correctamente!
+        updated: Se ha actualizado correctamente!
+        deleted: Se ha eliminado correctamente!
     confirmation: Confirmación
     delete_element: ¿Desea eliminar este elemento?
     yes: Si
     image: Imagen
     hotel_type:
-        apt: Apart Hoteles
-        bad: Bed And Breakfast
-        btq: Hoteles Boutique
-        dpt: Departamentos
-        hot: Hoteles
-        hst: Hostels
-        mot: Motel
-        rsr: Resort
+        APT: Apart Hoteles
+        BAD: Bed And Breakfast
+        BTQ: Hoteles Boutique
+        DPT: Departamentos
+        HOT: Hoteles
+        HST: Hostels
+        MOT: Motel
+        RSR: Resort
+    percentage_gain: Porcentaje de ganancia
+    origin: Origen
+    pick_address: Por favor escriba la dirección del hotel y mueva el marcador
+    gallery_photo: Galería de fotos
