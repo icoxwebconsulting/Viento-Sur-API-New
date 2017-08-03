@@ -46,7 +46,7 @@ a, a:hover, a:focus{
 
 .paddingSpecial{
 	padding: 0 0 0 2.5vw;
-	margin: 0 3.58vw;
+	margin: 0;
 }
 
 .paddingModif{
@@ -173,11 +173,12 @@ header{
 }
 
 .search{
-	left: 18.08vw;
+	left: 50%;
 	position: absolute;
 	top: 10.83vw;
-	width: 70%;
+	width: 79.16vw;
 	z-index: 99;
+	margin-left: -39.58vw;
 }
 
 .search .nav-tabs{

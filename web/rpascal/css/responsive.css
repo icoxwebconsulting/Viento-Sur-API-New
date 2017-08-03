@@ -10,7 +10,6 @@
 
     .paddingSpecial{
         padding: 0 0 0 30px;
-        margin: 0 43px;
     }
 
     /*-- END GENERLS --*/
@@ -67,7 +66,8 @@
     /*----- GO SLIDER -----*/
     .search{
         top: 130px;
-        left: 217px;
+        width: 950px;
+        margin-left: -475px;
     }
 
     .search .nav-tabs{
