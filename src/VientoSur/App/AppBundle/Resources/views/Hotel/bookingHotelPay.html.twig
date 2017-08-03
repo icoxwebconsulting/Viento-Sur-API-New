@@ -62,9 +62,9 @@
                     <div class="panel-body">
                         <div class="list-group pay-methods-panel">
                             {% for paymentMethod in paymentMethods %}
-                            <a href="javascript:void(0)" class="list-group-item">
+                            <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
                                 {% set type = paymentMethod.type %}
-                                <h4 class="list-group-item-heading" onclick="selectCuote({{ loop.index }})">
+                                <h4 class="list-group-item-heading">
                                     {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
                                     {% if paymentMethod.installment_quantity is defined %}
                                         {% if paymentMethod.installment_quantity == 1 %}
@@ -108,7 +108,9 @@
                                                     <label class="card-selector vs-cs-label">
                                                         {% set cardData = card|split('-') %}
                                                         <div class="eva-card-container clickable-card" data-data-cuote="{{ loop.parent.loop.index }}"
-                                                             data-card-id="{{ card }}">
+                                                             data-card-id="{{ card }}"
+                                                             data-card-id-select="{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}"
+                                                             data-all-data-card="{{ loop.parent.loop.index }}-{{ card }}">
                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                         </div>
                                                     </label>
@@ -126,7 +128,11 @@
                                                                 <div class="card-content hide">
                                                                     {% for card in list  %}
                                                                         {% set cardData = card|split('-') %}
-                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}"  data-data-cuote="{{ loop.parent.loop.parent.loop.index }}">
+                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}"
+                                                                             data-bank-id="{{ key }}"
+                                                                             data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}"
+                                                                             data-data-cuote="{{ loop.parent.loop.parent.loop.index }}"
+                                                                             data-all-data-card="{{ loop.parent.loop.parent.loop.index }}-{{ card }}">
                                                                             <span class="eva-card-body {{ cardData[1] }}"></span>
                                                                         </div>
                                                                     {% endfor %}
@@ -212,12 +218,12 @@
 
                                                             {% for bankKey, bankValue in bankList %}
                                                                 {% if bankKey == cardType[2] %}
-                                                                <option id="{{ n }}-{{ key }}" value="{{ key }}">{{ label }} {{ bankValue }}</option>
+                                                                <option id="{{ n }}-{{ key }}" value="{{ n }}-{{ key }}">{{ label }} {{ bankValue }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
 
                                                         {% else %}
-                                                            <option id="{{ n }}-{{ key }}" value="{{ key }}">{{ label }}</option>
+                                                            <option id="{{ n }}-{{ cardType[0] }}-{{ cardType[1] }}-{{ cardType[3] }}" value="{{ n }}-{{ key }}">{{ label }}</option>
                                                         {% endif %}
 
                                                     {% endfor %}
@@ -235,7 +241,7 @@
                                                         {% set label = cardValue %}
                                                     {% endif %}
                                                 {% endfor %}
-                                                <option id="1-{{ card }}" value="{{ card }}">{{ label }}</option>
+                                                <option id="1-{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}" value="{{ card }}">{{ label }}</option>
                                             {% endfor %}
                                         </select>
                                     {% endif %}
@@ -594,6 +600,7 @@
     <script src="https://cdn.ywxi.net/js/1.js" async></script>
     <script src="{{ asset('js/hotel-form.js') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script>
         $(document).ready(function(){
             $("#form_payment_fiscal_document").change(function(){
@@ -606,7 +613,22 @@
                     $("#errorCuit").show();
                 }
             });
+            $("#form_payment_fiscal_document").mask("99-99999999-9");
+
+            $("#form_payment_fiscal_document").on("blur", function() {
+                var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+
+                if( last.length == 3 ) {
+                    var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+                    var lastfour = move + last;
+
+                    var first = $(this).val().substr( 0, 9 );
+
+                    $(this).val( first + '-' + lastfour );
+                }
+            });
         });
+
         $("#form_contact_country_code0").intlTelInput({
             autoHideDialCode: false,
             nationalMode: false,
@@ -636,7 +658,8 @@
 //            $('.eva-card-container').removeClass('selected-p-card');
 //            $('.card-list .eva-card-container').removeClass('selected-p-card');
             var data = this.value;
-            $('.clickable-card[data-card-id=\"'+data+'\"]').click();
+            console.log('change data', data);
+            $('.clickable-card[data-all-data-card=\"'+data+'\"]').click();
         });
         $('#card-selected').on('change', function () {
             var cardNumber = $('#form_payment_number').val();
