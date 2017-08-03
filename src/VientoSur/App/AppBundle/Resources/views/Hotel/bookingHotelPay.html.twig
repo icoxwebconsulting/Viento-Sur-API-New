@@ -594,6 +594,7 @@
     <script src="https://cdn.ywxi.net/js/1.js" async></script>
     <script src="{{ asset('js/hotel-form.js') }}"></script>
     <script src="{{ asset('assets/vendor/intl-tel-input/build/js/intlTelInput.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script>
         $(document).ready(function(){
             $("#form_payment_fiscal_document").change(function(){
@@ -606,7 +607,22 @@
                     $("#errorCuit").show();
                 }
             });
+            $("#form_payment_fiscal_document").mask("99-99999999-9");
+
+            $("#form_payment_fiscal_document").on("blur", function() {
+                var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+
+                if( last.length == 3 ) {
+                    var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+                    var lastfour = move + last;
+
+                    var first = $(this).val().substr( 0, 9 );
+
+                    $(this).val( first + '-' + lastfour );
+                }
+            });
         });
+
         $("#form_contact_country_code0").intlTelInput({
             autoHideDialCode: false,
             nationalMode: false,

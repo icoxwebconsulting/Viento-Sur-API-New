@@ -795,6 +795,7 @@
     {{ parent() }}
     <script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/creditcard.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script>
         var cardsObjs = {{ cardList|json_encode()|raw }};
         $(document).ready(function(){
@@ -806,6 +807,20 @@
                 }else{
                     console.log('cuit not valido')
                     $("#errorCuit").show();
+                }
+            });
+            $("#form_payments_invoice-fiscal_id0").mask("99-99999999-9");
+
+            $("#form_payments_invoice-fiscal_id0").on("blur", function() {
+                var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+
+                if( last.length == 3 ) {
+                    var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+                    var lastfour = move + last;
+
+                    var first = $(this).val().substr( 0, 9 );
+
+                    $(this).val( first + '-' + lastfour );
                 }
             });
         });
