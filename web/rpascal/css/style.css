@@ -25,7 +25,7 @@ a, a:hover, a:focus{
 }
 
 .right {
-	float: right;
+	float: right !important;
 }
 
 .textLeft{
@@ -50,8 +50,7 @@ a, a:hover, a:focus{
 }
 
 .paddingModif{
-	padding: 0 3.33vw;
-	margin: 0 3.58vw;
+	margin: 0 3%;
 }
 
 .inputError{
@@ -174,7 +173,7 @@ header{
 }
 
 .search{
-	left: 15vw;
+	left: 18.08vw;
 	position: absolute;
 	top: 10.83vw;
 	width: 70%;
@@ -288,7 +287,7 @@ header{
 	border-radius: 5px;
 	background: #192731;
 	color: #e3e3e3;
-	font-size: 1.08vw;
+	font-size: 1vw;
 	height: 2.91vw;
 	width: 100%;
 	border: none;
@@ -946,13 +945,14 @@ header{
 	color: #fff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latoregular';
 	background: #008cd0;
 	box-shadow: none;
 	border-radius: 5px;
-	padding: 0.41vw 1.25vw;
+	padding: 1.25vw;
 	margin-top: 3.33vw;
 	border: none;
+	font-family: 'latobold';
+	width: 100%;
 }
 
 #thumbHotel .priceRoom button:hover, #thumbsFlights .paymentFlight button:hover, #thumbsFlights .panel-body button:hover, #descriptionHotel .boxPrice button:hover{
@@ -1015,7 +1015,7 @@ header{
 	margin: 0;
 	padding: 0 0 2.5vw 0;
 	text-align: center;
-	font-size: 2.08vw;
+	font-size: 2.41vw;
 	color: #233034;
 	font-family: 'latobold';
 	text-transform: uppercase;
@@ -1069,10 +1069,11 @@ header{
 
 .grid figure h2 {
 	font-family: 'latoregular';
-	font-size: 2vw;
+	font-size: 1.8vw;
 	color: #ffffff;
 	margin: 0;
 	background: rgba(0,0,0,0.6);
+	width: 100%;
 }
 
 .grid figure p {
@@ -1207,12 +1208,13 @@ figure.effect-goliath:hover p {
 	color: #ffffff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latoregular';
+	font-family: 'latobold';
 	background: #008cd0;
 	box-shadow: none;
 	border-radius: 5px;
 	border: none;
-	padding: 0.41vw 1.25vw;
+	padding: 1.25vw;
+	width: 100%;
 }
 
 #descriptionHotel .galleryHotel{
@@ -1289,9 +1291,9 @@ figure.effect-goliath:hover p {
 	border-radius: 5px;
 	box-shadow: none;
 	color: #ffffff;
-	font-family: 'latoregular';
+	font-family: 'latobold';
 	font-size: 13px;
-	padding: 5px;
+	padding: 1.25vw;
 	text-align: center;
 }
 
@@ -1596,12 +1598,12 @@ figure.effect-goliath:hover p {
 	color: #ffffff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latoregular';
+	font-family: 'latobold';
 	background: #008cd0;
 	box-shadow: none;
 	border-radius: 5px;
 	border: none;
-	padding: 0.41vw 1.25vw;
+	padding: 1.25vw;
 }
 
 #thumbsFlights .panel-heading h3{
@@ -1620,10 +1622,11 @@ figure.effect-goliath:hover p {
 	margin-bottom: 0;
 }
 
-#thumbsFlights .panel-heading p{
+#thumbsFlights .panel-heading h6 span{
 	color: #fcfeff;
-	font-size: 1.16vw;
+	font-size: 1.08vw;
 	font-family: 'latolight';
+	margin-left: 7px;
 }
 
 #thumbsFlights .panel-body [type="radio"] {
@@ -1673,10 +1676,11 @@ figure.effect-goliath:hover p {
 	border-radius: 5px;
 	box-shadow: none;
 	color: #ffffff;
-	font-family: 'latoregular';
+	font-family: 'latobold';
 	font-size: 1vw;
-	padding: 0.41vw 1.25vw;
+	padding: 1.25vw;
 	text-align: center;
+	width: 100%;
 }
 
 
