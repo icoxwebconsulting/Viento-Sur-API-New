@@ -133,7 +133,13 @@
                 {{ 'hotels.room_per_night' | trans }}:<br>
                 <h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
                 {{ 'hotels.taxes_and_rates' | trans }}:<br>
-                <h5>{{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
+                <h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
+                {{ 'index.fee' | trans }}:<br>
+                <h5>{{ symbol }} {{ price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
+                {% if price_detail.discounts > 0 %}
+                    {{ 'index.discounts' | trans }}:<br>
+                    <h5>{{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
+                {% endif %}
                 {{ 'hotels.total_price' | trans }}:<br>
                 <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>
 

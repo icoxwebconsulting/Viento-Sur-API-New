@@ -1,4 +1,6 @@
 index:
+    fee: Interés financiero
+    discounts: Descuentos
     error: Error
     class: Clase
     flight_remember: Recuerda presentarse en el aeropuerto 1 1/2 horas antes del horario de salida de tu vuelo.

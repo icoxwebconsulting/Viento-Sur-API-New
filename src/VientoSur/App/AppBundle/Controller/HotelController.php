@@ -489,10 +489,17 @@ class HotelController extends Controller
      */
     public function sendHotelBookingAction(Request $request)
     {
+        $session = $request->getSession();
         $locale = $request->getLocale();
         $lang = ($locale && in_array($locale, ['en', 'es', 'pt'])) ? $locale : 'es';
 
         $params = $request->query->all();
+
+        $price_detail = \GuzzleHttp\json_decode($request->get('price_detail'));
+
+        $session->remove('price_detail');
+        $session->set('price_detail', $price_detail);
+
         $postParams = array(
             "source" => array(
                 "country_code" => "AR"

@@ -1,4 +1,6 @@
 index:
+    fee: Fee
+    discounts: Discounts
     error: Error
     class: Class
     flight_remember: Remember to show up at the airport 1 1/2 hours before your departure time.
