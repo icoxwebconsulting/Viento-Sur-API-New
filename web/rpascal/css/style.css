@@ -438,6 +438,8 @@ header{
 	font-size: 1.08vw;
 	cursor: pointer;
 	padding: 0 1.15vw;
+	width: 75%;
+	float: right;
 }
 
 .search .tab-content .btnSearch{
