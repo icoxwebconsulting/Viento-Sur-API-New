@@ -104,7 +104,6 @@
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
             {{ form_end(form)}}
-            {{ form_start(formb) }}
         </div>
     </div>
 {% endblock %}
@@ -146,14 +145,14 @@
     <script>
         function initialize() {
             var map = new google.maps.Map(document.getElementById("map-canvas"), {
-                center: {lat: 0, lng: 0},
+                center: {lat: {{ entity ? entity.latitude : 0 }}, lng: {{ entity ? entity.longitude : 0 }}},
                 zoom: 4,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
             // Create the search box and link it to the UI element.
             var input = document.getElementById("appbundle_hotel_address");
-            var myLatLng = new google.maps.LatLng( 0, 0);
+            var myLatLng = new google.maps.LatLng({{ entity ? entity.latitude : 0 }}, {{ entity ? entity.longitude : 0 }});
             marker = new google.maps.Marker( {position: myLatLng, map: map, draggable: true } );
             google.maps.event.addListener(marker, 'dragend', function (event) {
                 document.getElementById("appbundle_hotel_latitude").value = this.getPosition().lat();

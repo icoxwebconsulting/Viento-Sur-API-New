@@ -44,7 +44,6 @@ class HotelController extends Controller
     {
         $entity = new Hotel();
         $picture = new Picture();
-        $formb= $this->createForm(new PictureType(), $picture);
         $form = $this->createForm(new HotelFormType(), $entity);
 
         if($form->handleRequest($request)->isValid())
@@ -70,7 +69,54 @@ class HotelController extends Controller
         }
         return $this->render(':admin/hotel:form.html.twig', array(
             'form' => $form->createView(),
-            'formb' => $formb->createView()
+            'entity' => $entity
         ));
+    }
+
+    /**
+     * @param Request $request
+     * @param Hotel $entity entity
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/edit/{id}", name="hotel_edit")
+     * @return array
+     */
+    public function putAction(Request $request, Hotel $entity)
+    {
+        $request->setMethod('PATCH');
+
+        $form = $this->createForm(new HotelFormType(), $entity, ["method" => $request->getMethod()]);
+        if ($form->handleRequest($request)->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_list');
+        }
+        return $this->render(':admin/hotel:form.html.twig', array(
+            'form' => $form->createView(),
+            'entity' => $entity
+        ));
+    }
+
+    /**
+     * @param Hotel $entity entity
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/delete/{id}", name="hotel_delete")
+     * @return route
+     */
+    public function deleteAction(Hotel $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($entity);
+        $em->flush();
+        $this->addFlash(
+            'success',
+            $this->get('translator')->trans('admin.messages.deleted')
+        );
+        return $this->redirectToRoute('hotel_list');
     }
 }
