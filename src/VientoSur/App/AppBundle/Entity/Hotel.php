@@ -111,11 +111,6 @@ class Hotel
     protected $created_by;
 
     /**
-     * @ORM\OneToMany(targetEntity="Picture", mappedBy="hotels", cascade={"persist", "remove"})
-     */
-     private $picture;
-
-    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -382,39 +377,6 @@ class Hotel
     public function getCreatedBy()
     {
         return $this->created_by;
-    }
-
-    /**
-     * Add picture
-     *
-     * @param \VientoSur\App\AppBundle\Entity\Picture $picture
-     * @return Hotel
-     */
-    public function addPicture(\VientoSur\App\AppBundle\Entity\Picture $picture)
-    {
-        $this->picture[] = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Remove picture
-     *
-     * @param \VientoSur\App\AppBundle\Entity\Picture $picture
-     */
-    public function removePicture(\VientoSur\App\AppBundle\Entity\Picture $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
-     * Get picture
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPicture()
-    {
-        return $this->picture;
     }
 
     public function __toString() {

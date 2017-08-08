@@ -68,8 +68,7 @@ class HotelController extends Controller
             return $this->redirectToRoute('hotel_list');
         }
         return $this->render(':admin/hotel:form.html.twig', array(
-            'form' => $form->createView(),
-            'entity' => $entity
+            'form' => $form->createView()
         ));
     }
 

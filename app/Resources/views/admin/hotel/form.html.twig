@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-    {{ dump(form.children.hotelTypes) }}
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
@@ -142,17 +141,24 @@
 {% endblock %}
 
 {% block extra_js %}
+    {% if entity is defined %}
+        {% set lat = entity.latitude %}
+        {% set long = entity.longitude %}
+    {% else %}
+        {% set lat = 0 %}
+        {% set long = 0 %}
+    {% endif %}
     <script>
         function initialize() {
             var map = new google.maps.Map(document.getElementById("map-canvas"), {
-                center: {lat: {{ entity ? entity.latitude : 0 }}, lng: {{ entity ? entity.longitude : 0 }}},
+                center: {lat: {{ lat }}, lng: {{ long }} },
                 zoom: 4,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
             // Create the search box and link it to the UI element.
             var input = document.getElementById("appbundle_hotel_address");
-            var myLatLng = new google.maps.LatLng({{ entity ? entity.latitude : 0 }}, {{ entity ? entity.longitude : 0 }});
+            var myLatLng = new google.maps.LatLng({{ lat }}, {{ long }});
             marker = new google.maps.Marker( {position: myLatLng, map: map, draggable: true } );
             google.maps.event.addListener(marker, 'dragend', function (event) {
                 document.getElementById("appbundle_hotel_latitude").value = this.getPosition().lat();
