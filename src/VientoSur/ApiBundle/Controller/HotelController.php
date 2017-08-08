@@ -154,7 +154,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *  },
      *  statusCodes={
      *     200="Returned when successful",
-     *     404="Search not found"
+     *     404="Wrong data"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
@@ -292,7 +292,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *  },
      *  statusCodes={
      *     200="Returned when successful",
-     *     404="Search not found"
+     *     404="Wrong data"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
@@ -365,7 +365,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *  },
      *  statusCodes={
      *     200="Returned when successful",
-     *     404="Search not found"
+     *     404="Wrong data"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
@@ -405,6 +405,36 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         );
 
         $results = $this->get('despegar')->postHotelsBookings($urlParams);
+        $response = new JsonResponse($results);
+
+        return $response;
+
+    }
+
+    /**
+     * Get form bookings
+     *
+     * @param String $id
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/hotel/booking/{id}/forms")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get room availability for hotel",
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getHotelBookingAction($id)
+    {
+
+        $results = $this->get('despegar')->getHotelsBookingsForms($id);
         $response = new JsonResponse($results);
 
         return $response;
