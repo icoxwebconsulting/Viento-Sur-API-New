@@ -1,4 +1,6 @@
 index:
+    error_message: A problem has occurred
+    error_message_description: Please try again later.
     fee: Fee
     discounts: Discounts
     error: Error

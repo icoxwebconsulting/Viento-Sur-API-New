@@ -1,4 +1,6 @@
 index:
+    error_message: Ha ocurrido un problema
+    error_message_description: Por favor intente más tarde
     fee: Interés financiero
     discounts: Descuentos
     error: Error

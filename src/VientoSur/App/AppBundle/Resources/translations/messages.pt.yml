@@ -1,4 +1,6 @@
 index:
+    error_message: Ocorreu um problema
+    error_message_description: Tente novamente mais tarde
     fee: Feudo
     discounts: Descontos
     error: Erro
