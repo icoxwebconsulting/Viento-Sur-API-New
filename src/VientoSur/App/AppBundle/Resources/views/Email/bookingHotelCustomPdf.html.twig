@@ -182,6 +182,20 @@
                                             <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: left;">
+                                            <strong style="font-size: 9px;">{{ 'index.fee' | trans }}</strong>
+                                        </div>
+                                        <div style="width: 48%; display: inline-block;text-align: right;">
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                        </div>
+                                        {% if price_detail.discounts > 0 %}
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong style="font-size: 9px;">{{ 'index.discounts' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                        {% endif %}
+                                        <div style="width: 48%; display: inline-block;text-align: left;">
                                             <strong>{{ 'hotels.total_price' | trans }}</strong>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: right;">

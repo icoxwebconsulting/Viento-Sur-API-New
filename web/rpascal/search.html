@@ -104,21 +104,21 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class='form-group date col-xs-12' id='datetimepicker5'>
+										<div class='form-group date col-xs-7' id='datetimepicker5'>
 											<label>Fecha de entrada</label>
 											<i class="fa fa-calendar" aria-hidden="true"></i>
 											<input type="text" class="form-control" value="" id="dpd5">
 										</div>
 									</div>
 									<div class="row">
-										<div class='form-group date col-xs-12' id='datetimepicker6'>
+										<div class='form-group date col-xs-7' id='datetimepicker6'>
 											<label>Fecha de salida</label>
 											<<i class="fa fa-calendar" aria-hidden="true"></i>
 											<input type="text" class="form-control" value="" id="dpd6">
 										</div>
 									</div>
 									<div class="row">
-										<div class="form-group col-xs-12">
+										<div class="form-group col-xs-7">
 											<label>N° de habitaciones</label>
 											<select class="form-control">
 												<option>1</option>
@@ -130,7 +130,7 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-4">
 											<label>Adultos</label>
 											<select class="form-control">
 												<option>1</option>
@@ -140,7 +140,7 @@
 												<option>5</option>
 											</select>
 										</div>
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-4">
 											<label>Niños</label>
 											<select class="form-control">
 												<option>1</option>
@@ -152,9 +152,9 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-10">
 											<label>Edad de los niños</label>
-											<select class="form-control">
+											<select class="form-control" style="width: 31%;">
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
@@ -303,7 +303,7 @@
 					<div class="col-sm-9 col-xs-12">
 						<div id="thumbsSearch">
 							<div class="filterThumb">
-								<div class="btn-group">
+								<div class="btn-group col-xs-3 noPadding">
 									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										PRECIO <span class="caret"></span>
 									</button>
@@ -313,7 +313,7 @@
 										<li><a href="#">Precio: mayor a menor</a></li>
 									</ul>
 								</div>
-								<div class="btn-group">
+								<div class="btn-group col-xs-3 noPadding">
 									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										estrellas <span class="caret"></span>
 									</button>
@@ -322,7 +322,7 @@
 										<li><a href="#">Estrellas: mayor a menor</a></li>
 									</ul>
 								</div>
-								<div class="btn-group">
+								<div class="btn-group col-xs-3 noPadding">
 									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										mejor <span class="caret"></span>
 									</button>
@@ -332,7 +332,7 @@
 										<li><a href="#">Mejor precio / calidad</a></li>
 									</ul>
 								</div>
-								<div class="btn-group">
+								<div class="btn-group col-xs-3 noPadding">
 									<button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										otros <span class="caret"></span>
 									</button>
@@ -344,20 +344,25 @@
 							</div>
 							<div class="ListHotel">
 								<div id="thumbHotel">
-									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+									<div class="imgHotel col-xs-4">
 										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
 									</div>
-									<div class="infoHotel col-xs-6 col-sm-5">
-										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
-										<ul>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-										</ul>
+									<div class="infoHotel col-xs-6 noPadding">
+										<h4>
+											<a href="#">Panamericano Buenos Aires</a>
+											<ul>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											</ul>
+										</h4>
 										<div class="modalMap">
-											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<span>
+												<a href="#" data-toggle="modal" data-target="#modalMap1">Buenos Aires <i class="fa fa-map-marker input-icon"></i></a>
+												- cerca del metro
+											</span>
 											<!-- Modal -->
 											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 												<div class="modal-dialog" role="document">
@@ -367,129 +372,58 @@
 															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
 														</div>
 														<div class="modal-body">
-															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+															mapa
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-										<ul>
+										<p class="descriptionText">
+											El Panamericano Buenos Aires, que ofrece alojamiento de lujo y varias instalaciones de spa, como una piscina cubierta, se encuentra a menos de 300 metros del Obelisco y del teatro Colón.
+										</p>
+										<p class="inDemand">
+											<span>¡Muy solicitado!</span>
+											Reservado 5 veces en las últimas 24 horas
+										</p>
+										<ul class="servicesIcons">
 											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
 											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
 											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
 											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
 											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+											<span><a href="#">ver más</a></span>
 										</ul>
 									</div>
-									<div class="priceRoom col-xs-3">
-										<p>Habitación por noche</p>
-										<h5>AR$ 2.216</h5>
-										<button>Elegir Habitación</button>
+									<div class="col-xs-2 textRight priceRoom">
+										<h4>Muy bien 8,4</h4>
+										<p>1.376 comentarios</p>
+										<h5>Desde <span>$ 90.832</span></h5>
+										<button>Elige Habitación</button>
 									</div>
 								</div>
+
+							</div>
+							<div class="ListHotel">
 								<div id="thumbHotel">
-									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+									<div class="imgHotel col-xs-4">
 										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
 									</div>
-									<div class="infoHotel col-xs-6 col-sm-5">
-										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
-										<ul>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-										</ul>
+									<div class="infoHotel col-xs-6 noPadding">
+										<h4>
+											<a href="#">Panamericano Buenos Aires</a>
+											<ul>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											</ul>
+										</h4>
 										<div class="modalMap">
-											<a href="#" data-toggle="modal" data-target="#modalMap2"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
-											<!-- Modal -->
-											<div class="modal fade" id="modalMap2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-												<div class="modal-dialog" role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
-														</div>
-														<div class="modal-body">
-															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<ul>
-											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
-											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
-											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
-											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
-											<li><i class="fa fa-users" aria-hidden="true"></i></li>
-										</ul>
-									</div>
-									<div class="priceRoom col-xs-3">
-										<p>Habitación por noche</p>
-										<h5>AR$ 2.216</h5>
-										<button>Elegir Habitación</button>
-									</div>
-								</div>
-								<div id="thumbHotel">
-									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
-										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
-									</div>
-									<div class="infoHotel col-xs-6 col-sm-5">
-										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
-										<ul>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-										</ul>
-										<div class="modalMap">
-											<a href="#" data-toggle="modal" data-target="#modalMap3"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
-											<!-- Modal -->
-											<div class="modal fade" id="modalMap3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-												<div class="modal-dialog" role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
-														</div>
-														<div class="modal-body">
-															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<ul>
-											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
-											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
-											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
-											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
-											<li><i class="fa fa-users" aria-hidden="true"></i></li>
-										</ul>
-									</div>
-									<div class="priceRoom col-xs-3">
-										<p>Habitación por noche</p>
-										<h5>AR$ 2.216</h5>
-										<button>Elegir Habitación</button>
-									</div>
-								</div>
-								<div id="thumbHotel">
-									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
-										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
-									</div>
-									<div class="infoHotel col-xs-6 col-sm-5">
-										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
-										<ul>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-										</ul>
-										<div class="modalMap">
-											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<span>
+												<a href="#" data-toggle="modal" data-target="#modalMap1">Buenos Aires <i class="fa fa-map-marker input-icon"></i></a>
+												- cerca del metro
+											</span>
 											<!-- Modal -->
 											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 												<div class="modal-dialog" role="document">
@@ -499,41 +433,58 @@
 															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
 														</div>
 														<div class="modal-body">
-															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+															mapa
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-										<ul>
+										<p class="descriptionText">
+											El Panamericano Buenos Aires, que ofrece alojamiento de lujo y varias instalaciones de spa, como una piscina cubierta, se encuentra a menos de 300 metros del Obelisco y del teatro Colón.
+										</p>
+										<p class="inDemand">
+											<span>¡Muy solicitado!</span>
+											Reservado 5 veces en las últimas 24 horas
+										</p>
+										<ul class="servicesIcons">
 											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
 											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
 											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
 											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
 											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+											<span><a href="#">ver más</a></span>
 										</ul>
 									</div>
-									<div class="priceRoom col-xs-3">
-										<p>Habitación por noche</p>
-										<h5>AR$ 2.216</h5>
-										<button>Elegir Habitación</button>
+									<div class="col-xs-2 textRight priceRoom">
+										<h4>Muy bien 8,4</h4>
+										<p>1.376 comentarios</p>
+										<h5>Desde <span>$ 90.832</span></h5>
+										<button>Elige Habitación</button>
 									</div>
 								</div>
+
+							</div>
+							<div class="ListHotel">
 								<div id="thumbHotel">
-									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+									<div class="imgHotel col-xs-4">
 										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
 									</div>
-									<div class="infoHotel col-xs-6 col-sm-5">
-										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
-										<ul>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-										</ul>
+									<div class="infoHotel col-xs-6 noPadding">
+										<h4>
+											<a href="#">Panamericano Buenos Aires</a>
+											<ul>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											</ul>
+										</h4>
 										<div class="modalMap">
-											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<span>
+												<a href="#" data-toggle="modal" data-target="#modalMap1">Buenos Aires <i class="fa fa-map-marker input-icon"></i></a>
+												- cerca del metro
+											</span>
 											<!-- Modal -->
 											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 												<div class="modal-dialog" role="document">
@@ -543,41 +494,58 @@
 															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
 														</div>
 														<div class="modal-body">
-															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+															mapa
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-										<ul>
+										<p class="descriptionText">
+											El Panamericano Buenos Aires, que ofrece alojamiento de lujo y varias instalaciones de spa, como una piscina cubierta, se encuentra a menos de 300 metros del Obelisco y del teatro Colón.
+										</p>
+										<p class="inDemand">
+											<span>¡Muy solicitado!</span>
+											Reservado 5 veces en las últimas 24 horas
+										</p>
+										<ul class="servicesIcons">
 											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
 											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
 											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
 											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
 											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+											<span><a href="#">ver más</a></span>
 										</ul>
 									</div>
-									<div class="priceRoom col-xs-3">
-										<p>Habitación por noche</p>
-										<h5>AR$ 2.216</h5>
-										<button>Elegir Habitación</button>
+									<div class="col-xs-2 textRight priceRoom">
+										<h4>Muy bien 8,4</h4>
+										<p>1.376 comentarios</p>
+										<h5>Desde <span>$ 90.832</span></h5>
+										<button>Elige Habitación</button>
 									</div>
 								</div>
+
+							</div>
+							<div class="ListHotel">
 								<div id="thumbHotel">
-									<div class="imgHotel col-xs-3 col-sm-4 noPadding">
+									<div class="imgHotel col-xs-4">
 										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
 									</div>
-									<div class="infoHotel col-xs-6 col-sm-5">
-										<h4>Panamericano Buenos Aires Hotel and Resort</h4>
-										<ul>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-											<li><i class="fa fa-star" aria-hidden="true"></i></li>
-										</ul>
+									<div class="infoHotel col-xs-6 noPadding">
+										<h4>
+											<a href="#">Panamericano Buenos Aires</a>
+											<ul>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											</ul>
+										</h4>
 										<div class="modalMap">
-											<a href="#" data-toggle="modal" data-target="#modalMap1"><i class="fa fa-map-marker input-icon"></i> Ver Mapa</a>
+											<span>
+												<a href="#" data-toggle="modal" data-target="#modalMap1">Buenos Aires <i class="fa fa-map-marker input-icon"></i></a>
+												- cerca del metro
+											</span>
 											<!-- Modal -->
 											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 												<div class="modal-dialog" role="document">
@@ -587,26 +555,97 @@
 															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
 														</div>
 														<div class="modal-body">
-															<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBgC05AsKN-tigrjez50rkIjRTwaqQg-Pw'></script><div style='overflow:hidden;height:400px;width:520px;'><div id='gmap_canvas' style='height:400px;width:520px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> <a href='https://travelaustria.co/'>Tourism Austria</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=936611bf9f0088de2ee708c7de7bb63312f88119'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:12,center:new google.maps.LatLng(-31.42008329999999,-64.18877609999998),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-31.42008329999999,-64.18877609999998)});infowindow = new google.maps.InfoWindow({content:'<strong>Nombre hotel</strong><br>Argentina<br> Cordoba<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+															mapa
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-										<ul>
+										<p class="descriptionText">
+											El Panamericano Buenos Aires, que ofrece alojamiento de lujo y varias instalaciones de spa, como una piscina cubierta, se encuentra a menos de 300 metros del Obelisco y del teatro Colón.
+										</p>
+										<p class="inDemand">
+											<span>¡Muy solicitado!</span>
+											Reservado 5 veces en las últimas 24 horas
+										</p>
+										<ul class="servicesIcons">
 											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
 											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
 											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
 											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
 											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+											<span><a href="#">ver más</a></span>
 										</ul>
 									</div>
-									<div class="priceRoom col-xs-3">
-										<p>Habitación por noche</p>
-										<h5>AR$ 2.216</h5>
-										<button>Elegir Habitación</button>
+									<div class="col-xs-2 textRight priceRoom">
+										<h4>Muy bien 8,4</h4>
+										<p>1.376 comentarios</p>
+										<h5>Desde <span>$ 90.832</span></h5>
+										<button>Elige Habitación</button>
 									</div>
 								</div>
+
+							</div>
+							<div class="ListHotel">
+								<div id="thumbHotel">
+									<div class="imgHotel col-xs-4">
+										<img src="images/thumb-hotel-demo.jpg" alt="demo hotel">
+									</div>
+									<div class="infoHotel col-xs-6 noPadding">
+										<h4>
+											<a href="#">Panamericano Buenos Aires</a>
+											<ul>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+												<li><i class="fa fa-star" aria-hidden="true"></i></li>
+											</ul>
+										</h4>
+										<div class="modalMap">
+											<span>
+												<a href="#" data-toggle="modal" data-target="#modalMap1">Buenos Aires <i class="fa fa-map-marker input-icon"></i></a>
+												- cerca del metro
+											</span>
+											<!-- Modal -->
+											<div class="modal fade" id="modalMap1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Panamericano Buenos Aires Hotel and Resort</h4>
+														</div>
+														<div class="modal-body">
+															mapa
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<p class="descriptionText">
+											El Panamericano Buenos Aires, que ofrece alojamiento de lujo y varias instalaciones de spa, como una piscina cubierta, se encuentra a menos de 300 metros del Obelisco y del teatro Colón.
+										</p>
+										<p class="inDemand">
+											<span>¡Muy solicitado!</span>
+											Reservado 5 veces en las últimas 24 horas
+										</p>
+										<ul class="servicesIcons">
+											<li><i class="fa fa-wifi" aria-hidden="true"></i></li>
+											<li><i class="fa fa-cutlery" aria-hidden="true"></i></li>
+											<li><i class="fa fa-bath" aria-hidden="true"></i></li>
+											<li><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
+											<li><i class="fa fa-users" aria-hidden="true"></i></li>
+											<span><a href="#">ver más</a></span>
+										</ul>
+									</div>
+									<div class="col-xs-2 textRight priceRoom">
+										<h4>Muy bien 8,4</h4>
+										<p>1.376 comentarios</p>
+										<h5>Desde <span>$ 90.832</span></h5>
+										<button>Elige Habitación</button>
+									</div>
+								</div>
+
 							</div>
 							<div class="paginationList">
 								<nav aria-label="">

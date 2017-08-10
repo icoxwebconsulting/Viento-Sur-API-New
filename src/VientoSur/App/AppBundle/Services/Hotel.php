@@ -113,7 +113,7 @@ class Hotel
         $reservation = new Reservation();
         $reservation->setHotelId($hotelId);
         $reservation->setReservationId($booking['reservation_id']);
-        $reservation->setTotalPrice($priceDetail['total']);
+        $reservation->setTotalPrice($priceDetail->total);
         $reservation->setCardType($formPay['card_code']);
         $reservation->setHolderName($formPay['owner_name']);
         $reservation->setPhoneNumber($formPay['country_code0'] . '-' . $formPay['area_code0'] . '-' . $formPay['number0']);

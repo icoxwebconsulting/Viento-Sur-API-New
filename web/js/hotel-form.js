@@ -22,13 +22,29 @@ $(document).ready(function () {
 
     $('.list-group').on('click', '.clickable-card', function () {
         var cardId = $(this).data('card-id');
+        var cardIdSelect = $(this).data('card-id-select');
+        var idOption = '';
         var cuote = $(this).data('data-cuote');
+        console.log('cuote ', cuote);
         var bank = $(this).data('bank-id');
         var splitCard = cardId.split("-");
-        var idOption = cuote+'-'+cardId;
+
+        if(splitCard[2] === "*"){
+            idOption = cuote+'-'+cardIdSelect;
+            console.log('tiene *');
+        }else{
+            idOption = cuote+'-'+cardId;
+            console.log('not tiene *');
+        }
+
+        console.log('idoption', idOption)
         if (cuote == 1){
-            // $("#select-card2").find('option').removeAttr("selected");
-            $('#select-card2 option[id="'+idOption+'"]').attr("selected", "selected");
+            if($('.list-group-item').length === 1){
+                $('#select-card2 option[id="'+idOption+'"]').attr("selected", "selected");
+            }else{
+                $('#select-card3 option[id="'+idOption+'"]').attr("selected", "selected");
+            }
+            console.log('count list-group-item',$('.list-group-item').length);
         }else{
             // $("#select-card3").find('option').removeAttr("selected");
             $('#select-card3 option[id='+idOption+']').attr("selected", "selected");
@@ -163,4 +179,27 @@ $(document).ready(function () {
             $('#errorEmail').removeClass('hide');
         }
     })
+    // var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
+    // $(window).scroll(function() {
+    //     var scrollVal = $(this).scrollTop();
+    //     if(limit > 400){
+    //         if (scrollVal > limit) {
+    //             $('.col-md-3.col-md-pull-9').css({'top': limit});
+    //             console.log('limit',limit)
+    //         }else{
+    //
+    //             $('.col-md-3.col-md-pull-9').stop();
+                .css({'top': 0});
+            // }
+        // }
+    // });
+    $(".col-md-3.col-md-pull-9").jScroll({speed : "slow"});
 });
+// var $elt = $('.col-md-3.col-md-pull-9');
+//
+// $elt.unbind('jScroll', jScroll);
+
+function selectCuote(id){
+    console.log('selectCuote',this);
+    $('#cuote').text($('#span-text-'+id).text())
+}
