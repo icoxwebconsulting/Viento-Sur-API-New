@@ -1,0 +1,79 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}{{ 'index.search.hotel.rooms' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'index.search.hotel.rooms' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {{ dump() }}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> {{ 'admin.room_manager' | trans }}
+            </div>
+            <div class="card-block">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'admin.period' | trans }}</th>
+                        <th>{{ 'index.hotel' | trans }}</th>
+                        <th>{{ 'admin.name' | trans }}</th>
+                        <th>{{ 'hotels.payment_methods' | trans }}</th>
+                        <th>{{ 'index.meal_plan' | trans }}</th>
+                        <th>{{ 'hotels.available_rooms' | trans }}</th>
+                        <th>{{ 'hotels.max_capacity' | trans }}</th>
+                        <th>{{ 'hotels.price_per_night' | trans }}</th>
+                        {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                            {#<th>{{ 'admin.percentage_gain' | trans }}</th>#}
+                        {#{% endif %}#}
+                        <th>{{ 'admin.created_by' | trans }}</th>
+                        <th>{{ 'admin.actions' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%  for entity in entities %}
+                        <tr>
+                            <td>{{ entity.id }}</td>
+                            <td>{{ entity.created | ago }}</td>
+                            <td>
+                                {% if entity.hotel %}
+                                    {{ entity.hotel.name }}
+                                {% endif %}
+                            </td>
+                            <td>{{ entity.name }}</td>
+                            <td>
+                                {% if entity.paymentType %}
+                                    {{ entity.paymentType.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.mealPlan %}
+                                    {{ entity.mealPlan.name }}
+                                {% endif %}
+                            </td>
+                            <td>{{ entity.availability }}</td>
+                            <td>{{ entity.capacity }}</td>
+                            <td>{{ entity.nightlyPrice }}</td>
+                            <td>
+                                {% if entity.createdBy %}
+                                    {{ entity.createdBy.username }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {#<a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('hotel_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>#}
+                                {#<a href="{{ path('hotel_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>#}
+                                <a href="#"><i class="fa fa-picture-o"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

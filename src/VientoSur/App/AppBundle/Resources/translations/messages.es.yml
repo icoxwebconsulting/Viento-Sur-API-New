@@ -1,4 +1,5 @@
 index:
+    meal_plan: Régimen de comida
     error: Error
     class: Clase
     flight_remember: Recuerda presentarse en el aeropuerto 1 1/2 horas antes del horario de salida de tu vuelo.
@@ -365,6 +366,7 @@ admin:
     hotels_manager: Gestor de hoteles
     promotion_section_manager: Gestor de título general
     photo_manager: Gestor de fotos
+    room_manager: Gestor de habitaciones
     period: Período
     name: Nombre
     promotion_section: Título general

@@ -1,4 +1,5 @@
 index:
+    meal_plan: Plano de refeição
     error: Erro
     class: Classe
     flight_remember: Lembre-se no aeroporto 1 1/2 horas antes da hora de partida do seu voo.
@@ -362,6 +363,7 @@ admin:
     promotions_manager: gestão de promoção
     promotion_section_manager: Gerente título geral
     photo_manager: Gerente de fotos
+    room_manager: Gerente de quartos
     period: Período
     name: Nome
     promotion_section: Título geral

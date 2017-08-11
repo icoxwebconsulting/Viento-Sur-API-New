@@ -1,4 +1,5 @@
 index:
+    meal_plan: Meal plan
     error: Error
     class: Class
     flight_remember: Remember to show up at the airport 1 1/2 hours before your departure time.
@@ -364,6 +365,7 @@ admin:
     promotions_manager: Promotions manager
     promotion_section_manager: General title manager
     photo_manager: Photo manager
+    room_manager: Rooms manager
     period: Period
     name: Name
     promotion_section: General title
