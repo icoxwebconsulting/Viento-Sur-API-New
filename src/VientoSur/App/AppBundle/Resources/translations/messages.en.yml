@@ -1,4 +1,5 @@
 index:
+    room_code: Room code
     meal_plan: Meal plan
     error: Error
     class: Class
@@ -92,6 +93,11 @@ index:
         send: Send
     invalid_cc: Invalid Credit Card
 hotels:
+    beds: Beds
+    bed: Bed
+    bed_type: Bed type
+    size:  Size
+    quantity: Quantity
     not_found: No available hotels
     last_room: Last room available
     lasts: Lasts
@@ -359,6 +365,7 @@ admin:
     promotion_section_list: List
     promotion_new: New promotion
     hotel_new: New hotel
+    room_new: New room
     promotion_section_new: New promotion section
     promotion_add: Add promotion
     add: Add
@@ -366,6 +373,7 @@ admin:
     promotion_section_manager: General title manager
     photo_manager: Photo manager
     room_manager: Rooms manager
+    bed_manager: Beds manager
     period: Period
     name: Name
     promotion_section: General title

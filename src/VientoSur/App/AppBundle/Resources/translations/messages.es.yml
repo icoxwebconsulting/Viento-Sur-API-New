@@ -1,4 +1,5 @@
 index:
+    room_code: Código de habitación
     meal_plan: Régimen de comida
     error: Error
     class: Clase
@@ -92,6 +93,11 @@ index:
         send: Enviar
     invalid_cc: Tarjeta inválida, por favor intruzca otra.
 hotels:
+    beds: Camas
+    bed: Cama
+    bed_type: Tipo de cama
+    size:  Tamaño
+    quantity: Cantidad
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible
     lasts: Últimas
@@ -359,6 +365,7 @@ admin:
     promotion_section_list: Lista
     promotion_new: Nueva promoción
     hotel_new: Nuevo hotel
+    room_new: Nueva habitación
     promotion_section_new: Nueva sección de promoción
     promotion_add: Agregar promoción
     add: Agregar
@@ -367,6 +374,7 @@ admin:
     promotion_section_manager: Gestor de título general
     photo_manager: Gestor de fotos
     room_manager: Gestor de habitaciones
+    bed_manager: Gestor de camas
     period: Período
     name: Nombre
     promotion_section: Título general

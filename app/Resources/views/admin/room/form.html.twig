@@ -1,0 +1,117 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.room_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.room_new' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-6">
+        {% set route_name = app.request.get('_route') %}
+        {% set path = '' %}
+        {% if entity is defined %}
+            {% set path = path(route_name, {'id': entity.id }) %}
+        {% else %}
+            {% set path = path(route_name) %}
+        {% endif %}
+        <form method="POST" action="{{ path }}" {{ form_enctype(form) }} class="card">
+            <div class="card-header">
+                <strong style="text-transform:capitalize;">{{ 'index.search.hotel.room' | trans }}</strong>
+            </div>
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="first-name">{{ 'index.hotel' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.hotel, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.hotel) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="first-name">{{ 'index.room_code' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.roomCode, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.roomCode) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="stars">{{ 'hotels.available_rooms' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.availability, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.availability) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="stars">{{ 'hotels.max_capacity' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.capacity, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.capacity) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'hotels.price_per_night' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.nightlyPrice, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.nightlyPrice) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'hotels.cancellation_policies' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.cancellationPolicity, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.cancellationPolicity) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'index.meal_plan' | trans }}</label>
+                    <div class="col-md-8">
+                        {% set label = '' %}
+                        <select id="{{ form.mealPlan.vars.id }}" name="{{ form.mealPlan.vars.full_name }}" class="form-control">
+                        {% for meal_plan in form.mealPlan.vars.choices %}
+                            {% if meal_plan.label == 'D' %}
+                                {% set label = 'hotels.drinks_included' %}
+                            {% elseif meal_plan.label == 'BRA' %}
+                                {% set label = 'hotels.american_breakfast' %}
+                            {% elseif meal_plan.label == 'BRL' %}
+                                {% set label = 'hotels.breakfast_carte' %}
+                            {% elseif meal_plan.label == 'BRB' %}
+                                {% set label = 'hotels.breakfast_buffet' %}
+                            {% elseif meal_plan.label == 'BRC' %}
+                                {% set label = 'hotels.breakfast_continental' %}
+                            {% elseif meal_plan.label == 'M' %}
+                                {% set label = 'hotels.half_pension' %}
+                            {% elseif meal_plan.label == 'H' %}
+                                {% set label = 'hotels.search_menu.only_hosting' %}
+                            {% elseif meal_plan.label == 'F' %}
+                                {% set label = 'hotels.full_pension' %}
+                            {% elseif meal_plan.label == 'A' %}
+                                {% set label = 'hotels.all_inclusive' %}
+                            {% endif %}
+                                <option value="{{ meal_plan.value }}">{{ label | trans }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    {{ form_errors(form.mealPlan) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'index.meal_plan' | trans }}</label>
+                </div>
+            </div>
+            {{ form_widget(form._token) }}
+            <div class="card-footer">
+                <a href="{{ path('room_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+

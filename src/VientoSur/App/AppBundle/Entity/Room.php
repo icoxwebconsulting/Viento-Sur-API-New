@@ -413,4 +413,8 @@ class Room
     {
         return $this->picture;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
 }

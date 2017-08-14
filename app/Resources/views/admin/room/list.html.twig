@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-    {{ dump() }}
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
@@ -28,9 +27,6 @@
                         <th>{{ 'hotels.available_rooms' | trans }}</th>
                         <th>{{ 'hotels.max_capacity' | trans }}</th>
                         <th>{{ 'hotels.price_per_night' | trans }}</th>
-                        {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
-                            {#<th>{{ 'admin.percentage_gain' | trans }}</th>#}
-                        {#{% endif %}#}
                         <th>{{ 'admin.created_by' | trans }}</th>
                         <th>{{ 'admin.actions' | trans }}</th>
                     </tr>
@@ -48,12 +44,32 @@
                             <td>{{ entity.name }}</td>
                             <td>
                                 {% if entity.paymentType %}
-                                    {{ entity.paymentType.name }}
+                                    {% if entity.paymentType.name == 'at_destination' %}
+                                        {{ 'hotels.pay_in_destiny' | trans }}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                             <td>
                                 {% if entity.mealPlan %}
-                                    {{ entity.mealPlan.name }}
+                                    {% if entity.mealPlan.name == 'D' %}
+                                        {{ 'hotels.drinks_included' | trans }}
+                                    {% elseif entity.mealPlan.name == 'BRA' %}
+                                        {{ 'hotels.american_breakfast' | trans }}
+                                    {% elseif entity.mealPlan.name == 'BRL' %}
+                                        {{ 'hotels.breakfast_carte' | trans }}
+                                    {% elseif entity.mealPlan.name == 'BRB' %}
+                                        {{ 'hotels.breakfast_buffet' | trans }}
+                                    {% elseif entity.mealPlan.name == 'BRC' %}
+                                        {{ 'hotels.breakfast_continental' | trans }}
+                                    {% elseif entity.mealPlan.name == 'M' %}
+                                        {{ 'hotels.half_pension' | trans }}
+                                    {% elseif entity.mealPlan.name == 'H' %}
+                                        {{ 'hotels.search_menu.only_hosting' | trans }}
+                                    {% elseif entity.mealPlan.name == 'F' %}
+                                        {{ 'hotels.full_pension' | trans }}
+                                    {% elseif entity.mealPlan.name == 'A' %}
+                                        {{ 'hotels.all_inclusive' | trans }}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                             <td>{{ entity.availability }}</td>

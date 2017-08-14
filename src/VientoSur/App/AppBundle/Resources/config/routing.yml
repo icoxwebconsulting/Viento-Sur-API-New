@@ -38,6 +38,10 @@ viento_sur_dashboard_picture:
     resource: "@VientoSurAppAppBundle/Controller/Dashboard/PictureController.php"
     type:     annotation
 
-viento_sur_dashboard_rooms:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/RoomsController.php"
+viento_sur_dashboard_room:
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/RoomController.php"
+    type:     annotation
+
+viento_sur_dashboard_bed:
+    resource: "@VientoSurAppAppBundle/Controller/Dashboard/BedController.php"
     type:     annotation

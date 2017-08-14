@@ -27,8 +27,9 @@ class HotelController extends Controller
      */
     public function indexAction()
     {
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
+        $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findBy(array('created_by' => $user->getId()));
         return $this->render(':admin/hotel:list.html.twig', array(
             'entities' => $entities
         ));

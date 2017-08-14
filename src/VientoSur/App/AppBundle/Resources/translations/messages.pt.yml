@@ -1,4 +1,5 @@
 index:
+    room_code: Código do quarto
     meal_plan: Plano de refeição
     error: Erro
     class: Classe
@@ -89,6 +90,11 @@ index:
         cancel: Cancelar
         send: Enviar
 hotels:
+    beds: Camas
+    bed: Cama
+    bed_type: Tipo de cama
+    size: Tamanho
+    quantity: Quantidade
     not_found: Não foram encontrados hotéis
     last_room: Última Disponibilidade quarto
     lasts: Últimas
@@ -357,6 +363,7 @@ admin:
     promotion_section_list: Lista
     promotion_new: Nova promoção
     hotel_new: Novo hotel
+    room_new: Novo quarto
     promotion_section_new: Nova seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar
@@ -364,6 +371,7 @@ admin:
     promotion_section_manager: Gerente título geral
     photo_manager: Gerente de fotos
     room_manager: Gerente de quartos
+    bed_manager: Gestor de camas
     period: Período
     name: Nome
     promotion_section: Título geral
