@@ -104,4 +104,8 @@ class BedType
     {
         $this->locale = $locale;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
 }

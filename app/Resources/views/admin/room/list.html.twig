@@ -81,9 +81,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {#<a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('hotel_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>#}
-                                {#<a href="{{ path('hotel_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>#}
-                                <a href="#"><i class="fa fa-picture-o"></i></a>
+                                <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('room_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>
+                                <a href="{{ path('room_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>
+                                {#<a href="#"><i class="fa fa-picture-o"></i></a>#}
                             </td>
                         </tr>
                     {% endfor %}

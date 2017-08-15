@@ -1,0 +1,70 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.bed_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.bed_new' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {% set route_name = app.request.get('_route') %}
+    {% set path = '' %}
+    {% if entity is defined %}
+        {% set path = path(route_name, {'id': entity.id }) %}
+    {% else %}
+        {% set path = path(route_name) %}
+    {% endif %}
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong style="text-transform:capitalize;">{{ 'hotels.bed' | trans }}</strong>
+            </div>
+            <form method="POST" action="{{ path }}" {{ form_enctype(form) }} class="card">
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'index.search.hotel.room' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.room, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.room) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'hotels.search_menu.type' | trans }}</label>
+                    <div class="col-md-9">
+                        <select id="{{ form.bedType.vars.id }}" name="{{ form.bedType.vars.full_name }}" class="form-control">
+                            {% for bedType in form.bedType.vars.choices %}
+                                {{ dump(bedType) }}
+                                <option value="{{ bedType.value }}">{{ bedType.data.name }} | {{ bedType.data.size }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    {{ form_errors(form.bedType) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="stars">{{ 'hotels.quantity' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.quantity, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.quantity) }}
+                </div>
+            </div>
+            {{ form_widget(form._token) }}
+            <div class="card-footer">
+                <a href="{{ path('bed_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+            </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
