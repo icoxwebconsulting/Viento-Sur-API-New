@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
-use VientoSur\App\AppBundle\Entity\Hotel;
 use VientoSur\App\AppBundle\Entity\Room;
 use VientoSur\App\AppBundle\Form\RoomsType;
 
@@ -64,5 +63,59 @@ class RoomController extends Controller
         return $this->render(':admin/room:form.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @param Request $request
+     * @param Room $entity entity
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/edit/{id}", name="room_edit")
+     * @return response
+     */
+    public function putAction(Request $request, Room $entity)
+    {
+        $request->setMethod('PATCH');
+
+        $form = $this->createForm(new RoomsType(), $entity, ["method" => $request->getMethod()]);
+        if ($form->handleRequest($request)->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('room_list');
+        }
+        return $this->render(':admin/room:form.html.twig', array(
+            'form' => $form->createView(),
+            'entity' => $entity
+        ));
+    }
+
+    /**
+     * @param Room $entity entity
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/delete/{id}", name="room_delete")
+     * @return response
+     */
+    public function deleteAction(Room $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beds = $em->getRepository('VientoSurAppAppBundle:Bed')->findBy(array('room' => $entity));
+
+        foreach ($beds as $bed){
+            $bed->setRoom(null);
+            $em->persist($bed);
+        }
+
+        $em->remove($entity);
+        $em->flush();
+        $this->addFlash(
+            'success',
+            $this->get('translator')->trans('admin.messages.deleted')
+        );
+        return $this->redirectToRoute('room_list');
     }
 }

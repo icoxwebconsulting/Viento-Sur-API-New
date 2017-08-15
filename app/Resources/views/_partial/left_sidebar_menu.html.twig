@@ -49,13 +49,24 @@
                 <a class="nav-link" href="{{ path('hotel_new') }}"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>
             </li>
             <li class="nav-item nav-dropdown">
-                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-bed"></i> {{ 'index.search.hotel.rooms' | trans }}</a>
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-h-square"></i> {{ 'index.search.hotel.rooms' | trans }}</a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('rooms_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotion_section_list' | trans }}</a>
+                        <a class="nav-link" href="{{ path('room_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotion_section_list' | trans }}</a>
                     </li>
                     <li class="nav-item">
-                        {#<a class="nav-link" href="{{ path('promotion_sections_new') }}" target="_top"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>#}
+                        <a class="nav-link" href="{{ path('room_new') }}" target="_top"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-bed"></i> {{ 'hotels.beds' | trans }}</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('bed_list') }}" target="_top"><i class="fa fa-list-alt"></i> {{ 'admin.promotion_section_list' | trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('bed_new') }}" target="_top"><i class="fa fa-plus"></i> {{ 'admin.add' | trans }}</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>

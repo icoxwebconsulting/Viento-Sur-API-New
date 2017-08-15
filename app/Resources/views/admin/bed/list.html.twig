@@ -1,10 +1,10 @@
 {% extends ':admin:base.html.twig' %}
 
-{% block title %}{{ 'index.hotels' | trans }}{% endblock %}
+{% block title %}{{ 'hotels.beds' | trans }}{% endblock %}
 
 {% block top_content %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}{{ 'index.hotels' | trans }}{% endblock %}
+        {% block breadcrumb %}{{ 'hotels.beds' | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 
@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-align-justify"></i> {{ 'admin.hotels_manager' | trans }}
+                <i class="fa fa-align-justify"></i> {{ 'admin.bed_manager' | trans }}
             </div>
             <div class="card-block">
                 <table class="table">
@@ -20,14 +20,11 @@
                     <tr>
                         <th>#</th>
                         <th>{{ 'admin.period' | trans }}</th>
+                        <th>{{ 'index.search.hotel.room' | trans }}</th>
                         <th>{{ 'admin.name' | trans }}</th>
-                        <th>{{ 'hotels.description' | trans }}</th>
-                        <th>{{ 'hotels.stars' | trans }}</th>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <th>{{ 'admin.percentage_gain' | trans }}</th>
-                            <th>{{ 'admin.origin' | trans }}</th>
-                        {% endif %}
-                        <th>{{ 'hotels.search_menu.type' | trans }}</th>
+                        <th>{{ 'hotels.bed_type' | trans }}</th>
+                        <th>{{ 'hotels.size' | trans }}</th>
+                        <th>{{ 'hotels.quantity' | trans }}</th>
                         <th>{{ 'admin.created_by' | trans }}</th>
                         <th>{{ 'admin.actions' | trans }}</th>
                     </tr>
@@ -37,27 +34,32 @@
                         <tr>
                             <td>{{ entity.id }}</td>
                             <td>{{ entity.created | ago }}</td>
-                            <td>{{ entity.name }}</td>
-                            <td>{{ entity.description }}</td>
-                            <td>{{ entity.stars }}</td>
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <td>{{ entity.percentageGain }}</td>
-                                <td>{{ entity.origen }}</td>
-                            {% endif %}
                             <td>
-                                {% if entity.hotelTypes %}
-                                    {% set label = 'admin.hotel_type.'~entity.hotelTypes.name %}
-                                    {{ label | trans  }}
+                                {% if entity.room %}
+                                    {{ entity.room.name }}
                                 {% endif %}
                             </td>
+                            <td>{{ entity.name }}
+                            </td>
+                            <td>
+                                {% if entity.bedType %}
+                                    {{ entity.bedType.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entity.bedType %}
+                                    {{ entity.bedType.size }}
+                                {% endif %}
+                            </td>
+                            <td>{{ entity.quantity }}</td>
                             <td>
                                 {% if entity.createdBy %}
                                     {{ entity.createdBy.username }}
                                 {% endif %}
                             </td>
                             <td>
-                                <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('hotel_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>
-                                <a href="{{ path('hotel_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>
+                                <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('bed_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>
+                                <a href="{{ path('bed_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>
                                 {#<a href="#"><i class="fa fa-picture-o"></i></a>#}
                             </td>
                         </tr>

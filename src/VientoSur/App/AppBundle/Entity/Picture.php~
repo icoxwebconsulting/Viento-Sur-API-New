@@ -42,12 +42,12 @@ class Picture
     private $imageName;
 
     /**
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(name="position", type="integer", nullable=true)
      */
     private $position;
 
     /**
-     * @ORM\Column(name="main_picture", type="boolean")
+     * @ORM\Column(name="main_picture", type="boolean", nullable=true)
      */
     private $mainPicture;
     
@@ -161,5 +161,51 @@ class Picture
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Picture
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set mainPicture
+     *
+     * @param boolean $mainPicture
+     * @return Picture
+     */
+    public function setMainPicture($mainPicture)
+    {
+        $this->mainPicture = $mainPicture;
+
+        return $this;
+    }
+
+    /**
+     * Get mainPicture
+     *
+     * @return boolean 
+     */
+    public function getMainPicture()
+    {
+        return $this->mainPicture;
     }
 }
