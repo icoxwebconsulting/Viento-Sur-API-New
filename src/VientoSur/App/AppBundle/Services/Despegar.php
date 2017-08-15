@@ -196,7 +196,7 @@ class Despegar
 
     public function getHotelsBookingsForms($bookingId)
     {
-        $url = $this->getServiceUrl() . "hotels/bookings/" . $bookingId . '/forms';
+        $url = $this->getServiceUrl() . "hotels/bookings/" . $bookingId . '/forms' . (($this->isTest) ? '?example=true' : '');
         $header = [
             'X-ApiKey:' . $this->apiKey
         ];

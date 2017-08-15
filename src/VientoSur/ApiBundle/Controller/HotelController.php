@@ -171,7 +171,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $countryCode        = $request->query->get('country_code');
         $checkinDate        = $request->query->get('checkin_date');
         $checkoutDate       = $request->query->get('checkout_date');
-        $distributions       = $request->query->get('distribution');
+        $distributions      = $request->query->get('distribution');
         $destination        = $request->query->get('destination');
         $language           = $request->query->get('language');
         $currency           = $request->query->get('currency');
@@ -439,5 +439,271 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
 
         return $response;
 
+    }
+
+    /**
+     * Get room availability for hotel
+     *
+     * @param Request $request
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/hotel/booking/")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get room availability for hotel",
+     *  parameters={
+     *     {
+     *          "name"="hotel_availabilities",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="JSON Data",
+     *          "description"="Hotel Availabilities JSON"
+     *      },
+     *     {
+     *          "name"="price_detail",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="JSON Data",
+     *          "description"="Price Detail JSON"
+     *      },
+     *     {
+     *          "name"="language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts involved in the response."
+     *      },
+     *     {
+     *          "name"="checkin_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkin."
+     *      },
+     *     {
+     *          "name"="checkout_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkout."
+     *      },
+     *     {
+     *          "name"="distribution",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="1-2-5!1-12-9",
+     *          "description"="Room distribution."
+     *      },
+     *     {
+     *          "name"="booking_id",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Booking ID"
+     *      },
+     *     {
+     *          "name"="tokenize_key",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Tokenize Key"
+     *      },
+     *     {
+     *          "name"="payment_method",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Payment Method"
+     *      },
+     *     {
+     *          "name"="number_card",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0000-0000-0000-0000",
+     *          "description"="Number Card"
+     *      },
+     *     {
+     *          "name"="expiration_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="2018-02-01 00:00:00.000000",
+     *          "description"="Expiration Date"
+     *      },
+     *     {
+     *          "name"="security_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="000 or 0000",
+     *          "description"="Security Code"
+     *      },
+     *     {
+     *          "name"="owner_name",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Owner Name"
+     *      },
+     *     {
+     *          "name"="bank_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Bank Code"
+     *      },
+     *     {
+     *          "name"="card_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Card Code"
+     *      },
+     *     {
+     *          "name"="card_type",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Card Type"
+     *      },
+     *     {
+     *          "name"="reservation_name",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="First name, Last name, Document Number"
+     *      },
+     *     {
+     *          "name"="email",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="email"
+     *      },
+     *     {
+     *          "name"="type_phone",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Type Phone: Local, Cell Phone, Office"
+     *      },
+     *     {
+     *          "name"="number",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Phone Number"
+     *      },
+     *     {
+     *          "name"="country_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="+54 Country Code"
+     *      },
+     *     {
+     *          "name"="area_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Area Code"
+     *      },
+     *     {
+     *          "name"="comment",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Comment"
+     *      },
+     *     {
+     *          "name"="should_use_nightly_prices",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="should_use_nightly_prices"
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function patchBookingAction(Request $request)
+    {
+        /**
+         * Parameters
+         */
+//        $formBooking: formulario bookin
+//        $formPay: formulario bookin  $bookingId, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email
+//        paymentMethod: payment_methods->choice
+//        hotel_availabilities: obtener el availability_token, idHotel
+
+        $params = $this->getRequest()->request->all();
+
+        $bookingId = $params['booking_id'];
+        $paymentMethod = $params['payment_method'];
+        $numberCard = $params['number_card'];
+        $expirationDate = $params['expiration_date'];
+        $securityCode = $params['security_code'];
+        $ownerName = $params['owner_name'];
+        $bankCode = $params['bank_code'];
+        $cardCode = $params['card_code'];
+        $cardType = $params['card_type'];
+        $typePhone = $params['type_phone'];
+        $number = $params['number'];
+        $countryCode = $params['country_code'];
+        $areaCode = $params['area_code'];
+        $comment = $params['comment'];
+        $email = $params['email'];
+        $shouldUseNightlyPrices = $params['should_use_nightly_prices'];
+
+        $hotelAvailabilities = $params['hotel_availabilities'];
+        $priceDetail = $params['price_detail'];
+        $checkinDate = $params['checkin_date'];
+        $checkoutDate = $params['checkout_date'];
+        $lang = $params['lang'];
+        $$email = $params['email'];
+
+        $formBookingId = '/v3/hotels/bookings/'.$bookingId.'/forms';
+
+        $date = new \DateTime($expirationDate);
+
+        $formBooking = $this->get('despegar')->getHotelsBookingsForms($bookingId);
+
+        // Adding data to booking form
+        $formData = $this->get('despegar')->getHotelsBookingsForms($bookingId);
+        $formData['paymentMethod'] = $paymentMethod;
+        $formData['$number'] = $numberCard;
+        $formData['expiration'] = $date;
+        $formData['security_code'] = $securityCode;
+        $formData['owner_name'] = $ownerName;
+        $formData['bank_code'] = $bankCode;
+        $formData['card_code'] = $cardCode;
+        $formData['card_type'] = $cardType;
+        $formData['email'] = $email;
+        $formData['type0'] = $typePhone;
+        $formData['number0'] = $number;
+        $formData['country_code0'] = $countryCode;
+        $formData['area_code0'] = $areaCode;
+        $formData['comment'] = $comment;
+        $formData['should_use_nightly_prices'] = $shouldUseNightlyPrices;
+
+        $result = $this->get('hotel_service')->bookingHotel(
+            $formBooking,
+            $formData,
+            $formBookingId,
+            $hotelAvailabilities->hotel->id,
+            $priceDetail,
+            $checkinDate,
+            $checkoutDate,
+            $lang,
+            $email);
+
+        $response = new JsonResponse($result);
+
+        return $response;
     }
 }
