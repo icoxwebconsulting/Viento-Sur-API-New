@@ -28,9 +28,13 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
 
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
+            new VientoSur\ApiBundle\VientoSurApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -19,6 +19,7 @@ framework:
     csrf_protection: ~
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
+    serializer: true
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -153,3 +154,12 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   false
             delete_on_remove:   false
+#FOSRest Configuration
+fos_rest:
+    routing_loader:
+        default_format: json
+        include_format: false
+
+#NelmioApiDoc Configuratio
+nelmio_api_doc:
+    name: Viento Sur Api

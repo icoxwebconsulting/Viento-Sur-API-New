@@ -172,6 +172,19 @@ class Despegar
         return $this->curlExec($this->getHotelsBookingsNextStepUrl($bookingId), $header, 'GET');
     }
 
+    public function getHotelsBookingsForms($bookingId)
+    {
+        $url = $this->getServiceUrl() . "hotels/bookings/" . $bookingId . '/forms' . (($this->isTest) ? '?example=true' : '');
+        $header = [
+            'X-ApiKey:' . $this->apiKey
+        ];
+
+//        echo "<pre>" . print_r($bookingId, true) . "</pre>";
+//        echo "<pre>" . print_r($url, true) . "</pre>";
+//        die();
+        return $this->curlExec($url, $header, 'GET');
+    }
+
     public function patchHotelsBookings($bookingId, $form_id_booking, $params)
     {
         $url = $this->serviceUrl . $bookingId . '/' . $form_id_booking . (($this->isTest) ? '?example=true' : '');
