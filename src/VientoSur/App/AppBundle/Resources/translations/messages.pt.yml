@@ -21,6 +21,7 @@ index:
     loading: Carregando
     filter: Filtro
     reservation: Reserva
+    reservations: Reservas
     reservation_error: Ocorreu um erro ao fazer sua reserva
     error_code: Código de erro
     cancellation_proceed: Seu pedido de cancelamento foi processado
@@ -90,6 +91,7 @@ index:
         cancel: Cancelar
         send: Enviar
 hotels:
+    holder_name: Nome do titular
     beds: Camas
     bed: Cama
     bed_type: Tipo de cama
@@ -371,7 +373,8 @@ admin:
     promotion_section_manager: Gerente título geral
     photo_manager: Gerente de fotos
     room_manager: Gerente de quartos
-    bed_manager: Gestor de camas
+    bed_manager: Gerente de camas
+    reservation_manager: Gerente de reservas
     period: Período
     name: Nome
     promotion_section: Título geral

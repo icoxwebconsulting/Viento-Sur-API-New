@@ -22,6 +22,7 @@ index:
     loading: Loading
     filter: Filter
     reservation: Reservation
+    reservations: Reservacions
     reservation_error: An error occurred when making your reservation
     error_code: Error code
     cancellation_proceed: Your cancellation request has been processed
@@ -93,6 +94,7 @@ index:
         send: Send
     invalid_cc: Invalid Credit Card
 hotels:
+    holder_name: Holder name
     beds: Beds
     bed: Bed
     bed_type: Bed type
@@ -374,6 +376,7 @@ admin:
     photo_manager: Photo manager
     room_manager: Rooms manager
     bed_manager: Beds manager
+    reservation_manager: Reservations manager
     period: Period
     name: Name
     promotion_section: General title
