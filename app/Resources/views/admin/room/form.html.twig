@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-6">
+    <div class="col-md-10 offset-md-1">
         {% set route_name = app.request.get('_route') %}
         {% set path = '' %}
         {% if entity is defined %}
