@@ -57,13 +57,14 @@ class DashboardController extends Controller
 //
 //        $em->flush();
 
-        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+       /* $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
         $translations = $repository->findTranslations($room);
 
         $entity = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
         return $this->render('admin/index.html.twig', array(
             'hotel' => $translations
-        ));
+        ));*/
+        return $this->render('admin/index.html.twig');
     }
 
     /**
