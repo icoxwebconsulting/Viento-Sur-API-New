@@ -148,12 +148,13 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   false
             delete_on_remove:   false
-        gallery_image:
-            uri_prefix:         /uploads/gallery
-            upload_destination: '%kernel.root_dir%/../web/uploads/gallery'
-            inject_on_load:     false
-            delete_on_update:   false
-            delete_on_remove:   false
+#        gallery_image:
+#            uri_prefix:         /uploads/gallery
+#            upload_destination: '%kernel.root_dir%/../web/uploads/gallery'
+#            inject_on_load:     false
+#            delete_on_update:   false
+#            delete_on_remove:   false
+
 #FOSRest Configuration
 fos_rest:
     routing_loader:

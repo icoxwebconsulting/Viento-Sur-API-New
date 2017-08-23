@@ -22,6 +22,7 @@ index:
     loading: Cargando
     filter: Filtro
     reservation: Reservación
+    reservations: Reservaciones
     reservation_error: Ha ocurrido un error al momento de realizar su reservación
     error_code: Código del error
     cancellation_proceed: Su solicitud de cancelación ha sido procesada
@@ -93,6 +94,7 @@ index:
         send: Enviar
     invalid_cc: Tarjeta inválida, por favor intruzca otra.
 hotels:
+    holder_name: Nombre del titular
     beds: Camas
     bed: Cama
     bed_type: Tipo de cama
@@ -375,6 +377,7 @@ admin:
     photo_manager: Gestor de fotos
     room_manager: Gestor de habitaciones
     bed_manager: Gestor de camas
+    reservation_manager: Gestor de reservas
     period: Período
     name: Nombre
     promotion_section: Título general
