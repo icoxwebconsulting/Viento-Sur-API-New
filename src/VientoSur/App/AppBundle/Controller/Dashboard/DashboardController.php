@@ -86,7 +86,13 @@ class DashboardController extends Controller
 //        return $this->render('admin/home.html.twig', array(
 //            'medias' => $medias,
 //            'news' => $news,
+//        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+//        $translations = $repository->findTranslations($room);
+
+//        $entity = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
+        return $this->render('admin/index.html.twig');
+//        return $this->render('admin/index.html.twig', array(
+//            'hotel' => $translations
 //        ));
-        return new Response('fsdfss');
     }
 }

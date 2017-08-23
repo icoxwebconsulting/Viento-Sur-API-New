@@ -22,6 +22,10 @@ viento_sur_user:
     resource: "@VientoSurAppAppBundle/Controller/UserController.php"
     type:     annotation
 
+viento_sur_reservation:
+    resource: "@VientoSurAppAppBundle/Controller/ReservationController.php"
+    type:     annotation
+
 viento_sur_promotions:
     resource: "@VientoSurAppAppBundle/Controller/Dashboard/PromotionsController.php"
     type:     annotation
