@@ -21,7 +21,6 @@
                         <th>#</th>
                         <th>{{ 'admin.period' | trans }}</th>
                         <th>{{ 'admin.name' | trans }}</th>
-                        <th>{{ 'hotels.description' | trans }}</th>
                         <th>{{ 'hotels.stars' | trans }}</th>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <th>{{ 'admin.percentage_gain' | trans }}</th>
@@ -38,7 +37,6 @@
                             <td>{{ entity.id }}</td>
                             <td>{{ entity.created | ago }}</td>
                             <td>{{ entity.name }}</td>
-                            <td>{{ entity.description }}</td>
                             <td>{{ entity.stars }}</td>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <td>{{ entity.percentageGain }}</td>
