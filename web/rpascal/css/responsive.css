@@ -541,10 +541,6 @@
         margin: 15px 0;
     }
 
-    #infoReserva img{
-        margin: 15px 0;
-    }
-
     #infoReserva li{
         font-size: 14px;
         margin-right: 5px;
@@ -586,7 +582,7 @@
     }
 
     #infoReserva .imgAeroline{
-        margin-bottom: 10px;
+        margin: 10px auto;
         padding: 5px 0;
     }
 

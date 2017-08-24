@@ -150,14 +150,15 @@ header{
 }
 
 .socialMedia li a{
-	display: block;
+	display: flex;
 	border-radius: 50%;
 	height: 2.08vw;
 	width: 2.08vw;
 	margin: 0 auto;
 	position: relative;
-	/*top: 0.33vw;*/
 	line-height: 2.08vw;
+	flex-flow: column;
+	justify-content: center;
 }
 
 .socialMedia li a i{
@@ -1372,8 +1373,8 @@ figure.effect-goliath:hover p {
 #infoReserva img{
 	width: 40%;
 	height: auto;
-	margin: 1.25vw 0;
 	border: #fcfeff 2px solid;
+	margin: 0 auto;
 }
 
 #infoReserva ul{
@@ -1454,12 +1455,15 @@ figure.effect-goliath:hover p {
 }
 
 #infoReserva .imgAeroline{
-	margin-bottom: 0.83vw;
+	margin: 0.83vw auto;
 	background: #fff;
 	border-radius: 50%;
 	padding: 0.41vw 0;
 	height: 60px;
 	width: 60px;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
 }
 
 #processPayment .panel-default{
@@ -1755,7 +1759,7 @@ figure.effect-goliath:hover p {
 }
 
 .socialMediaFooter li a{
-	display: block;
+	display:flex;
 	height: 2.08vw;
 	width: 2.08vw;
 	border-radius: 50%;
@@ -1763,6 +1767,8 @@ figure.effect-goliath:hover p {
 	top: 0.33vw;
 	margin: 0 auto;
 	line-height: 2.08vw;
+	flex-flow: column;
+	justify-content: center;
 }
 
 .socialMediaFooter li a i{
