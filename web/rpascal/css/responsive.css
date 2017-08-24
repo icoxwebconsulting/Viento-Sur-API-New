@@ -862,8 +862,21 @@
         padding: 0 20px !important;
     }
 
-    .footer p{
-        font-size: 1.8vw !important;
+    .footer h3{
+        font-size: 10px !important;
+    }
+
+    .footer p {
+        font-size: 8px !important;
+        line-height: 10px !important;
+    }
+
+    .associations .linkConditions{
+        font-size: 5px !important;
+    }
+
+    .copyright p{
+        font-size: 4px !important;
     }
 
     #infoReserva{
@@ -884,6 +897,52 @@
 
     #formSearch select{
         font-size: 13px;
+    }
+
+    #formSearch, #formFilters{
+        padding: 15px;
+    }
+
+    #descriptionHotel .titleHotel{
+        font-size: 19px;
+    }
+
+    #descriptionHotel ul.starsHotel li{
+        font-size: 12px;
+    }
+
+    #descriptionHotel .adress{
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #descriptionHotel .descriptionHotel p{
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    #descriptionHotel .itemsHotel h5{
+        font-size: 10px !important;
+    }
+
+    #descriptionHotel .titleSection{
+        font-size: 12px !important;
+    }
+
+    #descriptionHotel .itemsHotel ul li{
+        font-size: 9px !important;
+    }
+
+    #descriptionHotel .boxPrice p{
+        font-size: 12px !important;
+    }
+
+    #descriptionHotel .boxPrice h5{
+        font-size: 14px !important;
+    }
+
+    #descriptionHotel .boxPrice button{
+        font-size: 10px !important;
     }
 }
 
