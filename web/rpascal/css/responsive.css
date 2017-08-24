@@ -776,7 +776,7 @@
 @media only screen and (max-width: 1199px){
 
     .language select{
-        background-size: 2.2vw !important;
+        background-size: 1.2vw !important;
     }
 
     .search .tab-content .selectMoney select{
@@ -795,7 +795,7 @@
 }
 
 /*Mobile*/
-@media only screen and (max-width: 1023px){
+@media only screen and (max-width: 1024px){
 
     .associations .linkConditions{
         float: none;
@@ -804,6 +804,19 @@
     .associations{
         text-align: center;
     }
+
+    .footer p{
+        font-size: 1.20vw !important;
+    }
+
+    #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
+        font-size: 2vw;
+    }
+
+    .form-group label{
+        font-size: 1.1vw;
+    }
+
 }
 
 @media only screen and (max-width: 767px){
@@ -817,10 +830,6 @@
         display: none;
     }
 
-    .socialMediaFooter li a{
-        top: 0.18vw;
-    }
-
     #thumbHotel .infoHotel .modalMap {
         line-height: 0;
     }
@@ -828,7 +837,56 @@
     #thumbHotel .infoHotel ul{
         margin: 2.25vw 0;
     }
+
+    .socialMedia ul{
+        float: none;
+        text-align: center;
+    }
+
+    #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
+        font-size: 3vw;
+    }
+
+    #processPayment .panel-body .bg-success{
+        font-size: 2.6vw;
+        text-align: center;
+    }
+
+    .form-group label{
+        font-size: 13px;
+    }
+
+    .buttonPayment button {
+        font-size: 11px !important;
+        height: 25px !important;
+        padding: 0 20px !important;
+    }
+
+    .footer p{
+        font-size: 1.8vw !important;
+    }
+
+    #infoReserva{
+        padding: 15px !important;
+    }
+
+    #infoReserva .imgAeroline{
+        margin: 10px auto !important;
+    }
+
+    #infoReserva .infoDetail h6{
+        font-size: 16px !important;
+    }
+
+    #infoReserva li{
+        font-size: 13px !important;
+    }
+
+    #formSearch select{
+        font-size: 13px;
+    }
 }
+
 
 @media only screen and (max-width: 415px){
 
@@ -844,10 +902,6 @@
         font-size: 3.33vw;
     }
 
-    #formSearch select{
-        font-size: 2.33vw;
-    }
-
     #formFilters .boxFilter .checkbox span{
         font-size: 2.16vw;
     }
@@ -859,5 +913,9 @@
     #formSearch .form-group i, #formFilters .form-group i {
         bottom: 1.83vw;
         left: 5.5vw;
+    }
+
+    #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
+        font-size: 4vw;
     }
 }
