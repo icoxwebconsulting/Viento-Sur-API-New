@@ -1,4 +1,8 @@
 index:
+    error_message: Ocorreu um problema
+    error_message_description: Tente novamente mais tarde
+    fee: Feudo
+    discounts: Descontos
     error: Erro
     class: Classe
     flight_remember: Lembre-se no aeroporto 1 1/2 horas antes da hora de partida do seu voo.
