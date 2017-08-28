@@ -1736,9 +1736,10 @@ figure.effect-goliath:hover p {
 	font-family: 'latoregular';
 	font-size: 1.33vw;
 	text-transform: uppercase;
-	display: block;
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
 	text-align: center;
-	padding: 0.83vw 0;
 	margin-top: 2.25vw;
 }
 

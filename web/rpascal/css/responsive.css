@@ -818,6 +818,14 @@
 
 @media only screen and (max-width: 767px){
 
+    .logo img{
+        width: 90px;
+    }
+
+    #banner{
+        height: 180px;
+    }
+
     .associations li img{
         width: 10vw;
         height: auto;
@@ -838,6 +846,13 @@
     .socialMedia ul{
         float: none;
         text-align: center;
+    }
+
+    .language select{
+        margin: 10px auto;
+        font-size: 8px;
+        height: 20px;
+        width: 80px;
     }
 
     #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
@@ -867,6 +882,12 @@
     .footer p {
         font-size: 8px !important;
         line-height: 10px !important;
+    }
+
+    .footer .btnContact {
+        font-size: 6px;
+        height: 15px;
+        width: 80px;
     }
 
     .associations .linkConditions{
@@ -945,6 +966,14 @@
 
     #breadcrumb ol li a, .breadcrumb li + li:before, #breadcrumb ol li.active{
         font-size: 8px !important;
+    }
+
+    .socialMedia li{
+        vertical-align: super;
+    }
+
+    .socialMediaFooter li{
+        vertical-align: top;
     }
 
     .socialMediaFooter li a , .socialMedia li a{
