@@ -318,17 +318,96 @@ flights:
     reservation_data: Reservation data
     first_pay: 1st payment of %first% + %quota% dues of %last%
 amenities:
-    INGRAH: FREE WI-FI
+    label: Amenities
+    ACOM: Accommodations adapted for people with disabilities
     AIR: Air Conditioning
+    ADUON: Only for adults
+    AIRTRAN: Airport Transfer with Additional Cost
+    ASAD: Spit
+    BABYSIT: Day care center
     BAG: Bellhop Service
+    BAR: Bar
+    BEASAL: Beauty salon
+    BREAKFST: Breakfast
+    BREEXCH: Breakfast with additional cost
     BSNSC: Business Center
+    CAMA: ATM On The Property
+    CAR: Car rental
+    CAS: Casino
+    CEM: Entertainment / Monitors for Kids
+    CFGU: Computer for Guests / Internet Cafe
+    DISC: Discotheque
+    DRCLSE: Dry Cleaning Service with Extra Cost
+    ETES: Entertainment / Theme Parties / Shows
     ELEV: Elevator
+    GAMES: Playroom
+    GARD: Garden
     GIM: Gym / Fitness Center
+    GOLF: Golf course
+    HAIRROOM: Hairdressing
     HOT: Heating
+    INTCA: Internet with additional cost
+    INTGR: Free Internet
+    INGRAH: FREE WI-FI
+    INTPUAREXCH: WIFI with additional cost
+    INV: Accessible for people with reduced mobility
+    ISV: Ironing service
+    JCZHTL: Hydromassage bathtub
     LASESU: Laundry Service with Additional Cost
     LIPA: Limited Parking
+    LOCKS: Armarios / Lockers
+    LUGADCO: Luggage with Extra Cost
+    LUGFR: Free Luggage Storage
+    MAPCEL: Menu Suitable for Celiacs
+    MASSAGE: Massage
     MEETROOM: Meeting Room(s)
+    MNA: Pets: Pets not allowed
+    NPA: Parking not available
     OUSWPOSE: Outdoor Pool (seasonal)
+    PAREEXCH: Reception of Packages with Additional Cost
+    PAREFR: Free Packet Reception
+    PARKADCO: Parking with additional cost
+    PARKING: Free Parking
+    PEALAC: Pet Friendly with Extra Cost
+    PET: Pets are admitted free of charge
+    PISC: Indoor Swimming Pool (All Year)
+    PISCCLI: Climatized pool
+    PISCINF: Children's Pool
+    PISCN: Pool
+    PISDESC: Outdoor Swimming Pool (All Year)
+    PISTPO: Sports Court
+    PISTSC: Squash court
+    PRIBEAR: Private Beach Area
+    R24: 24hs Reception
+    RECEP: Reception limited hours
+    RESTO: Restaurant
+    ROOMSVC: Room service
+    SALJUE: Playroom for children
+    SAUN: Sauna
+    SEC24: Security 24h
+    SECTNI: Playground for children
+    SERCAM: Currency Exchange Service
+    SERCON: Concierge Service
+    SERGUAR: Babysitting service
+    SERNIN: Baby changer
+    SHKI: Shared Kitchen
+    SMPEALAC: Small Pets with Extra Cost
+    SMPEALFR: Free Small Pets Allowed
+    SOL: Solarium
+    SOMBR: Parasol
+    SPA: SPA
+    STORE: Shops on Property
+    TEM: Entertainment / Monitors for Teens
+    TENNIS: Tennis Court
+    TLS: Towels / Linens with Extra Cost
+    TOALPL: Towels for the Beach
+    TOASAB: Towels / sheets
+    TRANSAIR: Free Airport Transfer
+    TRANSER: Transfer Service with Additional Cost
+    TRANSFREE: Free Shuttle Service
+    TVROOM: TV room
+    VALETPRK: Valet Parking
+    WAKEUP: Wake Up Service
 admin:
     sign_in_account: Sign In to your account
     sign_in: Sign In

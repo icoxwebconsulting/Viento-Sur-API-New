@@ -11,7 +11,7 @@ use Gedmo\Translatable\Translatable;
  * Bed
  *
  * @ORM\Table(name="beds")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\BedRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Bed
@@ -72,29 +72,6 @@ class Bed
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $description
-     * @return Bed
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -215,5 +192,28 @@ class Bed
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Bed
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

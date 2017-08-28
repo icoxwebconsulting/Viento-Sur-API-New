@@ -318,17 +318,96 @@ flights:
     reservation_data: Datos de la reserva
     first_pay: 1er pago de %first% + %quota% cuotas de %last%
 amenities:
-    INGRAH: WIFI gratis
+    label: Servicios
+    ACOM: Alojamientos Adaptados a Personas con Discapacidad
     AIR: Aire Acondicionado
+    ADUON: Solo para Adultos
+    AIRTRAN: Traslado Aeropuerto con Costo Adicional
+    ASAD: Asador
+    BABYSIT: Guardería Infantil
     BAG: Servicio de Maletero
+    BAR: Bar
+    BEASAL: Salón de Belleza
+    BREAKFST: Desayuno
+    BREEXCH: Desayuno con Costo Adicional
     BSNSC: Centro de Negocios
+    CAMA: Cajero Automático en La Propiedad
+    CAR: Alquiler de Coches
+    CAS: Casino
+    CEM: Entretenimiento / Monitores para Niños
+    CFGU: Computadora para Huéspedes / Cibercafé
+    DISC: Discoteca
+    DRCLSE: Servicio de Tintorería con Costo Adicional
+    ETES: Entretenimiento / Fiestas Temáticas / Espectáculos
     ELEV: Ascensor
+    GAMES: Salón de Juegos
+    GARD: Jardín
     GIM: Gimnasio
+    GOLF: Campo de Golf
+    HAIRROOM: Peluquería
     HOT: Calefacción
+    INTCA: Internet con costo adicional
+    INTGR: Internet gratis
+    INGRAH: WIFI gratis
+    INTPUAREXCH: WIFI con costo adicional
+    INV: Accesible para personas con movilidad reducida
+    ISV: Servicio de Planchado
+    JCZHTL: Bañera de Hidromasaje
     LASESU: Servicio de Lavandería con Costo Adicional
     LIPA: Estacionamiento Rotativo
+    LOCKS: Armarios / Lockers
+    LUGADCO: Guardaequipajes con Costo Adicional
+    LUGFR: Guardaequipajes Gratis
+    MAPCEL: Menú Apto para Celíacos
+    MASSAGE: Masajes
     MEETROOM: Sala de Reuniones
+    MNA: Mascotas: no se admiten
+    NPA: Estacionamiento No Disponible
     OUSWPOSE: Piscina al Aire Libre (de Temporada)
+    PAREEXCH: Recepción de Paquetes con Costo Adicional
+    PAREFR: Recepción de Paquetes Gratis
+    PARKADCO: Estacionamiento con Costo Adicional
+    PARKING: Estacionamiento Gratis
+    PEALAC: Se Admiten Mascotas con Costo Adicional
+    PET: Se Admiten Mascotas Gratuitamente
+    PISC: Piscina Interior (Todo el Año)
+    PISCCLI: Piscina climatizada
+    PISCINF: Piscina Infantil
+    PISCN: Piscina
+    PISDESC: Piscina al Aire Libre (Todo el Año)
+    PISTPO: Cancha Polideportiva
+    PISTSC: Cancha de Squash
+    PRIBEAR: Zona Privada de Playa
+    R24: Recepción 24hs
+    RECEP: Recepción (horario limitado)
+    RESTO: Restaurante
+    ROOMSVC: Servicio de Habitación
+    SALJUE: Sala de juegos para niños
+    SAUN: Sauna
+    SEC24: Seguridad 24h
+    SECTNI: Sector de juegos para niños
+    SERCAM: Servicio de Cambio de Moneda
+    SERCON: Servicio de Conserjería
+    SERGUAR: Servicio de niñera
+    SERNIN: Cambiador de bebes
+    SHKI: Cocina Compartida
+    SMPEALAC: Se Admiten Mascotas Pequeñas con Costo Adicional
+    SMPEALFR: Se Admiten Mascotas Pequeñas Gratis
+    SOL: Solárium
+    SOMBR: Sombrilla
+    SPA: SPA
+    STORE: Tiendas en la Propiedad
+    TEM: Entretenimiento / Monitores para Adolescentes
+    TENIS: Cancha de Tenis
+    TLS: Toallas / Sábanas con Costo Adicional
+    TOALPL: Toallas para la Playa
+    TOASAB: Toallas / Sábanas
+    TRANSAIR: Traslado al Aeropuerto Gratis
+    TRANSER: Servicio de Traslado con Costo Adicional
+    TRANSFREE: Servicio de Traslado Gratis
+    TVROOM: Salón de TV
+    VALETPRK: Valet Parking
+    WAKEUP: Servicio de Despertador
 admin:
     sign_in_account: Inicia sesión con tu cuenta
     sign_in: Inicia sesión
