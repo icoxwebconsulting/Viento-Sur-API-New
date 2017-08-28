@@ -857,6 +857,7 @@
         font-size: 11px !important;
         height: 25px !important;
         padding: 0 20px !important;
+        margin-bottom: 20px !important;
     }
 
     .footer h3{
@@ -941,6 +942,21 @@
     #descriptionHotel .boxPrice button{
         font-size: 10px !important;
     }
+
+    #breadcrumb ol li a, .breadcrumb li + li:before, #breadcrumb ol li.active{
+        font-size: 8px !important;
+    }
+
+    .socialMediaFooter li a , .socialMedia li a{
+        height: 12px !important;
+        width: 12px !important;
+    }
+
+    .socialMediaFooter li a i, .socialMedia li a i{
+        font-size: 6px !important;
+    }
+
+
 }
 
 
