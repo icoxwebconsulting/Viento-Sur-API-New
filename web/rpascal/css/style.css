@@ -58,6 +58,10 @@ a, a:hover, a:focus{
 	border-width: 2px !important;
 }
 
+.borderNone{
+	border: none !important;
+}
+
 /*----- END GENERALS -------*/
 
 /*----- GO COLORS SOCIAL MEDIA -----*/
@@ -115,7 +119,7 @@ header{
 	border-radius: 5px;
 	border: #888888 1px solid;
 	background-color: rgba(17,17,17,0.2);
-	background: URL(../images/arrow-down.png) no-repeat 89% 50% !important;
+	background: url(../images/arrow-down.png) no-repeat 89% 50% !important;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
@@ -750,6 +754,7 @@ header{
 	border-radius: 5px;
 	margin-bottom: 3.33vw;
 	line-height: 0;
+	display: flex;
 }
 
 #thumbsSearch .filterThumb .btnDropdown{
@@ -1738,7 +1743,7 @@ figure.effect-goliath:hover p {
 	text-transform: uppercase;
 	display: flex;
 	justify-content: center;
-	flex-flow: column;
+	fle
 	text-align: center;
 	margin-top: 2.25vw;
 }

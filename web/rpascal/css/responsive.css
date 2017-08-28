@@ -785,12 +785,6 @@
     }
 }
 
-/*Tablets*/
-@media only screen and (min-width: 768px) and (max-width: 1023px){
-
-
-}
-
 /*Mobile*/
 @media only screen and (max-width: 1024px){
 
@@ -833,6 +827,62 @@
 
     .footer .logoFooter img, .carousel-indicators{
         display: none;
+    }
+
+    .message{
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    #thumbsSearch .filterThumb{
+        border-width: 2px 1px 1px;
+    }
+
+    #thumbsSearch .filterThumb .btnDropdown{
+        font-size: 8px !important;
+    }
+
+    #thumbsSearch .filterThumb .caret{
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        border-top: 3px solid;
+    }
+
+    #thumbHotel{
+        width: 100%;
+        margin: 30px 0 0 0 !important;
+    }
+
+    #thumbHotel .infoHotel h4{
+        display: grid;
+    }
+
+    #thumbHotel .infoHotel h4 a, #thumbHotel .infoHotel span, #thumbHotel .infoHotel a, #thumbHotel .infoHotel li i.fa-star, #thumbHotel .priceRoom p{
+        font-size: 12px;
+    }
+
+    #thumbHotel .infoHotel ul{
+        margin: 0 !important;
+    }
+
+    #thumbHotel .infoHotel ul li{
+        vertical-align: super;
+    }
+
+    #thumbHotel .priceRoom{
+        text-align: center;
+    }
+
+    #thumbHotel .priceRoom h4{
+        font-size: 14px;
+    }
+
+    #thumbHotel .priceRoom h5, #thumbHotel .priceRoom h5 span, #thumbHotel .priceRoom button{
+        font-size: 10px;
+    }
+
+    #thumbHotel .infoHotel, #thumbHotel .priceRoom{
+        padding: 15px !important;
     }
 
     #thumbHotel .infoHotel .modalMap {
@@ -962,6 +1012,7 @@
 
     #descriptionHotel .boxPrice button{
         font-size: 10px !important;
+        width: 100px !important;
     }
 
     #breadcrumb ol li a, .breadcrumb li + li:before, #breadcrumb ol li.active{
@@ -984,10 +1035,7 @@
     .socialMediaFooter li a i, .socialMedia li a i{
         font-size: 6px !important;
     }
-
-
 }
-
 
 @media only screen and (max-width: 415px){
 
