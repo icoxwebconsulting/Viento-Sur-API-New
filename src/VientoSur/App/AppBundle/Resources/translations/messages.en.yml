@@ -1,4 +1,6 @@
 index:
+    hotel_footer: Please note that your reservation is already active, but your personal data will arrive at the hotel 24 hours before the arrival date
+    hotel_footer2: For inconveniences at destination, contact us on +54 351 4877555/444
     error_message: A problem has occurred
     error_message_description: Please try again later.
     fee: Fee
@@ -184,6 +186,8 @@ hotels:
     edit_reservation: Edit reservation
     room_holder: Room holder
     payment_methods: Payment methods
+    payment_method_chosen: Payment method chosen
+    payment_last_digits: Your reservation was charged with the card ending in %digits%
     interest: interest
     whitout_interest: Whitout interest
     pay: Pay

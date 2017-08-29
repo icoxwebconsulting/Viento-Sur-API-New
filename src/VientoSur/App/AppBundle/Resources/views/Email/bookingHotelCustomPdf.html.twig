@@ -7,6 +7,9 @@
 {% endif %}
 {% set decimal =false %}
 {% set price_detail = app.session.get('price_detail') %}
+{% set booking_all_data = app.session.get('booking_all_data') %}
+{% set destination = app.session.get('destination') %}
+
 <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
     <tr>
         <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
@@ -32,7 +35,7 @@
                         </div>
                         <br><br>
                         <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">
-                            {{ 'hotels.thanks_booking' | trans({'%name%': internal.holderName}) }}
+                            {{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}
                         </div>
 
                         <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
@@ -92,7 +95,7 @@
                                     <br>
                                     <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
                                     <br>
-                                    <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }}
+                                    <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }} {{ destination.text | split(',')[1] }}
                                 </td>
                             </tr>
                             {% if reservationDetails.rooms is defined %}
@@ -112,6 +115,25 @@
                                 </td>
                             </tr>
                             {% endif %}
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>{{ 'hotels.room_holder' | trans }}:</strong>
+
+                                    <ul>
+                                        {% for holder in booking_all_data.travelers %}
+                                        <ul>
+                                            <li>{{ 'hotels.labels.name' | trans }} {{ holder.first_name }}</li>
+                                            <li>{{ 'hotels.labels.lastname' | trans }} {{ holder.last_name }}</li>
+                                            <li>{{ 'hotels.labels.document' | trans }} {{ holder.document_number }}</li>
+                                        </ul>
+                                        {% endfor %}
+                                    </ul>
+
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -126,6 +148,7 @@
                                     <br>
                                     {{ 'index.search.hotel.checkin_date' | trans }}
                                     <h3>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
+                                    <h3>{{ reservationDetails.checkin_date|localizeddate('none', 'short', app.request.locale) }}</h3>
                                 </td>
                             </tr>
                         </table>
@@ -136,6 +159,7 @@
                                     <br>
                                     {{ 'index.search.hotel.checkout_date' | trans }}
                                     <h3>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
+                                    <h3>{{ reservationDetails.checkout_date|localizeddate('none', 'short', app.request.locale) }}</h3>
                                 </td>
                             </tr>
                         </table>
@@ -209,18 +233,70 @@
                         </table>
                         <br>
                         <br><br>
+                        {#<table width="350" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">#}
+                            {#<tr>#}
+                                {#<td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">#}
+                                    {#<br>#}
+                                    {#{{ 'hotels.reservation_by' | trans }}:#}
+                                    {#<h3>{{ internal.holderName }}</h3>#}
+                                    {#<h3>Email: {{ internal.email }}</h3>#}
+                                    {#<h3>{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h3>#}
+                                {#</td>#}
+                            {#</tr>#}
+                        {#</table>#}
+                        {#<table width="500" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">#}
+                            {#<tr>#}
+                                {#<td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">#}
+                                    {#<br>#}
+                                    {#{{ 'hotels.pay' | trans }}#}
+                                    {#<h4>#}
+                                        {#{{ 'hotels.payment_method_chosen' | trans }}:#}
+                                        {#{{ booking_all_data.payment.selected }}#}
+                                    {#</h4>#}
+                                    {#<h4>{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h4>#}
+                                {#</td>#}
+                            {#</tr>#}
+                        {#</table>#}
+                                    <div class="hr" style=" width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
 
+                        <table width="350" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    <br>
+                                    {{ 'hotels.reservation_by' | trans }}:
+                                    <h3>{{ internal.holderName }}</h3>
+                                    <h3>Email: {{ internal.email }}</h3>
+                                    <h3>{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h3>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="350" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    {{ 'hotels.pay' | trans }}
+                                    <h4>
+                                        {{ 'hotels.payment_method_chosen' | trans }}:
+                                        {{ booking_all_data.payment.selected }}
+                                    </h4>
+                                    <h4>{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h4>
+                                </td>
+                            </tr>
+                        </table>
                         <div class="hr" style="width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
                         <br>
                         <table>
                             <tbody><tr width="70%">
                                 <th width="10%">{{ 'hotels.description' | trans }}:</th>
                                 <td class="text-justify" style="width: 60%">
-                                    <p style="font-size: 11px">{{ hotelDetails.information.es }}</p>
+                                    {% set info = hotelDetails.information.es %}
+                                    <p id="info" style="font-size: 11px">{{ info }}</p>
                                 </td>
                                 <td style="text-align: center;">
-                                    <h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>
-                                    <p>{{ internal.email }}, {{ internal.holderName }}</p>
+                                    {#<h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>#}
+                                    {#<p>{{ internal.email }}, {{ internal.holderName }}</p>#}
                                     <br>
                                     <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
                                     <ul style="width: 70%; margin: auto;">
@@ -255,5 +331,18 @@
                 </tr>
             </table>
         </table>
+        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+        <br>
+        <i class="fa fa-clock-o"></i> <em><small>{{ 'index.hotel_footer' | trans }}</small></em>
+        <br>
+        <em><small>{{ 'index.hotel_footer2' | trans }}</small></em>
+        </div>
+        {{ 'index.footer_copy' | trans }}
             <!--/100% background wrapper-->
+        <script>
+            $(document).ready(function(){
+                var str = $('#info').text();
+                $("#info").html( str.replace(/\n/g, "<br />"));
+            })
+        </script>
 </body>

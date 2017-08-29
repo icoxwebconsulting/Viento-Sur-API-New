@@ -59,7 +59,259 @@
     </div>
 </header>
 
-{% include 'VientoSurAppAppBundle:Email:bookingDetail.html.twig' %}
+{% set symbol = '' %}
+{% set targetCurrency = app.session.get('targetCurrency') %}
+{% if targetCurrency == 'USD' %}
+    {% set symbol = 'US$' %}
+{% elseif targetCurrency == 'ARS' %}
+    {% set symbol = 'AR$' %}
+{% else %}
+    {% set symbol = 'AR$' %}
+{% endif %}
+{% set decimal =false %}
+{% set price_detail = app.session.get('price_detail') %}
+{% set booking_all_data = app.session.get('booking_all_data') %}
+{% set destination = app.session.get('destination') %}
+
+
+{#{{ dump(app.session.all()) }}#}
+
+<div class="container bs-docs-container">
+    <table class="table">
+        <tr>
+            <th colspan="2">
+                <b>
+                    <h3>{{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}</h3>
+                </b>
+            </th>
+        </tr>
+        <tr>
+            <th colspan="2">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div id="main_picture" style="width: 493px; height: 328px;">
+                                <img style="width: 493px; height: 328px;" src="{{ hotelDetails.main_picture.url }}/" class="origin" />
+                            </div>
+                        </td>
+                        <td>
+
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                            {#<div id="map"></div>#}
+                        </td>
+                    </tr>
+                </table>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <h3>{{ hotelDetails.name }}</h3>
+                {% for i in 1..hotelDetails.stars %}
+                    <i class="fa fa-star fa-2x" style="color: #008cd1;" aria-hidden="true"></i>
+                {% endfor %}
+            </th>
+        </tr>
+        <tr>
+            <th>
+                {{ 'hotels.phone' | trans }}:
+            </th>
+            <td>
+                {{ 'hotels.unavailable' | trans }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {{ 'hotels.gps_coordinates' | trans }}
+            </th>
+            <td>
+                Lat {{ hotelDetails.location.latitude }}, Long {{ hotelDetails.location.longitude }}
+            </td>
+        </tr>
+        <tr>
+            <th width="15%">
+                {{ 'hotels.address' | trans }}:
+            </th>
+            <td>
+                {{ hotelDetails.location.address }}. {{ destination.text | split(',')[1] }}
+            </td>
+        </tr>
+        <tr>
+            <th width="15%">
+                {{ 'index.search.hotel.rooms' | trans }}:
+            </th>
+            <td>
+                {% if reservationDetails.rooms is defined %}
+                    <ul>
+                        {% for room in reservationDetails.rooms %}
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th width="15%">{{ 'hotels.room_holder' | trans }}</th>
+            <td class="text-justify">
+                <ul>
+                    {% for holder in booking_all_data.travelers %}
+                        <ul>
+                            <li>{{ 'hotels.labels.name' | trans }} {{ holder.first_name }}</li>
+                            <li>{{ 'hotels.labels.lastname' | trans }} {{ holder.last_name }}</li>
+                            <li>{{ 'hotels.labels.document' | trans }} {{ holder.document_number }}</li>
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr style="text-align: center;">
+            <td width="30%">
+                {{ 'index.search.hotel.checkin_date' | trans }}:<br>
+                <h2>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h2>
+                <h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkin_date|localizeddate('none', 'short', app.request.locale) }}</h4>
+            </td>
+            <td width="30%">
+                {{ 'index.search.hotel.checkout_date' | trans }}: <br>
+                <h2>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h2>
+                <h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkout_date|localizeddate('none', 'short', app.request.locale) }}</h4>
+            </td>
+            <td width="40%">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <h7 style="margin: 0; padding: 0;">{{ 'index.search.hotel.room' | trans }}(s) </h7>
+                        <h3 style="margin: 0; padding: 0;">{{ reservationDetails.rooms|length }}</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h7 style="margin: 0; padding: 0;">{{ 'hotels.night' | trans }}(s).</h7>
+                        <h3 style="margin: 0; padding: 0;">{{ reservationDetails.night_count }}</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <h7 style="display: block;">{{ 'hotels.your_group' | trans }}</h7>
+                        {% for room in reservationDetails.rooms %}
+                            <div class="col-md-12">
+                                {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
+                            </div>
+                            <div class="col-md-{% if room.children > 0 %}6{% else %}12{% endif %}">
+                                <h5>{{ room.adults }} {{ 'index.search.hotel.adult' | trans }}(s)</h5>
+                            </div>
+                            {% if room.children > 0 %}
+                                <div class="col-md-6">
+                                    <h5>{{ room.children }} {{ 'index.search.hotel.child' | trans }}(s)</h5>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </td>
+            {#{% if not app.session.get('pdf')  %}#}
+                {#<td width="30%">#}
+                    {#{{ 'hotels.room_per_night' | trans }}:<br>#}
+                    {#<h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>#}
+                    {#{{ 'hotels.taxes_and_rates' | trans }}:<br>#}
+                    {#<h5>{{ symbol }} {{ price_detail.taxes|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>#}
+                    {#{{ 'index.fee' | trans }}:<br>#}
+                    {#<h5>{{ symbol }} {{ price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>#}
+                    {#{% if price_detail.discounts > 0 %}#}
+                        {#{{ 'index.discounts' | trans }}:<br>#}
+                        {#<h5>{{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>#}
+                    {#{% endif %}#}
+                    {#{{ 'hotels.total_price' | trans }}:<br>#}
+                    {#<h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>#}
+
+                {#</td>#}
+            {#{% endif %}#}
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr style="text-align: center;">
+            <td width="50%">
+                <h2 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h2>
+                <h4>{{ internal.holderName }}</h4>
+                <h4>Email: {{ internal.email }}</h4>
+                <h4>{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h4>
+            </td>
+            <td width="50%">
+                <h2 style="margin-top: -10px;">{{ 'hotels.pay' | trans }}</h2>
+                <h5>
+                    {{ 'hotels.payment_method_chosen' | trans }}:
+                    {{ booking_all_data.payment.selected }}
+                </h5>
+                <h5>{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h5>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr width="70%">
+            <th width="10%">{{ 'hotels.description' | trans }}:</th>
+            <td class="text-justify" style="width: 60%">
+                {% set info = hotelDetails.information.es %}
+                <p id="info" style="font-size: 11px">{{ info }}</p>
+            </td>
+            <td style="text-align: center;">
+                {#<h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>#}
+                {#<p>{{ internal.email }}, {{ internal.holderName }}</p>#}
+                {#<br>#}
+                <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
+                <ul style="width: 70%; margin: auto;">
+                    {% if reservationDetails.hours_before_checkin_penalty is defined %}
+                    <li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.
+                        {% endif %}
+                    <li>
+                        {% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}
+                            {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}
+                        {% else %}
+                            {{ 'hotels.whitout_charges' | trans }}.
+                        {% endif %}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr><td><br></td></tr>
+        <tr>
+            <th>
+                {{ 'hotels.labels.comment' | trans }}
+            </th>
+            <td>
+                <p>{{ internal.comments }}</p>
+            </td>
+        </tr>
+    </table>
+
+    {% if not pdf %}
+        <div style="width: 48%; display: inline-block; text-align: center">
+            <a class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
+                {{ 'hotels.download_pdf' | trans }}
+            </a>
+        </div>
+        <div style="width: 48%; display: inline-block; text-align: center">
+            <a class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
+                {{ 'hotels.edit_reservation' | trans }}
+            </a>
+        </div>
+        <br><br><br>
+    {% endif %}
+</div>
+<script>
+    function initMap() {
+        var LatLong = {lat: {{ hotelDetails.location.latitude }}, lng: {{ hotelDetails.location.longitude }}};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 19,
+            center: LatLong
+        });
+        var marker = new google.maps.Marker({
+            position: LatLong,
+            map: map
+        });
+    }
+    $(document).ready(function(){
+        var str = $('#info').text();
+        $("#info").html( str.replace(/\n/g, "<br />"));
+    })
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&callback=initMap">
+</script>
 
 </body>
 </html>

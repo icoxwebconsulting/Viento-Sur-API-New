@@ -1,4 +1,6 @@
 index:
+    hotel_footer: Tenga en cuenta que su reserva ya se encuentra activa, pero sus datos personales llegarán al hotel 24hs antes de la fecha de ingreso
+    hotel_footer2: Por inconvenientes en destino, contáctenos al +54 351 4877555/444
     error_message: Ha ocurrido un problema
     error_message_description: Por favor intente más tarde
     fee: Interés financiero
@@ -184,6 +186,8 @@ hotels:
     edit_reservation: Editar reservación
     room_holder: Titular de habitación
     payment_methods: Formas de pago
+    payment_method_chosen: Forma de pago elegida
+    payment_last_digits: Su reserva fue cobrada con la tarjeta terminada en %digits%
     interest: interés
     whitout_interest: Sin interés
     pay: Pago
