@@ -2,17 +2,23 @@
 
 namespace VientoSur\App\AppBundle\Services;
 
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Templating\EngineInterface;
 
 class Email
 {
     private $mailer;
     private $templating;
+    private $container;
+    private $session;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, Container $container, Session $session)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->container = $container;
+        $this->session = $session;
     }
 
     public function sendCommentsEmail($html, $email= 'web@vientosur.net')
@@ -31,9 +37,11 @@ class Email
 
     public function sendBookingEmail($email, $data)
     {
+        $internalId = $this->session->get('reservationInternalId');
+        $filePath = $this->container->getParameter('kernel.root_dir') . '/../web/'.$internalId.'.pdf';
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
-            ->setFrom('no-responder@vientosur.net','info@vientosur.net')
+            ->setFrom('info@vientosur.net','VientoSur.net')
             ->setTo([$email])
             ->setBody(
                 $this->templating->render(
@@ -41,7 +49,8 @@ class Email
                     $data
                 ),
                 'text/html'
-            )/*
+            )->attach(\Swift_Attachment::fromPath($filePath))
+            /*
              * If you also want to include a plaintext version of the message
             ->addPart(
                 $this->renderView(
@@ -59,7 +68,8 @@ class Email
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Cancelación de reserva')
-            ->setFrom('no-responder@vientosur.net','info@vientosur.net')
+//            ->setFrom('info@vientosur.net','info@vientosur.net')
+            ->setFrom('info@vientosur.net','VientoSur.net')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(
@@ -85,7 +95,8 @@ class Email
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
-            ->setFrom('no-responder@vientosur.net','info@vientosur.net')
+//            ->setFrom('info@vientosur.net','info@vientosur.net')
+            ->setFrom('info@vientosur.net','VientoSur.net')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(

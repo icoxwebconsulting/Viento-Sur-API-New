@@ -226,18 +226,18 @@
     <table class="table table-bordered">
         <tr style="text-align: center;">
             <td width="50%">
-                <h2 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h2>
-                <h4>{{ internal.holderName }}</h4>
-                <h4>Email: {{ internal.email }}</h4>
-                <h4>{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h4>
+                <h2 style="margin-top: -10px;font-size: 12px">{{ 'hotels.reservation_by' | trans }}:</h2>
+                <h4 style="font-size: 12px">{{ internal.holderName }}</h4>
+                <h4 style="font-size: 12px">Email: {{ internal.email }}</h4>
+                <h4 style="font-size: 12px">{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h4>
             </td>
             <td width="50%">
-                <h2 style="margin-top: -10px;">{{ 'hotels.pay' | trans }}</h2>
-                <h5>
+                <h2 style="margin-top: -10px;font-size: 12px">{{ 'hotels.pay' | trans }}</h2>
+                <h5 style="font-size: 12px">
                     {{ 'hotels.payment_method_chosen' | trans }}:
                     {{ booking_all_data.payment.selected }}
                 </h5>
-                <h5>{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h5>
+                <h5 style="font-size: 12px">{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h5>
             </td>
         </tr>
     </table>
