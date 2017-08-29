@@ -783,6 +783,54 @@ class HotelController extends Controller
             'bankList' => $bankList
         );
     }
+    /**
+     * @Route("/booking/pdf/", name="viento_sur_app_booking_hotel_pdf")
+     */
+    public function showPdfBookingAction(Request $request)
+    {
+        $detail = $request->get('detail');
+        $hotelId = $request->get('hotel_id');
+        $email = $request->get('email');
+        $reservationId = $request->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+
+        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+            'ids' => $hotelId,
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ));
+
+        $reservationDetails = $this->get('despegar')->getReservationDetails($detail['reservation_id'], array(
+            'email' => 'info@vientosur.net',
+            'language' => 'es',
+            'site' => 'AR'
+        ), $this->getParameter('is_test'));
+
+        $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
+
+        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
+            'hotelDetails' => $hotelDetails[0],
+            'reservationDetails' => $reservationDetails,
+            'detail' => $detail,
+            'hotelId' => $hotelId,
+            'internal' => $reservation,
+            'logoUrl' => $logoUrl,
+            'pdf' => true
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="reservacion.pdf"'
+            )
+        );
+    }
 
     /**
      *
