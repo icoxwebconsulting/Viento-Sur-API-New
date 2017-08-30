@@ -45,7 +45,8 @@ class Email
         $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
-            ->setFrom('info@vientosur.net','VientoSur.net')
+//            ->setFrom('info@vientosur.net','VientoSur.net')
+            ->setFrom("no-replay@vientosur.net", 'vientosur.net')
             ->setTo([$email])
             ->setBody(
                 $this->templating->render(
@@ -72,8 +73,8 @@ class Email
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Cancelación de reserva')
-//            ->setFrom('info@vientosur.net','info@vientosur.net')
-            ->setFrom('info@vientosur.net','VientoSur.net')
+            ->setFrom("no-replay@vientosur.net", 'vientosur.net')
+//            ->setFrom('info@vientosur.net','VientoSur.net')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(
@@ -99,8 +100,8 @@ class Email
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
-//            ->setFrom('info@vientosur.net','info@vientosur.net')
-            ->setFrom('info@vientosur.net','VientoSur.net')
+            ->setFrom("no-replay@vientosur.net", 'vientosur.net')
+//            ->setFrom('info@vientosur.net','VientoSur.net')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(
