@@ -614,12 +614,12 @@ class HotelController extends Controller
 
                 for($i = 0; $i < 3; $i++){
                     if(isset($formData['first_name'.$i])){
-                        $data[$i] = [
+                        $data[$i] = array(
                             'full_name' => $formData['first_name'.$i].' '.$formData['last_name'.$i],
                             'first_name' => $formData['first_name'.$i],
                             'last_name' => $formData['last_name'.$i],
                             'document_number' => $formData['document_number'.$i]
-                        ];
+                        );
                     }
                 }
                 $session->set('booking_all_data',[
