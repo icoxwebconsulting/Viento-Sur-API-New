@@ -610,7 +610,7 @@ class HotelController extends Controller
 
                 $session->remove('booking_all_data');
                 $last_digits = explode(' ', $formData['number']);
-                $data = '';
+                $data = array();
 
                 for($i = 0; $i < 3; $i++){
                     if(isset($formData['first_name'.$i])){
