@@ -145,18 +145,23 @@
             </td>
             {% if not app.session.get('pdf')  %}
             <td width="30%">
+                {% set room_per_night = {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
+                {% set total_price_per_night = room_per_night * reservationDays %}
+                {% set taxes = price_detail.taxes|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
+                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+
                 {{ 'hotels.room_per_night' | trans }}:<br>
                 <h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
                 {{ 'hotels.taxes_and_rates' | trans }}:<br>
-                <h5>{{ symbol }} {{ price_detail.taxes|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
-                {{ 'index.fee' | trans }}:<br>
-                <h5>{{ symbol }} {{ price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
+                <h5>{{ symbol }} {{ taxes + fee }}</h5>
                 {% if price_detail.discounts > 0 %}
                     {{ 'index.discounts' | trans }}:<br>
                     <h5>{{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
                 {% endif %}
                 {{ 'hotels.total_price' | trans }}:<br>
-                <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>
+                {#<h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>#}
+                <h2>{{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</h2>
 
             </td>
             {% endif %}

@@ -566,17 +566,22 @@
             <div class="booking-item-dates-change">
                 <b><span id="cuote"></span></b>
                 <br>
+                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')  %}
+                {% set total_price_per_night = room_per_night * reservationDays %}
+                {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
 
                 {#{{ 'hotels.room_per_night' | trans }}: $ {{ price_detail.nightly_subtotal|number_format(0, ',', '.') }}<br/>#}
                 {{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}<br/>
                 {#{{ 'hotels.taxes_and_rates' | trans }}: $ {{ (price_detail.taxes + price_detail.fee)|number_format(0, ',', '.') }}<br/>#}
-                {{ 'hotels.taxes_and_rates' | trans }}: {{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}<br/>
-                {{ 'index.fee' | trans }}: {{ symbol }} {{ price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}<br/>
+                {{ 'hotels.taxes_and_rates' | trans }}: {{ taxes + fee }}<br/>
                 {% if price_detail.discounts > 0 %}
                     {{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}<br/>
                 {% endif %}
                 {#<b>Total: $ {{ price_detail.total|number_format(0, ',', '.') }}</b><br/>#}
-                <b>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ price_detail.total|round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</b><br/>
+                {#<b>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ price_detail.total|round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</b><br/>#}
+                <b>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</b><br/>
             </div>
 
             <div class="" style="padding: 0 5px 0 5px">
