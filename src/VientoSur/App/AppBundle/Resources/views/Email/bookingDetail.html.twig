@@ -145,7 +145,7 @@
             </td>
             {% if not app.session.get('pdf')  %}
             <td width="30%">
-                {% set room_per_night = {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
+                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
                 {% set total_price_per_night = room_per_night * reservationDays %}
                 {% set taxes = price_detail.taxes|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
                 {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
@@ -160,7 +160,6 @@
                     <h5>{{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
                 {% endif %}
                 {{ 'hotels.total_price' | trans }}:<br>
-                {#<h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>#}
                 <h2>{{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</h2>
 
             </td>
