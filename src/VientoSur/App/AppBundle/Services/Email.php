@@ -3,6 +3,7 @@
 namespace VientoSur\App\AppBundle\Services;
 
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -37,8 +38,11 @@ class Email
 
     public function sendBookingEmail($email, $data)
     {
+        $fs = new Filesystem();
         $internalId = $this->session->get('reservationInternalId');
         $filePath = $this->container->getParameter('kernel.root_dir') . '/../web/'.$internalId.'.pdf';
+        $fs->rename($filePath, 'voucher-vs.pdf');
+        $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de reserva')
             ->setFrom('info@vientosur.net','VientoSur.net')
@@ -49,7 +53,7 @@ class Email
                     $data
                 ),
                 'text/html'
-            )->attach(\Swift_Attachment::fromPath($filePath))
+            )->attach(\Swift_Attachment::fromPath($filenName))
             /*
              * If you also want to include a plaintext version of the message
             ->addPart(

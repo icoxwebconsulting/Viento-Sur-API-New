@@ -315,11 +315,11 @@
                             </tr>
                             </tbody></table>
                         <br>
-                        {#<div style="width: 48%; display: inline-block; text-align: center;">#}
-                            {#<a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #008cd1;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">#}
-                                {#{{ 'hotels.download_pdf' | trans }}#}
-                            {#</a>#}
-                        {#</div>#}
+                        <div style="width: 48%; display: inline-block; text-align: center;">
+                            <a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #008cd1;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-default" href="{{ url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }}">
+                                {{ 'hotels.download_pdf' | trans }}
+                            </a>
+                        </div>
                         <div style="width: 48%; display: inline-block; text-align: center;">
                             <a style="color:#ffffff;border:0;display: inline-block;padding: 14px 25px;opacity: 0.9;background-color: #404040;text-align: center;text-decoration: none;font-size: 16px;margin-left: 20px;" class="btn btn-success" href="{{ url('viento_sur_app_edit_reservation', {'id': internal.id}) }}">
                                 {{ 'hotels.edit_reservation' | trans }}

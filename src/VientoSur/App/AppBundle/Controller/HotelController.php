@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -468,6 +469,8 @@ class HotelController extends Controller
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
         $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution, $lang);
 
+        $this->deleteFileAction();
+
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                 'dispoHotel' => $dispoHotel,
                 'hotelDetails' => $hotelDetails[0],
@@ -867,6 +870,20 @@ class HotelController extends Controller
                 'hotelDetails' => $hotelDetails
             ));
         }
+    }
+
+    /**
+     * @Route("/delete/fs", name="dete_file")
+     *
+     */
+    public function deleteFileAction()
+    {
+        $fs = new Filesystem();
+        $file = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+        if (file_exists($file)){
+        $fs->remove($file);
+        }
+        return new Response('file deleted');
     }
 
     /**
