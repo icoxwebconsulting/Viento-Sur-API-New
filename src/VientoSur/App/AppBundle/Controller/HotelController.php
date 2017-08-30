@@ -469,7 +469,6 @@ class HotelController extends Controller
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
         $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution, $lang);
 
-        $this->deleteFileAction();
 
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                 'dispoHotel' => $dispoHotel,
@@ -548,6 +547,7 @@ class HotelController extends Controller
      */
     public function bookingHotelPayAction(Request $request)
     {
+        $this->deleteFileAction();
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         $roompackChoice = $request->get('roompack_choice');
