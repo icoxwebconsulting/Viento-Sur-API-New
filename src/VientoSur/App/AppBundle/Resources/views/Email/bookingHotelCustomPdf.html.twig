@@ -300,8 +300,18 @@
                                     <br>
                                     <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
                                     <ul style="width: 70%; margin: auto;">
-                                        {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.{% endif %}
-                                        <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} {{ 'hotels.whitout_charges' | trans }}.{% endif %}</li>
+                                        {% if reservationDetails.hours_before_checkin_penalty is defined and reservationDetails.hours_before_checkin_penalty > 0 %}
+                                            <li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.
+                                        {% endif %}
+                                        <li>
+                                        {% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}
+                                            {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}
+                                        {% elseif reservationDetails.penalty.status == "NOT_ALLOW_BY_NOT_REFUNDABLE" %}
+                                            {{ 'hotels.not_cancelation' | trans }}.
+                                        {% else %}
+                                            {{ 'hotels.whitout_charges' | trans }}.
+                                        {% endif %}
+                                        </li>
                                     </ul>
                                 </td>
                             </tr>

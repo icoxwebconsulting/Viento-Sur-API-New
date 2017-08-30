@@ -260,6 +260,8 @@
                     <li>
                         {% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}
                             {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}
+                        {% elseif reservationDetails.penalty.status == "NOT_ALLOW_BY_NOT_REFUNDABLE" %}
+                            {{ 'hotels.not_cancelation' | trans }}.
                         {% else %}
                             {{ 'hotels.whitout_charges' | trans }}.
                         {% endif %}

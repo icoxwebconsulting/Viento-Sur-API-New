@@ -178,6 +178,7 @@ hotels:
     room_number: Room number
     reservation_by: Reservation made by
     can_cancel_to: You can cancel up to
+    not_cancelation: No changes or cancellations allowed
     hours_before: hours before checkin
     cancellation_amount: The amount for canceling is
     whitout_charges: Without cancellation charges

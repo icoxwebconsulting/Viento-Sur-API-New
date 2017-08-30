@@ -178,6 +178,7 @@ hotels:
     room_number: Número de habitación
     reservation_by: Reserva realizada por
     can_cancel_to: Puede cancelar  hasta
+    not_cancelation: No permite cambios o cancelaciones
     hours_before: horas antes del checking
     cancellation_amount: El cargo por cancelar es
     whitout_charges: Sin cargos por cancelación
