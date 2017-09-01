@@ -51,9 +51,9 @@
               <p style="color:#FFFFFF; text-align: right; padding-top:15px;">{{ 'hotels.reservation_number' | trans }}:
                   <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservationDetails.id }}</span>
               </p>
-              <p style="color:#FFFFFF; text-align: right;">{{ 'hotels.room_number' | trans }}:
-                  <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ hotelDetails.number_of_rooms }}</span>
-              </p>
+              {#<p style="color:#FFFFFF; text-align: right;">{{ 'hotels.room_number' | trans }}:#}
+                  {#<span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ hotelDetails.number_of_rooms }}</span>#}
+              {#</p>#}
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
                 {{ 'hotels.address' | trans }}:
             </th>
             <td>
-                {{ hotelDetails.location.address }}. {{ destination.text | split(',')[1] }}
+                {{ hotelDetails.location.address }}. {{ destination.text }}
             </td>
         </tr>
         <tr>
@@ -143,7 +143,7 @@
                 {% if reservationDetails.rooms is defined %}
                     <ul>
                         {% for room in reservationDetails.rooms %}
-                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}</li>
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}{{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -254,18 +254,19 @@
                 {#<br>#}
                 <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
                 <ul style="width: 70%; margin: auto;">
-                    {% if reservationDetails.hours_before_checkin_penalty is defined %}
-                    <li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.
-                        {% endif %}
-                    <li>
-                        {% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}
-                            {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}
-                        {% elseif reservationDetails.penalty.status == "NOT_ALLOW_BY_NOT_REFUNDABLE" %}
-                            {{ 'hotels.not_cancelation' | trans }}.
-                        {% else %}
-                            {{ 'hotels.whitout_charges' | trans }}.
-                        {% endif %}
-                    </li>
+                    {#{% if reservationDetails.hours_before_checkin_penalty is defined %}#}
+                    {#<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.#}
+                        {#{% endif %}#}
+                    {#<li>#}
+                        {#{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}#}
+                            {#{{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}#}
+                        {#{% elseif reservationDetails.penalty.status == "NOT_ALLOW_BY_NOT_REFUNDABLE" %}#}
+                            {#{{ 'hotels.not_cancelation' | trans }}.#}
+                        {#{% else %}#}
+                            {#{{ 'hotels.whitout_charges' | trans }}.#}
+                        {#{% endif %}#}
+                    {#</li>#}
+                    {{ app.session.get('room_cancellation') }}
                 </ul>
             </td>
         </tr>

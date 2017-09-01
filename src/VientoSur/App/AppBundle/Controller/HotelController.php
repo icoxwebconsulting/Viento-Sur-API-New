@@ -498,9 +498,12 @@ class HotelController extends Controller
         $params = $request->query->all();
 
         $price_detail = \GuzzleHttp\json_decode($request->get('price_detail'));
+        $room_cancellation = $request->get('room_cancellation');
 
         $session->remove('price_detail');
         $session->set('price_detail', $price_detail);
+        $session->remove('room_cancellation');
+        $session->set('room_cancellation', $room_cancellation);
 
         $postParams = array(
             "source" => array(
