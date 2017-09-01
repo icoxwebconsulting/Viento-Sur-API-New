@@ -30,7 +30,7 @@ services:
         arguments: [@guzzle.client.api_vault,@guzzle.client.api_despegar,"%api_key%", "%api_key_test%", "%service_version%", "%service_url%", "%service_vault_url%", "%service_vault_url_test%", "%is_test%", "@Session"]
     email.service:
         class: VientoSur\App\AppBundle\Services\Email
-        arguments: [@mailer,@templating]
+        arguments: [@mailer,@templating, @service_container, @session]
     booking_helper:
         class: VientoSur\App\AppBundle\Services\BookingHelper
     app.card:

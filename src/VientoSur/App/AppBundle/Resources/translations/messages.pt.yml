@@ -1,4 +1,6 @@
 index:
+    hotel_footer: Por favor, note que sua reserva já está ativa, mas seus dados pessoais chegarão ao hotel 24 horas antes da data de chegada
+    hotel_footer2: Para inconvenientes no destino, contate-nos no +54 351 4877555/444
     error_message: Ocorreu um problema
     error_message_description: Tente novamente mais tarde
     fee: Feudo
@@ -172,6 +174,7 @@ hotels:
     room_number: Número da quarto
     reservation_by: Agendados por
     can_cancel_to: Você pode cancelar até
+    not_cancelation: Nenhuma alteração ou cancelamento permitido
     hours_before: Horas antes do check-in
     cancellation_amount: A carga é cancelada
     whitout_charges: Nenhuma taxa de cancelamento
@@ -180,6 +183,8 @@ hotels:
     edit_reservation: Editar reserva
     room_holder: Titular do Quarto
     payment_methods: Formas de pagamento
+    payment_method_chosen: Método de pagamento escolhido
+    payment_last_digits: Sua reserva foi cobrada com o cartão que termina em %digits%
     interest: interesse
     whitout_interest: Sem interesse
     pay: Pagamento

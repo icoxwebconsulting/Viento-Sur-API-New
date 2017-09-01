@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -468,6 +469,7 @@ class HotelController extends Controller
         $session->set('price_detail', $dispoHotel['roompacks'][0]['price_detail']);
         $travellers = $this->get('booking_helper')->getSearchText($checkin_date, $checkout_date, $distribution, $lang);
 
+
         return $this->render('VientoSurAppAppBundle:Hotel:showHotelIdAvailabilities.html.twig', array(
                 'dispoHotel' => $dispoHotel,
                 'hotelDetails' => $hotelDetails[0],
@@ -496,9 +498,12 @@ class HotelController extends Controller
         $params = $request->query->all();
 
         $price_detail = \GuzzleHttp\json_decode($request->get('price_detail'));
+        $room_cancellation = $request->get('room_cancellation');
 
         $session->remove('price_detail');
         $session->set('price_detail', $price_detail);
+        $session->remove('room_cancellation');
+        $session->set('room_cancellation', $room_cancellation);
 
         $postParams = array(
             "source" => array(
@@ -545,6 +550,7 @@ class HotelController extends Controller
      */
     public function bookingHotelPayAction(Request $request)
     {
+        $this->deleteFileAction();
         $session = $request->getSession();
         $priceDetail = $session->get('price_detail');
         $roompackChoice = $request->get('roompack_choice');
@@ -605,6 +611,30 @@ class HotelController extends Controller
                 $formData = $formNewPaySend->getData();
                 $session->set('email', $formData['email']);
 
+                $session->remove('booking_all_data');
+                $last_digits = explode(' ', $formData['number']);
+                $data = array();
+
+                for($i = 0; $i < 3; $i++){
+                    if(isset($formData['first_name'.$i])){
+                        $data[$i] = array(
+                            'full_name' => $formData['first_name'.$i].' '.$formData['last_name'.$i],
+                            'first_name' => $formData['first_name'.$i],
+                            'last_name' => $formData['last_name'.$i],
+                            'document_number' => $formData['document_number'.$i]
+                        );
+                    }
+                }
+                $session->set('booking_all_data',[
+                    'payment' => [
+                        'last_digits' => $last_digits[3],
+                        'card_code' => $formData['card_code'],
+                        'selected' => $request->get('selected-card')
+                    ],
+                    'travelers' => $data,
+                    'contact' => $formData['type0'].' '.$formData['country_code0'].' '.$formData['area_code0'].' '.$formData['number0']
+                ]);
+//                echo "<pre>".print_r($request->get('selected-card'), true)."</pre>";die();
                 try {
                     $booking = $hotelService->bookingHotel(
                         $formBooking,
@@ -688,6 +718,43 @@ class HotelController extends Controller
                         'bankList' => $bankList
                     );
                 }else{
+                    $hotelDetails = $this->container->get('despegar')->getHotelsDetails(array(
+                        'ids' =>  $hotelAvailabilities->hotel->id,
+                        'language' => $lang,
+                        'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+                        'resolve' => 'merge_info',
+                        'catalog_info' => 'true'
+                    ));
+                    $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
+
+                    $reservationDetails = $this->container->get('despegar')->getReservationDetails(
+                        $booking['booking']['reservation_id'],
+                        array(
+                            'email' => 'info@vientosur.net',
+                            'language' => $lang,
+                            'site' => 'AR'
+                        ), $this->getParameter('is_test')
+                    );
+
+                    $this->savePdfToAttachAction(
+                        $booking['booking'],
+                        $hotelAvailabilities->hotel->id,
+                        $session->get('email'),
+                        $booking['reservation']->getId());
+
+                    $session->remove('reservationInternalId');
+                    $session->remove('despegarReservationId');
+                    $session->set('reservationInternalId', $booking['reservation']->getId());
+                    $session->set('despegarReservationId', $booking['reservation']->getReservationId());
+
+                    $this->container->get('hotel_service')->sendBookingEmail(
+                        $booking,
+                        $booking['reservation']->getId(),
+                        $hotelAvailabilities->hotel->id,
+                        $lang,
+                        $session->get('email'),
+                        $hotelDetails, $reservationDetails);
+
                     return $this->render('VientoSurAppAppBundle:Hotel:payHotelBooking.html.twig', array(
                         'hotelDetails' => $booking['hotelDetails'],
                         'reservationDetails' => $booking['reservationDetails'],
@@ -723,6 +790,54 @@ class HotelController extends Controller
             'hotelBrief' => $session->get('hotel_brief'),
             'cardList' => $cards,
             'bankList' => $bankList
+        );
+    }
+    /**
+     * @Route("/booking/pdf/", name="viento_sur_app_booking_hotel_pdf")
+     */
+    public function showPdfBookingAction(Request $request)
+    {
+        $detail = $request->get('detail');
+        $hotelId = $request->get('hotel_id');
+        $email = $request->get('email');
+        $reservationId = $request->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+
+        $hotelDetails = $this->get('despegar')->getHotelsDetails(array(
+            'ids' => $hotelId,
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ));
+
+        $reservationDetails = $this->get('despegar')->getReservationDetails($detail['reservation_id'], array(
+            'email' => 'info@vientosur.net',
+            'language' => 'es',
+            'site' => 'AR'
+        ), $this->getParameter('is_test'));
+
+        $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
+
+        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
+            'hotelDetails' => $hotelDetails[0],
+            'reservationDetails' => $reservationDetails,
+            'detail' => $detail,
+            'hotelId' => $hotelId,
+            'internal' => $reservation,
+            'logoUrl' => $logoUrl,
+            'pdf' => true
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="reservacion.pdf"'
+            )
         );
     }
 
@@ -764,14 +879,28 @@ class HotelController extends Controller
     }
 
     /**
-     * @Route("/booking/pdf/", name="viento_sur_app_booking_hotel_pdf")
+     * @Route("/delete/fs", name="dete_file")
+     *
      */
-    public function showPdfBookingAction(Request $request)
+    public function deleteFileAction()
     {
-        $detail = $request->get('detail');
-        $hotelId = $request->get('hotel_id');
-        $email = $request->get('email');
-        $reservationId = $request->get('id');
+        $fs = new Filesystem();
+        $file = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+        if (file_exists($file)){
+        $fs->remove($file);
+        }
+        return new Response('file deleted');
+    }
+
+    /**
+     * @Route("/booking/pdf/save/{detail}/{hotelId}/{email}/{reservationId}", name="viento_sur_app_save_hotel_pdf")
+     */
+    public function savePdfToAttachAction($detail, $hotelId, $email, $reservationId)
+    {
+//        $detail = $request->get('detail');
+//        $hotelId = $request->get('hotel_id');
+//        $email = $request->get('email');
+//        $reservationId = $request->get('id');
 
         $em = $this->getDoctrine()->getManager();
         $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
@@ -791,7 +920,7 @@ class HotelController extends Controller
         ), $this->getParameter('is_test'));
 
         $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
-        
+
         $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
             'hotelDetails' => $hotelDetails[0],
             'reservationDetails' => $reservationDetails,
@@ -802,14 +931,21 @@ class HotelController extends Controller
             'pdf' => true
         ));
 
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            200,
-            array(
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="reservacion.pdf"'
-            )
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $this->renderView(
+                'VientoSurAppAppBundle:Pdf:booking.html.twig', array(
+                'hotelDetails' => $hotelDetails[0],
+                'reservationDetails' => $reservationDetails,
+                'detail' => $detail,
+                'hotelId' => $hotelId,
+                'internal' => $reservation,
+                'logoUrl' => $logoUrl,
+                'pdf' => true
+            )),
+            $reservation->getId().'.pdf'
         );
+
+        return new Response('work');
     }
 
     /**
