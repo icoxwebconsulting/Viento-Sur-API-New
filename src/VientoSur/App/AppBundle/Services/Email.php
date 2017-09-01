@@ -39,12 +39,16 @@ class Email
     public function sendBookingEmail($email, $data)
     {
         $fs = new Filesystem();
+
+        $reservationId = $this->session->get('despegarReservationId');
         $internalId = $this->session->get('reservationInternalId');
+
         $filePath = $this->container->getParameter('kernel.root_dir') . '/../web/'.$internalId.'.pdf';
         $fs->rename($filePath, 'voucher-vs.pdf');
         $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+
         $message = \Swift_Message::newInstance()
-            ->setSubject('Confirmación de reserva')
+            ->setSubject('Viento Sur Operadores Turísticos - Solicitud de compra de Hotel - Número: '.$reservationId)
 //            ->setFrom('info@vientosur.net','VientoSur.net')
             ->setFrom("no-replay@vientosur.net", 'vientosur.net')
             ->setTo([$email])

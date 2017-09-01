@@ -741,8 +741,11 @@ class HotelController extends Controller
                         $hotelAvailabilities->hotel->id,
                         $session->get('email'),
                         $booking['reservation']->getId());
-                        $session->remove('reservationInternalId');
-                        $session->set('reservationInternalId', $booking['reservation']->getId());
+
+                    $session->remove('reservationInternalId');
+                    $session->remove('despegarReservationId');
+                    $session->set('reservationInternalId', $booking['reservation']->getId());
+                    $session->set('despegarReservationId', $booking['reservation']->getReservationId());
 
                     $this->container->get('hotel_service')->sendBookingEmail(
                         $booking,

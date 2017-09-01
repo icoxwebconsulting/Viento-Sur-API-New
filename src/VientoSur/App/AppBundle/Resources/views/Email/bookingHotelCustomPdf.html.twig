@@ -43,18 +43,18 @@
 
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr><td width="50%" valign="top"><![endif]-->
-                        <table width="900" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
-                            <tr>
-                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
-                                    <div style="width: 49%;display: inline-block;">
-                                        <img style="width: 433px; height: 278px;" src="{{ hotelDetails.main_picture.url }}/" alt="Viento Sur" title="">
-                                    </div>
-                                    <div style="width: 49%;display: inline-block;">
-                                        <img style="width: 433px; height: 278px;" src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }} alt="">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                            <table width="900" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                        <div style="width: 49%;display: inline-block;">
+                                            <img style="width: 433px; height: 278px;" src="{{ hotelDetails.main_picture.url }}/" alt="Viento Sur" title="">
+                                        </div>
+                                        <div style="width: 49%;display: inline-block;">
+                                            <img style="width: 433px; height: 278px;" src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }} alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         <br>
                         <br>
                         <!-- example: two columns (simple) -->
@@ -96,6 +96,14 @@
                                     <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
                                     <br>
                                     <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }} {{ destination.text }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>CP:</strong> {{ hotelDetails.location.zipcode }}
                                 </td>
                             </tr>
                             {% if reservationDetails.rooms is defined %}
@@ -355,5 +363,10 @@
                 var str = $('#info').text();
                 $("#info").html( str.replace(/\n/g, "<br />"));
             })
-        </script>
+        </script></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 </body>
