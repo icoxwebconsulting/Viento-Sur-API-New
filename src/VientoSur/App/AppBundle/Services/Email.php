@@ -50,7 +50,7 @@ class Email
         $message = \Swift_Message::newInstance()
             ->setSubject('Viento Sur Operadores Turísticos - Solicitud de compra de Hotel - Número: '.$reservationId)
 //            ->setFrom('info@vientosur.net','VientoSur.net')
-            ->setFrom("no-replay@vientosur.net", 'vientosur.net')
+            ->setFrom("no-replay@vientosur.net", 'Viento Sur Operadores Turísticos')
             ->setTo([$email])
             ->setBody(
                 $this->templating->render(
