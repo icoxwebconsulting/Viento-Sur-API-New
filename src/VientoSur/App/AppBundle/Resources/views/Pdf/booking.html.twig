@@ -41,13 +41,13 @@
 <body>
 <header id="main-header">
     <div class="header-top">
-        <div class="container">
+        <div class="container" style="padding: 0 20px; line-height: 0;">
             <div class="col-md-3">
                 <a class="logo" href="#">
                     <img src="{{ logoUrl }}" alt="Viento Sur" title="">
                 </a>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9" style="position: relative; top: -23px;">
               <p style="color:#FFFFFF; text-align: right; padding-top:15px;">{{ 'hotels.reservation_number' | trans }}:
                   <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservationDetails.id }}</span>
               </p>
@@ -75,28 +75,28 @@
 
 
 {#{{ dump(app.session.all()) }}#}
-
+<h5>{{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}</h5>
 <div class="container bs-docs-container">
-    <table class="table">
-        <tr>
-            <th colspan="2">
-                <b>
-                    <h3>{{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}</h3>
-                </b>
-            </th>
-        </tr>
+    <table class="table" style="margin-bottom:0px;">
+        {#<tr>#}
+            {#<th width="100%">#}
+                {#<b>#}
+                    {#<h5>{{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}</h5>#}
+                {#</b>#}
+            {#</th>#}
+        {#</tr>#}
         <tr>
             <th colspan="2">
                 <table class="table">
                     <tr>
                         <td>
-                            <div id="main_picture" style="width: 493px; height: 328px;">
-                                <img style="width: 493px; height: 328px;" src="{{ hotelDetails.main_picture.url }}/" class="origin" />
+                            <div id="main_picture" style="width: 293px; height: 228px;">
+                                <img style="width: 293px; height: 228px; margin: auto;display: block;" src="{{ hotelDetails.main_picture.url }}/" class="origin" />
                             </div>
                         </td>
                         <td>
 
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=293x228&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
                             {#<div id="map"></div>#}
                         </td>
                     </tr>
@@ -105,11 +105,13 @@
         </tr>
         <tr>
             <th>
-                <h3>{{ hotelDetails.name }}</h3>
+                <h4>{{ hotelDetails.name }}</h4>
+            </th>
+            <td>
                 {% for i in 1..hotelDetails.stars %}
                     <i class="fa fa-star fa-2x" style="color: #008cd1;" aria-hidden="true"></i>
                 {% endfor %}
-            </th>
+            </td>
         </tr>
         <tr>
             <th>
@@ -128,7 +130,7 @@
             </td>
         </tr>
         <tr>
-            <th width="15%">
+            <th width="20%">
                 {{ 'hotels.address' | trans }}:
             </th>
             <td>
@@ -176,23 +178,23 @@
         <tr style="text-align: center;">
             <td width="30%">
                 {{ 'index.search.hotel.checkin_date' | trans }}:<br>
-                <h2>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h2>
+                <h3>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
                 <h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkin_date|localizeddate('none', 'short', app.request.locale) }}</h4>
             </td>
             <td width="30%">
                 {{ 'index.search.hotel.checkout_date' | trans }}: <br>
-                <h2>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h2>
+                <h3>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
                 <h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkout_date|localizeddate('none', 'short', app.request.locale) }}</h4>
             </td>
             <td width="40%">
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <h7 style="margin: 0; padding: 0;">{{ 'index.search.hotel.room' | trans }}(s) </h7>
-                        <h3 style="margin: 0; padding: 0;">{{ reservationDetails.rooms|length }}</h3>
+                        <h5 style="margin: 0; padding: 0;">{{ reservationDetails.rooms|length }}</h5>
                     </div>
                     <div class="col-md-6">
                         <h7 style="margin: 0; padding: 0;">{{ 'hotels.night' | trans }}(s).</h7>
-                        <h3 style="margin: 0; padding: 0;">{{ reservationDetails.night_count }}</h3>
+                        <h5 style="margin: 0; padding: 0;">{{ reservationDetails.night_count }}</h5>
                     </div>
                     <div class="col-md-12">
                         <h7 style="display: block;">{{ 'hotels.your_group' | trans }}</h7>
@@ -231,7 +233,7 @@
             {#{% endif %}#}
         </tr>
     </table>
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="margin-bottom: 0px">
         <tr style="text-align: center;">
             <td width="50%">
                 <h2 style="margin-top: -10px;font-size: 12px">{{ 'hotels.reservation_by' | trans }}:</h2>
@@ -254,7 +256,7 @@
             <th width="10%">{{ 'hotels.description' | trans }}:</th>
             <td class="text-justify" style="width: 60%">
                 {% set info = hotelDetails.information.es %}
-                <p id="info" style="font-size: 11px">{{ info }}</p>
+                <p id="info" style="font-size: 9px">{{ info }}</p>
             </td>
             <td style="text-align: center;">
                 {#<h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>#}
