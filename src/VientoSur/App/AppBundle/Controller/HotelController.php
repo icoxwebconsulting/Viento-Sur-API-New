@@ -632,7 +632,7 @@ class HotelController extends Controller
                         'selected' => $request->get('selected-card')
                     ],
                     'travelers' => $data,
-                    'contact' => $formData['type0'].' '.$formData['country_code0'].' '.$formData['area_code0'].' '.$formData['number0']
+                    'contact' => $formData['country_code0'].' '.$formData['area_code0'].' '.$formData['number0']
                 ]);
 //                echo "<pre>".print_r($request->get('selected-card'), true)."</pre>";die();
                 try {
