@@ -921,15 +921,15 @@ class HotelController extends Controller
 
         $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
 
-        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
-            'hotelDetails' => $hotelDetails[0],
-            'reservationDetails' => $reservationDetails,
-            'detail' => $detail,
-            'hotelId' => $hotelId,
-            'internal' => $reservation,
-            'logoUrl' => $logoUrl,
-            'pdf' => true
-        ));
+//        $html = $this->renderView('VientoSurAppAppBundle:Pdf:booking.html.twig', array(
+//            'hotelDetails' => $hotelDetails[0],
+//            'reservationDetails' => $reservationDetails,
+//            'detail' => $detail,
+//            'hotelId' => $hotelId,
+//            'internal' => $reservation,
+//            'logoUrl' => $logoUrl,
+//            'pdf' => true
+//        ));
 
         $this->get('knp_snappy.pdf')->generateFromHtml(
             $this->renderView(
