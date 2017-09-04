@@ -1634,7 +1634,7 @@ figure.effect-goliath:hover p {
 #thumbsFlights .paymentFlight{
 	margin-top: 10%;
 	position: absolute;
-	right: 1.83vw;
+	right: 18px;
 	text-align: center;
 	transform: translateY(-20%);
 }
@@ -1739,6 +1739,7 @@ figure.effect-goliath:hover p {
 	padding: 1.25vw;
 	text-align: center;
 	width: 100%;
+	max-width: 80px;
 }
 
 

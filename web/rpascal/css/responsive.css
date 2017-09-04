@@ -1035,6 +1035,58 @@
     .socialMediaFooter li a i, .socialMedia li a i{
         font-size: 6px !important;
     }
+
+    #thumbsFlights .panel-body p, #thumbsFlights .panel-body label, #thumbsFlights .panel-body button{
+        font-size: 10px;
+    }
+
+    #thumbsFlights .panel-body [type="radio"] + span::before{
+        height: 10px;
+        width: 10px;
+    }
+
+    #thumbsFlights .panel-body button{
+        margin-top: 10px;
+    }
+
+    #thumbsFlights .panel-heading{
+        padding: 5px 10px;
+    }
+
+    #thumbsFlights .panel-heading h3 {
+        font-size: 7px;
+        margin: 0;
+        padding: 5px;
+    }
+
+    #thumbsFlights .panel-heading h6{
+        margin: 0;
+        font-size: 7px;
+    }
+
+    #thumbsFlights .panel-heading h6 span{
+        font-size: 7px;
+        line-height: 9px;
+    }
+
+    #thumbsFlights .paymentFlight{
+        position: inherit;
+    }
+
+    #thumbsFlights .paymentFlight p{
+        font-size: 12px;
+        text-align: center;
+    }
+
+    #thumbsFlights .paymentFlight h5{
+        font-size: 14px;
+    }
+
+    #thumbsFlights .paymentFlight button{
+        max-width: 90px;
+        font-size: 10px;
+        padding: 5px 10px;
+    }
 }
 
 @media only screen and (max-width: 415px){
@@ -1067,4 +1119,5 @@
     #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
         font-size: 4vw;
     }
+
 }
