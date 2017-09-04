@@ -757,6 +757,52 @@ header{
 	display: flex;
 }
 
+#thumbsSearch .filterThumb .modal{
+	z-index: 99999;
+}
+
+#thumbsSearch .filterThumb .modal ul{
+	padding: 0;
+}
+
+#thumbsSearch .filterThumb .modal ul li{
+	height: 25px;
+	margin-bottom: 10px;
+}
+
+#thumbsSearch .filterThumb  label {
+	display: inline-block;
+	cursor: pointer;
+	font-size: 16px;
+	float: left;
+	padding: 0;
+	color: #1d2d33;
+}
+
+#thumbsSearch .filterThumb [type="radio"] {
+	display: none;
+}
+
+#thumbsSearch .filterThumb [type="radio"] + span:before {
+	content: '';
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	vertical-align: middle;
+	border-radius: 50%;           /*hard border*/
+	border: 2px solid #0281c0;
+	margin-right: 10px;
+	transition: 0.5s ease all;    /*animation here*/
+}
+
+#thumbsSearch .filterThumb [type="radio"]:checked + span:before {
+	background: #0281c0;
+	box-shadow: 0 0 0 0.15em #0281c0;
+	border: 1px solid #fff;
+}
+
+
+
 #thumbsSearch .filterThumb .btnDropdown{
 	border-style: solid;
 	border-color: #008cd0;
