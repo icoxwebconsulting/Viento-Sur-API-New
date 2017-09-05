@@ -31,8 +31,9 @@
                             </div>
                         </td>
                         <td style="width: 493px; height: 328px; display: block;">
-
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                            <div id="main_picture" style="width: 493px; height: 328px;">
+                                <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                            </div>
                             {#<div id="map"></div>#}
                         </td>
                     </tr>
