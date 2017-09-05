@@ -718,6 +718,9 @@ class HotelController extends Controller
                         'bankList' => $bankList
                     );
                 }else{
+                    $session->remove('hotel_entrance_code');
+                    $session->set('hotel_entrance_code', $booking['booking']['pnr']);
+
                     $hotelDetails = $this->container->get('despegar')->getHotelsDetails(array(
                         'ids' =>  $hotelAvailabilities->hotel->id,
                         'language' => $lang,

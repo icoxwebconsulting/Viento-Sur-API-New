@@ -82,6 +82,7 @@ index:
         send: Enviar
     invalid_cc: Tarjeta inválida, por favor intruzca otra.
 hotels:
+    code_hotel_entrance: Código de ingreso al hotel
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible
     lasts: Últimas
