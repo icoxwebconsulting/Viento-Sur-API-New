@@ -2,8 +2,8 @@
 
 namespace VientoSur\App\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,6 +21,10 @@ class RoomsType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => 'VientoSur\App\AppBundle\Entity\Hotel',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('h')
+                            ->orderBy('h.name', 'ASC');
+                    }
                 )
             )
             ->add(
