@@ -9,8 +9,8 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="card mx-2">
                             <div class="card-block p-2">
-                                <h1>{{ 'Register' | trans }}</h1>
-                                <p class="text-muted">{{ 'Create your account' | trans }}</p>
+                                <h1>{{ 'admin.register' | trans }}</h1>
+                                <p class="text-muted">{{ 'admin.create_account' | trans }}</p>
                                 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
                                     <div class="input-group mb-1">
                                         {{ form_widget(form.firstName, { 'attr': { 'class': 'form-control', 'placeholder': 'First Name'}}) }}
@@ -49,22 +49,22 @@
                                     </div>
                                     {{ form_errors(form.plainPassword.second) }}
 
-                                    <div class="form-group row">
-                                        <label class="col-md-4 form-control-label">{{ 'User type' | trans }}</label>
-                                        <div class="col-md-8">
-                                            {{ form_widget(form.roles) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" style="display: none;">
-                                        <label class="col-md-4 form-control-label">{{ 'Image Profile' | trans }}</label>
-                                        <div class="col-md-8">
-                                            {{ form_widget(form.image, { 'attr': { 'class': 'form-control'}}) }}
-                                        </div>
-                                    </div>
-                                    {{ form_errors(form.image) }}
+                                    {#<div class="form-group row">#}
+                                        {#<label class="col-md-4 form-control-label">{{ 'User type' | trans }}</label>#}
+                                        {#<div class="col-md-8">#}
+                                            {#{{ form_widget(form.roles) }}#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#<div class="form-group row" style="display: none;">#}
+                                        {#<label class="col-md-4 form-control-label">{{ 'Image Profile' | trans }}</label>#}
+                                        {#<div class="col-md-8">#}
+                                            {#{{ form_widget(form.image, { 'attr': { 'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#{{ form_errors(form.image) }}#}
                                     {{ form_rest(form) }}
-                                    <button type="submit" class="btn btn-block btn-success">{{ 'Create Account' | trans }}</button>
-                                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-block btn-primary"><i class="fa fa-mail-reply"></i> {{ 'Back' | trans }}</a>
+                                    <button type="submit" class="btn btn-block btn-success">{{ 'admin.create_account' | trans }}</button>
+                                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-block btn-primary"><i class="fa fa-mail-reply"></i> {{ 'admin.b' | trans }}</a>
                                 </form>
                             </div>
                         </div>

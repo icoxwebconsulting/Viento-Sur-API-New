@@ -409,6 +409,9 @@ amenities:
     VALETPRK: Valet Parking
     WAKEUP: Wake Up Service
 admin:
+    create_account: Create account
+    confirm_account: Please check your email. It contains an activation link that you must click to activate your account.
+    register: Register
     sign_in_account: Sign In to your account
     sign_in: Sign In
     username: Username
@@ -447,6 +450,7 @@ admin:
     promotion_new: New promotion
     hotel_new: New hotel
     room_new: New room
+    bed_new: New bed
     promotion_section_new: New promotion section
     promotion_add: Add promotion
     add: Add

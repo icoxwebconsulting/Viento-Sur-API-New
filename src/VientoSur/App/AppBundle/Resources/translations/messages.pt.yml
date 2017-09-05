@@ -407,6 +407,9 @@ amenities:
     VALETPRK: Estacionamento com manobrista
     WAKEUP: Serviço de despertador
 admin:
+    create_account: Criar Conta
+    confirm_account: Verifique seu e-mail. Ele contém um link de ativação que você deve clicar para ativar sua conta.
+    register: Registo
     sign_in_account: Faça login em sua conta
     sign_in: Assinar em
     username: Nome de usuário
@@ -445,6 +448,7 @@ admin:
     promotion_new: Nova promoção
     hotel_new: Novo hotel
     room_new: Novo quarto
+    bed_new: Nova cama
     promotion_section_new: Nova seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar
