@@ -719,7 +719,10 @@ class HotelController extends Controller
                     );
                 }else{
                     $session->remove('hotel_entrance_code');
-                    $pnr = isset($booking['booking']['pnr'])?$booking['booking']['pnr']:0;
+                    $pnr = 0;
+                    if(isset($booking['booking']['pnr'])) {
+                        $pnr = $booking['booking']['pnr'];
+                    }
                     $session->set('hotel_entrance_code', $pnr);
 
                     $hotelDetails = $this->container->get('despegar')->getHotelsDetails(array(
