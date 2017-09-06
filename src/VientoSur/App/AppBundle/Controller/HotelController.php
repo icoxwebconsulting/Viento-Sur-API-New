@@ -720,7 +720,7 @@ class HotelController extends Controller
                 }else{
                     $session->remove('hotel_entrance_code');
                     $pnr = isset($booking['booking']['pnr'])?$booking['booking']['pnr']:0;
-                    $session->set('hotel_entrance_code', $booking['booking']['pnr']);
+                    $session->set('hotel_entrance_code', $pnr);
 
                     $hotelDetails = $this->container->get('despegar')->getHotelsDetails(array(
                         'ids' =>  $hotelAvailabilities->hotel->id,
