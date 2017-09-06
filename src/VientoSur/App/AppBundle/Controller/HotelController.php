@@ -485,7 +485,7 @@ class HotelController extends Controller
 
         $params = $request->query->all();
 
-        $price_detail = \GuzzleHttp\json_decode($request->get('price_detail'));
+        $price_detail = json_decode($request->get('price_detail'));
         $room_cancellation = $request->get('room_cancellation');
 
         $session->remove('price_detail');
@@ -707,7 +707,11 @@ class HotelController extends Controller
                     );
                 }else{
                     $session->remove('hotel_entrance_code');
-                    $session->set('hotel_entrance_code', $booking['booking']['pnr']);
+                    $pnr = NULL;
+                    if(isset($booking['booking']['pnr'])) {
+                        $pnr = $booking['booking']['pnr'];
+                    }
+                    $session->set('hotel_entrance_code', $pnr);
 
                     $hotelDetails = $this->container->get('despegar')->getHotelsDetails(array(
                         'ids' =>  $hotelAvailabilities->hotel->id,

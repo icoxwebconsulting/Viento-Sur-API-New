@@ -49,11 +49,13 @@
               <p style="color:#000; text-align: right; padding-top:15px;">{{ 'hotels.reservation_number' | trans }}:
                   <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservationDetails.id }}</span>
               </p>
-              <p>&nbsp;</p>      
+              <p>&nbsp;</p>
+              {% if app.session.get('hotel_entrance_code') is not null %}
               <p style="color:#000; text-align: right;">
                   {{ 'hotels.code_hotel_entrance' | trans }}:
                   <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ app.session.get('hotel_entrance_code') }}</span>
               </p>
+              {% endif %}
             </div>
         </div>
     </div>
