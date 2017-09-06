@@ -719,7 +719,7 @@ class HotelController extends Controller
                     );
                 }else{
                     $session->remove('hotel_entrance_code');
-                    $pnr = 0;
+                    $pnr = NULL;
                     if(isset($booking['booking']['pnr'])) {
                         $pnr = $booking['booking']['pnr'];
                     }
