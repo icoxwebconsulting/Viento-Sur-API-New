@@ -90,15 +90,6 @@ class Hotel
     private $percentageGain;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Amenity")
-     * @ORM\JoinTable(name="amenity_hotels",
-     *     joinColumns={@ORM\JoinColumn(name="hotel_id", referencedColumnName="id", onDelete="CASCADE")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="amenity_id", referencedColumnName="id")}
-     * )
-     */
-    protected $amenityHotels;
-
-    /**
      * @ORM\ManyToOne(targetEntity="HotelType", inversedBy="hotels")
      * @ORM\JoinColumn(name="hotel_types", referencedColumnName="id")
      */
@@ -269,40 +260,6 @@ class Hotel
      */
     public function __construct()
     {
-        $this->amenityHotels = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add amenityHotels
-     *
-     * @param \VientoSur\App\AppBundle\Entity\Amenity $amenityHotels
-     * @return Hotel
-     */
-    public function addAmenityHotel(\VientoSur\App\AppBundle\Entity\Amenity $amenityHotels)
-    {
-        $this->amenityHotels[] = $amenityHotels;
-
-        return $this;
-    }
-
-    /**
-     * Remove amenityHotels
-     *
-     * @param \VientoSur\App\AppBundle\Entity\Amenity $amenityHotels
-     */
-    public function removeAmenityHotel(\VientoSur\App\AppBundle\Entity\Amenity $amenityHotels)
-    {
-        $this->amenityHotels->removeElement($amenityHotels);
-    }
-
-    /**
-     * Get amenityHotels
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAmenityHotels()
-    {
-        return $this->amenityHotels;
     }
 
     /**

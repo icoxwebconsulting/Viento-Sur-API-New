@@ -42,12 +42,12 @@
 						</div>
 						<div class="socialMedia">
 							<ul>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+								<li><a class="bgFacebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a class="bgTwitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								<li><a class="bgGooglePlus" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a class="bgLinkedin" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+								<li><a class="bgInstagram" href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a class="bgWeibo" href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -59,21 +59,6 @@
 		<!-- GO BANNER -->
 		<div id="banner"></div>
 		<!-- END BANNER -->
-
-		<!-- GO NAV -->
-		<nav id="navBar">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12">
-						<ul>
-							<li class="active"><a href="#"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
-							<li><a href="#"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
-		<!-- END NAV -->
 
 		<!-- GO BREADCRUMB -->
 		<div id="breadcrumb">
@@ -95,10 +80,10 @@
 		<div class="wrapperReservation">
 			<div class="container">
 				<div class="row">
-					<!-- GO SIDE BAR -->
-					<div class="col-sm-4 col-xs-12">
+					<!-- GO SIDE BAR MOBILE-->
+					<div class="col-xs-12">
 						<div id="sidebar">
-							<div id="infoReserva">
+							<div id="infoReserva" class="hidden-sm hidden-md hidden-lg">
 								<h5 class="titleReserva">Su Alojamiento:</h5>
 								<img src="images/thumb-hotel-demo.jpg" alt="">
 								<ul>
@@ -125,87 +110,11 @@
 									<aside>El importe en AR$ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</aside>
 								</div>
 							</div>
-							<div id="formSearch">
-								<form action="">
-									<div class="row">
-										<div class="form-group col-xs-12">
-											<label>Destino/Nombre del hotel</label>
-											<i class="fa fa-map-marker input-icon"></i>
-											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
-										</div>
-									</div>
-									<div class="row">
-										<div class='form-group date col-xs-12' id='datetimepicker5'>
-											<label>Fecha de entrada</label>
-											<i class="fa fa-calendar" aria-hidden="true"></i>
-											<input type="text" class="form-control" value="" id="dpd5">
-										</div>
-									</div>
-									<div class="row">
-										<div class='form-group date col-xs-12' id='datetimepicker6'>
-											<label>Fecha de salida</label>
-											<<i class="fa fa-calendar" aria-hidden="true"></i>
-											<input type="text" class="form-control" value="" id="dpd6">
-										</div>
-									</div>
-									<div class="row">
-										<div class="form-group col-xs-12">
-											<label>N° de habitaciones</label>
-											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
-										</div>
-									</div>
-									<div class="row">
-										<div class="form-group col-xs-6">
-											<label>Adultos</label>
-											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
-										</div>
-										<div class="form-group col-xs-6">
-											<label>Niños</label>
-											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
-										</div>
-									</div>
-									<div class="row">
-										<div class="form-group col-xs-6">
-											<label>Edad de los niños</label>
-											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
-										</div>
-									</div>
-									<div class="row">
-										<div class="bottonSearch col-xs-12">
-											<button>buscar</button>
-										</div>
-									</div>
-								</form>
-							</div>
 						</div>
 					</div>
-					<!-- END SIDE BAR -->
+					<!-- END SIDE BAR MOBILE-->
 					<!-- GO RESERVATION HOTEL -->
-					<div class="col-sm-8 col-xs-12">
+					<div class="col-xs-12 col-sm-8 col-sm-push-4">
 						<div id="processPayment">
 							<form action="">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -277,17 +186,17 @@
 																<div class="row">
 																	<div class="col-xs-6">
 																		<select class="form-control">
-																				<option>Enero</option>
-																				<option>Febrero</option>
-																				<option>Marzo</option>
-																				<option>Abril</option>
-																				<option>Mayo</option>
-																				<option>Julio</option>
-																				<option>Agosto</option>
-																				<option>Septiembre</option>
-																				<option>Octubre</option>
-																				<option>Noviembre</option>
-																				<option>Diciembre</option>
+																			<option>Enero</option>
+																			<option>Febrero</option>
+																			<option>Marzo</option>
+																			<option>Abril</option>
+																			<option>Mayo</option>
+																			<option>Julio</option>
+																			<option>Agosto</option>
+																			<option>Septiembre</option>
+																			<option>Octubre</option>
+																			<option>Noviembre</option>
+																			<option>Diciembre</option>
 																		</select>
 																	</div>
 																	<div class="col-xs-6">
@@ -487,7 +396,7 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="">Email:</label>
-															<input type="email" class="form-control" id="">
+															<input type="email" class="form-control inputError" id="">
 														</div>
 													</div>
 													<div class="col-sm-6">
@@ -552,6 +461,116 @@
 						</div>
 					</div>
 					<!-- END RESERVATION HOTEL -->
+					<!-- GO SIDE BAR DESKTOP-->
+					<div class="col-xs-12 col-sm-4 col-sm-pull-8">
+						<div id="sidebar">
+							<div id="infoReserva" class="hidden-xs">
+								<h5 class="titleReserva">Su Alojamiento:</h5>
+								<img src="images/thumb-hotel-demo.jpg" alt="">
+								<ul>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+									<li><i class="fa fa-star" aria-hidden="true"></i></li>
+								</ul>
+								<p><span>Panamericano Buenos Aires</span></p>
+								<p>Carlos Pellegrini 551</p>
+								<p><span>Fecha de entrada:</span> 08 Jul</p>
+								<p><span>Fecha de salida:</span> 15 Jul</p>
+								<p><span>1 Adulto(s)</span></p>
+								<p><span>Menor(es)</span> </p>
+								<div class="datesPayment">
+									<h5>Usted está pagando:</h5>
+									<p>7 Noches - 1 Habitación</p>
+									<p><span>* Habitación Doble Estándar con Vista</span></p>
+									<h3>No permite cambios o cancelaciones</h3>
+									<p>Habitación por noche: AR$ 2.091</p>
+									<p>Impuestos y tasas: AR$ 2.459</p>
+									<p><span>Precio total: AR$ 18.772</span></p>
+									<aside>El importe en AR$ es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda.</aside>
+								</div>
+							</div>
+							<div id="formSearch">
+								<form action="">
+									<div class="row">
+										<div class="form-group col-xs-12">
+											<label>Destino/Nombre del hotel</label>
+											<i class="fa fa-map-marker input-icon"></i>
+											<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" autocomplete="on">
+										</div>
+									</div>
+									<div class="row">
+										<div class='form-group date col-xs-7' id='datetimepicker5'>
+											<label>Fecha de entrada</label>
+											<i class="fa fa-calendar" aria-hidden="true"></i>
+											<input type="text" class="form-control" value="" id="dpd5">
+										</div>
+									</div>
+									<div class="row">
+										<div class='form-group date col-xs-7' id='datetimepicker6'>
+											<label>Fecha de salida</label>
+											<<i class="fa fa-calendar" aria-hidden="true"></i>
+											<input type="text" class="form-control" value="" id="dpd6">
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-7">
+											<label>N° de habitaciones</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-4">
+											<label>Adultos</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+										<div class="form-group col-xs-4">
+											<label>Niños</label>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-xs-10">
+											<label>Edad de los niños</label>
+											<select class="form-control" style="width: 31%;">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="bottonSearch col-xs-12">
+											<button>buscar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- END SIDE BAR DESKTOP-->
+
 				</div>
 			</div>
 		</div>
@@ -571,12 +590,12 @@
 							<p>Reserva tu viaje a cualquier parte del mundo, encontrando todas las ofertas en un solo lugar</p>
 							<div class="socialMediaFooter">
 								<ul>
-									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+									<li><a class="bgFacebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li><a class="bgTwitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li><a class="bgGooglePlus" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+									<li><a class="bgLinkedin" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+									<li><a class="bgInstagram" href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+									<li><a class="bgWeibo" href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
 								</ul>
 							</div>
 						</div>

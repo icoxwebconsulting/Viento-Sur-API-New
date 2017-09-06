@@ -1,6 +1,12 @@
 index:
     room_code: Room code
     meal_plan: Meal plan
+    hotel_footer: Please note that your reservation is already active, but your personal data will arrive at the hotel 24 hours before the arrival date
+    hotel_footer2: For inconveniences at destination, contact us on +54 351 4877555/444
+    error_message: A problem has occurred
+    error_message_description: Please try again later.
+    fee: Fee
+    discounts: Discounts
     error: Error
     class: Class
     flight_remember: Remember to show up at the airport 1 1/2 hours before your departure time.
@@ -100,6 +106,7 @@ hotels:
     bed_type: Bed type
     size:  Size
     quantity: Quantity
+    code_hotel_entrance: Hotel entrance code
     not_found: No available hotels
     last_room: Last room available
     lasts: Lasts
@@ -199,6 +206,7 @@ hotels:
     room_number: Room number
     reservation_by: Reservation made by
     can_cancel_to: You can cancel up to
+    not_cancelation: No changes or cancellations allowed
     hours_before: hours before checkin
     cancellation_amount: The amount for canceling is
     whitout_charges: Without cancellation charges
@@ -207,6 +215,8 @@ hotels:
     edit_reservation: Edit reservation
     room_holder: Room holder
     payment_methods: Payment methods
+    payment_method_chosen: Payment method chosen
+    payment_last_digits: Your reservation was charged with the card ending in %digits%
     interest: interest
     whitout_interest: Whitout interest
     pay: Pay
@@ -318,18 +328,100 @@ flights:
     reservation_data: Reservation data
     first_pay: 1st payment of %first% + %quota% dues of %last%
 amenities:
-    INGRAH: FREE WI-FI
+    label: Amenities
+    ACOM: Accommodations adapted for people with disabilities
     AIR: Air Conditioning
+    ADUON: Only for adults
+    AIRTRAN: Airport Transfer with Additional Cost
+    ASAD: Spit
+    BABYSIT: Day care center
     BAG: Bellhop Service
+    BAR: Bar
+    BEASAL: Beauty salon
+    BREAKFST: Breakfast
+    BREEXCH: Breakfast with additional cost
     BSNSC: Business Center
+    CAMA: ATM On The Property
+    CAR: Car rental
+    CAS: Casino
+    CEM: Entertainment / Monitors for Kids
+    CFGU: Computer for Guests / Internet Cafe
+    DISC: Discotheque
+    DRCLSE: Dry Cleaning Service with Extra Cost
+    ETES: Entertainment / Theme Parties / Shows
     ELEV: Elevator
+    GAMES: Playroom
+    GARD: Garden
     GIM: Gym / Fitness Center
+    GOLF: Golf course
+    HAIRROOM: Hairdressing
     HOT: Heating
+    INTCA: Internet with additional cost
+    INTGR: Free Internet
+    INGRAH: FREE WI-FI
+    INTPUAREXCH: WIFI with additional cost
+    INV: Accessible for people with reduced mobility
+    ISV: Ironing service
+    JCZHTL: Hydromassage bathtub
     LASESU: Laundry Service with Additional Cost
     LIPA: Limited Parking
+    LOCKS: Armarios / Lockers
+    LUGADCO: Luggage with Extra Cost
+    LUGFR: Free Luggage Storage
+    MAPCEL: Menu Suitable for Celiacs
+    MASSAGE: Massage
     MEETROOM: Meeting Room(s)
+    MNA: Pets: Pets not allowed
+    NPA: Parking not available
     OUSWPOSE: Outdoor Pool (seasonal)
+    PAREEXCH: Reception of Packages with Additional Cost
+    PAREFR: Free Packet Reception
+    PARKADCO: Parking with additional cost
+    PARKING: Free Parking
+    PEALAC: Pet Friendly with Extra Cost
+    PET: Pets are admitted free of charge
+    PISC: Indoor Swimming Pool (All Year)
+    PISCCLI: Climatized pool
+    PISCINF: Children's Pool
+    PISCN: Pool
+    PISDESC: Outdoor Swimming Pool (All Year)
+    PISTPO: Sports Court
+    PISTSC: Squash court
+    PRIBEAR: Private Beach Area
+    R24: 24hs Reception
+    RECEP: Reception limited hours
+    RESTO: Restaurant
+    ROOMSVC: Room service
+    SALJUE: Playroom for children
+    SAUN: Sauna
+    SEC24: Security 24h
+    SECTNI: Playground for children
+    SERCAM: Currency Exchange Service
+    SERCON: Concierge Service
+    SERGUAR: Babysitting service
+    SERNIN: Baby changer
+    SHKI: Shared Kitchen
+    SMPEALAC: Small Pets with Extra Cost
+    SMPEALFR: Free Small Pets Allowed
+    SOL: Solarium
+    SOMBR: Parasol
+    SPA: SPA
+    STORE: Shops on Property
+    TEM: Entertainment / Monitors for Teens
+    TENNIS: Tennis Court
+    TLS: Towels / Linens with Extra Cost
+    TOALPL: Towels for the Beach
+    TOASAB: Towels / sheets
+    TRANSAIR: Free Airport Transfer
+    TRANSER: Transfer Service with Additional Cost
+    TRANSFREE: Free Shuttle Service
+    TVROOM: TV room
+    VALETPRK: Valet Parking
+    WAKEUP: Wake Up Service
 admin:
+    create_account: Create account
+    confirm_account: Please check your email. It contains an activation link that you must click to activate your account.
+    register: Register
     sign_in_account: Sign In to your account
     sign_in: Sign In
     username: Username
@@ -368,6 +460,7 @@ admin:
     promotion_new: New promotion
     hotel_new: New hotel
     room_new: New room
+    bed_new: New bed
     promotion_section_new: New promotion section
     promotion_add: Add promotion
     add: Add

@@ -1,6 +1,12 @@
 index:
     room_code: Código do quarto
     meal_plan: Plano de refeição
+    hotel_footer: Por favor, note que sua reserva já está ativa, mas seus dados pessoais chegarão ao hotel 24 horas antes da data de chegada
+    hotel_footer2: Para inconvenientes no destino, contate-nos no +54 351 4877555/444
+    error_message: Ocorreu um problema
+    error_message_description: Tente novamente mais tarde
+    fee: Feudo
+    discounts: Descontos
     error: Erro
     class: Classe
     flight_remember: Lembre-se no aeroporto 1 1/2 horas antes da hora de partida do seu voo.
@@ -97,6 +103,7 @@ hotels:
     bed_type: Tipo de cama
     size: Tamanho
     quantity: Quantidade
+    code_hotel_entrance: Código de entrada do hotel
     not_found: Não foram encontrados hotéis
     last_room: Última Disponibilidade quarto
     lasts: Últimas
@@ -196,6 +203,7 @@ hotels:
     room_number: Número da quarto
     reservation_by: Agendados por
     can_cancel_to: Você pode cancelar até
+    not_cancelation: Nenhuma alteração ou cancelamento permitido
     hours_before: Horas antes do check-in
     cancellation_amount: A carga é cancelada
     whitout_charges: Nenhuma taxa de cancelamento
@@ -204,6 +212,8 @@ hotels:
     edit_reservation: Editar reserva
     room_holder: Titular do Quarto
     payment_methods: Formas de pagamento
+    payment_method_chosen: Método de pagamento escolhido
+    payment_last_digits: Sua reserva foi cobrada com o cartão que termina em %digits%
     interest: interesse
     whitout_interest: Sem interesse
     pay: Pagamento
@@ -316,18 +326,100 @@ flights:
     first_pay: 1º pagamento de %first% + %quota% quotas de %last%
     invalid_cc: Cartão inválido
 amenities:
-    INGRAH: WI-FI GRÁTIS
+    label: Serviços
+    ACOM: Accommodations adapted for people with disabilities
     AIR: Ar-condicionado
-    BAG: Mensageiro
+    ADUON: Somente para adultos
+    AIRTRAN: Transferência do aeroporto com custo adicional
+    ASAD: Spit
+    BABYSIT: Creche
+    BAG: Bellhop Service
+    BAR: Bar
+    BEASAL: Salão de beleza
+    BREAKFST: Café da manhã
+    BREEXCH: Café da manhã com custo adicional
     BSNSC: Business Center
-    ELEV: Elevator
-    GIM: Academia
+    CAMA: Caixa eletrônico na propriedade
+    CAR: Aluguer de automóveis
+    CAS: Casino
+    CEM: Entretenimento / Monitores para crianças
+    CFGU: Computador para convidados / Internet Cafe
+    DISC: Discoteca
+    DRCLSE: Serviço de limpeza a seco com custo extra
+    ETES: Entretenimento / Festas Temáticas / Shows
+    ELEV: Elevador
+    GAMES: Sala de jogos
+    GARD: Jardim
+    GIM: Ginásio / Centro de Fitness
+    GOLF: Campo de golfe
+    HAIRROOM: Cabeleireiro
     HOT: Aquecimento
-    LASESU: Lavanderia com Custo Adicional
+    INTCA: Internet com custo adicional
+    INTGR: Internet grátis
+    INGRAH: WI-FI GRÁTIS
+    INTPUAREXCH: WIFI com custo adicional
+    INV: Acessível para pessoas com mobilidade reduzida
+    ISV: Serviço de engomadoria
+    JCZHTL: Banheira de hidromassagem
+    LASESU: Serviço de lavanderia com custo adicional
     LIPA: Estacionamento Rotativo
+    LOCKS: Armários
+    LUGADCO: Bagagem com custo extra
+    LUGFR: Armazenamento de bagagem gratuito
+    MAPCEL: Menu adequado para celíacos
+    MASSAGE: Massagem
     MEETROOM: Sala de Reuniões
+    MNA: Animais de estimação: Animais de estimação não permitidos
+    NPA: Estacionamento não disponível
     OUSWPOSE: Piscina ao Ar Livre (sazonal)
+    PAREEXCH: Recepção de pacotes com custo adicional
+    PAREFR: Recepção Gratuita de Pacotes
+    PARKADCO: Estacionamento com custo adicional
+    PARKING: Estacionamento gratuito
+    PEALAC: Amigo dos Animais com Custo Extra
+    PET: Animais de estimação são admitidos gratuitamente
+    PISC: Piscina coberta (todo o ano)
+    PISCCLI:  Piscina climatizada
+    PISCINF: Piscina infantil
+    PISCN: Piscina
+    PISDESC: Piscina exterior (todo o ano)
+    PISTPO: Tribunal esportivo
+    PISTSC: Corte de squash
+    PRIBEAR: Área de Praia Privada
+    R24: Recepção 24hs
+    RECEP: Horas limitadas de recepção
+    RESTO: Restaurante
+    ROOMSVC: Serviço de quarto
+    SALJUE: Sala de jogos para crianças
+    SAUN: Sauna
+    SEC24: Segurança 24h
+    SECTNI: Playground para crianças
+    SERCAM: Serviço de câmbio
+    SERCON: Serviço de concierge
+    SERGUAR: Serviço de babá
+    SERNIN: Trocador de baleias
+    SHKI: Cozinha compartilhada
+    SMPEALAC: Animais de estimação com custo extra
+    SMPEALFR: Pequenos Animais Permitidos Grátis
+    SOL: Solário
+    SOMBR: Parasol
+    SPA: SPA
+    STORE: Lojas na propriedade
+    TEM: Entretenimento / Monitores para Adolescentes
+    TENNIS: Campo de ténis
+    TLS: Toalhas / roupa de cama com custo adicional
+    TOALPL: Toalhas para a praia
+    TOASAB: Toalhas / lençóis
+    TRANSAIR: Transporte gratuito para o aeroporto
+    TRANSER: Serviço de Transferência com Custo Adicional
+    TRANSFREE: Serviço de transporte gratuito
+    TVROOM: Sala de TV
+    VALETPRK: Estacionamento com manobrista
+    WAKEUP: Serviço de despertador
 admin:
+    create_account: Criar Conta
+    confirm_account: Verifique seu e-mail. Ele contém um link de ativação que você deve clicar para ativar sua conta.
+    register: Registo
     sign_in_account: Faça login em sua conta
     sign_in: Assinar em
     username: Nome de usuário
@@ -366,6 +458,7 @@ admin:
     promotion_new: Nova promoção
     hotel_new: Novo hotel
     room_new: Novo quarto
+    bed_new: Nova cama
     promotion_section_new: Nova seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar

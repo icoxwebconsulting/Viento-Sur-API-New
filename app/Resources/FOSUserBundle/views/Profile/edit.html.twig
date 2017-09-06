@@ -31,6 +31,13 @@
                     {{ form_errors(form.last_name) }}
                 </div>
                 <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="email">{{ 'admin.username' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.username, { 'attr': { 'class': 'form-control', 'placeholder': 'smithjohn'}}) }}
+                    </div>
+                    {{ form_errors(form.username) }}
+                </div>
+                <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="email">{{ 'admin.email' | trans }}</label>
                     <div class="col-md-9">
                         {{ form_widget(form.email, { 'attr': { 'class': 'form-control', 'placeholder': 'smith@mail.com'}}) }}

@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'index.hotels' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/ionRangeSlider.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <section class="login" style="margin:5em 15em;">
+        <article>
+            <h1>{{ 'index.error_message' | trans }}!</h1>
+
+            <div>{{ 'index.error_message_description' | trans }}...</div>
+        </article>
+    </section>
+
+{% endblock %}
+

@@ -9,12 +9,15 @@
     {% endif %}
     {% set decimal =false %}
 {% set price_detail = app.session.get('price_detail') %}
+{% set booking_all_data = app.session.get('booking_all_data') %}
+{% set destination = app.session.get('destination') %}
+
 <div class="container bs-docs-container">
     <table class="table">
         <tr>
             <th colspan="2">
                 <b>
-                    <h3>{{ 'hotels.thanks_booking' | trans({'%name%': internal.holderName}) }}</h3>
+                    <h3>{{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}</h3>
                 </b>
             </th>
         </tr>
@@ -27,9 +30,10 @@
                                 <img style="width: 493px; height: 328px;" src="{{ hotelDetails.main_picture.url }}/" class="origin" />
                             </div>
                         </td>
-                        <td>
-
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                        <td style="width: 493px; height: 328px; display: block;">
+                            <div id="main_picture" style="width: 493px; height: 328px;">
+                                <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                            </div>
                             {#<div id="map"></div>#}
                         </td>
                     </tr>
@@ -37,7 +41,7 @@
             </th>
         </tr>
         <tr>
-            <th>
+            <th colspan="2">
                 <h3>{{ hotelDetails.name }}</h3>
                 {% for i in 1..hotelDetails.stars %}
                     <i class="fa fa-star fa-2x" style="color: #008cd1;" aria-hidden="true"></i>
@@ -65,7 +69,15 @@
                 {{ 'hotels.address' | trans }}:
             </th>
             <td>
-                {{ hotelDetails.location.address }}.
+                {{ hotelDetails.location.address }}. {{ destination.text }}
+            </td>
+        </tr>
+        <tr>
+            <th width="15%">
+                CP:
+            </th>
+            <td>
+                {{ hotelDetails.location.zipcode }}.
             </td>
         </tr>
         <tr>
@@ -76,32 +88,40 @@
                 {% if reservationDetails.rooms is defined %}
                     <ul>
                         {% for room in reservationDetails.rooms %}
-                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} {% endif %}</li>
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %} {{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
             </td>
         </tr>
-        {#<tr>#}
-            {#<th width="15%">{{ 'hotels.description' | trans }}</th>#}
-            {#<td class="text-justify">#}
-                {#{{ hotelDetails.information.es }}#}
-            {#</td>#}
-        {#</tr>#}
+        <tr>
+            <th width="15%">{{ 'hotels.room_holder' | trans }}</th>
+            <td class="text-justify">
+                <ul>
+                {% for holder in booking_all_data.travelers %}
+                    <ul>
+                        <li>{{ 'hotels.labels.name' | trans }} {{ holder.first_name }}</li>
+                        <li>{{ 'hotels.labels.lastname' | trans }} {{ holder.last_name }}</li>
+                        <li>{{ 'hotels.labels.document' | trans }} {{ holder.document_number }}</li>
+                    </ul>
+                {% endfor %}
+                </ul>
+            </td>
+        </tr>
     </table>
     <table class="table table-bordered">
         <tr style="text-align: center;">
-            <td width="20%">
+            <td width="{% if app.session.get('pdf') == true %}30%{% else %}20%{% endif %}">
                 {{ 'index.search.hotel.checkin_date' | trans }}:<br>
                 <h2>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h2>
-                {#<h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkin_date|localizeddate('none', 'short', app.request.locale) }}</h4>#}
+                <h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkin_date|localizeddate('none', 'short', app.request.locale) }}</h4>
             </td>
-            <td width="20%">
+            <td width="{% if app.session.get('pdf') == true %}30%{% else %}20%{% endif %}">
                 {{ 'index.search.hotel.checkout_date' | trans }}: <br>
                 <h2>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h2>
-                {#<h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkout_date|localizeddate('none', 'short', app.request.locale) }}</h4>#}
+                <h4 style="margin: 0; padding: 0;">{{ reservationDetails.checkout_date|localizeddate('none', 'short', app.request.locale) }}</h4>
             </td>
-            <td width="30%">
+            <td width="{% if app.session.get('pdf') == true %}40%{% else %}30%{% endif %}">
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <h7 style="margin: 0; padding: 0;">{{ 'index.search.hotel.room' | trans }}(s) </h7>
@@ -129,14 +149,44 @@
                     </div>
                 </div>
             </td>
+            {% if not app.session.get('pdf')  %}
             <td width="30%">
+                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
+                {% set total_price_per_night = room_per_night * reservationDetails.night_count %}
+                {% set taxes = price_detail.taxes|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
+                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+
                 {{ 'hotels.room_per_night' | trans }}:<br>
                 <h5>{{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
                 {{ 'hotels.taxes_and_rates' | trans }}:<br>
-                <h5>{{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
+                <h5>{{ symbol }} {{ taxes + fee }}</h5>
+                {% if price_detail.discounts > 0 %}
+                    {{ 'index.discounts' | trans }}:<br>
+                    <h5>{{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</h5>
+                {% endif %}
                 {{ 'hotels.total_price' | trans }}:<br>
-                <h2>{{ symbol }} {{ internal.totalPrice | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')}}</h2>
+                <h2>{{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</h2>
 
+            </td>
+            {% endif %}
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr style="text-align: center;">
+            <td width="50%">
+                <h2 style="margin-top: -10px;font-size: 12px">{{ 'hotels.reservation_by' | trans }}:</h2>
+                <h4 style="font-size: 12px">{{ internal.holderName }}</h4>
+                <h4 style="font-size: 12px">Email: {{ internal.email }}</h4>
+                <h4 style="font-size: 12px">{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h4>
+            </td>
+            <td width="50%">
+                <h2 style="margin-top: -10px;font-size: 12px">{{ 'hotels.pay' | trans }}</h2>
+                <h5 style="font-size: 12px">
+                    {{ 'hotels.payment_method_chosen' | trans }}:
+                    {{ booking_all_data.payment.selected }}
+                </h5>
+                <h5 style="font-size: 12px">{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h5>
             </td>
         </tr>
     </table>
@@ -144,16 +194,28 @@
         <tr width="70%">
             <th width="10%">{{ 'hotels.description' | trans }}:</th>
             <td class="text-justify" style="width: 60%">
-                <p style="font-size: 11px">{{ hotelDetails.information.es }}</p>
+                {% set info = hotelDetails.information.es %}
+                <p id="info" style="font-size: 11px">{{ info }}</p>
             </td>
             <td style="text-align: center;">
-                <h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>
-                <p>{{ internal.email }}, {{ internal.holderName }}</p>
-                <br>
+                {#<h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>#}
+                {#<p>{{ internal.email }}, {{ internal.holderName }}</p>#}
+                {#<br>#}
                 <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
                 <ul style="width: 70%; margin: auto;">
-                    {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.{% endif %}
-                    <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} {{ 'hotels.whitout_charges' | trans }}.{% endif %}</li>
+                    {#{% if reservationDetails.hours_before_checkin_penalty is defined and reservationDetails.hours_before_checkin_penalty > 0 %}#}
+                    {#<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.#}
+                    {#{% endif %}#}
+                    {#<li>#}
+                    {#{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}#}
+                        {#{{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}#}
+                    {#{% elseif reservationDetails.penalty.status == "NOT_ALLOW_BY_NOT_REFUNDABLE" %}#}
+                        {#{{ 'hotels.not_cancelation' | trans }}.#}
+                    {#{% else %}#}
+                        {#{{ 'hotels.whitout_charges' | trans }}.#}
+                    {#{% endif %}#}
+                    {#</li>#}
+                    {{ app.session.get('room_cancellation') }}
                 </ul>
             </td>
         </tr>
@@ -181,6 +243,14 @@
         </div>
         <br><br><br>
     {% endif %}
+    <div>
+        <p>{{ 'index.hotel_footer' | trans }}</p>
+        <p>{{ 'index.hotel_footer2' | trans }}</p>
+    </div>
+    <div>
+        {{ 'index.footer_copy' | trans }}
+    </div>
+    <br><br>
 </div>
 <script>
     function initMap() {
@@ -194,6 +264,10 @@
             map: map
         });
     }
+    $(document).ready(function(){
+        var str = $('#info').text();
+        $("#info").html( str.replace(/\n/g, "<br />"));
+    })
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&callback=initMap">

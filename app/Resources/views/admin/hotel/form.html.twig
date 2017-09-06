@@ -30,15 +30,6 @@
                     </div>
                     {{ form_errors(form.description) }}
                 </div>
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="stars">{{ 'admin.percentage_gain' | trans }}</label>
-                    <div class="col-md-9">
-                        {{ form_widget(form.percentageGain, { 'attr': { 'class': 'form-control'}}) }}
-                    </div>
-                    {{ form_errors(form.percentageGain) }}
-                </div>
-                {% endif %}
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="stars">{{ 'hotels.stars' | trans }}</label>
                     <div class="col-md-9">
@@ -46,19 +37,12 @@
                     </div>
                     {{ form_errors(form.stars) }}
                 </div>
-                {#<div class="form-group row">#}
-                    {#<label class="col-md-3 form-control-label" for="last-name">{{ 'image' | trans }}</label>#}
-                    {#<div class="col-md-9">#}
-                        {#{{ form_widget(form.image, { 'attr': { 'class': 'form-control', 'required': 'false'}}) }}#}
-                    {#</div>#}
-                    {#{{ form_errors(form.image) }}#}
-                {#</div>#}
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="email">{{ 'hotels.search_menu.type' | trans }}</label>
                     <div class="col-md-9">
                         {{ form_widget(form.hotelTypes, { 'attr': { 'class': 'form-control'}}) }}
-                    {#</div>#}
-                    {#{{ form_errors(form.hotelTypes) }}#}
+                    </div>
+                    {{ form_errors(form.hotelTypes) }}
                 </div>
                    {#<div class="form-group row">#}
                     {#<div class="col-md-9">#}
@@ -96,6 +80,23 @@
                         <div id="map-canvas"></div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-md-12 form-control-label" for="first-name">{{ 'amenities.label' | trans }}</label>
+                    <div class="col-md-12">
+                        {% for amenity in amenities %}
+                        <div class="col-md-3 checkbox {% if loop.index > 12 %}amenities-hidden{% endif %}" {% if loop.index > 12 %}style="display: none; height: 50px;"{% endif %}>
+                            <input id="amenity" type="checkbox" name="amenity[{{ loop.index }}]" value="{{ amenity.id }}">
+                            {% set label = 'amenities.'~amenity.name %}
+                            <span>{{ label | trans }}</span>
+                        </div>
+                        {% endfor %}
+                         <div class="col-md-12 checkbox">
+                                <label style="color:#008CD1" class="amenities-view-toggle" data-type="amenities">{{ 'hotels.search_menu.view_more' | trans }} <i class="glyphicon glyphicon-chevron-down"></i></label>
+                                <label style="color:#008CD1" class="amenities-view-toggle hide" data-type="amenities">{{ 'hotels.search_menu.view_less' | trans }} <i class="glyphicon glyphicon-chevron-up"></i></label>
+                        </div>
+                    </div>
+                </div>
+
                 {{ form_rest(form) }}
             </div>
             <div class="card-footer">
@@ -105,11 +106,15 @@
             {{ form_end(form)}}
         </div>
     </div>
+
 {% endblock %}
 
 {% block extra_css %}
     {{ parent() }}
     <style>
+        .hide {
+            display: none !important;
+        }
         #map-canvas {
             height: 400px;
             width: 100%;
@@ -235,6 +240,16 @@
             });
             // [END region_getplaces]
         }
+
+        $(document).ready(function(){
+             $('.amenities-view-toggle').on('click', function () {
+                var type = $(this).data('type');
+                var selector = '.' + type + '-hidden';
+
+                $(selector).slideToggle();
+                $('.' + type + '-view-toggle').toggleClass('hide')
+            });
+        })
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>
 {% endblock %}

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
+use VientoSur\App\AppBundle\Entity\AmenityHotel;
 use VientoSur\App\AppBundle\Entity\Hotel;
 use VientoSur\App\AppBundle\Entity\Picture;
 use VientoSur\App\AppBundle\Form\HotelFormType;
@@ -43,25 +44,35 @@ class HotelController extends Controller
      */
     public function newAcion(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $entity = new Hotel();
         $picture = new Picture();
+        $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();
+
         $form = $this->createForm(new HotelFormType(), $entity);
 
         if($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
-
 //            $image = $form->get('image')->getData();
 //
 //            if($image != NULL)
 //            {
 //                $entity->setImageName($image);
 //            }
-//            echo"<pre>".print_r($form->get('image')->getData(),true)."</pre>";die();
             $entity->setOrigen('VS');
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
+
+            foreach($_POST['amenity'] as $data){
+                $amenity_hotel = new AmenityHotel();
+                $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($data);
+                $amenity_hotel->setAmenity($amenity);
+                $amenity_hotel->setHotel($entity);
+                $em->persist($amenity_hotel);
+            }
             $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.added')
@@ -69,7 +80,8 @@ class HotelController extends Controller
             return $this->redirectToRoute('hotel_list');
         }
         return $this->render(':admin/hotel:form.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'amenities' => $amenities
         ));
     }
 

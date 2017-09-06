@@ -46,8 +46,6 @@ class HotelFormType extends AbstractType
                 'longitude',
                 HiddenType::class
             )
-            ->add('percentageGain',
-                PercentType::class)
 //            ->add(
 //                'image',
 //                VichImageType::class,

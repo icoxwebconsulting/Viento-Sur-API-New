@@ -38,6 +38,18 @@ class UserType extends AbstractType
                 )
             )
             ->add(
+                'username',
+                TextType::class,
+                array(
+                    'label' => false,
+                    "mapped" => true,
+                    'attr' => array(
+                        "minlength" => 1, //Longitud minima
+                        "maxlength" => 32, //Longitud máxima
+                    )
+                )
+            )
+            ->add(
                 'email',
                 EmailType::class,
                 array(
