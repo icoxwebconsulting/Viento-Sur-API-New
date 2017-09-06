@@ -1,6 +1,12 @@
 index:
     room_code: Código de habitación
     meal_plan: Régimen de comida
+    hotel_footer: Tenga en cuenta que su reserva ya se encuentra activa, pero sus datos personales llegarán al hotel 24hs antes de la fecha de ingreso
+    hotel_footer2: Por inconvenientes en destino, contáctenos al +54 351 4877555/444
+    error_message: Ha ocurrido un problema
+    error_message_description: Por favor intente más tarde
+    fee: Interés financiero
+    discounts: Descuentos
     error: Error
     class: Clase
     flight_remember: Recuerda presentarse en el aeropuerto 1 1/2 horas antes del horario de salida de tu vuelo.
@@ -100,6 +106,7 @@ hotels:
     bed_type: Tipo de cama
     size:  Tamaño
     quantity: Cantidad
+    code_hotel_entrance: Código de ingreso al hotel
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible
     lasts: Últimas
@@ -199,6 +206,7 @@ hotels:
     room_number: Número de habitación
     reservation_by: Reserva realizada por
     can_cancel_to: Puede cancelar  hasta
+    not_cancelation: No permite cambios o cancelaciones
     hours_before: horas antes del checking
     cancellation_amount: El cargo por cancelar es
     whitout_charges: Sin cargos por cancelación
@@ -207,6 +215,8 @@ hotels:
     edit_reservation: Editar reservación
     room_holder: Titular de habitación
     payment_methods: Formas de pago
+    payment_method_chosen: Forma de pago elegida
+    payment_last_digits: Su reserva fue cobrada con la tarjeta terminada en %digits%
     interest: interés
     whitout_interest: Sin interés
     pay: Pago

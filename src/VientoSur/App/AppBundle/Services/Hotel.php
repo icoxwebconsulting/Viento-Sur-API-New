@@ -6,6 +6,7 @@ namespace VientoSur\App\AppBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use VientoSur\App\AppBundle\Controller\HotelController;
 use VientoSur\App\AppBundle\Entity\Passengers;
 use VientoSur\App\AppBundle\Entity\Reservation;
 use VientoSur\App\AppBundle\Entity\ResultLog;
@@ -71,7 +72,7 @@ class Hotel
             ), $this->isTest
         );
 
-        $this->sendBookingEmail($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails);
+//        $this->sendBookingEmail($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails);
 
         return [
             'reservationDetails' => $reservationDetails,
@@ -113,7 +114,7 @@ class Hotel
         $reservation = new Reservation();
         $reservation->setHotelId($hotelId);
         $reservation->setReservationId($booking['reservation_id']);
-        $reservation->setTotalPrice($priceDetail['total']);
+        $reservation->setTotalPrice($priceDetail->total);
         $reservation->setCardType($formPay['card_code']);
         $reservation->setHolderName($formPay['owner_name']);
         $reservation->setPhoneNumber($formPay['country_code0'] . '-' . $formPay['area_code0'] . '-' . $formPay['number0']);
@@ -138,17 +139,18 @@ class Hotel
         return $reservation;
     }
 
-    private function sendBookingEmail($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails)
+    public function sendBookingEmail($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails)
     {
+        $internal = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->find($reservation);
 //        try {
 //            if ($email) {
                 $this->emailService->sendBookingEmail($email, array(
                     'hotelDetails' => $hotelDetails,
                     'reservationDetails' => $reservationDetails,
-                    'reservationId' => base64_encode($reservation->getId()),
+                    'reservationId' => base64_encode($reservation),
                     'detail' => $booking,
                     'hotelId' => $hotelId,
-                    'internal' => $reservation,
+                    'internal' => $internal,
                     'pdf' => false
                 ));
 //            }

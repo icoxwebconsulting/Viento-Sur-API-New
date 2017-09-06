@@ -17,7 +17,7 @@
                 {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
 
                 <!--Pasajeros-->
-                <div class="panel panel-primary">
+                <div class="panel panel-primary passengers-panel">
                     <div class="panel-heading">{{ 'flights.passengers' | trans }}</div>
                     <div class="panel-body">
                         {% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}
@@ -211,12 +211,14 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>
                     <div class="panel-body">
-                        <div class="list-group">
+                        <div class="list-group pay-methods-panel">
                             {% for cuotas, bank in paymentMethods %}
-                            <a href="javascript:void(0)" class="list-group-item">
+                            <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
                                 <h4 class="list-group-item-heading">
                                     <input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>
-                                    <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
+                                    <span id="span-text-{{ loop.index }}">
+                                        <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
+                                    </span>
                                 </h4>
                                 <p class="list-group-item-text">
                                     <div class="radio">
@@ -510,6 +512,7 @@
                         <h5><b>{{ 'flights.buy_detail' | trans }}</b></h5>
                         <div class="row alert alert-warning">
                             <div class="col-md-offset-1 col-md-10 ">
+                                <b><span id="cuote">asdasdas</span></b>
                                 <div class="row" style="font-size: 2rem; padding-bottom: 10px">
                                     <span style="float: left;">{{ 'flights.rate_per_adult' | trans }}</span>
                                     {#<span style="float: right;">{{ itineraryDetail.price_detail.adult_base | number_format(2, ',', '.') }}</span>#}
@@ -566,112 +569,114 @@
                                 </div>#}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="header-outbound">
-                                    <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
-                                    <span> <b>{{ 'flights.going' | trans }}</b> </span>
-                                    {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
-                                        <span style="float: right">{{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
+                        <div class="flight-detail">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="header-outbound">
+                                        <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
+                                        <span> <b>{{ 'flights.going' | trans }}</b> </span>
+                                        {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
+                                            <span style="float: right">{{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
 
-                                    {% else %}
-                                        <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s</span>
+                                        {% else %}
+                                            <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s</span>
 
-                                    {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="outbound">
-                            {% if itineraryDetail.outbound_choices[0].segments | length > 0 %}
-                            {% for item in itineraryDetail.outbound_choices[0].segments %}
-                                <div class="row">
-                                    <div class="segment-header col-md-12">
-                                        <span>{{ item.cabin_type | capitalize }}</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    {# Salida #}
-                                    <div class="flight-details-container col-md-5 align-center">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-label">{{ 'flights.departure' | trans }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-city-code">{{ item.from }}</span>
-                                            </div>
-                                        </div>
-                                        {#<div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-location-code">Buenos Aires</span>
-                                            </div>
-                                        </div>#}
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
-                                            </div>
+                            <div class="outbound">
+                                {% if itineraryDetail.outbound_choices[0].segments | length > 0 %}
+                                {% for item in itineraryDetail.outbound_choices[0].segments %}
+                                    <div class="row">
+                                        <div class="segment-header col-md-12">
+                                            <span>{{ item.cabin_type | capitalize }}</span>
                                         </div>
                                     </div>
-
-                                    {# Vuelo #}
-                                    <div class="col-md-2 align-center media-middle">
-
-                                        <div class="row">
-                                            <div class="col-md-12 airline-data-col">
-                                                <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
-                                                <span class="airline-data">{{ item.flight_id }}</span>
+                                    <div class="row">
+                                        {# Salida #}
+                                        <div class="flight-details-container col-md-5 align-center">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-label">{{ 'flights.departure' | trans }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-city-code">{{ item.from }}</span>
+                                                </div>
+                                            </div>
+                                            {#<div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-location-code">Buenos Aires</span>
+                                                </div>
+                                            </div>#}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
+                                                </div>
                                             </div>
                                         </div>
 
-                                    </div>
+                                        {# Vuelo #}
+                                        <div class="col-md-2 align-center media-middle">
 
-                                    {# Llegada #}
-                                    <div class="flight-details-container col-md-5 align-center">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-label">{{ 'flights.arrival' | trans }}</span>
+                                            <div class="row">
+                                                <div class="col-md-12 airline-data-col">
+                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
+                                                    <span class="airline-data">{{ item.flight_id }}</span>
+                                                </div>
                                             </div>
+
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-city-code">{{ item.to }}</span>
+
+                                        {# Llegada #}
+                                        <div class="flight-details-container col-md-5 align-center">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-label">{{ 'flights.arrival' | trans }}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        {#<div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-location-code">Buenos Aires</span>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-city-code">{{ item.to }}</span>
+                                                </div>
                                             </div>
-                                        </div>#}
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
+                                            {#<div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-location-code">Buenos Aires</span>
+                                                </div>
+                                            </div>#}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 alert alert-warning">
-                                        <span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>
+                                    <div class="row">
+                                        <div class="col-md-12 alert alert-warning">
+                                            <span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>
+                                        </div>
                                     </div>
-                                </div>
-                            {% endfor %}
-                            {% endif %}
+                                {% endfor %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                     {% if itineraryDetail.inbound_choices is defined %}
-                    <div class="booking-item-dates-change mb5">
+                    <div class="booking-item-dates-change mb5 flight-detail">
                         <div class="row">
                             <div class="cold-md-12">
                                 <div class="header-outbound">
@@ -790,6 +795,7 @@
     {{ parent() }}
     <script src="{{ asset('bundles/vientosurappapp/js/card-payment.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/creditcard.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script>
         var cardsObjs = {{ cardList|json_encode()|raw }};
         $(document).ready(function(){
@@ -801,6 +807,20 @@
                 }else{
                     console.log('cuit not valido')
                     $("#errorCuit").show();
+                }
+            });
+            $("#form_payments_invoice-fiscal_id0").mask("99-99999999-9");
+
+            $("#form_payments_invoice-fiscal_id0").on("blur", function() {
+                var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+
+                if( last.length == 3 ) {
+                    var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+                    var lastfour = move + last;
+
+                    var first = $(this).val().substr( 0, 9 );
+
+                    $(this).val( first + '-' + lastfour );
                 }
             });
         });

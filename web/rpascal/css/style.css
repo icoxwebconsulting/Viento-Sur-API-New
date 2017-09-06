@@ -25,7 +25,7 @@ a, a:hover, a:focus{
 }
 
 .right {
-	float: right;
+	float: right !important;
 }
 
 .textLeft{
@@ -40,11 +40,55 @@ a, a:hover, a:focus{
 	margin-bottom: 0.83vw !important;
 }
 
+.paddingLeft15{
+	padding-left: 15px !important;
+}
+
 .paddingSpecial{
-	padding: 0 1.25vw 0 3.75vw;
+	padding: 0 0 0 2.5vw;
+	margin: 0;
+}
+
+.paddingModif{
+	margin: 0 3%;
+}
+
+.inputError{
+	border-color: #ea0000 !important;
+	border-width: 2px !important;
+}
+
+.borderNone{
+	border: none !important;
 }
 
 /*----- END GENERALS -------*/
+
+/*----- GO COLORS SOCIAL MEDIA -----*/
+.bgFacebook{
+	background-color: #3b5998;
+}
+
+.bgTwitter{
+	background-color: #55acee;
+}
+
+.bgGooglePlus{
+	 background-color: #dd4b39;
+ }
+
+.bgLinkedin{
+	background-color: #007bb5;
+}
+
+.bgInstagram{
+	background-color: #125688;
+}
+
+.bgWeibo{
+	background-color: #df2029;
+}
+/*----- END COLORS SOCIAL MEDIA -----*/
 
 /*----- GO HEADER -----*/
 header.new-header{
@@ -71,11 +115,11 @@ header.new-header{
 
 .language select{
 	height: 2.5vw;
-	width: 10.83vw;
-	border-radius: 25px;
+	width: 7.5vw;
+	border-radius: 5px;
 	border: #888888 1px solid;
 	background-color: rgba(17,17,17,0.2);
-	background: URL(../images/arrow-down.png) no-repeat 89% 50% !important;
+	background: url(../images/arrow-down.png) no-repeat 89% 50% !important;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
@@ -84,7 +128,7 @@ header.new-header{
 	font-size: 1vw;
 	text-transform: uppercase;
 	cursor: pointer;
-	padding: 0 1.25vw;
+	padding: 0 0.83vw;
 	margin: 0 4.16vw 0 auto;
 }
 
@@ -100,25 +144,25 @@ header.new-header{
 
 .socialMedia li{
 	display: inline-block;
-	margin-left: 2.08vw;
-	background: rgba(17,17,17,0.2);
+	margin-left: 0.41vw;
+	/*background: rgba(17,17,17,0.2);*/
 	border-radius: 50%;
-	border: #888888 1px solid;
+	/*border: #888888 1px solid;
 	height: 2.91vw;
-	width: 2.91vw;
+	width: 2.91vw;*/
 	text-align: center;
 }
 
 .socialMedia li a{
-	display: block;
-	background: #008cd1 none repeat scroll 0 0;
+	display: flex;
 	border-radius: 50%;
 	height: 2.08vw;
 	width: 2.08vw;
 	margin: 0 auto;
 	position: relative;
-	top: 0.33vw;
 	line-height: 2.08vw;
+	flex-flow: column;
+	justify-content: center;
 }
 
 .socialMedia li a i{
@@ -128,20 +172,18 @@ header.new-header{
 /*----- END HEADER -----*/
 
 /*----- GO SLIDER -----*/
-.slide{
-	border-bottom: #008cd0 7px solid;
-}
 
 .carousel-indicators {
 	bottom: 0 !important;
 }
 
 .search{
-	left: 7.28vw;
+	left: 50%;
 	position: absolute;
 	top: 10.83vw;
-	width: 86%;
+	width: 79.16vw;
 	z-index: 99;
+	margin-left: -39.58vw;
 }
 
 .search .nav-tabs{
@@ -174,17 +216,24 @@ header.new-header{
 	color: #233034;
 }
 
-.search .tab-content{
+.search .tab-pane{
 	background: rgba(255,255,255,0.7);
 	border-radius: 5px;
 	padding: 3.33vw 1.66vw 0 1.66vw;
 }
 
+.search .tab-pane.active{
+    border: #192731 2px solid;
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,19,33,0.65);
+    -moz-box-shadow: 0px 0px 15px 3px rgba(0,19,33,0.65);
+    box-shadow: 0px 0px 15px 3px rgba(0,19,33,0.65);
+}
+
 .search .tab-content h4{
-	font-size: 1.5vw;
+	font-size: 1vw;
 	font-family: 'latoblack';
 	color: #1d2d33;
-	margin: 0 0 1.66vw 0;
+	margin: 0 0 0.83vw 0;
 	text-transform: uppercase;
 }
 
@@ -210,18 +259,18 @@ header.new-header{
 }
 
 .search .tab-content .city-input{
-	border-radius: 25px;
+	border-radius: 5px;
 	box-shadow: none;
 	border: none;
 	background: #192731;
 	color: #e3e3e3;
-	font-size: 1.33vw;
+	font-size: 1.08vw;
 	padding: 0 0 0 2.91vw;
 	height: 2.91vw;
 }
 
 .search .tab-content .input-group .form-control{
-	border-radius: 25px;
+	border-radius: 5px;
 	background: #192731;
 	border: none;
 	color: #e3e3e3;
@@ -241,15 +290,16 @@ header.new-header{
 
 .search .tab-content .btnModal{
 	height: 35px;
-	border-radius: 25px;
+	border-radius: 5px;
 	background: #192731;
 	color: #e3e3e3;
-	font-size: 1.33vw;
+	font-size: 1vw;
 	height: 2.91vw;
 	width: 100%;
 	border: none;
 	text-align: left;
 	padding: 0 2.08vw;
+    float: left;
 }
 
 .search .tab-content .modal-dialog{
@@ -311,9 +361,9 @@ header.new-header{
 
 .search .tab-content .modal-dialog .selectRoom select, .search .tab-content .modal-dialog .selectFlight select{
 	height: 2.91vw;
-	border-radius: 25px;
+	border-radius: 5px;
 	border: none;
-	background: url(../images/arrow-back-white.png) no-repeat 92% 50% #5e676e!important;
+	background: url(../images/arrow-back-white.png) no-repeat 92% 50% #192731!important;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
@@ -382,7 +432,7 @@ header.new-header{
 
 .search .tab-content .selectMoney select{
 	height: 2.91vw;
-	border-radius: 25px;
+	border-radius: 5px;
 	border: #192731 1px solid;
 	background: url(../images/arrow-down-select.png) no-repeat 92% 50% rgba(225,225,225,0.7)!important;
 	-moz-appearance: none;
@@ -390,9 +440,11 @@ header.new-header{
 	appearance: none;
 	color: #192731;
 	font-family: 'latolight';
-	font-size: 1.33vw;
+	font-size: 1.08vw;
 	cursor: pointer;
 	padding: 0 1.15vw;
+	width: 75%;
+	float: right;
 }
 
 .search .tab-content .btnSearch{
@@ -402,14 +454,15 @@ header.new-header{
 .search .tab-content .btnSearch button{
 	height: 3.33vw;
 	background: #0181c0;
-	border-radius: 25px 25px 0 0;
+	border-radius: 5px;
 	font-size: 1.33vw;
 	color: #e3e3e3;
 	font-family: 'latoregular';
-	width: 24.58vw;
+	width: 10.83vw;
 	border: none;
 	box-shadow: none;
 	text-transform: uppercase;
+	margin-bottom: 3.33vw;
 }
 /*----- END SLIDER -----*/
 
@@ -482,7 +535,7 @@ header.new-header{
 
 /*----- GO BREADCRUMB -----*/
 #breadcrumb{
-	padding: 1.25vw 0;
+	padding: 1.08vw 0;
 	background: #e1e1e1;
 }
 
@@ -496,7 +549,7 @@ header.new-header{
 	text-transform: uppercase;
 	color: #233034;
 	font-family: 'latobold';
-	font-size: 1.33vw;
+	font-size: 1.16vw;
 }
 
 #breadcrumb ol li a:hover{
@@ -527,9 +580,9 @@ header.new-header{
 .message{
 	margin: 0;
 	padding: 3.33vw 0;
-	font-size: 2.66vw;
+	font-size: 2.08vw;
 	color: #233034;
-	font-family: 'latoitalic';
+    font-family: 'latoregular';
 }
 
 #formSearch, #formFilters{
@@ -545,7 +598,7 @@ header.new-header{
 
 #formSearch .results p{
 	color: #ffffff;
-	font-size: 1.5vw;
+	font-size: 1.33vw;
 	font-family: 'latolight';
 }
 
@@ -555,8 +608,9 @@ header.new-header{
 
 #formSearch label, #formFilters label{
 	color: #ffffff;
-	font-size: 1.33vw;
-	font-family: 'latobold';
+	font-size: 12px;
+	font-family: 'latoregular';
+	font-weight: normal;
 }
 
 #formSearch .form-group, #formFilters .form-group{
@@ -564,11 +618,11 @@ header.new-header{
 }
 
 #formSearch .form-group i, #formFilters .form-group i{
-	bottom: 0.83vw;
+	bottom: 10px;
 	color: #233034;
-	left: 2.5vw;
+	left: 23px;
 	position: absolute;
-	font-size: 1.66vw;
+	font-size: 16px;
 	z-index: 99;
 }
 #formFilters .form-group i{
@@ -576,26 +630,26 @@ header.new-header{
 	top:36px;
 }
 #formSearch input, #formFilters input{
-	border-radius: 25px;
-	height: 3.33vw;
+	border-radius: 5px;
+	height: 30px;
 	border: none;
 	box-shadow: none;
 	color: #233034;
-	font-size: 1.33vw;
+	font-size: 14px;
 	font-family: 'latoregular';
 	position: relative;
-	padding-left: 4.16vw;
+	padding-left: 25px;
 }
 
 #formSearch button, #formFilters button{
 	border: none;
 	box-shadow: none;
-	border-radius: 25px;
-	height: 3.33vw;
+	border-radius: 5px;
+	height: 30px;
 	width: 100%;
 	background: #0777ae;
 	text-align: center;
-	font-size: 1.33vw;
+	font-size: 14px;
 	color: #e3e3e3;
 	font-family: 'latobold';
 	text-transform: uppercase;
@@ -603,33 +657,32 @@ header.new-header{
 
 #formSearch select{
 	background: url(../images/arrow-down-select.png) no-repeat 92% 50% #ffffff !important;
-	height: 3.33vw;
+	height: 30px;
 	border: none;
-	border-radius: 25px;
+	border-radius: 5px;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
-	font-size: 1.33vw;
+	font-size: 14px;
 	padding: 0.5vw 1vw;
 }
 
 #formFilters .titleFilters{
 	color: #fcfeff;
 	text-transform: uppercase;
-	font-size: 2.83vw;
+	font-size: 18px;
 	margin: 0 0 3.33vw 0;
 	font-family: 'latobold';
 }
 
 #formFilters .boxFilter h4{
 	color: #fcfeff;
-	font-size: 1.33vw;
-	font-family: 'latobold';
+	font-size: 1.16vw;
+	font-family: 'latoregular';
 	padding: 1.66vw 0 0.83vw 0;
 	border-bottom: #7f7f7f 1px solid;
 	margin-bottom: 1.66vw;
-	text-transform: uppercase;
 }
 
 #formFilters .boxFilter ul{
@@ -645,8 +698,8 @@ header.new-header{
 #formFilters .boxFilter label {
 	padding-left: 0;
 	color: #fcfeff;
-	font-size: 1.16vw;
-	font-family: 'latolight';
+	font-size: 12px;
+	font-family: 'latoregular';
 	vertical-align: top;
 }
 
@@ -657,22 +710,22 @@ header.new-header{
 #formFilters .boxFilter .checkbox span{
 	color: #fcfeff;
 	font-family: 'latolight';
-	font-size: 1.16vw;
+	font-size: 12px;
 }
 
 #formFilters .boxFilter .checkbox .cr {
 	border: #ffffff 1px solid;
-	width: 2vw;
-	height: 2vw;
-	padding: 0.16vw;
+	width: 18px;
+	height: 18px;
+	padding: 2px;
 	display: inline-flex;
-	margin-right: 0.83vw;
+	margin-right: 5px;
 	vertical-align: middle;
 }
 
 #formFilters .boxFilter .checkbox .cr .cr-icon {
 	color: #00bce7;
-	font-size: 1.5vw;
+	font-size: 12px;
 }
 
 #formFilters .boxFilter .checkbox label input[type="checkbox"] {
@@ -703,11 +756,58 @@ header.new-header{
 #thumbsSearch .filterThumb{
 	border-color: #008cd0;
 	border-style: solid;
-	border-width: 6px 2px 2px 2px;
+	border-width: 4px 2px 2px 2px;
 	border-radius: 5px;
 	margin-bottom: 3.33vw;
 	line-height: 0;
+	display: flex;
 }
+
+#thumbsSearch .filterThumb .modal{
+	z-index: 99999;
+}
+
+#thumbsSearch .filterThumb .modal ul{
+	padding: 0;
+}
+
+#thumbsSearch .filterThumb .modal ul li{
+	height: 25px;
+	margin-bottom: 10px;
+}
+
+#thumbsSearch .filterThumb  label {
+	display: inline-block;
+	cursor: pointer;
+	font-size: 16px;
+	float: left;
+	padding: 0;
+	color: #1d2d33;
+}
+
+#thumbsSearch .filterThumb [type="radio"] {
+	display: none;
+}
+
+#thumbsSearch .filterThumb [type="radio"] + span:before {
+	content: '';
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	vertical-align: middle;
+	border-radius: 50%;           /*hard border*/
+	border: 2px solid #0281c0;
+	margin-right: 10px;
+	transition: 0.5s ease all;    /*animation here*/
+}
+
+#thumbsSearch .filterThumb [type="radio"]:checked + span:before {
+	background: #0281c0;
+	box-shadow: 0 0 0 0.15em #0281c0;
+	border: 1px solid #fff;
+}
+
+
 
 #thumbsSearch .filterThumb .btnDropdown{
 	border-style: solid;
@@ -715,11 +815,12 @@ header.new-header{
 	border-width: 0 1px 0 0;
 	background: none;
 	height: 4.41vw;
-	padding: 0 2.5vw;
+	text-align: center;
 	text-transform: uppercase;
 	color: #233034;
 	font-family: 'latobold';
 	font-size: 1.33vw;
+	width: 100%;
 }
 
 #thumbsSearch .filterThumb .caret {
@@ -756,64 +857,88 @@ header.new-header{
 
 #thumbHotel{
 	border-radius: 5px;
-	border: #e1e1e1 0.33vw solid;
-	height: 17.5vw;
+	border: #e1e1e1 1px solid;
+	/*height: 17.5vw;*/
 	margin-bottom: 2.5vw;
 	overflow: hidden;
 	background: #f5f5f5;
+	padding: 15px 0;
 }
 
 #thumbHotel:hover{
 	border-color: #008cd0;
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,140,208,0.65);
+    -moz-box-shadow: 0px 0px 15px 3px rgba(0,140,208,0.65);
+    box-shadow: 0px 0px 15px 3px rgba(0,140,208,0.65);
 }
 
 #thumbHotel .imgHotel{
-	overflow: hidden;
-	height: 17.5vw;
+	padding: 0 15px;
 }
 
 #thumbHotel .imgHotel img{
-	width: auto;
-	height: 100%;
-}
-
-#thumbHotel .infoHotel{
-	margin: 1.25vw 0;
-	padding: 0 1.25vw;
+	width: 100%;
+	height: auto;
 }
 
 #thumbHotel .infoHotel h4{
-	color: #233034;
-	font-size: 1.83vw;
+	margin: 0 0 5px 0;
+	display: flex;
+}
+
+#thumbHotel .infoHotel h4 a{
+	color: #008cd0;
+	font-size: 1.66vw;
 	font-family: 'latobold';
-	margin: 0;
+	float: left;
 }
 
 #thumbHotel .infoHotel ul{
 	padding: 0;
-	margin: 1.25vw 0;
-	line-height: 0;
+	margin: 0 0 0 10px;
+	float: left;
 }
 
 #thumbHotel .infoHotel li{
 	display: inline-block;
-	margin-right: 0.83vw;
-}
-
-#thumbHotel .infoHotel li i{
-	font-size: 1.66vw;
-	color: #bbbbbb;
 }
 
 #thumbHotel .infoHotel li i.fa-star{
-	color: #008cd0;
+	color: #febb02;
+	font-size: 1.25vw;
+}
 
+#thumbHotel .infoHotel .modalMap{
+	margin-bottom: 5px;
+}
+
+#thumbHotel .infoHotel .descriptionText{
+	padding-right: 10px;
+	font-size: 13px;
+}
+
+#thumbHotel .infoHotel .inDemand{
+	font-size: 12px;
+	color: #ff0202;
+}
+
+#thumbHotel .infoHotel .inDemand span{
+	font-size: 12px;
+	background: #ff6c6c;
+	padding: 3px 5px;
+	border-radius: 3px;
+	color: #ffffff;
+	margin-right: 5px;
 }
 
 #thumbHotel .infoHotel a{
-	font-size: 1.33vw;
+	font-size: 1.25vw;
 	font-family: 'latoregular';
 	color: #0777ae;
+}
+
+#thumbHotel .infoHotel a i{
+	margin: 0 5px;
 }
 
 #thumbHotel .infoHotel a:hover{
@@ -821,11 +946,43 @@ header.new-header{
 	color: #233034;
 }
 
-#thumbHotel .priceRoom{
-	margin: 1.25vw 0;
-	padding: 1.41vw 1.25vw;
-	border-left: #ebebeb 1px solid;
+#thumbHotel .infoHotel .servicesIcons{
+	padding: 0;
+	margin: 10px 0 0 0;
+	border-radius: 50%;
+}
+
+#thumbHotel .infoHotel .servicesIcons li{
+	border-radius: 50%;
+	background: #ffffff;
+	border: #008cd0 1px solid;
 	text-align: center;
+	width: 30px;
+	height: 30px;
+}
+
+#thumbHotel .infoHotel .servicesIcons li i{
+	color: #003580;
+	font-size: 12px;
+	vertical-align: sub;
+}
+
+#thumbHotel .infoHotel .servicesIcons span{
+	margin-left: 5px;
+	vertical-align: text-top;
+}
+
+#thumbHotel .priceRoom{
+	margin: 0;
+	padding: 0 15px 0 0;
+	text-align: right;
+}
+
+#thumbHotel .priceRoom h4{
+	margin: 0 0 5px 0;
+	color: #008cd0;
+	font-size: 1.66vw;
+	font-family: 'latobold';
 }
 
 #thumbHotel .priceRoom p{
@@ -835,22 +992,38 @@ header.new-header{
 }
 
 #thumbHotel .priceRoom h5{
-	color: #008cd0;
-	font-size: 2vw;
+	color: #233034;
+	font-size: 1.25vw;
 	font-family: 'latoblack';
-	margin: 2.5vw 0;
+	margin: 3.33vw 0 0 0;
 }
 
-#thumbHotel .priceRoom a{
+#thumbHotel .priceRoom h5 span{
+	font-size: 1.41vw;
+}
+
+#thumbHotel .priceRoom a {
 	color: #233034;
+}
+
+#thumbHotel .priceRoom button{
+	color: #fff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latolight';
-	background: transparent;
+	background: #008cd0;
 	box-shadow: none;
-	border-radius: 25px;
-	border: #008cd0 1px solid;
-	padding: 0.41vw 1.25vw;
+	border-radius: 5px;
+	padding: 1.25vw;
+	margin-top: 3.33vw;
+	border: none;
+	font-family: 'latobold';
+	width: 100%;
+}
+
+#thumbHotel .priceRoom button:hover, #thumbsFlights .paymentFlight button:hover, #thumbsFlights .panel-body button:hover, #descriptionHotel .boxPrice button:hover{
+	background: #008cd0;
+	border-radius: 10px;
+	color: #ffffff;
 }
 #thumbHotel .priceRoom a:hover, #descriptionHotel > div:nth-child(1) > div.boxPrice.col-xs-3 > button:hover, #descriptionHotel > div > div > div > div > div > div > div.col-xs-9 > table > tbody > tr > td.center > form > button:hover{
 	background: #008cd0;
@@ -920,9 +1093,10 @@ header.new-header{
 	margin: 0;
 	padding: 0 0 2.5vw 0;
 	text-align: center;
-	font-size: 2.66vw;
+	font-size: 2.41vw;
 	color: #233034;
 	font-family: 'latobold';
+	text-transform: uppercase;
 }
 
 .grid figure {
@@ -930,7 +1104,7 @@ header.new-header{
 	overflow: hidden;
 	text-align: center;
 	cursor: pointer;
-	border-radius: 15px;
+	border-radius: 10px;
 }
 
 .grid figure img {
@@ -973,10 +1147,11 @@ header.new-header{
 
 .grid figure h2 {
 	font-family: 'latoregular';
-	font-size: 2vw;
+	font-size: 1.8vw;
 	color: #ffffff;
 	margin: 0;
 	background: rgba(0,0,0,0.6);
+	width: 100%;
 }
 
 .grid figure p {
@@ -987,7 +1162,7 @@ header.new-header{
 
 figure.effect-goliath {
 	background: #0777ae;
-	border: #d7d7d7 10px solid;
+	border: #d7d7d7 4px solid;
 }
 
 figure.effect-goliath img,
@@ -1019,7 +1194,7 @@ figure.effect-goliath p {
 }
 
 figure.effect-goliath:hover{
-	border: #0777ae 10px solid;
+	border: #0777ae 4px solid;
 }
 
 figure.effect-goliath:hover img {
@@ -1073,12 +1248,13 @@ figure.effect-goliath:hover p {
 
 #descriptionHotel ul.starsHotel li{
 	display: inline-block;
-	color: #008cd0;
+	color: #febb02;
 	font-size: 1.66vw;
 }
 
 #descriptionHotel .descriptionHotel{
 	margin: 2.5vw 0;
+	text-align: justify;
 }
 
 #descriptionHotel .descriptionHotel p{
@@ -1107,15 +1283,16 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .boxPrice button{
-	color: #233034;
+	color: #ffffff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latolight';
-	background: transparent;
+	font-family: 'latobold';
+	background: #008cd0;
 	box-shadow: none;
-	border-radius: 25px;
-	border: #008cd0 1px solid;
-	padding: 0.41vw 1.25vw;
+	border-radius: 5px;
+	border: none;
+	padding: 1.25vw;
+	width: 100%;
 }
 
 #descriptionHotel .galleryHotel{
@@ -1152,10 +1329,6 @@ figure.effect-goliath:hover p {
 	vertical-align: middle;
 }
 
-#descriptionHotel .itemsHotel ul li i.iconRed{
-	color: #e0041f;
-}
-
 #descriptionHotel .titleSection{
 	font-family: 'latobold';
 	font-size: 2.33vw;
@@ -1165,64 +1338,94 @@ figure.effect-goliath:hover p {
 	margin-top: 0;
 }
 
-#descriptionHotel .itemRoom{
+.listRooms table{
+	margin-top: 20px;
+	border: #008cd0 1px solid;
+}
+
+.listRooms table th{
+	text-align: center;
+	color: #fff;
+	border: #008cd0 1px solid !important;
+	background: #02003B;
+	font-family: 'latoregular';
+	font-size: 14px;
+}
+
+.listRooms table td{
+	border: #008cd0 1px solid !important;
+	vertical-align: middle !important;
+}
+
+#descriptionHotel table td h5{
+	color: #008cd0;
+	font-family: 'latoblack';
+	font-size: 14px;
+}
+
+#descriptionHotel table td button{
+	background: #008cd0;
+	border: none;
 	border-radius: 5px;
-	border: #e1e1e1 0.33vw solid;
-	margin: 1.25vw 0;
-	overflow: hidden;
-	background: #f5f5f5;
+	box-shadow: none;
+	color: #ffffff;
+	font-family: 'latobold';
+	font-size: 13px;
+	padding: 1.25vw;
+	text-align: center;
 }
 
-#descriptionHotel .itemRoom:hover{
-	border-color: #008cd0;
+#descriptionHotel table td button:hover{
+	background: #008cd0;
+	border-radius: 10px;
+	color: #ffffff;
 }
 
-#descriptionHotel .itemRoom .titleRooms{
-	font-size: 1.66vw;
+#descriptionHotel table td select{
+	height: 30px;
+	width: 55px;
+	border-radius: 5px;
+	border: #192731 1px solid;
+	background: url(../images/arrow-down-select.png) no-repeat 92% 50% !important;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	color: #192731;
+	font-family: 'latolight';
+	font-size: 14px;
+	cursor: pointer;
+	padding: 0 12px;
+	margin: 0 auto;
+}
+
+#descriptionHotel table td ul, #descriptionHotel table td ol{
+	padding:0;
+}
+
+#descriptionHotel table td ul li{
+	display: inline-block;
+}
+
+#descriptionHotel table td ol li{
+	list-style: inside;
+	margin-bottom: 10px;
+	font-size: 12px;
+	color: #0ab21b;
+}
+
+#descriptionHotel table td ol li i{
+	padding-right: 5px;
+}
+
+#descriptionHotel table td h4{
+	font-size: 15px;
 	font-family: 'latobold';
 	color: #008cd0;
 }
 
-#descriptionHotel .itemRoom img{
-	width: 100%;
-	height: auto;
-	margin-bottom: 0.83vw;
-}
-
-#descriptionHotel .itemRoom ul{
-	padding: 0;
-}
-
-#descriptionHotel .itemRoom ul li{
-	display: inline-block;
-}
-
-#descriptionHotel .itemRoom th{
-	font-family: 'latoregular';
-}
-
-#descriptionHotel .itemRoom td{
-	vertical-align: middle;
-	font-family: 'latolight';
-}
-
-#descriptionHotel .itemRoom td h5{
-	color: #008cd0;
-	font-family: 'latoblack';
-	font-size: 1.5vw;
-}
-
-#descriptionHotel .itemRoom td button{
-	background: transparent none repeat scroll 0 0;
-	border: 1px solid #008cd0;
-	border-radius: 25px;
-	box-shadow: none;
-	color: #233034;
-	font-family: "latolight";
-	font-size: 1vw;
-	padding: 0.25vw 1.25vw;
-	text-align: center;
-	margin-bottom: 0.41vw;
+#descriptionHotel table td img{
+	margin: 15px 0;
+	cursor: pointer;
 }
 /*----- END DETAIL HOTEL -----*/
 
@@ -1236,7 +1439,7 @@ figure.effect-goliath:hover p {
 
 #infoReserva .titleReserva, .datesPayment h5{
 	color: #008cd0;
-	font-size: 1.5vw;
+	font-size: 16px;
 	font-family: 'latobold';
 	margin: 1.25vw 0;
 }
@@ -1244,8 +1447,8 @@ figure.effect-goliath:hover p {
 #infoReserva img{
 	width: 40%;
 	height: auto;
-	margin: 1.25vw 0;
 	border: #fcfeff 2px solid;
+	margin: 0 auto;
 }
 
 #infoReserva ul{
@@ -1254,14 +1457,14 @@ figure.effect-goliath:hover p {
 
 #infoReserva li{
 	display: inline-block;
-	color: #008cd0;
+	color: #febb02;
 	font-size: 1.16vw;
 	margin-right: 0.41vw;
 }
 
 #infoReserva p{
 	color: #fcfeff;
-	font-size: 1.33vw;
+	font-size: 14px;
 	font-family: 'latolight';
 	margin-bottom: 0.41vw;
 }
@@ -1272,19 +1475,19 @@ figure.effect-goliath:hover p {
 
 #infoReserva h3{
 	padding: 1.25vw;
-	font-family: 'latoregular';
-	font-size: 1.16vw;
-	color: #008cd0;
+    font-family: 'latobold';
+	font-size: 10px;
+	color: #fff;
 	text-transform: uppercase;
-	background-color: #fcfeff;
+	background-color: #ff5b5b;
 	margin: 1.66vw 0;
-
+    border-radius: 5px;
 }
 
 #infoReserva aside{
-	font-family: 'latolight_italic';
-	color: #fcfeff;
-	font-size: 1.16vw;
+    font-family: 'latobold_italic';
+	color: #febb02;
+	font-size: 12px;
 	margin-top: 1.66vw;
 }
 
@@ -1293,7 +1496,7 @@ figure.effect-goliath:hover p {
 }
 
 #infoReserva .totalPayment h2{
-	font-size: 1.66vw;
+	font-size: 16px;
 	font-family: 'latobold';
 	color: #fcfeff;
 }
@@ -1326,10 +1529,15 @@ figure.effect-goliath:hover p {
 }
 
 #infoReserva .imgAeroline{
-	margin-bottom: 0.83vw;
+	margin: 0.83vw auto;
 	background: #fff;
 	border-radius: 50%;
 	padding: 0.41vw 0;
+	height: 60px;
+	width: 60px;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
 }
 
 #processPayment .panel-default{
@@ -1337,35 +1545,35 @@ figure.effect-goliath:hover p {
 }
 
 #processPayment .panel-heading{
-	background-color: #008cd0;
-	padding: 1.66vw 1.25vw;
+	background-color: #02003B;
+	padding: 0.83vw 1.25vw;
 }
 
 #processPayment .panel-title{
 	font-family: 'latoregular';
-	font-size: 1.5vw;
+	font-size: 1.33vw;
 	color: #fcfeff;
 }
 
 #processPayment .panel-body h5{
 	font-family: 'latoregular';
-	font-size: 1.5vw;
+	font-size: 1.33vw;
 	color: #233034;
 }
 
 #processPayment .panel-body input{
-	border-radius: 25px;
+	border-radius: 5px;
 	font-family: 'latolight';
-	height: 3.33vw;
+	height: 35px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
 }
 
 #processPayment .panel-body select{
-	border-radius: 25px;
+	border-radius: 5px;
 	font-family: 'latolight';
-	height: 3.33vw;
+	height: 35px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
@@ -1378,7 +1586,7 @@ figure.effect-goliath:hover p {
 
 #processPayment .panel-body textarea{
 	border: #192731 1px solid;
-	border-radius: 25px;
+	border-radius: 5px;
 	font-family: 'latolight';
 	color: #192731;
 	resize: none;
@@ -1389,16 +1597,17 @@ figure.effect-goliath:hover p {
 
 #processPayment .panel-body .bg-success{
 	padding: 1.25vw 0.83vw;
-	background: #192731;
+	background: #ff5b5b;
 	color: #fcfeff;
 	font-size: 1.16vw;
-	font-family: 'latolight';
+    font-family: 'latobold';
+    border-radius: 5px;
 }
 
 #processPayment .buttonPayment button{
 	background: #0777ae none repeat scroll 0 0;
 	border: medium none;
-	border-radius: 25px;
+	border-radius: 5px;
 	box-shadow: none;
 	color: #e3e3e3;
 	font-family: "latobold";
@@ -1416,7 +1625,7 @@ figure.effect-goliath:hover p {
 
 #processPayment .datesPayment h2{
 	font-family: 'latoregular';
-	font-size: 2.16vw;
+	font-size: 1.66vw;
 	color: #233034;
 }
 
@@ -1425,7 +1634,7 @@ figure.effect-goliath:hover p {
 /*----- GO SEARCH VUELOS -----*/
 #thumbsFlights{
 	border-radius: 5px;
-	border: #e1e1e1 4px solid;
+	border: #e1e1e1 1px solid;
 	height: 100%;
 	margin-bottom: 2.5vw;
 	overflow: hidden;
@@ -1435,17 +1644,20 @@ figure.effect-goliath:hover p {
 
 #thumbsFlights:hover{
 	border-color: #008cd0;
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,140,208,0.65);
+    -moz-box-shadow: 0px 0px 15px 3px rgba(0,140,208,0.65);
+    box-shadow: 0px 0px 15px 3px rgba(0,140,208,0.65);
 }
 
 #thumbsFlights .panel-heading{
-	background-color: #008cd0;
-	padding: 1.66vw 1.25vw;
+	background-color: #02003b;
+	padding: 0 1.25vw;
 }
 
 #thumbsFlights .paymentFlight{
 	margin-top: 10%;
 	position: absolute;
-	right: 1.83vw;
+	right: 18px;
 	text-align: center;
 	transform: translateY(-20%);
 }
@@ -1464,35 +1676,38 @@ figure.effect-goliath:hover p {
 }
 
 #thumbsFlights .paymentFlight button{
-	color: #233034;
+	color: #ffffff;
 	font-size: 1vw;
 	text-align: center;
-	font-family: 'latolight';
-	background: transparent;
+	font-family: 'latobold';
+	background: #008cd0;
 	box-shadow: none;
-	border-radius: 25px;
-	border: #008cd0 1px solid;
-	padding: 0.41vw 1.25vw;
+	border-radius: 5px;
+	border: none;
+	padding: 1.25vw;
 }
 
 #thumbsFlights .panel-heading h3{
-	background: #fcfeff;
+	background: #333;
 	padding: 0.41vw;
-	color: #008cd0;
+	color: #fff;
 	font-size: 1.33vw;
 	font-family: 'latobold';
+	margin: 1vw 0;
 }
 
 #thumbsFlights .panel-heading h6{
 	color: #fcfeff;
 	font-size: 1.33vw;
 	font-family: 'latobold';
+	margin-bottom: 0;
 }
 
-#thumbsFlights .panel-heading p{
+#thumbsFlights .panel-heading h6 span{
 	color: #fcfeff;
-	font-size: 1.16vw;
+	font-size: 1.08vw;
 	font-family: 'latolight';
+	margin-left: 7px;
 }
 
 #thumbsFlights .panel-body [type="radio"] {
@@ -1537,15 +1752,17 @@ figure.effect-goliath:hover p {
 }
 
 #thumbsFlights .panel-body button{
-	background: transparent none repeat scroll 0 0;
-	border: 1px solid #008cd0;
-	border-radius: 25px;
+	background: #008cd0;
+	border: none;
+	border-radius: 5px;
 	box-shadow: none;
-	color: #233034;
-	font-family: "latolight";
+	color: #ffffff;
+	font-family: 'latobold';
 	font-size: 1vw;
-	padding: 0.41vw 1.25vw;
+	padding: 1.25vw;
 	text-align: center;
+	width: 100%;
+	max-width: 80px;
 }
 
 
@@ -1573,7 +1790,7 @@ span.irs-to,span.irs-from{
 	margin-left: 20px !important;
 }
 .footer h3{
-	font-size: 2.5vw;
+	font-size: 1.66vw;
 	color: #ffffff;
 	padding-bottom: 1.25vw;
 	border-bottom: #008cd1 1px solid;
@@ -1582,7 +1799,7 @@ span.irs-to,span.irs-from{
 }
 
 .footer p{
-	font-size: 1.58vw;
+	font-size: 1.08vw;
 	color: #ffffff;
 	font-family: 'latoregular';
 	line-height: 1.83vw;
@@ -1592,16 +1809,17 @@ span.irs-to,span.irs-from{
 .footer .btnContact{
 	height: 3.58vw;
 	width: 20vw;
-	border-radius: 25px;
+	border-radius: 5px;
 	border: #464646 1px solid;
 	background-color: rgba(0,0,0,0.2);
 	color: #fff;
 	font-family: 'latoregular';
 	font-size: 1.33vw;
 	text-transform: uppercase;
-	display: block;
+	display: flex;
+	justify-content: center;
+	fle
 	text-align: center;
-	padding: 0.83vw 0;
 	margin-top: 2.25vw;
 }
 
@@ -1612,25 +1830,26 @@ span.irs-to,span.irs-from{
 
 .socialMediaFooter li{
 	display: inline-block;
-	margin: 0 1.08vw 0 0;
-	background: rgba(17,17,17,0.2);
-	border-radius: 50%;
+	margin: 0 0.41vw 0 0;
+	/*background: rgba(17,17,17,0.2);
 	border: #888888 1px solid;
 	height: 2.91vw;
-	width: 2.91vw;
+	width: 2.91vw;*/
+	border-radius: 50%;
 	text-align: center;
 }
 
 .socialMediaFooter li a{
-	display: block;
+	display:flex;
 	height: 2.08vw;
 	width: 2.08vw;
-	background: #008cd1 none repeat scroll 0 0;
 	border-radius: 50%;
 	position: relative;
 	top: 0.33vw;
 	margin: 0 auto;
 	line-height: 2.08vw;
+	flex-flow: column;
+	justify-content: center;
 }
 
 .socialMediaFooter li a i{
@@ -1645,7 +1864,7 @@ span.irs-to,span.irs-from{
 }
 
 .associations ul{
-	padding: 1.25vw 0 0 0;
+	padding: 6px 0 0 0;
 	margin: 0;
 }
 
@@ -1658,7 +1877,7 @@ span.irs-to,span.irs-from{
 	color: #00224f;
 	text-transform: uppercase;
 	font-family: 'latoregular';
-	font-size: 1vw;
+	font-size: 0.83vw;
 	padding: 2.08vw 0 1.91vw 0;
 	display: block;
 }
@@ -1671,9 +1890,10 @@ span.irs-to,span.irs-from{
 }
 
 .copyright p{
-	font-size: 1vw;
+	font-size: 0.83vw;
 	color: #999999;
 	font-family: 'latoregular';
+	font-style: italic;
 }
 
 .copyright p span{

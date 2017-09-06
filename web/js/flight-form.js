@@ -34,6 +34,13 @@ $(document).ready(function () {
         monthNames: monthNames,
         defaultDate: "+1w",
         numberOfMonths: 2,
+        onClose: function (selectedDate) {
+            try {
+                $('#start-flight').val(startFlight0.val());
+            } catch (e) {
+                console.error(e);
+            }
+        }
     });
     var startFlight1 = $('#start-flight1').datepicker({
         dateFormat: dateFormat,
@@ -100,6 +107,8 @@ $(document).ready(function () {
         serviceUrl: url,
         onSelect: function (suggestion) {
             $("#multidestination-originFlight0").val(suggestion.data.id);
+            $('#from-flight').val($("#multidestination-from-flight0").val());
+            $("#originFlight").val(suggestion.data.id);
         },
         minChars: 3,
         groupBy: 'category',
@@ -174,6 +183,8 @@ $(document).ready(function () {
             $("#multidestination-destinationFlight0").val(suggestion.data.id);
             $("#multidestination-from-flight1").val($("#multidestination-to-flight0").val());
             $("#multidestination-originFlight1").val($("#multidestination-destinationFlight0").val());
+            $('#to-flight').val($("#multidestination-to-flight0").val());
+            $("#destinationFlight").val(suggestion.data.id);
         },
         minChars: 3,
         groupBy: 'category',
@@ -289,6 +300,7 @@ $(document).ready(function () {
     });
     $('#multiple-destinations').click(function(){
         $('.wrapper').show();
+        $('.round-trip-wrapper').hide();
         $('#add-stretch').show();
         $('#remove-stretch').show();
         $('#multipledestination').val(true);
@@ -682,6 +694,7 @@ $(document).ready(function () {
             $('.wrapper').hide();
             $('#remove-stretch').hide();
             $('#add-stretch').hide();
+            $('.round-trip-wrapper').show();
             $('#multipledestination').val(false);
             console.log($('#multipledestination').val());
             $('#div-end-flight').show();
@@ -727,4 +740,34 @@ $(document).ready(function () {
             $("#end-flight").show().attr("required");
         }
     });
+
+    // var limit =$('.passengers-panel').height() + $('.pay-methods-panel').height() + 100;
+    // $(window).scroll(function() {
+    //     var scrollVal = $(this).scrollTop();
+    //     if(limit > 400){
+    //         if ( scrollVal > limit ) {
+    //             $('.content-sidebar').css({
+    //                 'top': limit,
+    //                 'position': 'relative'
+    //             });
+    //             $('.flight-detail').css({
+    //                 'display': 'none'
+    //             });
+    //         }else{
+    //             $('.content-sidebar').css({
+    //                 'top': 0,
+    //                 'position': 'initial'
+    //             });
+    //             $('.flight-detail').css({
+    //                 'display': 'block'
+    //             });
+    //         }
+    //     }
+    // });
+    $(".col-md-5.col-md-pull-7").jScroll({speed : "slow"});
+
 });
+function selectCuote(id){
+    console.log('click');
+    $('#cuote').text($('#span-text-'+id).text())
+}

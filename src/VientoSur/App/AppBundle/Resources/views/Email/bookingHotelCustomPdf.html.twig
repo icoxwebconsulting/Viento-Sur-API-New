@@ -7,6 +7,9 @@
 {% endif %}
 {% set decimal =false %}
 {% set price_detail = app.session.get('price_detail') %}
+{% set booking_all_data = app.session.get('booking_all_data') %}
+{% set destination = app.session.get('destination') %}
+
 <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
     <tr>
         <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
@@ -25,14 +28,14 @@
                             </div>
                             <div style="width: 48%;text-align: right;display: inline-block;">
                                 <p style="display: inline-block;margin: 0;">{{ 'hotels.reservation_number' | trans }}:</p>
-                                <h4 style="display: inline-block;margin: 0;">{{ internal.reservationId }}</h4><br>
-                                <p style="display: inline-block;margin: 0;">{{ 'hotels.room_number' | trans }}:</p>
-                                <h4 style="display: inline-block;margin: 0;">{{ hotelDetails.number_of_rooms }}</h4>
+                                <h4 style="display: inline-block;margin: 0;">{{ internal.reservationId }}</h4><br><br>
+                                <p style="display: inline-block;margin: 0;margin-top: 2px;">{{ 'hotels.code_hotel_entrance' | trans }}:</p>
+                                <h4 style="display: inline-block;margin: 0;">{{ app.session.get('hotel_entrance_code') }}</h4>
                             </div>
                         </div>
                         <br><br>
                         <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">
-                            {{ 'hotels.thanks_booking' | trans({'%name%': internal.holderName}) }}
+                            {{ 'hotels.thanks_booking' | trans({'%name%': booking_all_data.travelers[0].full_name}) }}
                         </div>
 
                         <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
@@ -40,18 +43,18 @@
 
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr><td width="50%" valign="top"><![endif]-->
-                        <table width="900" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
-                            <tr>
-                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
-                                    <div style="width: 49%;display: inline-block;">
-                                        <img style="width: 433px; height: 278px;" src="{{ hotelDetails.main_picture.url }}/" alt="Viento Sur" title="">
-                                    </div>
-                                    <div style="width: 49%;display: inline-block;">
-                                        <img style="width: 433px; height: 278px;" src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }} alt="">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                            <table width="900" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
+                                <tr>
+                                    <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;width:100%">
+                                        <div style="width: 49%;display: inline-block;">
+                                            <img style="width: 433px; height: 278px;" src="{{ hotelDetails.main_picture.url }}/" alt="Viento Sur" title="">
+                                        </div>
+                                        <div style="width: 49%;display: inline-block;">
+                                            <img style="width: 433px; height: 278px;" src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }} alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         <br>
                         <br>
                         <!-- example: two columns (simple) -->
@@ -92,7 +95,15 @@
                                     <br>
                                     <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
                                     <br>
-                                    <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }}
+                                    <strong>{{ 'hotels.address' | trans }}:</strong> {{ hotelDetails.location.address }} {{ destination.text }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>CP:</strong> {{ hotelDetails.location.zipcode }}
                                 </td>
                             </tr>
                             {% if reservationDetails.rooms is defined %}
@@ -105,13 +116,32 @@
 
                                         <ul>
                                             {% for room in reservationDetails.rooms %}
-                                            {% if room.descriptions.es is defined %}<li>{{ room.descriptions.es }}</li>{% else %} N/A {% endif %}
+                                                <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}{{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
                                             {% endfor %}
                                         </ul>
 
                                 </td>
                             </tr>
                             {% endif %}
+                            <tr>
+                                <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;">
+                                    <br>
+                                    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc">&nbsp;</div>
+                                    <br>
+                                    <strong>{{ 'hotels.room_holder' | trans }}:</strong>
+
+                                    <ul>
+                                        {% for holder in booking_all_data.travelers %}
+                                        <ul>
+                                            <li>{{ 'hotels.labels.name' | trans }} {{ holder.first_name }}</li>
+                                            <li>{{ 'hotels.labels.lastname' | trans }} {{ holder.last_name }}</li>
+                                            <li>{{ 'hotels.labels.document' | trans }} {{ holder.document_number }}</li>
+                                        </ul>
+                                        {% endfor %}
+                                    </ul>
+
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -126,6 +156,7 @@
                                     <br>
                                     {{ 'index.search.hotel.checkin_date' | trans }}
                                     <h3>{{ reservationDetails.checkin_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
+                                    <h3>{{ reservationDetails.checkin_date|localizeddate('none', 'short', app.request.locale) }}</h3>
                                 </td>
                             </tr>
                         </table>
@@ -136,6 +167,7 @@
                                     <br>
                                     {{ 'index.search.hotel.checkout_date' | trans }}
                                     <h3>{{ reservationDetails.checkout_date|localizeddate('medium', 'none', app.request.locale) }}</h3>
+                                    <h3>{{ reservationDetails.checkout_date|localizeddate('none', 'short', app.request.locale) }}</h3>
                                 </td>
                             </tr>
                         </table>
@@ -145,13 +177,13 @@
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
                                     <br>
                                     {% for room in reservationDetails.rooms %}
-                                        {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
                                         <div class="col-md-6" style="{% if room.children > 0 %}width: 48%;{% else %}width:100%{% endif %}display: inline-block;">
+                                        {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
                                             <h7 style="margin: 0; padding: 0;text-align: center;display: block;">{{ 'index.search.hotel.adult' | trans }}(s) </h7>
                                             <h3 style="text-align: center;">{{ room.adults }}</h3>
-                                        </div>
+                                        {#</div>#}
                                         {% if room.children > 0 %}
-                                        <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                        {#<div class="col-md-6" style="width: 48%;display: inline-block;">#}
                                             <h7 style="margin: 0; padding: 0; text-align: center;display: block;">{{ 'index.search.hotel.child' | trans }}(s)</h7>
                                             <h3 style="text-align: center;">{{ room.children }}</h3>
                                         </div>
@@ -168,6 +200,12 @@
                             <tr>
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
                                     <br>
+                                    {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
+                                    {% set total_price_per_night = room_per_night * reservationDetails.night_count %}
+                                    {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                    {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                    {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+
                                     <div style="padding: 0 45px">
                                         <div style="width: 48%; display: inline-block;text-align: left;">
                                             <strong style="font-size: 9px;">{{ 'hotels.room_per_night' | trans }}</strong>
@@ -179,13 +217,21 @@
                                             <strong style="font-size: 9px;">{{ 'hotels.taxes_and_rates' | trans }}</strong>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: right;">
-                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ taxes + fee }}</p>
                                         </div>
+                                        {% if price_detail.discounts > 0 %}
+                                            <div style="width: 48%; display: inline-block;text-align: left;">
+                                                <strong style="font-size: 9px;">{{ 'index.discounts' | trans }}</strong>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;text-align: right;">
+                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                            </div>
+                                        {% endif %}
                                         <div style="width: 48%; display: inline-block;text-align: left;">
                                             <strong>{{ 'hotels.total_price' | trans }}</strong>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: right;">
-                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.total|round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</p>
                                         </div>
                                     </div>
                                     {#<strong>{{ 'hotels.total_price' | trans }}</strong>#}
@@ -195,23 +241,86 @@
                         </table>
                         <br>
                         <br><br>
+                        {#<table width="350" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">#}
+                            {#<tr>#}
+                                {#<td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">#}
+                                    {#<br>#}
+                                    {#{{ 'hotels.reservation_by' | trans }}:#}
+                                    {#<h3>{{ internal.holderName }}</h3>#}
+                                    {#<h3>Email: {{ internal.email }}</h3>#}
+                                    {#<h3>{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h3>#}
+                                {#</td>#}
+                            {#</tr>#}
+                        {#</table>#}
+                        {#<table width="500" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">#}
+                            {#<tr>#}
+                                {#<td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">#}
+                                    {#<br>#}
+                                    {#{{ 'hotels.pay' | trans }}#}
+                                    {#<h4>#}
+                                        {#{{ 'hotels.payment_method_chosen' | trans }}:#}
+                                        {#{{ booking_all_data.payment.selected }}#}
+                                    {#</h4>#}
+                                    {#<h4>{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h4>#}
+                                {#</td>#}
+                            {#</tr>#}
+                        {#</table>#}
+                                    <div class="hr" style=" width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
 
+                        <table width="350" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;border-left: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    <br>
+                                    {{ 'hotels.reservation_by' | trans }}:
+                                    <h3 style="font-size: 12px">{{ internal.holderName }}</h3>
+                                    <h3 style="font-size: 12px">Email: {{ internal.email }}</h3>
+                                    <h3 style="font-size: 12px">{{ 'hotels.labels.number' | trans }} {{ booking_all_data.contact }}</h3>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="350" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row" style="margin-right: 10px;border-right: #eee 1px solid;height:150px;">
+                            <tr>
+                                <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
+                                    <br>
+                                    {{ 'hotels.pay' | trans }}
+                                    <h4 style="font-size: 12px">
+                                        {{ 'hotels.payment_method_chosen' | trans }}:
+                                        {{ booking_all_data.payment.selected }}
+                                    </h4>
+                                    <h4 style="font-size: 12px">{{ 'hotels.payment_last_digits' | trans({'%digits%': booking_all_data.payment.last_digits })}}</h4>
+                                </td>
+                            </tr>
+                        </table>
                         <div class="hr" style="width: 880px;height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
                         <br>
                         <table>
                             <tbody><tr width="70%">
                                 <th width="10%">{{ 'hotels.description' | trans }}:</th>
                                 <td class="text-justify" style="width: 60%">
-                                    <p style="font-size: 11px">{{ hotelDetails.information.es }}</p>
+                                    {% set info = hotelDetails.information.es %}
+                                    <p id="info" style="font-size: 11px">{{ info }}</p>
                                 </td>
                                 <td style="text-align: center;">
-                                    <h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>
-                                    <p>{{ internal.email }}, {{ internal.holderName }}</p>
+                                    {#<h4 style="margin-top: -10px;">{{ 'hotels.reservation_by' | trans }}:</h4>#}
+                                    {#<p>{{ internal.email }}, {{ internal.holderName }}</p>#}
                                     <br>
                                     <h4>{{ 'hotels.cancellation_policies' | trans }}:</h4>
                                     <ul style="width: 70%; margin: auto;">
-                                        {% if reservationDetails.hours_before_checkin_penalty is defined %}<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.{% endif %}
-                                        <li>{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %} {{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }} {% else %} {{ 'hotels.whitout_charges' | trans }}.{% endif %}</li>
+                                        {#{% if reservationDetails.hours_before_checkin_penalty is defined and reservationDetails.hours_before_checkin_penalty > 0 %}#}
+                                            {#<li>{{ 'hotels.can_cancel_to' | trans }} {{ reservationDetails.hours_before_checkin_penalty }} {{ 'hotels.hours_before' | trans }}.#}
+                                        {#{% endif %}#}
+                                        {#<li>#}
+                                        {#{% if reservationDetails.penalty.penalty_provider_amount is defined and reservationDetails.penalty.penalty_provider_amount > 0 %}#}
+                                            {#{{ 'hotels.cancellation_amount' | trans }} $ {{ reservationDetails.penalty.penalty_provider_amount }}#}
+                                        {#{% elseif reservationDetails.penalty.status == "NOT_ALLOW_BY_NOT_REFUNDABLE" %}#}
+                                            {#{{ 'hotels.not_cancelation' | trans }}.#}
+                                        {#{% else %}#}
+                                            {#{{ 'hotels.whitout_charges' | trans }}.#}
+                                        {#{% endif %}#}
+                                        {#</li>#}
+                                        {{ app.session.get('room_cancellation') }}
                                     </ul>
                                 </td>
                             </tr>
@@ -241,5 +350,18 @@
                 </tr>
             </table>
         </table>
+        <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+        <br>
+        <i class="fa fa-clock-o"></i> <em><small>{{ 'index.hotel_footer' | trans }}</small></em>
+        <br>
+        <em><small>{{ 'index.hotel_footer2' | trans }}</small></em>
+        </div>
+        {{ 'index.footer_copy' | trans }}
             <!--/100% background wrapper-->
+        <script>
+            $(document).ready(function(){
+                var str = $('#info').text();
+                $("#info").html( str.replace(/\n/g, "<br />"));
+            })
+        </script>
 </body>

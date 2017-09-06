@@ -9,7 +9,7 @@
     }
 
     .paddingSpecial{
-        padding: 0 15px 0 45px;
+        padding: 0 0 0 30px;
     }
 
     /*-- END GENERLS --*/
@@ -30,9 +30,9 @@
 
     .language select{
         height: 30px;
-        width:130px;
+        width: 90px;
         font-size: 12px;
-        padding: 0 15px;
+        padding: 0 10px;
         background-size: 15px;
         margin: 0 50px 0 auto;
     }
@@ -46,9 +46,9 @@
     }
 
     .socialMedia li{
-        margin-left: 25px;
-        height: 35px;
-        width: 35px;
+        margin-left: 5px;
+        /*height: 35px;
+        width: 35px;*/
     }
 
     .socialMedia li a{
@@ -66,7 +66,8 @@
     /*----- GO SLIDER -----*/
     .search{
         top: 130px;
-        left: 87px;
+        width: 950px;
+        margin-left: -475px;
     }
 
     .search .nav-tabs{
@@ -77,13 +78,13 @@
         margin-right: 5px;
     }
 
-    .search .tab-content{
+    .search .tab-pane{
         padding: 40px 20px 0 20px;
     }
 
     .search .tab-content h4{
-        font-size: 18px;
-        margin: 0 0 20px 0;
+        font-size: 12px;
+        margin: 0 0 10px 0;
     }
 
     .search .tab-content h4 span{
@@ -99,7 +100,7 @@
 
     .search .tab-content .city-input{
         height: 35px;
-        font-size: 16px;
+        font-size: 13px;
         padding: 0 0 0 35px;
     }
 
@@ -117,7 +118,7 @@
 
     .search .tab-content .btnModal{
         height: 35px;
-        font-size: 16px;
+        font-size: 12px;
         padding: 0 25px;
     }
 
@@ -182,14 +183,15 @@
 
     .search .tab-content .selectMoney select{
         height: 35px;
-        font-size: 16px;
+        font-size: 13px;
         padding: 0 15px;
     }
 
     .search .tab-content .btnSearch button{
         height: 40px;
         font-size: 16px;
-        width: 295px;
+        width: 130px;
+        margin-bottom: 40px;
     }
     /*----- END SLIDER -----*/
 
@@ -223,11 +225,11 @@
     /*----- END NAVBAR -----*/
     /*----- GO BREADCRUMB -----*/
     #breadcrumb{
-        padding: 15px 0;
+        padding: 13px 0;
     }
 
     #breadcrumb ol li a{
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #breadcrumb ol li.active{
@@ -247,7 +249,7 @@
 
     .message{
         padding: 40px 0;
-        font-size: 32px;
+        font-size: 25px;
     }
 
     #formSearch, #formFilters{
@@ -260,11 +262,16 @@
     }
 
     #formSearch .results p{
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #formSearch label{
-        font-size: 16px;
+        font-size: 14px;
+    }
+
+    #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
+        height: 35px;
+        font-size: 14px;
     }
 
     #formSearch .form-group{
@@ -272,29 +279,27 @@
     }
 
     #formSearch i{
-        bottom: 10px;
-        left: 30px;
-        font-size: 20px;
+        /*bottom: 19%;
+        left: 5%;*/
+        font-size: 16px;
     }
 
     #formSearch input{
-        height: 40px;
-        font-size: 16px;
-        padding-left: 50px;
+        font-size: 14px;
     }
 
     #formSearch .bottonSearch button{
-        height: 40px;
-        font-size: 16px;
+        height: 35px;
+        font-size: 14px;
     }
 
     #formFilters .titleFilters{
-        font-size: 34px;
+        font-size: 20px;
         margin: 0 0 40px 0;
     }
 
     #formFilters .boxFilter h4{
-        font-size: 16px;
+        font-size: 14px;
         padding: 20px 0 10px 0;
         margin-bottom: 20px;
     }
@@ -304,7 +309,7 @@
     }
 
     #formFilters .boxFilter label {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #formFilters .boxFilter .checkbox {
@@ -312,18 +317,18 @@
     }
 
     #formFilters .boxFilter .checkbox span{
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #formFilters .boxFilter .checkbox .cr {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
         padding: 2px;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     #formFilters .boxFilter .checkbox .cr .cr-icon {
-        font-size: 18px;
+        font-size: 12px;
     }
 
     #formFilters .boxFilter .rangePrice{
@@ -333,20 +338,20 @@
 
     /*----- GO LIST THUMBS HOTELS -----*/
     #thumbsSearch .filterThumb{
-        height: 60px;
+        height: 40px;
         margin-bottom: 40px;
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        height: 53px;
         padding: 0 30px;
-        font-size: 12px;
+        height: 34px;
+        font-size: 14px;
     }
 
     #thumbsSearch .filterThumb .caret {
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        border-top: 7px solid;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid;
         margin-left: 5px;
     }
 
@@ -356,43 +361,24 @@
     }
 
     #thumbHotel{
-        height: 210px;
+        /*height: 210px;*/
         margin-bottom: 30px;
-        border: #e1e1e1 4px solid;
     }
 
-    #thumbHotel .imgHotel{
-        height: 210px;
-    }
-
-    #thumbHotel .infoHotel{
-        margin: 15px 0;
-        padding: 0 15px;
-    }
-
-    #thumbHotel .infoHotel h4{
-        font-size: 22px;
-    }
-
-    #thumbHotel .infoHotel ul{
-        margin: 15px 0;
-    }
-
-    #thumbHotel .infoHotel li{
-        margin-right: 10px;
-    }
-
-    #thumbHotel .infoHotel li i{
+    #thumbHotel .infoHotel h4 a{
         font-size: 20px;
     }
 
-    #thumbHotel .infoHotel a{
-        font-size: 16px;
+    #thumbHotel .infoHotel li i.fa-star{
+        font-size: 15px;
     }
 
-    #thumbHotel .priceRoom{
-        margin: 15px 0;
-        padding: 17px 15px;
+    #thumbHotel .infoHotel a{
+        font-size: 15px;
+    }
+
+    #thumbHotel .priceRoom h4{
+        font-size: 20px;
     }
 
     #thumbHotel .priceRoom p{
@@ -400,14 +386,18 @@
     }
 
     #thumbHotel .priceRoom h5{
-        font-size: 24px;
-        margin: 30px 0;
+        font-size: 15px;
+        margin: 40px 0 0 0;
+    }
+
+    #thumbHotel .priceRoom h5 span{
+        font-size: 17px;
     }
 
     #thumbHotel .priceRoom button{
         font-size: 12px;
-        border-radius: 25px;
-        padding: 5px 15px;
+        padding: 15px;
+        margin-top: 40px;
     }
 
     #thumbsSearch .paginationList li a{
@@ -472,8 +462,7 @@
 
     #descriptionHotel .boxPrice button{
         font-size: 12px;
-        border-radius: 25px;
-        padding: 5px 15px;
+        padding: 15px;
     }
 
     #descriptionHotel .itemsHotel{
@@ -525,6 +514,10 @@
         padding: 3px 15px;
         margin-bottom: 5px;
     }
+
+    #descriptionHotel table td button{
+        padding: 15px;
+    }
     /*----- END DETAIL HOTEL -----*/
 
     /*----- GO CONTENT INFO -----*/
@@ -533,8 +526,12 @@
     }
 
     .promotions h1{
-        font-size: 32px;
+        font-size: 29px;
         padding: 0 0 30px 0;
+    }
+
+    .grid figure h2{
+        font-size: 23px;
     }
     /*----- END CONTENT INFO -----*/
 
@@ -545,11 +542,7 @@
     }
 
     #infoReserva .titleReserva, .datesPayment h5{
-        font-size: 18px;
-        margin: 15px 0;
-    }
-
-    #infoReserva img{
+        font-size: 16px;
         margin: 15px 0;
     }
 
@@ -559,24 +552,24 @@
     }
 
     #infoReserva p{
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 5px;
     }
 
     #infoReserva h3{
         padding: 15px;
-        font-size: 14px;
+        font-size: 10px;
         margin: 20px 0;
 
     }
 
     #infoReserva aside{
-        font-size: 14px;
+        font-size: 12px;
         margin-top: 20px;
     }
 
     #infoReserva .totalPayment h2{
-        font-size: 20px;
+        font-size: 16px;
     }
 
     #infoReserva .headerDetail{
@@ -594,7 +587,7 @@
     }
 
     #infoReserva .imgAeroline{
-        margin-bottom: 10px;
+        margin: 10px auto;
         padding: 5px 0;
     }
 
@@ -603,11 +596,11 @@
     }
 
     #processPayment .panel-heading{
-        padding: 20px 15px;
+        padding: 10px 15px;
     }
 
     #processPayment .panel-title{
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #processPayment .panel-body h5{
@@ -615,12 +608,10 @@
     }
 
     #processPayment .panel-body input{
-        height: 40px;
         margin-top: 10px;
     }
 
     #processPayment .panel-body select{
-        height: 40px;
         margin-top: 10px;
     }
 
@@ -645,7 +636,7 @@
     }
 
     #processPayment .datesPayment h2{
-        font-size: 26px;
+        font-size: 20px;
     }
 
     /*----- GO PROCESS PAYMENT RESERVATION -----*/
@@ -657,7 +648,7 @@
     }
 
     #thumbsFlights .panel-heading{
-        padding: 20px 15px;
+        padding: 0px 15px;
     }
 
     #thumbsFlights .paymentFlight{
@@ -675,25 +666,27 @@
 
     #thumbsFlights .paymentFlight button{
         font-size: 12px;
-        padding: 5px 15px;
+        padding: 15px;
     }
 
     #thumbsFlights .panel-heading h3{
         padding: 5px;
         font-size: 16px;
+        margin: 12px 0;
     }
 
     #thumbsFlights .panel-heading h6{
         font-size: 16px;
     }
 
-    #thumbsFlights .panel-heading p{
-        font-size: 14px;
+    #thumbsFlights .panel-heading h6 span{
+        font-size: 13px;
     }
 
     #thumbsFlights .panel-body button{
         font-size: 12px;
-        padding: 5px 15px;
+        padding: 15px 0;
+        text-align: center;
     }
 
     #thumbsFlights .panel-body  label {
@@ -719,12 +712,12 @@
     }
 
     .footer h3{
-        font-size: 30px;
+        font-size: 20px;
         padding-bottom: 15px;
     }
 
     .footer p{
-        font-size: 19px;
+        font-size: 13px;
         margin-top: 22px;
         line-height: 22px;
     }
@@ -742,9 +735,9 @@
     }
 
     .socialMediaFooter li{
-        margin: 0 13px 0 0;
-        height: 35px;
-        width: 35px;
+        margin: 0 5px 0 0;
+        /*height: 35px;
+        width: 35px;*/
     }
 
     .socialMediaFooter li a{
@@ -763,11 +756,11 @@
     }
 
     .associations ul{
-        padding: 15px 0 0 0;
+        padding: 6px 0 0 0;
     }
 
     .associations .linkConditions{
-        font-size: 12px;
+        font-size: 10px;
         padding: 25px 0 23px 0;
     }
 
@@ -777,7 +770,7 @@
     }
 
     .copyright p{
-        font-size: 12px;
+        font-size: 10px;
     }
     /*----- END FOOTER -----*/
 }
@@ -785,7 +778,7 @@
 @media only screen and (max-width: 1199px){
 
     .language select{
-        background-size: 2.2vw !important;
+        background-size: 1.2vw !important;
     }
 
     .search .tab-content .selectMoney select{
@@ -797,14 +790,8 @@
     }
 }
 
-/*Tablets*/
-@media only screen and (min-width: 768px) and (max-width: 1023px){
-
-
-}
-
 /*Mobile*/
-@media only screen and (max-width: 1023px){
+@media only screen and (max-width: 1024px){
 
     .associations .linkConditions{
         float: none;
@@ -813,9 +800,30 @@
     .associations{
         text-align: center;
     }
+
+    .footer p{
+        font-size: 1.20vw !important;
+    }
+
+    #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
+        font-size: 2vw;
+    }
+
+    .form-group label{
+        font-size: 1.1vw;
+    }
+
 }
 
 @media only screen and (max-width: 767px){
+
+    .logo img{
+        width: 90px;
+    }
+
+    #banner{
+        height: 180px;
+    }
 
     .associations li img{
         width: 10vw;
@@ -826,8 +834,60 @@
         display: none;
     }
 
-    .socialMediaFooter li a{
-        top: 0.18vw;
+    .message{
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    #thumbsSearch .filterThumb{
+        border-width: 2px 1px 1px;
+    }
+
+    #thumbsSearch .filterThumb .btnDropdown{
+        font-size: 8px !important;
+    }
+
+    #thumbsSearch .filterThumb .caret{
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        border-top: 3px solid;
+    }
+
+    #thumbHotel{
+        width: 100%;
+        margin: 30px 0 0 0 !important;
+    }
+
+    #thumbHotel .infoHotel h4{
+        display: grid;
+    }
+
+    #thumbHotel .infoHotel h4 a, #thumbHotel .infoHotel span, #thumbHotel .infoHotel a, #thumbHotel .infoHotel li i.fa-star, #thumbHotel .priceRoom p{
+        font-size: 12px;
+    }
+
+    #thumbHotel .infoHotel ul{
+        margin: 0 !important;
+    }
+
+    #thumbHotel .infoHotel ul li{
+        vertical-align: super;
+    }
+
+    #thumbHotel .priceRoom{
+        text-align: center;
+    }
+
+    #thumbHotel .priceRoom h4{
+        font-size: 14px;
+    }
+
+    #thumbHotel .priceRoom h5, #thumbHotel .priceRoom h5 span, #thumbHotel .priceRoom button{
+        font-size: 10px;
+    }
+
+    #thumbHotel .infoHotel, #thumbHotel .priceRoom{
+        padding: 15px !important;
     }
 
     #thumbHotel .infoHotel .modalMap {
@@ -837,6 +897,201 @@
     #thumbHotel .infoHotel ul{
         margin: 2.25vw 0;
     }
+
+    .socialMedia ul{
+        float: none;
+        text-align: center;
+    }
+
+    .language select{
+        margin: 10px auto;
+        font-size: 8px;
+        height: 20px;
+        width: 80px;
+    }
+
+    #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
+        font-size: 3vw;
+    }
+
+    #processPayment .panel-body .bg-success{
+        font-size: 2.6vw;
+        text-align: center;
+    }
+
+    .form-group label{
+        font-size: 13px;
+    }
+
+    .buttonPayment button {
+        font-size: 11px !important;
+        height: 25px !important;
+        padding: 0 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .footer h3{
+        font-size: 10px !important;
+    }
+
+    .footer p {
+        font-size: 8px !important;
+        line-height: 10px !important;
+    }
+
+    .footer .btnContact {
+        font-size: 6px;
+        height: 15px;
+        width: 80px;
+    }
+
+    .associations .linkConditions{
+        font-size: 5px !important;
+    }
+
+    .copyright p{
+        font-size: 4px !important;
+    }
+
+    #infoReserva{
+        padding: 15px !important;
+    }
+
+    #infoReserva .imgAeroline{
+        margin: 10px auto !important;
+    }
+
+    #infoReserva .infoDetail h6{
+        font-size: 16px !important;
+    }
+
+    #infoReserva li{
+        font-size: 13px !important;
+    }
+
+    #formSearch select{
+        font-size: 13px;
+    }
+
+    #formSearch, #formFilters{
+        padding: 15px;
+    }
+
+    #descriptionHotel .titleHotel{
+        font-size: 19px;
+    }
+
+    #descriptionHotel ul.starsHotel li{
+        font-size: 12px;
+    }
+
+    #descriptionHotel .adress{
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    #descriptionHotel .descriptionHotel p{
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    #descriptionHotel .itemsHotel h5{
+        font-size: 10px !important;
+    }
+
+    #descriptionHotel .titleSection{
+        font-size: 12px !important;
+    }
+
+    #descriptionHotel .itemsHotel ul li{
+        font-size: 9px !important;
+    }
+
+    #descriptionHotel .boxPrice p{
+        font-size: 12px !important;
+    }
+
+    #descriptionHotel .boxPrice h5{
+        font-size: 14px !important;
+    }
+
+    #descriptionHotel .boxPrice button{
+        font-size: 10px !important;
+        width: 100px !important;
+    }
+
+    #breadcrumb ol li a, .breadcrumb li + li:before, #breadcrumb ol li.active{
+        font-size: 8px !important;
+    }
+
+    .socialMedia li{
+        vertical-align: super;
+    }
+
+    .socialMediaFooter li{
+        vertical-align: top;
+    }
+
+    .socialMediaFooter li a , .socialMedia li a{
+        height: 12px !important;
+        width: 12px !important;
+    }
+
+    .socialMediaFooter li a i, .socialMedia li a i{
+        font-size: 6px !important;
+    }
+
+    #thumbsFlights .panel-body p, #thumbsFlights .panel-body label, #thumbsFlights .panel-body button{
+        font-size: 10px;
+    }
+
+    #thumbsFlights .panel-body [type="radio"] + span::before{
+        height: 10px;
+        width: 10px;
+    }
+
+    #thumbsFlights .panel-body button{
+        margin-top: 10px;
+    }
+
+    #thumbsFlights .panel-heading{
+        padding: 5px 10px;
+    }
+
+    #thumbsFlights .panel-heading h3 {
+        font-size: 7px;
+        margin: 0;
+        padding: 5px;
+    }
+
+    #thumbsFlights .panel-heading h6{
+        margin: 0;
+        font-size: 7px;
+    }
+
+    #thumbsFlights .panel-heading h6 span{
+        font-size: 7px;
+        line-height: 9px;
+    }
+
+    #thumbsFlights .paymentFlight{
+        position: inherit;
+    }
+
+    #thumbsFlights .paymentFlight p{
+        font-size: 12px;
+        text-align: center;
+    }
+
+    #thumbsFlights .paymentFlight h5{
+        font-size: 14px;
+    }
+
+    #thumbsFlights .paymentFlight button{
+        max-width: 90px;
+        font-size: 10px;
+        padding: 5px 10px;
+    }
 }
 
 @media only screen and (max-width: 415px){
@@ -845,20 +1100,12 @@
         margin: 0;
     }
 
-    #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
-        height: 5.33vw;
-    }
-
     #formSearch .results p{
         font-size: 2.5vw;
     }
 
     #formSearch label, #formFilters label, #formFilters .boxFilter h4, #formSearch button, #formFilters button{
         font-size: 3.33vw;
-    }
-
-    #formSearch select{
-        font-size: 2.33vw;
     }
 
     #formFilters .boxFilter .checkbox span{
@@ -873,4 +1120,9 @@
         bottom: 1.83vw;
         left: 5.5vw;
     }
+
+    #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
+        font-size: 4vw;
+    }
+
 }
