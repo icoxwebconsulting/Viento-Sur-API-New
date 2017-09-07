@@ -1,0 +1,55 @@
+<tr>
+    <td>{{ entity.id }}</td>
+    <td>{{ entity.created | ago }}</td>
+    <td>
+        {% if entity.hotel %}
+            {{ entity.hotel.name }}
+        {% endif %}
+    </td>
+    <td>{{ entity.name }}</td>
+    <td>
+        {% if entity.paymentType %}
+            {% if entity.paymentType.name == 'at_destination' %}
+                {{ 'hotels.pay_in_destiny' | trans }}
+            {% endif %}
+        {% endif %}
+    </td>
+    <td>
+        {% if entity.mealPlan %}
+            {% if entity.mealPlan.name == 'D' %}
+                {{ 'hotels.drinks_included' | trans }}
+            {% elseif entity.mealPlan.name == 'BRA' %}
+                {{ 'hotels.american_breakfast' | trans }}
+            {% elseif entity.mealPlan.name == 'BRL' %}
+                {{ 'hotels.breakfast_carte' | trans }}
+            {% elseif entity.mealPlan.name == 'BRB' %}
+                {{ 'hotels.breakfast_buffet' | trans }}
+            {% elseif entity.mealPlan.name == 'BRC' %}
+                {{ 'hotels.breakfast_continental' | trans }}
+            {% elseif entity.mealPlan.name == 'M' %}
+                {{ 'hotels.half_pension' | trans }}
+            {% elseif entity.mealPlan.name == 'H' %}
+                {{ 'hotels.search_menu.only_hosting' | trans }}
+            {% elseif entity.mealPlan.name == 'F' %}
+                {{ 'hotels.full_pension' | trans }}
+            {% elseif entity.mealPlan.name == 'A' %}
+                {{ 'hotels.all_inclusive' | trans }}
+            {% endif %}
+        {% endif %}
+    </td>
+    <td>{{ entity.availability }}</td>
+    <td>{{ entity.capacity }}</td>
+    <td>{{ entity.nightlyPrice }}</td>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <td>
+        {% if entity.createdBy %}
+            {{ entity.createdBy.username }}
+        {% endif %}
+    </td>
+    {% endif %}
+    <td>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('room_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        <a href="{{ path('room_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+        <a href="{{ path('room_picture_list', {id: entity.id}) }}" data-toggle="tooltip" title="Gallery"><i class="fa fa-picture-o"></i></a>
+    </td>
+</tr>

@@ -31,6 +31,7 @@ class Hotel
     /**
      * @var string
      * @Gedmo\Translatable
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -44,13 +45,14 @@ class Hotel
 
     /**
      * @var string
+     * @Assert\NotBlank()
      * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
 
     /**
      * @var integer
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="stars", type="integer", nullable=true)
      */
     private $stars;
@@ -64,14 +66,14 @@ class Hotel
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="latitude", type="string", length=255)
      */
     private $latitude;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="longitude", type="string", length=255)
      */
     private $longitude;

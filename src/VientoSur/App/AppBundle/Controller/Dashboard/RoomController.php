@@ -18,16 +18,15 @@ use VientoSur\App\AppBundle\Form\RoomsType;
 class RoomController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="room_list")
      * @Method("GET")
      * @return response
      */
     public function indexAction()
     {
-        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository("VientoSurAppAppBundle:Room")->findBy(array('created_by' => $user->getId()));
+        $entities = $em->getRepository("VientoSurAppAppBundle:Room")->findAll();
 
         return $this->render(':admin/room:list.html.twig', array(
             'entities' => $entities
@@ -36,14 +35,16 @@ class RoomController extends Controller
 
     /**
      * @param Request $request
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/new", name="room_new")
      * @return response
      */
     public function newAcion(Request $request)
     {
         $entity = new Room();
-        $form = $this->createForm(new RoomsType(), $entity);
+        $form = $this->createForm(new RoomsType(), $entity, array(
+            'id' => $this->getUser()->getId()
+        ));
 
         if($form->handleRequest($request)->isValid())
         {
@@ -68,7 +69,7 @@ class RoomController extends Controller
     /**
      * @param Request $request
      * @param Room $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/edit/{id}", name="room_edit")
      * @return response
      */
@@ -76,7 +77,10 @@ class RoomController extends Controller
     {
         $request->setMethod('PATCH');
 
-        $form = $this->createForm(new RoomsType(), $entity, ["method" => $request->getMethod()]);
+        $form = $this->createForm(new RoomsType(), $entity, [
+            "method" => $request->getMethod(),
+            "id" => $this->getUser()->getId()
+            ]);
         if ($form->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()->getManager();
@@ -96,7 +100,7 @@ class RoomController extends Controller
 
     /**
      * @param Room $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/delete/{id}", name="room_delete")
      * @return response
      */

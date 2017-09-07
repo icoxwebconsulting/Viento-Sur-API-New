@@ -29,18 +29,21 @@ class Promotions
 
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
 
     /**
      * @Gedmo\Translatable
+     * @Assert\NotBlank()
      * @ORM\Column(name="description", type="text")
      */
     protected $description;
 
     /**
-     * @ORM\Column(name="link", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="link", type="string", length=255)
      */
     protected $link;
 

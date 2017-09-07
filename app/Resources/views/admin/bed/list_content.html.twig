@@ -1,0 +1,33 @@
+<tr>
+    <td>{{ entity.id }}</td>
+    <td>{{ entity.created | ago }}</td>
+    <td>
+        {% if entity.room %}
+            {{ entity.room.name }}
+        {% endif %}
+    </td>
+    <td>{{ entity.name }}
+    </td>
+    <td>
+        {% if entity.bedType %}
+            {{ entity.bedType.name }}
+        {% endif %}
+    </td>
+    <td>
+        {% if entity.bedType %}
+            {{ entity.bedType.size }}
+        {% endif %}
+    </td>
+    <td>{{ entity.quantity }}</td>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <td>
+        {% if entity.createdBy %}
+            {{ entity.createdBy.username }}
+        {% endif %}
+    </td>
+    {% endif %}
+    <td>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('bed_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        <a href="{{ path('bed_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+    </td>
+</tr>
