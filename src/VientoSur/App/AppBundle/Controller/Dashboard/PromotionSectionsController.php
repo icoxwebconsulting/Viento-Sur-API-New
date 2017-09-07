@@ -19,7 +19,7 @@ use VientoSur\App\AppBundle\Form\PromotionSectionsType;
 class PromotionSectionsController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="promotion_sections_list")
      */
     public function indexAction()
@@ -33,7 +33,7 @@ class PromotionSectionsController extends Controller
 
     /**
      * @param Request $request
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/new", name="promotion_sections_new")
      * @return array
      */
@@ -62,7 +62,7 @@ class PromotionSectionsController extends Controller
     /**
      * @param Request $request
      * @param PromotionSections $entity entity
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/edit/{id}", name="promotion_sections_edit")
      * @return array
      */
@@ -90,7 +90,7 @@ class PromotionSectionsController extends Controller
 
     /**
      * @param PromotionSections $entity entity
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/delete/{id}", name="promotion_sections_delete")
      * @return route
      */
