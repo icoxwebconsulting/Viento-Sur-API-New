@@ -2,7 +2,9 @@
 
 namespace VientoSur\App\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -14,12 +16,20 @@ class BedType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $id = $options['id'];
+
         $builder
             ->add(
                 'room',
                 EntityType::class,
                 array(
-                    'class' => 'VientoSur\App\AppBundle\Entity\Room'
+                    'class' => 'VientoSur\App\AppBundle\Entity\Room',
+                    'query_builder' => function (EntityRepository $er) use ($id){
+                        return $er->createQueryBuilder('r')
+                            ->where('r.created_by = :id')
+                            ->orderBy('r.name', 'ASC')
+                            ->setParameter('id', $id);
+                    }
                 )
             )
             ->add(
@@ -35,7 +45,13 @@ class BedType extends AbstractType
             )
             ->add(
                 'quantity',
-                TextType::class
+                IntegerType::class,
+                array(
+                    'attr' => array(
+                        'min' => 1,
+                        'max' => 10
+                    )
+                )
             );
     }
 
@@ -45,7 +61,8 @@ class BedType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Bed::class
+            'data_class' => Bed::class,
+            'id' => null
         ));
     }
 

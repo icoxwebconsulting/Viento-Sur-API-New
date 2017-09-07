@@ -4,6 +4,7 @@ namespace VientoSur\App\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 
 /**
@@ -23,7 +24,8 @@ class PromotionSections
     protected $id;
 
     /**
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
 

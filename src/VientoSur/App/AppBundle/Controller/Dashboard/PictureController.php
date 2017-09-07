@@ -22,7 +22,7 @@ class PictureController extends Controller
 {
     /**
      * @param Hotel $hotel
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/hotel/{id}", name="hotel_picture_list")
      * @Method("GET")
      * @return response
@@ -39,7 +39,7 @@ class PictureController extends Controller
 
     /**
      * @param Hotel $hotel
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/hotel-picture/new/{id}", name="hotel_picture_new")
      * @return response
      */
@@ -65,7 +65,7 @@ class PictureController extends Controller
 
     /**
      * @param Hotel $hotel Picture $picture
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/hotel-picture/{hotel}/delete/{picture}", name="hotel_picture_delete")
      * @return response
      */
@@ -84,7 +84,7 @@ class PictureController extends Controller
 
     /**
      * @param Room $room
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/room/{id}", name="room_picture_list")
      * @Method("GET")
      * @return response
@@ -101,7 +101,7 @@ class PictureController extends Controller
 
     /**
      * @param Room $room
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/room-picture/new/{id}", name="room_picture_new")
      * @return response
      */
@@ -127,7 +127,7 @@ class PictureController extends Controller
 
     /**
      * @param Room $room Picture $picture
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/room-picture/{room}/delete/{picture}", name="room_picture_delete")
      * @return response
      */
@@ -166,7 +166,7 @@ class PictureController extends Controller
 //    }
 
 //    /**
-//     * @Security("has_role('ROLE_USER')")
+//     * @Security("has_role('ROLE_HOTELIER')")
 //     * @Route("/photo/", name="photo_list")
 //     * @Method("GET")
 //     * @return response

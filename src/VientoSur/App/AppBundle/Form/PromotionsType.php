@@ -2,6 +2,7 @@
 
 namespace VientoSur\App\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -16,6 +17,8 @@ class PromotionsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $id = $options['id'];
+
         $builder
             ->add(
                 'name',
@@ -56,6 +59,12 @@ class PromotionsType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => 'VientoSur\App\AppBundle\Entity\PromotionSections',
+                    'query_builder' => function (EntityRepository $er) use ($id) {
+                        return $er->createQueryBuilder('ps')
+                            ->where('ps.created_by = :id')
+                            ->orderBy('ps.title', 'ASC')
+                            ->setParameter('id', $id);
+                    }
                 )
             );
     }
@@ -66,7 +75,8 @@ class PromotionsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VientoSur\App\AppBundle\Entity\Promotions'
+            'data_class' => 'VientoSur\App\AppBundle\Entity\Promotions',
+            'id' => null
         ));
     }
 

@@ -19,7 +19,7 @@ use VientoSur\App\AppBundle\Form\PromotionsType;
 class PromotionsController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="promotion_list")
      */
     public function indexAction()
@@ -33,14 +33,16 @@ class PromotionsController extends Controller
 
     /**
      * @param Request $request
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/new", name="promotion_new")
      * @return array
      */
     public function newAcion(Request $request)
     {
         $entity = new Promotions();
-        $form = $this->createForm(new PromotionsType(), $entity);
+        $form = $this->createForm(new PromotionsType(), $entity, array(
+            'id' => $this->getUser()->getId()
+        ));
         
         if($form->handleRequest($request)->isValid())
         {
@@ -70,7 +72,7 @@ class PromotionsController extends Controller
     /**
      * @param Request $request
      * @param Promotions $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/edit/{id}", name="promotion_edit")
      * @return array
      */
@@ -78,7 +80,10 @@ class PromotionsController extends Controller
     {
         $request->setMethod('PATCH');
 
-        $form = $this->createForm(new PromotionsType(), $entity, ["method" => $request->getMethod()]);
+        $form = $this->createForm(new PromotionsType(), $entity, [
+            "method" => $request->getMethod(),
+            "id" => $this->getUser()->getId()
+        ]);
         if ($form->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()->getManager();
@@ -104,7 +109,7 @@ class PromotionsController extends Controller
 
     /**
      * @param Promotions $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/delete/{id}", name="promotion_delete")
      * @return route
      */

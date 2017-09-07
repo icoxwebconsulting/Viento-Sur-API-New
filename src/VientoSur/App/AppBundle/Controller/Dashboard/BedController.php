@@ -19,16 +19,15 @@ use VientoSur\App\AppBundle\Form\BedType;
 class BedController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="bed_list")
      * @Method("GET")
      * @return response
      */
     public function indexAction()
     {
-        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository("VientoSurAppAppBundle:Bed")->findBy(array('created_by' => $user->getId()));
+        $entities = $em->getRepository("VientoSurAppAppBundle:Bed")->findAll();
 
         return $this->render(':admin/bed:list.html.twig', array(
             'entities' => $entities
@@ -37,14 +36,16 @@ class BedController extends Controller
 
     /**
      * @param Request $request
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/new", name="bed_new")
      * @return response
      */
     public function newAcion(Request $request)
     {
         $entity = new Bed();
-        $form = $this->createForm(new BedType(), $entity);
+        $form = $this->createForm(new BedType(), $entity, array(
+            'id' => $this->getUser()->getId()
+        ));
 
         if($form->handleRequest($request)->isValid())
         {
@@ -66,7 +67,7 @@ class BedController extends Controller
     /**
      * @param Request $request
      * @param Bed $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/edit/{id}", name="bed_edit")
      * @return response
      */
@@ -74,7 +75,10 @@ class BedController extends Controller
     {
         $request->setMethod('PATCH');
 
-        $form = $this->createForm(new BedType(), $entity, ["method" => $request->getMethod()]);
+        $form = $this->createForm(new BedType(), $entity, [
+            "method" => $request->getMethod(),
+            "id" => $this->getUser()->getId()
+        ]);
         if ($form->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()->getManager();
@@ -94,7 +98,7 @@ class BedController extends Controller
 
     /**
      * @param Bed $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/delete/{id}", name="bed_delete")
      * @return response
      */

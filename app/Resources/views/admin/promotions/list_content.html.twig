@@ -1,0 +1,32 @@
+<tr>
+    <td>{{ entity.id }}</td>
+    <td>{{ entity.created | ago }}</td>
+    <td>{{ entity.name }}</td>
+    <td>
+        {% if entity.section %}
+            {{ entity.section.title }}
+        {% endif %}
+    </td>
+    <td><a href="{{ entity.link }}" target="_blank"><i class="fa fa-link"></i></a></td>
+    <td>
+        {% if entity.imageName %}
+            <img src="{{asset(vich_uploader_asset(entity, 'image')) }}" style="width: 100px; height: 100px;" alt="" class="img-avatar">
+        {% endif %}
+    </td>
+    <td>
+        {% if entity.status %}
+            {{ entity.status.name }}
+        {% endif %}
+    </td>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <td>
+        {% if entity.createdBy %}
+            {{ entity.createdBy.username }}
+        {% endif %}
+    </td>
+    {% endif %}
+    <td>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('promotion_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        <a href="{{ path('promotion_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+    </td>
+</tr>

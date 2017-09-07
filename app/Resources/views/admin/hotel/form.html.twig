@@ -40,30 +40,17 @@
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="email">{{ 'hotels.search_menu.type' | trans }}</label>
                     <div class="col-md-9">
-                        {{ form_widget(form.hotelTypes, { 'attr': { 'class': 'form-control'}}) }}
+                        {{ form_widget(form.hotelTypes, { 'attr': { 'class': 'form-control', 'style': 'display:none;'}}) }}
+                        <select id="hotelType" class="form-control">
+                            {% for key,val in form.hotelTypes.vars.choices %}
+                                {% set label = 'admin.hotel_type.'~val.label %}
+                                <option value="{{ val.value }}" {{  form.hotelTypes.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.hotelTypes.vars.value ? ' selected ' : '') }}>{{ label | trans }}</option>
+                            {% endfor %}
+                        </select>
+
                     </div>
                     {{ form_errors(form.hotelTypes) }}
                 </div>
-                   {#<div class="form-group row">#}
-                    {#<div class="col-md-9">#}
-                        {#{% for hotelTypes in form.hotelTypes.children %}#}
-                            {#{{ form_widget(hotelTypes, {'attr' : {'checked':false}}) }}#}
-                            {#{{ form_label(hotelTypes) }}#}
-                        {#{% endfor %}#}
-                    {#</div>#}
-                {#</div>#}
-               {#{% set label = '' %}#}
-               {#{% set labelb = '' %}#}
-    {#{% for choice in form.hotelTypes.vars.choices %}#}
-    {#{{ dump(choice) }}#}
-        {#{% if choice.value == form.hotelTypes.vars.value %}#}
-            {#{% set label = 'admin.hotel_type.'~choice.label %}#}
-            {#{% set labelb = label | trans %}#}
-        {#{% endif %}#}
-    {#{% endfor %}#}
-
-
-    {#<h1 id="test">{{ labelb }}</h1>#}
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="col-md-3 form-control-label" for="search-address">{{ 'hotels.address' | trans }}</label>
@@ -101,7 +88,7 @@
             </div>
             <div class="card-footer">
                 <a href="{{ path('hotel_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
             {{ form_end(form)}}
         </div>
@@ -249,6 +236,23 @@
                 $(selector).slideToggle();
                 $('.' + type + '-view-toggle').toggleClass('hide')
             });
+
+            var checkbox_required = $('input[type="checkbox"]');
+
+            checkbox_required.prop('required', true);
+
+            checkbox_required.on('click', function(){
+                if (checkbox_required.is(':checked')) {
+                    checkbox_required.prop('required', false);
+                } else {
+                    checkbox_required.prop('required', true);
+                }
+            });
+
+            $('#hotelType').change(function(){
+                var id = $( this ).val();
+                $('#appbundle_hotel_hotelTypes').val(id)
+            })
         })
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>

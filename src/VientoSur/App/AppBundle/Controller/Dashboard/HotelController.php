@@ -21,16 +21,15 @@ use VientoSur\App\AppBundle\Form\PictureType;
 class HotelController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="hotel_list")
      * @Method("GET")
      * @return response
      */
     public function indexAction()
     {
-        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findBy(array('created_by' => $user->getId()));
+        $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
         return $this->render(':admin/hotel:list.html.twig', array(
             'entities' => $entities
         ));
@@ -38,7 +37,7 @@ class HotelController extends Controller
 
     /**
      * @param Request $request
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/new", name="hotel_new")
      * @return response
      */
@@ -54,12 +53,9 @@ class HotelController extends Controller
 
         if($form->handleRequest($request)->isValid())
         {
-//            $image = $form->get('image')->getData();
-//
-//            if($image != NULL)
-//            {
-//                $entity->setImageName($image);
-//            }
+//            echo "<pre>".print_r($request)."</pre>";die();
+//            $entity->setHotelTypes();
+            $entity->setPercentageGain(0);
             $entity->setOrigen('VS');
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
@@ -88,18 +84,22 @@ class HotelController extends Controller
     /**
      * @param Request $request
      * @param Hotel $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/edit/{id}", name="hotel_edit")
      * @return response
      */
     public function putAction(Request $request, Hotel $entity)
     {
         $request->setMethod('PATCH');
+        $em = $this->getDoctrine()->getManager();
+
+        $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();
+        $amenityHotels = $em->getRepository('VientoSurAppAppBundle:AmenityHotel')->findAll();
 
         $form = $this->createForm(new HotelFormType(), $entity, ["method" => $request->getMethod()]);
         if ($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
+
             $em->persist($entity);
             $em->flush();
             $this->addFlash(
@@ -110,13 +110,15 @@ class HotelController extends Controller
         }
         return $this->render(':admin/hotel:form.html.twig', array(
             'form' => $form->createView(),
-            'entity' => $entity
-        ));
+            'entity' => $entity,
+            'amenities' => $amenities,
+            'amenityHotels' => $amenityHotels
+    ));
     }
 
     /**
      * @param Hotel $entity entity
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/delete/{id}", name="hotel_delete")
      * @return response
      */

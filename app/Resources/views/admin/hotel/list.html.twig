@@ -22,43 +22,24 @@
                         <th>{{ 'admin.period' | trans }}</th>
                         <th>{{ 'admin.name' | trans }}</th>
                         <th>{{ 'hotels.stars' | trans }}</th>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <th>{{ 'admin.percentage_gain' | trans }}</th>
-                            <th>{{ 'admin.origin' | trans }}</th>
-                        {% endif %}
                         <th>{{ 'hotels.search_menu.type' | trans }}</th>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th>{{ 'admin.percentage_gain' | trans }}</th>
+                        <th>{{ 'admin.origin' | trans }}</th>
                         <th>{{ 'admin.created_by' | trans }}</th>
+                        {% endif %}
                         <th>{{ 'admin.actions' | trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {%  for entity in entities %}
-                        <tr>
-                            <td>{{ entity.id }}</td>
-                            <td>{{ entity.created | ago }}</td>
-                            <td>{{ entity.name }}</td>
-                            <td>{{ entity.stars }}</td>
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <td>{{ entity.percentageGain }}</td>
-                                <td>{{ entity.origen }}</td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {% include ':admin/hotel:list_content.html.twig' %}
+                        {% elseif is_granted('ROLE_HOTELIER') %}
+                            {% if entity.createdBy.id == app.user.id %}
+                                {% include ':admin/hotel:list_content.html.twig' %}
                             {% endif %}
-                            <td>
-                                {% if entity.hotelTypes %}
-                                    {% set label = 'admin.hotel_type.'~entity.hotelTypes.name %}
-                                    {{ label | trans  }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if entity.createdBy %}
-                                    {{ entity.createdBy.username }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('hotel_delete', {id: entity.id}) }}" data-toggle="tooltip" title="delete"><i class="fa fa-trash"></i></a>
-                                <a href="{{ path('hotel_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
-                                <a href="{{ path('hotel_picture_list', {id: entity.id}) }}" data-toggle="tooltip" title="Gallery"><i class="fa fa-picture-o"></i></a>
-                            </td>
-                        </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                 </table>

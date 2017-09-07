@@ -4,12 +4,11 @@ namespace VientoSur\App\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use VientoSur\App\AppBundle\Entity\Hotel;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use VientoSur\App\AppBundle\Entity\HotelType;
@@ -46,32 +45,23 @@ class HotelFormType extends AbstractType
                 'longitude',
                 HiddenType::class
             )
-//            ->add(
-//                'image',
-//                VichImageType::class,
-//                array(
-//                    'label' => false,
-//                    'required' => false
-//                )
-//            )
             ->add(
                 'stars',
-                TextType::class
+                IntegerType::class,
+                array(
+                    'attr' => array(
+                        'min' => 1,
+                        'max' => 5
+                    )
+                )
             )
             ->add(
                 'hotelTypes',
                 EntityType::class,
                 array(
-                    'class' => 'VientoSur\App\AppBundle\Entity\HotelType',
+                    'class' => 'VientoSur\App\AppBundle\Entity\HotelType'
                 )
             )
-//            ->add(
-//                'section',
-//                EntityType::class,
-//                array(
-//                    'class' => 'VientoSur\App\AppBundle\Entity\PromotionSections',
-//                )
-//            )
         ;
     }
 
