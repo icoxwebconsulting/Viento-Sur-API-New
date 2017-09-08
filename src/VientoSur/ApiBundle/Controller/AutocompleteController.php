@@ -60,9 +60,24 @@ class AutocompleteController extends FOSRestController implements ClassResourceI
             'hotel_result' => '5'
         );
 
-        $results = $this->get('despegar')->autocomplete($urlParams);
-        $response = new JsonResponse($results);
+//        $results = $this->get('despegar')->autocomplete($urlParams);
+//        $response = new JsonResponse($results);
 
-        return $response;
+        $data = $this->get('despegar')->autocomplete($urlParams);
+
+        if (!in_array('code', $data)) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
+        return new JsonResponse($results);
     }
 }

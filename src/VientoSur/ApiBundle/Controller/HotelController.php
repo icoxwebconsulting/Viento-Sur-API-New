@@ -168,37 +168,37 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         /**
          * Parameters
          */
-        $countryCode        = $request->query->get('country_code');
-        $checkinDate        = $request->query->get('checkin_date');
-        $checkoutDate       = $request->query->get('checkout_date');
-        $distributions      = $request->query->get('distribution');
-        $destination        = $request->query->get('destination');
-        $language           = $request->query->get('language');
-        $currency           = $request->query->get('currency');
-        $sorting            = $request->query->get('sorting');
-        $amenities          = $request->query->get('amenities');
-        $hotelType          = $request->query->get('hotel_type');
-        $paymentType        = $request->query->get('payment_type');
-        $mealPlans          = $request->query->get('meal_plans');
-        $stars              = $request->query->get('stars');
-        $zones              = $request->query->get('zones');
-        $profiles           = $request->query->get('profiles');
-        $hotelChains        = $request->query->get('hotel_chains');
-        $totalPriceRange    = $request->query->get('total_price_range');
+        $countryCode = $request->query->get('country_code');
+        $checkinDate = $request->query->get('checkin_date');
+        $checkoutDate = $request->query->get('checkout_date');
+        $distributions = $request->query->get('distribution');
+        $destination = $request->query->get('destination');
+        $language = $request->query->get('language');
+        $currency = $request->query->get('currency');
+        $sorting = $request->query->get('sorting');
+        $amenities = $request->query->get('amenities');
+        $hotelType = $request->query->get('hotel_type');
+        $paymentType = $request->query->get('payment_type');
+        $mealPlans = $request->query->get('meal_plans');
+        $stars = $request->query->get('stars');
+        $zones = $request->query->get('zones');
+        $profiles = $request->query->get('profiles');
+        $hotelChains = $request->query->get('hotel_chains');
+        $totalPriceRange = $request->query->get('total_price_range');
 
         /**
          * Processed date
          */
 
-        if(!$currency){
+        if (!$currency) {
             $currency = 'ARS';
         }
 
-        if(!$language){
+        if (!$language) {
             $language = 'es';
         }
 
-        if(!$sorting){
+        if (!$sorting) {
             $sorting = 'best_selling_descending';
         }
 
@@ -216,23 +216,116 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             'hotel_type' => $hotelType,
             'classify_roompacks_by' => 'none',
             'roompack_choices' => 'recommended',
-            'payment_type'=>$paymentType,
-            'meal_plans'=>$mealPlans,
-            'stars'=>$stars,
-            'zones'=>$zones,
-            'profiles'=>$profiles,
-            'hotel_chains'=>$hotelChains,
-            'total_price_range'=>$totalPriceRange,
-            'offset' => '0',
-            'limit' => '25'
+            'payment_type' => $paymentType,
+            'meal_plans' => $mealPlans,
+            'stars' => $stars,
+            'zones' => $zones,
+            'profiles' => $profiles,
+            'hotel_chains' => $hotelChains,
+            'total_price_range' => $totalPriceRange,
+            'offset' => '0'/*,
+            'limit' => '25'*/
         );
 
 //        echo "<pre>" . print_r($urlParams, true) . "</pre>";
 //        die();
-        $results = $this->get('despegar')->getHotelsAvailabilities($urlParams);
+
+
+        $data = $this->get('despegar')->getHotelsAvailabilities($urlParams);
+
+        if (!isset($data['code'])) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
         $response = new JsonResponse($results);
 
         return $response;
+    }
+
+    /**
+     * Get hotel details as available hotels
+     *
+     * @param Request $request
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/hotels/")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get room availability for hotel",
+     *  parameters={
+     *     {
+     *          "name"="ids",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0000,0001,0002",
+     *          "description"="List ids."
+     *      },*     {
+     *          "name"="language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts involved in the response."
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getHotelsAction(Request $request)
+    {
+        /**
+         * Parameters
+         */
+        $ids = $request->query->get('ids');
+        $language = $request->query->get('language');
+
+        /*echo "<pre>" . print_r($ids, true) . "</pre>";
+        die();*/
+
+        if ($ids == '' || $language == '') {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        } else {
+            $urlParams = array(
+                'ids' => $ids,
+                'language' => $language,
+                'options' => 'pictures',
+                'resolve' => 'merge_info',
+                'catalog_info' => 'true'
+            );
+
+            $data = $this->get('despegar')->getHotelsDetails($urlParams, true);
+
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+
+        }
+
+        $response = new JsonResponse($results);
+
+        return $response;
+
     }
 
     /**
@@ -305,12 +398,12 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         /**
          * Parameters
          */
-        $countryCode        = $request->query->get('country_code');
-        $checkinDate        = $request->query->get('checkin_date');
-        $checkoutDate       = $request->query->get('checkout_date');
-        $distributions       = $request->query->get('distribution');
-        $language           = $request->query->get('language');
-        $currency           = $request->query->get('currency');
+        $countryCode = $request->query->get('country_code');
+        $checkinDate = $request->query->get('checkin_date');
+        $checkoutDate = $request->query->get('checkout_date');
+        $distributions = $request->query->get('distribution');
+        $language = $request->query->get('language');
+        $currency = $request->query->get('currency');
 
         $urlParams = array(
             'language' => $language,
@@ -322,7 +415,23 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             'classify_roompacks_by' => 'rate_plan',
         );
 
-        $results = $this->get('despegar')->getHotelsAvailabilitiesDetail($id, $urlParams);
+        $data = $this->get('despegar')->getHotelsAvailabilitiesDetail($id, $urlParams);
+
+
+        if (!isset($data['code'])) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
         $response = new JsonResponse($results);
 
         return $response;
@@ -380,31 +489,45 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
          */
         $params = $this->getRequest()->request->all();
 
-        $countryCode        = $params['country_code'];
-        $language           = $params['context_language'];
-        $availabilityToken  = $params['availability_token'];
-        $clientIp           = $request->getClientIp();
-        $agentCode          = $this->getParameter('agent_code');
-        $userAgent          = $request->headers->get('User-Agent');
+        if (!isset($params['country_code']) || !isset($params['context_language']) || !isset($params['availability_token'])) {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        } else {
+            $countryCode = $params['country_code'];
+            $language = $params['context_language'];
+            $availabilityToken = $params['availability_token'];
+            $clientIp = $request->getClientIp();
+            $agentCode = $this->getParameter('agent_code');
+            $userAgent = $request->headers->get('User-Agent');
 
-        $urlParams = array(
-            "source" => array(
-                "country_code" => $countryCode
-            ),
-            "reservation_context" => array(
-                "context_language" => $language,
-                "shown_currency" => "ARS",
-                "threat_metrix_id" => "25",
-                "agent_code" => $agentCode,
-                "client_ip" => $clientIp,
-                "user_agent" => $userAgent
-            ),
-            "keys" => array(
-                "availability_token" => $availabilityToken
-            )
-        );
+            $urlParams = array(
+                "source" => array(
+                    "country_code" => $countryCode
+                ),
+                "reservation_context" => array(
+                    "context_language" => $language,
+                    "shown_currency" => "ARS",
+                    "threat_metrix_id" => "25",
+                    "agent_code" => $agentCode,
+                    "client_ip" => $clientIp,
+                    "user_agent" => $userAgent
+                ),
+                "keys" => array(
+                    "availability_token" => $availabilityToken
+                )
+            );
 
-        $results = $this->get('despegar')->postHotelsBookings($urlParams);
+            $data = $this->get('despegar')->postHotelsBookings($urlParams);
+
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+        }
+
         $response = new JsonResponse($results);
 
         return $response;
@@ -434,7 +557,21 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     public function getHotelBookingAction($id)
     {
 
-        $results = $this->get('despegar')->getHotelsBookingsForms($id);
+        $data = $this->get('despegar')->getHotelsBookingsForms($id);
+
+        if (!in_array('data', $data)) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
         $response = new JsonResponse($results);
 
         return $response;
@@ -667,7 +804,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $lang = $params['lang'];
         $$email = $params['email'];
 
-        $formBookingId = '/v3/hotels/bookings/'.$bookingId.'/forms';
+        $formBookingId = '/v3/hotels/bookings/' . $bookingId . '/forms';
 
         $date = new \DateTime($expirationDate);
 
@@ -691,7 +828,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $formData['comment'] = $comment;
         $formData['should_use_nightly_prices'] = $shouldUseNightlyPrices;
 
-        $result = $this->get('hotel_service')->bookingHotel(
+        $bookingHotel = $this->get('hotel_service')->bookingHotel(
             $formBooking,
             $formData,
             $formBookingId,
@@ -702,7 +839,20 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
-        $response = new JsonResponse($result);
+        $results = [
+            'status' => 'success',
+            'code' => 200,
+            'data' => $bookingHotel
+        ];
+
+        if ($results['data'] == null) {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
+        $response = new JsonResponse($results);
 
         return $response;
     }
