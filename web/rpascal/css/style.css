@@ -1125,6 +1125,7 @@ header{
 .grid figure h2 {
 	font-family: 'latoregular';
 	font-size: 1.8vw;
+	line-height: 2.2vw;
 	color: #ffffff;
 	margin: 0;
 	background: rgba(0,0,0,0.6);
