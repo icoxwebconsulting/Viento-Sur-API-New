@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use VientoSur\App\AppBundle\Entity\PromotionSections;
-use VientoSur\App\AppBundle\Form\PromotionSectionsType;
+use BackendBundle\Form\PromotionSectionsType;
 
 /**
  * @Route("/promotion-sections")

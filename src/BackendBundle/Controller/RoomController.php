@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -10,26 +10,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use VientoSur\App\AppBundle\Entity\Room;
-use VientoSur\App\AppBundle\Entity\Bed;
-use VientoSur\App\AppBundle\Form\BedType;
+use BackendBundle\Form\RoomsType;
 
 /**
- * @Route("dashboard-bed")
+ * @Route("dashboard-room")
  */
-class BedController extends Controller
+class RoomController extends Controller
 {
     /**
      * @Security("has_role('ROLE_HOTELIER')")
-     * @Route("/", name="bed_list")
+     * @Route("/", name="room_list")
      * @Method("GET")
      * @return response
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository("VientoSurAppAppBundle:Bed")->findAll();
+        $entities = $em->getRepository("VientoSurAppAppBundle:Room")->findAll();
 
-        return $this->render(':admin/bed:list.html.twig', array(
+        return $this->render(':admin/room:list.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -37,19 +36,22 @@ class BedController extends Controller
     /**
      * @param Request $request
      * @Security("has_role('ROLE_HOTELIER')")
-     * @Route("/new", name="bed_new")
+     * @Route("/new", name="room_new")
      * @return response
      */
     public function newAcion(Request $request)
     {
-        $entity = new Bed();
-        $form = $this->createForm(new BedType(), $entity, array(
+        $entity = new Room();
+        $form = $this->createForm(new RoomsType(), $entity, array(
             'id' => $this->getUser()->getId()
         ));
 
         if($form->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+            $payment_type = $em->getRepository('VientoSurAppAppBundle:PaymentType')->findOneBy(array('name' => 'at_destination'));
+
+            $entity->setPaymentType($payment_type);
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();
@@ -57,28 +59,28 @@ class BedController extends Controller
                 'success',
                 $this->get('translator')->trans('admin.messages.added')
             );
-            return $this->redirectToRoute('bed_list');
+            return $this->redirectToRoute('room_list');
         }
-        return $this->render(':admin/bed:form.html.twig', array(
+        return $this->render(':admin/room:form.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
     /**
      * @param Request $request
-     * @param Bed $entity entity
+     * @param Room $entity entity
      * @Security("has_role('ROLE_HOTELIER')")
-     * @Route("/edit/{id}", name="bed_edit")
+     * @Route("/edit/{id}", name="room_edit")
      * @return response
      */
-    public function putAction(Request $request, Bed $entity)
+    public function putAction(Request $request, Room $entity)
     {
         $request->setMethod('PATCH');
 
-        $form = $this->createForm(new BedType(), $entity, [
+        $form = $this->createForm(new RoomsType(), $entity, [
             "method" => $request->getMethod(),
             "id" => $this->getUser()->getId()
-        ]);
+            ]);
         if ($form->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()->getManager();
@@ -88,23 +90,29 @@ class BedController extends Controller
                 'success',
                 $this->get('translator')->trans('admin.messages.updated')
             );
-            return $this->redirectToRoute('bed_list');
+            return $this->redirectToRoute('room_list');
         }
-        return $this->render(':admin/bed:form.html.twig', array(
+        return $this->render(':admin/room:form.html.twig', array(
             'form' => $form->createView(),
             'entity' => $entity
         ));
     }
 
     /**
-     * @param Bed $entity entity
+     * @param Room $entity entity
      * @Security("has_role('ROLE_HOTELIER')")
-     * @Route("/delete/{id}", name="bed_delete")
+     * @Route("/delete/{id}", name="room_delete")
      * @return response
      */
-    public function deleteAction(Bed $entity)
+    public function deleteAction(Room $entity)
     {
         $em = $this->getDoctrine()->getManager();
+        $beds = $em->getRepository('VientoSurAppAppBundle:Bed')->findBy(array('room' => $entity));
+
+        foreach ($beds as $bed){
+            $bed->setRoom(null);
+            $em->persist($bed);
+        }
 
         $em->remove($entity);
         $em->flush();
@@ -112,6 +120,6 @@ class BedController extends Controller
             'success',
             $this->get('translator')->trans('admin.messages.deleted')
         );
-        return $this->redirectToRoute('bed_list');
+        return $this->redirectToRoute('room_list');
     }
 }

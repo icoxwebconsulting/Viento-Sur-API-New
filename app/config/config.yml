@@ -131,7 +131,7 @@ fos_user:
                 sender_name:    info@vientosur.net
     registration:
         form:
-            type: VientoSur\App\AppBundle\Form\RegisterType
+            type: BackendBundle\Form\RegisterType
         confirmation:
             enabled: true
             from_email:

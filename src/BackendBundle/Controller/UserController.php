@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use VientoSur\App\AppBundle\Entity\User;
-use VientoSur\App\AppBundle\Form\UserType;
+use BackendBundle\Form\UserType;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
