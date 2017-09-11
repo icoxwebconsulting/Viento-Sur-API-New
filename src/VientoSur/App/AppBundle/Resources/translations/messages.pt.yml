@@ -78,6 +78,7 @@ index:
         cancel: Cancelar
         send: Enviar
 hotels:
+    code_hotel_entrance: Código de entrada do hotel
     not_found: Não foram encontrados hotéis
     last_room: Última Disponibilidade quarto
     lasts: Últimas

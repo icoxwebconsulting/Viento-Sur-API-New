@@ -30,9 +30,10 @@
                                 <img style="width: 493px; height: 328px;" src="{{ hotelDetails.main_picture.url }}/" class="origin" />
                             </div>
                         </td>
-                        <td>
-
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                        <td style="width: 493px; height: 328px; display: block;">
+                            <div id="main_picture" style="width: 493px; height: 328px;">
+                                <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
+                            </div>
                             {#<div id="map"></div>#}
                         </td>
                     </tr>
@@ -40,7 +41,7 @@
             </th>
         </tr>
         <tr>
-            <th>
+            <th colspan="2">
                 <h3>{{ hotelDetails.name }}</h3>
                 {% for i in 1..hotelDetails.stars %}
                     <i class="fa fa-star fa-2x" style="color: #008cd1;" aria-hidden="true"></i>
@@ -87,7 +88,7 @@
                 {% if reservationDetails.rooms is defined %}
                     <ul>
                         {% for room in reservationDetails.rooms %}
-                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %} {{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}

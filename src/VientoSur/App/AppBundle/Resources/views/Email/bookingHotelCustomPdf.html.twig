@@ -28,9 +28,11 @@
                             </div>
                             <div style="width: 48%;text-align: right;display: inline-block;">
                                 <p style="display: inline-block;margin: 0;">{{ 'hotels.reservation_number' | trans }}:</p>
-                                <h4 style="display: inline-block;margin: 0;">{{ internal.reservationId }}</h4><br>
-                                {#<p style="display: inline-block;margin: 0;">{{ 'hotels.room_number' | trans }}:</p>#}
-                                {#<h4 style="display: inline-block;margin: 0;">{{ hotelDetails.number_of_rooms }}</h4>#}
+                                <h4 style="display: inline-block;margin: 0;">{{ internal.reservationId }}</h4><br><br>
+                                {% if app.session.get('hotel_entrance_code') is not null %}
+                                <p style="display: inline-block;margin: 0;margin-top: 2px;">{{ 'hotels.code_hotel_entrance' | trans }}:</p>
+                                <h4 style="display: inline-block;margin: 0;">{{ app.session.get('hotel_entrance_code') }}</h4>
+                                {% endif %}
                             </div>
                         </div>
                         <br><br>
@@ -116,7 +118,7 @@
 
                                         <ul>
                                             {% for room in reservationDetails.rooms %}
-                                                <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}{{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
+                                                <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
                                             {% endfor %}
                                         </ul>
 
@@ -177,13 +179,13 @@
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
                                     <br>
                                     {% for room in reservationDetails.rooms %}
-                                        {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
                                         <div class="col-md-6" style="{% if room.children > 0 %}width: 48%;{% else %}width:100%{% endif %}display: inline-block;">
+                                        {{ 'index.search.hotel.room' | trans }} {{ loop.index }}
                                             <h7 style="margin: 0; padding: 0;text-align: center;display: block;">{{ 'index.search.hotel.adult' | trans }}(s) </h7>
                                             <h3 style="text-align: center;">{{ room.adults }}</h3>
-                                        </div>
+                                        {#</div>#}
                                         {% if room.children > 0 %}
-                                        <div class="col-md-6" style="width: 48%;display: inline-block;">
+                                        {#<div class="col-md-6" style="width: 48%;display: inline-block;">#}
                                             <h7 style="margin: 0; padding: 0; text-align: center;display: block;">{{ 'index.search.hotel.child' | trans }}(s)</h7>
                                             <h3 style="text-align: center;">{{ room.children }}</h3>
                                         </div>
@@ -355,8 +357,9 @@
         <i class="fa fa-clock-o"></i> <em><small>{{ 'index.hotel_footer' | trans }}</small></em>
         <br>
         <em><small>{{ 'index.hotel_footer2' | trans }}</small></em>
+        <br/>
+        <em><small>{{ 'index.footer_copy' | trans }}</small></em>
         </div>
-        {{ 'index.footer_copy' | trans }}
             <!--/100% background wrapper-->
         <script>
             $(document).ready(function(){
