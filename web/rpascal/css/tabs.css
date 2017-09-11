@@ -82,3 +82,24 @@
     border-radius: 8px 0 0 0;
 }
 
+@media only screen and (max-width: 767px){
+    .tabbed ul{
+        padding: 0 0 0 50px;
+    }
+    .tabbed ul li:before,
+    .tabbed ul li:after{
+        width: 20px;
+    }
+
+    .tabbed ul li:after{
+        left: -9px;
+    }
+    .tabbed ul li:before{
+        right: -9px;
+    }
+    .tabbed ul li{
+        padding: 8px 15px 6px;
+        margin-right: 22px;
+    }
+
+}
