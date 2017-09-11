@@ -320,6 +320,260 @@
 
 		<!-- GO CONTENT INFO -->
 		<div class="wrapper">
+			<!-- GO SEARCH MOBILE -->
+			<div class="mobileSearch visible-xs">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="search">
+							<!-- Nav tabs -->
+
+							<div class="tabbed round">
+								<ul role="tablist">
+									<li href="#vuelos2" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+									<li class="active" href="#hoteles2" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+								</ul>
+							</div>
+
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane active row" id="hoteles2">
+									<form action="">
+										<div class="col-xs-12">
+											<h4>destino</h4>
+											<div class="form-group-icon-left">
+												<i class="fa fa-map-marker input-icon"></i>
+												<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Dónde vas" autocomplete="on">
+											</div>
+										</div>
+										<div class="col-xs-12">
+											<div class="form-inline row">
+												<div class="col-xs-6">
+													<h4>fecha de entrada</h4>
+													<div class='input-group date' id='datetimepicker1'>
+														<i class="glyphicon glyphicon-calendar"></i>
+														<input type="text" class="form-control" value="" id="dpd1">
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<h4>fecha de Salida</h4>
+													<div class='input-group date' id='datetimepicker2'>
+														<i class="glyphicon glyphicon-calendar"></i>
+														<input type="text" class="form-control" value="" id="dpd2">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12">
+											<h4>habitaciones</h4>
+											<button type="button" class="btnModal marginBottom10" data-toggle="modal" data-target="#roomModal2">
+												2 Adultos, 1 Niño, 1Habitación
+											</button>
+											<!-- Modal -->
+											<div class="modal fade" id="roomModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+															<h4 class="modal-title" id="myModalLabel">Habitaciones</h4>
+														</div>
+														<div class="modal-body">
+															<div class="contectRoom">
+																<h5 class="titleSection">Habitacion 1</h5>
+																<div class="selectRoom">
+																	<div class="selectGroup">
+																		<h3>adultos <span>+12 años</span></h3>
+																		<select>
+																			<option>1</option>
+																			<option>2</option>
+																			<option>3</option>
+																			<option>4</option>
+																			<option>5</option>
+																		</select>
+																	</div>
+																	<div class="selectGroup">
+																		<h3>niños / bebes <span>0 a 12 años</span></h3>
+																		<select>
+																			<option>1</option>
+																			<option>2</option>
+																			<option>3</option>
+																			<option>4</option>
+																			<option>5</option>
+																		</select>
+																	</div>
+																	<div class="selectGroup">
+																		<h3>edad niños</h3>
+																		<select>
+																			<option>1</option>
+																			<option>2</option>
+																			<option>3</option>
+																			<option>4</option>
+																			<option>5</option>
+																		</select>
+																	</div>
+																</div>
+																<div class="addRoom">
+																	<a href="#">+ Agregar habitación</a>
+																</div>
+																<div class="btnSearch" data-dismiss="modal">
+																	<button>Aplicar</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-6 col-xs-offset-6 selectMoney">
+											<select class="form-control">
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+											</select>
+										</div>
+										<div class="col-xs-12 btnSearch">
+											<button>buscar</button>
+										</div>
+									</form>
+								</div>
+								<div role="tabpanel" class="tab-pane row" id="vuelos2">
+									<form action="">
+										<div class="col-xs-12">
+											<h4>donde</h4>
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="form-group-icon-left marginBottom10">
+														<i class="fa fa-map-marker input-icon"></i>
+														<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Origen" autocomplete="on">
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="form-group-icon-left marginBottom10">
+														<i class="fa fa-map-marker input-icon"></i>
+														<input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino" autocomplete="on">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12">
+											<h4>fecha</h4>
+											<div class="row">
+												<div class="col-xs-6">
+													<div class='input-group date' id='datetimepicker3'>
+														<i class="glyphicon glyphicon-calendar"></i>
+														<input type="text" class="form-control" value="" id="dpd3">
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class='input-group date' id='datetimepicker4'>
+														<i class="glyphicon glyphicon-calendar"></i>
+														<input type="text" class="form-control" value="" id="dpd4">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12">
+											<h4>cuantos</h4>
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="selectPassengers">
+														<div class="marginBottom10">
+															<button type="button" class="btnModal" data-toggle="modal" data-target="#flightsModal2">
+																2 Pasajeros
+															</button>
+															<!-- Modal -->
+															<div class="modal fade" id="flightsModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+																<div class="modal-dialog" role="document">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+																			<h4 class="modal-title" id="myModalLabel">Pasajeros</h4>
+																		</div>
+																		<div class="modal-body">
+																			<div class="contentFlight">
+																				<div class="selectFlight">
+																					<div class="selectGroup">
+																						<h3>adultos</h3>
+																						<select>
+																							<option>1</option>
+																							<option>2</option>
+																							<option>3</option>
+																							<option>4</option>
+																							<option>5</option>
+																						</select>
+																					</div>
+																					<div class="selectGroup">
+																						<h3>menores</h3>
+																						<select>
+																							<option>1</option>
+																							<option>2</option>
+																							<option>3</option>
+																							<option>4</option>
+																							<option>5</option>
+																						</select>
+																					</div>
+																					<div class="selectGroup">
+																						<h3>edad menores</h3>
+																						<select>
+																							<option>0 a 24 meses (en brazos)</option>
+																							<option>0 a 24 meses (en asiento)</option>
+																							<option>2 a 11 años</option>
+																							<option>12 años o más</option>
+																						</select>
+																					</div>
+																				</div>
+																				<div class="btnSearch" data-dismiss="modal">
+																					<button>Aplicar</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="selectPassengers">
+														<div class="radioButton">
+															<label for="radio-four" class="radio-inline">
+																<input type="radio" value="radio-four" name="quality" id="radio-four"> <span>Solo Ida</span>
+															</label>
+
+															<label for="radio-five" class="radio-inline">
+																<input type="radio" value="radio-five" name="quality" id="radio-five"> <span>Ida y Vuelta</span>
+															</label>
+
+															<label for="radio-six" class="radio-inline">
+																<input type="radio" value="radio-six"  name="quality" id="radio-six" checked> <span>Multidestino</span>
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+										<div class="col-xs-6 col-xs-offset-6 selectMoney">
+											<select class="form-control">
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+												<option>USD - Us Dollar</option>
+											</select>
+										</div>
+										<div class="col-xs-12 btnSearch">
+											<button>buscar</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- GO SEARCH MOBILE -->
 			<div class="promotions">
 				<div class="container">
 					<div class="row">
@@ -328,7 +582,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xs-4">
+						<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0">
 							<div class="grid">
 								<figure class="effect-goliath">
 									<img src="images/img-promtion-demo.jpg" alt="imgDemo"/>
@@ -340,7 +594,7 @@
 								</figure>
 							</div>
 						</div>
-						<div class="col-xs-4">
+						<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0">
 							<div class="grid">
 								<figure class="effect-goliath">
 									<img src="images/img-promtion-demo.jpg" alt="imgDemo"/>
@@ -352,7 +606,7 @@
 								</figure>
 							</div>
 						</div>
-						<div class="col-xs-4">
+						<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0">
 							<div class="grid">
 								<figure class="effect-goliath">
 									<img src="images/img-promtion-demo.jpg" alt="imgDemo"/>
