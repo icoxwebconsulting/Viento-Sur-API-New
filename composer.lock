@@ -929,16 +929,16 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "11424b43c3bcb020a60caa6d6f97acdd125c34ca"
+                "reference": "49c1069132dcef371fb526351569deabeb6f0d8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/11424b43c3bcb020a60caa6d6f97acdd125c34ca",
-                "reference": "11424b43c3bcb020a60caa6d6f97acdd125c34ca",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/49c1069132dcef371fb526351569deabeb6f0d8e",
+                "reference": "49c1069132dcef371fb526351569deabeb6f0d8e",
                 "shasum": ""
             },
             "require": {
@@ -955,7 +955,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -984,7 +984,7 @@
                 "javascript",
                 "routing"
             ],
-            "time": "2017-08-10T12:17:19+00:00"
+            "time": "2017-08-25T15:21:42+00:00"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -2624,17 +2624,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v4.0.38",
+            "version": "v4.0.39",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "95469374e703f01b8e760023ac4f2f64da6a1dd9"
+                "reference": "bf582cc96becd7ae53f9fe8c4647d0a41c243a42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/95469374e703f01b8e760023ac4f2f64da6a1dd9",
-                "reference": "95469374e703f01b8e760023ac4f2f64da6a1dd9",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/bf582cc96becd7ae53f9fe8c4647d0a41c243a42",
+                "reference": "bf582cc96becd7ae53f9fe8c4647d0a41c243a42",
                 "shasum": ""
             },
             "require": {
@@ -2680,7 +2680,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2017-01-04T13:34:44+00:00"
+            "time": "2017-08-25T16:49:47+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3614,16 +3614,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.8.26",
+            "version": "v2.8.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "33553101754e0888a1a1fecc46d7a7f10f6f9580"
+                "reference": "d512cc1c2c418f42c07b82d8b029e7a487be007f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/33553101754e0888a1a1fecc46d7a7f10f6f9580",
-                "reference": "33553101754e0888a1a1fecc46d7a7f10f6f9580",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/d512cc1c2c418f42c07b82d8b029e7a487be007f",
+                "reference": "d512cc1c2c418f42c07b82d8b029e7a487be007f",
                 "shasum": ""
             },
             "require": {
@@ -3748,7 +3748,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-08-01T09:05:29+00:00"
+            "time": "2017-08-28T19:21:56+00:00"
         },
         {
             "name": "twig/extensions",
