@@ -241,7 +241,7 @@
             <td class="text-justify" style="width: 90%">
                 {% set info = hotelDetails.information.es %}
                 <p id="info" style="font-size: 9px; line-height: 10px; margin-top:5px; margin-left: 5px">
-                   {{ info|length > 1400 ? info|slice(0, 1400) ~ '...' : info }}
+                   {{ info|length > 1350 ? info|slice(0, 1350) ~ '...' : info }}
                 </p>
             </td>
             <td style="text-align: center;">
@@ -288,7 +288,7 @@
 <br>
 <em><small style="font-size: 8px">{{ 'index.hotel_footer2' | trans }}</small></em>
 <br>
-<em><small>{{ 'index.footer_copy' | trans }}</small></em>
+<em style="font-size: 8px;"><small>{{ 'index.footer_copy' | trans }}</small></em>
 <script>
     function initMap() {
         var LatLong = {lat: {{ hotelDetails.location.latitude }}, lng: {{ hotelDetails.location.longitude }}};

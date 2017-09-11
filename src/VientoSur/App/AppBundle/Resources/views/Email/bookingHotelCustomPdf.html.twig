@@ -118,7 +118,7 @@
 
                                         <ul>
                                             {% for room in reservationDetails.rooms %}
-                                                <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}{{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
+                                                <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
                                             {% endfor %}
                                         </ul>
 
