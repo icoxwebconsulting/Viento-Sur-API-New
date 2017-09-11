@@ -76,14 +76,14 @@ class HotelController extends Controller
      */
     public function sendHotelsProcessSearch(Request $request)
     {
-        if ($this->getParameter('is_test')) {
+        /*if ($this->getParameter('is_test')) {
             $destinationText = 'Buenos Aires, Ciudad de Buenos Aires, Argentina';
 //            $destinationText = 'Arbatax Park Resort Borgo Cala Moresca, Tortoli, Italia';
             $destination = 'CITY-982';
-        } else {
+        } else {*/
             $destinationText = $request->get('autocomplete');
             $destination = $request->get('cityInput');
-        }
+        //}
 
         $start = $request->get('start');
         $end = $request->get('end');
