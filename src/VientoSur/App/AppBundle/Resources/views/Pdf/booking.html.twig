@@ -146,7 +146,7 @@
                 {% if reservationDetails.rooms is defined %}
                     <ul>
                         {% for room in reservationDetails.rooms %}
-                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}{{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -287,6 +287,8 @@
 <i class="fa fa-clock-o"></i> <em><small style="font-size: 8px">{{ 'index.hotel_footer' | trans }}</small></em>
 <br>
 <em><small style="font-size: 8px">{{ 'index.hotel_footer2' | trans }}</small></em>
+<br>
+<em><small>{{ 'index.footer_copy' | trans }}</small></em>
 <script>
     function initMap() {
         var LatLong = {lat: {{ hotelDetails.location.latitude }}, lng: {{ hotelDetails.location.longitude }}};
