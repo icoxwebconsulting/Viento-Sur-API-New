@@ -1316,6 +1316,102 @@ figure.effect-goliath:hover p {
 	margin-top: 0;
 }
 
+/*LIST ROOMS MOBILE*/
+
+#descriptionHotel .listRooms .thumbRoom{
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #e1e1e1;
+	border-radius: 5px;
+	margin-bottom: 2.5vw;
+	overflow: hidden;
+	padding: 15px 0;
+	text-align: center;
+}
+
+#descriptionHotel .listRooms .thumbRoom img{
+    cursor: pointer;
+}
+
+#descriptionHotel .listRooms .thumbRoom h4{
+	color: #008cd0;
+	font-family: "latobold";
+	font-size: 14px;
+}
+
+#descriptionHotel .listRooms .thumbRoom ol, #descriptionHotel .listRooms .thumbRoom ul{
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+#descriptionHotel .listRooms .thumbRoom ol li{
+    text-align: left;
+    display: inline-block;
+    color: #0ab21b;
+    font-size: 12px;
+    list-style: none;
+    margin: 0 10px 0 0;
+}
+
+#descriptionHotel .listRooms .thumbRoom ol li i{
+    margin-right: 5px;
+}
+
+#descriptionHotel .listRooms .thumbRoom ul li{
+    text-align: left;
+    display: inline-block;
+    list-style: none;
+    font-family: "latobold";
+    font-size: 12px;
+}
+
+#descriptionHotel .listRooms .thumbRoom h3{
+    font-family: "latobold";
+    font-size: 12px;
+    margin-top: 0;
+}
+
+#descriptionHotel .listRooms .thumbRoom h3 span{
+    color: #008cd0;
+    font-family: "latoblack";
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+#descriptionHotel .listRooms .thumbRoom select{
+    -moz-appearance: none;
+    background: rgba(0, 0, 0, 0) url("../images/arrow-down-select.png") no-repeat scroll 92% 50%;
+    border: 1px solid #192731;
+    border-radius: 5px;
+    color: #192731;
+    cursor: pointer;
+    font-family: "latolight";
+    font-size: 14px;
+    height: 30px;
+    margin: 0 auto;
+    padding: 0 12px;
+    width: 80px;
+}
+
+#descriptionHotel .listRooms .thumbRoom button{
+    background: #008cd0 none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 5px;
+    box-shadow: none;
+    color: #ffffff;
+    font-family: "latobold";
+    font-size: 13px;
+    padding: 12px;
+    text-align: center;
+    margin: 10px 0;
+    width: 100px;
+}
+
+#descriptionHotel .listRooms .thumbRoom button:hover{
+    border-radius: 10px;
+}
+
+/*LIST ROOMS DESKTOP*/
+
 .listRooms table{
 	margin-top: 20px;
 	border: #008cd0 1px solid;
@@ -1742,7 +1838,6 @@ figure.effect-goliath:hover p {
 	width: 100%;
 	max-width: 80px;
 }
-
 
 /*----- END SEARCH VUELOS -----*/
 

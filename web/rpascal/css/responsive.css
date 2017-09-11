@@ -1117,14 +1117,14 @@
     }
 
     .mobileSearch .search input{
-        height: 20px !important;
+        height: 25px !important;
         font-size: 10px !important;
         padding: 0 0 0 20px !important;
         margin-bottom: 10px !important;
     }
 
     .mobileSearch .search select, button.btnModal{
-        height: 20px !important;
+        height: 25px !important;
         font-size: 10px !important;
         margin-bottom: 10px !important;
     }
@@ -1135,8 +1135,8 @@
 
     .mobileSearch .search i{
         font-size: 10px !important;
-        top: 5px !important;
-        left: 5px !important;
+        top: 8px !important;
+        left: 8px !important;
     }
 
     .mobileSearch .search .btnSearch button{
