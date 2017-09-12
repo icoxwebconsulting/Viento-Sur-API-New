@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Bed
@@ -30,12 +31,14 @@ class Bed
     /**
      * @var string
      * @Gedmo\Translatable
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
+     * @Assert\NotBlank()
      * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
