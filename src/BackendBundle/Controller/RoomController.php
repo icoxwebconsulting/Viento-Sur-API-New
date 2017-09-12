@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
+use VientoSur\App\AppBundle\Entity\AmenityRoom;
 use VientoSur\App\AppBundle\Entity\Room;
 use BackendBundle\Form\RoomsType;
 
@@ -42,18 +43,35 @@ class RoomController extends Controller
     public function newAcion(Request $request)
     {
         $entity = new Room();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();
+
         $form = $this->createForm(new RoomsType(), $entity, array(
             'id' => $this->getUser()->getId()
         ));
 
         if($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
             $payment_type = $em->getRepository('VientoSurAppAppBundle:PaymentType')->findOneBy(array('name' => 'at_destination'));
+            $amenity_value = $request->get('amenity');
+            $amenity_price = $request->get('amenity_price');
 
             $entity->setPaymentType($payment_type);
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
+
+            for($i = 0; $i < count($amenity_value); $i++){
+                $amenity_room = new AmenityRoom();
+                $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($amenity_value[$i]);
+
+                $amenity_room->setRoom($entity);
+                $amenity_room->setAmenity($amenity);
+                $amenity_room->setPrice($amenity_price[$i]);
+                $em->persist($amenity_room);
+            }
+
             $em->flush();
             $this->addFlash(
                 'success',
@@ -62,7 +80,8 @@ class RoomController extends Controller
             return $this->redirectToRoute('room_list');
         }
         return $this->render(':admin/room:form.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'amenities' => $amenities
         ));
     }
 
@@ -75,16 +94,47 @@ class RoomController extends Controller
      */
     public function putAction(Request $request, Room $entity)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $request->setMethod('PATCH');
+
+        $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();
+        $amenityRooms = $em->getRepository('VientoSurAppAppBundle:AmenityRoom')->findBy(array(
+            'room' => $entity
+        ));
 
         $form = $this->createForm(new RoomsType(), $entity, [
             "method" => $request->getMethod(),
             "id" => $this->getUser()->getId()
             ]);
+
         if ($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
+            $amenity_value = $request->get('amenity');
+            $amenity_price = $request->get('amenity_price');
+
             $em->persist($entity);
+
+            for($i = 0; $i < count($amenity_value); $i++) {
+                if (is_array($amenity_value[$i])) {
+                    foreach ($amenity_value[$i] as $key => $value) {
+                        $amenity_room = $em->getRepository('VientoSurAppAppBundle:AmenityRoom')->find($key);
+                        $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($value);
+                    }
+                    foreach ($amenity_price[$i] as $value) {
+                        $amenity_room->setPrice($value);
+                    }
+                } else {
+                    $amenity_room = new AmenityRoom();
+                    $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($amenity_value[$i]);
+                    $amenity_room->setPrice($amenity_price[$i]);
+                }
+
+                $amenity_room->setRoom($entity);
+                $amenity_room->setAmenity($amenity);
+                $em->persist($amenity_room);
+            }
+
             $em->flush();
             $this->addFlash(
                 'success',
@@ -94,7 +144,9 @@ class RoomController extends Controller
         }
         return $this->render(':admin/room:form.html.twig', array(
             'form' => $form->createView(),
-            'entity' => $entity
+            'entity' => $entity,
+            'amenities' => $amenities,
+            'amenityRooms' => $amenityRooms
         ));
     }
 

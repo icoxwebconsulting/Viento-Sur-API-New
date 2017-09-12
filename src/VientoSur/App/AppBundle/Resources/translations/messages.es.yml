@@ -328,6 +328,7 @@ flights:
     reservation_data: Datos de la reserva
     first_pay: 1er pago de %first% + %quota% cuotas de %last%
 amenities:
+    amenity: Servicio
     label: Servicios
     ACOM: Alojamientos Adaptados a Personas con Discapacidad
     AIR: Aire Acondicionado
@@ -464,6 +465,7 @@ admin:
     promotion_section_new: Nueva sección de promoción
     promotion_add: Agregar promoción
     add: Agregar
+    delete: Eliminar
     promotions_manager: Gestor de promociones
     hotels_manager: Gestor de hoteles
     promotion_section_manager: Gestor de título general
