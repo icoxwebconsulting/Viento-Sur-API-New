@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
             new VientoSur\ApiBundle\VientoSurApiBundle(),
+            new \BackendBundle\BackendBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

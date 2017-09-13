@@ -13,39 +13,3 @@ viento_sur_flight:
 viento_sur_test:
     resource: "@VientoSurAppAppBundle/Controller/TestController.php"
     type:     annotation
-
-viento_sur_admin:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/DashboardController.php"
-    type:     annotation
-
-viento_sur_user:
-    resource: "@VientoSurAppAppBundle/Controller/UserController.php"
-    type:     annotation
-
-viento_sur_reservation:
-    resource: "@VientoSurAppAppBundle/Controller/ReservationController.php"
-    type:     annotation
-
-viento_sur_promotions:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/PromotionsController.php"
-    type:     annotation
-
-viento_sur_promotion_sections:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/PromotionSectionsController.php"
-    type:     annotation
-
-viento_sur_dashboard_hotel:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/HotelController.php"
-    type:     annotation
-
-viento_sur_dashboard_picture:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/PictureController.php"
-    type:     annotation
-
-viento_sur_dashboard_room:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/RoomController.php"
-    type:     annotation
-
-viento_sur_dashboard_bed:
-    resource: "@VientoSurAppAppBundle/Controller/Dashboard/BedController.php"
-    type:     annotation

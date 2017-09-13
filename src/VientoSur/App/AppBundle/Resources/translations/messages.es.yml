@@ -489,6 +489,7 @@ admin:
         added: Se ha agregado correctamente!
         updated: Se ha actualizado correctamente!
         deleted: Se ha eliminado correctamente!
+        limit_hotel_by_user: Ya cumpliste el limite de creación de hoteles
     confirmation: Confirmación
     delete_element: ¿Desea eliminar este elemento?
     yes: Si
@@ -506,3 +507,4 @@ admin:
     origin: Origen
     pick_address: Por favor escriba la dirección del hotel y mueva el marcador
     gallery_photo: Galería de fotos
+    complete_profile: Completa tu perfil

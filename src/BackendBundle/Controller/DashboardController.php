@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
