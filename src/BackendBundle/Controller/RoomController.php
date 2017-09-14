@@ -135,6 +135,13 @@ class RoomController extends Controller
                 $em->persist($amenity_room);
             }
 
+            //Remove amenity from amenityRooms
+            for($j = 0; $j < count($amenityRooms); $j++){
+                if (!isset($amenity_value[$j])) {
+                    $em->remove($amenityRooms[$j]);
+                }
+            }
+
             $em->flush();
             $this->addFlash(
                 'success',
