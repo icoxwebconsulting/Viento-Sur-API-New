@@ -146,7 +146,7 @@
                 {% if reservationDetails.rooms is defined %}
                     <ul>
                         {% for room in reservationDetails.rooms %}
-                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}{{ 'hotels.room_number' | trans }}: {{ room.holder_identification_number }}</li>
+                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -241,7 +241,7 @@
             <td class="text-justify" style="width: 90%">
                 {% set info = hotelDetails.information.es %}
                 <p id="info" style="font-size: 9px; line-height: 10px; margin-top:5px; margin-left: 5px">
-                   {{ info|length > 1400 ? info|slice(0, 1400) ~ '...' : info }}
+                   {{ info|length > 1350 ? info|slice(0, 1350) ~ '...' : info }}
                 </p>
             </td>
             <td style="text-align: center;">
@@ -283,10 +283,11 @@
     {% endif %}
 </div>
 <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
-<br>
 <i class="fa fa-clock-o"></i> <em><small style="font-size: 8px">{{ 'index.hotel_footer' | trans }}</small></em>
 <br>
 <em><small style="font-size: 8px">{{ 'index.hotel_footer2' | trans }}</small></em>
+<br>
+<em style="font-size: 8px;"><small>{{ 'index.footer_copy' | trans }}</small></em>
 <script>
     function initMap() {
         var LatLong = {lat: {{ hotelDetails.location.latitude }}, lng: {{ hotelDetails.location.longitude }}};

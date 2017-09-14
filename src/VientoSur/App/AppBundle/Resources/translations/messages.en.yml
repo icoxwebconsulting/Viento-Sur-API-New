@@ -328,6 +328,7 @@ flights:
     reservation_data: Reservation data
     first_pay: 1st payment of %first% + %quota% dues of %last%
 amenities:
+    amenity: Amenity
     label: Amenities
     ACOM: Accommodations adapted for people with disabilities
     AIR: Air Conditioning
@@ -464,6 +465,7 @@ admin:
     promotion_section_new: New promotion section
     promotion_add: Add promotion
     add: Add
+    delete: Delete
     promotions_manager: Promotions manager
     promotion_section_manager: General title manager
     photo_manager: Photo manager

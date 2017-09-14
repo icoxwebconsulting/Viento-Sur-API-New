@@ -326,6 +326,7 @@ flights:
     first_pay: 1º pagamento de %first% + %quota% quotas de %last%
     invalid_cc: Cartão inválido
 amenities:
+    amenity: Serviço
     label: Serviços
     ACOM: Accommodations adapted for people with disabilities
     AIR: Ar-condicionado
@@ -462,6 +463,7 @@ admin:
     promotion_section_new: Nova seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar
+    delete: Para eliminar
     promotions_manager: gestão de promoção
     promotion_section_manager: Gerente título geral
     photo_manager: Gerente de fotos
