@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Form;
+namespace BackendBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -1092,6 +1092,82 @@
         font-size: 10px;
         padding: 5px 10px;
     }
+
+    .grid figure p{
+        font-size: 10px;
+    }
+
+    #carousel-example-generic{
+        display: none !important;
+    }
+
+    header{
+        position: inherit;
+    }
+
+    .mobileSearch{
+        margin: 20px 0;
+    }
+
+    .mobileSearch .search{
+        position: inherit;
+        top: 0;
+        left: 0;
+        margin: 0 !important;
+        width: 100%;
+    }
+
+    .mobileSearch .search .input-group{
+        display: inherit !important;
+    }
+
+    .mobileSearch .search input{
+        height: 30px !important;
+        font-size: 10px !important;
+        padding: 0 0 0 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .mobileSearch .search select, button.btnModal{
+        height: 30px !important;
+        font-size: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .mobileSearch .search h4{
+        font-size: 10px;
+    }
+
+    .mobileSearch .search i{
+        font-size: 10px !important;
+        top: 9px !important;
+        left: 9px !important;
+    }
+
+    .mobileSearch .search .btnSearch button{
+        height: 20px !important;
+        font-size: 10px !important;
+        width: 70px;
+    }
+
+    .mobileSearch .search .selectPassengers label{
+        font-size: 8px !important;
+    }
+
+    .mobileSearch .search .selectPassengers [type="radio"] + span::before{
+        width: 10px !important;
+        height: 10px !important;
+    }
+
+    .grid figure img{
+        width: 100%;
+        height: auto;
+    }
+
+    .promotions .grid{
+        margin-bottom: 15px;
+    }
+
 }
 
 @media only screen and (max-width: 415px){

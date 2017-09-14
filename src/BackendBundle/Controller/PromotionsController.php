@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use VientoSur\App\AppBundle\Entity\Promotions;
-use VientoSur\App\AppBundle\Form\PromotionsType;
+use BackendBundle\Form\PromotionsType;
 
 /**
  * @Route("/promotions")
@@ -19,7 +19,7 @@ use VientoSur\App\AppBundle\Form\PromotionsType;
 class PromotionsController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="promotion_list")
      */
     public function indexAction()
@@ -33,7 +33,7 @@ class PromotionsController extends Controller
 
     /**
      * @param Request $request
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/new", name="promotion_new")
      * @return array
      */
@@ -72,7 +72,7 @@ class PromotionsController extends Controller
     /**
      * @param Request $request
      * @param Promotions $entity entity
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/edit/{id}", name="promotion_edit")
      * @return array
      */
@@ -109,7 +109,7 @@ class PromotionsController extends Controller
 
     /**
      * @param Promotions $entity entity
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/delete/{id}", name="promotion_delete")
      * @return route
      */

@@ -328,6 +328,7 @@ flights:
     reservation_data: Datos de la reserva
     first_pay: 1er pago de %first% + %quota% cuotas de %last%
 amenities:
+    amenity: Servicio
     label: Servicios
     ACOM: Alojamientos Adaptados a Personas con Discapacidad
     AIR: Aire Acondicionado
@@ -464,6 +465,7 @@ admin:
     promotion_section_new: Nueva sección de promoción
     promotion_add: Agregar promoción
     add: Agregar
+    delete: Eliminar
     promotions_manager: Gestor de promociones
     hotels_manager: Gestor de hoteles
     promotion_section_manager: Gestor de título general
@@ -489,6 +491,7 @@ admin:
         added: Se ha agregado correctamente!
         updated: Se ha actualizado correctamente!
         deleted: Se ha eliminado correctamente!
+        limit_hotel_by_user: Ya cumpliste el limite de creación de hoteles
     confirmation: Confirmación
     delete_element: ¿Desea eliminar este elemento?
     yes: Si
@@ -506,3 +509,4 @@ admin:
     origin: Origen
     pick_address: Por favor escriba la dirección del hotel y mueva el marcador
     gallery_photo: Galería de fotos
+    complete_profile: Completa tu perfil

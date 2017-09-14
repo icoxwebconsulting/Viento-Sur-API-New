@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,9 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use VientoSur\App\AppBundle\Entity\AmenityHotel;
 use VientoSur\App\AppBundle\Entity\Hotel;
-use VientoSur\App\AppBundle\Entity\Picture;
-use VientoSur\App\AppBundle\Form\HotelFormType;
-use VientoSur\App\AppBundle\Form\PictureType;
+use BackendBundle\Form\HotelFormType;
 
 /**
  * @Route("dashboard-hotel")
@@ -44,17 +42,26 @@ class HotelController extends Controller
     public function newAcion(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findBy(array(
+            'created_by' => $this->getUser()->getId()
+        ));
+
+        if($hotel){
+            $route = $this->get('router')->generate('hotel_list');
+            $this->addFlash(
+                'info',
+                $this->get('translator')->trans('admin.messages.limit_hotel_by_user')
+            );
+            return new RedirectResponse($route);
+        }
 
         $entity = new Hotel();
-        $picture = new Picture();
         $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();
 
         $form = $this->createForm(new HotelFormType(), $entity);
 
         if($form->handleRequest($request)->isValid())
         {
-//            echo "<pre>".print_r($request)."</pre>";die();
-//            $entity->setHotelTypes();
             $entity->setPercentageGain(0);
             $entity->setOrigen('VS');
             $entity->setCreatedBy($this->getUser());

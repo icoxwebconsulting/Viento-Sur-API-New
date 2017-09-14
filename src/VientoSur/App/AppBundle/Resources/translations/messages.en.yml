@@ -328,6 +328,7 @@ flights:
     reservation_data: Reservation data
     first_pay: 1st payment of %first% + %quota% dues of %last%
 amenities:
+    amenity: Amenity
     label: Amenities
     ACOM: Accommodations adapted for people with disabilities
     AIR: Air Conditioning
@@ -464,6 +465,7 @@ admin:
     promotion_section_new: New promotion section
     promotion_add: Add promotion
     add: Add
+    delete: Delete
     promotions_manager: Promotions manager
     promotion_section_manager: General title manager
     photo_manager: Photo manager
@@ -488,6 +490,7 @@ admin:
         added: Successfully added!
         updated: Successfully updated!
         deleted: Successfully deleted!
+        limit_hotel_by_user: You already met the limit of hotel creation
     confirmation: Confirmation
     delete_element: Do you want to delete this element?
     yes: Yes
@@ -505,3 +508,4 @@ admin:
     origin: Origin
     pick_address: Please enter the hotel address and move the marker
     gallery_photo: Photo gallery
+    complete_profile: Complete your profile

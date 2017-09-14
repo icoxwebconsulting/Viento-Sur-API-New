@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Form;
+namespace BackendBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;

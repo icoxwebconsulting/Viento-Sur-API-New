@@ -75,7 +75,7 @@
                     <label class="col-md-4 form-control-label" for="email">{{ 'index.meal_plan' | trans }}</label>
                     <div class="col-md-8">
                         {% set label = '' %}
-                        <select id="{{ form.mealPlan.vars.id }}" name="{{ form.mealPlan.vars.full_name }}" class="form-control">
+                        <select id="{{ form.mealPlan.vars.id }}" name="{{ form.mealPlan.vars.full_name }}" class="form-control" required>
                         {% for meal_plan in form.mealPlan.vars.choices %}
                             {% if meal_plan.label == 'D' %}
                                 {% set label = 'hotels.drinks_included' %}
@@ -96,19 +96,142 @@
                             {% elseif meal_plan.label == 'A' %}
                                 {% set label = 'hotels.all_inclusive' %}
                             {% endif %}
-                                <option value="{{ meal_plan.value }}">{{ label | trans }}</option>
+                                <option value="{{ meal_plan.value }}" {% if entity is defined and meal_plan.value == entity.mealPlan.id %}selected="selected"{% endif %}>{{ label | trans }}</option>
                         {% endfor %}
                         </select>
                     </div>
                     {{ form_errors(form.mealPlan) }}
+
+                    {% if amenityRooms is not defined %}
+                        <div id="div-amenity" class="col-md-12 div-amenity" style="margin-top: 30px">
+                            <div class="col-md-2">
+                                <label id="label-amenity" class="form-control-label" for="email">{{ 'amenities.amenity' | trans }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <select name="amenity[0]" id="amenity-select-0" class="form-control" required>
+                                    {% for amenity in amenities %}
+                                        {% set label = 'amenities.'~amenity.name %}
+                                        <option value="{{ amenity.id }}">{{ label | trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label id="label-price" for="">{{ 'hotels.price' | trans }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="amenity_price[0]" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% for amenityRoom in amenityRooms %}
+                        <div id="div-amenity" class="col-md-12 div-amenity" style="margin-top: 30px">
+                            <div class="col-md-2">
+                                <label id="label-amenity" class="form-control-label" for="email">{{ 'amenities.amenity' | trans }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <select name="amenity[{{ loop.index0 }}][{{ amenityRoom.id }}]" id="amenity-select-{{ loop.index0 }}" class="form-control" required>
+                                    {% for amenity in amenities %}
+                                        {% set label = 'amenities.'~amenity.name %}
+                                        <option value="{{ amenity.id }}" {% if amenity.id == amenityRoom.amenity.id%}selected{% endif %}>{{ label | trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label id="label-price" for="">{{ 'hotels.price' | trans }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="amenity_price[{{ loop.index0 }}][{{ amenityRoom.id }}]"
+                                       type="text"
+                                       class="form-control"
+                                       required
+                                       value="{{ amenityRoom.price }}"
+                                >
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div id="button-div" class="col-md-4" style="margin-top:30px; color:#FFF;">
+                        <a id="add-amenity" class="btn btn-sm btn-success">{{ 'admin.add' | trans }}</a>
+                        <a id="remove-amenity" class="btn btn-sm btn-danger">{{ 'admin.delete' | trans }}</a>
+                    </div>
                 </div>
             </div>
             {{ form_widget(form._token) }}
             <div class="card-footer">
-                <a href="{{ path('room_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <a href="{{ path('room_list') }}" class="btn btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            $('#add-amenity').click(function(){
+                var lprice = $('#label-price').text();
+                var lamenity = $('#label-amenity').text();
+                var i = $('.div-amenity').length;
+
+                $('#button-div').before('<div id="div-amenity" class="col-md-12 div-amenity" style="margin-top: 30px">'
+                                        +'<div class="col-md-2">'
+                                            +'<label class="form-control-label" for="email">'+lamenity+'</label>'
+                                        +'</div>'
+                                        +'<div class="col-md-4">'
+                                            +'<select name="amenity['+i+']" id="amenity-select-'+i+'" class="form-control" required>'
+                                            +'</select>'
+                                        +'</div>'
+                                        +'<div class="col-md-2">'
+                                            +lprice
+                                        +'</div>'
+                                        +'<div class="col-md-4">'
+                                            +'<input name="amenity_price['+i+']" type="text" class="form-control" required>'
+                                        +'</div>'
+                                    +'</div>');
+
+                var options = $('#amenity-select-0 > option').clone();
+                $('#amenity-select-'+i).append(options);
+                sortSelectOptions('#amenity-select-'+i);
+                $('#amenity-select-'+i).prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
+            });
+
+            $('#remove-amenity').click(function(){
+                var count = $('.div-amenity').length;
+                if (count > 1){
+                    $('.div-amenity').last().remove();
+                }
+            });
+
+            function sortSelectOptions(selectElement) {
+                console.log('sorting');
+                var selected = $(selectElement).val();
+                var options = $(selectElement + " option");
+
+                options.sort(function(a,b) {
+                    if (a.text.toUpperCase() > b.text.toUpperCase()) return 1;
+                    else if (a.text.toUpperCase() < b.text.toUpperCase()) return -1;
+                    else return 0;
+                });
+
+                $(selectElement).empty().append( options );
+                $(selectElement).val(selected);
+            }
+
+            var iSelect = $('.div-amenity').length;
+
+            for(i = 0; i < iSelect; i++){
+                sortSelectOptions('#amenity-select-'+i);
+            }
+
+            sortSelectOptions('#appbundle_rooms_mealPlan');
+
+            {% if amenityRooms is not defined %}
+                $('#amenity-select-0').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
+                $('#appbundle_rooms_mealPlan').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
+            {% endif %}
+
+        });
+    </script>
 {% endblock %}
 

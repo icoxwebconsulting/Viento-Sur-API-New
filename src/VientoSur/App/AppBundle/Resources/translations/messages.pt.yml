@@ -326,6 +326,7 @@ flights:
     first_pay: 1º pagamento de %first% + %quota% quotas de %last%
     invalid_cc: Cartão inválido
 amenities:
+    amenity: Serviço
     label: Serviços
     ACOM: Accommodations adapted for people with disabilities
     AIR: Ar-condicionado
@@ -462,6 +463,7 @@ admin:
     promotion_section_new: Nova seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar
+    delete: Para eliminar
     promotions_manager: gestão de promoção
     promotion_section_manager: Gerente título geral
     photo_manager: Gerente de fotos
@@ -486,6 +488,7 @@ admin:
         added: Foi acrescentado!
         updated: Com sucesso, ele atualizou!
         deleted: Foi removido com sucesso!
+        limit_hotel_by_user: Você já conheceu o limite de criação hoteleira
     confirmation: Confirmação
     delete_element: Deseja excluir este elemento?
     yes: Sim
@@ -503,3 +506,4 @@ admin:
     origin: Fonte
     pick_address: Digite o endereço do hotel e mover o marcador
     gallery_photo: Galeria de fotos
+    complete_profile: Complete seu perfil

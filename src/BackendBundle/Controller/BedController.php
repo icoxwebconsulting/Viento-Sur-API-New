@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use VientoSur\App\AppBundle\Entity\Room;
 use VientoSur\App\AppBundle\Entity\Bed;
-use VientoSur\App\AppBundle\Form\BedType;
+use BackendBundle\Form\BedType;
 
 /**
  * @Route("dashboard-bed")

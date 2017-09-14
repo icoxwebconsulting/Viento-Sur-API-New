@@ -35,6 +35,7 @@
             </li>
         </ul>
     </li>
+    {% if is_granted('ROLE_ADMIN') %}
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-certificate"></i> {{ 'admin.promotions' | trans }}</a>
         <ul class="nav-dropdown-items">
@@ -57,6 +58,7 @@
             </li>
         </ul>
     </li>
+    {% endif %}
     <li class="nav-item">
         <a class="nav-link" href="{{ path('fos_user_profile_show') }}"><i class="fa fa-pencil"></i> {{ 'admin.edit_profile' | trans }}</a>
     </li>

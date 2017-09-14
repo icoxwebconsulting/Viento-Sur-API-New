@@ -1,6 +1,6 @@
 <?php
 
-namespace VientoSur\App\AppBundle\Controller\Dashboard;
+namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use VientoSur\App\AppBundle\Entity\Hotel;
 use VientoSur\App\AppBundle\Entity\Picture;
-use VientoSur\App\AppBundle\Form\PictureType;
+use BackendBundle\PictureType;
 use VientoSur\App\AppBundle\Entity\Room;
 
 /**
