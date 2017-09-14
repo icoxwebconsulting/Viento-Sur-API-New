@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Room
@@ -31,6 +31,7 @@ class Room
     /**
      * @var string
      * @Gedmo\Translatable
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -44,21 +45,21 @@ class Room
 
     /**
      * @var integer
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="availability", type="integer")
      */
     private $availability;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="capacity", type="integer")
      */
     private $capacity;
 
     /**
      * @var float
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nightly_price", type="float")
      */
     private $nightlyPrice;
