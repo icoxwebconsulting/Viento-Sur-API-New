@@ -90,13 +90,22 @@ class Reservation
      */
     private $checkout;
 
+    /**
+     * @ORM\Column(name="extra_data", type="string", length=255, nullable=true)
+     */
+    private $extra_data;
+
+    /**
+     * @ORM\Column(name="origin", type="string", length=255)
+     */
+    private $origin;
 
     public function __construct()
     {
         $this->created = new \DateTime();
+        $this->origin = 'despegar';
     }
-
-
+    
     /**
      * Get id
      *

@@ -90,12 +90,21 @@ class Reservation
      */
     private $checkout;
 
+    /**
+     * @ORM\Column(name="extra_data", type="string", length=255, nullable=true)
+     */
+    private $extra_data;
+
+    /**
+     * @ORM\Column(name="origin", type="string", length=255)
+     */
+    private $origin;
 
     public function __construct()
     {
         $this->created = new \DateTime();
+        $this->origin = 'despegar';
     }
-
 
     /**
      * Get id
@@ -381,5 +390,51 @@ class Reservation
     public function getCheckout()
     {
         return $this->checkout;
+    }
+
+    /**
+     * Set extra_data
+     *
+     * @param string $extraData
+     * @return Reservation
+     */
+    public function setExtraData($extraData)
+    {
+        $this->extra_data = $extraData;
+
+        return $this;
+    }
+
+    /**
+     * Get extra_data
+     *
+     * @return string 
+     */
+    public function getExtraData()
+    {
+        return $this->extra_data;
+    }
+
+    /**
+     * Set origin
+     *
+     * @param string $origin
+     * @return Reservation
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    /**
+     * Get origin
+     *
+     * @return string 
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
     }
 }
