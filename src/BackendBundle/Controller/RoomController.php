@@ -55,22 +55,22 @@ class RoomController extends Controller
         if($form->handleRequest($request)->isValid())
         {
             $payment_type = $em->getRepository('VientoSurAppAppBundle:PaymentType')->findOneBy(array('name' => 'at_destination'));
-            $amenity_value = $request->get('amenity');
-            $amenity_price = $request->get('amenity_price');
+//            $amenity_value = $request->get('amenity');
+//            $amenity_price = $request->get('amenity_price');
 
             $entity->setPaymentType($payment_type);
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
 
-            for($i = 0; $i < count($amenity_value); $i++){
-                $amenity_room = new AmenityRoom();
-                $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($amenity_value[$i]);
-
-                $amenity_room->setRoom($entity);
-                $amenity_room->setAmenity($amenity);
-                $amenity_room->setPrice($amenity_price[$i]);
-                $em->persist($amenity_room);
-            }
+//            for($i = 0; $i < count($amenity_value); $i++){
+//                $amenity_room = new AmenityRoom();
+//                $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($amenity_value[$i]);
+//
+//                $amenity_room->setRoom($entity);
+//                $amenity_room->setAmenity($amenity);
+//                $amenity_room->setPrice($amenity_price[$i]);
+//                $em->persist($amenity_room);
+//            }
 
             $em->flush();
             $this->addFlash(
@@ -110,37 +110,37 @@ class RoomController extends Controller
 
         if ($form->handleRequest($request)->isValid())
         {
-            $amenity_value = $request->get('amenity');
-            $amenity_price = $request->get('amenity_price');
+//            $amenity_value = $request->get('amenity');
+//            $amenity_price = $request->get('amenity_price');
 
             $em->persist($entity);
 
-            for($i = 0; $i < count($amenity_value); $i++) {
-                if (is_array($amenity_value[$i])) {
-                    foreach ($amenity_value[$i] as $key => $value) {
-                        $amenity_room = $em->getRepository('VientoSurAppAppBundle:AmenityRoom')->find($key);
-                        $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($value);
-                    }
-                    foreach ($amenity_price[$i] as $value) {
-                        $amenity_room->setPrice($value);
-                    }
-                } else {
-                    $amenity_room = new AmenityRoom();
-                    $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($amenity_value[$i]);
-                    $amenity_room->setPrice($amenity_price[$i]);
-                }
-
-                $amenity_room->setRoom($entity);
-                $amenity_room->setAmenity($amenity);
-                $em->persist($amenity_room);
-            }
-
-            //Remove amenity from amenityRooms
-            for($j = 0; $j < count($amenityRooms); $j++){
-                if (!isset($amenity_value[$j])) {
-                    $em->remove($amenityRooms[$j]);
-                }
-            }
+//            for($i = 0; $i < count($amenity_value); $i++) {
+//                if (is_array($amenity_value[$i])) {
+//                    foreach ($amenity_value[$i] as $key => $value) {
+//                        $amenity_room = $em->getRepository('VientoSurAppAppBundle:AmenityRoom')->find($key);
+//                        $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($value);
+//                    }
+//                    foreach ($amenity_price[$i] as $value) {
+//                        $amenity_room->setPrice($value);
+//                    }
+//                } else {
+//                    $amenity_room = new AmenityRoom();
+//                    $amenity = $em->getRepository('VientoSurAppAppBundle:Amenity')->find($amenity_value[$i]);
+//                    $amenity_room->setPrice($amenity_price[$i]);
+//                }
+//
+//                $amenity_room->setRoom($entity);
+//                $amenity_room->setAmenity($amenity);
+//                $em->persist($amenity_room);
+//            }
+//
+//            //Remove amenity from amenityRooms
+//            for($j = 0; $j < count($amenityRooms); $j++){
+//                if (!isset($amenity_value[$j])) {
+//                    $em->remove($amenityRooms[$j]);
+//                }
+//            }
 
             $em->flush();
             $this->addFlash(

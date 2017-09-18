@@ -19,13 +19,12 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ 'admin.period' | trans }}</th>
                         <th>{{ 'admin.name' | trans }}</th>
+                        <th>{{ 'hotels.address' | trans }}</th>
                         <th>{{ 'hotels.stars' | trans }}</th>
                         <th>{{ 'hotels.search_menu.type' | trans }}</th>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <th>{{ 'admin.percentage_gain' | trans }}</th>
-                        <th>{{ 'admin.origin' | trans }}</th>
                         <th>{{ 'admin.created_by' | trans }}</th>
                         {% endif %}
                         <th>{{ 'admin.actions' | trans }}</th>

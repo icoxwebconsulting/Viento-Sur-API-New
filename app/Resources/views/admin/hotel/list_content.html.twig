@@ -1,7 +1,7 @@
 <tr>
     <td>{{ entity.id }}</td>
-    <td>{{ entity.created | ago }}</td>
     <td>{{ entity.name }}</td>
+    <td>{{ entity.address }}</td>
     <td>{{ entity.stars }}</td>
     <td>
         {% if entity.hotelTypes %}
@@ -11,7 +11,6 @@
     </td>
     {% if is_granted('ROLE_SUPER_ADMIN') %}
     <td>{{ entity.percentageGain }}</td>
-    <td>{{ entity.origen }}</td>
     <td>
         {% if entity.createdBy %}
             {{ entity.createdBy.username }}
