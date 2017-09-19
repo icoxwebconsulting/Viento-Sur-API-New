@@ -709,7 +709,6 @@ $(document).ready(function () {
             $('#start-flight1').removeAttr('required');
             $('#tab-2').css({'overflow': '', 'height': ''});
             $('#round_trip').prop('checked', true);
-            $('.typeTrip').show();
         }
     });
     $("#childrenPassengers").change(function () {
@@ -774,10 +773,27 @@ $(document).ready(function () {
             $('#multipledestination').val(false);
             console.log($('#multipledestination').val());
 
+            $('.wrapper').hide();
+            $('#remove-stretch').hide();
+            $('#add-stretch').hide();
+            $('.round-trip-wrapper').show();
+            $('#multipledestination').val(false);
+            console.log($('#multipledestination').val());
+            $('#div-end-flight').show();
+            $('#end-flight').attr('required', 'true');
+            $('#multidestination-from-flight0').removeAttr('required');
+            $('#multidestination-to-flight0').removeAttr('required');
+            $('#multidestination-from-flight1').removeAttr('required');
+            $('#multidestination-to-flight1').removeAttr('required');
+            $('#start-flight0').removeAttr('required');
+            $('#start-flight1').removeAttr('required');
+            $('#tab-2').css({'overflow': '', 'height': ''});
+            $('#round_trip').prop('checked', true);
+
+
         }else if(flightType == 'multiple_destination'){
             $('.wrapper').show();
             $('.round-trip-wrapper').hide();
-            $('.typeTrip').hide();
             $('#add-stretch').show();
             $('#remove-stretch').show();
             $('#multipledestination').val(true);
@@ -793,6 +809,21 @@ $(document).ready(function () {
             $('#tab-2').css({'overflow': 'auto', 'height': '313px'});
         }
     });
+
+    $('#openFlight').click(function () {
+        $('#flightsModal').modal();
+    })
+
+
+    $('#sendFlight').on('click', function () {
+        var form = $('#search-flights')[0];
+        if(form.checkValidity()){
+            $('#search-flights').hide();
+            $('#searchFlightMsg').removeClass('hide');
+            moveProgressBar($('#flight_pb')[0]);
+        }
+    });
+
 
     /*if(flightType == 'only_out'){
         $("#end-flight").removeAttr('required').hide();

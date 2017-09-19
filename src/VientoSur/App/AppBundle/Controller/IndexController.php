@@ -31,6 +31,10 @@ class IndexController extends Controller
         $em = $this->getDoctrine()->getManager();
         $promotionSections = $em->getRepository("VientoSurAppAppBundle:PromotionSections")->findPromotionSectionsAvailables();
         $promotions = $em->getRepository("VientoSurAppAppBundle:Promotions")->findPromotionsAvailables();
+
+//        echo"<pre>".print_r($promotionSections, true)."</pre>";
+//        echo"<pre>".print_r($promotions, true)."</pre>";
+//        die();
         return array(
             'isTest' => $this->getParameter('is_test'),
             'isIndex' => true,

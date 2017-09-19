@@ -47,13 +47,13 @@
             <h4>{{ 'flights.passengers' | trans }}</h4>
             <div class="selectPassengers">
                 <div class="marginBottom10">
-                    <button type="button" class="btnModal" data-toggle="modal" data-target="#flightsModal">
+                    <button type="button" class="btnModal" data-toggle="modal" data-target="#passengersModal">
                         {{ 'index.search.hotel.adults' | trans }}: <span id="total-adults">0</span>
                         | {{ 'index.search.hotel.childs' | trans }}: <span id="total-children">0</span>
                         | Total {{ 'flights.passengers' | trans }}: <span id="total-passengers">0</span>
                     </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="flightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <!-- Modal passengers -->
+                    <div class="modal fade" id="passengersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -172,6 +172,136 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Modal flights -->
+                    <div class="modal fade" id="flightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">{{ 'index.search.flight.multiple_destinations' | trans }}</h4>
+                                </div>
+                                <div class="modal-body modal-flight">
+                                    <div class="contentFlight">
+
+                                        <div class="row wrapper" style="display: none">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-5 ">
+                                                    <p id="label-stretch"
+                                                       class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }}
+                                                        1</p>
+                                                    <p id="label-stretch"
+                                                       style="display: none">{{ 'index.search.stretch' | trans }}</p>
+                                                    <div class="form-group-icon-left marginBottom10">
+                                                        <i class="fa fa-map-marker input-icon"></i>
+                                                        <input class="city-input form-control"
+                                                               id="multidestination-from-flight0"
+                                                               name="multidestination[0][fromFlight]"
+                                                               data-provide="typeahead"
+                                                               placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"
+                                                               type="text"
+                                                               value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}"/>
+                                                        <input id="multidestination-originFlight0"
+                                                               name="multidestination[0][originFlight]" type="hidden"
+                                                               value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}"/>
+                                                    </div>
+                                                    <div class="form-group-icon-left marginBottom10">
+                                                        <i class="fa fa-map-marker input-icon"></i>
+                                                        <input class="city-input form-control"
+                                                               id="multidestination-to-flight0"
+                                                               name="multidestination[0][toFlight]"
+                                                               data-provide="typeahead"
+                                                               placeholder="{{ 'index.search.flight.to_placeholder' | trans }}"
+                                                               type="text"
+                                                               value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}"/>
+                                                        <input id="multidestination-destinationFlight0"
+                                                               name="multidestination[0][destinationFlight]"
+                                                               type="hidden"
+                                                               value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">
+                                                    <p>{{ 'index.search.hotel.date' | trans }}</p>
+                                                    <div class='input-group date marginBottom10 col-xs-12'
+                                                         id='datetimepicker3'>
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                        <input class="form-control required departure"
+                                                               id="start-flight0" name="multidestination[0][start]"
+                                                               type="text" placeholder="dd/mm/yyyy"
+                                                               value="{{ app.session.get('departure_date') }}"/>
+                                                        {#<input class="form-control required" id="start-flight" name="start" type="text" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}" />#}
+                                                        {#<input type="text" class="form-control" value="" id="dpd3">#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row wrapper" style="display: none">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-5 ">
+                                                    <p class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }}
+                                                        2</p>
+                                                    <div class="form-group-icon-left marginBottom10">
+                                                        <i class="fa fa-map-marker input-icon"></i>
+                                                        <input class="city-input form-control"
+                                                               id="multidestination-from-flight1"
+                                                               name="multidestination[1][fromFlight]"
+                                                               data-provide="typeahead" type="text"
+                                                               placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"/>
+                                                        <input id="multidestination-originFlight1"
+                                                               name="multidestination[1][originFlight]" type="hidden"
+                                                               value=""/>
+                                                    </div>
+                                                    <div class="form-group-icon-left marginBottom10">
+                                                        <i class="fa fa-map-marker input-icon"></i>
+                                                        <input class="city-input form-control"
+                                                               id="multidestination-to-flight1"
+                                                               name="multidestination[1][toFlight]"
+                                                               data-provide="typeahead"
+                                                               placeholder="{{ 'index.search.flight.to_placeholder' | trans }}"
+                                                               type="text"/>
+                                                        <input id="multidestination-destinationFlight1"
+                                                               name="multidestination[1][destinationFlight]"
+                                                               type="hidden" value=""/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">
+                                                    <p>{{ 'index.search.hotel.date' | trans }}</p>
+                                                    <div class='input-group date marginBottom10 col-xs-12'
+                                                         id='datetimepicker3'>
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                        <input class="form-control required departure"
+                                                               id="start-flight1" name="multidestination[1][start]"
+                                                               type="text" placeholder="dd/mm/yyyy"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 stretch">
+                                            <label for="">
+                                                <span class="pull-right">
+                                                    <a id="remove-stretch" style="display: none;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="">
+                                                <span class="pull-right">
+                                                    <a id="add-stretch" style="display: none;">{{ 'index.search.flight.add_stretch' | trans }}</a>
+                                                </span>
+                                            </label>
+                                        </div>
+
+                                        <div class="btnSearch"  id="sendFlight">
+                                            <button>{{ 'hotels.search_menu.apply' | trans }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="typeTrip" id="typeTrip">
                     <label class="radio-inline">
@@ -182,7 +312,10 @@
                         <input type="radio" value="round_trip" name="flightType" id="round_trip" checked> <span>Ida y Vuelta</span>
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" value="multiple_destination" name="flightType" id="multiple_destination" > <span>{{ 'index.search.flight.multiple_destinations' | trans }}</span>
+                        {#<a id="openFlight" class="openFlight" style="color: #0281c0"><span>{{ 'index.search.flight.multiple_destinations' | trans }}</span></a>#}
+                        <a id="openFlight" class="openFlight" style="color: #000000">
+                            <input type="radio" value="multiple_destination" name="flightType" id="multiple_destination" > <span>{{ 'index.search.flight.multiple_destinations' | trans }}</span>
+                        </a>
                     </label>
                     <input type="hidden" id="only_out" name="only_out" value=false>
                 </div>
@@ -190,74 +323,7 @@
         </div>
     </div>
 
-    <div class="row wrapper" style="display: none">
-        <div class="col-xs-12">
-            <div class="col-xs-5 ">
-                <p id="label-stretch" class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }} 1</p>
-                <p id="label-stretch" style="display: none">{{ 'index.search.stretch' | trans }}</p>
-                <div class="form-group-icon-left marginBottom10">
-                    <i class="fa fa-map-marker input-icon"></i>
-                    <input class="city-input form-control" id="multidestination-from-flight0" name="multidestination[0][fromFlight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}"/>
-                    <input id="multidestination-originFlight0" name="multidestination[0][originFlight]" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
-                </div>
-                <div class="form-group-icon-left marginBottom10">
-                    <i class="fa fa-map-marker input-icon"></i>
-                    <input class="city-input form-control" id="multidestination-to-flight0" name="multidestination[0][toFlight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
-                    <input id="multidestination-destinationFlight0" name="multidestination[0][destinationFlight]" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
-                </div>
-            </div>
-            <div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">
-                <p>{{ 'index.search.hotel.date' | trans }}</p>
-                <div class='input-group date marginBottom10 col-xs-12' id='datetimepicker3'>
-                    <i class="glyphicon glyphicon-calendar"></i>
-                    <input class="form-control required departure" id="start-flight0" name="multidestination[0][start]" type="text" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}" />
-                    {#<input class="form-control required" id="start-flight" name="start" type="text" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}" />#}
-                    {#<input type="text" class="form-control" value="" id="dpd3">#}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row wrapper" style="display: none">
-        <div class="col-xs-12">
-            <div class="col-xs-5 ">
-                <p class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }} 2</p>
-                <div class="form-group-icon-left marginBottom10">
-                    <i class="fa fa-map-marker input-icon"></i>
-                    <input class="city-input form-control" id="multidestination-from-flight1" name="multidestination[1][fromFlight]" data-provide="typeahead" type="text" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" />
-                    <input id="multidestination-originFlight1" name="multidestination[1][originFlight]" type="hidden" value="" />
-                </div>
-                <div class="form-group-icon-left marginBottom10">
-                    <i class="fa fa-map-marker input-icon"></i>
-                    <input class="city-input form-control" id="multidestination-to-flight1" name="multidestination[1][toFlight]" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" />
-                    <input id="multidestination-destinationFlight1" name="multidestination[1][destinationFlight]" type="hidden" value="" />
-                </div>
-            </div>
-            <div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">
-                <p>{{ 'index.search.hotel.date' | trans }}</p>
-                <div class='input-group date marginBottom10 col-xs-12' id='datetimepicker3'>
-                    <i class="glyphicon glyphicon-calendar"></i>
-                    <input class="form-control required departure" id="start-flight1" name="multidestination[1][start]" type="text" placeholder="dd/mm/yyyy"/>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12 stretch">
-        <label for="">
-                <span class="pull-right">
-                    <a id="remove-stretch" style="display: none;">{{ 'index.search.flight.remove_stretch' | trans}}</a>
-                </span>
-        </label>
-    </div>
-    <div class="col-md-12">
-        <label for="">
-                <span class="pull-right">
-                    <a id="add-stretch" style="display: none;">{{ 'index.search.flight.add_stretch' | trans }}</a>
-                </span>
-        </label>
-    </div>
-
-    <div class="col-xs-12 btnSearch">
+    <div class="col-xs-12 btnSearch" style="padding-top: 60px">
         <button class="btn btn-primary btn-lg" type="submit" id="submitFlight">{{ 'index.search_text' | trans }}</button>
     </div>
 </form>
