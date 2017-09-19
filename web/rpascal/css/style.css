@@ -1971,3 +1971,11 @@ figure.effect-goliath:hover p {
 /*----- END FOOTER -----*/
 
 
+.scroller-flight {
+	overflow: auto;
+	height: 300px;
+}
+
+.multiple-destinations-label {
+	margin-left: 13px;
+}
