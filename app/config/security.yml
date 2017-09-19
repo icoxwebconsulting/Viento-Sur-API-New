@@ -18,7 +18,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                default_target_path: 'dashboard'
+                default_target_path: 'reservation_list'
             logout:       true
             anonymous:    true
         dev:
