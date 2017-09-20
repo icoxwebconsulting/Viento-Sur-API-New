@@ -6,13 +6,15 @@ use Doctrine\ORM\EntityRepository;
 
 class PromotionsRepository extends EntityRepository
 {
-    public function findPromotionsAvailables()
+    public function findPromotionsAvailables($status)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('p')
             ->from('VientoSurAppAppBundle:Promotions', 'p')
-            ->where('p.status = 1');
+            ->where('p.status = :status');
+
+        $qb->setParameter('status', $status);
         
         return $qb->getQuery()->getResult();
     }
