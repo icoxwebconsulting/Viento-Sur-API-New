@@ -11,8 +11,77 @@
     {% endif %}
     {% set decimal =false %}
 
+    <!-- GO BREADCRUMB -->
+    <div id="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Viento Sur</a></li>
+                        <li><a href="#">{{ 'flights.flights' | trans }}</a></li>
+                        {% if app.session.get('origin_flight').text is defined %}
+                            {% set origin = app.session.get('origin_flight').text|split(',') %}
+                        {% else %}
+                            {% set origin = "" %}
+                        {% endif %}
+                        {% if app.session.get('destination_flight').text is defined %}
+                            {% set destination = app.session.get('destination_flight').text|split(',') %}
+                        {% else %}
+                            {% set destination = "" %}
+                        {% endif %}
+                        {% if items.status is not defined %}
+                            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
+                                    {% if origin  %}
+                                        {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
+                                    {% endif %}
+                                </a></li>
+                        {% endif %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END BREADCRUMB -->
+
     <div class="container">
-        <ul class="breadcrumb">
+
+        <div class="wrapperSearch">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1 class="message" class="totalHotels">
+                            {{ items.paging.total_itineraries }}
+                            {% if origin  %}
+                                {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
+                            {% endif %}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+                </div>
+
+                <div class="col-md-8">
+                    <div class="flight-filter">
+
+                    </div>
+
+                    <ul class="flight-list">
+                        {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
+                    </ul>
+
+                    {#{{ dump(items) }}#}
+
+                </div>
+            </div>
+
+        </div>
+
+        {#<ul class="breadcrumb">
             <li><a href="#">Viento Sur</a></li>
             <li><a href="#">{{ 'flights.flights' | trans }}</a></li>
             {% if app.session.get('origin_flight').text is defined %}
@@ -32,29 +101,11 @@
                     {% endif %}
                 </a></li>
             {% endif %}
-        </ul>
+        </ul>#}
 
         <br/>
 
-        <div class="row">
 
-            <div class="col-md-3">
-                {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
-            </div>
-
-            <div class="col-md-9">
-                <div class="flight-filter">
-
-                </div>
-
-                <ul class="flight-list">
-                    {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
-                </ul>
-
-                {#{{ dump(items) }}#}
-
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-12">
