@@ -93,8 +93,8 @@ a, a:hover, a:focus{
 /*----- GO HEADER -----*/
 header{
 	/*height: 8.75vw;*/
-	background: rgba(0,0,0,0.7);
-	position: absolute;
+	background: rgba(0,0,0,0.7)!important;
+	position: absolute!important;
 	z-index: 9999;
 	width: 100%;
 }
