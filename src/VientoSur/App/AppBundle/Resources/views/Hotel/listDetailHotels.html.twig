@@ -8,39 +8,42 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
-
     <div class="ListHotel">
         {% for item in items.items %}
         <div id="thumbHotel">
-            <div class="imgHotel col-xs-3 col-sm-4 noPadding">
+            <div class="imgHotel col-xs-3 col-sm-3 noPadding">
                 <img src="{{ hotelsDetails[item.id].main_picture.url }}/200x150" width="200"  height="150" alt="{{item.hotel.name}}">
             </div>
-            <div class="infoHotel col-xs-6 col-sm-5">
-                <h4 title="{{item.hotel.name}} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">{{item.hotel.name}}</h4>
-                <ul>
-                    {% for i in 1..5 %}
-                        {% if i <= item.hotel.stars %}
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+            <div class="infoHotel col-xs-6 col-sm-7">
+                <h4 title="{{item.hotel.name}} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">{{item.hotel.name}}
+                    <ul>
+                        {% for i in 1..5 %}
+                            {% if i <= item.hotel.stars %}
+                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </h4>
+
                 <div class="modalMap">
                     <a class="booking-item-address" data-prevent="modal"  data-latitude="{{ item.hotel.location.latitude }}" data-longitude="{{ item.hotel.location.longitude }}" data-name="{{ item.hotel.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>
                 </div>
                 {% for key, room_availability in item.roompacks %}
                     {% if room_availability.rooms[0].availability is defined %}
                         {% if  room_availability.rooms[0].availability < 6 %}
-                            <p class="booking-item-last-booked">
-                                {% if room_availability.rooms[0].availability == 1 %}
-                                    {{ 'hotels.last_room' | trans }}
-                                {% else %}
-                                    {{ 'hotels.lasts' | trans }} {{ room_availability.rooms[0].availability }} {{ 'index.search.hotel.rooms' | trans }}
-                                {% endif %}
+                            <p class="inDemand">
+                                <span>
+                                    {% if room_availability.rooms[0].availability == 1 %}
+                                        {{ 'hotels.last_room' | trans }}
+                                    {% else %}
+                                        {{ 'hotels.lasts' | trans }} {{ room_availability.rooms[0].availability }} {{ 'index.search.hotel.rooms' | trans }}
+                                    {% endif %}
+                                </span>
                             </p>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
-                <ul>
+                <ul class="servicesIcons">
                     {% for key, amenity in item.hotel.amenity_ids %}
                         {% if amenity == 'INGRAH' %}
                             <li title="{{ 'amenities.INGRAH' | trans }}"><i class="fa fa-wifi" aria-hidden="true"></i></li>
@@ -68,12 +71,15 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="priceRoom col-xs-3">
+            <div class="priceRoom col-xs-2">
                 <p>{{ 'hotels.room_per_night' | trans }}</p>
                 {%for price in item.roompacks%}
                     <h5>{{ symbol }} {{price.price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}</h5>
                 {%endfor%}
-                <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}" target="_blank">Elegir Habitación</a>
+
+                <a href="{{path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}" target="_blank">
+                    <button>Elegir Habitación</button>
+                </a>
             </div>
         </div>
         {% endfor %}

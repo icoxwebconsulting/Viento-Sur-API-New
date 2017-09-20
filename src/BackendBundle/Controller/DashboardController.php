@@ -57,6 +57,35 @@ class DashboardController extends Controller
 //
 //        $em->flush();
 
+       /* $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($room);
+
+        $entity = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
+        return $this->render('admin/index.html.twig', array(
+            'hotel' => $translations
+        ));*/
+        return $this->render('admin/index.html.twig');
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/home/", name="dashboard_user")
+     * @return array
+     */
+    public function homeAction()
+    {
+//        $user = $this->getUser();
+//        $em = $this->getDoctrine()->getManager();
+//        $medias = $em->getRepository('AppBundle:Media')->findBy(array('created_by' => $user->getId()),
+//            array('modified' => 'DESC'),
+//            10);
+//        $news = $em->getRepository('AppBundle:News')->findBy(array('created_by' => $user->getId()),
+//            array('modified' => 'DESC'),
+//            10);
+//
+//        return $this->render('admin/home.html.twig', array(
+//            'medias' => $medias,
+//            'news' => $news,
 //        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
 //        $translations = $repository->findTranslations($room);
 

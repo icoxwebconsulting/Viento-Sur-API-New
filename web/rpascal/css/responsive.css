@@ -15,7 +15,7 @@
     /*-- END GENERLS --*/
 
     /*-- GO HEADER --*/
-    header.new-header{
+    header{
         height: 105px;
     }
 
@@ -343,7 +343,6 @@
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        padding: 0 30px;
         height: 34px;
         font-size: 14px;
     }
@@ -498,11 +497,7 @@
     }
 
     #descriptionHotel .itemRoom img{
-        margin-bottom: 0px;
-    }
-
-    #descriptionHotel > div:nth-child(4) > div > div > div > div > div > div.col-xs-3 > ul {
-        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     #descriptionHotel .itemRoom td h5{
@@ -522,13 +517,14 @@
 
     /*----- GO CONTENT INFO -----*/
     .promotions{
-        margin: 50px 0;
+        /*margin: 50px 0;*/
+        margin: 0;
     }
 
-    .promotions h1{
+    /*.promotions h1{
         font-size: 29px;
         padding: 0 0 30px 0;
-    }
+    }*/
 
     .grid figure h2{
         font-size: 23px;
@@ -770,7 +766,8 @@
     }
 
     .copyright p{
-        font-size: 10px;
+        font-size: 10px!important;
+        color: #ebebeb!important;
     }
     /*----- END FOOTER -----*/
 }

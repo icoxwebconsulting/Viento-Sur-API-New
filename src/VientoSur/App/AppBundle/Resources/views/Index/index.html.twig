@@ -45,17 +45,27 @@
         </a>
         <!-- SEARCH -->
         <div class="search">
+
+            <div class="tabbed round">
+                <ul role="tablist">
+                    <li href="#vuelos" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> {{ 'index.flights' | trans }}</a></li>
+                    <li class="active" href="#hoteles" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> {{ 'index.hotels' | trans }}</a></li>
+                </ul>
+            </div>
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+
+            {#<ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#hoteles" onclick="showHotelItems()" aria-controls="hoteles" role="tab" data-toggle="tab" id="hotel-tab"><i class="fa fa-building" aria-hidden="true"></i> {{ 'index.hotels' | trans }}</a></li>
                 <li role="presentation"><a href="#vuelos" onclick="hideHotelItems()" aria-controls="vuelos" role="tab" data-toggle="tab" id="flight-tab"><i class="fa fa-plane" aria-hidden="true"></i> {{ 'index.flights' | trans }}</a></li>
-            </ul>
+            </ul>#}
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane {% if flightMenu is not defined  %}active{% endif %} row" id="hoteles">
                     {% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}
                 </div>
-                <div role="tabpanel" class="tab-pane {% if flightMenu is defined  %}active{% endif %}" id="vuelos">2</div>
+                <div role="tabpanel" class="scroller-flight tab-pane {% if flightMenu is defined  %}active{% endif %}" id="vuelos">
+                    {% include 'VientoSurAppAppBundle:Flight:searchFlight.html.twig' %}
+                </div>
             </div>
         </div>
     </div>

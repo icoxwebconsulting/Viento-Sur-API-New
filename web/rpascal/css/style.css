@@ -91,10 +91,10 @@ a, a:hover, a:focus{
 /*----- END COLORS SOCIAL MEDIA -----*/
 
 /*----- GO HEADER -----*/
-header.new-header{
+header{
 	/*height: 8.75vw;*/
-	background: rgba(0,0,0,0.7);
-	position: absolute;
+	background: rgba(0,0,0,0.7)!important;
+	position: absolute!important;
 	z-index: 9999;
 	width: 100%;
 }
@@ -467,13 +467,10 @@ header.new-header{
 /*----- END SLIDER -----*/
 
 /*----- GO BANNER -----*/
-
 #banner{
 	height: 25vw;
-	/*overflow: hidden;*/
-	background: url("../images/banner-demo.jpg"),
-				url("http://127.0.0.1:8000/rpascal/images/banner-demo.jpg"),
-				url("https://vientosur.net/rpascal/images/banner-demo.jpg");
+	overflow: hidden;
+	background: url("../images/banner-demo.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -625,10 +622,7 @@ header.new-header{
 	font-size: 16px;
 	z-index: 99;
 }
-#formFilters .form-group i{
-	left: 2vw;
-	top:36px;
-}
+
 #formSearch input, #formFilters input{
 	border-radius: 5px;
 	height: 30px;
@@ -1002,10 +996,6 @@ header.new-header{
 	font-size: 1.41vw;
 }
 
-#thumbHotel .priceRoom a {
-	color: #233034;
-}
-
 #thumbHotel .priceRoom button{
 	color: #fff;
 	font-size: 1vw;
@@ -1025,10 +1015,7 @@ header.new-header{
 	border-radius: 10px;
 	color: #ffffff;
 }
-#thumbHotel .priceRoom a:hover, #descriptionHotel > div:nth-child(1) > div.boxPrice.col-xs-3 > button:hover, #descriptionHotel > div > div > div > div > div > div > div.col-xs-9 > table > tbody > tr > td.center > form > button:hover{
-	background: #008cd0;
-	color: #fff;
-}
+
 #thumbsSearch .paginationList{
 	text-align: center;
 }
@@ -1070,16 +1057,6 @@ header.new-header{
 	color: #ffffff;
 }
 
-#thumbsSearch .paginationList li a:hover,#thumbsSearch .paginationList li.first a:hover ,#thumbsSearch .paginationList li.last a:hover {
-	background: #0777ae;
-	border: none;
-	color: #ffffff;
-}
-#thumbsSearch .paginationList li.first a,#thumbsSearch .paginationList li.last a {
-	background: #bbbbbb;
-	border: none;
-	color: #ffffff;
-}
 /*----- END LIST THUMBS HOTELS-----*/
 
 /*----- END CONTENT LIST SEARCH -------------------------------------------------------------------------------*/
@@ -1091,7 +1068,7 @@ header.new-header{
 
 .promotions h1{
 	margin: 0;
-	padding: 0 0 2.5vw 0;
+	padding: 0 0 0.5vw 0;
 	text-align: center;
 	font-size: 2.41vw;
 	color: #233034;
@@ -1879,12 +1856,7 @@ figure.effect-goliath:hover p {
 	height: auto;
 	padding-top: 18%;
 }
-span.irs-to,span.irs-from{
-	color: #fff;
-}
-.check-more-less{
-	margin-left: 20px !important;
-}
+
 .footer h3{
 	font-size: 1.66vw;
 	color: #ffffff;
@@ -1986,7 +1958,7 @@ span.irs-to,span.irs-from{
 }
 
 .copyright p{
-	font-size: 0.83vw;
+	font-size: 10px;
 	color: #999999;
 	font-family: 'latoregular';
 	font-style: italic;
@@ -1999,3 +1971,11 @@ span.irs-to,span.irs-from{
 /*----- END FOOTER -----*/
 
 
+.scroller-flight {
+	overflow: auto;
+	height: 300px;
+}
+
+.multiple-destinations-label {
+	margin-left: 13px;
+}
