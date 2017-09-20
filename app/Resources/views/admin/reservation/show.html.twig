@@ -1,0 +1,92 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="text-transform:capitalize;">{{ 'datos de la reserva' | trans }}</h4>
+            </div>
+            <div class="card-block">
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <p>entrada:</p>
+                        <h5>10/10/17</h5>
+                    </div>
+                    <div class="form-group row">
+                        <p>salida:</p>
+                        <h5>10/10/17</h5>
+                    </div>
+                    <div class="form-group row">
+                        <p>numero de huespedes:</p>
+                        <h5>2</h5>
+                    </div>
+                    <div class="form-group row">
+                        <p>total de habitaciones:</p>
+                        <h5>1</h5>
+                    </div>
+                </div>
+                <div class="col-md-8" style="border-left: 1px solid rgb(235, 238, 240); padding-left: 50px">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <h5>phils garcia</h5>
+                            <p>eivanphils@gmail.com</p>
+                            <p>+584125983290</p>
+                        </div>
+                        <div class="form-group row">
+                            <h5>hotel recoleta</h5>
+                            <p>numero de la reserva: 4654654654</p>
+                            <p>Habitacion premiun especial xsdfsdf</p>
+                            <p>sdsfd</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <h5>detale de precio</h5>
+                            <p>precio: 4654</p>
+                            <p>taxes: 4654</p>
+                            <p>fe: 4654</p>
+                            <p>total: 4654</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                <a href="{{ path('reservation_list') }}" class="btn btn-md btn-info" style="margin-top: 1px; width: 100%">{{ 'admin.back' | trans }}</a>
+            </div>
+            <div class="card-block" style="text-align: center">
+                <a data-target="#"
+                   data-toggle="modal"
+                   class="btn btn-danger"
+                   style="width:100%;margin-bottom:20px;color:#fff;"
+                >solicitar cancelacion de reserva</a>
+                <a data-target="#show-tdc-data-modal"
+                   data-toggle="modal"
+                   class="btn btn-success"
+                   style="width:100%;margin-bottom:20px;color:#fff;"
+                >ver datos de la tdc</a>
+            </div>
+                {#<a href="{{ path('hotel_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .card-block {
+            min-height: 360px;
+        }
+    </style>
+{% endblock %}
