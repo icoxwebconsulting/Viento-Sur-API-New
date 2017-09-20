@@ -13,7 +13,7 @@ class PromotionsRepository extends EntityRepository
         $qb->select('p')
             ->from('VientoSurAppAppBundle:Promotions', 'p')
             ->where('p.status = :status')
-            ->orderBy('p.created', 'ASC');
+            ->orderBy('p.created', 'DESC');
 
         $qb->setParameter('status', $status);
         
