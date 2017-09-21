@@ -9,9 +9,10 @@
     {% endif %}
     {% set decimal =false %}
     <div class="ListHotel">
+
         {% for item in items.items %}
         <div id="thumbHotel">
-            <div class="imgHotel col-xs-3 col-sm-3 noPadding">
+            <div class="imgHotel col-xs-3 col-sm-3 ">
                 <img src="{{ hotelsDetails[item.id].main_picture.url }}/200x150" width="200"  height="150" alt="{{item.hotel.name}}">
             </div>
             <div class="infoHotel col-xs-6 col-sm-7">
@@ -31,7 +32,7 @@
                 </div>
                 <div class="modalMap">
                     <a class="booking-item-address" data-prevent="modal"  data-latitude="{{ item.hotel.location.latitude }}" data-longitude="{{ item.hotel.location.longitude }}" data-name="{{ item.hotel.name }}">
-                        {{ 'hotels.map_view' | trans }} <i class="fa fa-map-marker input-icon"></i></a>
+                        {{ app.session.get('destination')['text'] }}  <i class="fa fa-map-marker input-icon"></i></a>
                 </div>
                 {% for key, room_availability in item.roompacks %}
                     {% if room_availability.rooms[0].availability is defined %}
