@@ -1,6 +1,7 @@
 {% extends '@VientoSurAppApp/layoutFlight.html.twig' %}
 {% block title %}{{ 'index.flight_search' | trans }}{% endblock %}
 
+
 {% block content %}
 
     {% set targetCurrency = app.session.get('targetCurrency') %}
@@ -10,6 +11,7 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
+    <div id="banner"></div>
 
     <!-- GO BREADCRUMB -->
     <div id="breadcrumb">
@@ -17,7 +19,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="#">Viento Sur</a></li>
+                        <li><a href="{{ path('homepage') }}">{{ 'admin.home' | trans }}</a></li>
                         <li><a href="#">{{ 'flights.flights' | trans }}</a></li>
                         {% if app.session.get('origin_flight').text is defined %}
                             {% set origin = app.session.get('origin_flight').text|split(',') %}
@@ -30,11 +32,11 @@
                             {% set destination = "" %}
                         {% endif %}
                         {% if items.status is not defined %}
-                            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
-                                    {% if origin  %}
-                                        {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
-                                    {% endif %}
-                                </a></li>
+                            <li>
+                                {% if origin %}
+                                    {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
+                                {% endif %}
+                            </li>
                         {% endif %}
                     </ol>
                 </div>
@@ -388,6 +390,30 @@
                 $('.' + type + '-view-toggle').toggleClass('hide')
             });
             */
+        })
+    </script>
+    <style>
+        h2 {
+            color: #FFFFFF!important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+//            console.log($('.bg-9').innerHeight());
+            var heightGet = [];
+            $( ".bg-9" ).each(function( index ) {
+                heightGet.push($( this ).innerHeight());
+            });
+
+            $('.col-md-3').each(function (index2) {
+                for (var i = 0; heightGet.length > i; i++){
+                    if(i == index2){
+                        $(this).css('height', heightGet[i] + 'px');
+                    }
+                }
+            })
+//            console.log('index2', heightGet);
+
         })
     </script>
 {% endblock %}

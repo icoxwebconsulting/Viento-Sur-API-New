@@ -99,6 +99,12 @@ header{
 	width: 100%;
 }
 
+.menu-left-label {
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: bold;
+}
+
 .logo{
 	text-align: center;
 }
@@ -1978,4 +1984,25 @@ figure.effect-goliath:hover p {
 
 .multiple-destinations-label {
 	margin-left: 13px;
+}
+
+.btn-detail {
+	background: #008cd0;
+	border: none;
+	border-radius: 5px;
+	box-shadow: none;
+	color: #ffffff;
+	font-family: 'latobold';
+	font-size: 12px;
+	padding: 1.25vw;
+	text-align: center;
+	width: 100%;
+	max-width: 80px;
+}
+
+.irs-to{
+	color: #FFFFFF!important;
+}
+.irs-from{
+	color: #FFFFFF!important;
 }
