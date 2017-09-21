@@ -91,7 +91,7 @@ class Reservation
     private $checkout;
 
     /**
-     * @ORM\Column(name="extra_data", type="string", length=255, nullable=true)
+     * @ORM\Column(name="extra_data", type="text", nullable=true)
      */
     private $extra_data;
 
