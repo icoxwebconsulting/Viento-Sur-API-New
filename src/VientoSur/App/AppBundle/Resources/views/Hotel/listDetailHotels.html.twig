@@ -12,10 +12,10 @@
 
         {% for item in items.items %}
         <div id="thumbHotel">
-            <div class="imgHotel col-xs-3 col-sm-3 ">
+            <div class="imgHotel col-xs-4">
                 <img src="{{ hotelsDetails[item.id].main_picture.url }}/200x150" width="200"  height="150" alt="{{item.hotel.name}}">
             </div>
-            <div class="infoHotel col-xs-6 col-sm-7">
+            <div class="infoHotel col-xs-12 col-sm-6 noPadding">
                 <h4 title="{{item.hotel.name}} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">
                     <a href="{{path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}" target="_blank">
                         {{item.hotel.name}}
