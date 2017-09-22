@@ -1735,7 +1735,7 @@ figure.effect-goliath:hover p {
 }
 
 #thumbsFlights .paymentFlight{
-	margin-top: 10%;
+	margin-top: 40%;
 	position: absolute;
 	right: 18px;
 	text-align: center;
@@ -2074,4 +2074,8 @@ figure.effect-goliath:hover p {
 	opacity: 1;
 	-ms-filter: none;
 	filter: none;
+}
+
+.pagination-flight > .pagination > li > a, pagination-flight > .pagination > li > span {
+	font-size:16px
 }

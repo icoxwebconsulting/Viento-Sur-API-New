@@ -758,6 +758,7 @@ $(document).ready(function () {
         if(flightType == 'only_out'){
             $("#end-flight").removeAttr('required').hide();
             $("#dummy-end-flight").removeClass('hidden');
+            $("#dummy-end-flight").removeAttr('required');
             $('#only_out').val(true);
             $('#multipledestination').val(false);
             $('#only_out').is(':checked');
