@@ -33,6 +33,7 @@ index:
     cancellation_proceed: Seu pedido de cancelamento foi processado
     cancellation_msg: Cancelamos uma reserva Com as seguintes Características
     cancellation_number: Número de cancelamento
+    credit_card: Cartão de crédito
     search:
         hotel:
            title: Procurar alojamento com as melhores taxas
@@ -129,6 +130,8 @@ hotels:
     pictures: Fotos
     map: Mapa
     entry: Entrada
+    number_guests: Número de convidados
+    guests: Convidados
     order:
         subtotal_price_ascending: Precio: menor a mayor
         subtotal_price_descending:

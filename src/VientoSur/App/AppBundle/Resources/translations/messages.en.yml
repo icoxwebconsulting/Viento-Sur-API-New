@@ -34,6 +34,7 @@ index:
     cancellation_proceed: Your cancellation request has been processed
     cancellation_msg: We have canceled a reservation with the following characteristics
     cancellation_number: Cancellation Number
+    credit_card: Credit card
     search:
         hotel:
            destination: Destination
@@ -131,6 +132,8 @@ hotels:
     pictures: Pictures
     map: Mapa
     entry: Entry
+    number_guests: Number of guests
+    guests: Guests
     order:
         subtotal_price_ascending: Price: ascending
         subtotal_price_descending: Price: descending

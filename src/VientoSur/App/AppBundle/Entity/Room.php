@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Room
  *
  * @ORM\Table(name="rooms")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\RoomRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Room
