@@ -374,8 +374,9 @@
                     <li class="amenities hidden" data-type="amenities">
                         <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_services' | trans }} - VientoSur.net">{{ 'hotels.search_menu.services' | trans }}</h4>
                         {% for amenity in facet.values %}
+
                             <div class="checkbox check-more-less {% if loop.index > 5 %}amenities-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                <label style="width: 90%">
+                                <label style="width: 80%">
                                     <input class="i-check" type="checkbox" {% if amenity.selected %}checked="checked"{% endif %} value="{{ amenity.value }}" />
                                     <span>{{ amenity.label }}</span>
                                 </label>

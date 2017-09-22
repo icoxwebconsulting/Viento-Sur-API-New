@@ -1,5 +1,5 @@
 {% set data_passengers = app.session.get('data_passengers') %}
-<div class="col-xs-12 content-sidebar">
+<div class="col-xs-12">
     <div class="" id="sidebar">
         <div id="formSearch">
             <form class="booking-item-dates-change mb5" name="searchFlight" id="search-flights" action ="{{ path('viento_sur_process_search_flights') }}" method="POST">
@@ -12,8 +12,8 @@
                     <div class="multi-flight">
                         {% for destiny in destinations %}
                             <div class="wrapper-lateral">
-                                <h2>{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</h2>
-                                <h2 id="label-stretch" style="display: none">{{ 'index.search.flight.stretch' | trans }}</h2>
+                                <label class="menu-left-label">{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</label>
+                                <label class="menu-left-label" id="label-stretch" style="display: none">{{ 'index.search.flight.stretch' | trans }}</label>
                                 {% if loop.index0 < 1 %}
                                     <div class="form-group form-group-icon-left form-icon-lg">
                                         <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
@@ -86,30 +86,39 @@
                     </div>
                 {% else %}
                     <a id="multidestination-lateral" class="multidestination-lateral-btn" style="display: block;">{{ 'index.search.flight.multiple_destinations' | trans }}</a>
-                    <span id="label-stretch" style="display: none;">{{ 'index.search.flight.stretch' | trans }}</span>
+                    <label id="label-stretch" style="display: none;">{{ 'index.search.flight.stretch' | trans }}</label>
                     <a id="remove-stretch-lateral" class="menu-lateral btn btn-danger" style="display: none;width: 48%;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
                     <a id="add-stretch-lateral" class="menu-lateral btn btn-success" style="display: none;width: 48%;">{{ 'index.search.flight.add_stretch' | trans }}</a>
                     <div class="normal-flight">
-                        <div class="form-group form-group-icon-left form-icon-lg">
-                            <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                            <label  id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
-                            <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
-                            <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <label id="label-from" >{{ 'index.search.flight.from' | trans }}</label>
+                                <i class="fa fa-map-marker input-icon"></i>
+                                <input class="city-input form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}">
+                                <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
+                            </div>
                         </div>
 
-                        <div class="form-group form-group-icon-left form-icon-lg">
-                            <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                            <label id="label-to"  class="mfont">{{ 'index.search.flight.to' | trans }}</label>
-                            <input id="to-flight" name="to-flight" type="text" class="form-control test" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
-                            <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <label id="label-to" >{{ 'index.search.flight.to' | trans }}</label>
+                                <i class="fa fa-map-marker input-icon"></i>
+                                <input id="to-flight" class="city-input form-control" name="to-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" (>
+                                <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
+                            </div>
                         </div>
-                        <div>
-                            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+
+                        <div class="row">
+                            <div class='form-group date col-xs-7' id='datetimepicker5'>
                                 <label  id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
                                 <input id="start-flight" class="form-control required test" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
                             </div>
-                            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
+                        </div>
+                        <div class="row">
+                            <div class='form-group date col-xs-7' id='datetimepicker5'>
                                 <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
                                 <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
                             </div>
                         </div>
@@ -167,371 +176,13 @@
                     </div>
                 </div>
 
-                <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
+                <div class="row">
+                    <div class="bottonSearch col-xs-12">
+                        <button >{{ 'index.search_text' | trans }}</button>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
 </div>
-{#
-<div class="content-sidebar">
-    {% set data_passengers = app.session.get('data_passengers') %}
-    <form class="booking-item-dates-change mb5" name="searchFlight" id="search-flights" action ="{{ path('viento_sur_process_search_flights') }}" method="POST">
-            {% if app.session.get('multipledestinations') is defined  and  app.session.get('multipledestinations') is not null  %}
-                {% set destinations = app.session.get('multipledestinations') %}
-{{ dump(app.session.get('multipledestinations')) }}
-
-                <input type="text"  id="multipledestination-multiple" name="multipledestination" style="display: none" value="true">
-
-                <div class="multi-flight">
-                    {% for destiny in destinations %}
-                        <div class="wrapper-lateral">
-                            <h2>{{ 'index.search.flight.stretch' | trans }} {{ loop.index }}</h2>
-                            <h2 id="label-stretch" style="display: none">{{ 'index.search.flight.stretch' | trans }}</h2>
-                            {% if loop.index0 < 1 %}
-                                <div class="form-group form-group-icon-left form-icon-lg">
-                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                                    <label id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
-                                    <input class="form-control" id="multidestination-from-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][fromFlight]" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"  value="{{ app.session.get('multipledestinations')[loop.index0].fromFlight }}" />
-                                    <input id="multidestination-originFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][originFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].originFlight }}" />
-                                </div>
-                                <div class="form-group form-group-icon-left form-icon-lg">
-                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                                    <label id="label-to" class="mfont">{{ 'index.search.flight.to' | trans }}</label>
-                                    <input id="to-flight" name="to-flight" type="hidden" class="form-control" data-provide="typeahead" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}"/>
-
-                                    <input id="multidestination-to-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{{ app.session.get('multipledestinations')[loop.index0].toFlight }}" />
-                                    <input id="multidestination-destinationFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][destinationFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}" />
-                                </div>
-                                <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                                    <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                                    <input id="start-flight" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
-                                </div>
-                            {% else %}
-                                <div class="form-group form-group-icon-left form-icon-lg">
-                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                                    <label class="mfont">{{ 'index.search.flight.from' | trans }}</label>
-                                    <input class="form-control" id="multidestination-from-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][fromFlight]" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}"  value="{{ app.session.get('multipledestinations')[loop.index0].fromFlight }}" />
-                                    <input id="multidestination-originFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][originFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].originFlight }}" />
-                                </div>
-                                <div class="form-group form-group-icon-left form-icon-lg">
-                                    <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                                    <label class="mfont">{{ 'index.search.flight.to' | trans }}</label>
-                                    <input id="multidestination-to-flight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{{ app.session.get('multipledestinations')[loop.index0].toFlight }}" />
-                                    <input id="multidestination-destinationFlight{{ loop.index0 }}" name="multidestination[{{ loop.index0 }}][destinationFlight]" type="hidden" value="{{ app.session.get('multipledestinations')[loop.index0].destinationFlight }}" />
-                                </div>
-                                <div>
-                                    <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                                        <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                                        <input id="start-flight{{ loop.index0 }}" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                </div>
-                <a id="multidestination-lateral" style="display: none;">{{ 'index.search.flight.multiple_destinations' | trans }}</a>
-                <a id="remove-stretch-lateral" class="menu-lateral btn btn-danger" style="display: inline-block;width: 48%;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
-                <a id="add-stretch-lateral" class="menu-lateral btn btn-success" style="display: inline-block;width: 48%;">{{ 'index.search.flight.add_stretch' | trans }}</a>
-                <div class="normal-flight" style="display: none">
-                    <div class="form-group form-group-icon-left form-icon-lg">
-                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                        <label id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
-                        <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" />
-                        <input id="originFlight" name="originFlight" type="hidden" />
-                    </div>
-
-                    <div class="form-group form-group-icon-left form-icon-lg">
-                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                        <label id="label-to" class="mfont">{{ 'index.search.flight.to' | trans }}</label>
-                        <input id="to-flight-test" name="to-flight" type="text" class="form-control test-to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}"/>
-                        <input id="destinationFlight" name="destinationFlight" type="hidden" />
-                    </div>
-                    <div>
-                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                            <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                            <input id="start-flight-test" class="form-control required" name="start" type="text" placeholder="dd/mm/yyyy"  value="{{app.session.get('departure_date')}}" />
-                        </div>
-                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                            <label id="label-end" class="sfont">{{ 'index.search.flight.end' | trans }}</label>
-                            <input id="end-flight-test" class="form-control required" name="end" type="text" placeholder="dd/mm/yyyy"/>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <a id="multidestination-lateral" class="multidestination-lateral-btn" style="display: block;">{{ 'index.search.flight.multiple_destinations' | trans }}</a>
-                <span id="label-stretch" style="display: none;">{{ 'index.search.flight.stretch' | trans }}</span>
-                <a id="remove-stretch-lateral" class="menu-lateral btn btn-danger" style="display: none;width: 48%;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
-                <a id="add-stretch-lateral" class="menu-lateral btn btn-success" style="display: none;width: 48%;">{{ 'index.search.flight.add_stretch' | trans }}</a>
-                <div class="normal-flight">
-                    <div class="form-group form-group-icon-left form-icon-lg">
-                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                        <label  id="label-from" class="mfont">{{ 'index.search.flight.from' | trans }}</label>
-                        <input class="form-control" id="from-flight" name="from-flight" type="text" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" />
-                        <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
-                    </div>
-
-                    <div class="form-group form-group-icon-left form-icon-lg">
-                        <i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                        <label id="label-to"  class="mfont">{{ 'index.search.flight.to' | trans }}</label>
-                        <input id="to-flight" name="to-flight" type="text" class="form-control test" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" />
-                        <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
-                    </div>
-                    <div>
-                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                            <label  id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                            <input id="start-flight" class="form-control required test" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
-                        </div>
-                        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                            <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
-                            <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="adultsPassengers">{{ 'index.search.hotel.adults' | trans }}</label>
-                        <select id="adultsPassengers" class="form-control coupled" name="adultsPassengers" data-couple="childrenPassengers.0">
-                            <option value="1" {% if adults is defined and adults == 1 %}selected="selected"{% endif %}>1</option>
-                            <option value="2" {% if adults is defined and  adults == 2 %}selected="selected"{% endif %}>2</option>
-                            <option value="3" {% if adults is defined and  adults == 3 %}selected="selected"{% endif %}>3</option>
-                            <option value="4" {% if adults is defined and  adults == 4 %}selected="selected"{% endif %}>4</option>
-                            <option value="5" {% if adults is defined and  adults == 5 %}selected="selected"{% endif %}>5</option>
-                            <option value="6" {% if adults is defined and  adults == 6 %}selected="selected"{% endif %}>6</option>
-                            <option value="7" {% if adults is defined and  adults == 7 %}selected="selected"{% endif %}>7</option>
-                            <option value="8" {% if adults is defined and  adults == 8 %}selected="selected"{% endif %}>8</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="childrenPassengers">{{ 'index.search.hotel.childs' | trans }}</label>
-                        <select id="childrenPassengers" class="form-control coupled" name="childrenPassengers" data-couple="adultsPassengers.1">
-                            {% for i in 1..8 %}
-                                <option value="{{ loop.index0 }}" {% if data_passengers.children is defined and data_passengers.children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-        <!--se abre si hay menores-->
-        <div class="col-md-12 {% if data_passengers.children is not defined %}hidden{% endif %}" id="menorGroup">
-            <div class="form-group">
-                <label for="field-hotel-adult">{{ 'index.search.flight.childs_ages' | trans }}</label>
-                <div class="row">
-                    {% for i in 1..7 %}
-                        <div class="col-md-6 field-menor-{{ i }}" {% if data_passengers.children[i] is not defined %}style="display:none;"{% endif %}>
-                            <div class="form-group form-group-sm form-group-select-plus">
-                                <select id="field-menor-{{ i }}" class="form-control " name="field-menor-{{ i }}">
-                                    <option value="">{{ 'index.search.flight.children' | trans }} {{ i }}</option>
-                                    <option value="M" {% if data_passengers.children[i] is defined and  data_passengers.children[i] == 'M' %}selected="selected"{% endif %}>{{ 'index.search.flight.0_24_arm' | trans }}</option>
-                                    <option value="I" {% if data_passengers.children[i] is defined and data_passengers.children[i] == 'I' %}selected="selected"{% endif %}>{{ 'index.search.flight.0_24:seat' | trans }}</option>
-                                    <option value="C" {% if data_passengers.children[i] is defined and data_passengers.children[i] == 'C' %}selected="selected"{% endif %}>{{ 'index.search.flight.2_11' | trans }}</option>
-                                    <option value="A" {% if data_passengers.children[i] is defined and data_passengers.children[i] == 'A' %}selected="selected"{% endif %}>{{ 'index.search.flight.12_more' | trans }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
-    </form>
-    {% if items.facets is defined and items.facets is not empty %}
-        <aside class="booking-filters">
-            <h3 title="{{ 'flights.flights' | trans }} - {{ 'hotels.search_menu.filters' | trans }} - VientoSur.net">{{ 'hotels.search_menu.filter_by' | trans }}:</h3>
-            <ul class="list booking-filters-list">
-                {% for facet in items.facets %}
-                    {% if facet.criteria == 'stops' %}
-                        <li class="stops hidden" data-type="stops">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.scales' | trans }} - VientoSur.net">{{ 'flights.scales' | trans }}</h5>
-                            {% for type in facet.values %}
-                                {% set zero =  'flights.scale_0' | trans  %}
-                                {% set one = 'flights.scale_1' | trans  %}
-                                {% set more_than_one = 'flights.scale_2' | trans %}
-                                {% set names = {
-                                    none: zero,
-                                    one: one,
-                                    more_than_one: more_than_one
-                                } %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        {{ attribute(names, type.value) }}
-                                        <span class="pull-right">({{ type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-                    {% if facet.criteria == 'airlines' %}
-                        <li class="airlines hidden" data-type="airlines">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airlines' | trans }} - VientoSur.net">{{ 'flights.airlines' | trans }}</h5>
-                            {% for type in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        <span class="filter-img-wrapper">
-                                            <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines/25x25/{{ type.value }}.png" alt="{{ attribute(airlineNames, type.value) }}">
-                                        </span>
-                                        {{ attribute(airlineNames, type.value) }}
-                                        <span class="pull-right">({{ type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-                    {% if facet.criteria == 'alliances' %}
-                        <li class="alliances hidden" data-type="alliances">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.alliances' | trans }} - VientoSur.net">{{ 'flights.alliances' | trans }}</h5>
-                            {% for type in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        {% set allianceNames = {
-                                            OW : 'One World',
-                                            ST : 'Sky Team',
-                                            SA : 'Star Alliance'
-                                        } %}
-                                        <span class="filter-img-wrapper">
-                                            <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines-alliances/25x25/{{ type.value }}.png" alt="{{ attribute(allianceNames, type.value) }}">
-                                        </span>
-                                        {{ attribute(allianceNames, type.value) }}
-                                        <span class="pull-right">({{ type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-                    {% if facet.criteria == 'outbound_airports' %}
-                        <li class="outbound_airports hidden" data-type="outbound_airports">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.going' | trans }}</h5>
-                            {% for type in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
-                                        <span class="pull-right">({{ type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-                    {% if facet.criteria == 'inbound_airports' %}
-                        <li class="inbound_airports hidden" data-type="inbound_airports">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.return' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.return' | trans }}</h5>
-                            {% for type in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
-                                        <span class="pull-right">({{ type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'outbound_duration_range' %}
-                        <li class="outbound_duration_range hidden" data-type="outbound_duration_range">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.going' | trans }}</h5>
-                            {% if app.request.get('outbound_duration_range') is empty %}
-                                <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
-                            {% else %}
-                                {% set fromTo = app.request.get('outbound_duration_range')|split('-') %}
-                                <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
-                            {% endif %}
-                            <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'inbound_duration_range' %}
-                        <li class="inbound_duration_range hidden" data-type="inbound_duration_range">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.return' | trans }}</h5>
-                            {% if app.request.get('inbound_duration_range') is empty %}
-                                <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
-                            {% else %}
-                                {% set fromTo = app.request.get('inbound_duration_range')|split('-') %}
-                                <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
-                            {% endif %}
-                            <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="inbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'outbound_time_range' %}
-                        <li class="outbound_time_range hidden" data-type="outbound_time_range">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.going' | trans }}</h5>
-                            {% if app.request.get('outbound_time_range') is empty %}
-                                {% set temp = facet.min|split(':') %}
-                                {% set min = (temp[0] * 60) + temp[1] %}
-                                {% set temp = facet.max|split(':') %}
-                                {% set max = (temp[0] * 60) + temp[1] %}
-                                <input type="text" id="outbound_time_range-slider" data-min="0"
-                                       data-max="1439" data-from="{{ min|round }}" data-to="{{ max|round }}" />
-                            {% else %}
-                                {% set fromTo = app.request.get('outbound_time_range')|split('-') %}
-                                <input type="text" id="outbound_time_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" data-to="{{ fromTo[1] }}" />
-                            {% endif %}
-                            <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="outbound_time_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                        </li>
-                    {% endif %}
-                    {% if facet.criteria == 'inbound_time_range' %}
-                        <li class="inbound_time_range hidden" data-type="inbound_time_range">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.return' | trans }}</h5>
-                            {% if app.request.get('inbound_time_range') is empty %}
-                                {% set temp = facet.min|split(':') %}
-                                {% set min = (temp[0] * 60) + temp[1] %}
-                                {% set temp = facet.max|split(':') %}
-                                {% set max = (temp[0] * 60) + temp[1] %}
-                                <input type="text" id="inbound_time_range-slider" data-min="{{ min }}"
-                                       data-max="{{ max }}" data-from="{{ min }}" data-to="{{ max }}" />
-                            {% else %}
-                                {% set fromTo = app.request.get('inbound_time_range')|split('-') %}
-                                <input type="text" id="inbound_time_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ min }}" data-to="{{ max }}" />
-                            {% endif %}
-                            <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="inbound_time_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-
-                {% if items.facets[0] is defined %}
-                    {% set facet = items.facets[0] %}
-                    {% if facet.criteria == 'total_price_range' %}
-                        <li class="total_price_range hidden" data-type="total_price_range">
-                            <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h5>
-                            {% if app.request.get('total_price_range') is empty %}
-                                <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}"/>
-                            {% else %}
-                                {% set fromTo = app.request.get('total_price_range')|split('-') %}
-                                <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
-                                       data-to="{{ fromTo[1] }}"/>
-                            {% endif %}
-                            <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                        </li>
-                    {% endif %}
-                {% endif %}
-            </ul>
-        </aside>
-    {% endif %}
-</div>
-<div class="gap-small"></div>
-
-#}

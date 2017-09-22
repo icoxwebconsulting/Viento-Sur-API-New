@@ -335,42 +335,42 @@ $(document).ready(function () {
             console.log('mostrar menu multiple');
             $('.multidestination-lateral-btn').after('<div class="multi-flight">'+
                                                         '<div class="wrapper-lateral">'+
-                                                            '<h2>'+labelStretch+' 1</h2>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
-                                                                '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
+                                                            '<lable class="menu-left-label">'+labelStretch+' 1</label>'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<label class="mfont">'+labelFrom+'</label>'+
+                                                                '<i class="fa fa-map-marker input-icon"></i>'+
                                                                 '<input class="form-control" id="multidestination-from-flight0" name="multidestination[0][fromFlight]" type="text" data-provide="typeahead" placeholder="'+placeHolderFrom+'" />'+
                                                                 '<input id="multidestination-originFlight0" name="multidestination[0][originFlight]" type="hidden" />'+
                                                             '</div>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
-                                                                '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<label class="mfont">'+labelTo+'</label>'+
+                                                                '<i class="fa fa-map-marker input-icon"></i>'+
                                                                 '<input id="multidestination-to-flight0" name="multidestination[0][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="'+placeHolderTo+'" />'+
                                                                 '<input id="multidestination-destinationFlight0" name="multidestination[0][destinationFlight]" type="hidden" />'+
                                                             '</div>'+
                                                             '<div>'+
-                                                                '<div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
+                                                                '<div class="form-group col-xs-12"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
                                                                     '<label class="sfont">'+labelStart+'</label>'+
                                                                     '<input id="start-flight0" class="form-control required" name="multidestination[0][start]" type="text" required="" placeholder="dd/mm/yyyy" />'+
                                                                 '</div>'+
                                                             '</div>'+
                                                         '</div>'+
                                                         '<div class="wrapper-lateral">'+
-                                                            '<h2>'+labelStretch+' 2</h2>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
+                                                            '<lable class="menu-left-label">'+labelStretch+' 2</label>'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                                                                 '<label class="mfont">'+labelFrom+'</label>'+
                                                                 '<input class="form-control" id="multidestination-from-flight1" name="multidestination[1][fromFlight]" type="text" data-provide="typeahead" placeholder="'+placeHolderFrom+'" />'+
                                                                 '<input id="multidestination-originFlight1" name="multidestination[1][originFlight]" type="hidden" />'+
                                                             '</div>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                                                                 '<label class="mfont">'+labelTo+'</label>'+
                                                                 '<input id="multidestination-to-flight1" name="multidestination[1][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="'+placeHolderTo+'" />'+
                                                                 '<input id="multidestination-destinationFlight1" name="multidestination[1][destinationFlight]" type="hidden" />'+
                                                             '</div>'+
                                                             '<div>'+
-                                                                '<div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
+                                                                '<div class="form-group col-xs-12"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
                                                                     '<label class="sfont">'+labelStart+'</label>'+
                                                                     '<input id="start-flight1" class="form-control required" name="multidestination[1][start]" type="text" required="" placeholder="dd/mm/yyyy" />'+
                                                                 '</div>'+
@@ -467,21 +467,21 @@ $(document).ready(function () {
         console.log(lenght);
         if (lenght < 7){
             $('.wrapper-lateral').last().after('<div class="wrapper-lateral">'+
-                    '<h2>'+labelStretch+' '+lenght+'</h2>'+
-                '<div class="form-group form-group-icon-left form-icon-lg">'+
+                    '<label class="menu-left-label" style="font-weight: bold; font-size: 16px">'+labelStretch+' '+lenght+'</label>'+
+                '<div class="form-group col-xs-12">'+
                     '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                     '<label class="mfont">'+labelFrom+'</label>'+
                     '<input class="form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" type="text" data-provide="typeahead" placeholder="'+placeHolderFrom+'" />'+
                     '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" />'+
                 '</div>'+
-                '<div class="form-group form-group-icon-left form-icon-lg">'+
+                '<div class="form-group col-xs-12">'+
                     '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                     '<label class="mfont">'+labelTo+'</label>'+
                     '<input id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="'+placeHolderTo+'" />'+
                     '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" />'+
                 '</div>'+
                 '<div>'+
-                    '<div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
+                    '<div class="form-group col-xs-12"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
                         '<label class="sfont">'+labelStart+'</label>'+
                         '<input id="start-flight'+count+'" class="form-control required" name="multidestination['+count+'][start]" type="text" required="" placeholder="dd/mm/yyyy" />'+
                     '</div>'+
@@ -758,6 +758,7 @@ $(document).ready(function () {
         if(flightType == 'only_out'){
             $("#end-flight").removeAttr('required').hide();
             $("#dummy-end-flight").removeClass('hidden');
+            $("#dummy-end-flight").removeAttr('required');
             $('#only_out').val(true);
             $('#multipledestination').val(false);
             $('#only_out').is(':checked');
