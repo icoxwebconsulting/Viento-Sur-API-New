@@ -28,7 +28,9 @@
                         {#<th>{{ 'hotels.card' | trans }}</th>#}
                         {#<th>{{ 'hotels.phone' | trans }}</th>#}
                         {#<th>{{ 'admin.email' | trans }}</th>#}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <th>{{ 'admin.origin' | trans }}</th>
+                        {% endif %}
                         <th>{{ 'admin.actions' | trans }}</th>
                     </tr>
                     </thead>
@@ -55,9 +57,7 @@
                             <td>{{ entity.origin }}</td>
                             {% endif %}
                             <td>
-                                {#<a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('room_delete', {id: entity.id}) }}"><i class="fa fa-trash"></i></a>#}
-                                {#<a href="{{ path('room_edit', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>#}
-                                {#<a href="#"><i class="fa fa-picture-o"></i></a>#}
+                                <a href="{{ path('reservation_show', {id: entity.id}) }}"><i class="fa fa-pencil"></i></a>
                             </td>
                         </tr>
                     {% endfor %}

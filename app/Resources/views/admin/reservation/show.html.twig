@@ -1,0 +1,49 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'flights.reservation_data' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'flights.reservation_data' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% else %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+
+    <div class="col-md-8">
+      {% if entity.origin == 'despegar' %}
+          {% include ':admin/reservation:show_content_despegar.html.twig' %}
+      {% elseif entity.origin == 'vientosur' %}
+        {% include ':admin/reservation:show_content_vs.html.twig' %}
+      {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                <a href="{{ path('reservation_list') }}" class="btn btn-md btn-info" style="margin-top: 1px; width: 100%">{{ 'admin.back' | trans }}</a>
+            </div>
+            <div class="card-block" style="text-align: center">
+                <a data-target="#" data-toggle="modal" class="btn btn-danger" style="width:100%;margin-bottom:20px;color:#fff;" >solicitar cancelacion de reserva</a>
+
+                {% if entity.origin != 'despegar' %}
+                <a data-target="#show-tdc-data-modal" data-toggle="modal" class="btn btn-success" style="width:100%;margin-bottom:20px;color:#fff;">ver datos de la tdc</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .card-block {
+            min-height: 360px;
+        }
+    </style>
+{% endblock %}

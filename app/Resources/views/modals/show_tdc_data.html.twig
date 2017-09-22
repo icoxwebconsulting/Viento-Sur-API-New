@@ -1,0 +1,20 @@
+<div class="modal fade" id="show-tdc-data-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">{{ 'index.credit_card' | trans }}</h4>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                {% if extraData.tdc_data is defined %}
+                <p><strong>{{ 'hotels.holder_name' | trans }}:</strong> {{ extraData.tdc_data.holder_name }}</p>
+                <p><strong>{{ 'hotels.labels.document' | trans }}</strong> {{ extraData.tdc_data.dni }}</p>
+                <p><strong>{{ 'hotels.labels.card_number' | trans }}</strong> {{ extraData.tdc_data.card_number }}</p>
+                <p><strong>{{ 'hotels.card' | trans }}:</strong> {{ extraData.tdc_data.type_card }}</p>
+                <p><strong>{{ 'hotels.labels.security_code' | trans }}</strong> {{ extraData.tdc_data.security_code }}</p>
+                <p><strong>{{ 'hotels.labels.expiration' | trans }}</strong> {{ extraData.tdc_data.expiration_date }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

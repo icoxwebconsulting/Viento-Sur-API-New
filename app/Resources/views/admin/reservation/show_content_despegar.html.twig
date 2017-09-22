@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header">
+        <h4 style="text-transform:capitalize;">{{ 'flights.reservation_data' | trans }}</h4>
+    </div>
+    <div class="card-block">
+        <div class="col-md-4">
+            <div class="form-group row">
+                <p>{{ 'index.search.hotel.checkin_date' | trans }}:</p>
+                <h5>{{ entity.checkin | localizeddate('medium', 'none', app.request.locale) }}</h5>
+            </div>
+            <div class="form-group row">
+                <p>{{ 'index.search.hotel.checkout_date' | trans }}:</p>
+                <h5>{{ entity.checkout | localizeddate('medium', 'none', app.request.locale) }}</h5>
+            </div>
+            <div class="form-group row">
+                <p>{{ 'hotels.number_guests' | trans }}:</p>
+                <h5>{{ extraData.guests | length }}</h5>
+            </div>
+            <div class="form-group row">
+                <p>{{ 'index.search.hotel.rooms' | trans}}:</p>
+                <h5>{{ extraData.reservationDetails.rooms | length }}</h5>
+            </div>
+        </div>
+        <div class="col-md-8" style="border-left: 1px solid rgb(235, 238, 240); padding-left: 50px">
+            <div class="col-md-8">
+                <div class="form-group row">
+                    <h5>{{ entity.holderName }}</h5>
+                    <p>{{ entity.email }}</p>
+                    <p>{{ entity.phoneNumber }}</p>
+                </div>
+                <div class="form-group row">
+                    <h6>{{ extraData.hotelDetails.name }}</h6>
+                    <p>{{ 'hotels.reservation_number' | trans }}: {{ entity.reservationId }}</p>
+                    {% for room in extraData.reservationDetails.rooms %}
+                        <p>{% if room.descriptions.es is defined %}<p>{{ 'index.search.hotel.room' | trans }} {{ loop.index }}: {{ room.descriptions.es }} {% endif %}</p>
+                    {% endfor %}
+                </div>
+                <div class="form-group row">
+                    <h6>{{ 'hotels.guests' | trans }}</h6>
+                    {% for guest in extraData.guests %}
+                    <p>{{ guest.name }} {{ guest.lastName }} - {{ guest.document }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                 <div class="form-group row">
+                    <h5>{{ 'hotels.total_price' | trans }}</h5>
+                    <p>{{ symbol }} {{ entity.totalPrice }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

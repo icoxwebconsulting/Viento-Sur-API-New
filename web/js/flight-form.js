@@ -602,38 +602,40 @@ $(document).ready(function () {
         var lenght = $('.multiple-destinations-label').length;
         var count = $('.multiple-destinations-label').length;
         lenght++;
-        var labelStretch = $('#label-stretch').text();
+        var labelStr = $('#label-stretch').text();
+        var labelStretch = labelStr.substring(0, labelStr.length -1);
         var labelFrom = $('#label-from').text();
         var labelTo = $('#label-to').text();
         var labelStart = $('#label-start').text();
+        var toDate = $('#toDate').text();
         var placeHolderFrom = $('#multidestination-from-flight0').attr('placeholder');
         var placeHolderTo = $('#multidestination-to-flight0').attr('placeholder');
         if (lenght < 7){
-            $('.col-md-12.stretch').before('<div class="wrapper col-md-12">'+
-                                            '<label class="multiple-destinations-label">'+labelStretch+' '+lenght+'</label>'+
-                                            '<div class="multiple-destinations-wrapper col-md-6 ">'+
-                                                '<div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>'+
-                                                    '<label>'+labelFrom+'</label>'+
-                                                    '<input class="form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderFrom+'"/>'+
-                                                    '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" value="" />'+
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="multiple-destinations-wrapper col-md-6 ">'+
-                                                '<div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>'+
-                                                    '<label>'+labelTo+'</label>'+
-                                                    '<input class="form-control" id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderTo+'" />'+
-                                                    '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="multiple-destinations-wrapper col-md-12">'+
-                                                '<div class="col-md-6">'+
-                                                    '<div class="form-group form-group-sm form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>'+
-                                                        '<label>'+labelStart+'</label>'+
-                                                        '<input class="form-control required departure" id="start-flight'+count+'" name="multidestination['+count+'][start]" type="text" required="" placeholder="dd/mm/yyyy"/>'+
-                                                    '</div>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>');
+            $('.col-md-12.stretch')
+                .before('<div class="row wrapper">'+
+                            '<div class="col-xs-12">'+
+                                '<div class="col-xs-5">'+
+                                    '<p class="multiple-destinations-label">'+labelStretch+' '+lenght+'</p>'+
+                                    '<div class="form-group-icon-left marginBottom10">'+
+                                        '<i class="fa fa-map-marker input-icon"></i>'+
+                                        '<input class="city-input form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderFrom+'" />'+
+                                        '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" value="" />'+
+                                    '</div>'+
+                                    '<div class="form-group-icon-left marginBottom10">'+
+                                        '<i class="fa fa-map-marker input-icon"></i>'+
+                                        '<input class="city-input form-control" id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderTo+'" />'+
+                                        '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">'+
+                                    '<p>'+toDate+'</p>'+
+                                    '<div class="input-group date marginBottom10 col-xs-12" id="datetimepicker3">'+
+                                    '<i class="glyphicon glyphicon-calendar"></i>'+
+                                    '<input class="form-control required departure" id="start-flight'+count+'" name="multidestination['+count+'][start]" type="text" required="" placeholder="dd/mm/yyyy"/>'+
+                                '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>');
             var aux = count - 1;
             var dateSelector = '#start-flight'+aux;
             console.log('#start-flight'+aux);
@@ -706,6 +708,7 @@ $(document).ready(function () {
             $('#start-flight0').removeAttr('required');
             $('#start-flight1').removeAttr('required');
             $('#tab-2').css({'overflow': '', 'height': ''});
+            $('#round_trip').prop('checked', true);
         }
     });
     $("#childrenPassengers").change(function () {
@@ -725,6 +728,107 @@ $(document).ready(function () {
             $("#menorGroup").addClass('hidden');
         }
     });
+
+    /*$("#adultsPassengers").change(function () {
+        alert($("#adultsPassengers").val());
+    })*/
+
+    $("#total-passengers").text($("#adultsPassengers").val());
+    $("#total-adults").text($("#adultsPassengers").val());
+
+    $('#adultsPassengers').on('change', function() {
+        $("#total-passengers").text($("#adultsPassengers").val());
+        console.log(typeof($("#adultsPassengers").val()));
+    })
+
+    $('#childrenPassengers').on('change', function() {
+        var adultsPas = parseInt($("#adultsPassengers").val());
+        var childrenPas = parseInt($("#childrenPassengers").val());
+
+        var totalPas = adultsPas + childrenPas;
+
+        $("#total-adults").text(adultsPas);
+        $("#total-children").text(childrenPas);
+        $("#total-passengers").text(totalPas);
+    })
+
+
+    $("#typeTrip").change(function () {
+        var flightType =  $('input[name=flightType]:checked', '#typeTrip').val();
+        if(flightType == 'only_out'){
+            $("#end-flight").removeAttr('required').hide();
+            $("#dummy-end-flight").removeClass('hidden');
+            $('#only_out').val(true);
+            $('#multipledestination').val(false);
+            $('#only_out').is(':checked');
+
+            console.log($('#multipledestination').val());
+
+
+        }else if(flightType == 'round_trip') {
+            $("#dummy-end-flight").addClass('hidden');
+            $("#end-flight").show().attr("required");
+            // $('.round-trip-wrapper').show();
+            $('#only_out').val(false);
+            $('#multipledestination').val(false);
+            console.log($('#multipledestination').val());
+
+            $('.wrapper').hide();
+            $('#remove-stretch').hide();
+            $('#add-stretch').hide();
+            $('.round-trip-wrapper').show();
+            $('#multipledestination').val(false);
+            console.log($('#multipledestination').val());
+            $('#div-end-flight').show();
+            $('#end-flight').attr('required', 'true');
+            $('#multidestination-from-flight0').removeAttr('required');
+            $('#multidestination-to-flight0').removeAttr('required');
+            $('#multidestination-from-flight1').removeAttr('required');
+            $('#multidestination-to-flight1').removeAttr('required');
+            $('#start-flight0').removeAttr('required');
+            $('#start-flight1').removeAttr('required');
+            $('#tab-2').css({'overflow': '', 'height': ''});
+            $('#round_trip').prop('checked', true);
+
+
+        }else if(flightType == 'multiple_destination'){
+            $('.wrapper').show();
+            $('.round-trip-wrapper').hide();
+            $('#add-stretch').show();
+            $('#remove-stretch').show();
+            $('#multipledestination').val(true);
+            console.log($('#multipledestination').val());
+            $('#div-end-flight').hide();
+            $('#end-flight').removeAttr('required');
+            $('#multidestination-from-flight0').attr('required', 'true');
+            $('#multidestination-to-flight0').attr('required', 'true');
+            $('#start-flight0').attr('required', 'true');
+            $('#multidestination-from-flight1').attr('required', 'true');
+            $('#multidestination-to-flight1').attr('required', 'true');
+            $('#start-flight1').attr('required', 'true');
+            $('#tab-2').css({'overflow': 'auto', 'height': '313px'});
+        }
+    });
+
+    $('#openFlight').click(function () {
+        $('#flightsModal').modal();
+    })
+
+
+    $('#sendFlight').on('click', function () {
+        var form = $('#search-flights')[0];
+        if(form.checkValidity()){
+            $('#search-flights').hide();
+            $('#searchFlightMsg').removeClass('hide');
+            moveProgressBar($('#flight_pb')[0]);
+        }
+    });
+
+
+    /*if(flightType == 'only_out'){
+        $("#end-flight").removeAttr('required').hide();
+        $("#dummy-end-flight").removeClass('hidden');
+    }*/
 
     if($('#only_out').is(':checked')){
         $("#end-flight").removeAttr('required').hide();

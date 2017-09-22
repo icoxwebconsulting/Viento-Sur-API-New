@@ -1,6 +1,6 @@
 <div class="filterThumb">
     {% if sortArray.price is not empty %}
-        <div class="btn-group booking-sort">
+        <div class="btn-group booking-sort col-xs-3 noPadding">
             <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_price' | trans }} - VientoSur.net">
                 <span class="sort_name" id="sort_price">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span>
                 <span class="caret"></span>
@@ -10,7 +10,7 @@
             </ul>
         </div>
     {% endif %}
-    <div class="btn-group booking-sort">
+    <div class="btn-group booking-sort col-xs-3 noPadding">
         <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_stars' | trans }} - VientoSur.net">
             <span class="sort_name" id="sort_star">{% if sortArray.selected.category == 'star' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span>
@@ -20,7 +20,7 @@
             {{ sortArray.star|raw }}
         </ul>
     </div>
-    <div class="btn-group booking-sort">
+    <div class="btn-group booking-sort col-xs-3 noPadding">
         <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_features' | trans }} - VientoSur.net">
             <span id="sort_best" class="sort_name">{% if sortArray.selected.category == 'best' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span>
             <span class="caret"></span>
@@ -29,7 +29,7 @@
             {{ sortArray.best|raw }}
         </ul>
     </div>
-    <div class="btn-group booking-sort">
+    <div class="btn-group booking-sort col-xs-3 noPadding">
         <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_others' | trans }} - VientoSur.net">
             <span id="sort_other" class="sort_name">{% if sortArray.selected.category == 'other' %} {{ sortArray.selected.name }} {% else %} {{ 'hotels.select' | trans }}... {% endif %}</span>
             <span class="caret"></span>

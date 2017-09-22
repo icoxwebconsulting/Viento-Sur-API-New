@@ -12,7 +12,8 @@ class PromotionSectionsRepository extends EntityRepository
 
         $qb->select('ps')
             ->from('VientoSurAppAppBundle:PromotionSections', 'ps')
-            ->where('ps.status = :status');
+            ->where('ps.status = :status')
+            ->orderBy('ps.created', 'DESC');
 
         $qb->setParameter('status', $status);
 
