@@ -15,6 +15,9 @@
                 <i class="fa fa-align-justify"></i> {{ 'admin.room_manager' | trans }}
             </div>
             <div class="card-block">
+                <div class="count">
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -34,7 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {%  for entity in entities %}
+                    {%  for entity in pagination %}
                         {% if is_granted('ROLE_ADMIN') %}
                             {% include ':admin/room:list_content.html.twig' %}
                         {% elseif is_granted('ROLE_HOTELIER') %}
@@ -45,6 +48,10 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>

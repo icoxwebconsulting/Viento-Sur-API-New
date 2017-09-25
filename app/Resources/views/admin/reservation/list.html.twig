@@ -15,6 +15,9 @@
                 <i class="fa fa-align-justify"></i> {{ 'admin.reservation_manager' | trans }}
             </div>
             <div class="card-block">
+                <div class="count">
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -35,9 +38,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {%  for entity in entities %}
+                    {%  for entity in pagination %}
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td>{{ entity.id }}</td>
                             <td>{{ entity.holderName }}</td>
                             <td>{{ entity.checkin | localizeddate('medium', 'none', app.request.locale) }}</td>
                             <td>{{ entity.checkout | localizeddate('medium', 'none', app.request.locale) }}</td>
@@ -63,6 +66,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
