@@ -483,260 +483,260 @@
     </div>
     {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}
 
-    {#<div class="container">#}
-        {#<ul class="breadcrumb">#}
-            {#<li><a href="#">Viento Sur</a></li>#}
-            {#<li><a href="index.html">{{ 'index.hotels' | trans }}</a></li>#}
-            {#<li><a href="#">Hotel {{hotelDetails.name}}</a></li>#}
-        {#</ul>#}
+    {#<div class="container">
+        <ul class="breadcrumb">
+            <li><a href="#">Viento Sur</a></li>
+            <li><a href="index.html">{{ 'index.hotels' | trans }}</a></li>
+            <li><a href="#">Hotel {{hotelDetails.name}}</a></li>
+        </ul>
 
-        {#<div class="gap gap-small"></div>#}
+        <div class="gap gap-small"></div>
 
-        {#<div class="row">#}
+        <div class="row">
 
-            {#<div class="col-md-9 col-md-push-3">#}
+            <div class="col-md-9 col-md-push-3">
 
-                {#<!-- info del hotel -->#}
-                {#<div class="booking-item-details">#}
+                <!-- info del hotel -->
+                <div class="booking-item-details">
 
-                    {#<header class="booking-item-header">#}
-                        {#<div class="row">#}
-                            {#<div class="col-md-8">#}
-                                {#<h2 class="lh1em" title="Hotel {{ hotelDetails.name }} - VientoSur.net"><b>{{ hotelDetails.name }}</b></h2>#}
-                                {#<p>{{ hotelDetails.location.address }}</p>#}
-                                {#<ul class="icon-list icon-group booking-item-rating-stars">#}
-                                    {#{% for i in 1..5 %}#}
-                                        {#{% if i <= hotelDetails.stars %}#}
-                                            {#<li><i class="fa fa-star"></i>#}
-                                            {#</li>#}
-                                            {#{% else %}#}
-                                            {#<!--<li><i class="fa fa-star-o"></i>#}
-                                            {#</li>-->#}
-                                        {#{% endif %}#}
-                                    {#{% endfor %}#}
-                                {#</ul>#}
-                            {#</div>#}
+                    <header class="booking-item-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h2 class="lh1em" title="Hotel {{ hotelDetails.name }} - VientoSur.net"><b>{{ hotelDetails.name }}</b></h2>
+                                <p>{{ hotelDetails.location.address }}</p>
+                                <ul class="icon-list icon-group booking-item-rating-stars">
+                                    {% for i in 1..5 %}
+                                        {% if i <= hotelDetails.stars %}
+                                            <li><i class="fa fa-star"></i>
+                                            </li>
+                                            {% else %}
+                                            <!--<li><i class="fa fa-star-o"></i>
+                                            </li>-->
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
 
-                            {#<div class="col-md-4">#}
-                                {#<div class="booking-item-header-price">#}
-                                    {#<p>#}
-                                        {#{{ 'hotels.price_per_night' | trans }}#}
-                                    {#</p>#}
-                                    {#<div class="text-lg">#}
-                                        {#$&nbsp;{{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}#}
-                                        {#{{ symbol }} {{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}#}
-                                    {#</div>#}
-                                    {#<a href="#">#}
-                                        {#<!--<span class="btn btn-primary mt15">Reservar ahora</span>-->#}
-                                        {#<br />#}
-                                        {#<button class="btn btn-primary" id="animarscroll">#}
-                                            {#{{ 'hotels.choose_room' | trans }}#}
-                                        {#</button>#}
-                                    {#</a>#}
-                                    {#<br />#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</header>#}
+                            <div class="col-md-4">
+                                <div class="booking-item-header-price">
+                                    <p>
+                                        {{ 'hotels.price_per_night' | trans }}
+                                    </p>
+                                    <div class="text-lg">
+                                        $&nbsp;{{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}
+                                        {{ symbol }} {{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
+                                    </div>
+                                    <a href="#">
+                                        <!--<span class="btn btn-primary mt15">Reservar ahora</span>-->
+                                        <br />
+                                        <button class="btn btn-primary" id="animarscroll">
+                                            {{ 'hotels.choose_room' | trans }}
+                                        </button>
+                                    </a>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </header>
 
-                    {#<div class="row">#}
-                        {#<div class="col-md-10">#}
-                            {#<!-- tabs-->#}
-                            {#<div class="tabbable booking-details-tabbable">#}
-                                {#<ul class="nav nav-tabs" id="myTab">#}
-                                    {#<li class="active">#}
-                                        {#<a href="#tab-1" data-toggle="tab" id="tab-fotos"><i class="fa fa-camera"></i>{{ 'hotels.pictures' | trans }}</a>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                        {#<a href="#google-map-tab" data-toggle="tab" id="tab-mapa"><i class="fa fa-map-marker"></i>{{ 'hotels.map' | trans }}</a>#}
-                                    {#</li>#}
-                                {#</ul>#}
+                    <div class="row">
+                        <div class="col-md-10">
+                            <!-- tabs-->
+                            <div class="tabbable booking-details-tabbable">
+                                <ul class="nav nav-tabs" id="myTab">
+                                    <li class="active">
+                                        <a href="#tab-1" data-toggle="tab" id="tab-fotos"><i class="fa fa-camera"></i>{{ 'hotels.pictures' | trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="#google-map-tab" data-toggle="tab" id="tab-mapa"><i class="fa fa-map-marker"></i>{{ 'hotels.map' | trans }}</a>
+                                    </li>
+                                </ul>
 
-                                {#<div class="tab-content">#}
-                                    {#<div class="tab-pane fade in active" id="tab-1">#}
-                                        {#<div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">#}
-                                            {#{% for key, pictures in hotelDetails.pictures %}#}
-                                                {#{% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}#}
-                                                {#<img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}" />#}
-                                            {#{% endfor %}#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                    {#<div class="tab-pane fade" id="google-map-tab">#}
-                                        {#<div id="map" style="width:500px; height:500px;"></div>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="tab-1">
+                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
+                                            {% for key, pictures in hotelDetails.pictures %}
+                                                {% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}
+                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}" />
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="google-map-tab">
+                                        <div id="map" style="width:500px; height:500px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                {#</div><!-- close info -->#}
+                </div><!-- close info -->
 
-                {#<div class="gap gap-small"></div>#}
+                <div class="gap gap-small"></div>
 
-                {#<div class="row booking-details-description">#}
+                <div class="row booking-details-description">
 
-                    {#<div class="col-md-10">#}
-                        {#{% set info = attribute(hotelDetails.information, app.request.locale) %}#}
-                        {#<p class="text-justify" style="color: #003580">{{ info }}</p>#}
+                    <div class="col-md-10">
+                        {% set info = attribute(hotelDetails.information, app.request.locale) %}
+                        <p class="text-justify" style="color: #003580">{{ info }}</p>
 
-                        {#<h4 title="Hotel {{ hotelDetails.name }} {{ hotelDetails.number_of_rooms}} {{ 'index.search.hotel.rooms' | trans }} - VientoSur.net">{{ 'hotels.number_of_rooms' | trans }}: {{ hotelDetails.number_of_rooms}}</h4>#}
-                    {#</div>#}
+                        <h4 title="Hotel {{ hotelDetails.name }} {{ hotelDetails.number_of_rooms}} {{ 'index.search.hotel.rooms' | trans }} - VientoSur.net">{{ 'hotels.number_of_rooms' | trans }}: {{ hotelDetails.number_of_rooms}}</h4>
+                    </div>
 
-                {#</div>#}
+                </div>
 
-                {#<div class="gap gap-small"></div>#}
+                <div class="gap gap-small"></div>
 
-                {#<!-- lista habitaciones disponibles -->#}
-                {#<div class="booking-list-rooms">#}
-                    {#<script>#}
-                        {#var roomCapacity = {};#}
-                        {#var roomTypes = {{ roomTypesEncoded|raw }};#}
-                    {#</script>#}
-                    {#{% if roomDetail is not empty %}#}
-                    {#<h3 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.available_rooms' | trans }} - VientoSur.net">{{ 'hotels.available_rooms' | trans }}</h3>#}
-                    {#<ul class="booking-list">#}
-                        {#{% for key, rooms in roomDetail %}#}
-                            {#<li>#}
-                                {#<div class="booking-item">#}
-                                    {#<div class="row">#}
-                                        {#<div class="col-md-3">#}
-                                            {#<div><b>{{ roomTypes[key].despegar_names[app.request.locale] }}</b></div>#}
-                                            {#<div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}">#}
-                                                {#{% if roomTypes[key].pictures is defined %}#}
-                                                    {#<img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}" title="" />#}
-                                                    {#<div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>#}
-                                                {#{% endif %}#}
-                                            {#</div>#}
-                                            {#<div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> {{ 'hotels.max_capacity' | trans }}</div>#}
-                                        {#</div>#}
+                <!-- lista habitaciones disponibles -->
+                <div class="booking-list-rooms">
+                    <script>
+                        var roomCapacity = {};
+                        var roomTypes = {{ roomTypesEncoded|raw }};
+                    </script>
+                    {% if roomDetail is not empty %}
+                    <h3 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.available_rooms' | trans }} - VientoSur.net">{{ 'hotels.available_rooms' | trans }}</h3>
+                    <ul class="booking-list">
+                        {% for key, rooms in roomDetail %}
+                            <li>
+                                <div class="booking-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div><b>{{ roomTypes[key].despegar_names[app.request.locale] }}</b></div>
+                                            <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}">
+                                                {% if roomTypes[key].pictures is defined %}
+                                                    <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}" title="" />
+                                                    <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{ roomTypes[key].pictures|length }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div><i class="fa fa-male"></i> <span id="room-capacity-{{ key }}"></span> {{ 'hotels.max_capacity' | trans }}</div>
+                                        </div>
 
-                                        {#<div class="col-md-9">#}
-                                            {#<div class="table-responsive">#}
-                                                {#<table class="table">#}
-                                                    {#<thead>#}
-                                                    {#<tr>#}
-                                                        {#<th>{{ 'hotels.food_regime' | trans }}</th>#}
-                                                        {#<th>{{ 'hotels.cancellation_policies' | trans }}</th>#}
-                                                        {#<th></th>#}
-                                                        {#<th colspan="2" class="text-center">{{ 'hotels.price_per_night' | trans }}</th>#}
-                                                    {#</tr>#}
-                                                    {#</thead>#}
-                                                    {#<tbody>#}
-                                                    {#{% for key, rate_plan in rooms %}#}
-                                                        {#{% set room = rate_plan[0] %}#}
-                                                        {#{% if loop.first %}#}
-                                                        {#<script>#}
-                                                            {#roomCapacity[{{ loop.parent.key }}] = {{ room.rooms[0].capacity.max }};#}
-                                                        {#</script>#}
-                                                        {#{% endif %}#}
-                                                        {#<tr>#}
-                                                            {#<td>#}
-                                                                {#{% if room.meal_plan.id == 'D' %}#}
-                                                                    {#{{ 'hotels.drinks_included' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'BRA' %}#}
-                                                                    {#{{ 'hotels.american_breakfast' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'BRL' %}#}
-                                                                    {#{{ 'hotels.breakfast_carte' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'BRB' %}#}
-                                                                    {#{{ 'hotels.breakfast_buffet' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'BRC' %}#}
-                                                                    {#{{ 'hotels.breakfast_continental' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'M' %}#}
-                                                                    {#{{ 'hotels.half_pension' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'H' %}#}
-                                                                    {#{{ 'hotels.search_menu.only_hosting' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'F' %}#}
-                                                                    {#{{ 'hotels.full_pension' | trans }}#}
-                                                                {#{% elseif room.meal_plan.id == 'A' %}#}
-                                                                    {#All inclusive#}
-                                                                {#{% endif %}#}
-                                                            {#</td>#}
-                                                            {#<td>#}
-                                                                {#{{ room.cancellation_policy.text }}#}
-                                                            {#</td>#}
-                                                            {#<td style="min-width: 80px;">#}
-                                                                {#<span><b>$ {{ room.price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}</b></span>#}
-                                                                {#<span><b>{{ symbol }} {{ room.price_detail.nightly_subtotal|round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</b></span>#}
-                                                            {#</td>#}
-                                                            {#<td>#}
-                                                                {#<form action="{{path('viento_sur_app_app_homepage_send_hotel_booking', {'_locale': app.request.locale})}}?{{ reservation|url_encode }}" method="POST" >#}
-                                                                    {#<input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">#}
-                                                                    {#<input type="hidden" name="price_detail" value="{{ room.price_detail | json_encode }}">#}
-                                                                    {#<input type="hidden" name="roompack_choice" value="{{ room.choice }}">#}
-                                                                    {#<input type="hidden" name="hotel_img" value="{{ hotelDetails.main_picture.url }}">#}
-                                                                    {#<input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">#}
-                                                                    {#<input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">#}
-                                                                    {#<input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">#}
-                                                                    {#<input type="hidden" name="room_cancellation" value="{{room.cancellation_policy.text}}">#}
-                                                                    {#<button class="blue" type="submit" class="btn btn-primary">#}
-                                                                        {#{{ 'hotels.book' | trans }}#}
-                                                                    {#</button>#}
-                                                                {#</form>#}
-                                                            {#</td>#}
-                                                        {#</tr>#}
-                                                    {#{% endfor %}#}
-                                                    {#</tbody>#}
-                                                {#</table>#}
-                                            {#</div>#}
-                                        {#</div>#}
+                                        <div class="col-md-9">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>{{ 'hotels.food_regime' | trans }}</th>
+                                                        <th>{{ 'hotels.cancellation_policies' | trans }}</th>
+                                                        <th></th>
+                                                        <th colspan="2" class="text-center">{{ 'hotels.price_per_night' | trans }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for key, rate_plan in rooms %}
+                                                        {% set room = rate_plan[0] %}
+                                                        {% if loop.first %}
+                                                        <script>
+                                                            roomCapacity[{{ loop.parent.key }}] = {{ room.rooms[0].capacity.max }};
+                                                        </script>
+                                                        {% endif %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if room.meal_plan.id == 'D' %}
+                                                                    {{ 'hotels.drinks_included' | trans }}
+                                                                {% elseif room.meal_plan.id == 'BRA' %}
+                                                                    {{ 'hotels.american_breakfast' | trans }}
+                                                                {% elseif room.meal_plan.id == 'BRL' %}
+                                                                    {{ 'hotels.breakfast_carte' | trans }}
+                                                                {% elseif room.meal_plan.id == 'BRB' %}
+                                                                    {{ 'hotels.breakfast_buffet' | trans }}
+                                                                {% elseif room.meal_plan.id == 'BRC' %}
+                                                                    {{ 'hotels.breakfast_continental' | trans }}
+                                                                {% elseif room.meal_plan.id == 'M' %}
+                                                                    {{ 'hotels.half_pension' | trans }}
+                                                                {% elseif room.meal_plan.id == 'H' %}
+                                                                    {{ 'hotels.search_menu.only_hosting' | trans }}
+                                                                {% elseif room.meal_plan.id == 'F' %}
+                                                                    {{ 'hotels.full_pension' | trans }}
+                                                                {% elseif room.meal_plan.id == 'A' %}
+                                                                    All inclusive
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                {{ room.cancellation_policy.text }}
+                                                            </td>
+                                                            <td style="min-width: 80px;">
+                                                                <span><b>$ {{ room.price_detail.nightly_subtotal|round|number_format(0, ',', '.') }}</b></span>
+                                                                <span><b>{{ symbol }} {{ room.price_detail.nightly_subtotal|round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</b></span>
+                                                            </td>
+                                                            <td>
+                                                                <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking', {'_locale': app.request.locale})}}?{{ reservation|url_encode }}" method="POST" >
+                                                                    <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                                                    <input type="hidden" name="price_detail" value="{{ room.price_detail | json_encode }}">
+                                                                    <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
+                                                                    <input type="hidden" name="hotel_img" value="{{ hotelDetails.main_picture.url }}">
+                                                                    <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
+                                                                    <input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">
+                                                                    <input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">
+                                                                    <input type="hidden" name="room_cancellation" value="{{room.cancellation_policy.text}}">
+                                                                    <button class="blue" type="submit" class="btn btn-primary">
+                                                                        {{ 'hotels.book' | trans }}
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                                        {#<div class="col-md-3 booking-prices align-center">#}
+                                        <div class="col-md-3 booking-prices align-center">
 
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</li>#}
-                        {#{% endfor %}#}
-                    {#</ul>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
 
-                    {#{% else %}#}
-                        {#<h3>{{ 'hotels.rooms_unavailables' | trans }}</h3>#}
-                    {#{% endif %}#}
+                    {% else %}
+                        <h3>{{ 'hotels.rooms_unavailables' | trans }}</h3>
+                    {% endif %}
 
-                {#</div>#}
+                </div>
 
-                {#<div class="gap"></div>#}
+                <div class="gap"></div>
 
-                {#<div class="row row-wrap">#}
-                    {#<div class="col-md-4">#}
-                        {#<h4 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.services' | trans }} - VientoSur.net">{{ 'hotels.services' | trans }}</h4>#}
-                        {#<ul class="amenities-list list-services">#}
-                        {#</ul>#}
-                    {#</div>#}
-                    {#<div class="col-md-4">#}
-                        {#<h4 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.activities' | trans }} - VientoSur.net">{{ 'hotels.activities' | trans }}</h4>#}
-                        {#<ul class="amenities-list list-recreation">#}
-                        {#</ul>#}
-                    {#</div>#}
-                    {#<div class="col-md-4">#}
-                        {#<h4 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.generals' | trans }} - VientoSur.net">{{ 'hotels.generals' | trans }}</h4>#}
-                        {#<ul class="amenities-list list-generals">#}
-                        {#</ul>#}
-                    {#</div>#}
-                {#</div>#}
+                <div class="row row-wrap">
+                    <div class="col-md-4">
+                        <h4 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.services' | trans }} - VientoSur.net">{{ 'hotels.services' | trans }}</h4>
+                        <ul class="amenities-list list-services">
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.activities' | trans }} - VientoSur.net">{{ 'hotels.activities' | trans }}</h4>
+                        <ul class="amenities-list list-recreation">
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 title="Hotel {{ hotelDetails.name }} - {{ 'hotels.generals' | trans }} - VientoSur.net">{{ 'hotels.generals' | trans }}</h4>
+                        <ul class="amenities-list list-generals">
+                        </ul>
+                    </div>
+                </div>
 
-                {#<div class="gap"></div>#}
+                <div class="gap"></div>
 
-                {#<!-- opiniones -->#}
-                {#<h3 class="mb20">{{ 'hotels.hotel_reviews' | trans }}</h3>#}
+                <!-- opiniones -->
+                <h3 class="mb20">{{ 'hotels.hotel_reviews' | trans }}</h3>
 
-                {#<div class="row row-wrap">#}
-                    {#<div class="col-md-11">#}
-                        {#<!--<div class="fb-comments" data-href="http://viento-sur.icox.mobi" data-width="600 px" data-numposts="5"></div>-->#}
-                        {#<div class="fb-comments" data-href="http://viento-sur.icox.mobi/hotel/show/{{idHotel}}" data-width="600 px" data-numposts="10"></div>#}
-                    {#</div>#}
-                {#</div>#}
+                <div class="row row-wrap">
+                    <div class="col-md-11">
+                        <!--<div class="fb-comments" data-href="http://viento-sur.icox.mobi" data-width="600 px" data-numposts="5"></div>-->
+                        <div class="fb-comments" data-href="http://viento-sur.icox.mobi/hotel/show/{{idHotel}}" data-width="600 px" data-numposts="10"></div>
+                    </div>
+                </div>
 
 
-            {#</div> <!-- close col md9-->#}
+            </div> <!-- close col md9-->
 
-            {#<div class="col-md-3 col-md-pull-9">#}
-                {#{% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}#}
-            {#</div>#}
-            {#<!-- cierra sidebar -->#}
-        {#</div>#}
-        {#<div class="gap"></div>#}
-    {#</div>#}
+            <div class="col-md-3 col-md-pull-9">
+                {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
+            </div>
+            <!-- cierra sidebar -->
+        </div>
+        <div class="gap"></div>
+    </div>#}
 
    {% include '@VientoSurAppApp/Hotel/hotelModalRoomImages.html.twig' %}
 {% endblock %}
