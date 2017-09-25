@@ -169,15 +169,7 @@
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04"></script>
     <script>
-        jQuery(function(){
 
-            jQuery('#camera_wrap_3').camera({
-                height: '56%',
-                pagination: false,
-                thumbnails: true,
-                imagePath: 'images/gallery'
-            });
-        });
 
         //TABS DETAIL
         $('#tabsDetail a').click(function (e) {
@@ -256,7 +248,7 @@
                                 </ul>
                                 <p class="adress">
                                     {{ hotelDetails.location.address }} {{ app.session.get('destination').text | split(',')[0] }}, {{ app.session.get('destination').text | split(',')[2] }}
-                                    <a class="item-map-address" data-prevent="modal"  data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-name="{{ hotelDetails.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>
+                                    {#<a class="item-map-address" data-prevent="modal"  data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-name="{{ hotelDetails.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>#}
                                 </p>
                             </div>
                             <div class="boxPrice col-xs-12 col-sm-3">
@@ -276,10 +268,10 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="fotos">
-                                        <div class="camera_wrap camera_emboss" id="camera_wrap_3">
+                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
                                             {% for key, pictures in hotelDetails.pictures %}
                                                 {% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}
-                                                <div data-thumb="{{ pictures.url }}" data-src="{{ asset(pictures.url) }}"></div>
+                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}" />
                                             {% endfor %}
                                         </div>
                                     </div>
