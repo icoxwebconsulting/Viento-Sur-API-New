@@ -28,8 +28,18 @@ class HotelController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
+
+        $images = array();
+        for($i = 0; $i < count($entities); $i++){
+            $images[$i] = $em->getRepository('VientoSurAppAppBundle:Picture')->findOneBy(
+                array('hotel' => $entities[$i]->getId()),
+                array('id' =>'ASC'),
+            1);
+        }
+
         return $this->render(':admin/hotel:list.html.twig', array(
-            'entities' => $entities
+            'entities' => $entities,
+            'images' => $images
         ));
     }
 

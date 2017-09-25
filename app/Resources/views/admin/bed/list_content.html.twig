@@ -1,5 +1,5 @@
 <tr>
-    <td>{{ entity.id }}</td>
+    <td>{{ loop.index }}</td>
     <td>{{ entity.created | ago }}</td>
     <td>
         {% if entity.room %}

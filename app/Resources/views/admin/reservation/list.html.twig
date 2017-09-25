@@ -37,7 +37,7 @@
                     <tbody>
                     {%  for entity in entities %}
                         <tr>
-                            <td>{{ entity.id }}</td>
+                            <td>{{ loop.index }}</td>
                             <td>{{ entity.holderName }}</td>
                             <td>{{ entity.checkin | localizeddate('medium', 'none', app.request.locale) }}</td>
                             <td>{{ entity.checkout | localizeddate('medium', 'none', app.request.locale) }}</td>

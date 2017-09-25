@@ -128,6 +128,7 @@ hotels:
     show_rooms: Ver quartos
     choose_room: Escolher quarto
     pictures: Fotos
+    picture: Foto
     map: Mapa
     entry: Entrada
     number_guests: Número de convidados

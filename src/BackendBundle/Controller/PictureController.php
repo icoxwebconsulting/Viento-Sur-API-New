@@ -143,36 +143,4 @@ class PictureController extends Controller
         );
         return $this->redirectToRoute('room_picture_list', array('id' => $room->getId()));
     }
-//    /**
-//     *
-//     * @Method({"GET", "POST"})
-//     * @Route("/ajax/snippet/image/send", name="ajax_snippet_image_send")
-//     */
-//    public function ajaxSnippetImageSendAction(Request $request)
-//    {
-//        $em = $this->container->get("doctrine.orm.default_entity_manager");
-//
-//        $photo = new Photo();
-//        $media = $request->files->get('file');
-//
-//        $photo->setFile($media);
-//        $photo->setPath($media->getPathName());
-//        $photo->setName($media->getClientOriginalName());
-//        $photo->upload();
-//        $em->persist($photo);
-//        $em->flush();
-//
-//        return new JsonResponse(array('success' => true));
-//    }
-
-//    /**
-//     * @Security("has_role('ROLE_HOTELIER')")
-//     * @Route("/photo/", name="photo_list")
-//     * @Method("GET")
-//     * @return response
-//     */
-//    public function photoAction()
-//    {
-//        return $this->render('uploader.html.twig');
-//    }
 }

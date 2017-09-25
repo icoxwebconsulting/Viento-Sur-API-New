@@ -1,5 +1,5 @@
 <tr>
-    <td>{{ entity.id }}</td>
+    <td>{{ loop.index }}</td>
     <td>{{ entity.name }}</td>
     <td>{{ entity.address }}</td>
     <td>{{ entity.stars }}</td>
@@ -7,6 +7,15 @@
         {% if entity.hotelTypes %}
             {% set label = 'admin.hotel_type.'~entity.hotelTypes.name %}
             {{ label | trans  }}
+        {% endif %}
+    </td>
+    <td>
+        {% if images[loop.index0] is not null and images[loop.index0].hotel.id == entity.id %}
+        <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('uploads/gallery_image/') }}{{ images[loop.index0].imageName }}">
+            <img class="img-responsive" src="{{ asset('uploads/gallery_image/') }}{{ images[loop.index0].imageName }}" style="width: 100px;height: 100px;">
+        </a>
+        {% else %}
+            <img src="{{ asset('uploads/gallery_image/320x320.png') }}" style="width: 100px; height: 100px;">
         {% endif %}
     </td>
     {% if is_granted('ROLE_SUPER_ADMIN') %}

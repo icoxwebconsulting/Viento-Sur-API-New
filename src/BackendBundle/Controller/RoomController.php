@@ -29,8 +29,17 @@ class RoomController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository("VientoSurAppAppBundle:Room")->findAll();
 
+        $images = array();
+        for($i = 0; $i < count($entities); $i++){
+            $images[$i] = $em->getRepository('VientoSurAppAppBundle:Picture')->findOneBy(
+                array('room' => $entities[$i]->getId()),
+                array('id' =>'ASC'),
+                1);
+        }
+
         return $this->render(':admin/room:list.html.twig', array(
-            'entities' => $entities
+            'entities' => $entities,
+            'images' => $images
         ));
     }
 

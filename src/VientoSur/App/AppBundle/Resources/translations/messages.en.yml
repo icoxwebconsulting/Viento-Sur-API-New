@@ -130,6 +130,7 @@ hotels:
     show_rooms: Show rooms
     choose_room: Choose room
     pictures: Pictures
+    picture: Picture
     map: Mapa
     entry: Entry
     number_guests: Number of guests

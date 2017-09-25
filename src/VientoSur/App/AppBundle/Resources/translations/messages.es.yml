@@ -130,6 +130,7 @@ hotels:
     show_rooms: Ver habitaciones
     choose_room: Elegir habitación
     pictures: Fotos
+    picture: Foto
     map: Mapa
     entry: Entrada
     number_guests: Número de huéspedes
