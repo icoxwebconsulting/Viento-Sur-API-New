@@ -80,6 +80,7 @@
             $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
                 google.maps.event.trigger(map, 'resize');
                 map.setCenter(myLatLng);
+                console.log('click map')
             });
 
         }
@@ -167,7 +168,7 @@
             $("#info").html( str.replace(/\n/g, "<br />"));
         })
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQF38I89N84GmzeuqCWVtFJTlcwuNwx04&callback=initMap"></script>
     <script>
 
 
@@ -262,7 +263,14 @@
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" id="tabsDetail" role="tablist">
                                     <li role="presentation" class="active"><a href="#fotos" aria-controls="fotos" role="tab" data-toggle="tab"><i class="fa fa-camera" aria-hidden="true"></i> Fotos</a></li>
-                                    <li role="presentation"><a href="#mapa" aria-controls="mapa" role="tab" data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> Mapa</a></li>
+                                    <li role="presentation"><a href="#mapaDiv" aria-controls="mapaDiv"
+                                                               role="tab"
+                                                               data-toggle="tab"
+                                                               data-prevent="modal"
+                                                               data-latitude="{{ latitude }}"
+                                                               data-longitude="{{ longitude }}"
+                                                               data-name="{{ hotelDetails.name }}"
+                                    ><i class="fa fa-map-marker" aria-hidden="true"></i> Mapa</a></li>
                                 </ul>
 
                                 <!-- Tab panes -->
@@ -275,8 +283,8 @@
                                             {% endfor %}
                                         </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="mapa">
-                                        <div id="map" style="width:500px; height:500px;"></div>
+                                    <div role="tabpanel" class="tab-pane" id="mapaDiv">
+                                        <div id="map" style="width:700px; height:500px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -729,6 +737,13 @@
         </div>
         <div class="gap"></div>
     </div>#}
-
+    <style>
+        div#google-map-tab {
+            width: 750px !important;
+        }
+        div#map {
+            width: 750px !important;
+        }
+    </style>
    {% include '@VientoSurAppApp/Hotel/hotelModalRoomImages.html.twig' %}
 {% endblock %}
