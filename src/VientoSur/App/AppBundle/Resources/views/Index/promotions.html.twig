@@ -1,21 +1,19 @@
 {#<!-- hoteles - promotions -->#}
 {#<pre>{{ dump(promotions) }}</pre>#}
-<div class="wrapper">
-    <div class="promotions">
-        <div class="container">
-            {% for section in sections %}
-            <div class="row" style="padding-top: 20px">
-                <div class="col-xs-12">
-                    <h1>{{ section.title }}</h1>
-                    {% if section.subtitle != '' %}
-                        <h4 style="text-align: center;" class="mb20">{{ section.subtitle }}</h4>
-                    {% endif %}
-                </div>
+<div class="container">
+    {% for section in sections %}
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xs-12">
+                <h1>{{ section.title }}</h1>
+                {% if section.subtitle != '' %}
+                    <h4 style="text-align: center;" class="mb20">{{ section.subtitle }}</h4>
+                {% endif %}
             </div>
-            <div class="row">
-                {% for promotion in promotions %}
-                    {% if promotion.section.id == section.id %}
-                    <div class="col-xs-4">
+        </div>
+        <div class="row">
+            {% for promotion in promotions %}
+                {% if promotion.section.id == section.id %}
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0">
                         <div class="grid">
                             <figure class="effect-goliath">
                                 <img style="width: 363px; height: 345px;" src="{{asset(vich_uploader_asset(promotion, 'image')) }}" alt="{{ promotion.name }}">
@@ -29,10 +27,8 @@
                             </figure>
                         </div>
                     </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                {% endif %}
             {% endfor %}
         </div>
-    </div>
+    {% endfor %}
 </div>

@@ -63,23 +63,23 @@
 
             <div class="row">
 
-                <div class="col-md-4">
-                    {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
-                </div>
-
-                <div class="col-md-8">
+                <div class="col-sm-8 col-sm-push-4" style="padding-left: 5px!important;">
                     <div class="flight-filter">
 
                     </div>
 
                     <ul class="flight-list">
                         {% include 'VientoSurAppAppBundle:Flight:listDetailFlights.html.twig' %}
-                        {#{% include 'VientoSurAppAppBundle:_partial:pagination.html.twig' %}#}
                     </ul>
 
                     {#{{ dump(items) }}#}
 
                 </div>
+
+                <div class="col-sm-4 col-sm-pull-8" >
+                    {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+                </div>
+
             </div>
         </div>
 
@@ -105,7 +105,12 @@
             {% endif %}
         </ul>#}
 
-        <br/>
+        <div class="row">
+            <div class="col-md-12 center">
+                <ul class="pagination pagination-flight" style="font-size: 15px!important;" id="pagination">
+                </ul>
+            </div>
+        </div>
 
     </div>
 {% endblock %}
@@ -114,27 +119,27 @@
     {{ parent() }}
     <script>
         {#$(function () {#}
-            {#$("#pagination").bootpag({#}
-                {#total: {{ (items.paging.total / 10) }},#}
-                {#maxVisible: 15,#}
-                {#page: {{ limit }} ,#}
-                {#firstLastUse: true,#}
-                {#first: '←',#}
-                {#last: '→'#}
+        {#$("#pagination").bootpag({#}
+        {#total: {{ (items.paging.total / 10) }},#}
+        {#maxVisible: 15,#}
+        {#page: {{ limit }} ,#}
+        {#firstLastUse: true,#}
+        {#first: '←',#}
+        {#last: '→'#}
 
-            {#}).on("page", function (event, num) {#}
-                {#var offset = (num * 10) - 1;#}
-                {#var limit = num;#}
-                {#var URLdomain = window.location.host;#}
-                {#var url2 = Routing.generate('viento_sur_send_flights');#}
-                {#var URLsearch = window.location.search;#}
+        {#}).on("page", function (event, num) {#}
+        {#var offset = (num * 10) - 1;#}
+        {#var limit = num;#}
+        {#var URLdomain = window.location.host;#}
+        {#var url2 = Routing.generate('viento_sur_send_flights');#}
+        {#var URLsearch = window.location.search;#}
 
-                {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
-            {#});#}
-//            $("#field-hotel-checkin").datepicker({
-//                "setDate": new Date()
-//            });
-//        });
+        {#window.location.replace("http://" + URLdomain + url2 + "/" + offset + "/" + limit + URLsearch);#}
+        {#});#}
+        //            $("#field-hotel-checkin").datepicker({
+        //                "setDate": new Date()
+        //            });
+        //        });
         $('.flight-list').on('click', '.booking-prices', function (event) {
             event.stopPropagation();
             var itemId = $(this).data('item');

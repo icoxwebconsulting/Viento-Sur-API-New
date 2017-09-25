@@ -1,5 +1,5 @@
 <form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels', {'_locale': app.request.locale})}}" method="POST">
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-md-4">
         <h4> {{ 'index.search.hotel.destination' | trans }}</h4>
         <div class="form-group-icon-left">
             <i class="fa fa-map-marker input-icon"></i>
@@ -7,7 +7,7 @@
             <input id="destinationCity" name="cityInput" type="hidden" {% if not isTest %}required{% endif %} />
         </div>
     </div>
-    {#<div class="col-xs-4 paddingSpecial">
+    {#<div class="col-xs-12 col-md-4 paddingSpecial">
         <h4> {{ 'index.search.hotel.checkin_date' | trans }}</h4>
         <div class="form-inline">
             <div class='input-group date col-xs-5' id='datetimepicker1'>
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>#}
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-md-4">
         <div class="form-inline row">
             <div class="col-xs-6">
                 <h4>{{ 'index.search.hotel.checkin_date' | trans }}</h4>
@@ -38,9 +38,9 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-md-4">
         <h4> {{ 'index.search.hotel.rooms' | trans }}</h4>
-        <button type="button" class="btnModal marginBottom10" id="flag_modal">
+        <button type="button" class="btnModal marginBottom10" id="flag_modal" data-toggle="modal">
             <span id="data-adults">0</span> {{ 'index.search.hotel.adults' | trans }},
             <span id="data-childs">0</span> {{ 'index.search.hotel.childs' | trans }},
             <span id="data-room">0</span> {{ 'index.search.hotel.room' | trans }}

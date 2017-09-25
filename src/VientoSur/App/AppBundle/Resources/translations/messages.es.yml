@@ -283,6 +283,7 @@ hotels:
         subscribe_newsletter: Subscribir a noticias:
         travel_assistance: Asistencia en viaje:
 flights:
+    since: Desde
     flights: Vuelos
     flight: Vuelo
     not_found: ¡Ups! Para la fecha y ruta indicada, no se encontraron vuelos disponibles puedes intentar realizar otra búsqueda

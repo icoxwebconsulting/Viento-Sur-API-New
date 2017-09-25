@@ -283,6 +283,7 @@ hotels:
         subscribe_newsletter: Subscribe to newsletter:
         travel_assistance: Travel assistance:
 flights:
+    since: Since
     flights: Flights
     flight: Flight
     not_found: Ops! For the date and destiny no flights were found available

@@ -814,6 +814,10 @@
 
 @media only screen and (max-width: 767px){
 
+    #thumbsFlights .paymentFlight{
+        margin-top: 10%;
+    }
+
     .logo img{
         width: 90px;
     }
@@ -1168,6 +1172,10 @@
 }
 
 @media only screen and (max-width: 415px){
+
+    #thumbsFlights .paymentFlight{
+        margin-top: 10%;
+    }
 
     #thumbHotel .priceRoom h5{
         margin: 0;

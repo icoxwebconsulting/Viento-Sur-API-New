@@ -38,16 +38,21 @@
                                             <div class="col-xs-6">
                                                 <div class="radioButton">
                                                     <label for="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" class="radio-inline">
-                                                        <input type="radio" name="optionsRadiosOut{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ outbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
+                                                        <input type="radio"
+                                                               name="optionsRadiosOut{{ loop.parent.loop.index }}"
+                                                               id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}"
+                                                               value="{{ outbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
                                                         <span>
                                                             {% set airlines = [] %}
-                                                            {% for segment in outbound.segments %}
+                                                            {% for segment in outbound.segments  %}
                                                                 {% if segment.airline not in airlines %}
-                                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}"/>
-                                                                    {% set airlines = airlines|merge([segment.airline]) %}
-
-                                                                    {{ airlineNames[segment.airline] }}
-
+                                                                    {% if loop.index == 1 %}
+                                                                        <img class="paso-por-aqui" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}"/>
+                                                                        {% set airlines = airlines|merge([segment.airline]) %}
+                                                                        {% if loop.length == 1 %}
+                                                                            {{ airlineNames[segment.airline] }}
+                                                                        {% endif %}
+                                                                    {% endif %}
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </span>
@@ -196,7 +201,8 @@
                                         <div class="col-xs-6">
                                             <div class="radioButton">
                                                 <label for="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" class="radio-inline">
-                                                    <input type="radio" name="optionsRadiosOut{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />
+                                                    <input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} >
+                                                    {#<input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} />#}
                                                     <span>
                                                             {% set airlines = [] %}
                                                         {% for segment in inbound.segments %}
@@ -338,7 +344,6 @@
                             <p>{{ 'flights.final_total_price' | trans }}</p>
                             <h5>
                                 {% if item.price_detail.total is defined %}
-                                    $ {{ item.price_detail.total|round|number_format(0, '.', '.') }}
                                     {{ symbol }} {{ item.price_detail.total|round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.') }}
                                 {% endif %}
                             </h5>
@@ -346,12 +351,6 @@
                         </div>
                     </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-md-12 center">
-                        <ul class="pagination pagination-flight" style="font-size: 15px!important;" id="pagination">
-                        </ul>
-                    </div>
                 </div>
             </form>
         </li>

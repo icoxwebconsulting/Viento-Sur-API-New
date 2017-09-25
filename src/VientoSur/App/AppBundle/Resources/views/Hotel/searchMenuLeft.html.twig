@@ -1,5 +1,5 @@
 {% set data_travelers = app.session.get('data_travelers') %}
-<div class="col-sm-4 col-xs-12">
+<div class="col-sm-4 col-sm-pull-8">
     <div id="sidebar">
         <div id="formSearch">
             <div class="results">
@@ -15,21 +15,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class='form-group date col-xs-12' id='datetimepicker5'>
+                    <div class='form-group date col-xs-7' id='datetimepicker5'>
                         <label>{{ 'index.search.hotel.checkin_date' | trans }}</label>
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                         <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkin_date')}}"/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class='form-group date col-xs-12' id='datetimepicker6'>
+                    <div class='form-group date col-xs-7' id='datetimepicker6'>
                         <label>{{ 'index.search.hotel.checkout_date' | trans }}</label>
                         <<i class="fa fa-calendar" aria-hidden="true"></i>
                         <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkout_date')}}"/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-7">
                         <label for="roomsQty">{{ 'index.search.hotel.number_rooms' | trans }}</label>
                         <select id="roomsQty" class="form-control" name="habitacionesCant">
                             <option value="1" {% if data_travelers| length == 1 %}selected{% endif %}>1 {{ 'index.search.hotel.room' | trans }}</option>
@@ -466,7 +466,7 @@
     </div>
 </div>
 
-<div class="content-sidebar" style="display: none;">
+{#<div class="content-sidebar" style="display: none;">
     <form class="booking-item-dates-change mb5" name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels',  {'_locale': app.request.locale})}}" method="POST">
         <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
             <label class="mfont">{{ 'hotels.search_menu.destiny' | trans }}</label>
@@ -572,9 +572,9 @@
                     <div class="row">
                         {% for i in 1..7 %}
                         <div class="col-md-6 childAge{{ i }}1 child1" style="margin-bottom:6px;">
-                        {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
+                        #}{#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}{#
 
-                            {#<select id="childAge11" class="sb-age form-control required" name="childAgeSelector-1-1">#}
+                            #}{#<select id="childAge11" class="sb-age form-control required" name="childAgeSelector-1-1">#}{#
                             <select id="childAge{{ i }}1" class="sb-age form-control required" name="childAgeSelector-1-{{ i }}">
                                 <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                 {% for j in 1..18 %}
@@ -620,9 +620,9 @@
                     <div class="row">
                         {% for i in 1..7 %}
                             <div class="col-md-6 childAge{{ i }}2 child2" style="margin-bottom:6px;">
-                                {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
+                                #}{#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}{#
 
-                                {#<select id="childAge12" class="sb-age form-control required" name="childAgeSelector-2-1">#}
+                                #}{#<select id="childAge12" class="sb-age form-control required" name="childAgeSelector-2-1">#}{#
                                 <select id="childAge{{ i }}2" class="sb-age form-control required" name="childAgeSelector-2-{{ i }}">
                                     <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                     {% for j in 1..18 %}
@@ -668,9 +668,9 @@
                     <div class="row">
                         {% for i in 1..7 %}
                             <div class="col-md-6 childAge{{ i }}3 child3" style="margin-bottom:6px;">
-                                {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
+                                #}{#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}{#
 
-                                {#<select id="childAge13" class="sb-age form-control required" name="childAgeSelector-3-1">#}
+                                #}{#<select id="childAge13" class="sb-age form-control required" name="childAgeSelector-3-1">#}{#
                                 <select id="childAge{{ i }}3" class="sb-age form-control required" name="childAgeSelector-3-{{ i }}">
                                     <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                     {% for j in 1..18 %}
@@ -716,8 +716,8 @@
                     <div class="row">
                         {% for i in 1..7 %}
                             <div class="col-md-6 childAge{{ i }}4 child4" style="margin-bottom:6px;">
-                                {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
-                                {#<select id="childAge14" class="sb-age form-control required" name="childAgeSelector-4-1">#}
+                                #}{#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}{#
+                                #}{#<select id="childAge14" class="sb-age form-control required" name="childAgeSelector-4-1">#}{#
                                 <select id="childAge{{ i }}4" class="sb-age form-control required" name="childAgeSelector-4-{{ i }}">
                                     <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
                                     {% for j in 1..18 %}
@@ -911,6 +911,6 @@
             </ul>
         </aside>
     {% endif %}
-</div>
-<div class="gap-small"></div>
+</div>#}
+{#<div class="gap-small"></div>#}
 
