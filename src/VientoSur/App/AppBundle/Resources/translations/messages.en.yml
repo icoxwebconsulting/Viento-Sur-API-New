@@ -178,7 +178,9 @@ hotels:
         filter_travel_profile: Filtro Perfil de viaje
     number_of_rooms: Number of rooms
     available_rooms: Availables rooms
+    capacity: Capacity
     max_capacity: Maximum capacity
+    options: options
     food_regime: Food regime
     cancellation_policies: Cancellation policies
     drinks_included: Drinks included

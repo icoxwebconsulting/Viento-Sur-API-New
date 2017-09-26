@@ -47,6 +47,15 @@ a, a:hover, a:focus{
 	width: 200px;
 }
 
+
+.cancellation_policies{
+	width: 200px;
+}
+
+.capacity{
+	width: 90px;
+}
+
 .paddingSpecial{
 	padding: 0 0 0 2.5vw;
 	margin: 0;

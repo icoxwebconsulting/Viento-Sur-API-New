@@ -178,6 +178,8 @@ hotels:
         filter_travel_profile: Filtro Perfil de viaje
     number_of_rooms: Número de habitaciones
     available_rooms: Habitaciones disponibles
+    capacity: Capacidad
+    options: Opciones
     max_capacity: Capacidad máxima
     food_regime: Régimen de comida
     cancellation_policies: Políticas de cancelación
