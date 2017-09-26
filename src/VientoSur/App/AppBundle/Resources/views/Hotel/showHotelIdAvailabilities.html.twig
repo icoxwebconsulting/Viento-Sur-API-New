@@ -80,7 +80,6 @@
             $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
                 google.maps.event.trigger(map, 'resize');
                 map.setCenter(myLatLng);
-                console.log('click map')
             });
 
         }
@@ -147,22 +146,22 @@
                 $('#myModalLabel').text(hotelName);
             });
 
-            $('#mapModal').on('shown.bs.modal', function (e) {
-                var map = new google.maps.Map(document.getElementById('mapHotel'), {
-                    center: latLng,
-                    scrollwheel: false,
-                    zoom: 16
-                });
-
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: latLng,
-                    title: hotelName
-                });
-
-                google.maps.event.trigger(map, 'resize');
-                map.setCenter(latLng);
-            })
+//            $('#mapModal').on('shown.bs.modal', function (e) {
+//                var map = new google.maps.Map(document.getElementById('mapHotel'), {
+//                    center: latLng,
+//                    scrollwheel: false,
+//                    zoom: 16
+//                });
+//
+//                var marker = new google.maps.Marker({
+//                    map: map,
+//                    position: latLng,
+//                    title: hotelName
+//                });
+//
+//                google.maps.event.trigger(map, 'resize');
+//                map.setCenter(latLng);
+//            })
 
             var str = $('#info').text();
             $("#info").html( str.replace(/\n/g, "<br />"));
@@ -263,14 +262,11 @@
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" id="tabsDetail" role="tablist">
                                     <li role="presentation" class="active"><a href="#fotos" aria-controls="fotos" role="tab" data-toggle="tab"><i class="fa fa-camera" aria-hidden="true"></i> Fotos</a></li>
-                                    <li role="presentation"><a href="#mapaDiv" aria-controls="mapaDiv"
-                                                               role="tab"
-                                                               data-toggle="tab"
-                                                               data-prevent="modal"
-                                                               data-latitude="{{ latitude }}"
-                                                               data-longitude="{{ longitude }}"
-                                                               data-name="{{ hotelDetails.name }}"
-                                    ><i class="fa fa-map-marker" aria-hidden="true"></i> Mapa</a></li>
+                                    <li role="presentation">
+                                        <div class="col-xs-12">
+                                            <a href="#google-map-tab" data-toggle="tab" id="tab-mapa"><i class="fa fa-map-marker"></i>{{ 'hotels.map' | trans }}</a>
+                                        </div>
+                                    </li>
                                 </ul>
 
                                 <!-- Tab panes -->
@@ -283,8 +279,10 @@
                                             {% endfor %}
                                         </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="mapaDiv">
-                                        <div id="map" style="width:700px; height:500px;"></div>
+                                    <div role="tabpanel" class="tab-pane fade" id="google-map-tab">
+                                        <div class="col-xs-12">
+                                            <div id="map" style="width:500px; height:500px;"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -481,7 +479,7 @@
             </div>
         </div>
     </div>
-    {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}
+    {#{% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}#}
 
     {#<div class="container">
         <ul class="breadcrumb">
