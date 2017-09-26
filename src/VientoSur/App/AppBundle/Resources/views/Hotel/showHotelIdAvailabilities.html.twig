@@ -403,12 +403,17 @@
                                     <div class="contentRooms contentMobile">
                                         {% for key, rooms in roomDetail %}
                                         <div class="col-xs-12 thumbRoom">
-                                            {% if roomTypes[key].pictures is defined %}
-                                                <img data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}" src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}">
-                                            {% endif %}
-                                            <h4>{{ roomTypes[key].despegar_names[app.request.locale] }}</h4>
+                                            {#{% if roomTypes[key].pictures is defined %}#}
+                                                {#<img data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}" src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}">#}
+                                            {#{% endif %}#}
+                                            {#<h4>{{ roomTypes[key].despegar_names[app.request.locale] }}</h4>#}
                                             {% for key, rate_plan in rooms %}
-                                            {% set room = rate_plan[0] %}
+                                                {% if roomTypes[loop.parent.key].pictures is defined %}
+                                                    <img data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[loop.parent.key].despegar_names[app.request.locale] }}" data-room-key="{{ loop.parent.key }}" src="{{ roomTypes[loop.parent.key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}">
+                                                {% endif %}
+                                                <h4>{{ roomTypes[loop.parent.key].despegar_names[app.request.locale] }}</h4>
+
+                                                {% set room = rate_plan[0] %}
                                             {% if loop.first %}
                                                 <script>
                                                     roomCapacity[{{ loop.parent.key }}] = {{ room.rooms[0].capacity.max }};
@@ -464,7 +469,6 @@
                                                         {{ 'hotels.book' | trans }}
                                                     </button>
                                                 </form>
-                                                </hr>
                                             {% endfor %}
 
                                             <!--GO MODAL-->
