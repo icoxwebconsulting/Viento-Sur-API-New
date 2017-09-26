@@ -400,6 +400,7 @@
                                                             <td class="center">
                                                                 <form action="{{path('viento_sur_app_app_homepage_send_hotel_booking', {'_locale': app.request.locale})}}?{{ reservation|url_encode }}" method="POST" >
                                                                     <input type="hidden" name="availability_token" value="{{dispoHotel.availability_token}}">
+                                                                    <input type="hidden" name="price_detail" value="{{ room.price_detail | json_encode }}">
                                                                     <input type="hidden" name="roompack_choice" value="{{ room.choice }}">
                                                                     <input type="hidden" name="hotel_img" value="{{ hotelDetails.main_picture.url }}">
                                                                     <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
