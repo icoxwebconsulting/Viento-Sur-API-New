@@ -813,6 +813,9 @@
 }
 
 @media only screen and (max-width: 767px){
+    .duration-time{
+        text-align: left!important;
+    }
 
     #thumbsFlights .paymentFlight{
         margin-top: 10%;
