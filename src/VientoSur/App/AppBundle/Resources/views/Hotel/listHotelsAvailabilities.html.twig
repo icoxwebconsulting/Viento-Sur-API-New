@@ -256,11 +256,11 @@
                 }
             });
 
-            $('.ListHotel').on('click', '.booking-item-address, .priceRoom', function (event) {
+            $('.ListHotel').on('click', '.booking-item, .booking-item-address, .priceRoom', function (event) {
                 event.stopPropagation();
                 var element = event.target;
                 if ($(element).data('prevent') != 'modal') {
-//                    window.open(this.dataset.href, '_blank');
+                    window.open(this.dataset.href, '_blank');
                 } else {
                     latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
                     hotelName = $(element).data('name');

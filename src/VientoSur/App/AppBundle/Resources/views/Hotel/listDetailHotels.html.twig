@@ -11,8 +11,10 @@
     <div class="ListHotel">
 
         {% for item in items.items %}
-            <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"
-               target="_blank">
+        <span class="booking-item cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+
+            {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
+               {#target="_blank">#}
                 <div id="thumbHotel">
 
                     <div class="imgHotel col-xs-4">
@@ -21,10 +23,10 @@
                     </div>
                     <div class="infoHotel col-xs-12 col-sm-6 noPadding">
                         <h4 title="{{ item.hotel.name }} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">
-                            <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"
-                               target="_blank">
+                            {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
+                               {#target="_blank">#}
                                 {{ item.hotel.name }}
-                            </a>
+                            {#</a>#}
                         </h4>
                         <div class="row">
                             <div class="col-sm-6">
@@ -111,14 +113,14 @@
                             <h5>{{ 'flights.since' | trans }} {{ symbol }} {{ price.price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}</h5>
                         {% endfor %}
 
-                        <a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"
-                           target="_blank">
+                        {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
+                           {#target="_blank">#}
                             <button>Elegir Habitación</button>
-                        </a>
+                        {#</a>#}
                     </div>
                 </div>
-            </a>
-
+            {#</a>#}
+        </span>
         {% endfor %}
     </div>
 {%endif%}
