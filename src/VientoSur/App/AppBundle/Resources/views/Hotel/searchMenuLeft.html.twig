@@ -351,7 +351,7 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-                {% if facet.criteria == 'zones' %}
+                {% if facet.criteria == 'zones' and facet.values is defined %}
                 <div class="boxFilter col-xs-12">
                     <li class="zones hidden" data-type="zones">
                         <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_zones' | trans }} - VientoSur.net">{{ 'hotels.search_menu.zones' | trans }}</h4>
