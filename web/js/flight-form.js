@@ -752,6 +752,38 @@ $(document).ready(function () {
         $("#total-passengers").text(totalPas);
     })
 
+    $('#vuelos-tab').click(function () {
+        $('#multipledestination').val(false);
+        console.log($('#multipledestination').val());
+    })
+
+    $('#modal-multi').click(function () {
+        $('#multipledestination').val(false);
+        $('#round_trip').attr('checked', true);
+        $("#dummy-end-flight").addClass('hidden');
+        $("#end-flight").show().attr("required");
+        // $('.round-trip-wrapper').show();
+        $('#only_out').val(false);
+        $('#multipledestination').val(false);
+        console.log($('#multipledestination').val());
+
+        $('.wrapper').hide();
+        $('#remove-stretch').hide();
+        $('#add-stretch').hide();
+        $('.round-trip-wrapper').show();
+        $('#multipledestination').val(false);
+        console.log($('#multipledestination').val());
+        $('#div-end-flight').show();
+        $('#end-flight').attr('required', 'true');
+        $('#multidestination-from-flight0').removeAttr('required');
+        $('#multidestination-to-flight0').removeAttr('required');
+        $('#multidestination-from-flight1').removeAttr('required');
+        $('#multidestination-to-flight1').removeAttr('required');
+        $('#start-flight0').removeAttr('required');
+        $('#start-flight1').removeAttr('required');
+        $('#tab-2').css({'overflow': '', 'height': ''});
+        $('#round_trip').prop('checked', true);
+    })
 
     $("#typeTrip").change(function () {
         var flightType =  $('input[name=flightType]:checked', '#typeTrip').val();

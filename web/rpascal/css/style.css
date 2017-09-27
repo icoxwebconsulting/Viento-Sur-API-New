@@ -2807,3 +2807,19 @@ figure.effect-goliath:hover p {
 .fotorama__stage{
 	height: 378px!important;
 }*/
+
+.no-margin-top {
+	margin-top: 0px!important;
+}
+
+.no-margin-left {
+	margin-left: 0px!important;
+}
+
+.no-margin-right {
+	margin-right: 0px!important;
+}
+
+.no-margin-bottom {
+	margin-bottom: 0px!important;
+}

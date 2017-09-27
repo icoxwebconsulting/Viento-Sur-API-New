@@ -25,6 +25,7 @@
                                         </div>
                                         <div class="col-xs-4 col-sm-5 noPadding">
                                             <h6>{{ item.outbound_choices[0].segments[0].from }}<span>{{ airportNames[item.outbound_choices[0].segments[0].from] }}</span></h6>
+                                            <h6 class="no-margin-top"><span class="no-margin-left">{{ item.outbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span></h6>
                                         </div>
                                         <div class="col-xs-4 col-sm-5 noPadding">
                                             {% set last = item.outbound_choices[0].segments|last %}
@@ -47,7 +48,7 @@
                                                             {% for segment in outbound.segments  %}
                                                                 {% if segment.airline not in airlines %}
                                                                     {% if loop.index == 1 %}
-                                                                        <img class="paso-por-aqui" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}"/>
+                                                                        <img class="" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}"/>
                                                                         {% set airlines = airlines|merge([segment.airline]) %}
                                                                         {% if loop.length == 1 %}
                                                                             {{ airlineNames[segment.airline] }}
@@ -61,20 +62,20 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <p>
-                                                    {{ outbound.segments[0].departure_datetime|date("H:i") }}
+                                                    {{ outbound.segments[0].departure_datetime|date("H:i") }} &nbsp;
                                                     {% set totalSeg = outbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;{{ 'flights.direct' | trans }}
+                                                        &nbsp;{{ 'flights.direct' | trans }} &nbsp;
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }}
+                                                        &nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }} &nbsp;
                                                     {% else %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }}
+                                                        &nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }} &nbsp;
                                                     {% endif %}
 
                                                     {% set lastSeg = outbound.segments|last %}
-                                                    &nbsp; {{ lastSeg.arrival_datetime|date("H:i") }}
+                                                    &nbsp; {{ lastSeg.arrival_datetime|date("H:i") }} &nbsp;
 
-                                                    &nbsp; {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m
+                                                    &nbsp; {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m &nbsp;
                                                 </p>
                                             </div>
                                             <div class="col-xs-12 center" style="margin-bottom: 5px">
@@ -188,6 +189,7 @@
                                             </div>
                                             <div class="col-xs-4 col-sm-5 noPadding">
                                                 <h6>{{ item.inbound_choices[0].segments[0].from }}<span>{{ airportNames[item.inbound_choices[0].segments[0].from] }}</span></h6>
+                                                <h6 class="no-margin-top"><span class="no-margin-left">{{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span></h6>
                                             </div>
                                             <div class="col-xs-4 col-sm-5 noPadding">
                                                 {% set last = item.inbound_choices[0].segments|last %}
@@ -217,20 +219,20 @@
                                         </div>
                                             <div class="col-xs-8">
                                                 <p>
-                                                    {{ inbound.segments[0].departure_datetime|date("H:i") }}
+                                                    {{ inbound.segments[0].departure_datetime|date("H:i") }} &nbsp;
                                                     {% set totalSeg = inbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;{{ 'flights.direct' | trans }}
+                                                        &nbsp;{{ 'flights.direct' | trans }} &nbsp;
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }}
+                                                        &nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }} &nbsp;
                                                     {% else %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }}
+                                                        &nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }} &nbsp;
                                                     {% endif %}
 
                                                     {% set lastSeg = inbound.segments|last %}
-                                                    &nbsp; {{ lastSeg.arrival_datetime|date("H:i") }}
+                                                    &nbsp; {{ lastSeg.arrival_datetime|date("H:i") }} &nbsp;
 
-                                                    &nbsp; {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m
+                                                    &nbsp; {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m &nbsp;
                                                 </p>
                                             </div>
                                         <div class="col-xs-12 center" style="margin-bottom: 5px">
