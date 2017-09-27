@@ -1,7 +1,20 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.hotel_detail' | trans }} {% endblock %}
 
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}{{ 'index.hotels' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'index.hotel_detail' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block content %}
+    {{ parent() }}
+    {% set data_travelers = app.session.get('data_travelers') %}
     {% set targetCurrency = app.session.get('targetCurrency') %}
     {% if targetCurrency == 'USD' %}
         {% set symbol = 'US$' %}
@@ -9,595 +22,1200 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
-    <div class="container formBooking">
-        <div class="row">
-            <div class="gap"></div>
 
-            <div class="col-md-9 col-md-push-3">
-                {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
-                {% include '@VientoSurAppApp/messages/danger.html.twig' %}
+    {#new design#}
+    <div class="wrapperReservation">
+        <div class="container">
+            <div class="row">
+                <!-- GO SIDE BAR MOBILE-->
+                <div class="col-xs-12">
+                    <div id="sidebar">
+                        <div id="infoReserva" class="hidden-sm hidden-md hidden-lg">
+                            <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
+                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <ul>
+                                {% for i in 1..5 %}
+                                    {% if i <= hotelBrief.stars %}
+                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <p><span>{{ hotelBrief.name }}</span></p>
+                            <p>{{ hotelBrief.address }}</p>
+                            {{ travellers|raw }}
+                            <div class="datesPayment">
+                                <h5>{{ 'hotels.paying' | trans }}:</h5>
+                                <p>{{ reservationDays }} {{ 'hotels.night' | trans }}{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}{{ 'index.search.hotel.room' | trans }}{% else %} {{ 'index.search.hotel.rooms' | trans }}{% endif %}<br/></p>
+                                <p>
+                                    <span>
+                                        {% for room in rooms %}
+                                            {% set temp = attribute(rooms, loop.index0) %}
+                                            * {{ temp.name }}<br/>
+                                        {% endfor %}
+                                    </span>
+                                </p>
+                                <h3>{{ hotelBrief.room_cancellation }}</h3>
+                                <b><span id="cuote" style="color: #fff"></span></b>
+                                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')  %}
+                                {% set total_price_per_night = room_per_night * reservationDays %}
+                                {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
 
-                <!--Pasajeros-->
-                <div class="panel panel-primary passengers-panel">
-                    <div class="panel-heading">{{ 'hotels.room_holder' | trans }}</div>
-                    <div class="panel-body">
-                        {#{{ form_row(formNewPay.passengers) }}#}
-                        {% for passenger in formChoice.passengers %}
-                            {% if loop.index0 > 0 %}
-                                <hr/>
-                            {% endif %}
-                            {% set temp = attribute(rooms, loop.index0) %}
-                            <h5>{{ 'index.search.hotel.room' | trans }} {{ loop.index }}: {{ temp.name }}</h5>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    {% set fieldName = 'first_name' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.name' | trans %}
-                                    {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'last_name' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.lastname' | trans %}
-                                    {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'document_number' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.document' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
+                                <p>{{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                <p>{{ 'hotels.taxes_and_rates' | trans }}: {{ taxes + fee }}</p>
+                                {% if price_detail.discounts > 0 %}
+                                    <p>{{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                {% endif %}
+                                <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</span></p>
+                                <aside>{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</aside>
                             </div>
-                            {% set fieldName = 'room_reference' ~ loop.index0 %}
-                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden'} }) }}
-                        {% endfor %}
-                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden'} }) }}
-                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden'} }) }}
+                        </div>
                     </div>
                 </div>
-                <!--/Pasajeros-->
-                <!--Formas de pago-->
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>
-                    <div class="panel-body">
-                        <div class="list-group pay-methods-panel">
-                            {% for paymentMethod in paymentMethods %}
-                            <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
-                                {% set type = paymentMethod.type %}
-                                <h4 class="list-group-item-heading">
-                                    {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
-                                    {% if paymentMethod.installment_quantity is defined %}
-                                        {% if paymentMethod.installment_quantity == 1 %}
-                                            <span id="span-text-{{ loop.index }}">
-                                                <b style="font-weight: bold !important;">1</b> Pago
-                                            </span>
-                                        {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
-                                            {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}#}
-                                            <span id="span-text-{{ loop.index }}">
-                                                <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
-                                                {% if paymentMethod.amounts.total_interest_amount > 0 %}
-                                                    {#<span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}#}
-                                                    <span class="b-interest">{{ symbol }} {{ paymentMethod.amounts.total_interest_amount| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}
-                                                        ({{ 'hotels.interest' | trans }})</span>
-                                                {% else %}
-                                                    <span class="b-interest">{{ 'hotels.whitout_interest' | trans }}</span>
-                                                {% endif %}
-                                            </span>
-                                        {% else %}
-                                            {{ 'hotels.pay' | trans }}
-                                        {% endif %}
-                                    {% elseif type == 'at_destination' %}
-                                        {{ 'hotels.pay_in_destiny' | trans }}
-                                    {% endif %}
-                                </h4>
-                                <p class="list-group-item-text">
-                                    <div class="radio">
-                                        <div class="card-list credit-cards">
-                                            {% if type == 'cash' %}
-                                                <label class="card-selector vs-cs-label">
-                                                    <div class="eva-card-container" data-card-id="">
-                                                        <span class="eva-card-body EFE"></span>
-                                                    </div>
-                                                </label>
-                                            {% else %}
-                                            {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
-                                            {% if cardsList['*'] is defined %}
-                                                {% set cardI = attribute(cardsList, '*') %}
-                                                {% for card in cardI %}
-
-                                                    <label class="card-selector vs-cs-label">
-                                                        {% set cardData = card|split('-') %}
-                                                        <div class="eva-card-container clickable-card" data-data-cuote="{{ loop.parent.loop.index }}"
-                                                             data-card-id="{{ card }}"
-                                                             data-card-id-select="{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}"
-                                                             data-all-data-card="{{ loop.parent.loop.index }}-{{ card }}">
-                                                            <span class="eva-card-body {{ cardData[1] }}"></span>
+                <!-- END SIDE BAR MOBILE-->
+                <!-- GO RESERVATION HOTEL -->
+                <div class="col-xs-12 col-sm-8 col-sm-push-4">
+                    <div id="processPayment">
+                        {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
+                        {% include '@VientoSurAppApp/messages/danger.html.twig' %}
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.room_holder' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        {% for passenger in formChoice.passengers %}
+                                        {% set temp = attribute(rooms, loop.index0) %}
+                                            <div class="panel-body">
+                                                <h5>{{ 'index.search.hotel.room' | trans }} {{ loop.index }}: {{ temp.name }}</h5>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'first_name' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.name' | trans %}
+                                                            {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                                         </div>
-                                                    </label>
-                                                {% endfor %}
-                                            {% endif %}
-                                                {#Agrupación por banco#}
-                                                {% set countBank = 1 %}
-                                                {% set moreBank = null %}
-                                                {% for key, list in cardsList %}
-                                                    {% if key != '*' %}
-                                                        {#limito la cantidad de bancos a 4 elementos#}
-                                                        {% if countBank < 5 %}
-                                                            <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
-                                                                <span class="eva-card-body {{ key }}"></span>
-                                                                <div class="card-content hide">
-                                                                    {% for card in list  %}
-                                                                        {% set cardData = card|split('-') %}
-                                                                        <div class="eva-card-container clickable-card" data-card-id="{{ card }}"
-                                                                             data-bank-id="{{ key }}"
-                                                                             data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}"
-                                                                             data-data-cuote="{{ loop.parent.loop.parent.loop.index }}"
-                                                                             data-all-data-card="{{ loop.parent.loop.parent.loop.index }}-{{ card }}">
-                                                                            <span class="eva-card-body {{ cardData[1] }}"></span>
-                                                                        </div>
-                                                                    {% endfor %}
-                                                                </div>
-                                                            </div>
-                                                        {% elseif countBank == 5 %}
-                                                            {% set moreBank = 1 %}
-                                                            <div class="eva-card-container clickable-group-bank viewMore" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-group">
-                                                                <span class="eva-card-body"></span>
-                                                                <p class="textViewMore"> Más<br />Bancos </p>
-                                                                <span class="arrowViewMore">&gt;</span>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'last_name' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.lastname' | trans %}
+                                                            {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'document_number' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.document' | trans %}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% set fieldName = 'room_reference' ~ loop.index0 %}
+                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden'} }) }}
+                                        {% endfor %}
+
+
+                                        {{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden'} }) }}
+                                        {{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden'} }) }}
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.payment_methods' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            {% include 'VientoSurAppAppBundle:Hotel:listPaymentMethods.html.twig' %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.contact_info' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                {% for phone in formChoice.contact.phones %}
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'country_code' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.country_code' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'style': 'margin-top:10px !important;', 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'type' ~ loop.index0 %}
+                                                        {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                                            {% set label = 'hotels.labels.type' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
                                                         {% endif %}
-                                                        {% set countBank = countBank + 1 %}
-                                                    {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'area_code' ~ loop.index0 %}
+                                                        {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                                            {% set label = 'hotels.labels.area_code' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'number' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.number' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
                                                 {% endfor %}
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">{{ 'hotels.contact_msg' | trans }}.</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="">Email:</label>
+                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError'}}) }}
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="">Confirme su Email:</label>
+                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 top-buffer hide" id="errorEmail">
+                                                    <div class="alert alert-danger" role="alert" style="background: #ea0000; border-color: #ea0000; color:#fff;">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        Las direcciones de email no coinciden.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">Enviaremos la confirmación de tu reserva a esta dirección.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if formNewPay.vouchers is defined %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.vouchers' | trans }}:</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                {% for voucher in formChoice.vouchers %}
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        {% set fieldName = loop.index0 %}
+                                                        <label for="">{{ 'hotels.vouchers' | trans }}:</label>
+                                                        {{ form_widget(attribute(formNewPay.vouchers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if formNewPay.additionalData is defined %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.additional_data' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                {% if formNewPay.additionalData.comment is defined %}
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        {% set label = 'hotels.labels.comment' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(formNewPay.additionalData.comment, {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">{{ 'hotels.additional_msg' | trans }}.</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                {% if formNewPay.additionalData.subscribe_newsletter is defined %}
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        {% set label = 'hotels.labels.subscribe_newsletter' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(formNewPay.additionalData.subscribe_newsletter, {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="row">
+                                                {% if formNewPay.additionalData.travel_assistance is defined %}
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            {% set label = 'hotels.labels.travel_assistance' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(formNewPay.additionalData.travel_assistance, {'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            {#{{ form_widget(formNewPay.additionalData.comment, {'attr': {'style': 'display:none;'}}) }}#}
+                                            {{ form_widget(formNewPay.additionalData.should_use_nightly_prices, {'attr': {'style': 'display:none;', 'checked': 'checked'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="buttonPayment center">
+                                <button>{{ 'hotels.buy' | trans }}</button>
+                            </div>
+                            <input type="hidden" name="roompack_choice" value="{{ roompack_choice }}">
+                        {{ form_end(formNewPay) }}
+                    </div>
+                </div>
+                <!-- END RESERVATION HOTEL -->
+                <!-- GO SIDE BAR DESKTOP-->
+                <div class="col-xs-12 col-sm-4 col-sm-pull-8">
+                    <div id="sidebar">
+                        <div id="infoReserva" class="hidden-xs">
+                            <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
+                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <ul>
+                                {% for i in 1..5 %}
+                                    {% if i <= hotelBrief.stars %}
+                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <p><span>{{ hotelBrief.name }}</span></p>
+                            <p>{{ hotelBrief.address }}</p>
+                            {{ travellers|raw }}
+                            <div class="datesPayment">
+                                <h5>{{ 'hotels.paying' | trans }}:</h5>
+                                <p>{{ reservationDays }} {{ 'hotels.night' | trans }}{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}{{ 'index.search.hotel.room' | trans }}{% else %} {{ 'index.search.hotel.rooms' | trans }}{% endif %}<br/></p>
+                                <p>
+                                    <span>
+                                        {% for room in rooms %}
+                                            {% set temp = attribute(rooms, loop.index0) %}
+                                            * {{ temp.name }}<br/>
+                                        {% endfor %}
+                                    </span>
+                                </p>
+                                <h3>{{ hotelBrief.room_cancellation }}</h3>
+                                <b><span id="cuoteDesktop"  style="color: #fff"></span></b>
+                                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')  %}
+                                {% set total_price_per_night = room_per_night * reservationDays %}
+                                {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+
+                                <p>{{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                <p>{{ 'hotels.taxes_and_rates' | trans }}: {{ taxes + fee }}</p>
+                                {% if price_detail.discounts > 0 %}
+                                    <p>{{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                {% endif %}
+                                <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</span></p>
+                                <aside>{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</aside>
+                            </div>
+                        </div>
+                        <div id="formSearch">
+                            <form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels',  {'_locale': app.request.locale})}}" method="POST">
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <label>{{ 'hotels.search_menu.destiny' | trans }}</label>
+                                        <i class="fa fa-map-marker input-icon"></i>
+                                        <input id="autocomplete" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Buenos Aires, Argentina" value="{% if app.session.get('destination').text is defined %} {{ app.session.get('destination').text }} {% endif %}">
+                                        <input id="destinationCity" name="cityInput" type="hidden" value="{% if app.session.get('destination').text is defined %}{{ app.session.get('destination').id }} {% endif %}" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class='form-group date col-xs-7' id='datetimepicker5'>
+                                        <label>{{ 'index.search.hotel.checkin_date' | trans }}</label>
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkin_date')}}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class='form-group date col-xs-7' id='datetimepicker6'>
+                                        <label>{{ 'index.search.hotel.checkout_date' | trans }}</label>
+                                        <<i class="fa fa-calendar" aria-hidden="true"></i>
+                                        <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkout_date')}}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-7">
+                                        <label for="roomsQty">{{ 'index.search.hotel.number_rooms' | trans }}</label>
+                                        <select id="roomsQty" class="form-control" name="habitacionesCant">
+                                            <option value="1" {% if data_travelers| length == 1 %}selected{% endif %}>1 {{ 'index.search.hotel.room' | trans }}</option>
+                                            <option value="2" {% if data_travelers| length == 2 %}selected{% endif %}>2 {{ 'index.search.hotel.rooms' | trans }}</option>
+                                            <option value="3" {% if data_travelers| length == 3 %}selected{% endif %}>3 {{ 'index.search.hotel.rooms' | trans }}</option>
+                                            <option value="4" {% if data_travelers| length == 4 %}selected{% endif %}>4 {{ 'index.search.hotel.rooms' | trans }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="room" {% if data_travelers | length > 1 %}style="display: none;"{% endif %}>
+                                    <div class="row">
+                                        <div class="form-group  col-xs-6">
+                                            <label for="adults">{{ 'index.search.hotel.adults' | trans }}</label>
+                                            <input type="hidden" value="0" id="adultsRoom">
+                                            <select id="adults" class="form-control coupled" data-couple="childrenRoom.0" name="adultsSelector">
+                                                {% for i in 1..8 %}
+                                                    <option value="{{ loop.index }}" {% if data_travelers != null and data_travelers[1].adults == loop.index %}selected="selected"{% endif %}>{{ loop.index }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-xs-6">
+                                            <label for="childrenRoom">{{ 'index.search.hotel.childs' | trans }}</label>
+                                            <select id="childrenRoom" class="form-control coupled" data-couple="adults.1" name="childrenRoomSelector">
+                                                {% for i in 0..7 %}
+                                                    <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="clearBox"></div>
+                                    </div>
+                                    <div class="hide" id="ageBlock">
+                                        <label id="lblAge">{{ 'index.search.hotel.childs_ages' | trans }}</label>
+                                        <div class="row">
+                                            {% for i in 1..7 %}
+                                                <div class="col-md-6 childAge{{ loop.index }}room {% if data_travelers[1].children is defined and  data_travelers[1].children| length < loop.index %}hide{% endif %}" style="margin-bottom:6px;">
+                                                    <select id="childAge{{ loop.index }}room" class="form-control" name="childAgeSelector-{{ loop.index }}">
+                                                        <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
+                                                        {% for j in 1..18 %}
+                                                            <option value="{{ loop.index0 }}" {% if data_travelers[1].children[i] is defined and  data_travelers[1].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="clearBox"></div>
+                                    </div>
+                                </div>
+                                <div class="row  {% if data_travelers| length < 2  %}hide{% endif %}" id="extraRooms">
+                                    <div class="room1 {% if data_travelers| length < 1 %}hide{% endif %}">
+                                        <div class="row">
+                                            <div class="col-md-12" style="padding:0px 29px;"><div class="form-group" style="margin-bottom:0;"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 1</label></div></div>
+                                        </div>
+                                        <div class="row" style="padding:0 14px;">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="adults1">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <input type="hidden" value="0" id="adultsRoom1">
+                                                    <select id="adults1" class="form-control coupled" data-couple="childrenRoom1.0" name="adultsSelector1">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ i }}" {% if data_travelers[1].adults is defined and data_travelers[1].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="childrenRoom1">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom1" class="form-control coupled" data-couple="adults1.1" name="childrenRoomSelector1">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="clearBox"></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="hide" id="menor-room1" style="padding:0 14px;">
+                                            <label id="lblAge1">{{ 'index.search.hotel.childs_ages' | trans }}</label>
+                                            <div class="row">
+                                                {% for i in 1..7 %}
+                                                    <div class="col-md-6 childAge{{ i }}1 child1" style="margin-bottom:6px;">
+
+                                                        {#<select id="childAge11" class="sb-age form-control required" name="childAgeSelector-1-1">#}
+                                                        <select id="childAge{{ i }}1" class="sb-age form-control required" name="childAgeSelector-1-{{ i }}">
+                                                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
+                                                            {% for j in 1..18 %}
+                                                                <option value="{{ loop.index0 }}" {% if data_travelers[1].children[i] is defined and  data_travelers[1].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="clearBox"></div>
+                                    </div>
+                                    <div class="room2 {% if data_travelers| length < 2  %}hide{% endif %}" style="margin-top:20px;">
+                                        <div class="row">
+                                            <div class="col-md-12" style="padding:0px 29px;"><div class="form-group" style="margin-bottom:0;"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 2</label></div></div>
+                                        </div>
+                                        <div class="row" style="padding:0px 14px;">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="adults2">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <input type="hidden" value="0" id="adultsRoom2">
+                                                    <select id="adults2" class="form-control coupled" data-couple="childrenRoom2.0" name="adultsSelector2">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ i }}" {% if data_travelers[2].adults is defined and data_travelers[2].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="childrenRoom2">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom2" class="form-control coupled" data-couple="adults2.1" name="childrenRoomSelector2">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ loop.index0 }}" {% if data_travelers[2].children is defined and data_travelers[2].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="clearBox"></div>
+                                            </div>
+                                        </div>
+                                        <div class="hide" id="menor-room2" style="padding:0 14px;">
+                                            <label id="lblAge2">{{ 'index.search.hotel.childs_ages' | trans }}</label>
+                                            <div class="row">
+                                                {% for i in 1..7 %}
+                                                    <div class="col-md-6 childAge{{ i }}2 child2" style="margin-bottom:6px;">
+                                                        {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
+
+                                                        {#<select id="childAge12" class="sb-age form-control required" name="childAgeSelector-2-1">#}
+                                                        <select id="childAge{{ i }}2" class="sb-age form-control required" name="childAgeSelector-2-{{ i }}">
+                                                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
+                                                            {% for j in 1..18 %}
+                                                                <option value="{{ loop.index0 }}" {% if data_travelers[2].children[i] is defined and  data_travelers[2].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="clearBox"></div>
+                                    </div>
+                                    <div class="room3 {% if data_travelers| length < 3  %}hide{% endif %}" style="margin-top:20px;">
+                                        <div class="row">
+                                            <div class="col-md-12" style="padding:0px 29px;"><div class="form-group" style="margin-bottom:0;"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 3</label></div></div>
+                                        </div>
+                                        <div class="row" style="padding:0px 14px;">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="adults3">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <input type="hidden" value="0" id="adultsRoom3">
+                                                    <select id="adults3" class="form-control coupled" data-couple="childrenRoom3.0" name="adultsSelector3">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ i }}" {% if data_travelers[3].adults is defined and data_travelers[3].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="childrenRoom3">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom3" class="form-control coupled" data-couple="adults3.0" name="childrenRoomSelector3">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ loop.index0 }}" {% if data_travelers[3].children is defined and data_travelers[3].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="clearBox"></div>
+                                            </div>
+                                        </div>
+                                        <div class="hide" id="menor-room3" style="padding:0 14px;">
+                                            <label id="lblAge3">{{ 'index.search.hotel.childs_ages' | trans }}</label>
+                                            <div class="row">
+                                                {% for i in 1..7 %}
+                                                    <div class="col-md-6 childAge{{ i }}3 child3" style="margin-bottom:6px;">
+                                                        {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
+
+                                                        {#<select id="childAge13" class="sb-age form-control required" name="childAgeSelector-3-1">#}
+                                                        <select id="childAge{{ i }}3" class="sb-age form-control required" name="childAgeSelector-3-{{ i }}">
+                                                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
+                                                            {% for j in 1..18 %}
+                                                                <option value="{{ loop.index0 }}" {% if data_travelers[3].children[i] is defined and  data_travelers[3].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="clearBox"></div>
+                                        </div>
+                                    </div>
+                                    <div class="room4 {% if data_travelers| length < 4  %}hide{% endif %}" style="margin-top:20px;">
+                                        <div class="row">
+                                            <div class="col-md-12" style="padding:0px 29px;"><div class="form-group" style="margin-bottom:0;"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 4</label></div></div>
+                                        </div>
+                                        <div class="row" style="padding:0px 14px;">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="adults4">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <input type="hidden" value="0" id="adultsRoom4">
+                                                    <select id="adults4" class="form-control coupled" data-couple="childrenRoom4.0" name="adultsSelector4">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ i }}" {% if data_travelers[4].adults is defined and data_travelers[4].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="childrenRoom4">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom4" class="form-control coupled" data-couple="adults4.0" name="childrenRoomSelector4">
+                                                        {% for i in 1..8 %}
+                                                            <option value="{{ loop.index0 }}" {% if data_travelers[4].children is defined and data_travelers[4].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="clearBox"></div>
+                                            </div>
+                                        </div>
+                                        <div class="hide" id="menor-room4" style="padding:0 14px;">
+                                            <label id="lblAge4">{{ 'index.search.hotel.childs_ages' | trans }}</label>
+                                            <div class="row">
+                                                {% for i in 1..7 %}
+                                                    <div class="col-md-6 childAge{{ i }}4 child4" style="margin-bottom:6px;">
+                                                        {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
+                                                        {#<select id="childAge14" class="sb-age form-control required" name="childAgeSelector-4-1">#}
+                                                        <select id="childAge{{ i }}4" class="sb-age form-control required" name="childAgeSelector-4-{{ i }}">
+                                                            <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
+                                                            {% for j in 1..18 %}
+                                                                <option value="{{ loop.index0 }}" {% if data_travelers[4].children[i] is defined and  data_travelers[4].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="clearBox"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="bottonSearch col-xs-12">
+                                        <button>{{ 'index.search_text' | trans }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- END SIDE BAR DESKTOP-->
+            </div>
+        </div>
+    </div>
+
+
+
+    {#old design#}
+    {#<div class="container formBooking">#}
+        {#<div class="row">#}
+            {#<div class="gap"></div>#}
+
+            {#<div class="col-md-9 col-md-push-3">#}
+                {#{{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}#}
+                {#{% include '@VientoSurAppApp/messages/danger.html.twig' %}#}
+
+                {#<!--Pasajeros-->#}
+                {#<div class="panel panel-primary passengers-panel">#}
+                    {#<div class="panel-heading">{{ 'hotels.room_holder' | trans }}</div>#}
+                    {#<div class="panel-body">#}
+                        {#{{ form_row(formNewPay.passengers) }}#}
+                        {#{% for passenger in formChoice.passengers %}#}
+                            {#{% if loop.index0 > 0 %}#}
+                                {#<hr/>#}
+                            {#{% endif %}#}
+                            {#{% set temp = attribute(rooms, loop.index0) %}#}
+                            {#<h5>{{ 'index.search.hotel.room' | trans }} {{ loop.index }}: {{ temp.name }}</h5>#}
+
+                            {#<div class="row">#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'first_name' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.name' | trans %}#}
+                                    {#{% set placeholder = 'hotels.labels.name_placeholder' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'last_name' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.lastname' | trans %}#}
+                                    {#{% set placeholder = 'hotels.labels.name_placeholder' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'document_number' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.document' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#{% set fieldName = 'room_reference' ~ loop.index0 %}#}
+                            {#{{ form_widget(attribute(formNewPay.passengers, fieldName), { 'attr': {'class': 'hidden'} }) }}#}
+                        {#{% endfor %}#}
+                        {#{{ form_widget(formNewPay.passengers.idspecial_requests, { 'attr': {'class': 'hidden'} }) }}#}
+                        {#{{ form_widget(formNewPay.passengers.paramsspecial_requests, { 'attr': {'class': 'hidden'} }) }}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!--/Pasajeros-->#}
+                {#<!--Formas de pago-->#}
+                {#<div class="panel panel-primary">#}
+                    {#<div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>#}
+                    {#<div class="panel-body">#}
+                        {#<div class="list-group pay-methods-panel">#}
+                            {#{% for paymentMethod in paymentMethods %}#}
+                            {#<a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">#}
+                                {#{% set type = paymentMethod.type %}#}
+                                {#<h4 class="list-group-item-heading">#}
+                                    {#{{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}#}
+                                    {#{% if paymentMethod.installment_quantity is defined %}#}
+                                        {#{% if paymentMethod.installment_quantity == 1 %}#}
+                                            {#<span id="span-text-{{ loop.index }}">#}
+                                                {#<b style="font-weight: bold !important;">1</b> Pago#}
+                                            {#</span>#}
+                                        {#{% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}#}
+                                            {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}#}
+                                            {#<span id="span-text-{{ loop.index }}">#}
+                                                {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}#}
+                                                {#{% if paymentMethod.amounts.total_interest_amount > 0 %}#}
+                                                    {#<span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}#}
+                                                    {#<span class="b-interest">{{ symbol }} {{ paymentMethod.amounts.total_interest_amount| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}#}
+                                                        {#({{ 'hotels.interest' | trans }})</span>#}
+                                                {#{% else %}#}
+                                                    {#<span class="b-interest">{{ 'hotels.whitout_interest' | trans }}</span>#}
+                                                {#{% endif %}#}
+                                            {#</span>#}
+                                        {#{% else %}#}
+                                            {#{{ 'hotels.pay' | trans }}#}
+                                        {#{% endif %}#}
+                                    {#{% elseif type == 'at_destination' %}#}
+                                        {#{{ 'hotels.pay_in_destiny' | trans }}#}
+                                    {#{% endif %}#}
+                                {#</h4>#}
+                                {#<p class="list-group-item-text">#}
+                                    {#<div class="radio">#}
+                                        {#<div class="card-list credit-cards">#}
+                                            {#{% if type == 'cash' %}#}
+                                                {#<label class="card-selector vs-cs-label">#}
+                                                    {#<div class="eva-card-container" data-card-id="">#}
+                                                        {#<span class="eva-card-body EFE"></span>#}
+                                                    {#</div>#}
+                                                {#</label>#}
+                                            {#{% else %}#}
+                                            {#{% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}#}
+                                            {#{% if cardsList['*'] is defined %}#}
+                                                {#{% set cardI = attribute(cardsList, '*') %}#}
+                                                {#{% for card in cardI %}#}
+
+                                                    {#<label class="card-selector vs-cs-label">#}
+                                                        {#{% set cardData = card|split('-') %}#}
+                                                        {#<div class="eva-card-container clickable-card" data-data-cuote="{{ loop.parent.loop.index }}"#}
+                                                             {#data-card-id="{{ card }}"#}
+                                                             {#data-card-id-select="{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}"#}
+                                                             {#data-all-data-card="{{ loop.parent.loop.index }}-{{ card }}">#}
+                                                            {#<span class="eva-card-body {{ cardData[1] }}"></span>#}
+                                                        {#</div>#}
+                                                    {#</label>#}
+                                                {#{% endfor %}#}
+                                            {#{% endif %}#}
+                                                {#Agrupación por banco#}
+                                                {#{% set countBank = 1 %}#}
+                                                {#{% set moreBank = null %}#}
+                                                {#{% for key, list in cardsList %}#}
+                                                    {#{% if key != '*' %}#}
+                                                        {#limito la cantidad de bancos a 4 elementos#}
+                                                        {#{% if countBank < 5 %}#}
+                                                            {#<div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">#}
+                                                                {#<span class="eva-card-body {{ key }}"></span>#}
+                                                                {#<div class="card-content hide">#}
+                                                                    {#{% for card in list  %}#}
+                                                                        {#{% set cardData = card|split('-') %}#}
+                                                                        {#<div class="eva-card-container clickable-card" data-card-id="{{ card }}"#}
+                                                                             {#data-bank-id="{{ key }}"#}
+                                                                             {#data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}"#}
+                                                                             {#data-data-cuote="{{ loop.parent.loop.parent.loop.index }}"#}
+                                                                             {#data-all-data-card="{{ loop.parent.loop.parent.loop.index }}-{{ card }}">#}
+                                                                            {#<span class="eva-card-body {{ cardData[1] }}"></span>#}
+                                                                        {#</div>#}
+                                                                    {#{% endfor %}#}
+                                                                {#</div>#}
+                                                            {#</div>#}
+                                                        {#{% elseif countBank == 5 %}#}
+                                                            {#{% set moreBank = 1 %}#}
+                                                            {#<div class="eva-card-container clickable-group-bank viewMore" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-group">#}
+                                                                {#<span class="eva-card-body"></span>#}
+                                                                {#<p class="textViewMore"> Más<br />Bancos </p>#}
+                                                                {#<span class="arrowViewMore">&gt;</span>#}
+                                                            {#</div>#}
+                                                        {#{% endif %}#}
+                                                        {#{% set countBank = countBank + 1 %}#}
+                                                    {#{% endif %}#}
+                                                {#{% endfor %}#}
 
                                                 {#si hay bancos en grupos para dibujar#}
-                                                {% if moreBank is not null %}
-                                                    <div class="{{ loop.index }}-group hidden">
-                                                        {% set countBank = 1 %}
-                                                        <table class="table table-bordered">
-                                                            <tr>
-                                                                <th class="text-center">{{ 'hotels.bank' | trans }}</th>
-                                                                <th class="text-center">{{ 'hotels.card' | trans }}</th>
-                                                            </tr>
-                                                        {% for key, list in cardsList %}
-                                                            {% if key != '*' %}
-                                                                {% if countBank > 4 %}
-                                                                    <tr>
-                                                                        <th>
-                                                                            <div class="eva-card-container notClickableCard">
-                                                                                <span class="eva-card-body {{ key }} notClickableCard"></span>
-                                                                            </div>
-                                                                        </th>
-                                                                        <td>
-                                                                            {% for card in list  %}
-                                                                                {% set cardData = card|split('-') %}
-                                                                                <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group"  data-data-cuote="{{ loop.parent.loop.parent.loop.index }}">
-                                                                                    <span class="eva-card-body {{ cardData[1] }}"></span>
-                                                                                </div>
-                                                                            {% endfor %}
-                                                                        </td>
-                                                                    </tr>
-                                                                {% endif %}
-                                                                {% set countBank = countBank + 1 %}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        </table>
-                                                    </div>
-                                                {% endif %}
+                                                {#{% if moreBank is not null %}#}
+                                                    {#<div class="{{ loop.index }}-group hidden">#}
+                                                        {#{% set countBank = 1 %}#}
+                                                        {#<table class="table table-bordered">#}
+                                                            {#<tr>#}
+                                                                {#<th class="text-center">{{ 'hotels.bank' | trans }}</th>#}
+                                                                {#<th class="text-center">{{ 'hotels.card' | trans }}</th>#}
+                                                            {#</tr>#}
+                                                        {#{% for key, list in cardsList %}#}
+                                                            {#{% if key != '*' %}#}
+                                                                {#{% if countBank > 4 %}#}
+                                                                    {#<tr>#}
+                                                                        {#<th>#}
+                                                                            {#<div class="eva-card-container notClickableCard">#}
+                                                                                {#<span class="eva-card-body {{ key }} notClickableCard"></span>#}
+                                                                            {#</div>#}
+                                                                        {#</th>#}
+                                                                        {#<td>#}
+                                                                            {#{% for card in list  %}#}
+                                                                                {#{% set cardData = card|split('-') %}#}
+                                                                                {#<div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group"  data-data-cuote="{{ loop.parent.loop.parent.loop.index }}">#}
+                                                                                    {#<span class="eva-card-body {{ cardData[1] }}"></span>#}
+                                                                                {#</div>#}
+                                                                            {#{% endfor %}#}
+                                                                        {#</td>#}
+                                                                    {#</tr>#}
+                                                                {#{% endif %}#}
+                                                                {#{% set countBank = countBank + 1 %}#}
+                                                            {#{% endif %}#}
+                                                        {#{% endfor %}#}
+                                                        {#</table>#}
+                                                    {#</div>#}
+                                                {#{% endif %}#}
 
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </p>
-                            </a>
-                            {% endfor %}
-                        </div>
+                                            {#{% endif %}#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</p>#}
+                            {#</a>#}
+                            {#{% endfor %}#}
+                        {#</div>#}
 
-                        {% if formChoice.payment.credit_card is defined %}
-                            <hr/>
-                            <h3>{{ 'hotels.payment_methods' | trans }}:</h3>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label>{{ 'hotels.selected_card' | trans }}:</label>
-                                    <input type="hidden" value="" name="selected-card" id="card-selected" class="form-control" readonly>
-                                    {% if paymentMethods|length > 1 %}
-                                        <select id="select-card3" class="form-control" title="">
-                                            {% for cuotas, bank in paymentMethods %}
-                                                {% set n = loop.index %}
-                                                <optgroup id="{{ loop.index }}" label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
-                                                    {% for key in bank.card_ids %}
+                        {#{% if formChoice.payment.credit_card is defined %}#}
+                            {#<hr/>#}
+                            {#<h3>{{ 'hotels.payment_methods' | trans }}:</h3>#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-3">#}
+                                    {#<label>{{ 'hotels.selected_card' | trans }}:</label>#}
+                                    {#<input type="hidden" value="" name="selected-card" id="card-selected" class="form-control" readonly>#}
+                                    {#{% if paymentMethods|length > 1 %}#}
+                                        {#<select id="select-card3" class="form-control" title="">#}
+                                            {#{% for cuotas, bank in paymentMethods %}#}
+                                                {#{% set n = loop.index %}#}
+                                                {#<optgroup id="{{ loop.index }}" label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">#}
+                                                    {#{% for key in bank.card_ids %}#}
 
-                                                        {% set cardType = key | split('-') %}
-                                                        {% set label = '' %}
-                                                        {% for cardKey, cardValue in cardList %}
-                                                            {% if cardType[1] == cardKey %}
-                                                                {% set label = cardValue %}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        {% if cardType[2] != '*' %}
+                                                        {#{% set cardType = key | split('-') %}#}
+                                                        {#{% set label = '' %}#}
+                                                        {#{% for cardKey, cardValue in cardList %}#}
+                                                            {#{% if cardType[1] == cardKey %}#}
+                                                                {#{% set label = cardValue %}#}
+                                                            {#{% endif %}#}
+                                                        {#{% endfor %}#}
+                                                        {#{% if cardType[2] != '*' %}#}
 
-                                                            {% for bankKey, bankValue in bankList %}
-                                                                {% if bankKey == cardType[2] %}
-                                                                <option id="{{ n }}-{{ key }}" value="{{ n }}-{{ key }}">{{ label }} {{ bankValue }}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                            {#{% for bankKey, bankValue in bankList %}#}
+                                                                {#{% if bankKey == cardType[2] %}#}
+                                                                {#<option id="{{ n }}-{{ key }}" value="{{ n }}-{{ key }}">{{ label }} {{ bankValue }}</option>#}
+                                                                {#{% endif %}#}
+                                                            {#{% endfor %}#}
 
-                                                        {% else %}
-                                                            <option id="{{ n }}-{{ cardType[0] }}-{{ cardType[1] }}-{{ cardType[3] }}" value="{{ n }}-{{ key }}">{{ label }}</option>
-                                                        {% endif %}
+                                                        {#{% else %}#}
+                                                            {#<option id="{{ n }}-{{ cardType[0] }}-{{ cardType[1] }}-{{ cardType[3] }}" value="{{ n }}-{{ key }}">{{ label }}</option>#}
+                                                        {#{% endif %}#}
 
-                                                    {% endfor %}
-                                                </optgroup>
-                                            {% endfor %}
-                                        </select>
-                                    {% else %}
-                                        <select id="select-card2" class="form-control" title="">
-                                            {% for card in paymentMethods[0].card_ids %}
-                                                {% set cardData = card|split('-') %}
+                                                    {#{% endfor %}#}
+                                                {#</optgroup>#}
+                                            {#{% endfor %}#}
+                                        {#</select>#}
+                                    {#{% else %}#}
+                                        {#<select id="select-card2" class="form-control" title="">#}
+                                            {#{% for card in paymentMethods[0].card_ids %}#}
+                                                {#{% set cardData = card|split('-') %}#}
 
-                                                {% set label = '' %}
-                                                {% for cardKey, cardValue in cardList %}
-                                                    {% if cardData[1] == cardKey %}
-                                                        {% set label = cardValue %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                                <option id="1-{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}" value="{{ card }}">{{ label }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    {% endif %}
-                                </div>
-                                {% if formNewPay.payment.number is defined %}
-                                    {% set label = 'hotels.labels.card_number' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.number, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-                                {% if formNewPay.payment.expiration is defined %}
-                                    {% set label = 'hotels.labels.expiration' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.expiration, {'label': label}) }}
-                                    </div>
-                                {% endif %}
-                                {% if formNewPay.payment.security_code is defined %}
-                                    {% set label = 'hotels.labels.security_code' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.security_code, {'label': label, 'attr': {'class': 'form-control input-ccv' , 'size': '5'}}) }}
-                                    </div>
-                                {% endif %}
-                            </div>
+                                                {#{% set label = '' %}#}
+                                                {#{% for cardKey, cardValue in cardList %}#}
+                                                    {#{% if cardData[1] == cardKey %}#}
+                                                        {#{% set label = cardValue %}#}
+                                                    {#{% endif %}#}
+                                                {#{% endfor %}#}
+                                                {#<option id="1-{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}" value="{{ card }}">{{ label }}</option>#}
+                                            {#{% endfor %}#}
+                                        {#</select>#}
+                                    {#{% endif %}#}
+                                {#</div>#}
+                                {#{% if formNewPay.payment.number is defined %}#}
+                                    {#{% set label = 'hotels.labels.card_number' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.number, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                                {#{% if formNewPay.payment.expiration is defined %}#}
+                                    {#{% set label = 'hotels.labels.expiration' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.expiration, {'label': label}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                                {#{% if formNewPay.payment.security_code is defined %}#}
+                                    {#{% set label = 'hotels.labels.security_code' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.security_code, {'label': label, 'attr': {'class': 'form-control input-ccv' , 'size': '5'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                            {#</div>#}
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>
-                                </div>
-                            </div>
+                            {#<div class="row">#}
+                                {#<div class="col-md-6">#}
+                                    {#<div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>#}
+                                {#</div>#}
+                            {#</div>#}
 
-                            <div class="row">
-                                {% if formNewPay.payment.owner_name is defined %}
-                                    {% set label = 'hotels.labels.cardholder' | trans %}
-                                    {% set placeholder = 'hotels.labels.such_as_card' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_name, {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                            {#<div class="row">#}
+                                {#{% if formNewPay.payment.owner_name is defined %}#}
+                                    {#{% set label = 'hotels.labels.cardholder' | trans %}#}
+                                    {#{% set placeholder = 'hotels.labels.such_as_card' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.owner_name, {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% if formNewPay.payment.owner_document is defined %}
-                                    {% set label = 'hotels.labels.owner_doc' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_document, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                                {#{% if formNewPay.payment.owner_document is defined %}#}
+                                    {#{% set label = 'hotels.labels.owner_doc' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.owner_document, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% if formNewPay.payment.owner_documenttype is defined %}
-                                    {% set label = 'hotels.labels.owner_documenttype' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_documenttype, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                                {#{% if formNewPay.payment.owner_documenttype is defined %}#}
+                                    {#{% set label = 'hotels.labels.owner_documenttype' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.owner_documenttype, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% if formNewPay.payment.owner_documentnumber is defined %}
-                                    {% set label = 'hotels.labels.owner_documentnumber' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_documentnumber, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                                {#{% if formNewPay.payment.owner_documentnumber is defined %}#}
+                                    {#{% set label = 'hotels.labels.owner_documentnumber' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.owner_documentnumber, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% if formNewPay.payment.owner_gender is defined %}
-                                    {% set label = 'hotels.labels.owner_gender' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.payment.owner_gender, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-                            </div>
+                                {#{% if formNewPay.payment.owner_gender is defined %}#}
+                                    {#{% set label = 'hotels.labels.owner_gender' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.payment.owner_gender, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                            {#</div>#}
 
-                            {{ form_widget(attribute(formNewPay.payment, 'id0'), { 'attr': {'class': 'hidden'} }) }}
-                            {{ form_widget(attribute(formNewPay.payment, 'amount0'), { 'attr': {'class': 'hidden'} }) }}
+                            {#{{ form_widget(attribute(formNewPay.payment, 'id0'), { 'attr': {'class': 'hidden'} }) }}#}
+                            {#{{ form_widget(attribute(formNewPay.payment, 'amount0'), { 'attr': {'class': 'hidden'} }) }}#}
 
-                            {% if formNewPay.payment.country is defined %}
-                                <hr/>
-                                <div class="row">
-                                    {% if formNewPay.payment.country is defined %}
-                                        {% set label = 'hotels.labels.country' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.country, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
+                            {#{% if formNewPay.payment.country is defined %}#}
+                                {#<hr/>#}
+                                {#<div class="row">#}
+                                    {#{% if formNewPay.payment.country is defined %}#}
+                                        {#{% set label = 'hotels.labels.country' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.country, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
 
-                                    {% if formNewPay.payment.state is defined %}
-                                        {% set label = 'hotels.labels.state' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.state, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
+                                    {#{% if formNewPay.payment.state is defined %}#}
+                                        {#{% set label = 'hotels.labels.state' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.state, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
 
-                                    {% if formNewPay.payment.city is defined %}
-                                        {% set label = 'hotels.labels.city' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.city, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
+                                    {#{% if formNewPay.payment.city is defined %}#}
+                                        {#{% set label = 'hotels.labels.city' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.city, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
 
-                                    {% if formNewPay.payment.street is defined %}
-                                        {% set label = 'hotels.labels.street' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.street, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
+                                    {#{% if formNewPay.payment.street is defined %}#}
+                                        {#{% set label = 'hotels.labels.street' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.street, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
 
-                                    {% if formNewPay.payment.floor is defined %}
-                                        {% set label = 'hotels.labels.floor' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.floor, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
+                                    {#{% if formNewPay.payment.floor is defined %}#}
+                                        {#{% set label = 'hotels.labels.floor' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.floor, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
 
-                                    {% if formNewPay.payment.department is defined %}
-                                        {% set label = 'hotels.labels.department' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.department, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
+                                    {#{% if formNewPay.payment.department is defined %}#}
+                                        {#{% set label = 'hotels.labels.department' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.department, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
 
-                                    {% if formNewPay.payment.postal_code is defined %}
-                                        {% set label = 'hotels.labels.postal_code' | trans %}
-                                        <div class="col-md-3">
-                                            {{ form_row(formNewPay.payment.postal_code, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
+                                    {#{% if formNewPay.payment.postal_code is defined %}#}
+                                        {#{% set label = 'hotels.labels.postal_code' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(formNewPay.payment.postal_code, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+                                {#</div>#}
+                            {#{% endif %}#}
                             {##}
 
-                            {% if formNewPay.payment.bank_code is defined %}
-                                {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden'} }) }}
-                            {% endif %}
-                            {% if formNewPay.payment.card_code is defined %}
-                                {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden'} }) }}
-                            {% endif %}
-                            {% if formNewPay.payment.card_type is defined %}
-                                {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden'} }) }}
-                            {% endif %}
-                            {% if formChoice.payment.invoice is defined %}
-                                {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
-                            {% endif %}
+                            {#{% if formNewPay.payment.bank_code is defined %}#}
+                                {#{{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden'} }) }}#}
+                            {#{% endif %}#}
+                            {#{% if formNewPay.payment.card_code is defined %}#}
+                                {#{{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden'} }) }}#}
+                            {#{% endif %}#}
+                            {#{% if formNewPay.payment.card_type is defined %}#}
+                                {#{{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden'} }) }}#}
+                            {#{% endif %}#}
+                            {#{% if formChoice.payment.invoice is defined %}#}
+                                {#{% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}#}
+                            {#{% endif %}#}
 
-                            {% for flashMessage in app.session.flashbag.get('card_msg') %}
-                                <div class="row">
-                                    <div class="col-md-10 top-buffer">
-                                        <div class="alert alert-danger" role="alert">
-                                            <span>{{ 'index.invalid_cc' | trans }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
+                            {#{% for flashMessage in app.session.flashbag.get('card_msg') %}#}
+                                {#<div class="row">#}
+                                    {#<div class="col-md-10 top-buffer">#}
+                                        {#<div class="alert alert-danger" role="alert">#}
+                                            {#<span>{{ 'index.invalid_cc' | trans }}</span>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#{% endfor %}#}
 
-                        {% endif %}
-                    </div>
-                </div>
-                <!--/Formas de pago-->
+                        {#{% endif %}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!--/Formas de pago-->#}
 
-                <!--Contacto-->
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ 'hotels.contact_info' | trans }}</div>
-                    <div class="panel-body">
+                {#<!--Contacto-->#}
+                {#<div class="panel panel-primary">#}
+                    {#<div class="panel-heading">{{ 'hotels.contact_info' | trans }}</div>#}
+                    {#<div class="panel-body">#}
                         {#{{ form_row(formNewPay.contact) }}#}
-                        <div class="row">
-                            {% for phone in formChoice.contact.phones %}
-                                <div class="col-md-2">
-                                    {% set fieldName = 'country_code' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.country_code' | trans %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'size': 4, 'class': 'form-control'}}) }}
-                                </div>
+                        {#<div class="row">#}
+                            {#{% for phone in formChoice.contact.phones %}#}
+                                {#<div class="col-md-2">#}
+                                    {#{% set fieldName = 'country_code' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.country_code' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'size': 4, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
 
-                                {% set fieldName = 'type' ~ loop.index0 %}
-                                {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.type' | trans %}
-                                    <div class="col-md-2">
-                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                                {#{% set fieldName = 'type' ~ loop.index0 %}#}
+                                {#{% if attribute(formNewPay.contact, fieldName) is defined %}#}
+                                    {#{% set label = 'hotels.labels.type' | trans %}#}
+                                    {#<div class="col-md-2">#}
+                                        {#{{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% set fieldName = 'area_code' ~ loop.index0 %}
-                                {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.area_code' | trans %}
-                                    <div class="col-md-2">
-                                        {{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                                {#{% set fieldName = 'area_code' ~ loop.index0 %}#}
+                                {#{% if attribute(formNewPay.contact, fieldName) is defined %}#}
+                                    {#{% set label = 'hotels.labels.area_code' | trans %}#}
+                                    {#<div class="col-md-2">#}
+                                        {#{{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                <div class="col-md-4">
-                                    {% set fieldName = 'number' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.number' | trans %}
-                                    {{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="row">
-                            <div class="col-md-10 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_msg' | trans }}.</div></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                {{ form_row(formNewPay.contact.email, {'label': 'Email:', 'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-md-4">
-                                <div>
-                                    <label for="form_contact_info_email-" class="required">Confirme su Email:</label>
-                                    <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-8 top-buffer hide" id="errorEmail">
-                                <div class="alert alert-danger" role="alert">
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                    <span class="sr-only">Error:</span>
-                                    Las direcciones de email no coinciden.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_confirm' | trans }}.</div></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/Contacto-->
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'number' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.number' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.contact, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                        {#</div>#}
+                        {#<div class="row">#}
+                            {#<div class="col-md-10 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_msg' | trans }}.</div></div>#}
+                        {#</div>#}
+                        {#<div class="row">#}
+                            {#<div class="col-md-4">#}
+                                {#{{ form_row(formNewPay.contact.email, {'label': 'Email:', 'attr': {'class': 'form-control'}}) }}#}
+                            {#</div>#}
+                            {#<div class="col-md-4">#}
+                                {#<div>#}
+                                    {#<label for="form_contact_info_email-" class="required">Confirme su Email:</label>#}
+                                    {#<input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="col-md-8 top-buffer hide" id="errorEmail">#}
+                                {#<div class="alert alert-danger" role="alert">#}
+                                    {#<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>#}
+                                    {#<span class="sr-only">Error:</span>#}
+                                    {#Las direcciones de email no coinciden.#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="row">#}
+                            {#<div class="col-md-8 top-buffer"><div class="alert alert-success" role="alert">{{ 'hotels.contact_confirm' | trans }}.</div></div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!--/Contacto-->#}
 
-                <!--Vouchers-->
-                {% if formNewPay.vouchers is defined %}
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">{{ 'hotels.vouchers' | trans }}</div>
-                        <div class="panel-body">
+                {#<!--Vouchers-->#}
+                {#{% if formNewPay.vouchers is defined %}#}
+                    {#<div class="panel panel-primary">#}
+                        {#<div class="panel-heading">{{ 'hotels.vouchers' | trans }}</div>#}
+                        {#<div class="panel-body">#}
                             {#{{ form_row(formNewPay.vouchers) }}#}
-                            <div class="row">
-                                {% for voucher in formChoice.vouchers %}
-                                    <div class="col-md-2">
-                                        {% set fieldName = loop.index0 %}
-                                        {% set label = 'hotels.vouchers' | trans %}
-                                        {{ form_row(attribute(formNewPay.vouchers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                <!--/Vouchers-->
+                            {#<div class="row">#}
+                                {#{% for voucher in formChoice.vouchers %}#}
+                                    {#<div class="col-md-2">#}
+                                        {#{% set fieldName = loop.index0 %}#}
+                                        {#{% set label = 'hotels.vouchers' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.vouchers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#{% endif %}#}
+                {#<!--/Vouchers-->#}
 
-                <!--Datos adicionales-->
-                {% if formNewPay.additionalData is defined %}
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">{{ 'hotels.additional_data' | trans }}</div>
-                        <div class="panel-body">
+                {#<!--Datos adicionales-->#}
+                {#{% if formNewPay.additionalData is defined %}#}
+                    {#<div class="panel panel-primary">#}
+                        {#<div class="panel-heading">{{ 'hotels.additional_data' | trans }}</div>#}
+                        {#<div class="panel-body">#}
                             {#{{ form_row(formNewPay.additionalData) }}#}
-                            <div class="row">
-                                {% if formNewPay.additionalData.comment is defined %}
-                                    <div class="col-md-6">
-                                        {% set label = 'hotels.labels.comment' | trans %}
-                                        {{ form_row(formNewPay.additionalData.comment, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
+                            {#<div class="row">#}
+                                {#{% if formNewPay.additionalData.comment is defined %}#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set label = 'hotels.labels.comment' | trans %}#}
+                                        {#{{ form_row(formNewPay.additionalData.comment, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
 
-                                    <div class="col-md-6">
-                                        <div class="alert alert-success" role="alert">{{ 'hotels.additional_msg' | trans }}.</div>
-                                    </div>
-                                {% endif %}
+                                    {#<div class="col-md-6">#}
+                                        {#<div class="alert alert-success" role="alert">{{ 'hotels.additional_msg' | trans }}.</div>#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% if formNewPay.additionalData.subscribe_newsletter is defined %}
-                                    {% set label = 'hotels.labels.subscribe_newsletter' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.additionalData.subscribe_newsletter, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
+                                {#{% if formNewPay.additionalData.subscribe_newsletter is defined %}#}
+                                    {#{% set label = 'hotels.labels.subscribe_newsletter' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.additionalData.subscribe_newsletter, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
 
-                                {% if formNewPay.additionalData.travel_assistance is defined %}
-                                    {% set label = 'hotels.labels.travel_assistance' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(formNewPay.additionalData.travel_assistance, {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-                            </div>
+                                {#{% if formNewPay.additionalData.travel_assistance is defined %}#}
+                                    {#{% set label = 'hotels.labels.travel_assistance' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(formNewPay.additionalData.travel_assistance, {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                            {#</div>#}
                             {#{{ form_label(formNewPay.additionalData.comment) }}#}
-                            {{ form_widget(formNewPay.additionalData.comment, {'attr': {'style': 'display:none;'}}) }}
+                           {#/ {{ form_widget(formNewPay.additionalData.comment, {'attr': {'style': 'display:none;'}}) }}#}
                             {#{{ form_label(formNewPay.additionalData.should_use_nightly_prices) }}#}
-                            {{ form_widget(formNewPay.additionalData.should_use_nightly_prices, {'attr': {'style': 'display:none;', 'checked': 'checked'}}) }}
-                        </div>
-                    </div>
-                {% endif %}
-                <!--/Datos adicionales-->
+                            {#{{ form_widget(formNewPay.additionalData.should_use_nightly_prices, {'attr': {'style': 'display:none;', 'checked': 'checked'}}) }}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#{% endif %}#}
+                {#<!--/Datos adicionales-->#}
 
-                <div class="gap"></div>
-                <div class="mod-searchbutton">
-                    <button class="btn btn-primary btn-lg" type="submit">{{ 'hotels.buy' | trans }}</button>
-                    <span>{{ 'hotels.buy_alert' | trans }}.</span>
-                </div>
-                <input type="hidden" name="roompack_choice" value="{{ roompack_choice }}">
-                <div class="gap"></div>
+                {#<div class="gap"></div>#}
+                {#<div class="mod-searchbutton">#}
+                    {#<button class="btn btn-primary btn-lg" type="submit">{{ 'hotels.buy' | trans }}</button>#}
+                    {#<span>{{ 'hotels.buy_alert' | trans }}.</span>#}
+                {#</div>#}
+                {#<input type="hidden" name="roompack_choice" value="{{ roompack_choice }}">#}
+                {#<div class="gap"></div>#}
                 {#{{ form_rest(formNewPay) }}#}
-                {{ form_end(formNewPay) }}
-            </div>
+                {#{{ form_end(formNewPay) }}#}
+            {#</div>#}
 
-            <div class="col-md-3 col-md-pull-9">
-        <div class="content-sidebar">
-            <div class="booking-item-dates-change mb5">
-                <h5><b>{{ 'hotels.your_accommodation' | trans }}</b></h5>
-                <img src="{{ hotelBrief.img }}/95x95" alt="Hotel" style="width: 95px; height: 95px !important;"/>
-                <span>
-                            {% for i in 1..5 %}
-                                {% if i <= hotelBrief.stars %}
-                                    <span><i class="fa fa-star"></i></span>
-                                {% endif %}
-                            {% endfor %}
-                        </span>
-                <div>{{ hotelBrief.address }}</div>
-                <div><b>{{ hotelBrief.name }}</b></div>
-                {{ travellers|raw }}
-            </div>
+            {#<div class="col-md-3 col-md-pull-9">#}
+        {#<div class="content-sidebar">#}
+            {#<div class="booking-item-dates-change mb5">#}
+                {#<h5><b>{{ 'hotels.your_accommodation' | trans }}</b></h5>#}
+                {#<img src="{{ hotelBrief.img }}/95x95" alt="Hotel" style="width: 95px; height: 95px !important;"/>#}
+                {#<span>#}
+                            {#{% for i in 1..5 %}#}
+                                {#{% if i <= hotelBrief.stars %}#}
+                                    {#<span><i class="fa fa-star"></i></span>#}
+                                {#{% endif %}#}
+                            {#{% endfor %}#}
+                        {#</span>#}
+                {#<div>{{ hotelBrief.address }}</div>#}
+                {#<div><b>{{ hotelBrief.name }}</b></div>#}
+                {#{{ travellers|raw }}#}
+            {#</div>#}
 
-            <div class="booking-item-dates-change">
-                <h5><b>{{ 'hotels.paying' | trans }}:</b></h5>
-                {{ reservationDays }} {{ 'hotels.night' | trans }}{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}{{ 'index.search.hotel.room' | trans }}{% else %} {{ 'index.search.hotel.rooms' | trans }}{% endif %}<br/>
-                <p>
-                    {% for room in rooms %}
-                        {% set temp = attribute(rooms, loop.index0) %}
-                        <b>* {{ temp.name }}<br/></b>
+            {#<div class="booking-item-dates-change">#}
+                {#<h5><b>{{ 'hotels.paying' | trans }}:</b></h5>#}
+                {#{{ reservationDays }} {{ 'hotels.night' | trans }}{% if reservationDays > 1 %}s{% endif %} - {{ roomNumbers }} {% if roomNumbers == 1 %}{{ 'index.search.hotel.room' | trans }}{% else %} {{ 'index.search.hotel.rooms' | trans }}{% endif %}<br/>#}
+                {#<p>#}
+                    {#{% for room in rooms %}#}
+                        {#{% set temp = attribute(rooms, loop.index0) %}#}
+                        {#<b>* {{ temp.name }}<br/></b>#}
 
-                    {% endfor %}
-                </p>
-            </div>
-            <div class="" style="padding: 0 5px 0 5px">
-                <div class="alert alert-warning" role="alert" style="margin-bottom: 0px;">{{ hotelBrief.room_cancellation }}</div>
-            </div>
-            <div class="booking-item-dates-change">
-                <b><span id="cuote"></span></b>
-                <br>
-                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')  %}
-                {% set total_price_per_night = room_per_night * reservationDays %}
-                {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
-                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
-                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                    {#{% endfor %}#}
+                {#</p>#}
+            {#</div>#}
+            {#<div class="" style="padding: 0 5px 0 5px">#}
+                {#<div class="alert alert-warning" role="alert" style="margin-bottom: 0px;">{{ hotelBrief.room_cancellation }}</div>#}
+            {#</div>#}
+            {#<div class="booking-item-dates-change">#}
+                {#<b><span id="cuote"></span></b>#}
+                {#<br>#}
+                {#{% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')  %}#}
+                {#{% set total_price_per_night = room_per_night * reservationDays %}#}
+                {#{% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}#}
+                {#{% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}#}
+                {#{% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}#}
 
                 {#{{ 'hotels.room_per_night' | trans }}: $ {{ price_detail.nightly_subtotal|number_format(0, ',', '.') }}<br/>#}
-                {{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}<br/>
+                {#{{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}<br/>#}
                 {#{{ 'hotels.taxes_and_rates' | trans }}: $ {{ (price_detail.taxes + price_detail.fee)|number_format(0, ',', '.') }}<br/>#}
-                {{ 'hotels.taxes_and_rates' | trans }}: {{ taxes + fee }}<br/>
-                {% if price_detail.discounts > 0 %}
-                    {{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}<br/>
-                {% endif %}
+                {#{{ 'hotels.taxes_and_rates' | trans }}: {{ taxes + fee }}<br/>#}
+                {#{% if price_detail.discounts > 0 %}#}
+                    {#{{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}<br/>#}
+                {#{% endif %}#}
                 {#<b>Total: $ {{ price_detail.total|number_format(0, ',', '.') }}</b><br/>#}
                 {#<b>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ price_detail.total|round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</b><br/>#}
-                <b>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</b><br/>
-            </div>
+                {#<b>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</b><br/>#}
+            {#</div>#}
 
-            <div class="" style="padding: 0 5px 0 5px">
-                <div class="alert alert-success text-justify" role="alert">{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</div>
-            </div>
-            {% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}
+            {#<div class="" style="padding: 0 5px 0 5px">#}
+                {#<div class="alert alert-success text-justify" role="alert">{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</div>#}
+            {#</div>#}
+            {#{% include 'VientoSurAppAppBundle:Hotel:searchMenuLeft.html.twig' %}#}
 
-        </div>
-    </div>
+        {#</div>#}
+    {#</div>#}
 
-            <div class="gap"></div>
-            <div class="errors">
+            {#<div class="gap"></div>#}
+            {#<div class="errors">#}
                 {#{{ dump(errors) }}#}
-            </div>
-        </div>
-    </div>
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
     {#{{ dump(formNewPay.additionalData.should_use_nightly_prices) }}#}
 {% endblock %}
 
@@ -635,7 +1253,25 @@
                     $(this).val( first + '-' + lastfour );
                 }
             });
+
+            device();
         });
+
+        function device() {
+            if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+                console.log('mobile');
+                return true;
+            } else {
+                console.log('desktop');
+                return false;
+            }
+        }
+
+        if(device() == true){
+            $('#contentDesktop').html('');
+        }else{
+            $('#contentMobile').html('');
+        }
 
         $("#form_contact_country_code0").intlTelInput({
             autoHideDialCode: false,
@@ -693,5 +1329,17 @@
     {{ parent() }}
     <link href="{{ asset('css/form-payment.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('css/cards-vertical.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('rpascal/css/responsive.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        #processPayment > form > div:nth-child(4) {
+            display: none;
+        }
+        .intl-tel-input.allow-dropdown {
+            width: 100%;
+        }
+        #processPayment .panel-body input[type="radio"] {
+            height: 15px;
+        }
+    </style>
 {% endblock %}

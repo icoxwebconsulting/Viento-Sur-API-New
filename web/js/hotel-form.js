@@ -193,7 +193,7 @@ $(document).ready(function () {
             // }
         // }
     // });
-    $(".col-md-3.col-md-pull-9").jScroll({speed : "slow"});
+    $(".col-xs-12.col-sm-4.col-sm-pull-8").jScroll({speed : "slow"});
 });
 // var $elt = $('.col-md-3.col-md-pull-9');
 //
@@ -202,4 +202,5 @@ $(document).ready(function () {
 function selectCuote(id){
     console.log('selectCuote',this);
     $('#cuote').text($('#span-text-'+id).text())
+    $('#cuoteDesktop').text($('#span-text-'+id).text())
 }

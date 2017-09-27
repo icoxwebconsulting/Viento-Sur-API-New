@@ -1,8 +1,18 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.purchase_summary' | trans }}{% endblock %}
 
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}{{ 'index.hotels' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'index.purchase_summary' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block content %}
-
+    {{ parent() }}
     {% include 'VientoSurAppAppBundle:Email:bookingDetail.html.twig' %}
-
 {% endblock %}
