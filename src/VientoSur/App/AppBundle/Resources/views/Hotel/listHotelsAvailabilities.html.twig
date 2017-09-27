@@ -108,6 +108,7 @@
 
             {#Filtro por rango de precios#}
             $('.total_price_range').each(function () {
+                alert('hola')
                 $(this).removeClass('hidden');
                 var slider = $("#price-slider").ionRangeSlider({
                     type: 'double',
@@ -118,14 +119,15 @@
                     }
                 });
                 $('#priceBtn').on('click', function () {
+                    var range = $('#price-slider').val();
+                    if (range.length > 0) {
+                        range = range.replace(';', '-');
+                        asynLoad({
+                            'price_range': range
+                        });
+                    }
                     if (!$(this).hasClass('disabled')) {
-                        var range = $('#price-slider').val();
-                        if (range.length > 0) {
-                            range = range.replace(';', '-');
-                            asynLoad({
-                                'price_range': range
-                            });
-                        }
+
                     }
                 })
             });
