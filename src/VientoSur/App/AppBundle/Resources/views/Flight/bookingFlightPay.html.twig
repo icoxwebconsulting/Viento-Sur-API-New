@@ -9,786 +9,1586 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
-    <div class="container formBooking">
-        <div class="row">
-            <div class="gap"></div>
+    <div id="banner"></div>
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}{{ 'index.flights' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'index.flight_detail' | trans }}{% endblock %}
+    {% endembed %}
 
-            <div class="col-md-7 col-md-push-5">
-                {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
-
-                <!--Pasajeros-->
-                <div class="panel panel-primary passengers-panel">
-                    <div class="panel-heading">{{ 'flights.passengers' | trans }}</div>
-                    <div class="panel-body">
-                        {% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}
-                            {% if loop.index0 > 0 %}
-                                <hr/>
-                            {% endif %}
-                            <h5>{{ 'flights.adult' | trans }} {{ loop.index }}</h5>
-
+    {#new design#}
+    <div class="wrapperReservation">
+        <div class="container">
+            <div class="row">
+                <!-- GO SIDE BAR -->
+                <div class="col-xs-12 col-sm-4 sidebar-reservation">
+                    <div id="sidebar">
+                        <div id="infoReserva">
+                            <h5 class="titleReserva marginBottom10">{{ 'flights.buy_detail' | trans }}:</h5>
                             <div class="row">
-                                <div class="col-md-6">
-                                    {% set fieldName = 'adults-first_name' ~ loop.index %}
-                                    {% set label = 'hotels.labels.name' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                <div class="col-sx-6 col-sm-7">
+                                    <p class="marginBottom10"><span id="cuote" style="color: #fff;"></span></p>
                                 </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'adults-last_name' ~ loop.index %}
-                                    {% set label = 'hotels.labels.lastname' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                <div class="col-xs-6 col-sm-7">
+                                    <p class="marginBottom10"><span>{{ 'flights.rate_per_adult' | trans }}</span></p>
+                                    <p>{{ 'flights.adult' | trans }} ({{ itineraryDetail.passenger_distribution.adults }})</p>
+                                    {% if itineraryDetail.passenger_distribution.children > 0 %}
+                                        <p>{{ 'flights.labels.child' | trans }} ({{ itineraryDetail.passenger_distribution.children }})</p>
+                                    {% endif %}
+                                    {% if itineraryDetail.passenger_distribution.infants > 0 %}
+                                        <p>{{ 'flights.labels.infant' | trans }} ({{ itineraryDetail.passenger_distribution.infants }})</p>
+                                    {% endif %}
+                                    <p>{{ 'hotels.taxes_and_rates' | trans }}</p>
+                                    <p>{{ 'flights.charges' | trans }}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'adults-nationality' ~ loop.index %}
-                                    {% set label = 'flights.labels.residence' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                <div class="textRight col-xs-6 col-sm-5">
+                                    <p class="marginBottom10"><span>{{ symbol }} {{ itineraryDetail.price_detail.adult_base |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span></p>
+                                    <p>{{ symbol }} {{ itineraryDetail.price_detail.adults_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                    {% if itineraryDetail.passenger_distribution.children > 0 %}
+                                        <p>{{ symbol }} {{ itineraryDetail.price_detail.children_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                    {% endif %}
+                                    {% if itineraryDetail.passenger_distribution.infants > 0 %}
+                                        <p>{{ symbol }} {{ itineraryDetail.price_detail.infants_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                    {% endif %}
+                                    <p>{{ symbol }} {{ itineraryDetail.price_detail.taxes | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                    <p>{{ symbol }} {{ itineraryDetail.price_detail.fees | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
                                 </div>
-
-                                {% set fieldName = 'adults-type' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                    {% set label = 'hotels.labels.type' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'adults-number' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                    {% set label = 'hotels.labels.number' | trans %}
-                                    {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'adults-birthdate' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                    {% set label = 'flights.labels.birthdate' | trans %}
-                                    <div class="col-md-6">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'adults-gender' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                    {% set label = 'hotels.labels.owner_gender' | trans %}
-                                    <div class="col-md-6">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
                             </div>
-                        {% endfor %}
-
-                        {% if formChoice.passengers.children is defined %}
-                        {% for i in 1..formChoice.passengers.children[0].metadata.quantity %}
-                            {% if loop.index0 > 0 %}
-                                <hr/>
-                            {% endif %}
-                            <h5>{{ 'flights.labels.child' | trans }} {{ loop.index }}</h5>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {% set fieldName = 'children-first_name' ~ loop.index %}
-                                    {% set label = 'hotels.labels.name' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                            <div class="totalPayment">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h2>TOTAL</h2>
+                                    </div>
+                                    <div class="textRight col-xs-6">
+                                        <h2>{{ symbol }} {{ itineraryDetail.price_detail.total | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h2>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'children-last_name' ~ loop.index %}
-                                    {% set label = 'hotels.labels.lastname' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'children-nationality' ~ loop.index %}
-                                    {% set label = 'flights.labels.residence' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-
-                                {% set fieldName = 'children-type' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.type' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'children-number' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.number' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'children-birthdate' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'flights.labels.birthdate' | trans %}
-                                    <div class="col-md-6">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'children-gender' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.owner_gender' | trans %}
-                                    <div class="col-md-6">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
                             </div>
-                        {% endfor %}
-                        {% endif %}
-                        {% if formChoice.passengers.infants is defined %}
-                        {% for i in 1..formChoice.passengers.infants[0].metadata.quantity %}
-                            {% if loop.index0 > 0 %}
-                                <hr/>
-                            {% endif %}
-                            <h5>{{ 'flights.labels.infant' | trans }} {{ loop.index }}</h5>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {% set fieldName = 'infants-first_name' ~ loop.index %}
-                                    {% set label = 'hotels.labels.name' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'infants-last_name' ~ loop.index %}
-                                    {% set label = 'hotels.labels.lastname' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'infants-nationality' ~ loop.index %}
-                                    {% set label = 'flights.labels.residence' | trans %}
-                                    {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-
-                                {% set fieldName = 'infants-type' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.type' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                            <div class="datesPayment">
+                                <div class="flightDetail">
+                                    <div class="headerDetail">
+                                        <div class="row">
+                                            <div class="col-xs-7">
+                                                <p><span><i class="fa fa-plane" aria-hidden="true"></i> {{ 'flights.going' | trans }}</span></p>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
+                                                    <p>{{ itineraryDetail.outbound_choices[0].segments | length}} {{ 'flights.stop' | trans }}</p>
+                                                {% else %}
+                                                    <p>{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stops' | trans }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     </div>
-                                {% endif %}
-
-                                {% set fieldName = 'infants-number' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.number' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    <div class="col-md-3">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'infants-birthdate' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'flights.labels.birthdate' | trans %}
-                                    <div class="col-md-6">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
-                                    </div>
-                                {% endif %}
-
-                                {% set fieldName = 'infants-gender' ~ loop.index %}
-                                {% if attribute(formNewPay.passengers, fieldName) is defined %}
-                                    {% set label = 'hotels.labels.owner_gender' | trans %}
-                                    <div class="col-md-6">
-                                        {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-                <!--/Pasajeros-->
-
-                <div class="alert alert-info" role="alert">{{ 'flights.payment_msg' | trans }}.</div>
-                <!--Formas de pago-->
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>
-                    <div class="panel-body">
-                        <div class="list-group pay-methods-panel">
-                            {% for cuotas, bank in paymentMethods %}
-                            <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
-                                <h4 class="list-group-item-heading">
-                                    <input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>
-                                    <span id="span-text-{{ loop.index }}">
-                                        <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
-                                    </span>
-                                </h4>
-                                <p class="list-group-item-text">
-                                    <div class="radio">
-                                    <div class="card-list credit-cards">
-                                    {% for key, cards in bank %}
-                                            {% if key == 'generic' %}
-                                                {% for card in cards  %}
-                                                    <label class="card-selector vs-cs-label">
-                                                        <div class="eva-card-container clickable-card"
-                                                             data-card-id="{{ cuotas }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" id="{{ cuotas }}-{{ card.card_code }}">
-                                                            <span class="eva-card-body {{ card.card_code }}"></span>
-                                                        </div>
-                                                    </label>
-                                                {% endfor %}
-                                            {% else %}
-                                                <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
-                                                    <span class="eva-card-body {{ key }}"></span>
-                                                    <div class="card-content hide">
-                                                        {% for card in cards  %}
-                                                            <div class="eva-card-container clickable-card card-click-2" data-cuotas="{{ cuotas }}" id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
-                                                                <span class="eva-card-body {{ card.generic_card_code }}"></span>
-                                                            </div>
-                                                        {% endfor %}
-                                                    </div>
+                                    {% if itineraryDetail.outbound_choices[0].segments | length > 0 %}
+                                        {% for item in itineraryDetail.outbound_choices[0].segments %}
+                                    <div class="subHeaderDetail">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p>{{ item.cabin_type | capitalize }}</p>
                                                 </div>
-                                            {% endif %}
-                                    {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="infoDetail">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <p>{{ 'flights.departure' | trans }}</p>
+                                                <h6>{{ item.from }}</h6>
+                                                <p style="text-transform:capitalize;">{{ item.departure_datetime | localizeddate('full', 'none', app.request.locale) }}</p>
+                                                <p>{{ item.departure_datetime | localizeddate('none', 'short', app.request.locale) }}</p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="imgAeroline">
+                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png">
+                                                </div>
+                                                <p>{{ item.flight_id }}</p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{ 'flights.arrival' | trans }}</p>
+                                                <h6>{{ item.to }}</h6>
+                                                <p style="text-transform:capitalize;">{{ item.arrival_datetime | localizeddate('full', 'none', app.request.locale) }}</p>
+                                                <p>{{ item.arrival_datetime | localizeddate('none', 'short', app.request.locale) }}</p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <h3>{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</h3>
+                                            </div>
+                                        </div>
                                     </div>
-                                    </div>
-                                </p>
-                            </a>
-                            {% endfor %}
-                        </div>
-
-                        {% for credit_card in formChoice.payments.credit_cards %}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {% set fieldName = 'card-type' ~ loop.index0 %}
-                                    {% set label = 'hotels.selected_card' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'hidden'}}) }}
-                                    {#<input type="text" value="" id="card-selected" class="form-control" readonly>#}
-                                    <select id="select-card" class="form-control" title="{{ label }}">
-                                        {% for cuotas, bank in paymentMethods %}
-                                            {% for key, cards in bank %}
-                                                <optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">
-                                                    {% for card in cards  %}
-                                                        {% if key == 'generic' %}
-                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}" data-pay-text="">{{ cardList[card.generic_card_code] }}</option>
-                                                        {% else %}
-                                                            {% set first_pay = 'flights.first_pay' | trans({'%first%': card.first_installment_amount, '%quota%': (card.installments - 1), '%last%': card.other_installments_amount}) %}
-                                                            <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}" data-pay-text="{{ first_pay }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                            {% endfor %}
                                         {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-md-6" style="height: 60px;">
-                                    <br />
-                                    <b id="pay-text"></b>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card-number' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.card_number' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card-expiration' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.expiration' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card-security_code' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.security_code' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control input-ccv', 'size': '5'}}) }}
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card-card_holder_name' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.cardholder' | trans %}
-                                    {% set placeholder = 'hotels.labels.such_as_card' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card_holder_identification-type' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.type' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.owner_documentnumber' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-
-                            {{ form_widget(attribute(formNewPay.payments, 'card-token0'), { 'attr': {'class': 'hidden'}, 'value' : formChoice.payments.credit_cards[0].card.token.metadata.public_key }) }}
-                            {{ form_widget(attribute(formNewPay.payments, 'card_code0'), { 'attr': {'class': 'hidden'} }) }}
-                            {{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}
-
-                            {{ form_widget(attribute(formNewPay.payments, 'session_id'), { 'value' : riskAnalysis.sessionId }) }}
-
-                            {% for flashMessage in app.session.flashbag.get('card_msg') %}
-                                <div class="row">
-                                    <div class="col-md-10 top-buffer">
-                                        <div class="alert alert-danger" role="alert">
-                                            <span>{{ 'index.invalid_cc' | trans }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                </div>
-                {#{{ dump(paymentMethods) }}#}
-                <!--/Formas de pago-->
-
-                <!--Facturación-->
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ 'flights.invoice_data' | trans }}</div>
-                    <div class="panel-body">
-                        {% for invoice in formChoice.payments.credit_cards %}
-                            <div class="row">
-                                <div class="col-md-4">
-                                    {% set fieldName = 'invoice-fiscal_status' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.tax_status' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control', 'pattern': '^(20|27|30|23|33|24|34)(-|)[0-9]{8}(-|)[0-9]$', 'title': 'Debe coincidir con el patrón: Ej: 20-12345678-4'}}) }}
-                                </div>
-                                <div class="col-md-8 top-buffer" id="errorCuit" style="display: none;">
-                                    <div class="alert alert-danger" role="alert">
-                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                        <span class="sr-only">Error:</span>
-                                        {{ 'hotels.labels.invalid_fiscal_document' | trans }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {% set fieldName = 'invoice-state' ~ loop.index0 %}
-                                    {{ form_label(attribute(formNewPay.payments, fieldName), 'Provincia:') }}
-                                    <select id="select-state" class="form-control">
-                                        <option value="">{{ 'hotels.select' | trans }}...</option>
-                                        <option value="14061">Buenos Aires</option>
-                                        <option value="30078">Catamarca</option>
-                                        <option value="30083">Chaco</option>
-                                        <option value="12344">Chubut</option>
-                                        <option value="13028">Córdoba</option>
-                                        <option value="13662">Corrientes</option>
-                                        <option value="12548">Entre Ríos</option>
-                                        <option value="10047">Formosa</option>
-                                        <option value=30081"">Jujuy</option>
-                                        <option value="30082">La Pampa</option>
-                                        <option value="31654">La Rioja</option>
-                                        <option value="11817">Mendoza</option>
-                                        <option value="11542">Misiones</option>
-                                        <option value="10968">Neuquén</option>
-                                        <option value="13435">Río Negro</option>
-                                        <option value="12738">Salta</option>
-                                        <option value="10222">San Juan</option>
-                                        <option value="30080">San Luis</option>
-                                        <option value="11343">Santa Cruz</option>
-                                        <option value="10309">Santa Fe</option>
-                                        <option value="13857">Santiago del Estero</option>
-                                        <option value="30079">Tierra del Fuego</option>
-                                        <option value="14052">Tucumán</option>
-                                    </select>
-                                    {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class': 'hidden'}}) }}
-                                    {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
-                                </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.city' | trans %}
-                                    {{ form_label(attribute(formNewPay.payments, fieldName), label) }}
-                                    <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ 'flights.select_state' | trans }}" readonly required autocomplete="off" class="form-control" />
-                                    {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class' : 'hidden'}}) }}
-                                    {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
-
-                                </div>
-                                <div class="col-md-6">
-                                    {% set fieldName = 'invoice-street' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.street' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-2">
-                                    {% set fieldName = 'invoice-number' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.number' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-2">
-                                    {% set fieldName = 'invoice-floor' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.floor' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-2">
-                                    {% set fieldName = 'invoice-department' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.department' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
-                                    {% set label = 'flights.business_name' | trans %}
-                                    {% set placeholder = 'flights.labels.name_placeholder' | trans %}
-                                    {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <!--/Facturación-->
-
-                <!--Contacto-->
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ 'hotels.contact_info' | trans }}</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                {{ form_row(attribute(formNewPay.contact_info, 'email-'), {'label': 'Email:', 'attr': {'placeholder': 'Ingrese su email', 'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-md-6">
-                                <div>
-                                    <label for="form_contact_info_email-" class="required">Confirme su Email:</label>
-                                    <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-8 top-buffer hide" id="errorEmail">
-                                <div class="alert alert-danger" role="alert">
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                    <span class="sr-only">Error:</span>
-                                    Las direcciones de email no coinciden.
-                                </div>
-                            </div>
-                        </div>
-                        {% for phone in formChoice.contact_info.phones %}
-                            <div class="row">
-                                <div class="col-md-3">
-                                    {% set fieldName = 'phones-type' ~ loop.index0 %}
-                                    {% set label = 'hotels.phone' | trans %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-3">
-                                    {% set fieldName = 'phones-country_code' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.country' | trans %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-2">
-                                    {% set fieldName = 'phones-area_code' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.area_code' | trans %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="col-md-2">
-                                    {% set fieldName = 'phones-number' ~ loop.index0 %}
-                                    {% set label = 'hotels.labels.number' | trans %}
-                                    {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <!--/Contacto-->
-
-                <div class="gap"></div>
-                <div class="mod-searchbutton">
-                    <button class="btn btn-primary btn-lg" type="submit" id="buyBtn">{{ 'hotels.buy' | trans }}</button>
-                    <span>{{ 'hotels.buy_alert' | trans }}</span>
-                </div>
-                <div class="gap"></div>
-                {{ form_rest(formNewPay) }}
-                {{ form_end(formNewPay) }}
-                {{ form_errors(formNewPay) }}
-            </div>
-
-            <div class="col-md-5 col-md-pull-7">
-                <div class="content-sidebar">
-                    <div class="booking-item-dates-change mb5">
-                        <h5><b>{{ 'flights.buy_detail' | trans }}</b></h5>
-                        <div class="row alert alert-warning">
-                            <div class="col-md-offset-1 col-md-10 ">
-                                <b><span id="cuote">asdasdas</span></b>
-                                <div class="row" style="font-size: 2rem; padding-bottom: 10px">
-                                    <span style="float: left;">{{ 'flights.rate_per_adult' | trans }}</span>
-                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.adult_base | number_format(2, ',', '.') }}</span>#}
-                                    <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.adult_base |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>
-                                    {#<span style="float: right;">$ </span>#}
-                                </div>
-                                <div class="row">
-                                    <span style="float: left;">{{ 'flights.adult' | trans }}</span>
-                                    <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>
-                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>#}
-                                    <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.adults_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>
-                                    {#<span style="float: right;">$ </span>#}
-                                </div>
-
-                                {% if itineraryDetail.passenger_distribution.children > 0 %}
-                                    <div class="row">
-                                        <span style="float: left;">{{ 'flights.labels.child' | trans }}</span>
-                                        <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.children }})</span>
-                                        {#<span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>#}
-                                        <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.children_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>
-                                        {#<span style="float: right;">$ </span>#}
-                                    </div>
-                                {% endif %}
-                                {% if itineraryDetail.passenger_distribution.infants > 0 %}
-                                    <div class="row">
-                                        <span style="float: left;">{{ 'flights.labels.infant' | trans }}</span>
-                                        <span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.infants }})</span>
-                                        {#<span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>#}
-                                        <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.infants_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>
-                                        {#<span style="float: right;">$ </span>#}
-                                    </div>
-                                {% endif %}
-
-                                <div class="row">
-                                    <span style="float: left;">{{ 'hotels.taxes_and_rates' | trans }}</span>
-                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.taxes | number_format(2, ',', '.') }}</span>#}
-                                    <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.taxes | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>
-                                    {#<span style="float: right;">$ </span>#}
-                                </div>
-                                <div class="row">
-                                    <span style="float: left;">{{ 'flights.charges' | trans }}</span>
-                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.fees | number_format(2, ',', '.') }}</span>#}
-                                    <span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.fees | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>
-                                    {#<span style="float: right;">$ </span>#}
-                                </div>
-                                <div class="row" style="padding-top: 2rem; border-top: 1px solid #000;">
-                                    <span class="label-total" style="float: left;font-size: 2rem; text-align: left; text-transform: uppercase"><b>Total</b></span>
-                                    {#<span style="float: right;font-size: 3rem"><b>{{ itineraryDetail.price_detail.total | number_format(2, ',', '.') }}</b></span>#}
-                                    <span style="float: right;font-size: 3rem"><b>{{ symbol }} {{ itineraryDetail.price_detail.total | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</b></span>
-                                    {#<span style="float: right; font-size: 2rem;padding-right: 3px;"><b>$</b></span>#}
-                                </div>
-                                {#<div class="row" style="padding-top: 2rem">
-                                    <button style="float: right; " class="btn btn-primary btn-lg" type="submit">Comprar</button>
-                                </div>#}
-                            </div>
-                        </div>
-                        <div class="flight-detail">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="header-outbound">
-                                        <span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>
-                                        <span> <b>{{ 'flights.going' | trans }}</b> </span>
-                                        {% if itineraryDetail.outbound_choices[0].segments | length < 1 %}
-                                            <span style="float: right">{{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}</span>
-
-                                        {% else %}
-                                            <span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s</span>
-
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="outbound">
-                                {% if itineraryDetail.outbound_choices[0].segments | length > 0 %}
-                                {% for item in itineraryDetail.outbound_choices[0].segments %}
-                                    <div class="row">
-                                        <div class="segment-header col-md-12">
-                                            <span>{{ item.cabin_type | capitalize }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        {# Salida #}
-                                        <div class="flight-details-container col-md-5 align-center">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-label">{{ 'flights.departure' | trans }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-city-code">{{ item.from }}</span>
-                                                </div>
-                                            </div>
-                                            {#<div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-location-code">Buenos Aires</span>
-                                                </div>
-                                            </div>#}
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {# Vuelo #}
-                                        <div class="col-md-2 align-center media-middle">
-
-                                            <div class="row">
-                                                <div class="col-md-12 airline-data-col">
-                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="{#{{ airlineNames[segment.airline] }}#}" />
-                                                    <span class="airline-data">{{ item.flight_id }}</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        {# Llegada #}
-                                        <div class="flight-details-container col-md-5 align-center">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-label">{{ 'flights.arrival' | trans }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-city-code">{{ item.to }}</span>
-                                                </div>
-                                            </div>
-                                            {#<div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-location-code">Buenos Aires</span>
-                                                </div>
-                                            </div>#}
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 alert alert-warning">
-                                            <span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    {% if itineraryDetail.inbound_choices is defined %}
-                    <div class="booking-item-dates-change mb5 flight-detail">
-                        <div class="row">
-                            <div class="cold-md-12">
-                                <div class="header-outbound">
-                                    <span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>
-                                    <span> <b>{{ 'flights.return' | trans }}</b> </span>
-                                    {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
-                                        <span class="pull-right">{{ 'flights.stop' | trans }} {{ itineraryDetail.inbound_choices[0].segments| length }}</span>
-                                    {% else %}
-                                        <span class="pull-right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} {{ 'flights.stop' | trans }}s</span>
                                     {% endif %}
                                 </div>
+                                {% if itineraryDetail.inbound_choices is defined %}
+                                <div class="flightDetail">
+                                    <div class="headerDetail">
+                                        <div class="row">
+                                            <div class="col-xs-7">
+                                                <p><span><i class="fa fa-plane" aria-hidden="true"></i> {{ 'flights.return' | trans }}</span></p>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                {% if itineraryDetail.inbound_choices[0].segments| length < 1 %}
+                                                    <p>{{ itineraryDetail.inbound_choices[0].segments| length }} {{ 'flights.stop' | trans }}</p>
+                                                {% else %}
+                                                    <p>{{ itineraryDetail.inbound_choices[0].segments| length -1}} {{ 'flights.stops' | trans }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if itineraryDetail.inbound_choices[0].segments| length > 0 %}
+                                        {% for item in itineraryDetail.inbound_choices[0].segments%}
+                                        <div class="subHeaderDetail">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>{{ item.cabin_type | capitalize }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="infoDetail">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <p>{{ 'flights.outgoing' | trans }}</p>
+                                                <h6>{{ item.from }}</h6>
+                                                <p style="text-transform:capitalize;">{{ item.departure_datetime | localizeddate('full', 'none', app.request.locale) }}</p>
+                                                <p>{{ item.departure_datetime | localizeddate('none', 'short', app.request.locale) }}</p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="imgAeroline">
+                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png">
+                                                </div>
+                                                <p>{{ item.flight_id }}</p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{ 'flights.incoming' | trans }}</p>
+                                                <h6>{{ item.to }}</h6>
+                                                <p style="text-transform:capitalize;">{{ item.arrival_datetime | localizeddate('full', 'none', app.request.locale) }}</p>
+                                                <p>{{ item.arrival_datetime | localizeddate('none', 'short', app.request.locale) }}</p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <h3>{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                {% endif %}
                             </div>
-                        </div>
-
-                        <div class="outbound">
-                            {% if itineraryDetail.inbound_choices[0].segments| length > 0 %}
-                                {% for item in itineraryDetail.inbound_choices[0].segments%}
-                                    <div class="row">
-                                        <div class="segment-header col-md-12">
-                                            <span>{{ item.cabin_type | capitalize }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        {# Salida #}
-                                        <div class="flight-details-container col-md-5 align-center">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-label">{{ 'flights.outgoing' | trans }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-city-code">{{ item.from }}</span>
-                                                </div>
-                                            </div>
-                                            {#<div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-location-code">Buenos Aires</span>
-                                                </div>
-                                            </div>#}
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {# Vuelo #}
-                                        <div class="col-md-2 align-center media-middle">
-
-                                            <div class="row">
-                                                <div class="col-md-12 airline-data-col">
-                                                    <img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" />
-                                                    <span class="airline-data">{{ item.flight_id }}</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        {# Llegada #}
-                                        <div class="flight-details-container col-md-5 align-center">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-label">{{ 'flights.incoming' | trans }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-city-code">{{ item.to }}</span>
-                                                </div>
-                                            </div>
-                                            {#<div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-location-code">Buenos Aires</span>
-                                                </div>
-                                            </div>#}
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 alert alert-warning">
-                                            <span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
+                            <div class="gap"></div>
+                            <div class="errors"></div>
                         </div>
                     </div>
-                    {% endif %}
                 </div>
-            </div>
+                <!-- END SIDE BAR -->
+                <!-- GO RESERVATION HOTEL -->
+                <div class="col-xs-12 col-sm-8">
+                    <div id="processPayment">
+                        {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'flights.passengers' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        {#adults#}
+                                        {% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}
+                                        <div class="panel-body">
+                                            <h5>{{ 'flights.adult' | trans }} {{ loop.index }}</h5>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'adults-first_name' ~ loop.index %}
+                                                        {% set label = 'hotels.labels.name' | trans %}
+                                                        {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'adults-last_name' ~ loop.index %}
+                                                        {% set label = 'hotels.labels.lastname' | trans %}
+                                                        {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'adults-nationality' ~ loop.index %}
+                                                        {% set label = 'flights.labels.residence' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
 
-            <div class="gap"></div>
-            <div class="errors">
-                {#{{ dump(errors) }}#}
+                                                {% set fieldName = 'adults-type' ~ loop.index %}
+                                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set label = 'hotels.labels.type' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+
+                                                {% set fieldName = 'adults-number' ~ loop.index %}
+                                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set label = 'hotels.labels.number' | trans %}
+                                                        {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="row">
+                                                {% set fieldName = 'adults-birthdate' ~ loop.index %}
+                                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set label = 'flights.labels.birthdate' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+
+                                                {% set fieldName = 'adults-gender' ~ loop.index %}
+                                                {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set label = 'hotels.labels.owner_gender' | trans %}
+                                                        <label for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {#end adults#}
+
+                                        {#childrens#}
+                                        {% if formChoice.passengers.children is defined %}
+                                            {% for i in 1..formChoice.passengers.children[0].metadata.quantity %}
+                                            <div class="panel-body">
+                                                <h5>{{ 'flights.labels.child' | trans }} {{ loop.index }}</h5>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'children-first_name' ~ loop.index %}
+                                                            {% set label = 'hotels.labels.name' | trans %}
+                                                            {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'children-last_name' ~ loop.index %}
+                                                            {% set label = 'hotels.labels.lastname' | trans %}
+                                                            {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'children-nationality' ~ loop.index %}
+                                                            {% set label = 'flights.labels.residence' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    {% set fieldName = 'children-type' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                {% set label = 'hotels.labels.type' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% set fieldName = 'children-number' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                {% set label = 'hotels.labels.number' | trans %}
+                                                                {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="row">
+                                                    {% set fieldName = 'children-birthdate' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                {% set label = 'flights.labels.birthdate' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% set fieldName = 'children-gender' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                {% set label = 'hotels.labels.owner_gender' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {#end childrens#}
+
+                                        {#infants#}
+                                        {% if formChoice.passengers.infants is defined %}
+                                            {% for i in 1..formChoice.passengers.infants[0].metadata.quantity %}
+                                            <div class="panel-body">
+                                                <h5>{{ 'flights.labels.infant' | trans }} {{ loop.index }}</h5>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'infants-first_name' ~ loop.index %}
+                                                            {% set label = 'hotels.labels.name' | trans %}
+                                                            {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'infants-last_name' ~ loop.index %}
+                                                            {% set label = 'hotels.labels.lastname' | trans %}
+                                                            {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'infants-nationality' ~ loop.index %}
+                                                            {% set label = 'flights.labels.residence' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    {% set fieldName = 'infants-type' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                {% set label = 'hotels.labels.type' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% set fieldName = 'infants-number' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                {% set label = 'hotels.labels.number' | trans %}
+                                                                {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="row">
+                                                    {% set fieldName = 'infants-birthdate' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                {% set label = 'flights.labels.birthdate' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% set fieldName = 'infants-gender' ~ loop.index %}
+                                                    {% if attribute(formNewPay.passengers, fieldName) is defined  %}
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                {% set label = 'hotels.labels.owner_gender' | trans %}
+                                                                <label for="">{{ label }}</label>
+                                                                {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {#end infants#}
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.payment_methods' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            {# fee list to choose#}
+                                            <div class="list-group pay-methods-panel">
+                                                {% for cuotas, bank in paymentMethods %}
+                                                    <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
+                                                        <h4 class="list-group-item-heading">
+                                                            <input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>
+                                                            <span id="span-text-{{ loop.index }}">
+                                        <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
+                                    </span>
+                                                        </h4>
+                                                        <p class="list-group-item-text">
+                                                        <div class="radio">
+                                                            <div class="card-list credit-cards">
+                                                                {% for key, cards in bank %}
+                                                                    {% if key == 'generic' %}
+                                                                        {% for card in cards  %}
+                                                                            <label class="card-selector vs-cs-label">
+                                                                                <div class="eva-card-container clickable-card"
+                                                                                     data-card-id="{{ cuotas }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" id="{{ cuotas }}-{{ card.card_code }}">
+                                                                                    <span class="eva-card-body {{ card.card_code }}"></span>
+                                                                                </div>
+                                                                            </label>
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
+                                                                            <span class="eva-card-body {{ key }}"></span>
+                                                                            <div class="card-content hide">
+                                                                                {% for card in cards  %}
+                                                                                    <div class="eva-card-container clickable-card card-click-2" data-cuotas="{{ cuotas }}" id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">
+                                                                                        <span class="eva-card-body {{ card.generic_card_code }}"></span>
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                        </p>
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                            {#end fe list to choose#}
+
+                                            {#credit card date#}
+                                            <div class="datesPayment">
+                                                <h2>{{ 'hotels.payment_methods' | trans }}:</h2>
+                                                <p id="pay-text"></p>
+                                                {% for credit_card in formChoice.payments.credit_cards %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card-type' ~ loop.index0 %}
+                                                            {% set label = 'hotels.selected_card' | trans %}
+                                                            <label for="">{{ label }}:</label>
+                                                            {{ form_widget(attribute(formNewPay.payments, fieldName), {'attr': {'class': 'hidden'}}) }}
+                                                            <select id="select-card" class="form-control" title="{{ label }}">
+                                                                {% for cuotas, bank in paymentMethods %}
+                                                                    {% for key, cards in bank %}
+                                                                        <optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">
+                                                                            {% for card in cards  %}
+                                                                                {% if key == 'generic' %}
+                                                                                    <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}" data-pay-text="">{{ cardList[card.generic_card_code] }}</option>
+                                                                                {% else %}
+                                                                                    {% set first_pay = 'flights.first_pay' | trans({'%first%': card.first_installment_amount, '%quota%': (card.installments - 1), '%last%': card.other_installments_amount}) %}
+                                                                                    <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}" data-pay-text="{{ first_pay }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </optgroup>
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card-number' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.card_number' | trans %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card-expiration' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.expiration' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            <div class="row">
+                                                                <div class="col-xs-6" id="expiration-month"></div>
+                                                                <div class="col-xs-6" id="expiration-year"></div>
+                                                                {{ form_row(attribute(formNewPay.payments, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card-security_code' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.security_code' | trans %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control input-ccv', 'size': '5'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card-card_holder_name' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.cardholder' | trans %}
+                                                            {% set placeholder = 'hotels.labels.such_as_card' | trans %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card_holder_identification-type' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.type' | trans %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.owner_documentnumber' | trans %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>
+                                                </div>
+                                                {{ form_widget(attribute(formNewPay.payments, 'card-token0'), { 'attr': {'class': 'hidden'}, 'value' : formChoice.payments.credit_cards[0].card.token.metadata.public_key }) }}
+                                                {{ form_widget(attribute(formNewPay.payments, 'card_code0'), { 'attr': {'class': 'hidden'} }) }}
+                                                {{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}
+
+                                                {{ form_widget(attribute(formNewPay.payments, 'session_id'), { 'value' : riskAnalysis.sessionId }) }}
+
+                                                    {% for flashMessage in app.session.flashbag.get('card_msg') %}
+                                                        <div class="row">
+                                                            <div class="col-md-10 top-buffer">
+                                                                <div class="alert alert-danger" role="alert">
+                                                                    <span>{{ 'index.invalid_cc' | trans }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </div>
+                                            {#end credit card date#}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'flights.invoice_data' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            {% for credit_card in formChoice.payments.credit_cards %}
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'invoice-fiscal_status' ~ loop.index0 %}
+                                                            {% set label = 'hotels.labels.tax_status' | trans %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            {% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}
+                                                            {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control', 'pattern': '^(20|27|30|23|33|24|34)(-|)[0-9]{8}(-|)[0-9]$', 'title': 'Debe coincidir con el patrón: Ej: 20-12345678-4'}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 top-buffer" id="errorCuit" style="display: none;">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        {{ 'hotels.labels.invalid_fiscal_document' | trans }}
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-state' ~ loop.index0 %}
+                                                        {{ form_label(attribute(formNewPay.payments, fieldName), 'Provincia:') }}
+                                                        <select id="select-state" class="form-control">
+                                                            <option value="">{{ 'hotels.select' | trans }}...</option>
+                                                            <option value="14061">Buenos Aires</option>
+                                                            <option value="30078">Catamarca</option>
+                                                            <option value="30083">Chaco</option>
+                                                            <option value="12344">Chubut</option>
+                                                            <option value="13028">Córdoba</option>
+                                                            <option value="13662">Corrientes</option>
+                                                            <option value="12548">Entre Ríos</option>
+                                                            <option value="10047">Formosa</option>
+                                                            <option value=30081"">Jujuy</option>
+                                                            <option value="30082">La Pampa</option>
+                                                            <option value="31654">La Rioja</option>
+                                                            <option value="11817">Mendoza</option>
+                                                            <option value="11542">Misiones</option>
+                                                            <option value="10968">Neuquén</option>
+                                                            <option value="13435">Río Negro</option>
+                                                            <option value="12738">Salta</option>
+                                                            <option value="10222">San Juan</option>
+                                                            <option value="30080">San Luis</option>
+                                                            <option value="11343">Santa Cruz</option>
+                                                            <option value="10309">Santa Fe</option>
+                                                            <option value="13857">Santiago del Estero</option>
+                                                            <option value="30079">Tierra del Fuego</option>
+                                                            <option value="14052">Tucumán</option>
+                                                        </select>
+                                                        {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class': 'hidden'}}) }}
+                                                        {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.city' | trans %}
+                                                        {{ form_label(attribute(formNewPay.payments, fieldName), label) }}
+                                                        <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ 'flights.select_state' | trans }}" readonly required autocomplete="off" class="form-control" />
+                                                        {{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class' : 'hidden'}}) }}
+                                                        {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-street' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.street' | trans %}
+                                                        {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-number' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.number' | trans %}
+                                                        {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-floor' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.floor' | trans %}
+                                                        {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-department' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.department' | trans %}
+                                                        {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
+                                                        {% set label = 'flights.business_name' | trans %}
+                                                        {% set placeholder = 'flights.labels.name_placeholder' | trans %}
+                                                        {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.contact_info' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            {% for phone in formChoice.contact_info.phones %}
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'phones-country_code' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.country' | trans %}
+                                                        <div>
+                                                            <label for="" style="margin-bottom:16px; display:block;">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact_info, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'phones-type' ~ loop.index0 %}
+                                                        {% set label = 'hotels.phone' | trans %}
+                                                        {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'phones-area_code' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.area_code' | trans %}
+                                                        {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'phones-number' ~ loop.index0 %}
+                                                        {% set label = 'hotels.labels.number' | trans %}
+                                                        {{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">{{ 'hotels.contact_msg' | trans }}.</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form_row(attribute(formNewPay.contact_info, 'email-'), {'label': 'Email:', 'attr': {'placeholder': 'Ingrese su email', 'class': 'form-control'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="form_contact_info_email-" class="required">Confirme su Email:</label>
+                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 top-buffer hide" id="errorEmail">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        Las direcciones de email no coinciden.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">{{ 'hotels.contact_confirm' | trans }}.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttonPayment center">
+                                <button id="buyBtn">{{ 'hotels.buy' | trans }}</button>
+                            </div>
+
+                            {{ form_rest(formNewPay) }}
+                            {{ form_end(formNewPay) }}
+                        {{ form_errors(formNewPay) }}
+                    </div>
+                </div>
+                <!-- END RESERVATION HOTEL -->
             </div>
         </div>
     </div>
+    {#end new design#}
+
+    {#od design#}
+    {#<div class="container formBooking">#}
+        {#<div class="row">#}
+            {#<div class="gap"></div>#}
+
+            {#<div class="col-md-7 col-md-push-5">#}
+                {#{{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}#}
+
+                {#<!--Pasajeros-->#}
+                {#<div class="panel panel-primary">#}
+                    {#<div class="panel-heading">{{ 'flights.passengers' | trans }}</div>#}
+                    {#<div class="panel-body">#}
+                        {#{% for i in 1..formChoice.passengers.adults[0].metadata.quantity %}#}
+                            {#{% if loop.index0 > 0 %}#}
+                                {#<hr/>#}
+                            {#{% endif %}#}
+                            {#<h5>{{ 'flights.adult' | trans }} {{ loop.index }}</h5>#}
+
+                            {#<div class="row">#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'adults-first_name' ~ loop.index %}#}
+                                    {#{% set label = 'hotels.labels.name' | trans %}#}
+                                    {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'adults-last_name' ~ loop.index %}#}
+                                    {#{% set label = 'hotels.labels.lastname' | trans %}#}
+                                    {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'adults-nationality' ~ loop.index %}#}
+                                    {#{% set label = 'flights.labels.residence' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+
+                                {#{% set fieldName = 'adults-type' ~ loop.index %}#}
+                                {#{% if attribute(formNewPay.passengers, fieldName) is defined  %}#}
+                                    {#{% set label = 'hotels.labels.type' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+
+                                {#{% set fieldName = 'adults-number' ~ loop.index %}#}
+                                {#{% if attribute(formNewPay.passengers, fieldName) is defined  %}#}
+                                    {#{% set label = 'hotels.labels.number' | trans %}#}
+                                    {#{% set placeholder = 'hotels.labels.name_placeholder' | trans %}#}
+                                    {#<div class="col-md-3">#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+
+                                {#{% set fieldName = 'adults-birthdate' ~ loop.index %}#}
+                                {#{% if attribute(formNewPay.passengers, fieldName) is defined  %}#}
+                                    {#{% set label = 'flights.labels.birthdate' | trans %}#}
+                                    {#<div class="col-md-6">#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+
+                                {#{% set fieldName = 'adults-gender' ~ loop.index %}#}
+                                {#{% if attribute(formNewPay.passengers, fieldName) is defined  %}#}
+                                    {#{% set label = 'hotels.labels.owner_gender' | trans %}#}
+                                    {#<div class="col-md-6">#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+
+                        {#{% if formChoice.passengers.children is defined %}#}
+                            {#{% for i in 1..formChoice.passengers.children[0].metadata.quantity %}#}
+                                {#{% if loop.index0 > 0 %}#}
+                                    {#<hr/>#}
+                                {#{% endif %}#}
+                                {#<h5>{{ 'flights.labels.child' | trans }} {{ loop.index }}</h5>#}
+
+                                {#<div class="row">#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set fieldName = 'children-first_name' ~ loop.index %}#}
+                                        {#{% set label = 'hotels.labels.name' | trans %}#}
+                                        {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set fieldName = 'children-last_name' ~ loop.index %}#}
+                                        {#{% set label = 'hotels.labels.lastname' | trans %}#}
+                                        {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set fieldName = 'children-nationality' ~ loop.index %}#}
+                                        {#{% set label = 'flights.labels.residence' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+
+                                    {#{% set fieldName = 'children-type' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'hotels.labels.type' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+
+                                    {#{% set fieldName = 'children-number' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'hotels.labels.number' | trans %}#}
+                                        {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+
+                                    {#{% set fieldName = 'children-birthdate' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'flights.labels.birthdate' | trans %}#}
+                                        {#<div class="col-md-6">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+
+                                    {#{% set fieldName = 'children-gender' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'hotels.labels.owner_gender' | trans %}#}
+                                        {#<div class="col-md-6">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                        {#{% endif %}#}
+                        {#{% if formChoice.passengers.infants is defined %}#}
+                            {#{% for i in 1..formChoice.passengers.infants[0].metadata.quantity %}#}
+                                {#{% if loop.index0 > 0 %}#}
+                                    {#<hr/>#}
+                                {#{% endif %}#}
+                                {#<h5>{{ 'flights.labels.infant' | trans }} {{ loop.index }}</h5>#}
+
+                                {#<div class="row">#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set fieldName = 'infants-first_name' ~ loop.index %}#}
+                                        {#{% set label = 'hotels.labels.name' | trans %}#}
+                                        {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set fieldName = 'infants-last_name' ~ loop.index %}#}
+                                        {#{% set label = 'hotels.labels.lastname' | trans %}#}
+                                        {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                    {#<div class="col-md-6">#}
+                                        {#{% set fieldName = 'infants-nationality' ~ loop.index %}#}
+                                        {#{% set label = 'flights.labels.residence' | trans %}#}
+                                        {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+
+                                    {#{% set fieldName = 'infants-type' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'hotels.labels.type' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+
+                                    {#{% set fieldName = 'infants-number' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'hotels.labels.number' | trans %}#}
+                                        {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                        {#<div class="col-md-3">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+
+                                    {#{% set fieldName = 'infants-birthdate' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'flights.labels.birthdate' | trans %}#}
+                                        {#<div class="col-md-6">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+
+                                    {#{% set fieldName = 'infants-gender' ~ loop.index %}#}
+                                    {#{% if attribute(formNewPay.passengers, fieldName) is defined %}#}
+                                        {#{% set label = 'hotels.labels.owner_gender' | trans %}#}
+                                        {#<div class="col-md-6">#}
+                                            {#{{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                    {#{% endif %}#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                        {#{% endif %}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!--/Pasajeros-->#}
+
+                {#<div class="alert alert-info" role="alert">{{ 'flights.payment_msg' | trans }}.</div>#}
+                {#<!--Formas de pago-->#}
+                {#<div class="panel panel-primary">#}
+                    {#<div class="panel-heading">{{ 'hotels.payment_methods' | trans }}</div>#}
+                    {#<div class="panel-body">#}
+                        {#<div class="list-group pay-methods-panel">#}
+                            {#{% for cuotas, bank in paymentMethods %}#}
+                            {#<a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">#}
+                                {#<h4 class="list-group-item-heading">#}
+                                    {#<input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>#}
+                                    {#<span id="span-text-{{ loop.index }}">#}
+                                        {#<b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}#}
+                                    {#</span>#}
+                                {#</h4>#}
+                                {#<p class="list-group-item-text">#}
+                                    {#<div class="radio">#}
+                                    {#<div class="card-list credit-cards">#}
+                                    {#{% for key, cards in bank %}#}
+                                            {#{% if key == 'generic' %}#}
+                                                {#{% for card in cards  %}#}
+                                                    {#<label class="card-selector vs-cs-label">#}
+                                                        {#<div class="eva-card-container clickable-card"#}
+                                                             {#data-card-id="{{ cuotas }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" id="{{ cuotas }}-{{ card.card_code }}">#}
+                                                            {#<span class="eva-card-body {{ card.card_code }}"></span>#}
+                                                        {#</div>#}
+                                                    {#</label>#}
+                                                {#{% endfor %}#}
+                                            {#{% else %}#}
+                                                {#<div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">#}
+                                                    {#<span class="eva-card-body {{ key }}"></span>#}
+                                                    {#<div class="card-content hide">#}
+                                                        {#{% for card in cards  %}#}
+                                                            {#<div class="eva-card-container clickable-card card-click-2" data-cuotas="{{ cuotas }}" id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-id="{{ cuotas }}-{{ key }}-{{ card.card_code }}" data-card-code="{{ card.generic_card_code }}" data-bank-code="{{ card.bank_code }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}">#}
+                                                                {#<span class="eva-card-body {{ card.generic_card_code }}"></span>#}
+                                                            {#</div>#}
+                                                        {#{% endfor %}#}
+                                                    {#</div>#}
+                                                {#</div>#}
+                                            {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                    {#</div>#}
+                                    {#</div>#}
+                                {#</p>#}
+                            {#</a>#}
+                            {#{% endfor %}#}
+                        {#</div>#}
+
+                        {#{% for credit_card in formChoice.payments.credit_cards %}#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'card-type' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.selected_card' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'hidden'}}) }}#}
+                                    {#<input type="text" value="" id="card-selected" class="form-control" readonly>#}
+                                    {#<select id="select-card" class="form-control" title="{{ label }}">#}
+                                        {#{% for cuotas, bank in paymentMethods %}#}
+                                            {#{% for key, cards in bank %}#}
+                                                {#<optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">#}
+                                                    {#{% for card in cards  %}#}
+                                                        {#{% if key == 'generic' %}#}
+                                                            {#<option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}" data-pay-text="">{{ cardList[card.generic_card_code] }}</option>#}
+                                                        {#{% else %}#}
+                                                            {#{% set first_pay = 'flights.first_pay' | trans({'%first%': card.first_installment_amount, '%quota%': (card.installments - 1), '%last%': card.other_installments_amount}) %}#}
+                                                            {#<option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}" data-pay-text="{{ first_pay }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>#}
+                                                        {#{% endif %}#}
+                                                    {#{% endfor %}#}
+                                                {#</optgroup>#}
+                                            {#{% endfor %}#}
+                                        {#{% endfor %}#}
+                                    {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-md-6" style="height: 60px;">#}
+                                    {#<br />#}
+                                    {#<b id="pay-text"></b>#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'card-number' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.card_number' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'card-expiration' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.expiration' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'card-security_code' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.security_code' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control input-ccv', 'size': '5'}}) }}#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            {#<div class="row">#}
+                                {#<div class="col-md-6">#}
+                                    {#<div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            {#<div class="row">#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'card-card_holder_name' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.cardholder' | trans %}#}
+                                    {#{% set placeholder = 'hotels.labels.such_as_card' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'card_holder_identification-type' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.type' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'card_holder_identification-number' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.owner_documentnumber' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            {#{{ form_widget(attribute(formNewPay.payments, 'card-token0'), { 'attr': {'class': 'hidden'}, 'value' : formChoice.payments.credit_cards[0].card.token.metadata.public_key }) }}#}
+                            {#{{ form_widget(attribute(formNewPay.payments, 'card_code0'), { 'attr': {'class': 'hidden'} }) }}#}
+                            {#{{ form_widget(attribute(formNewPay.payments, 'installments0'), { 'attr': {'class': 'hidden'} }) }}#}
+
+                            {#{{ form_widget(attribute(formNewPay.payments, 'session_id'), { 'value' : riskAnalysis.sessionId }) }}#}
+
+                            {#{% for flashMessage in app.session.flashbag.get('card_msg') %}#}
+                                {#<div class="row">#}
+                                    {#<div class="col-md-10 top-buffer">#}
+                                        {#<div class="alert alert-danger" role="alert">#}
+                                            {#<span>{{ 'index.invalid_cc' | trans }}</span>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+                {#{{ dump(paymentMethods) }}#}
+                {#<!--/Formas de pago-->#}
+
+                {#<!--Facturación-->#}
+                {#<div class="panel panel-primary">#}
+                    {#<div class="panel-heading">{{ 'flights.invoice_data' | trans }}</div>#}
+                    {#<div class="panel-body">#}
+                        {#{% for invoice in formChoice.payments.credit_cards %}#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'invoice-fiscal_status' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.tax_status' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control', 'pattern': '^(20|27|30|23|33|24|34)(-|)[0-9]{8}(-|)[0-9]$', 'title': 'Debe coincidir con el patrón: Ej: 20-12345678-4'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-8 top-buffer" id="errorCuit" style="display: none;">#}
+                                    {#<div class="alert alert-danger" role="alert">#}
+                                        {#<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>#}
+                                        {#<span class="sr-only">Error:</span>#}
+                                        {#{{ 'hotels.labels.invalid_fiscal_document' | trans }}#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'invoice-state' ~ loop.index0 %}#}
+                                    {#{{ form_label(attribute(formNewPay.payments, fieldName), 'Provincia:') }}#}
+                                    {#<select id="select-state" class="form-control">#}
+                                        {#<option value="">{{ 'hotels.select' | trans }}...</option>#}
+                                        {#<option value="14061">Buenos Aires</option>#}
+                                        {#<option value="30078">Catamarca</option>#}
+                                        {#<option value="30083">Chaco</option>#}
+                                        {#<option value="12344">Chubut</option>#}
+                                        {#<option value="13028">Córdoba</option>#}
+                                        {#<option value="13662">Corrientes</option>#}
+                                        {#<option value="12548">Entre Ríos</option>#}
+                                        {#<option value="10047">Formosa</option>#}
+                                        {#<option value=30081"">Jujuy</option>#}
+                                        {#<option value="30082">La Pampa</option>#}
+                                        {#<option value="31654">La Rioja</option>#}
+                                        {#<option value="11817">Mendoza</option>#}
+                                        {#<option value="11542">Misiones</option>#}
+                                        {#<option value="10968">Neuquén</option>#}
+                                        {#<option value="13435">Río Negro</option>#}
+                                        {#<option value="12738">Salta</option>#}
+                                        {#<option value="10222">San Juan</option>#}
+                                        {#<option value="30080">San Luis</option>#}
+                                        {#<option value="11343">Santa Cruz</option>#}
+                                        {#<option value="10309">Santa Fe</option>#}
+                                        {#<option value="13857">Santiago del Estero</option>#}
+                                        {#<option value="30079">Tierra del Fuego</option>#}
+                                        {#<option value="14052">Tucumán</option>#}
+                                    {#</select>#}
+                                    {#{{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class': 'hidden'}}) }}#}
+                                    {#{{ form_errors(attribute(formNewPay.payments, fieldName)) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'invoice-city_id' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.city' | trans %}#}
+                                    {#{{ form_label(attribute(formNewPay.payments, fieldName), label) }}#}
+                                    {#<input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ 'flights.select_state' | trans }}" readonly required autocomplete="off" class="form-control" />#}
+                                    {#{{ form_widget(attribute(formNewPay.payments, fieldName) , {'attr': {'class' : 'hidden'}}) }}#}
+                                    {#{{ form_errors(attribute(formNewPay.payments, fieldName)) }}#}
+
+                                {#</div>#}
+                                {#<div class="col-md-6">#}
+                                    {#{% set fieldName = 'invoice-street' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.street' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-2">#}
+                                    {#{% set fieldName = 'invoice-number' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.number' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-2">#}
+                                    {#{% set fieldName = 'invoice-floor' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.floor' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-2">#}
+                                    {#{% set fieldName = 'invoice-department' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.department' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-4">#}
+                                    {#{% set fieldName = 'invoice-business_name' ~ loop.index0 %}#}
+                                    {#{% set label = 'flights.business_name' | trans %}#}
+                                    {#{% set placeholder = 'flights.labels.name_placeholder' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!--/Facturación-->#}
+
+                {#<!--Contacto-->#}
+                {#<div class="panel panel-primary">#}
+                    {#<div class="panel-heading">{{ 'hotels.contact_info' | trans }}</div>#}
+                    {#<div class="panel-body">#}
+                        {#<div class="row">#}
+                            {#<div class="col-md-6">#}
+                                {#{{ form_row(attribute(formNewPay.contact_info, 'email-'), {'label': 'Email:', 'attr': {'placeholder': 'Ingrese su email', 'class': 'form-control'}}) }}#}
+                            {#</div>#}
+                            {#<div class="col-md-6">#}
+                                {#<div>#}
+                                    {#<label for="form_contact_info_email-" class="required">Confirme su Email:</label>#}
+                                    {#<input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="col-md-8 top-buffer hide" id="errorEmail">#}
+                                {#<div class="alert alert-danger" role="alert">#}
+                                    {#<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>#}
+                                    {#<span class="sr-only">Error:</span>#}
+                                    {#Las direcciones de email no coinciden.#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#{% for phone in formChoice.contact_info.phones %}#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-3">#}
+                                    {#{% set fieldName = 'phones-type' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.phone' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-3">#}
+                                    {#{% set fieldName = 'phones-country_code' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.country' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-2">#}
+                                    {#{% set fieldName = 'phones-area_code' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.area_code' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-2">#}
+                                    {#{% set fieldName = 'phones-number' ~ loop.index0 %}#}
+                                    {#{% set label = 'hotels.labels.number' | trans %}#}
+                                    {#{{ form_row(attribute(formNewPay.contact_info, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!--/Contacto-->#}
+
+                {#<div class="gap"></div>#}
+                {#<div class="mod-searchbutton">#}
+                    {#<button class="btn btn-primary btn-lg" type="submit" id="buyBtn">{{ 'hotels.buy' | trans }}</button>#}
+                    {#<span>{{ 'hotels.buy_alert' | trans }}</span>#}
+                {#</div>#}
+                {#<div class="gap"></div>#}
+                {#{{ form_rest(formNewPay) }}#}
+                {#{{ form_end(formNewPay) }}#}
+                {#{{ form_errors(formNewPay) }}#}
+            {#</div>#}
+
+            {#<div class="col-md-5 col-md-pull-7">#}
+                {#<div class="content-sidebar">#}
+                    {#<div class="booking-item-dates-change mb5">#}
+                        {#<h5><b>{{ 'flights.buy_detail' | trans }}</b></h5>#}
+                        {#<div class="row alert alert-warning">#}
+                            {#<div class="col-md-offset-1 col-md-10 ">#}
+                                {#<b><span id="cuote">asdasdas</span></b>#}
+                                {#<div class="row" style="font-size: 2rem; padding-bottom: 10px">#}
+                                    {#<span style="float: left;">{{ 'flights.rate_per_adult' | trans }}</span>#}
+                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.adult_base | number_format(2, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.adult_base |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">$ </span>#}
+                                {#</div>#}
+                                {#<div class="row">#}
+                                    {#<span style="float: left;">{{ 'flights.adult' | trans }}</span>#}
+                                    {#<span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.adults }})</span>#}
+                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.base | number_format(2, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.adults_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">$ </span>#}
+                                {#</div>#}
+
+                                {#{% if itineraryDetail.passenger_distribution.children > 0 %}#}
+                                    {#<div class="row">#}
+                                        {#<span style="float: left;">{{ 'flights.labels.child' | trans }}</span>#}
+                                        {#<span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.children }})</span>#}
+                                        {#<span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>#}
+                                        {#<span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.children_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>#}
+                                        {#<span style="float: right;">$ </span>#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                                {#{% if itineraryDetail.passenger_distribution.infants > 0 %}#}
+                                    {#<div class="row">#}
+                                        {#<span style="float: left;">{{ 'flights.labels.infant' | trans }}</span>#}
+                                        {#<span style="float: left;padding-left: 3px">({{ itineraryDetail.passenger_distribution.infants }})</span>#}
+                                        {#<span style="float: right;">{{ itineraryDetail.price_detail.children_subtotal | number_format(2, ',', '.') }}</span>#}
+                                        {#<span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.infants_subtotal |round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>#}
+                                        {#<span style="float: right;">$ </span>#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+
+                                {#<div class="row">#}
+                                    {#<span style="float: left;">{{ 'hotels.taxes_and_rates' | trans }}</span>#}
+                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.taxes | number_format(2, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.taxes | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">$ </span>#}
+                                {#</div>#}
+                                {#<div class="row">#}
+                                    {#<span style="float: left;">{{ 'flights.charges' | trans }}</span>#}
+                                    {#<span style="float: right;">{{ itineraryDetail.price_detail.fees | number_format(2, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">{{ symbol }} {{ itineraryDetail.price_detail.fees | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</span>#}
+                                    {#<span style="float: right;">$ </span>#}
+                                {#</div>#}
+                                {#<div class="row" style="padding-top: 2rem; border-top: 1px solid #000;">#}
+                                    {#<span class="label-total" style="float: left;font-size: 2rem; text-align: left; text-transform: uppercase"><b>Total</b></span>#}
+                                    {#<span style="float: right;font-size: 3rem"><b>{{ itineraryDetail.price_detail.total | number_format(2, ',', '.') }}</b></span>#}
+                                    {#<span style="float: right;font-size: 3rem"><b>{{ symbol }} {{ itineraryDetail.price_detail.total | round| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</b></span>#}
+                                    {#<span style="float: right; font-size: 2rem;padding-right: 3px;"><b>$</b></span>#}
+                                {#</div>#}
+                                {#<div class="row" style="padding-top: 2rem">#}
+                                    {#<button style="float: right; " class="btn btn-primary btn-lg" type="submit">Comprar</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="flight-detail">#}
+                            {#<div class="row">#}
+                                {#<div class="col-md-12">#}
+                                    {#<div class="header-outbound">#}
+                                        {#<span style="float: left; padding-right: 4px"> <i class="fa fa-plane"></i></span>#}
+                                        {#<span> <b>{{ 'flights.going' | trans }}</b> </span>#}
+                                        {#{% if itineraryDetail.outbound_choices[0].segments | length < 1 %}#}
+                                            {#<span style="float: right">{{ 'flights.stop' | trans }} {{ itineraryDetail.outbound_choices[0].segments | length }}</span>#}
+
+                                        {#{% else %}#}
+                                            {#<span style="float: right">{{ itineraryDetail.outbound_choices[0].segments | length -1}} {{ 'flights.stop' | trans }}s</span>#}
+
+                                        {#{% endif %}#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            {#<div class="outbound">#}
+                                {#{% if itineraryDetail.outbound_choices[0].segments | length > 0 %}#}
+                                {#{% for item in itineraryDetail.outbound_choices[0].segments %}#}
+                                    {#<div class="row">#}
+                                        {#<div class="segment-header col-md-12">#}
+                                            {#<span>{{ item.cabin_type | capitalize }}</span>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#<div class="row">#}
+                                        {# Salida #}
+                                        {#<div class="flight-details-container col-md-5 align-center">#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-label">{{ 'flights.departure' | trans }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-city-code">{{ item.from }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-location-code">Buenos Aires</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {# Vuelo #}
+                                        {#<div class="col-md-2 align-center media-middle">#}
+
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12 airline-data-col">#}
+                                                    {#<img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" title="#}{#{{ airlineNames[segment.airline] }}#}{#" />#}
+                                                    {#<span class="airline-data">{{ item.flight_id }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+
+                                        {#</div>#}
+
+                                        {# Llegada #}
+                                        {#<div class="flight-details-container col-md-5 align-center">#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-label">{{ 'flights.arrival' | trans }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-city-code">{{ item.to }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-location-code">Buenos Aires</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#<div class="row">#}
+                                        {#<div class="col-md-12 alert alert-warning">#}
+                                            {#<span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#{% endfor %}#}
+                                {#{% endif %}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#{% if itineraryDetail.inbound_choices is defined %}#}
+                    {#<div class="booking-item-dates-change mb5 flight-detail">#}
+                        {#<div class="row">#}
+                            {#<div class="cold-md-12">#}
+                                {#<div class="header-outbound">#}
+                                    {#<span style="float: left; padding-right: 4px"> <i class="fa fa-plane fa-flip-horizontal"></i></span>#}
+                                    {#<span> <b>{{ 'flights.return' | trans }}</b> </span>#}
+                                    {#{% if itineraryDetail.inbound_choices[0].segments| length < 1 %}#}
+                                        {#<span class="pull-right">{{ 'flights.stop' | trans }} {{ itineraryDetail.inbound_choices[0].segments| length }}</span>#}
+                                    {#{% else %}#}
+                                        {#<span class="pull-right">{{ itineraryDetail.inbound_choices[0].segments| length -1}} {{ 'flights.stop' | trans }}s</span>#}
+                                    {#{% endif %}#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="outbound">#}
+                            {#{% if itineraryDetail.inbound_choices[0].segments| length > 0 %}#}
+                                {#{% for item in itineraryDetail.inbound_choices[0].segments%}#}
+                                    {#<div class="row">#}
+                                        {#<div class="segment-header col-md-12">#}
+                                            {#<span>{{ item.cabin_type | capitalize }}</span>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#<div class="row">#}
+                                        {# Salida #}
+                                        {#<div class="flight-details-container col-md-5 align-center">#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-label">{{ 'flights.outgoing' | trans }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-city-code">{{ item.from }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-location-code">Buenos Aires</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-date">{{ item.departure_datetime | date("D d F Y") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-time">{{ item.departure_datetime | date("H:i") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {# Vuelo #}
+                                        {#<div class="col-md-2 align-center media-middle">#}
+
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12 airline-data-col">#}
+                                                    {#<img src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ item.airline }}.png" />#}
+                                                    {#<span class="airline-data">{{ item.flight_id }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+
+                                        {#</div>#}
+
+                                        {# Llegada #}
+                                        {#<div class="flight-details-container col-md-5 align-center">#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-label">{{ 'flights.incoming' | trans }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-city-code">{{ item.to }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-location-code">Buenos Aires</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-date">{{ item.arrival_datetime | date("D d F Y") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            {#<div class="row">#}
+                                                {#<div class="col-md-12">#}
+                                                    {#<span class="item-time">{{ item.arrival_datetime | date("H:i") }}</span>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#<div class="row">#}
+                                        {#<div class="col-md-12 alert alert-warning">#}
+                                            {#<span style="float: left">{{ 'flights.waiting_time' | trans }}: {{ item.duration|split(':')[0] }}h {{ item.duration|split(':')[1] }}m</span>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#{% endfor %}#}
+                            {#{% endif %}#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#{% endif %}#}
+                {#</div>#}
+            {#</div>#}
+
+            {#<div class="gap"></div>#}
+            {#<div class="errors">#}
+                {#{{ dump(errors) }}#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
 {% endblock %}
 
 {% block javascripts %}
@@ -844,4 +1644,18 @@
     <link href="{{ asset('css/form-payment.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/cards-vertical.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/vendor/intl-tel-input/build/css/intlTelInput.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        #collapse > div > div.datesPayment > div:nth-child(3) > div.col-sm-6 > div > div > div:nth-child(3) {
+            display: none;
+        }
+        #collapse > div > div.list-group.pay-methods-panel > a:nth-child(1) > h4 > input[type="radio"] {
+            height: 13px;
+        }
+        .intl-tel-input.allow-dropdown {
+            width: 100%;
+        }
+        #processPayment > form > div:nth-child(3) {
+            display: none;
+        }
+    </style>
 {% endblock %}

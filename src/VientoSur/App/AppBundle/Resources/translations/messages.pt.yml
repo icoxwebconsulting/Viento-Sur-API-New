@@ -322,6 +322,7 @@ flights:
     rate_per_adult: Tarifa por adulto
     charges: Cargos
     stop: Parar
+    stops: Pára
     waiting_time: Tempo de espera
     outgoing: Saída
     incoming: Chegada

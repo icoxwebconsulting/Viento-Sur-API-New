@@ -328,6 +328,7 @@ flights:
     rate_per_adult: Rate per adult
     charges: Charges
     stop: Stop
+    stops: Stops
     waiting_time: Waiting time
     outgoing: Outgoing
     incoming: Incoming
