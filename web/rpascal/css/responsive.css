@@ -789,7 +789,9 @@
 
 /*Mobile*/
 @media only screen and (max-width: 1024px){
-
+    figure.effect-goliath {
+        height: 220px;
+    }
     .associations .linkConditions{
         float: none;
     }
