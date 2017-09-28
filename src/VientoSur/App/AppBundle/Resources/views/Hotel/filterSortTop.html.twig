@@ -1,8 +1,9 @@
-<div class="filterThumb">
+{#filter desktop#}
+<div class="filterThumb hidden-xs">
     {% if sortArray.price is not empty %}
         <div class="btn-group booking-sort col-xs-3 noPadding">
             <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} {{ 'hotels.by_price' | trans }} - VientoSur.net">
-                <span class="sort_name" id="sort_price" style="font-size: 11px;">{% if sortArray.selected.category == 'price' %} {{ sortArray.selected.name }}
+                <span class="sort_name" id="sort_price" style="font-size: 11px;">{% if sortArray.selected.category == 'price' %} {{ 'hotels.price' | trans }}
                 {% else %}{{ 'hotels.price' | trans }}{% endif %}
                 </span>
                 <span class="caret"></span>
@@ -44,3 +45,139 @@
         </ul>
     </div>
 </div>
+
+
+{#filter mobile#}
+<div class="filterThumb hidden-sm hidden-md hidden-lg">
+    {% if sortArrayMobile.price is not empty %}
+    <div class="btn-group col-xs-3 noPadding">
+        <button type="button" class="btnDropdown" data-toggle="modal" data-target="#myModal1">
+            {% if sortArrayMobile.selected.category == 'price' %}
+                {{ sortArray.selected.name }}<span class="caret"></span>
+            {% else %}
+                {{ 'hotels.price' | trans }} <span class="caret"></span>
+            {% endif %}
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="sort_price">
+                            {% if sortArrayMobile.selected.category == 'price' %}
+                                {{ sortArray.selected.name }}
+                            {% else %}
+                                {{ 'hotels.price' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.price|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="btn-group col-xs-3 noPadding">
+        <button type="button" class="btnDropdown" data-toggle="modal" data-target="#myModal2">
+            {% if sortArrayMobile.selected.category == 'star' %}
+                {{ sortArrayMobile.selected.name }}
+            {% else %}
+                {{ 'hotels.stars' | trans }}
+            {% endif %}
+            <span class="caret"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4  class="modal-title" id="sort_star" id="myModalLabel">
+                            {% if sortArrayMobile.selected.category == 'star' %}
+                                {{ sortArrayMobile.selected.name }}
+                            {% else %}
+                                {{ 'hotels.stars' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.star|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group col-xs-3 noPadding">
+        <button type="button" class="btnDropdown" data-toggle="modal" data-target="#myModal3">
+            {% if sortArrayMobile.selected.category == 'best' %}
+                {{ sortArrayMobile.selected.name }}
+            {% else %}
+                {{ 'hotels.best' | trans }}
+            {% endif %}
+            <span class="caret"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="sort_best">
+                            {% if sortArrayMobile.selected.category == 'best' %}
+                                {{ sortArrayMobile.selected.name }}
+                            {% else %}
+                                {{ 'hotels.best' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.best|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group col-xs-3 noPadding">
+        <button id="sort_other" type="button" class="btnDropdown borderNone" data-toggle="modal" data-target="#myModal4">
+            {% if sortArrayMobile.selected.category == 'other' %}
+                {{ sortArrayMobile.selected.name }}
+            {% else %}
+                {{ 'hotels.search_menu.others' | trans }}
+            {% endif %}
+            <span class="caret"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 id="sort_other" class="modal-title">
+                            {% if sortArrayMobile.selected.category == 'other' %}
+                                {{ sortArrayMobile.selected.name }}
+                            {% else %}
+                                {{ 'hotels.search_menu.others' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.other|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

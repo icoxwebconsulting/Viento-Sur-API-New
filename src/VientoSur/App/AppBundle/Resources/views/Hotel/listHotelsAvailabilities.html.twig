@@ -42,6 +42,11 @@
         </div>
         {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}
     </div>
+    <style>
+        a.nav-drop-menu-a.mobile {
+            color: #1d2d33;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
@@ -143,6 +148,7 @@
                         $('.sort_name').text('{{ 'hotels.select' | trans }}...').removeClass('vs-color-copy');
                         $('#sort_' + category).text(text).addClass('vs-color-copy');
                     })
+                    waitingDialog.delay(2000).hide();
                 }
             });
 
