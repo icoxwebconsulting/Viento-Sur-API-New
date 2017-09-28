@@ -183,4 +183,22 @@
         checkout.hide();
     }).data('datepicker');
 </script>
+    <script>
+        function device() {
+            if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if(device() == true){
+            $('#carousel-example-generic').html('');
+            $('#desktop-search-tab').html('');
+//            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" class="map-mobile" style="width:600px; height:450px;"></div></div>')
+        }else{
+            $('#mobile-search-tab').html('');
+        }
+
+    </script>
 {% endblock %}

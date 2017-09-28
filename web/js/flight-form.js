@@ -737,11 +737,10 @@ $(document).ready(function () {
     $("#total-adults").text($("#adultsPassengers").val());
 
     $('#adultsPassengers').on('change', function() {
-        $("#total-passengers").text($("#adultsPassengers").val());
-        console.log(typeof($("#adultsPassengers").val()));
+
     })
 
-    $('#childrenPassengers').on('change', function() {
+    $('#apply-passengers').click(function () {
         var adultsPas = parseInt($("#adultsPassengers").val());
         var childrenPas = parseInt($("#childrenPassengers").val());
 
@@ -750,6 +749,17 @@ $(document).ready(function () {
         $("#total-adults").text(adultsPas);
         $("#total-children").text(childrenPas);
         $("#total-passengers").text(totalPas);
+    })
+
+    $('#childrenPassengers').on('change', function() {
+        /*var adultsPas = parseInt($("#adultsPassengers").val());
+        var childrenPas = parseInt($("#childrenPassengers").val());
+
+        var totalPas = adultsPas + childrenPas;
+
+        $("#total-adults").text(adultsPas);
+        $("#total-children").text(childrenPas);
+        $("#total-passengers").text(totalPas);*/
     })
 
     $('#vuelos-tab').click(function () {

@@ -111,21 +111,47 @@
 
         $(document).ready(function () {
             {#Usa código heredado de base#}
-            var from = $("#field-hotel-checkin").datepicker({
-                dateFormat: dateFormat,
-                dayNamesMin: dayNamesMin,
-                monthNames: monthNames,
-                defaultDate: "+1w",
-                numberOfMonths: 2,
-                minDate: 0,
-                onClose: function (selectedDate) {
-                    var minDate = $(this).datepicker('getDate');
-                    if (minDate) {
-                        var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
-                        $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
-                    }
+
+            function device() {
+                if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+                    return true;
+                } else {
+                    return false;
                 }
-            });
+            }
+
+            if(device() == true){
+                var from = $("#field-hotel-checkin").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    numberOfMonths: 1,
+                    minDate: 0,
+                    onClose: function (selectedDate) {
+                        var minDate = $(this).datepicker('getDate');
+                        if (minDate) {
+                            var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                            $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
+                        }
+                    }
+                });
+            }else {
+                var from = $("#field-hotel-checkin").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    defaultDate: "+1w",
+                    numberOfMonths: 2,
+                    minDate: 0,
+                    onClose: function (selectedDate) {
+                        var minDate = $(this).datepicker('getDate');
+                        if (minDate) {
+                            var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                            $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
+                        }
+                    }
+                });
+            }
             var to = $("#field-hotel-checkout").datepicker({
                 dateFormat: dateFormat,
                 dayNamesMin: dayNamesMin,

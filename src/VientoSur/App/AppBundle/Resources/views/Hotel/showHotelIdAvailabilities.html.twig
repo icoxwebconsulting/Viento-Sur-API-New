@@ -331,7 +331,6 @@
                                     <div class="contentRooms contentDesktop" >
                                         <div class="row">
                                                 <div class="col-xs-12">
-                                                {% for key, rooms in roomDetail %}
                                                     <table class="table table-responsive">
                                                         <thead>
                                                         <tr>
@@ -344,6 +343,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
+                                                        {% for key, rooms in roomDetail %}
+
                                                         <tr>
                                                             <td colspan="1" rowspan="{{ rooms |length }}" class="paddingLeft15 search-menu-type">
                                                                 <h4 class="titleRooms">{{ roomTypes[key].despegar_names[app.request.locale] }}</h4>
@@ -413,10 +414,11 @@
                                                             </td>
                                                         </tr>
                                                         {% endfor %}
+                                                        {% endfor %}
+
                                                         </tbody>
                                                     </table>
 
-                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>
