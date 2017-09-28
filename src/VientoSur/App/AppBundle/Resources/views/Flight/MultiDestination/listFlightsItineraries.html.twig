@@ -40,11 +40,9 @@
                     <div class="col-xs-12 noPadding">
                         <h1 class="message" class="totalHotels">
                             <a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
-                                {% if origin  %}
-                                    {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
-                                {% endif %}
+                                {% set lastDestination = multidestination | last %}
+                                {{ 'flights.flights_from_to' | trans({'%origin%': multidestination[0].fromFlight | split(',')[2], '%destination%': lastDestination.toFlight | split(',')[2]}) }}
                             </a>
-
                         </h1>
                     </div>
                 </div>
