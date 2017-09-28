@@ -152,15 +152,28 @@
                     }
                 });
             }
-            var to = $("#field-hotel-checkout").datepicker({
-                dateFormat: dateFormat,
-                dayNamesMin: dayNamesMin,
-                monthNames: monthNames,
-                defaultDate: "+1w",
-                numberOfMonths: 2
-            }).on("change", function () {
-                from.datepicker("option", "maxDate", getDate(this));
-            });
+
+            if(device() == true){
+                var to = $("#field-hotel-checkout").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    numberOfMonths: 1
+                }).on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
+            }else{
+                var to = $("#field-hotel-checkout").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    defaultDate: "+1w",
+                    numberOfMonths: 2
+                }).on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
+            }
+
         });
         function moveProgressBar(elem) {
             var width = 1;

@@ -815,6 +815,10 @@
 }
 
 @media only screen and (max-width: 767px){
+    .copyright p {
+        margin-bottom: 0px;
+        margin-top: -8px;
+    }
     .booking-item-img-num {
         position: relative;
         bottom: 20px;
@@ -1125,7 +1129,7 @@
     }
 
     .mobileSearch{
-        margin: 20px 0;
+        /*margin: 20px 0;*/
     }
 
     .mobileSearch .search{
