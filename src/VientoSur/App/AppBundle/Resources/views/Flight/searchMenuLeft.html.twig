@@ -205,179 +205,226 @@
             </form>
         </div>
 
-
         {% if items.facets is defined and items.facets is not empty %}
-            <aside class="booking-filters">
-                <h3 title="{{ 'flights.flights' | trans }} - {{ 'hotels.search_menu.filters' | trans }} - VientoSur.net">{{ 'hotels.search_menu.filter_by' | trans }}:</h3>
-                <ul class="list booking-filters-list">
-                    {% for facet in items.facets %}
-                        {% if facet.criteria == 'stops' %}
-                            <li class="stops" data-type="stops">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.scales' | trans }} - VientoSur.net">{{ 'flights.scales' | trans }}</h5>
-                                {% for type in facet.values %}
-                                    {% set zero =  'flights.scale_0' | trans  %}
-                                    {% set one = 'flights.scale_1' | trans  %}
-                                    {% set more_than_one = 'flights.scale_2' | trans %}
-                                    {% set names = {
-                                    none: zero,
-                                    one: one,
-                                    more_than_one: more_than_one
-                                    } %}
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                            {{ attribute(names, type.value) }}
-                                            <span class="pull-right">({{ type.count }})</span>
-                                        </label>
+            <div id="formFilters">
+            <h1 class="titleFilters" title="{{ 'flights.flights' | trans }} - {{ 'hotels.search_menu.filters' | trans }} - VientoSur.net">{{ 'hotels.search_menu.filter_by' | trans }}:</h1>
+
+            <form action="">
+                {% for facet in items.facets %}
+                    {#filtro de ida#}
+                    {% if facet.criteria == 'outbound_duration_range' %}
+                        <div class="row">
+                            <div class="boxFilter col-xs-12">
+                                <li class="outbound_duration_range hidden" data-type="outbound_duration_range">
+                                    <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.going' | trans }}</h4>
+
+                                    {% if app.request.get('outbound_duration_range') is empty %}
+                                        <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                               data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
+                                    {% else %}
+                                        {% set fromTo = app.request.get('outbound_duration_range')|split('-') %}
+                                        <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                               data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
+                                    {% endif %}
+                                    <br/>
+                                    <div class="bottonSearch range col-xs-12">
+                                        <span class="btn range" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
                                     </div>
-                                {% endfor %}
-                            </li>
-                        {% endif %}
-                        {% if facet.criteria == 'airlines' %}
-                            <li class="airlines" data-type="airlines">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airlines' | trans }} - VientoSur.net">{{ 'flights.airlines' | trans }}</h5>
-                                {% for type in facet.values %}
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                            <span class="filter-img-wrapper">
+                                </li>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {#filtro de vuelta#}
+                    {% if facet.criteria == 'inbound_duration_range' %}
+                        <div class="row">
+                            <div class="boxFilter col-xs-12">
+                                <li class="inbound_duration_range" data-type="inbound_duration_range">
+                                    <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.return' | trans }}</h4>
+
+                                    {% if app.request.get('inbound_duration_range') is empty %}
+                                        <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                               data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
+                                    {% else %}
+                                        {% set fromTo = app.request.get('inbound_duration_range')|split('-') %}
+                                        <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                               data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
+                                    {% endif %}
+                                    <br/>
+                                    <div class="bottonSearch range col-xs-12">
+                                        <span class="btn range" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {#filtro de horario ida#}
+                    {% if facet.criteria == 'outbound_time_range' %}
+                        <div class="row">
+                            <div class="boxFilter col-xs-12">
+                                <li class="outbound_time_range" data-type="outbound_time_range">
+                                    <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.going' | trans }}</h4>
+
+                                    {% if app.request.get('outbound_time_range') is empty %}
+                                        {% set temp = facet.min|split(':') %}
+                                        {% set min = (temp[0] * 60) + temp[1] %}
+                                        {% set temp = facet.max|split(':') %}
+                                        {% set max = (temp[0] * 60) + temp[1] %}
+                                        <input type="text" id="outbound_time_range-slider" data-min="0"
+                                               data-max="1439" data-from="{{ min|round }}" data-to="{{ max|round }}" />
+                                    {% else %}
+                                        {% set fromTo = app.request.get('outbound_time_range')|split('-') %}
+                                        <input type="text" id="outbound_time_range-slider" data-min="{{ facet.min|round }}"
+                                               data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" data-to="{{ fromTo[1] }}" />
+                                    {% endif %}
+                                    <br/>
+                                    <div class="bottonSearch range col-xs-12">
+                                        <span class="btn range" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {#filtro de horario vuelta#}
+                    {% if facet.criteria == 'inbound_time_range' %}
+                        <div class="row">
+                            <div class="boxFilter col-xs-12">
+                                <li class="inbound_time_range" data-type="inbound_time_range">
+                                    <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.return' | trans }}</h4>
+                                    {% if app.request.get('inbound_time_range') is empty %}
+                                        {% set temp = facet.min|split(':') %}
+                                        {% set min = (temp[0] * 60) + temp[1] %}
+                                        {% set temp = facet.max|split(':') %}
+                                        {% set max = (temp[0] * 60) + temp[1] %}
+                                        <input type="text" id="inbound_time_range-slider" data-min="{{ min }}"
+                                               data-max="{{ max }}" data-from="{{ min }}" data-to="{{ max }}" />
+                                    {% else %}
+                                        {% set fromTo = app.request.get('inbound_time_range')|split('-') %}
+                                        <input type="text" id="inbound_time_range-slider" data-min="{{ facet.min|round }}"
+                                               data-max="{{ facet.max|round }}" data-from="{{ min }}" data-to="{{ max }}" />
+                                    {% endif %}
+                                    <br/>
+                                    <div class="bottonSearch range col-xs-12">
+                                        <span class="btn range" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {#filtro de paradas#}
+                    {% if facet.criteria == 'stops' and facet.values is defined %}
+                        <div class="boxFilter col-xs-12">
+                            <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.scales' | trans }} - VientoSur.net">{{ 'flights.scales' | trans }}</h4>
+                            {% for type in facet.values %}
+                                {% set zero =  'flights.scale_0' | trans  %}
+                                {% set one = 'flights.scale_1' | trans  %}
+                                {% set more_than_one = 'flights.scale_2' | trans %}
+                                {% set names = {
+                                none: zero,
+                                one: one,
+                                more_than_one: more_than_one
+                                } %}
+                                <div class="checkbox check-more-less">
+                                    <label class="stops" data-type="stops">
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
+                                        {{ attribute(names, type.value) }}
+                                    </label>
+                                    <span class="right">({{ type.count }})</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {#filtro de aerolineas#}
+                    {% if facet.criteria == 'airlines' and facet.values is defined %}
+                        <div class="boxFilter col-xs-12">
+                            <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airlines' | trans }} - VientoSur.net">{{ 'flights.airlines' | trans }}</h4>
+                            {% for type in facet.values %}
+                                <div class="checkbox check-more-less">
+                                    <label class="airlines" data-type="airlines">
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
+                                        <span class="filter-img-wrapper">
                                             <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines/25x25/{{ type.value }}.png" alt="{{ attribute(airlineNames, type.value) }}">
                                         </span>
-                                            {{ attribute(airlineNames, type.value) }}
-                                            <span class="pull-right">({{ type.count }})</span>
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </li>
-                        {% endif %}
-                        {% if facet.criteria == 'alliances' %}
-                            <li class="alliances" data-type="alliances">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.alliances' | trans }} - VientoSur.net">{{ 'flights.alliances' | trans }}</h5>
-                                {% for type in facet.values %}
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                            {% set allianceNames = {
-                                            OW : 'One World',
-                                            ST : 'Sky Team',
-                                            SA : 'Star Alliance'
-                                            } %}
-                                            <span class="filter-img-wrapper">
+                                        {{ attribute(airlineNames, type.value) }}
+                                    </label>
+                                    <span class="right">({{ type.count }})</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {#filtro de alianzas#}
+                    {% if facet.criteria == 'alliances' and facet.values is defined %}
+                        <div class="boxFilter col-xs-12">
+                            <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.alliances' | trans }} - VientoSur.net">{{ 'flights.alliances' | trans }}</h4>
+
+                            {% for type in facet.values %}
+                                {% set allianceNames = {
+                                OW : 'One World',
+                                ST : 'Sky Team',
+                                SA : 'Star Alliance'
+                                } %}
+                                <div class="checkbox check-more-less">
+                                    <label class="alliances" data-type="alliances">
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
+                                        <span class="filter-img-wrapper">
                                             <img src="//ar.staticontent.com/flights-images/latest/dist/common/airlines-alliances/25x25/{{ type.value }}.png" alt="{{ attribute(allianceNames, type.value) }}">
                                         </span>
-                                            {{ attribute(allianceNames, type.value) }}
-                                            <span class="pull-right">({{ type.count }})</span>
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </li>
-                        {% endif %}
-                        {% if facet.criteria == 'outbound_airports' %}
-                            <li class="outbound_airports" data-type="outbound_airports">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.going' | trans }}</h5>
-                                {% for type in facet.values %}
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                            <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
-                                            <span class="pull-right">({{ type.count }})</span>
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </li>
-                        {% endif %}
-                        {% if facet.criteria == 'inbound_airports' %}
-                            <li class="inbound_airports" data-type="inbound_airports">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.return' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.return' | trans }}</h5>
-                                {% for type in facet.values %}
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                            <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
-                                            <span class="pull-right">({{ type.count }})</span>
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </li>
-                        {% endif %}
+                                        {{ attribute(allianceNames, type.value) }}
+                                    </label>
+                                    <span class="right">({{ type.count }})</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
-                        {% if facet.criteria == 'outbound_duration_range' %}
-                            <li class="outbound_duration_range" data-type="outbound_duration_range">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.going' | trans }}</h5>
-                                {% if app.request.get('outbound_duration_range') is empty %}
-                                    <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                           data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
-                                {% else %}
-                                    {% set fromTo = app.request.get('outbound_duration_range')|split('-') %}
-                                    <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                           data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
-                                {% endif %}
-                                <br/>
-                                <span class="btn btn-primary btn-sm disabled" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                            </li>
-                        {% endif %}
+                    {#filtro de aeropuertos ida#}
+                    {% if facet.criteria == 'outbound_airports' and facet.values is defined %}
+                        <div class="boxFilter col-xs-12">
+                            <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.going' | trans }}</h4>
 
-                        {% if facet.criteria == 'inbound_duration_range' %}
-                            <li class="inbound_duration_range" data-type="inbound_duration_range">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.return' | trans }}</h5>
-                                {% if app.request.get('inbound_duration_range') is empty %}
-                                    <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                           data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
-                                {% else %}
-                                    {% set fromTo = app.request.get('inbound_duration_range')|split('-') %}
-                                    <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
-                                           data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
-                                {% endif %}
-                                <br/>
-                                <span class="btn btn-primary btn-sm disabled" id="inbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                            </li>
-                        {% endif %}
+                            {% for type in facet.values %}
+                                <div class="checkbox check-more-less">
+                                    <label class="outbound_airports" data-type="outbound_airports">
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
+                                        <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
+                                    </label>
+                                    <span class="right">({{ type.count }})</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
-                        {% if facet.criteria == 'outbound_time_range' %}
-                            <li class="outbound_time_range" data-type="outbound_time_range">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.going' | trans }}</h5>
-                                {% if app.request.get('outbound_time_range') is empty %}
-                                    {% set temp = facet.min|split(':') %}
-                                    {% set min = (temp[0] * 60) + temp[1] %}
-                                    {% set temp = facet.max|split(':') %}
-                                    {% set max = (temp[0] * 60) + temp[1] %}
-                                    <input type="text" id="outbound_time_range-slider" data-min="0"
-                                           data-max="1439" data-from="{{ min|round }}" data-to="{{ max|round }}" />
-                                {% else %}
-                                    {% set fromTo = app.request.get('outbound_time_range')|split('-') %}
-                                    <input type="text" id="outbound_time_range-slider" data-min="{{ facet.min|round }}"
-                                           data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" data-to="{{ fromTo[1] }}" />
-                                {% endif %}
-                                <br/>
-                                <span class="btn btn-primary btn-sm disabled" id="outbound_time_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                            </li>
-                        {% endif %}
-                        {% if facet.criteria == 'inbound_time_range' %}
-                            <li class="inbound_time_range" data-type="inbound_time_range">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.schedule' | trans }} - VientoSur.net">{{ 'flights.schedule' | trans }} - {{ 'flights.return' | trans }}</h5>
-                                {% if app.request.get('inbound_time_range') is empty %}
-                                    {% set temp = facet.min|split(':') %}
-                                    {% set min = (temp[0] * 60) + temp[1] %}
-                                    {% set temp = facet.max|split(':') %}
-                                    {% set max = (temp[0] * 60) + temp[1] %}
-                                    <input type="text" id="inbound_time_range-slider" data-min="{{ min }}"
-                                           data-max="{{ max }}" data-from="{{ min }}" data-to="{{ max }}" />
-                                {% else %}
-                                    {% set fromTo = app.request.get('inbound_time_range')|split('-') %}
-                                    <input type="text" id="inbound_time_range-slider" data-min="{{ facet.min|round }}"
-                                           data-max="{{ facet.max|round }}" data-from="{{ min }}" data-to="{{ max }}" />
-                                {% endif %}
-                                <br/>
-                                <span class="btn btn-primary btn-sm disabled" id="inbound_time_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
+                    {#filtro de aeropuertos retorno#}
+                    {% if facet.criteria == 'inbound_airports' and facet.values is defined %}
+                        <div class="boxFilter col-xs-12">
+                            <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.airports' | trans }}, {{ 'flights.return' | trans }} - VientoSur.net">{{ 'flights.airports' | trans }} - {{ 'flights.return' | trans }}</h4>
 
-                    {% if items.facets[0] is defined %}
-                        {% set facet = items.facets[0] %}
-                        {% if facet.criteria == 'total_price_range' %}
+                            {% for type in facet.values %}
+                                <div class="checkbox check-more-less">
+                                    <label class="inbound_airports" data-type="inbound_airports">
+                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}">
+                                        <span title="{{ type.value }}" style="font-size: 14px !important;">{{ airportNames[type.value] }}</span>
+                                    </label>
+                                    <span class="right">({{ type.count }})</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                {% if items.facets[0] is defined %}
+                    {% set facet = items.facets[0] %}
+                    {% if facet.criteria == 'total_price_range' %}
+                    <div class="row">
+                        <div class="boxFilter col-xs-12">
                             <li class="total_price_range" data-type="total_price_range">
-                                <h5 class="booking-filters-title" title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h5>
+                                <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h4>
+
                                 {% if app.request.get('total_price_range') is empty %}
                                     <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
                                            data-max="{{ facet.max|round }}"/>
@@ -387,12 +434,42 @@
                                            data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
                                            data-to="{{ fromTo[1] }}"/>
                                 {% endif %}
-                                <br/>
-                                <span class="btn btn-primary btn-sm disabled" id="total_price_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
+                                <div class="bottonSearch range col-xs-12">
+                                    <span class="btn range" id="outbound_duration_range-btn">{{ 'hotels.search_menu.apply' | trans }}</span>
+                                </div>
                             </li>
-                        {% endif %}
+                        </div>
+                    </div>
                     {% endif %}
-                </ul>
-            </aside>
+                {% endif %}
+            </form>
+        </div>
         {% endif %}
     </div>
+<style>
+    .irs-min, .irs-max {
+        color: #fff;
+        background: rgb(54, 54, 54);
+    }
+    .irs-from, .irs-to, .irs-single {
+        background: #008cd0;
+    }
+    .bottonSearch.range.col-xs-12 {
+        border: none;
+        box-shadow: none;
+        border-radius: 5px;
+        height: 30px;
+        width: 100%;
+        background: #0777ae;
+        text-align: center;
+        font-size: 14px;
+        color: #e3e3e3;
+        font-family: 'latobold';
+        text-transform: uppercase;
+    }
+    .btn.range{
+        display: block;
+        top: 0px;
+        position: relative;
+    }
+</style>
