@@ -13,7 +13,7 @@
         <div class="row">
             {% for promotion in promotions %}
                 {% if promotion.section.id == section.id %}
-                    <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0">
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0" style="z-index:-1;">
                         <div class="grid">
                             <figure class="effect-goliath">
                                 <img style="width: 363px; height: 345px;" src="{{asset(vich_uploader_asset(promotion, 'image')) }}" alt="{{ promotion.name }}">
