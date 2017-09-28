@@ -1,25 +1,53 @@
 $(document).ready(function () {
     $('#round_trip').prop('checked', true);
     $('#form_payments_deferred_months0').val(0);
-    console.log('form',$('#form_payments_deferred_months0').val());
-    var fromFlight = $("#start-flight").datepicker({
-        dateFormat: dateFormat,
-        dayNamesMin: dayNamesMin,
-        monthNames: monthNames,
-        defaultDate: "+1w",
-        numberOfMonths: 2,
-        minDate: 0,
-        onClose: function (selectedDate) {
-            try {
-                var minDate = $(this).datepicker('getDate');
-                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
-                $("#end-flight").datepicker("option", "minDate", newMin);
-                $('#start-flight0').val(fromFlight.val());
-            } catch (e) {
-                console.error(e);
-            }
+
+    function device() {
+        if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+            return true;
+        } else {
+            return false;
         }
-    });
+    }
+
+    if(device() == true){
+        var fromFlight = $("#start-flight").datepicker({
+            dateFormat: dateFormat,
+            dayNamesMin: dayNamesMin,
+            monthNames: monthNames,
+            numberOfMonths: 1,
+            minDate: 0,
+            onClose: function (selectedDate) {
+                try {
+                    var minDate = $(this).datepicker('getDate');
+                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                    $("#end-flight").datepicker("option", "minDate", newMin);
+                    $('#start-flight0').val(fromFlight.val());
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        });
+    }else {
+        var fromFlight = $("#start-flight").datepicker({
+            dateFormat: dateFormat,
+            dayNamesMin: dayNamesMin,
+            monthNames: monthNames,
+            defaultDate: "+1w",
+            numberOfMonths: 2,
+            minDate: 0,
+            onClose: function (selectedDate) {
+                try {
+                    var minDate = $(this).datepicker('getDate');
+                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                    $("#end-flight").datepicker("option", "minDate", newMin);
+                    $('#start-flight0').val(fromFlight.val());
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        });
+    }
     var toFlight = $("#end-flight").datepicker({
         dateFormat: dateFormat,
         dayNamesMin: dayNamesMin,
