@@ -901,10 +901,43 @@ $(document).ready(function () {
     //         }
     //     }
     // });
-    $(".col-md-5.col-md-pull-7").jScroll({speed : "slow"});
+    $(".col-xs-12.col-sm-4.sidebar-reservation").jScroll({speed : "slow"});
+
+    $( "#expiration-month" ).append($("#form_payments_card-expiration0_month"));
+    $( "#expiration-year" ).append($("#form_payments_card-expiration0_year"));
+    $("#form_payments_card-expiration0_month").attr({
+        class: 'form-control'
+    })
+    $("#form_payments_card-expiration0_year").attr({
+        class: 'form-control'
+    })
+
+    $('#form_contact_info_email-1').on('blur', function () {
+        if($('#form_contact_info_email-').val() != $('#form_contact_info_email-1').val()) {
+            $('#errorEmail').removeClass('hide');
+        } else {
+            $('#errorEmail').addClass('hide');
+        }
+    });
+
+    device();
 
 });
 function selectCuote(id){
     console.log('click');
     $('#cuote').text($('#span-text-'+id).text())
+}
+
+function device() {
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+        console.log('mobile');
+        return true;
+    } else {
+        console.log('desktop');
+        return false;
+    }
+}
+
+if(device() == true){
+    $(".col-xs-12.col-sm-4.sidebar-reservation").toggleClass('sidebar-reservation');
 }
