@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $('#round_trip').prop('checked', true);
     $('#form_payments_deferred_months0').val(0);
     console.log('form',$('#form_payments_deferred_months0').val());
     var fromFlight = $("#start-flight").datepicker({

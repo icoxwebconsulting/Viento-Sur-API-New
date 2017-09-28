@@ -62,6 +62,9 @@ index:
            age: Edad
            searching: Buscando Alojamientos...
         flight:
+           where: Dónde
+           multidestination: Multidestino
+           round_trip: Ida y vuelta
            title: Buscá tu vuelo
            from: Origen
            from_placeholder: Ingresa desde dónde viajas

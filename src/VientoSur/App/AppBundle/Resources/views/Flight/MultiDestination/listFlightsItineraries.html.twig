@@ -63,7 +63,12 @@
                         {% include 'VientoSurAppAppBundle:Flight/MultiDestination:listDetailFlights.html.twig' %}
                     </ul>
 
-                    {#{{ dump(items) }}#}
+                    <div class="row">
+                        <div class="col-md-12 center">
+                            <ul class="pagination" id="pagination">
+                            </ul>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -73,15 +78,12 @@
 
             </div>
 
+
+
         </div>
 
 
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="pagination" id="pagination">
-                </ul>
-            </div>
-        </div>
+
     </div>
 
 {% endblock %}

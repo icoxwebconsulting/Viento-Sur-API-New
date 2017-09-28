@@ -16,6 +16,11 @@ a, a:hover, a:focus{
 	padding-right: 0 !important;
 }
 
+.pagination {
+	font-size: 15px!important;
+	text-align: center!important;
+}
+
 .center{
 	text-align: center;
 }
@@ -446,6 +451,10 @@ header{
 
 .search .tab-content .selectMoney{
 	padding-bottom: 3.33vw;
+}
+
+.select-money-flight{
+	padding-bottom: 1.33vw;
 }
 
 .search .tab-content .selectMoney select{
@@ -2822,4 +2831,8 @@ figure.effect-goliath:hover p {
 
 .no-margin-bottom {
 	margin-bottom: 0px!important;
+}
+
+.span-type-trip {
+	font-size: 8px!important;
 }

@@ -40,7 +40,7 @@
     </div>
     <div class="col-xs-12 col-md-4">
         <h4> {{ 'index.search.hotel.rooms' | trans }}</h4>
-        <button type="button" class="btnModal marginBottom10" id="flag_modal" data-toggle="modal">
+        <button type="button" class="btnModal marginBottom10" id="flag_modal" data-toggle="modal" data-target="#roomModal">
             <span id="data-adults">0</span> {{ 'index.search.hotel.adults' | trans }},
             <span id="data-childs">0</span> {{ 'index.search.hotel.childs' | trans }},
             <span id="data-room">0</span> {{ 'index.search.hotel.room' | trans }}
@@ -48,7 +48,7 @@
         <!-- Modal -->
         <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
                         <h4 class="modal-title" id="myModalLabel">{{ 'index.search.hotel.rooms' | trans }}</h4>

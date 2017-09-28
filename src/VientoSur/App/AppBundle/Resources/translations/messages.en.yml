@@ -62,6 +62,9 @@ index:
            age: Age
            searching: Searching Hotels...
         flight:
+           where: Where
+           multidestination: Multidestination
+           round_trip: Round trip
            title: Find your Flight
            from: Origin
            from_placeholder: Enter from where you travel
