@@ -351,6 +351,7 @@
                                                                 <div class="booking-item-img-wrap cursor-pointer" data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[key].despegar_names[app.request.locale] }}" data-room-key="{{ key }}">
                                                                     {% if roomTypes[key].pictures is defined %}
                                                                         <img src="{{ roomTypes[key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}" title=""  />
+                                                                        <div class="booking-item-img-num"><i class="fa fa-picture-o"> &nbsp;</i>{{ roomTypes[key].pictures|length }}</div>
                                                                     {% endif %}
                                                                 </div>
                                                             </td>
@@ -434,6 +435,7 @@
                                             {% for key, rate_plan in rooms %}
                                                 {% if roomTypes[loop.parent.key].pictures is defined %}
                                                     <img data-toggle="modal" data-target="#roomImgs" data-room-name="{{ roomTypes[loop.parent.key].despegar_names[app.request.locale] }}" data-room-key="{{ loop.parent.key }}" src="{{ roomTypes[loop.parent.key].pictures[0].url}}/180x120" alt="{{ 'index.search.hotel.room' | trans }}">
+                                                    <div class="booking-item-img-num"><i class="fa fa-picture-o"> &nbsp;</i>{{ roomTypes[loop.parent.key].pictures|length }}</div>
                                                 {% endif %}
                                                 <h4>{{ roomTypes[loop.parent.key].despegar_names[app.request.locale] }}</h4>
 

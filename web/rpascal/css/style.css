@@ -16,6 +16,16 @@ a, a:hover, a:focus{
 	padding-right: 0 !important;
 }
 
+
+.booking-item-img-num{
+	position: relative;
+	bottom: 36px;
+	left: 141px;
+	color: #fff;
+	background: rgba(0,0,0,0.01);
+	opacity: 0.5;
+}
+
 .pagination {
 	font-size: 15px!important;
 	text-align: center!important;

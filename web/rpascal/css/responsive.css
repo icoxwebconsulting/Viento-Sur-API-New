@@ -813,6 +813,15 @@
 }
 
 @media only screen and (max-width: 767px){
+    .booking-item-img-num {
+        position: relative;
+        bottom: 20px;
+        left: 66px;
+        color: #fff;
+        background: rgba(0,0,0,0.01);
+        opacity: 0.5;
+    }
+
     .modal-content{
         top:105px!important;
     }
