@@ -1,24 +1,27 @@
 <form name="searchFlight" id="search-flights" action="{{ path('viento_sur_process_search_flights', {'_locale': app.request.locale} ) }}" method="POST">
     <div id="desktop-search-tab">
         <div class="col-sm-5 col-xs-6 round-trip-wrapper">
-            <h4>{{ 'index.search.flight.from' | trans }}</h4>
             {% if isTest %}
+                <h4>{{ 'index.search.flight.from' | trans }}</h4>
                 <div class="form-group-icon-left marginBottom10">
                     <i class="fa fa-map-marker input-icon"></i>
                     <input class="city-input form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}"/>
                     <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
                 </div>
+                <h4>{{ 'index.search.flight.to' | trans }}</h4>
                 <div class="form-group-icon-left marginBottom10">
                     <i class="fa fa-map-marker input-icon"></i>
                     <input class="city-input form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}">
                     <input id="destinationFlight" name="destinationFlight" type="hidden" value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}" />
                 </div>
             {% else %}
+                <h4>{{ 'index.search.flight.from' | trans }}</h4>
                 <div class="form-group-icon-left marginBottom10">
                     <i class="fa fa-map-marker input-icon"></i>
                     <input class="city-input form-control" id="from-flight" name="from-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.from_placeholder' | trans }}" type="text" value="{% if app.session.get('origin_flight').text is defined %}{{ app.session.get('origin_flight').text }}{% endif %}" required />
                     <input id="originFlight" name="originFlight" type="hidden" value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}" />
                 </div>
+                <h4>{{ 'index.search.flight.to' | trans }}</h4>
                 <div class="form-group-icon-left marginBottom10">
                     <i class="fa fa-map-marker input-icon"></i>
                     <input class="city-input form-control" id="to-flight" name="to-flight" data-provide="typeahead" placeholder="{{ 'index.search.flight.to_placeholder' | trans }}" type="text" value="{% if app.session.get('destination_flight').text is defined %}{{ app.session.get('destination_flight').text }}{% endif %}" required >
@@ -29,12 +32,13 @@
         </div>
 
         <div class="col-xs-2 paddingSpecial round-trip-wrapper">
-            <h4 id="toDate">{{ 'index.search.hotel.date' | trans }}</h4>
             <div class="">
+                <h4 id="toDate">{{ 'index.search.flight.start' | trans }}</h4>
                 <div class='input-group date marginBottom10 col-xs-12' id='datetimepicker3'>
                     <i class="glyphicon glyphicon-calendar"></i>
                     <input class="form-control required" id="start-flight" name="start" type="text" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}" />
                 </div>
+                <h4 id="toDate">{{ 'index.search.flight.end' | trans }}</h4>
                 <div class='input-group date marginBottom10 col-xs-12' id='datetimepicker4'>
                     <i class="glyphicon glyphicon-calendar"></i>
                     <input class="form-control required" id="end-flight" name="end" type="text" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}" />
