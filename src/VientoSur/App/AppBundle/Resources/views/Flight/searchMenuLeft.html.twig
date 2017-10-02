@@ -219,11 +219,11 @@
                                     <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }}, {{ 'flights.going' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.going' | trans }}</h4>
 
                                     {% if app.request.get('outbound_duration_range') is empty %}
-                                        <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                        <input style="display: none;" type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
                                                data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
                                     {% else %}
                                         {% set fromTo = app.request.get('outbound_duration_range')|split('-') %}
-                                        <input type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                        <input style="display: none;" type="text" id="outbound_duration_range-slider" data-min="{{ facet.min|round }}"
                                                data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
                                     {% endif %}
                                     <br/>
@@ -243,11 +243,11 @@
                                     <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'flights.duration' | trans }} - VientoSur.net">{{ 'flights.duration' | trans }} - {{ 'flights.return' | trans }}</h4>
 
                                     {% if app.request.get('inbound_duration_range') is empty %}
-                                        <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                        <input style="display: none;" type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
                                                data-max="{{ facet.max|round }}" data-from="{{ facet.max|round }}" />
                                     {% else %}
                                         {% set fromTo = app.request.get('inbound_duration_range')|split('-') %}
-                                        <input type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
+                                        <input style="display: none;" type="text" id="inbound_duration_range-slider" data-min="{{ facet.min|round }}"
                                                data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" />
                                     {% endif %}
                                     <br/>
@@ -271,11 +271,11 @@
                                         {% set min = (temp[0] * 60) + temp[1] %}
                                         {% set temp = facet.max|split(':') %}
                                         {% set max = (temp[0] * 60) + temp[1] %}
-                                        <input type="text" id="outbound_time_range-slider" data-min="0"
+                                        <input style="display: none;" type="text" id="outbound_time_range-slider" data-min="0"
                                                data-max="1439" data-from="{{ min|round }}" data-to="{{ max|round }}" />
                                     {% else %}
                                         {% set fromTo = app.request.get('outbound_time_range')|split('-') %}
-                                        <input type="text" id="outbound_time_range-slider" data-min="{{ facet.min|round }}"
+                                        <input style="display: none;" type="text" id="outbound_time_range-slider" data-min="{{ facet.min|round }}"
                                                data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}" data-to="{{ fromTo[1] }}" />
                                     {% endif %}
                                     <br/>
@@ -298,11 +298,11 @@
                                         {% set min = (temp[0] * 60) + temp[1] %}
                                         {% set temp = facet.max|split(':') %}
                                         {% set max = (temp[0] * 60) + temp[1] %}
-                                        <input type="text" id="inbound_time_range-slider" data-min="{{ min }}"
+                                        <input style="display: none;" type="text" id="inbound_time_range-slider" data-min="{{ min }}"
                                                data-max="{{ max }}" data-from="{{ min }}" data-to="{{ max }}" />
                                     {% else %}
                                         {% set fromTo = app.request.get('inbound_time_range')|split('-') %}
-                                        <input type="text" id="inbound_time_range-slider" data-min="{{ facet.min|round }}"
+                                        <input style="display: none;" type="text" id="inbound_time_range-slider" data-min="{{ facet.min|round }}"
                                                data-max="{{ facet.max|round }}" data-from="{{ min }}" data-to="{{ max }}" />
                                     {% endif %}
                                     <br/>
@@ -426,11 +426,11 @@
                                 <h4 title="{{ 'flights.flights' | trans }} - {{ 'index.filter' | trans }} {{ 'hotels.price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h4>
 
                                 {% if app.request.get('total_price_range') is empty %}
-                                    <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
+                                    <input style="display: none;" type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
                                            data-max="{{ facet.max|round }}"/>
                                 {% else %}
                                     {% set fromTo = app.request.get('total_price_range')|split('-') %}
-                                    <input type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
+                                    <input style="display: none;" type="text" id="total_price_range-slider" data-min="{{ facet.min|round }}"
                                            data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
                                            data-to="{{ fromTo[1] }}"/>
                                 {% endif %}
@@ -451,9 +451,6 @@
         color: #fff;
         background: rgb(54, 54, 54);
     }
-    .irs-from, .irs-to, .irs-single {
-        background: #008cd0;
-    }
     .bottonSearch.range.col-xs-12 {
         border: none;
         box-shadow: none;
@@ -471,5 +468,8 @@
         display: block;
         top: 0px;
         position: relative;
+    }
+    .irs-from, .irs-to, .irs-single {
+        background: rgba(37, 40, 41, 0) !important;
     }
 </style>
