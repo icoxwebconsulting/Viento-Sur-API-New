@@ -26,7 +26,7 @@
                                     </div>
                                     <div id="collapse" class="panel-collapse">
                                         <div class="panel-body">
-                                            <div class="col-xs-4">
+                                            <div class="col-xs-2">
                                                 <div class="radioButton">
                                                     <span>
                                                         {% set airlines = [] %}
@@ -42,7 +42,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-8">
+                                            <div class="col-xs-6">
                                                 <p>
                                                     <!-- Salida -->
                                                     {{ routes.segments[0].departure_datetime|date("H:i") }} &nbsp;
@@ -62,7 +62,7 @@
                                                     {{ routes.duration|split(':')[0] }}h {{ routes.duration|split(':')[1] }}m &nbsp;
                                                 </p>
                                             </div>
-                                            <div class="col-xs-12 center" style="margin-bottom: 5px">
+                                            <div class="col-xs-4 center" style="margin-bottom: 5px">
                                                 <span class="btn btn-primary btn-detail" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}">{{ 'flights.detail' | trans }}</span>
                                             </div>
                                             <div id="detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12">
