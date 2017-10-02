@@ -1,6 +1,6 @@
-<form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels', {'_locale': app.request.locale})}}" method="POST">
-    <div class="col-xs-12 col-md-4">
-        <h4> {{ 'index.search.hotel.destination' | trans }}</h4>
+<form name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels', {'_locale': app.request.locale})}}" method="POST" style="margin-top: 35px;">
+    <div class="col-xs-12 col-md-5">
+        <h4> {{ 'index.search.hotel.from' | trans }}</h4>
         <div class="form-group-icon-left">
             <i class="fa fa-map-marker input-icon"></i>
             <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'index.search.hotel.from_placeholder' | trans }}" autocomplete="on"  {% if not isTest %}required{% endif %}>
@@ -38,15 +38,15 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-md-4">
+    <div class="col-xs-12 col-md-3">
         <h4> {{ 'index.search.hotel.rooms' | trans }}</h4>
-        <button type="button" class="btnModal marginBottom10" id="flag_modal" data-toggle="modal" data-target="#roomModal">
+        <button type="button" class="btnModal marginBottom10" id="flag_modal" data-toggle="modal" data-target="#roomModal" style="font-size: 11px;">
             <span id="data-adults">0</span> {{ 'index.search.hotel.adults' | trans }},
             <span id="data-childs">0</span> {{ 'index.search.hotel.childs' | trans }},
             <span id="data-room">0</span> {{ 'index.search.hotel.room' | trans }}
         </button>
         <!-- Modal -->
-        <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin: 0px auto; width: 60%">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content">
                     <div class="modal-header">
