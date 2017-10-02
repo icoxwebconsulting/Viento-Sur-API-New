@@ -1105,9 +1105,9 @@ header{
 
 .promotions h1{
 	margin: 0;
-	padding: 0 0 0.5vw 0;
+	padding: 20px 0 30px 0;
 	text-align: center;
-	font-size: 2.41vw;
+	font-size: 20px;
 	color: #233034;
 	font-family: 'latobold';
 	text-transform: uppercase;
@@ -1200,7 +1200,7 @@ figure.effect-goliath p {
 
 figure.effect-goliath p {
 	text-transform: none;
-	font-size: 90%;
+	font-size: 12px;
 	opacity: 0;
 	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
 	transition: opacity 0.35s, transform 0.35s;
