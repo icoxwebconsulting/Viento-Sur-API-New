@@ -577,6 +577,12 @@ $(document).ready(function () {
         if (lenght > 2){
             $('.wrapper-lateral').last().remove();
             $('#add-stretch-lateral').show();
+            $('#multidestination-from-flight0').removeAttr('required');
+            $('#multidestination-to-flight0').removeAttr('required');
+            $('#start-flight0').removeAttr('required');
+            $('#multidestination-from-flight1').removeAttr('required');
+            $('#multidestination-to-flight1').removeAttr('required');
+            $('#start-flight1').removeAttr('required');
         }else{
             $('#remove-stretch-lateral').hide();
             $('#add-stretch-lateral').hide();
@@ -628,8 +634,10 @@ $(document).ready(function () {
         }
     });
     $('#add-stretch').click(function(){
-        var lenght = $('.multiple-destinations-label').length;
-        var count = $('.multiple-destinations-label').length;
+        console.log('clicl');
+        var lenght = $('.wrapper').length;
+        var count = $('.wrapper').length;
+
         lenght++;
         var labelStr = $('#label-stretch').text();
         var labelStretch = labelStr.substring(0, labelStr.length -1);
