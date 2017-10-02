@@ -445,9 +445,9 @@
     }
 
     #descriptionHotel .descriptionHotel p{
-        font-size: 16px;
+        font-size: 13px;
         margin-bottom: 10px;
-        line-height: 24px;
+        line-height: 20px;
     }
 
     #descriptionHotel .boxPrice p{

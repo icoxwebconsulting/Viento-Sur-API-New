@@ -234,7 +234,7 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-sm-8 col-sm-push-4">
+                <div class="col-sm-9 col-sm-push-3">
                     <div id="descriptionHotel">
                         <div class="row">
                             <div class="col-xs-12 col-sm-9">
@@ -257,7 +257,6 @@
                                 <button id="animarscroll">{{ 'hotels.choose_room' | trans }}</button>
 
                                 <div class="social-shared">
-                                    <g:plusone></g:plusone>
                                     <div class="fb-share-button"
                                          data-href="https://vientosur.net{{ app.request.pathInfo }}"
                                          data-layout="button"
@@ -274,8 +273,10 @@
                                        data-text="Hotel {{hotelDetails.name}}"
                                        data-lang="{{ app.request.locale }}"
                                        data-hashtags="VientoSur"
-                                       data-size="large">
+                                       data-size="large" style="float: left; margin-right: 10px;">
                                         Tweet</a>
+
+                                    <g:plusone></g:plusone>
                                 </div>
                             </div>
                         </div>
@@ -609,7 +610,7 @@
             $('.contentDesktop').html('');
             $('#google-map-tab').html('<div class="col-xs-12"><div id="map" class="map-mobile" style="width:600px; height:450px;"></div></div>')
         }else{
-            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" style="width:750px; height:500px;"></div> </div>');
+            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" style="width:832px; height:500px;"></div> </div>');
             $('.contentMobile').html('');
         }
 
