@@ -332,7 +332,7 @@ flights:
     charges: Charges
     stop: Stop
     stops: Stops
-    waiting_time: Waiting time
+    waiting_time: Flight time
     outgoing: Outgoing
     incoming: Incoming
     reservation_data: Reservation data

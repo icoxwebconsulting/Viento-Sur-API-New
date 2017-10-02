@@ -323,7 +323,7 @@ flights:
     charges: Cargos
     stop: Parar
     stops: Pára
-    waiting_time: Tempo de espera
+    waiting_time: Tempo de voo
     outgoing: Saída
     incoming: Chegada
     reservation_data: Dados de reserva

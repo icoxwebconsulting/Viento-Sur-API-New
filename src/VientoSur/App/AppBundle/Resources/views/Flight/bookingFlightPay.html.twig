@@ -20,7 +20,7 @@
         <div class="container">
             <div class="row">
                 <!-- GO SIDE BAR -->
-                <div class="col-xs-12 col-sm-4 sidebar-reservation">
+                <div class="col-xs-9 col-sm-3 sidebar-reservation">
                     <div id="sidebar">
                         <div id="infoReserva">
                             <h5 class="titleReserva marginBottom10">{{ 'flights.buy_detail' | trans }}:</h5>
@@ -178,7 +178,7 @@
                 </div>
                 <!-- END SIDE BAR -->
                 <!-- GO RESERVATION HOTEL -->
-                <div class="col-xs-12 col-sm-8">
+                <div class="col-xs-3 col-sm-9">
                     <div id="processPayment">
                         {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -453,7 +453,7 @@
                                             {# fee list to choose#}
                                             <div class="list-group pay-methods-panel">
                                                 {% for cuotas, bank in paymentMethods %}
-                                                    <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
+                                                    <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})" style="padding-bottom: 0px;">
                                                         <h4 class="list-group-item-heading">
                                                             <input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>
                                                             <span id="span-text-{{ loop.index }}">
@@ -461,7 +461,7 @@
                                     </span>
                                                         </h4>
                                                         <p class="list-group-item-text">
-                                                        <div class="radio">
+                                                        <div>
                                                             <div class="card-list credit-cards">
                                                                 {% for key, cards in bank %}
                                                                     {% if key == 'generic' %}
