@@ -755,8 +755,8 @@ $(document).ready(function () {
             element = $('.contentFlight').find('.wrapper-multidestination');
             console.log('click mobile strech')
         }else{
-            lenght = $('#desktop-wrapper').find('.wrapper-multidestination').length;
-            element = $('#desktop-wrapper').find('.wrapper-multidestination');
+            lenght = $('#desktop-wrapper').find('.wrapper').length;
+            element = $('#desktop-wrapper').find('.wrapper');
             console.log('click desktop strech')
         }
 
