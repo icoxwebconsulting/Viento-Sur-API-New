@@ -28,6 +28,7 @@ $(document).ready(function () {
                 }
             }
         });
+        var month = 1;
     }else {
         var fromFlight = $("#start-flight").datepicker({
             dateFormat: dateFormat,
@@ -47,13 +48,14 @@ $(document).ready(function () {
                 }
             }
         });
+        var month = 2;
     }
     var toFlight = $("#end-flight").datepicker({
         dateFormat: dateFormat,
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2
+        numberOfMonths: month
     }).on("change", function () {
         fromFlight.datepicker("option", "maxDate", getDate(this));
     });
@@ -62,7 +64,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
         onClose: function (selectedDate) {
             try {
                 $('#start-flight').val(startFlight0.val());
@@ -71,12 +73,17 @@ $(document).ready(function () {
             }
         }
     });
+    $('#start-flight0').change(function(){
+       $('#start-flight').val($('#start-flight0'));
+       console.log('start-flight', $('#start-flight'))
+    });
+
     var startFlight1 = $('#start-flight1').datepicker({
         dateFormat: dateFormat,
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight0.datepicker("option", "maxDate", getDate(this));
     });
@@ -85,7 +92,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight1.datepicker("option", "maxDate", getDate(this));
     });
@@ -94,7 +101,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight2.datepicker("option", "maxDate", getDate(this));
     });
@@ -103,7 +110,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight3.datepicker("option", "maxDate", getDate(this));
     });
@@ -112,7 +119,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight4.datepicker("option", "maxDate", getDate(this));
     });
@@ -577,6 +584,12 @@ $(document).ready(function () {
         if (lenght > 2){
             $('.wrapper-lateral').last().remove();
             $('#add-stretch-lateral').show();
+            $('#multidestination-from-flight0').removeAttr('required');
+            $('#multidestination-to-flight0').removeAttr('required');
+            $('#start-flight0').removeAttr('required');
+            $('#multidestination-from-flight1').removeAttr('required');
+            $('#multidestination-to-flight1').removeAttr('required');
+            $('#start-flight1').removeAttr('required');
         }else{
             $('#remove-stretch-lateral').hide();
             $('#add-stretch-lateral').hide();
@@ -628,8 +641,22 @@ $(document).ready(function () {
         }
     });
     $('#add-stretch').click(function(){
-        var lenght = $('.multiple-destinations-label').length;
-        var count = $('.multiple-destinations-label').length;
+        console.log(this.id);
+        var lenght = 0;
+        var count = 0;
+        var className = '';
+        if (device() == true){
+            lenght = $('.contentFlight').find('.wrapper-multidestination').length;
+            count = $('.contentFlight').find('.wrapper-multidestination').length;
+            className = 'wrapper-multidestination';
+            console.log('click mobile strech')
+        }else{
+            lenght = $('#desktop-wrapper').find('.wrapper').length;
+            count = $('#desktop-wrapper').find('.wrapper').length;
+            className = 'wrapper';
+            console.log('click desktop strech')
+        }
+
         lenght++;
         var labelStr = $('#label-stretch').text();
         var labelStretch = labelStr.substring(0, labelStr.length -1);
@@ -641,9 +668,9 @@ $(document).ready(function () {
         var placeHolderTo = $('#multidestination-to-flight0').attr('placeholder');
         if (lenght < 7){
             $('.col-md-12.stretch')
-                .before('<div class="row wrapper">'+
+                .before('<div class="row wrapper '+className+'">'+
                             '<div class="col-xs-12">'+
-                                '<div class="col-xs-5">'+
+                                '<div class="col-xs-12 col-md-5">'+
                                     '<p class="multiple-destinations-label">'+labelStretch+' '+lenght+'</p>'+
                                     '<div class="form-group-icon-left marginBottom10">'+
                                         '<i class="fa fa-map-marker input-icon"></i>'+
@@ -656,7 +683,7 @@ $(document).ready(function () {
                                         '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
                                     '</div>'+
                                 '</div>'+
-                                '<div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">'+
+                                '<div class="col-xs-12 col-md-2 paddingSpecial multiple-destinations-wrapper">'+
                                     '<p>'+toDate+'</p>'+
                                     '<div class="input-group date marginBottom10 col-xs-12" id="datetimepicker3">'+
                                     '<i class="glyphicon glyphicon-calendar"></i>'+
@@ -665,6 +692,9 @@ $(document).ready(function () {
                                 '</div>'+
                             '</div>'+
                         '</div>');
+            if (device() == true){
+                $('.multiple-destinations-wrapper').removeClass('paddingSpecial')
+            }
             var aux = count - 1;
             var dateSelector = '#start-flight'+aux;
             console.log('#start-flight'+aux);
@@ -673,7 +703,7 @@ $(document).ready(function () {
                 dayNamesMin: dayNamesMin,
                 monthNames: monthNames,
                 defaultDate: "+1w",
-                numberOfMonths: 2
+                numberOfMonths: month
             }).on("change", function () {
                 $(dateSelector).datepicker("option", "maxDate", getDate(this));
             });
@@ -718,11 +748,22 @@ $(document).ready(function () {
         }
     });
     $('#remove-stretch').click(function () {
-        var lenght = $('.wrapper').length;
-        if (lenght > 2){
-            $('.wrapper').last().remove();
+        var lenght = 0;
+        var element = '';
+        if (device() == true){
+            lenght = $('.contentFlight').find('.wrapper-multidestination').length;
+            element = $('.contentFlight').find('.wrapper-multidestination');
+            console.log('click mobile strech')
         }else{
-            $('.wrapper').hide();
+            lenght = $('#desktop-wrapper').find('.wrapper').length;
+            element = $('#desktop-wrapper').find('.wrapper');
+            console.log('click desktop strech')
+        }
+
+        if (lenght > 2){
+            element.last().remove();
+        }else{
+            element.hide();
             $('#remove-stretch').hide();
             $('#add-stretch').hide();
             $('.round-trip-wrapper').show();
@@ -738,6 +779,8 @@ $(document).ready(function () {
             $('#start-flight1').removeAttr('required');
             $('#tab-2').css({'overflow': '', 'height': ''});
             $('#round_trip').prop('checked', true);
+            $('#flightsModal').modal('hide');
+            $('#round_trip').trigger('click');
         }
     });
     $("#childrenPassengers").change(function () {
@@ -842,10 +885,9 @@ $(document).ready(function () {
             $("#end-flight").show().attr("required");
             // $('.round-trip-wrapper').show();
             $('#only_out').val(false);
-            $('#multipledestination').val(false);
             console.log($('#multipledestination').val());
 
-            $('.wrapper').hide();
+            // $('.wrapper').hide();
             $('#remove-stretch').hide();
             $('#add-stretch').hide();
             $('.round-trip-wrapper').show();
@@ -885,6 +927,16 @@ $(document).ready(function () {
     $('#openFlight').click(function () {
         $('#flightsModal').modal();
     })
+
+    $('#multiple_destination').click(function () {
+        $('#flightsModal').modal();
+        console.log('click multidestination')
+        if(device() == true){
+            $('.multiple-destinations-wrapper').removeClass('paddingSpecial')
+            $('.modal-flight-select-group').removeClass('selectGroup');
+            $('.modal-flight-select-group').addClass('col-sx-6');
+        }
+    });
 
 
     $('#sendFlight').on('click', function () {
@@ -979,4 +1031,9 @@ function device() {
 
 if(device() == true){
     $(".col-xs-12.col-sm-4.sidebar-reservation").toggleClass('sidebar-reservation');
+    $('.modal-flight-select-group').removeClass('selectGroup');
+    $('.modal-flight-select-group').addClass('col-sx-6');
+}else{
+    $('.mobileSearch').html('');
+    $('.modal.fade.two').html('');
 }
