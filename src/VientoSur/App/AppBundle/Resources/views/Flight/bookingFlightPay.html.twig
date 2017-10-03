@@ -20,7 +20,7 @@
         <div class="container">
             <div class="row">
                 <!-- GO SIDE BAR -->
-                <div class="col-xs-9 col-sm-3 sidebar-reservation">
+                <div class="col-xs-12 col-sm-3 sidebar-reservation">
                     <div id="sidebar">
                         <div id="infoReserva">
                             <h5 class="titleReserva marginBottom10">{{ 'flights.buy_detail' | trans }}:</h5>
@@ -178,7 +178,7 @@
                 </div>
                 <!-- END SIDE BAR -->
                 <!-- GO RESERVATION HOTEL -->
-                <div class="col-xs-3 col-sm-9">
+                <div class="col-xs-12 col-sm-9">
                     <div id="processPayment">
                         {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -192,7 +192,7 @@
                                         <div class="panel-body">
                                             <h5>{{ 'flights.adult' | trans }} {{ loop.index }}</h5>
                                             <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = 'adults-first_name' ~ loop.index %}
                                                         {% set label = 'hotels.labels.name' | trans %}
@@ -201,7 +201,7 @@
                                                         {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = 'adults-last_name' ~ loop.index %}
                                                         {% set label = 'hotels.labels.lastname' | trans %}
@@ -210,9 +210,7 @@
                                                         {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = 'adults-nationality' ~ loop.index %}
                                                         {% set label = 'flights.labels.residence' | trans %}
@@ -220,10 +218,11 @@
                                                         {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
                                                     </div>
                                                 </div>
-
+                                            </div>
+                                            <div class="row">
                                                 {% set fieldName = 'adults-type' ~ loop.index %}
                                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="form-group">
                                                         {% set label = 'hotels.labels.type' | trans %}
                                                         <label for="">{{ label }}</label>
@@ -243,30 +242,29 @@
                                                     </div>
                                                 </div>
                                                 {% endif %}
-                                            </div>
-                                            <div class="row">
                                                 {% set fieldName = 'adults-birthdate' ~ loop.index %}
                                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        {% set label = 'flights.labels.birthdate' | trans %}
-                                                        <label for="">{{ label }}</label>
-                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set label = 'flights.labels.birthdate' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'placeholder': 'dd/mm/aaaa', 'class': 'form-control birth-input'}}) }}
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 {% endif %}
 
                                                 {% set fieldName = 'adults-gender' ~ loop.index %}
                                                 {% if attribute(formNewPay.passengers, fieldName) is defined  %}
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        {% set label = 'hotels.labels.owner_gender' | trans %}
-                                                        <label for="">{{ label }}</label>
-                                                        {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            {% set label = 'hotels.labels.owner_gender' | trans %}
+                                                            <label for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.passengers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 {% endif %}
                                             </div>
+
                                         </div>
                                         {% endfor %}
                                         {#end adults#}
@@ -607,14 +605,14 @@
                                         <div class="panel-body">
                                             {% for credit_card in formChoice.payments.credit_cards %}
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-3">
                                                         <div class="form-group">
                                                             {% set fieldName = 'invoice-fiscal_status' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.tax_status' | trans %}
                                                             {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-3">
                                                         <div class="form-group">
                                                             {% set fieldName = 'invoice-fiscal_id' ~ loop.index0 %}
                                                             {{ form_row(attribute(formNewPay.payments, fieldName), {'label': 'CUIL:', 'attr': {'placeholder': 'Ej: 20-00000000-3', 'class': 'form-control', 'pattern': '^(20|27|30|23|33|24|34)(-|)[0-9]{8}(-|)[0-9]$', 'title': 'Debe coincidir con el patrón: Ej: 20-12345678-4'}}) }}
@@ -627,9 +625,7 @@
                                                         {{ 'hotels.labels.invalid_fiscal_document' | trans }}
                                                     </div>
                                                 </div>
-                                                </div>
-                                                <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'invoice-state' ~ loop.index0 %}
                                                         {{ form_label(attribute(formNewPay.payments, fieldName), 'Provincia:') }}
@@ -663,7 +659,7 @@
                                                         {{ form_errors(attribute(formNewPay.payments, fieldName)) }}
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'invoice-city_id' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.city' | trans %}
@@ -675,7 +671,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'invoice-street' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.street' | trans %}
@@ -703,9 +699,7 @@
                                                         {{ form_row(attribute(formNewPay.payments, fieldName), {'label': label, 'attr': {'placeholder': '', 'class': 'form-control'}}) }}
                                                     </div>
                                                 </div>
-                                            </div>
-                                                <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'invoice-business_name' ~ loop.index0 %}
                                                         {% set label = 'flights.business_name' | trans %}
