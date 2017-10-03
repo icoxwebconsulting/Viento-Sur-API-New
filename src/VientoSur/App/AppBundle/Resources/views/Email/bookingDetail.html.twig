@@ -31,7 +31,77 @@
                             </div>
                         </td>
                         <td style="width: 493px; height: 328px; display: block;">
-                            <div id="main_picture" style="width: 493px; height: 328px;">
+                            <table>
+                                <tr>
+                                    <th colspan="2">
+                                        <h3>{{ hotelDetails.name }}</h3>
+                                        {% for i in 1..hotelDetails.stars %}
+                                            <i class="fa fa-star fa-2x" style="color: #008cd1;" aria-hidden="true"></i>
+                                        {% endfor %}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ 'hotels.phone' | trans }}:
+                                    </th>
+                                    <td>
+                                        {{ 'hotels.unavailable' | trans }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ 'hotels.gps_coordinates' | trans }}
+                                    </th>
+                                    <td>
+                                        Lat {{ hotelDetails.location.latitude }}, Long {{ hotelDetails.location.longitude }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="15%">
+                                        {{ 'hotels.address' | trans }}:
+                                    </th>
+                                    <td>
+                                        {{ hotelDetails.location.address }}. {{ destination.text }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="15%">
+                                        CP:
+                                    </th>
+                                    <td>
+                                        {{ hotelDetails.location.zipcode }}.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="15%">
+                                        {{ 'index.search.hotel.rooms' | trans }}:
+                                    </th>
+                                    <td>
+                                        {% if reservationDetails.rooms is defined %}
+                                            <ul>
+                                                {% for room in reservationDetails.rooms %}
+                                                    <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="15%">{{ 'hotels.room_holder' | trans }}</th>
+                                    <td class="text-justify">
+                                        <ul>
+                                            {% for holder in booking_all_data.travelers %}
+                                                <ul>
+                                                    <li>{{ 'hotels.labels.name' | trans }} {{ holder.first_name }}</li>
+                                                    <li>{{ 'hotels.labels.lastname' | trans }} {{ holder.last_name }}</li>
+                                                    <li>{{ 'hotels.labels.document' | trans }} {{ holder.document_number }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                            {#<div id="main_picture" style="width: 493px; height: 328px;">
                                 <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ hotelDetails.location.latitude }}, {{ hotelDetails.location.longitude }}&zoom=19&size=493x328&maptype=roadmap&markers=color:green%7Clabel:H%7C{{ hotelDetails.location.latitude }},{{ hotelDetails.location.longitude }}" alt="">
                             </div>
                             {#<div id="map"></div>#}
@@ -39,74 +109,6 @@
                     </tr>
                 </table>
             </th>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <h3>{{ hotelDetails.name }}</h3>
-                {% for i in 1..hotelDetails.stars %}
-                    <i class="fa fa-star fa-2x" style="color: #008cd1;" aria-hidden="true"></i>
-                {% endfor %}
-            </th>
-        </tr>
-        <tr>
-            <th>
-                {{ 'hotels.phone' | trans }}:
-            </th>
-            <td>
-                {{ 'hotels.unavailable' | trans }}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                {{ 'hotels.gps_coordinates' | trans }}
-            </th>
-            <td>
-                Lat {{ hotelDetails.location.latitude }}, Long {{ hotelDetails.location.longitude }}
-            </td>
-        </tr>
-        <tr>
-            <th width="15%">
-                {{ 'hotels.address' | trans }}:
-            </th>
-            <td>
-                {{ hotelDetails.location.address }}. {{ destination.text }}
-            </td>
-        </tr>
-        <tr>
-            <th width="15%">
-                CP:
-            </th>
-            <td>
-                {{ hotelDetails.location.zipcode }}.
-            </td>
-        </tr>
-        <tr>
-            <th width="15%">
-                {{ 'index.search.hotel.rooms' | trans }}:
-            </th>
-            <td>
-                {% if reservationDetails.rooms is defined %}
-                    <ul>
-                        {% for room in reservationDetails.rooms %}
-                            <li>{% if room.descriptions.es is defined %}{{ room.descriptions.es }} - {% endif %}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th width="15%">{{ 'hotels.room_holder' | trans }}</th>
-            <td class="text-justify">
-                <ul>
-                {% for holder in booking_all_data.travelers %}
-                    <ul>
-                        <li>{{ 'hotels.labels.name' | trans }} {{ holder.first_name }}</li>
-                        <li>{{ 'hotels.labels.lastname' | trans }} {{ holder.last_name }}</li>
-                        <li>{{ 'hotels.labels.document' | trans }} {{ holder.document_number }}</li>
-                    </ul>
-                {% endfor %}
-                </ul>
-            </td>
         </tr>
     </table>
     <table class="table table-bordered">
