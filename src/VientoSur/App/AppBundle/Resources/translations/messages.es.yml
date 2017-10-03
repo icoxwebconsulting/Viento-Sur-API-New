@@ -244,7 +244,7 @@ hotels:
     paying_msg: El importe en %currency% es un precio aproximado que se ha calculado con el tipo de cambio vigente hoy. La entidad emisora de tu tarjeta podría cargarte una comisión por el cambio de moneda
     your_accommodation: Su alojamiento
     invoice: Facturación
-    selected_card: Tarjeta seleccionada
+    selected_card: Tarjeta
     labels:
         name: Nombre(s):
         name_placeholder: Como aparece en el documento
@@ -252,7 +252,7 @@ hotels:
         document: Documento de Identidad:
         card_number: Número de tarjeta:
         expiration: Vencimiento:
-        security_code: Código de seguridad:
+        security_code: Código:
         cardholder: Titular de la tarjeta:
         such_as_card: Como aparece en la tarjeta
         owner_doc: Documento de Identidad del titular:

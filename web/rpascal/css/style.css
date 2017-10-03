@@ -1274,7 +1274,7 @@ figure.effect-goliath:hover p {
 
 #descriptionHotel .descriptionHotel p{
 	font-family: 'latolight';
-	color: #233034;
+	color: #1C1C1C;
 	font-size: 1.33vw;
 	margin-bottom: 0.83vw;
 	line-height: 2vw;
@@ -1456,7 +1456,7 @@ figure.effect-goliath:hover p {
 
 .listRooms table th{
 	text-align: center;
-	color: #fff;
+	color: #EFFBF2;
 	border: #008cd0 1px solid !important;
 	background: #02003B;
 	font-family: 'latoregular';
@@ -1663,7 +1663,7 @@ figure.effect-goliath:hover p {
 #processPayment .panel-title{
 	font-family: 'latoregular';
 	font-size: 1.33vw;
-	color: #fcfeff;
+	color: #EFFBF2;
 }
 
 #processPayment .panel-body h5{
