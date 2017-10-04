@@ -849,7 +849,7 @@ $(document).ready(function () {
         $('#multipledestination').val(false);
         console.log($('#multipledestination').val());
 
-        $('.wrapper').hide();
+        // $('.wrapper').hide();
         $('#remove-stretch').hide();
         $('#add-stretch').hide();
         $('.round-trip-wrapper').show();
