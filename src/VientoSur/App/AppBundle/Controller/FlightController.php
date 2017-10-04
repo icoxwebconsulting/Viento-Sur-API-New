@@ -668,6 +668,7 @@ class FlightController extends Controller
      */
     public function bookingFlightPayAction(Request $request)
     {
+        $this->get('flights_service')->deleteFileAction();
         $params = $request->query->all();
 
         $locale = $request->getLocale();
@@ -775,6 +776,7 @@ class FlightController extends Controller
      */
     public function bookingFlightPayMultidestinationAction(Request $request)
     {
+        $this->get('flights_service')->deleteFileAction();
         $params = $request->query->all();
 
         $locale = $request->getLocale();
