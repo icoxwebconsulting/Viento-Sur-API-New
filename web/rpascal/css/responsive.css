@@ -197,7 +197,7 @@
 
     /*----- GO BANNER -----*/
     #banner{
-        height: 300px;
+        height: 220px;
     }
     /*----- END BANNER -----*/
 
@@ -225,15 +225,15 @@
     /*----- END NAVBAR -----*/
     /*----- GO BREADCRUMB -----*/
     #breadcrumb{
-        padding: 13px 0;
+        padding: 10px 0;
     }
 
     #breadcrumb ol li a{
-        font-size: 14px;
+        font-size: 13px;
     }
 
     #breadcrumb ol li.active{
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .breadcrumb li + li:before {
@@ -248,8 +248,8 @@
     }
 
     .message{
-        padding: 40px 0;
-        font-size: 25px;
+        padding: 30px 0;
+        font-size: 16px;
     }
 
     #formSearch, #formFilters{
@@ -338,12 +338,12 @@
 
     /*----- GO LIST THUMBS HOTELS -----*/
     #thumbsSearch .filterThumb{
-        height: 40px;
-        margin-bottom: 40px;
+        height: 35px;
+        margin-bottom: 20px;
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        height: 34px;
+        height: 30px;
         font-size: 14px;
     }
 

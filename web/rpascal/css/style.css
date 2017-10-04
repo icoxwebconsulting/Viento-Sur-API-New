@@ -511,6 +511,7 @@ header{
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
+	background-position-y: 95%;
 }
 /*----- END BANNER -----*/
 
