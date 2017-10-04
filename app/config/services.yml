@@ -16,6 +16,9 @@ services:
             "entityManager": "@doctrine.orm.entity_manager"
             "agentCode": "%agent_code%"
             "logger": "@logger"
+            "knp_snappy": "@knp_snappy.pdf"
+            "templating": "@templating"
+            "container": "@service_container"
     hotel_service:
         class: VientoSur\App\AppBundle\Services\Hotel
         arguments:
