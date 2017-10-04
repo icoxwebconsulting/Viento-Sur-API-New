@@ -179,7 +179,7 @@
 
                     <!-- Modal flights -->
                     <div class="modal fade" id="flightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog" role="document" style="width: 65%">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button id="modal-multi" type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i>
@@ -225,8 +225,8 @@
                                                                value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">
-                                                    <p>{{ 'index.search.hotel.date' | trans }}</p>
+                                                <div class="col-xs-4 paddingSpecial multiple-destinations-wrapper">
+                                                    <p id="date-m">{{ 'index.search.hotel.date' | trans }}</p>
                                                     <div class='input-group date marginBottom10 col-xs-12'
                                                          id='datetimepicker3'>
                                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -269,7 +269,7 @@
                                                                type="hidden" value=""/>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">
+                                                <div class="col-xs-4 paddingSpecial multiple-destinations-wrapper">
                                                     <p>{{ 'index.search.hotel.date' | trans }}</p>
                                                     <div class='input-group date marginBottom10 col-xs-12'
                                                          id='datetimepicker3'>
@@ -502,7 +502,7 @@
         <button id="submitHotel">{{ 'index.search_text' | trans }}</button>
     </div>#}
     <!-- Modal Multidestination flights -->
-    <div class="modal fade two" id="flightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade two" id="flightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin: 0px auto; width: 60%" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -549,7 +549,7 @@
                                                value="{% if app.session.get('destination_flight').id is defined %}{{ app.session.get('destination_flight').id }}{% endif %}"/>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-2 paddingSpecial multiple-destinations-wrapper">
+                                <div class="col-xs-12 col-md-4 paddingSpecial multiple-destinations-wrapper">
                                     <p>{{ 'index.search.hotel.date' | trans }}</p>
                                     <div class='input-group date marginBottom10 col-xs-12'
                                          id='datetimepicker3'>
@@ -593,7 +593,7 @@
                                                type="hidden" value=""/>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-2 paddingSpecial multiple-destinations-wrapper">
+                                <div class="col-xs-12 col-md-4 paddingSpecial multiple-destinations-wrapper">
                                     <p>{{ 'index.search.hotel.date' | trans }}</p>
                                     <div class='input-group date marginBottom10 col-xs-12'
                                          id='datetimepicker3'>
@@ -641,7 +641,7 @@
                     <div class="contentFlight">
                         <div class="selectFlight">
                             <div class="selectGroup modal-flight-select-group">
-                                <h3>{{ 'index.search.hotel.adults' | trans }}</h3>
+                                <h3 style="font-size: 12px;">{{ 'index.search.hotel.adults' | trans }}</h3>
                                 <select id="adultsPassengers" name="adultsPassengers" data-couple="childrenPassengers.0">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -654,7 +654,7 @@
                                 </select>
                             </div>
                             <div class="selectGroup modal-flight-select-group">
-                                <h3>{{ 'index.search.flight.children' | trans }}</h3>
+                                <h3 style="font-size: 12px;">{{ 'index.search.flight.children' | trans }}</h3>
                                 <select id="childrenPassengers" name="childrenPassengers" data-couple="adultsPassengers.1">
                                     <option value="0">0</option>
                                     <option value="1">1</option>

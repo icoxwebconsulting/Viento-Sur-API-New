@@ -663,7 +663,7 @@ $(document).ready(function () {
         var labelFrom = $('#label-from').text();
         var labelTo = $('#label-to').text();
         var labelStart = $('#label-start').text();
-        var toDate = $('#toDate').text();
+        var toDate = $('#date-m').text();
         var placeHolderFrom = $('#multidestination-from-flight0').attr('placeholder');
         var placeHolderTo = $('#multidestination-to-flight0').attr('placeholder');
         if (lenght < 7){
@@ -683,7 +683,7 @@ $(document).ready(function () {
                                         '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
                                     '</div>'+
                                 '</div>'+
-                                '<div class="col-xs-12 col-md-2 paddingSpecial multiple-destinations-wrapper">'+
+                                '<div class="col-xs-12 col-md-4 paddingSpecial multiple-destinations-wrapper">'+
                                     '<p>'+toDate+'</p>'+
                                     '<div class="input-group date marginBottom10 col-xs-12" id="datetimepicker3">'+
                                     '<i class="glyphicon glyphicon-calendar"></i>'+
