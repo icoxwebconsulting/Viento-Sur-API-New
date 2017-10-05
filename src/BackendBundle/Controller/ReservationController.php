@@ -18,30 +18,41 @@ use VientoSur\App\AppBundle\Entity\Reservation;
 class ReservationController extends Controller
 {
     /**
+     * @param $request
      * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="reservation_list")
      * @Method("GET")
      * @return response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
 
         if ($securityContext->isGranted('ROLE_ADMIN')) {
-            $entities = $em->getRepository("VientoSurAppAppBundle:Reservation")->findAll();
+            $dql = "SELECT r
+                FROM VientoSurAppAppBundle:Reservation r 
+                ORDER BY r.id ASC";
         }else{
             $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
                 'created_by' => $this->getUser()->getId()
             ));
-            $entities = $em->getRepository("VientoSurAppAppBundle:Reservation")->findBy(array(
-                'hotelId' => $hotel->getId()
-            ));
+            $dql = "SELECT r
+                FROM VientoSurAppAppBundle:Reservation r
+                WHERE r.hotelId = ".$hotel->getId()."
+                ORDER BY r.id ASC";
         }
 
+        $query = $em->createQuery($dql);
+
+        $page = $request->query->getInt('page', 1);
+        $paginator = $this->get('knp_paginator');
+        $items_per_page = $this->getParameter('items_per_page');
+
+        $pagination = $paginator->paginate($query, $page, $items_per_page);
 
         return $this->render(':admin/reservation:list.html.twig', array(
-            'entities' => $entities
+            'pagination' => $pagination
         ));
     }
 

@@ -128,6 +128,7 @@ hotels:
     show_rooms: Ver quartos
     choose_room: Escolher quarto
     pictures: Fotos
+    picture: Foto
     map: Mapa
     entry: Entrada
     number_guests: Número de convidados
@@ -511,3 +512,4 @@ admin:
     pick_address: Digite o endereço do hotel e mover o marcador
     gallery_photo: Galeria de fotos
     complete_profile: Complete seu perfil
+    total_records: Registros totais

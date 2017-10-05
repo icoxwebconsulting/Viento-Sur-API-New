@@ -133,6 +133,7 @@ hotels:
     show_rooms: Show rooms
     choose_room: Choose room
     pictures: Pictures
+    picture: Picture
     map: Mapa
     entry: Entry
     number_guests: Number of guests
@@ -519,3 +520,4 @@ admin:
     pick_address: Please enter the hotel address and move the marker
     gallery_photo: Photo gallery
     complete_profile: Complete your profile
+    total_records: Total records
