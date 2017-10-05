@@ -20,8 +20,8 @@ class BookingHelper
 
         $trad = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         $transText = [
-            'entry' => 'Entrada',
-            'exit' => 'Salida',
+            'entry' => 'Fecha de entrada',
+            'exit' => 'Fecha de salida',
             'adults' => 'Adulto(s)',
             'childs' => 'Menor(es)'
         ];
@@ -62,8 +62,8 @@ class BookingHelper
         $str = '<p><span>' . $transText['entry'] . ':</span> ' . $checkin_date->format('d') . ' ' . $months[$checkin_date->format('M')] . '</p>';
         $str .= '<p><span>' . $transText['exit'] . ':</span> ' . $checkout_date->format('d') . ' ' . $months[$checkout_date->format('M')].'</p>';
         $travellers = $this->processDistribution($distribution);
-        $str .= '<p>' . $travellers['adults'] . ' ' . $transText['adults'] . '</p>';
-        $str .= '<p>' .(($travellers['childrenCount'] > 0) ? $travellers['childrenCount'].' '. $transText['childs']  : ''). '</p>';
+        $str .= '<p><span>' . $travellers['adults'] . ' ' . $transText['adults'] . '</span></p>';
+        $str .= '<p><span>' .(($travellers['childrenCount'] > 0) ? $travellers['childrenCount'].' '. $transText['childs']  : ''). '</span></p>';
         return $str;
     }
 

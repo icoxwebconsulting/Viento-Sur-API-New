@@ -1,5 +1,5 @@
 {% set data_travelers = app.session.get('data_travelers') %}
-<div class="col-sm-4 col-xs-12">
+<div class="col-sm-3 col-sm-pull-9">
     <div id="sidebar">
         <div id="formSearch">
             <div class="results">
@@ -15,21 +15,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class='form-group date col-xs-12' id='datetimepicker5'>
+                    <div class='form-group date col-xs-7' id='datetimepicker5'>
                         <label>{{ 'index.search.hotel.checkin_date' | trans }}</label>
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                         <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkin_date')}}"/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class='form-group date col-xs-12' id='datetimepicker6'>
+                    <div class='form-group date col-xs-7' id='datetimepicker6'>
                         <label>{{ 'index.search.hotel.checkout_date' | trans }}</label>
                         <<i class="fa fa-calendar" aria-hidden="true"></i>
                         <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkout_date')}}"/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-7">
                         <label for="roomsQty">{{ 'index.search.hotel.number_rooms' | trans }}</label>
                         <select id="roomsQty" class="form-control" name="habitacionesCant">
                             <option value="1" {% if data_travelers| length == 1 %}selected{% endif %}>1 {{ 'index.search.hotel.room' | trans }}</option>
@@ -296,22 +296,24 @@
             {% for facet in items.facets %}
             <div class="row">
                 {% if facet.criteria == 'total_price_range' %}
-                <div class="boxFilter col-xs-12">
-                    <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h4>
-                    {% if app.request.get('price_range') is empty %}
-                        <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
-                               data-max="{{ facet.max|round }}"/>
-                    {% else %}
-                        {% set fromTo = app.request.get('price_range')|split('-') %}
-                        <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
-                               data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
-                               data-to="{{ fromTo[1] }}"/>
-                    {% endif %}
-                    <br/>
-                    <div class="bottonSearch col-xs-12">
-                        <button class="disabled" id="priceBtn">{{ 'index.filter' | trans }}</button>
+                    <div class="boxFilter col-xs-12">
+                        <li class="total_price_range hidden">
+                            <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h4>
+                            {% if app.request.get('price_range') is empty %}
+                                <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}"/>
+                            {% else %}
+                                {% set fromTo = app.request.get('price_range')|split('-') %}
+                                <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
+                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
+                                       data-to="{{ fromTo[1] }}"/>
+                            {% endif %}
+                            <br/>
+                            <div class="bottonSearch col-xs-12">
+                                <button class="disabled" id="priceBtn">{{ 'index.filter' | trans }}</button>
+                            </div>
+                        </li>
                     </div>
-                </div>
                 {% endif %}
                 {% if facet.criteria == 'stars' and facet.values is defined %}
                 <div class="boxFilter col-xs-12">
@@ -349,7 +351,7 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-                {% if facet.criteria == 'zones' %}
+                {% if facet.criteria == 'zones' and facet.values is defined %}
                 <div class="boxFilter col-xs-12">
                     <li class="zones hidden" data-type="zones">
                         <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_zones' | trans }} - VientoSur.net">{{ 'hotels.search_menu.zones' | trans }}</h4>
@@ -374,8 +376,9 @@
                     <li class="amenities hidden" data-type="amenities">
                         <h4 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_services' | trans }} - VientoSur.net">{{ 'hotels.search_menu.services' | trans }}</h4>
                         {% for amenity in facet.values %}
+
                             <div class="checkbox check-more-less {% if loop.index > 5 %}amenities-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                <label style="width: 90%">
+                                <label style="width: 80%">
                                     <input class="i-check" type="checkbox" {% if amenity.selected %}checked="checked"{% endif %} value="{{ amenity.value }}" />
                                     <span>{{ amenity.label }}</span>
                                 </label>
@@ -464,452 +467,3 @@
         {% endif %}
     </div>
 </div>
-
-<div class="content-sidebar" style="display: none;">
-    <form class="booking-item-dates-change mb5" name="searchHotel" id="search-hotels" action ="{{ path('viento_sur_process_search_hotels',  {'_locale': app.request.locale})}}" method="POST">
-        <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-            <label class="mfont">{{ 'hotels.search_menu.destiny' | trans }}</label>
-            <!--colocar valor por defecto que trae la busqueda inicial-->
-            <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Destino, Código Postal" value="{% if app.session.get('destination').text is defined %} {{ app.session.get('destination').text }} {% endif %}" />
-            <input id="destinationCity" name="cityInput" type="hidden" value="{% if app.session.get('destination').text is defined %}{{ app.session.get('destination').id }} {% endif %}" />
-        </div>
-        <div > <!--class="input-daterange" data-date-format="d M, D"-->
-            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">{{ 'index.search.hotel.checkin_date' | trans }}</label>
-                <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkin_date')}}"/>
-            </div>
-            <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                <label class="sfont">{{ 'index.search.hotel.checkout_date' | trans }}</label>
-                <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkout_date')}}"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="roomsQty">{{ 'index.search.hotel.rooms' | trans }}</label>
-            <select id="roomsQty" class="form-control" name="habitacionesCant">
-                <option value="1" {% if data_travelers| length == 1 %}selected{% endif %}>1 {{ 'index.search.hotel.room' | trans }}</option>
-                <option value="2" {% if data_travelers| length == 2 %}selected{% endif %}>2 {{ 'index.search.hotel.rooms' | trans }}</option>
-                <option value="3" {% if data_travelers| length == 3 %}selected{% endif %}>3 {{ 'index.search.hotel.rooms' | trans }}</option>
-                <option value="4" {% if data_travelers| length == 4 %}selected{% endif %}>4 {{ 'index.search.hotel.rooms' | trans }}</option>
-            </select>
-        </div>
-
-        <div id="room" {% if data_travelers | length > 1 %}style="display: none;"{% endif %}>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="adults">{{ 'index.search.hotel.adults' | trans }}</label>
-                        <input type="hidden" value="0" id="adultsRoom">
-                        <select id="adults" class="form-control coupled" data-couple="childrenRoom.0" name="adultsSelector">
-                            {% for i in 1..8 %}
-                                <option value="{{ loop.index }}" {% if data_travelers != null and data_travelers[1].adults == loop.index %}selected="selected"{% endif %}>{{ loop.index }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="childrenRoom">{{ 'index.search.hotel.childs' | trans }}</label>
-                        <select id="childrenRoom" class="form-control coupled" data-couple="adults.1" name="childrenRoomSelector">
-                            {% for i in 0..7 %}
-                                <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="clearBox"></div>
-                </div>
-            </div>
-            <div class="hide" id="ageBlock">
-                    <label id="lblAge">{{ 'index.search.hotel.childs_ages' | trans }}</label>
-                    <div class="row">
-                        {% for i in 1..7 %}
-                            <div class="col-md-6 childAge{{ loop.index }}room {% if data_travelers[1].children is defined and  data_travelers[1].children| length < loop.index %}hide{% endif %}" style="margin-bottom:6px;">
-                                <select id="childAge{{ loop.index }}room" class="form-control" name="childAgeSelector-{{ loop.index }}">
-                                    <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
-                                    {% for j in 1..18 %}
-                                        <option value="{{ loop.index0 }}" {% if data_travelers[1].children[i] is defined and  data_travelers[1].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="clearBox"></div>
-                </div>
-        </div>
-        <div class="row  {% if data_travelers| length < 2  %}hide{% endif %}" id="extraRooms">
-            <div class="room1 {% if data_travelers| length < 1 %}hide{% endif %}" style="background-color:#f5f5f5">
-                <div class="row">
-                    <div class="col-md-12"><div class="form-group"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 1</label></div></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="adults1">{{ 'index.search.hotel.adults' | trans }}</label>
-                            <input type="hidden" value="0" id="adultsRoom1">
-                            <select id="adults1" class="form-control coupled" data-couple="childrenRoom1.0" name="adultsSelector1">
-                                {% for i in 1..8 %}
-                                    <option value="{{ i }}" {% if data_travelers[1].adults is defined and data_travelers[1].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="childrenRoom1">{{ 'index.search.hotel.childs' | trans }}</label>
-                            <select id="childrenRoom1" class="form-control coupled" data-couple="adults1.1" name="childrenRoomSelector1">
-                                {% for i in 1..8 %}
-                                    <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="clearBox"></div>
-                    </div>
-
-                </div>
-                <div class="hide" id="menor-room1">
-                    <label id="lblAge1">{{ 'index.search.hotel.childs_ages' | trans }}</label>
-                    <div class="row">
-                        {% for i in 1..7 %}
-                        <div class="col-md-6 childAge{{ i }}1 child1" style="margin-bottom:6px;">
-                        {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
-
-                            {#<select id="childAge11" class="sb-age form-control required" name="childAgeSelector-1-1">#}
-                            <select id="childAge{{ i }}1" class="sb-age form-control required" name="childAgeSelector-1-{{ i }}">
-                                <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
-                                {% for j in 1..18 %}
-                                    <option value="{{ loop.index0 }}" {% if data_travelers[1].children[i] is defined and  data_travelers[1].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="clearBox"></div>
-            </div>
-            <div class="room2 {% if data_travelers| length < 2  %}hide{% endif %}" style="margin-top:40px;">
-                <div class="row">
-                    <div class="col-md-12"><div class="form-group"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 2</label></div></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="adults2">{{ 'index.search.hotel.adults' | trans }}</label>
-                            <input type="hidden" value="0" id="adultsRoom2">
-                            <select id="adults2" class="form-control coupled" data-couple="childrenRoom2.0" name="adultsSelector2">
-                                {% for i in 1..8 %}
-                                    <option value="{{ i }}" {% if data_travelers[2].adults is defined and data_travelers[2].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="childrenRoom2">{{ 'index.search.hotel.childs' | trans }}</label>
-                            <select id="childrenRoom2" class="form-control coupled" data-couple="adults2.1" name="childrenRoomSelector2">
-                                {% for i in 1..8 %}
-                                    <option value="{{ loop.index0 }}" {% if data_travelers[2].children is defined and data_travelers[2].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="clearBox"></div>
-                    </div>
-                </div>
-                <div class="hide" id="menor-room2">
-                    <label id="lblAge2">{{ 'index.search.hotel.childs_ages' | trans }}</label>
-                    <div class="row">
-                        {% for i in 1..7 %}
-                            <div class="col-md-6 childAge{{ i }}2 child2" style="margin-bottom:6px;">
-                                {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
-
-                                {#<select id="childAge12" class="sb-age form-control required" name="childAgeSelector-2-1">#}
-                                <select id="childAge{{ i }}2" class="sb-age form-control required" name="childAgeSelector-2-{{ i }}">
-                                    <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
-                                    {% for j in 1..18 %}
-                                        <option value="{{ loop.index0 }}" {% if data_travelers[2].children[i] is defined and  data_travelers[2].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="clearBox"></div>
-            </div>
-            <div class="room3 {% if data_travelers| length < 3  %}hide{% endif %}" style="margin-top:40px;">
-                <div class="row">
-                    <div class="col-md-12"><div class="form-group"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 3</label></div></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="adults3">{{ 'index.search.hotel.adults' | trans }}</label>
-                            <input type="hidden" value="0" id="adultsRoom3">
-                            <select id="adults3" class="form-control coupled" data-couple="childrenRoom3.0" name="adultsSelector3">
-                                {% for i in 1..8 %}
-                                    <option value="{{ i }}" {% if data_travelers[3].adults is defined and data_travelers[3].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="childrenRoom3">{{ 'index.search.hotel.childs' | trans }}</label>
-                            <select id="childrenRoom3" class="form-control coupled" data-couple="adults3.0" name="childrenRoomSelector3">
-                                {% for i in 1..8 %}
-                                    <option value="{{ loop.index0 }}" {% if data_travelers[3].children is defined and data_travelers[3].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="clearBox"></div>
-                    </div>
-                </div>
-                <div class="hide" id="menor-room3">
-                    <label id="lblAge3">{{ 'index.search.hotel.childs_ages' | trans }}</label>
-                    <div class="row">
-                        {% for i in 1..7 %}
-                            <div class="col-md-6 childAge{{ i }}3 child3" style="margin-bottom:6px;">
-                                {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
-
-                                {#<select id="childAge13" class="sb-age form-control required" name="childAgeSelector-3-1">#}
-                                <select id="childAge{{ i }}3" class="sb-age form-control required" name="childAgeSelector-3-{{ i }}">
-                                    <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
-                                    {% for j in 1..18 %}
-                                        <option value="{{ loop.index0 }}" {% if data_travelers[3].children[i] is defined and  data_travelers[3].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        {% endfor %}
-                </div>
-                <div class="clearBox"></div>
-            </div>
-            </div>
-            <div class="room4 {% if data_travelers| length < 4  %}hide{% endif %}" style="margin-top:40px;">
-                <div class="row">
-                    <div class="col-md-12"><div class="form-group"><label class="room-label roomLabel">{{ 'index.search.hotel.room' | trans }} 4</label></div></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="adults4">{{ 'index.search.hotel.adults' | trans }}</label>
-                            <input type="hidden" value="0" id="adultsRoom4">
-                            <select id="adults4" class="form-control coupled" data-couple="childrenRoom4.0" name="adultsSelector4">
-                                {% for i in 1..8 %}
-                                    <option value="{{ i }}" {% if data_travelers[4].adults is defined and data_travelers[4].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="childrenRoom4">{{ 'index.search.hotel.childs' | trans }}</label>
-                            <select id="childrenRoom4" class="form-control coupled" data-couple="adults4.0" name="childrenRoomSelector4">
-                                {% for i in 1..8 %}
-                                    <option value="{{ loop.index0 }}" {% if data_travelers[4].children is defined and data_travelers[4].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="clearBox"></div>
-                    </div>
-                </div>
-                <div class="hide" id="menor-room4">
-                    <label id="lblAge4">{{ 'index.search.hotel.childs_ages' | trans }}</label>
-                    <div class="row">
-                        {% for i in 1..7 %}
-                            <div class="col-md-6 childAge{{ i }}4 child4" style="margin-bottom:6px;">
-                                {#<div class="col-md-6 childAge11" style="margin-bottom:6px;">#}
-                                {#<select id="childAge14" class="sb-age form-control required" name="childAgeSelector-4-1">#}
-                                <select id="childAge{{ i }}4" class="sb-age form-control required" name="childAgeSelector-4-{{ i }}">
-                                    <option value="" selected="selected">{{ 'index.search.hotel.age' | trans }}</option>
-                                    {% for j in 1..18 %}
-                                        <option value="{{ loop.index0 }}" {% if data_travelers[4].children[i] is defined and  data_travelers[4].children[i] == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="clearBox"></div>
-            </div>
-        </div>
-
-        <input class="btn btn-primary btn-search" type="submit" value="{{ 'index.search_text' | trans }}" />
-    </form>
-    {% if items.facets is defined %}
-        <aside class="booking-filters">
-            <h3 title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filters' | trans }} - VientoSur.net">{{ 'hotels.search_menu.filter_by' | trans }}:</h3>
-            <ul class="list booking-filters-list">
-                <li class="hotel_name">
-                    <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_hotel_name' | trans }} - VientoSur.net">{{ 'hotels.search_menu.hotel_name' | trans }}</h5>
-                    <input id="hotel-autocomplete" name="hotel-autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="{{ 'hotels.search_menu.hotel_name_placeholder' | trans }}" />
-                    <input id="hotel" name="hotel" type="hidden" />
-                    <button class="btn btn-primary btn-sm disabled" id="btn-aplicar" style="margin-top: 5px;">{{ 'hotels.search_menu.apply' | trans }}</button>
-                </li>
-                {% for facet in items.facets %}
-
-                    {% if facet.criteria == 'total_price_range' %}
-                        <li class="total_price_range hidden">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_price' | trans }} - VientoSur.net">{{ 'hotels.price' | trans }}</h5>
-                            {% if app.request.get('price_range') is empty %}
-                                <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}"/>
-                            {% else %}
-                                {% set fromTo = app.request.get('price_range')|split('-') %}
-                                <input type="text" id="price-slider" data-min="{{ facet.min|round }}"
-                                       data-max="{{ facet.max|round }}" data-from="{{ fromTo[0] }}"
-                                       data-to="{{ fromTo[1] }}"/>
-                            {% endif %}
-                            <br/>
-                            <span class="btn btn-primary btn-sm disabled" id="priceBtn">{{ 'hotels.price' | trans }}</span>
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'stars' and facet.values is defined %}
-                        <li class="stars hidden" data-type="stars">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_category' | trans }} - VientoSur.net">{{ 'hotels.search_menu.category' | trans }}</h5>
-                            {% for stars in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if stars.selected %}checked="checked"{% endif %} value="{{ stars.value }}" />
-                                        {% if stars.value == '0' %}
-                                            {{ 'hotels.search_menu.others' | trans }}
-                                        {% else %}
-                                            {% for i in 1..stars.value %}
-                                                <i class="fa fa-star"></i>
-                                            {% endfor %}
-                                        {% endif %}
-                                        <span class="pull-right">({{ stars.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'payment_type' and facet.values is defined %}
-                        <li class="payment_type hidden" data-type="payment_type">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_payment_choices' | trans }} - VientoSur.net">{{ 'hotels.search_menu.payment_choices' | trans }}</h5>
-                            {% for type in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if type.selected %}checked="checked"{% endif %} value="{{ type.value }}" />
-                                        {{ type.label }}
-                                        <span class="pull-right">({{ type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'zones' %}
-                        <li class="zones hidden" data-type="zones">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_zones' | trans }} - VientoSur.net">{{ 'hotels.search_menu.zones' | trans }}</h5>
-                            {% if facet.values is defined %}
-                                {% for zone in facet.values %}
-                                    <div class="checkbox {% if loop.index > 5 %}zones-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                        <label>
-                                            <input class="i-check" type="checkbox" {% if zone.selected %}checked="checked"{% endif %} value="{{ zone.value }}" />
-                                            {{ zone.label }}
-                                            <span class="pull-right">({{ zone.count }})</span>
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                            <div class="checkbox">
-                                <label style="color:#008CD1" class="zones-view-toggle" data-type="zones">{{ 'hotels.search_menu.view_more' | trans }} <i class="glyphicon glyphicon-chevron-down"></i></label>
-                                <label style="color:#008CD1" class="zones-view-toggle hide" data-type="zones">{{ 'hotels.search_menu.view_less' | trans }} <i class="glyphicon glyphicon-chevron-up"></i></label>
-                            </div>
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'amenities' and facet.values is defined %}
-                        <li class="amenities hidden" data-type="amenities">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_services' | trans }} - VientoSur.net">{{ 'hotels.search_menu.services' | trans }}</h5>
-                            {% for amenity in facet.values %}
-                                <div class="checkbox {% if loop.index > 5 %}amenities-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if amenity.selected %}checked="checked"{% endif %} value="{{ amenity.value }}" />
-                                        <span>{{ amenity.label }}</span>
-                                        <span class="pull-right">({{ amenity.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                            <div class="checkbox">
-                                <label style="color:#008CD1" class="amenities-view-toggle" data-type="amenities">{{ 'hotels.search_menu.view_more' | trans }} <i class="glyphicon glyphicon-chevron-down"></i></label>
-                                <label style="color:#008CD1" class="amenities-view-toggle hide" data-type="amenities">{{ 'hotels.search_menu.view_less' | trans }} <i class="glyphicon glyphicon-chevron-up"></i></label>
-                            </div>
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'hotel_type' and facet.values is defined %}
-                        <li class="hotel_type hidden" data-type="hotel_type">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_type' | trans }} - VientoSur.net">{{ 'hotels.search_menu.type' | trans }}</h5>
-                            {% for hotel_type in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if hotel_type.selected %}checked="checked"{% endif %} value="{{ hotel_type.value }}" />
-                                        {{ hotel_type.label }}
-                                        <span class="pull-right">({{ hotel_type.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'hotel_chains' and facet.values is defined %}
-                        <li class="hotel_chains hidden" data-type="hotel_chains">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_hotel_chain' | trans }} - VientoSur.net">{{ 'hotels.search_menu.hotel_chain' | trans }}</h5>
-                            {% for hotel_chains in facet.values %}
-                                <div class="checkbox {% if loop.index > 5 %}hotel_chains-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if hotel_chains.selected %}checked="checked"{% endif %} value="{{ hotel_chains.value }}" />
-                                        {{ hotel_chains.label }}
-                                        <span class="pull-right">({{ hotel_chains.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                            <div class="checkbox">
-                                <label style="color:#008CD1" class="hotel_chains-view-toggle" data-type="hotel_chains">{{ 'hotels.search_menu.view_more' | trans }} <i class="glyphicon glyphicon-chevron-down"></i></label>
-                                <label style="color:#008CD1" class="hotel_chains-view-toggle hide" data-type="hotel_chains">{{ 'hotels.search_menu.view_less' | trans }} <i class="glyphicon glyphicon-chevron-up"></i></label>
-                            </div>
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'meal_plans' and facet.values is defined %}
-                        <li class="meal_plans hidden" data-type="meal_plans">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_diet' | trans }} - VientoSur.net">{{ 'hotels.search_menu.diet' | trans }}</h5>
-                            {% for meal_plans in facet.values %}
-                                <div class="checkbox">
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if meal_plans.selected %}checked="checked"{% endif %} value="{{ meal_plans.value }}" />
-                                        {% if meal_plans.value == 'B'%}{{ 'hotels.search_menu.breakfast' | trans }}{% else %}{{ 'hotels.search_menu.only_hosting' | trans }}{% endif %}
-                                        <span class="pull-right">({{ meal_plans.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-
-                    {% if facet.criteria == 'profiles' and facet.values is defined %}
-                        <li class="profiles hidden" data-type="profiles">
-                            <h5 class="booking-filters-title" title="{{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - {{ 'hotels.search_menu.filter_travel_profile' | trans }} - VientoSur.net">{{ 'hotels.search_menu.travel_profile' | trans }}</h5>
-                            {% for profiles in facet.values %}
-                                <div class="checkbox {% if loop.index > 5 %}profiles-hidden{% endif %}" {% if loop.index > 5 %}style="display: none;"{% endif %}>
-                                    <label>
-                                        <input class="i-check" type="checkbox" {% if profiles.selected %}checked="checked"{% endif %} value="{{ profiles.value }}" />
-                                        {% set value = attribute(tripProfile, profiles.value) %}
-                                        {{ value }}
-                                        <span class="pull-right">({{ profiles.count }})</span>
-                                    </label>
-                                </div>
-                            {% endfor %}
-                            <div class="checkbox">
-                                <label style="color:#008CD1" class="profiles-view-toggle" data-type="profiles">{{ 'hotels.search_menu.view_more' | trans }} <i class="glyphicon glyphicon-chevron-down"></i></label>
-                                <label style="color:#008CD1" class="profiles-view-toggle hide" data-type="profiles">{{ 'hotels.search_menu.view_less' | trans }} <i class="glyphicon glyphicon-chevron-up"></i></label>
-                            </div>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </aside>
-    {% endif %}
-</div>
-<div class="gap-small"></div>
-

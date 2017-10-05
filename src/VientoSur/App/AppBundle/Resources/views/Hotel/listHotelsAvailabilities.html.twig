@@ -12,13 +12,13 @@
 {% block breadcrumb %}
     {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
         {% block section %}{{ 'index.hotels' | trans }}{% endblock %}
-        {% block sub_section %}{{ 'index.hotel_search' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'index.hotel_detail' | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 
 {% block content %}
     {{ parent() }}
-    <div class="container">
+    <div class="container" style="max-width: 1170px;">
         <div class="wrapperSearch">
             <div class="container">
                 <div class="row">
@@ -27,20 +27,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    {% include '@VientoSurAppApp/Hotel/searchMenuLeft.html.twig' %}
 
-                    <div class="col-sm-8 col-xs-12">
+                    <div class="col-sm-9 col-sm-push-3 " style="padding-left: 5px!important;">
                         <div id="thumbsSearch">
                             {% include '@VientoSurAppApp/Hotel/filterSortTop.html.twig' %}
                             {% include '@VientoSurAppApp/Hotel/listDetailHotels.html.twig' %}
                             {% include 'VientoSurAppAppBundle:_partial:pagination.html.twig' %}
                         </div>
                     </div>
+
+                    {% include '@VientoSurAppApp/Hotel/searchMenuLeft.html.twig' %}
                 </div>
             </div>
         </div>
         {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}
     </div>
+    <style>
+        a.nav-drop-menu-a.mobile {
+            color: #1d2d33;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
@@ -117,14 +123,15 @@
                     }
                 });
                 $('#priceBtn').on('click', function () {
+                    var range = $('#price-slider').val();
+                    if (range.length > 0) {
+                        range = range.replace(';', '-');
+                        asynLoad({
+                            'price_range': range
+                        });
+                    }
                     if (!$(this).hasClass('disabled')) {
-                        var range = $('#price-slider').val();
-                        if (range.length > 0) {
-                            range = range.replace(';', '-');
-                            asynLoad({
-                                'price_range': range
-                            });
-                        }
+
                     }
                 })
             });
@@ -141,6 +148,7 @@
                         $('.sort_name').text('{{ 'hotels.select' | trans }}...').removeClass('vs-color-copy');
                         $('#sort_' + category).text(text).addClass('vs-color-copy');
                     })
+                    waitingDialog.delay(2000).hide();
                 }
             });
 
@@ -255,11 +263,11 @@
                 }
             });
 
-            $('.ListHotel').on('click', '.booking-item-address, .priceRoom', function (event) {
+            $('.ListHotel').on('click', '.booking-item, .booking-item-address', function (event) {
                 event.stopPropagation();
                 var element = event.target;
                 if ($(element).data('prevent') != 'modal') {
-//                    window.open(this.dataset.href, '_blank');
+                    window.open(this.dataset.href, '_blank');
                 } else {
                     latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
                     hotelName = $(element).data('name');

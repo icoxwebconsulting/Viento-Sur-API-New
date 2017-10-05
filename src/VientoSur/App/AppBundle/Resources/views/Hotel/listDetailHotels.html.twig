@@ -9,79 +9,118 @@
     {% endif %}
     {% set decimal =false %}
     <div class="ListHotel">
+
         {% for item in items.items %}
-        <div id="thumbHotel">
-            <div class="imgHotel col-xs-3 col-sm-3 noPadding">
-                <img src="{{ hotelsDetails[item.id].main_picture.url }}/200x150" width="200"  height="150" alt="{{item.hotel.name}}">
-            </div>
-            <div class="infoHotel col-xs-6 col-sm-7">
-                <h4 title="{{item.hotel.name}} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">{{item.hotel.name}}
-                    <ul>
-                        {% for i in 1..5 %}
-                            {% if i <= item.hotel.stars %}
-                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+        <span class="booking-item cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}">
+
+            {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
+               {#target="_blank">#}
+                <div id="thumbHotel">
+
+                    <div class="imgHotel col-xs-4">
+                        <img src="{{ hotelsDetails[item.id].main_picture.url }}/200x150" width="200" height="150"
+                             alt="{{ item.hotel.name }}">
+                    </div>
+                    <div class="infoHotel col-xs-12 col-sm-6 noPadding">
+                        <h4 title="{{ item.hotel.name }} - {{ 'hotels.hotels_in' | trans }} {{ app.session.get('destination').text }} - VientoSur.net">
+                            {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
+                               {#target="_blank">#}
+                                {{ item.hotel.name }}
+                            {#</a>#}
+                        </h4>
+                        <div class="row">
+                            <div class="col-sm-6" style="margin-left: -10px;">
+                                <ul>
+                                    {% for i in 1..5 %}
+                                        {% if i <= item.hotel.stars %}
+                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="modalMap" style="font-size: 15px">
+                                    <a class="booking-item-address" data-prevent="modal"
+                                       data-latitude="{{ item.hotel.location.latitude }}"
+                                       data-longitude="{{ item.hotel.location.longitude }}"
+                                       data-name="{{ item.hotel.name }}">
+                                        {{ app.session.get('destination')['text'] }} <i
+                                                class="fa fa-map-marker fa-lg input-icon"
+                                                style="font-size: 15px"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% for key, room_availability in item.roompacks %}
+                            {% if room_availability.rooms[0].availability is defined %}
+                                {% if  room_availability.rooms[0].availability < 6 %}
+                                    <p class="inDemand">
+                                        <span>
+                                            {% if room_availability.rooms[0].availability == 1 %}
+                                                {{ 'hotels.last_room' | trans }}
+                                            {% else %}
+                                                {{ 'hotels.lasts' | trans }} {{ room_availability.rooms[0].availability }} {{ 'index.search.hotel.rooms' | trans }}
+                                            {% endif %}
+                                        </span>
+                                    </p>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
-                    </ul>
-                </h4>
+                        <ul class="servicesIcons">
+                            {% for key, amenity in item.hotel.amenity_ids %}
+                                {% if amenity == 'INGRAH' %}
+                                    <li title="{{ 'amenities.INGRAH' | trans }}"><i class="fa fa-wifi"
+                                                                                    aria-hidden="true"></i></li>
+                                {% elseif amenity == 'AIR' %}
+                                    <li title="{{ 'amenities.AIR' | trans }}"><i class="fa fa-snowflake-o"
+                                                                                 aria-hidden="true"></i></li>
+                                {% elseif amenity == 'BAG' %}
+                                    <li title="{{ 'amenities.BAG' | trans }}"><i class="fa fa-suitcase"
+                                                                                 aria-hidden="true"></i></li>
+                                {% elseif amenity == 'BSNSC' %}
+                                    <li title="{{ 'amenities.BSNSC' | trans }}"><i class="fa fa-users"
+                                                                                   aria-hidden="true"></i></li>
+                                {% elseif amenity == 'ELEV' %}
+                                    <li title="{{ 'amenities.ELEV' | trans }}"><img
+                                                src="{{ asset('img/elevator.png') }}"/></li>
+                                {% elseif amenity == 'GIM' %}
+                                    <li title="{{ 'amenities.GIM' | trans }}"><img src="{{ asset('img/weight.png') }}"/>
+                                    </li>
+                                {% elseif amenity == 'HOT' %}
+                                    <li title="{{ 'amenities.HOT' | trans }}"><i class="fa fa-fire"
+                                                                                 aria-hidden="true"></i></li>
+                                {% elseif amenity == 'LASESU' %}
+                                    <li title="{{ 'amenities.LASESU' | trans }}"><img
+                                                src="{{ asset('img/washer-machine.png') }}"/></li>
+                                {% elseif amenity == 'LIPA' %}
+                                    <li title="{{ 'amenities.LIPA' | trans }}"><img
+                                                src="{{ asset('img/washer-machine.png') }}"/></li>
+                                {% elseif amenity == 'MEETROOM' %}
+                                    <li title="{{ 'amenities.MEETROOM' | trans }}"><img
+                                                src="{{ asset('img/business-people-meeting.png') }}"/></li>
+                                {% elseif amenity == 'OUSWPOSE' %}
+                                    <li title="{{ 'amenities.OUSWPOSE' | trans }}"><img
+                                                src="{{ asset('img/swimming-pool.png') }}"/></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 textRight priceRoom">
+                        <p>{{ 'hotels.room_per_night' | trans }}</p>
+                        {% for price in item.roompacks %}
+                            <h5>{{ 'flights.since' | trans }} {{ symbol }} {{ price.price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}</h5>
+                        {% endfor %}
 
-                <div class="modalMap">
-                    <a class="booking-item-address" data-prevent="modal"  data-latitude="{{ item.hotel.location.latitude }}" data-longitude="{{ item.hotel.location.longitude }}" data-name="{{ item.hotel.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>
+                        {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
+                           {#target="_blank">#}
+                            <button>Elegir Habitación</button>
+                        {#</a>#}
+                    </div>
                 </div>
-                {% for key, room_availability in item.roompacks %}
-                    {% if room_availability.rooms[0].availability is defined %}
-                        {% if  room_availability.rooms[0].availability < 6 %}
-                            <p class="inDemand">
-                                <span>
-                                    {% if room_availability.rooms[0].availability == 1 %}
-                                        {{ 'hotels.last_room' | trans }}
-                                    {% else %}
-                                        {{ 'hotels.lasts' | trans }} {{ room_availability.rooms[0].availability }} {{ 'index.search.hotel.rooms' | trans }}
-                                    {% endif %}
-                                </span>
-                            </p>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-                <ul class="servicesIcons">
-                    {% for key, amenity in item.hotel.amenity_ids %}
-                        {% if amenity == 'INGRAH' %}
-                            <li title="{{ 'amenities.INGRAH' | trans }}"><i class="fa fa-wifi" aria-hidden="true"></i></li>
-                        {% elseif amenity == 'AIR' %}
-                            <li title="{{ 'amenities.AIR' | trans }}"><i class="fa fa-snowflake-o" aria-hidden="true"></i></li>
-                        {% elseif amenity == 'BAG' %}
-                            <li title="{{ 'amenities.BAG' | trans }}"><i class="fa fa-suitcase" aria-hidden="true"></i></li>
-                        {% elseif amenity == 'BSNSC' %}
-                            <li title="{{ 'amenities.BSNSC' | trans }}"><i class="fa fa-users" aria-hidden="true"></i></li>
-                        {% elseif amenity == 'ELEV' %}
-                            <li title="{{ 'amenities.ELEV' | trans }}"><img src="{{ asset('img/elevator.png') }}" /></li>
-                        {% elseif amenity == 'GIM' %}
-                            <li title="{{ 'amenities.GIM' | trans }}"><img src="{{ asset('img/weight.png') }}" /></li>
-                        {% elseif amenity == 'HOT' %}
-                            <li title="{{ 'amenities.HOT' | trans }}"><i class="fa fa-fire" aria-hidden="true"></i></li>
-                        {% elseif amenity == 'LASESU' %}
-                            <li title="{{ 'amenities.LASESU' | trans }}"><img src="{{ asset('img/washer-machine.png') }}" /></li>
-                        {% elseif amenity == 'LIPA' %}
-                            <li title="{{ 'amenities.LIPA' | trans }}"><img src="{{ asset('img/washer-machine.png') }}" /></li>
-                        {% elseif amenity == 'MEETROOM' %}
-                            <li title="{{ 'amenities.MEETROOM' | trans }}"><img src="{{ asset('img/business-people-meeting.png') }}" /></li>
-                        {% elseif amenity == 'OUSWPOSE' %}
-                            <li title="{{ 'amenities.OUSWPOSE' | trans }}"><img src="{{ asset('img/swimming-pool.png') }}" /></li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="priceRoom col-xs-2">
-                <p>{{ 'hotels.room_per_night' | trans }}</p>
-                {%for price in item.roompacks%}
-                    <h5>{{ symbol }} {{price.price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}</h5>
-                {%endfor%}
-
-                <a href="{{path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}" target="_blank">
-                    <button>Elegir Habitación</button>
-                </a>
-            </div>
-        </div>
+            {#</a>#}
+        </span>
         {% endfor %}
     </div>
 {%endif%}

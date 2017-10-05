@@ -27,7 +27,7 @@ class Email
         $message = \Swift_Message::newInstance(null)
             ->setSubject("Consulta web Viento Sur")
             ->setFrom($email, $email)
-            ->setTo('web@vientosur.net','web@vientosur.net')
+            ->setTo('info@vientosur.net','VientoSur.net')
             ->setBody(
                 $html,
                 'text/html'
@@ -102,10 +102,11 @@ class Email
 
     public function sendBookingFlightEmail($email, $data)
     {
+        $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/reservation-vs.pdf';
+
         $message = \Swift_Message::newInstance()
-            ->setSubject('Confirmación de reserva')
-            ->setFrom("no-replay@vientosur.net", 'vientosur.net')
-//            ->setFrom('info@vientosur.net','VientoSur.net')
+            ->setSubject('Viento Sur Operadores Turísticos - Solicitud de compra de vuelo - Número: '.$data['reservation']->getReservationId())
+            ->setFrom("no-replay@vientosur.net", 'Viento Sur Operadores Turísticos')
             ->setTo($email)
             ->setBody(
                 $this->templating->render(
@@ -113,7 +114,7 @@ class Email
                     $data
                 ),
                 'text/html'
-            );
+            )->attach(\Swift_Attachment::fromPath($filenName));
         $this->mailer->send($message);
     }
 }

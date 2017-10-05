@@ -1,0 +1,373 @@
+<div class="list-group pay-methods-panel">
+    {% for paymentMethod in paymentMethods %}
+        {% if paymentMethod.type != 'debit_card' %}
+        <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
+            {% set type = paymentMethod.type %}
+            <h4 class="list-group-item-heading">
+                {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
+                {% if paymentMethod.installment_quantity is defined %}
+                    {% if paymentMethod.installment_quantity == 1 %}
+                        <span id="span-text-{{ loop.index }}">
+                                                    <b style="font-weight: bold !important;">1</b> Pago
+                                                </span>
+                    {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
+                        {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}#}
+                        <span id="span-text-{{ loop.index }}">
+                                                    <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
+                            {% if paymentMethod.amounts.total_interest_amount > 0 %}
+                                {#<span class="b-interest">$ {{ paymentMethod.amounts.total_interest_amount|number_format(2, ',', '.') }}#}
+                                <span class="b-interest">{{ symbol }} {{ paymentMethod.amounts.total_interest_amount| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}
+                                    ({{ 'hotels.interest' | trans }})</span>
+                                                    {% else %}
+                                <span class="b-interest">{{ 'hotels.whitout_interest' | trans }}</span>
+                            {% endif %}
+                                                </span>
+                    {% else %}
+                        {{ 'hotels.pay' | trans }}
+                    {% endif %}
+                {% elseif type == 'at_destination' %}
+                    {{ 'hotels.pay_in_destiny' | trans }}
+                {% endif %}
+            </h4>
+            <p class="list-group-item-text">
+                <div class="radio">
+                    <div class="card-list credit-cards">
+                        {% if type == 'cash' %}
+                        <label class="card-selector vs-cs-label">
+                            <div class="eva-card-container" data-card-id="">
+                                <span class="eva-card-body EFE"></span>
+                            </div>
+                        </label>
+                        {% else %}
+                        {% set cardsList = attribute(cardsGroup, paymentMethod.choice) %}
+                        {% if cardsList['*'] is defined %}
+                            {% set cardI = attribute(cardsList, '*') %}
+                            {% for card in cardI %}
+
+                                <label class="card-selector vs-cs-label">
+                                    {% set cardData = card|split('-') %}
+                                    <div class="eva-card-container clickable-card" data-data-cuote="{{ loop.parent.loop.index }}"
+                                         data-card-id="{{ card }}"
+                                         data-card-id-select="{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}"
+                                         data-all-data-card="{{ loop.parent.loop.index }}-{{ card }}">
+                                        <span class="eva-card-body {{ cardData[1] }}"></span>
+                                    </div>
+                                </label>
+                            {% endfor %}
+                        {% endif %}
+                        {#Agrupación por banco#}
+                        {% set countBank = 1 %}
+                        {% set moreBank = null %}
+                        {% for key, list in cardsList %}
+                        {% if key != '*' %}
+                        {#limito la cantidad de bancos a 4 elementos#}
+                        {% if countBank < 5 %}
+                        <div class="eva-card-container clickable-bank" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-{{ key }}">
+                            <span class="eva-card-body {{ key }}"></span>
+                            <div class="card-content hide">
+                                {% for card in list  %}
+                                    {% set cardData = card|split('-') %}
+                                    <div class="eva-card-container clickable-card" data-card-id="{{ card }}"
+                                         data-bank-id="{{ key }}"
+                                         data-parent-id="{{ loop.parent.loop.parent.loop.index }}-{{ key }}"
+                                         data-data-cuote="{{ loop.parent.loop.parent.loop.index }}"
+                                         data-all-data-card="{{ loop.parent.loop.parent.loop.index }}-{{ card }}">
+                                        <span class="eva-card-body {{ cardData[1] }}"></span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% elseif countBank == 5 %}
+                        {% set moreBank = 1 %}
+                        <div class="eva-card-container clickable-group-bank viewMore" data-trigger="focus" tabindex="0" role="button" id="{{ loop.parent.loop.index }}-group">
+                            <span class="eva-card-body"></span>
+            <p class="textViewMore"> Más<br />Bancos </p>
+            <span class="arrowViewMore">&gt;</span>
+    </div>
+    {% endif %}
+                {% set countBank = countBank + 1 %}
+            {% endif %}
+        {% endfor %}
+
+        {#si hay bancos en grupos para dibujar#}
+        {% if moreBank is not null %}
+            <div class="{{ loop.index }}-group hidden">
+                {% set countBank = 1 %}
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center">{{ 'hotels.bank' | trans }}</th>
+                        <th class="text-center">{{ 'hotels.card' | trans }}</th>
+                    </tr>
+                    {% for key, list in cardsList %}
+                        {% if key != '*' %}
+                            {% if countBank > 4 %}
+                                <tr>
+                                    <th>
+                                        <div class="eva-card-container notClickableCard">
+                                            <span class="eva-card-body {{ key }} notClickableCard"></span>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        {% for card in list  %}
+                                            {% set cardData = card|split('-') %}
+                                            <div class="eva-card-container clickable-card" data-card-id="{{ card }}" data-bank-id="{{ key }}" data-parent-id="{{ loop.parent.loop.parent.loop.index }}-group"  data-data-cuote="{{ loop.parent.loop.parent.loop.index }}">
+                                                <span class="eva-card-body {{ cardData[1] }}"></span>
+                                            </div>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% set countBank = countBank + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+
+    {% endif %}
+    </div>
+    </div>
+    </p>
+    </a>
+    {% endif %}
+{% endfor %}
+</div>
+
+{% if formChoice.payment.credit_card is defined %}
+    <div class="datesPayment">
+        <h2>{{ 'hotels.payment_methods' | trans }}:</h2>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>{{ 'hotels.selected_card' | trans }}:</label>
+                    <input type="hidden" value="" name="selected-card" id="card-selected" class="form-control" readonly>
+                    {% if paymentMethods|length > 1 %}
+
+                    <select id="select-card3" class="form-control" title="">
+                        {% for cuotas, bank in paymentMethods %}
+                            {% set n = loop.index %}
+                            {% if bank.installment_quantity is defined or bank.type != 'debit_card' %}
+                                <optgroup id="{{ loop.index }}" label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
+                                {% for key in bank.card_ids %}
+
+                                    {% set cardType = key | split('-') %}
+                                    {% set label = '' %}
+                                    {% for cardKey, cardValue in cardList %}
+                                        {% if cardType[1] == cardKey %}
+                                            {% set label = cardValue %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if cardType[2] != '*' %}
+
+                                        {% for bankKey, bankValue in bankList %}
+                                            {% if bankKey == cardType[2] %}
+                                                <option id="{{ n }}-{{ key }}" value="{{ n }}-{{ key }}">{{ label }} {{ bankValue }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    {% else %}
+                                        <option id="{{ n }}-{{ cardType[0] }}-{{ cardType[1] }}-{{ cardType[3] }}" value="{{ n }}-{{ key }}">{{ label }}</option>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </optgroup>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <select id="select-card2" class="form-control" title="">
+                        {% for card in paymentMethods[0].card_ids %}
+                            {% set cardData = card|split('-') %}
+
+                            {% set label = '' %}
+                            {% for cardKey, cardValue in cardList %}
+                                {% if cardData[1] == cardKey %}
+                                    {% set label = cardValue %}
+                                {% endif %}
+                            {% endfor %}
+                            <option id="1-{{ cardData[0] }}-{{ cardData[1] }}-{{ cardData[3] }}" value="{{ card }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                </div>
+            </div>
+            {% if formNewPay.payment.number is defined %}
+                {% set label = 'hotels.labels.card_number' | trans %}
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.number, { 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if formNewPay.payment.expiration is defined %}
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        {% set label = 'hotels.labels.expiration' | trans %}
+                        <label for="">{{ label }}</label>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                {{ form_widget(formNewPay.payment.expiration.month, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-xs-6">
+                                {{ form_widget(formNewPay.payment.expiration.year, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(formNewPay.payment.expiration.day, {'attr': {'style': 'display:nonoe;'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if formNewPay.payment.security_code is defined %}
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        {% set label = 'hotels.labels.security_code' | trans %}
+                        <label for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.security_code, {'attr': {'class': 'form-control input-ccv' , 'size': '5' , 'style': 'width:100% !important'}}) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-danger hidden" style="margin-top: 10px;" role="alert" id="card-error"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if formNewPay.payment.owner_name is defined %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {% set label = 'hotels.labels.cardholder' | trans %}
+                    {% set placeholder = 'hotels.labels.such_as_card' | trans %}
+                    <label for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.owner_name, {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if formNewPay.payment.owner_document is defined %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {% set label = 'hotels.labels.owner_doc' | trans %}
+                    <label for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.owner_document, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if formNewPay.payment.owner_documenttype is defined %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {% set label = 'hotels.labels.owner_documenttype' | trans %}
+                    <label for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.owner_documenttype, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if formNewPay.payment.owner_documentnumber is defined %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {% set label = 'hotels.labels.owner_documentnumber' | trans %}
+                    <label for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.owner_documentnumber, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if formNewPay.payment.owner_gender is defined %}
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {% set label = 'hotels.labels.owner_gender' | trans %}
+                    <label for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.owner_gender, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {{ form_widget(attribute(formNewPay.payment, 'id0'), { 'attr': {'class': 'hidden'} }) }}
+    {{ form_widget(attribute(formNewPay.payment, 'amount0'), { 'attr': {'class': 'hidden'} }) }}
+
+
+    {#pendiente campos de fcturacion#}
+    {% if formNewPay.payment.country is defined %}
+        <hr/>
+        <div class="row">
+            {% if formNewPay.payment.country is defined %}
+                {% set label = 'hotels.labels.country' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.country, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+
+            {% if formNewPay.payment.state is defined %}
+                {% set label = 'hotels.labels.state' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.state, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+
+            {% if formNewPay.payment.city is defined %}
+                {% set label = 'hotels.labels.city' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.city, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+
+            {% if formNewPay.payment.street is defined %}
+                {% set label = 'hotels.labels.street' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.street, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+
+            {% if formNewPay.payment.floor is defined %}
+                {% set label = 'hotels.labels.floor' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.floor, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+
+            {% if formNewPay.payment.department is defined %}
+                {% set label = 'hotels.labels.department' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.department, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+
+            {% if formNewPay.payment.postal_code is defined %}
+                {% set label = 'hotels.labels.postal_code' | trans %}
+                <div class="col-md-3">
+                    {{ form_row(formNewPay.payment.postal_code, {'label': label, 'attr': {'class': 'form-control'}}) }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if formNewPay.payment.bank_code is defined %}
+        {{ form_widget(formNewPay.payment.bank_code, { 'attr': {'class': 'hidden'} }) }}
+    {% endif %}
+    {% if formNewPay.payment.card_code is defined %}
+        {{ form_widget(formNewPay.payment.card_code, { 'attr': {'class': 'hidden'} }) }}
+    {% endif %}
+    {% if formNewPay.payment.card_type is defined %}
+        {{ form_widget(formNewPay.payment.card_type, { 'attr': {'class': 'hidden'} }) }}
+    {% endif %}
+    {% if formChoice.payment.invoice is defined %}
+        {% include 'VientoSurAppAppBundle:Hotel:bookingHotelPayInvoice.html.twig' %}
+    {% endif %}
+
+    {% for flashMessage in app.session.flashbag.get('card_msg') %}
+        <div class="row">
+            <div class="col-md-10 top-buffer">
+                <div class="alert alert-danger" role="alert">
+                    <span>{{ 'index.invalid_cc' | trans }}</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endif %}

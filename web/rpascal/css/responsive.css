@@ -79,7 +79,7 @@
     }
 
     .search .tab-pane{
-        padding: 40px 20px 0 20px;
+        padding: 28px 20px 0 20px;
     }
 
     .search .tab-content h4{
@@ -140,7 +140,7 @@
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup{
-        width: 25%;
+        width: 35%;
         margin-right: 15px;
     }
 
@@ -197,7 +197,7 @@
 
     /*----- GO BANNER -----*/
     #banner{
-        height: 300px;
+        height: 220px;
     }
     /*----- END BANNER -----*/
 
@@ -225,15 +225,15 @@
     /*----- END NAVBAR -----*/
     /*----- GO BREADCRUMB -----*/
     #breadcrumb{
-        padding: 13px 0;
+        padding: 10px 0;
     }
 
     #breadcrumb ol li a{
-        font-size: 14px;
+        font-size: 13px;
     }
 
     #breadcrumb ol li.active{
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .breadcrumb li + li:before {
@@ -248,8 +248,8 @@
     }
 
     .message{
-        padding: 40px 0;
-        font-size: 25px;
+        padding: 30px 0;
+        font-size: 16px;
     }
 
     #formSearch, #formFilters{
@@ -338,12 +338,12 @@
 
     /*----- GO LIST THUMBS HOTELS -----*/
     #thumbsSearch .filterThumb{
-        height: 40px;
-        margin-bottom: 40px;
+        height: 35px;
+        margin-bottom: 20px;
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        height: 34px;
+        height: 30px;
         font-size: 14px;
     }
 
@@ -445,9 +445,9 @@
     }
 
     #descriptionHotel .descriptionHotel p{
-        font-size: 16px;
+        font-size: 13px;
         margin-bottom: 10px;
-        line-height: 24px;
+        line-height: 20px;
     }
 
     #descriptionHotel .boxPrice p{
@@ -527,7 +527,7 @@
     }*/
 
     .grid figure h2{
-        font-size: 23px;
+        font-size: 16px;
     }
     /*----- END CONTENT INFO -----*/
 
@@ -699,7 +699,7 @@
 
     /*----- GO FOOTER  -----*/
     .footer{
-        height: 270px;
+        height: 240px;
         padding: 30px 0;
     }
 
@@ -708,7 +708,7 @@
     }
 
     .footer h3{
-        font-size: 20px;
+        font-size: 16px;
         padding-bottom: 15px;
     }
 
@@ -720,7 +720,7 @@
 
     .footer .btnContact{
         height: 43px;
-        width: 240px;
+        width: 195px;
         font-size: 16px;
         padding: 10px 0;
         margin-top: 27px;
@@ -789,7 +789,9 @@
 
 /*Mobile*/
 @media only screen and (max-width: 1024px){
-
+    figure.effect-goliath {
+        height: 220px;
+    }
     .associations .linkConditions{
         float: none;
     }
@@ -813,6 +815,30 @@
 }
 
 @media only screen and (max-width: 767px){
+    .copyright p {
+        margin-bottom: 0px;
+        margin-top: -8px;
+    }
+    .booking-item-img-num {
+        position: relative;
+        bottom: 20px;
+        left: 66px;
+        color: #fff;
+        background: rgba(0,0,0,0.01);
+        opacity: 0.5;
+    }
+
+    .modal-content{
+        top:105px!important;
+    }
+
+    .duration-time{
+        text-align: left!important;
+    }
+
+    #thumbsFlights .paymentFlight{
+        margin-top: 10%;
+    }
 
     .logo img{
         width: 90px;
@@ -1103,7 +1129,7 @@
     }
 
     .mobileSearch{
-        margin: 20px 0;
+        /*margin: 20px 0;*/
     }
 
     .mobileSearch .search{
@@ -1168,6 +1194,10 @@
 }
 
 @media only screen and (max-width: 415px){
+
+    #thumbsFlights .paymentFlight{
+        margin-top: 10%;
+    }
 
     #thumbHotel .priceRoom h5{
         margin: 0;

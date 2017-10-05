@@ -1,30 +1,61 @@
 $(document).ready(function () {
+    $('#round_trip').prop('checked', true);
     $('#form_payments_deferred_months0').val(0);
-    console.log('form',$('#form_payments_deferred_months0').val());
-    var fromFlight = $("#start-flight").datepicker({
-        dateFormat: dateFormat,
-        dayNamesMin: dayNamesMin,
-        monthNames: monthNames,
-        defaultDate: "+1w",
-        numberOfMonths: 2,
-        minDate: 0,
-        onClose: function (selectedDate) {
-            try {
-                var minDate = $(this).datepicker('getDate');
-                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
-                $("#end-flight").datepicker("option", "minDate", newMin);
-                $('#start-flight0').val(fromFlight.val());
-            } catch (e) {
-                console.error(e);
-            }
+
+    function device() {
+        if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+            return true;
+        } else {
+            return false;
         }
-    });
+    }
+
+    if(device() == true){
+        var fromFlight = $("#start-flight").datepicker({
+            dateFormat: dateFormat,
+            dayNamesMin: dayNamesMin,
+            monthNames: monthNames,
+            numberOfMonths: 1,
+            minDate: 0,
+            onClose: function (selectedDate) {
+                try {
+                    var minDate = $(this).datepicker('getDate');
+                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                    $("#end-flight").datepicker("option", "minDate", newMin);
+                    $('#start-flight0').val(fromFlight.val());
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        });
+        var month = 1;
+    }else {
+        var fromFlight = $("#start-flight").datepicker({
+            dateFormat: dateFormat,
+            dayNamesMin: dayNamesMin,
+            monthNames: monthNames,
+            defaultDate: "+1w",
+            numberOfMonths: 2,
+            minDate: 0,
+            onClose: function (selectedDate) {
+                try {
+                    var minDate = $(this).datepicker('getDate');
+                    var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                    $("#end-flight").datepicker("option", "minDate", newMin);
+                    $('#start-flight0').val(fromFlight.val());
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        });
+        var month = 2;
+    }
     var toFlight = $("#end-flight").datepicker({
         dateFormat: dateFormat,
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2
+        numberOfMonths: month
     }).on("change", function () {
         fromFlight.datepicker("option", "maxDate", getDate(this));
     });
@@ -33,7 +64,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
         onClose: function (selectedDate) {
             try {
                 $('#start-flight').val(startFlight0.val());
@@ -42,12 +73,17 @@ $(document).ready(function () {
             }
         }
     });
+    $('#start-flight0').change(function(){
+       $('#start-flight').val($('#start-flight0'));
+       console.log('start-flight', $('#start-flight'))
+    });
+
     var startFlight1 = $('#start-flight1').datepicker({
         dateFormat: dateFormat,
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight0.datepicker("option", "maxDate", getDate(this));
     });
@@ -56,7 +92,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight1.datepicker("option", "maxDate", getDate(this));
     });
@@ -65,7 +101,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight2.datepicker("option", "maxDate", getDate(this));
     });
@@ -74,7 +110,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight3.datepicker("option", "maxDate", getDate(this));
     });
@@ -83,7 +119,7 @@ $(document).ready(function () {
         dayNamesMin: dayNamesMin,
         monthNames: monthNames,
         defaultDate: "+1w",
-        numberOfMonths: 2,
+        numberOfMonths: month,
     }).on("change", function () {
         startFlight4.datepicker("option", "maxDate", getDate(this));
     });
@@ -335,42 +371,42 @@ $(document).ready(function () {
             console.log('mostrar menu multiple');
             $('.multidestination-lateral-btn').after('<div class="multi-flight">'+
                                                         '<div class="wrapper-lateral">'+
-                                                            '<h2>'+labelStretch+' 1</h2>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
-                                                                '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
+                                                            '<lable class="menu-left-label">'+labelStretch+' 1</label>'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<label class="mfont">'+labelFrom+'</label>'+
+                                                                '<i class="fa fa-map-marker input-icon"></i>'+
                                                                 '<input class="form-control" id="multidestination-from-flight0" name="multidestination[0][fromFlight]" type="text" data-provide="typeahead" placeholder="'+placeHolderFrom+'" />'+
                                                                 '<input id="multidestination-originFlight0" name="multidestination[0][originFlight]" type="hidden" />'+
                                                             '</div>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
-                                                                '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<label class="mfont">'+labelTo+'</label>'+
+                                                                '<i class="fa fa-map-marker input-icon"></i>'+
                                                                 '<input id="multidestination-to-flight0" name="multidestination[0][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="'+placeHolderTo+'" />'+
                                                                 '<input id="multidestination-destinationFlight0" name="multidestination[0][destinationFlight]" type="hidden" />'+
                                                             '</div>'+
                                                             '<div>'+
-                                                                '<div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
+                                                                '<div class="form-group col-xs-12"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
                                                                     '<label class="sfont">'+labelStart+'</label>'+
                                                                     '<input id="start-flight0" class="form-control required" name="multidestination[0][start]" type="text" required="" placeholder="dd/mm/yyyy" />'+
                                                                 '</div>'+
                                                             '</div>'+
                                                         '</div>'+
                                                         '<div class="wrapper-lateral">'+
-                                                            '<h2>'+labelStretch+' 2</h2>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
+                                                            '<lable class="menu-left-label">'+labelStretch+' 2</label>'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                                                                 '<label class="mfont">'+labelFrom+'</label>'+
                                                                 '<input class="form-control" id="multidestination-from-flight1" name="multidestination[1][fromFlight]" type="text" data-provide="typeahead" placeholder="'+placeHolderFrom+'" />'+
                                                                 '<input id="multidestination-originFlight1" name="multidestination[1][originFlight]" type="hidden" />'+
                                                             '</div>'+
-                                                            '<div class="form-group form-group-icon-left form-icon-lg">'+
+                                                            '<div class="form-group col-xs-12">'+
                                                                 '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                                                                 '<label class="mfont">'+labelTo+'</label>'+
                                                                 '<input id="multidestination-to-flight1" name="multidestination[1][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="'+placeHolderTo+'" />'+
                                                                 '<input id="multidestination-destinationFlight1" name="multidestination[1][destinationFlight]" type="hidden" />'+
                                                             '</div>'+
                                                             '<div>'+
-                                                                '<div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
+                                                                '<div class="form-group col-xs-12"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
                                                                     '<label class="sfont">'+labelStart+'</label>'+
                                                                     '<input id="start-flight1" class="form-control required" name="multidestination[1][start]" type="text" required="" placeholder="dd/mm/yyyy" />'+
                                                                 '</div>'+
@@ -467,21 +503,21 @@ $(document).ready(function () {
         console.log(lenght);
         if (lenght < 7){
             $('.wrapper-lateral').last().after('<div class="wrapper-lateral">'+
-                    '<h2>'+labelStretch+' '+lenght+'</h2>'+
-                '<div class="form-group form-group-icon-left form-icon-lg">'+
+                    '<label class="menu-left-label" style="font-weight: bold; font-size: 16px">'+labelStretch+' '+lenght+'</label>'+
+                '<div class="form-group col-xs-12">'+
                     '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                     '<label class="mfont">'+labelFrom+'</label>'+
                     '<input class="form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" type="text" data-provide="typeahead" placeholder="'+placeHolderFrom+'" />'+
                     '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" />'+
                 '</div>'+
-                '<div class="form-group form-group-icon-left form-icon-lg">'+
+                '<div class="form-group col-xs-12">'+
                     '<i class="fa fa-map-marker input-icon input-icon-hightlight"></i>'+
                     '<label class="mfont">'+labelTo+'</label>'+
                     '<input id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" type="text" class="form-control" data-provide="typeahead" placeholder="'+placeHolderTo+'" />'+
                     '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" />'+
                 '</div>'+
                 '<div>'+
-                    '<div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
+                    '<div class="form-group col-xs-12"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>'+
                         '<label class="sfont">'+labelStart+'</label>'+
                         '<input id="start-flight'+count+'" class="form-control required" name="multidestination['+count+'][start]" type="text" required="" placeholder="dd/mm/yyyy" />'+
                     '</div>'+
@@ -548,6 +584,12 @@ $(document).ready(function () {
         if (lenght > 2){
             $('.wrapper-lateral').last().remove();
             $('#add-stretch-lateral').show();
+            $('#multidestination-from-flight0').removeAttr('required');
+            $('#multidestination-to-flight0').removeAttr('required');
+            $('#start-flight0').removeAttr('required');
+            $('#multidestination-from-flight1').removeAttr('required');
+            $('#multidestination-to-flight1').removeAttr('required');
+            $('#start-flight1').removeAttr('required');
         }else{
             $('#remove-stretch-lateral').hide();
             $('#add-stretch-lateral').hide();
@@ -599,22 +641,36 @@ $(document).ready(function () {
         }
     });
     $('#add-stretch').click(function(){
-        var lenght = $('.multiple-destinations-label').length;
-        var count = $('.multiple-destinations-label').length;
+        console.log(this.id);
+        var lenght = 0;
+        var count = 0;
+        var className = '';
+        if (device() == true){
+            lenght = $('.contentFlight').find('.wrapper-multidestination').length;
+            count = $('.contentFlight').find('.wrapper-multidestination').length;
+            className = 'wrapper-multidestination';
+            console.log('click mobile strech')
+        }else{
+            lenght = $('#desktop-wrapper').find('.wrapper').length;
+            count = $('#desktop-wrapper').find('.wrapper').length;
+            className = 'wrapper';
+            console.log('click desktop strech')
+        }
+
         lenght++;
         var labelStr = $('#label-stretch').text();
         var labelStretch = labelStr.substring(0, labelStr.length -1);
         var labelFrom = $('#label-from').text();
         var labelTo = $('#label-to').text();
         var labelStart = $('#label-start').text();
-        var toDate = $('#toDate').text();
+        var toDate = $('#date-m').text();
         var placeHolderFrom = $('#multidestination-from-flight0').attr('placeholder');
         var placeHolderTo = $('#multidestination-to-flight0').attr('placeholder');
         if (lenght < 7){
             $('.col-md-12.stretch')
-                .before('<div class="row wrapper">'+
+                .before('<div class="row wrapper '+className+'">'+
                             '<div class="col-xs-12">'+
-                                '<div class="col-xs-5">'+
+                                '<div class="col-xs-12 col-md-5">'+
                                     '<p class="multiple-destinations-label">'+labelStretch+' '+lenght+'</p>'+
                                     '<div class="form-group-icon-left marginBottom10">'+
                                         '<i class="fa fa-map-marker input-icon"></i>'+
@@ -627,7 +683,7 @@ $(document).ready(function () {
                                         '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
                                     '</div>'+
                                 '</div>'+
-                                '<div class="col-xs-2 paddingSpecial multiple-destinations-wrapper">'+
+                                '<div class="col-xs-12 col-md-4 paddingSpecial multiple-destinations-wrapper">'+
                                     '<p>'+toDate+'</p>'+
                                     '<div class="input-group date marginBottom10 col-xs-12" id="datetimepicker3">'+
                                     '<i class="glyphicon glyphicon-calendar"></i>'+
@@ -636,6 +692,9 @@ $(document).ready(function () {
                                 '</div>'+
                             '</div>'+
                         '</div>');
+            if (device() == true){
+                $('.multiple-destinations-wrapper').removeClass('paddingSpecial')
+            }
             var aux = count - 1;
             var dateSelector = '#start-flight'+aux;
             console.log('#start-flight'+aux);
@@ -644,7 +703,7 @@ $(document).ready(function () {
                 dayNamesMin: dayNamesMin,
                 monthNames: monthNames,
                 defaultDate: "+1w",
-                numberOfMonths: 2
+                numberOfMonths: month
             }).on("change", function () {
                 $(dateSelector).datepicker("option", "maxDate", getDate(this));
             });
@@ -689,11 +748,22 @@ $(document).ready(function () {
         }
     });
     $('#remove-stretch').click(function () {
-        var lenght = $('.wrapper').length;
-        if (lenght > 2){
-            $('.wrapper').last().remove();
+        var lenght = 0;
+        var element = '';
+        if (device() == true){
+            lenght = $('.contentFlight').find('.wrapper-multidestination').length;
+            element = $('.contentFlight').find('.wrapper-multidestination');
+            console.log('click mobile strech')
         }else{
-            $('.wrapper').hide();
+            lenght = $('#desktop-wrapper').find('.wrapper').length;
+            element = $('#desktop-wrapper').find('.wrapper');
+            console.log('click desktop strech')
+        }
+
+        if (lenght > 2){
+            element.last().remove();
+        }else{
+            element.hide();
             $('#remove-stretch').hide();
             $('#add-stretch').hide();
             $('.round-trip-wrapper').show();
@@ -709,6 +779,8 @@ $(document).ready(function () {
             $('#start-flight1').removeAttr('required');
             $('#tab-2').css({'overflow': '', 'height': ''});
             $('#round_trip').prop('checked', true);
+            $('#flightsModal').modal('hide');
+            $('#round_trip').trigger('click');
         }
     });
     $("#childrenPassengers").change(function () {
@@ -737,11 +809,10 @@ $(document).ready(function () {
     $("#total-adults").text($("#adultsPassengers").val());
 
     $('#adultsPassengers').on('change', function() {
-        $("#total-passengers").text($("#adultsPassengers").val());
-        console.log(typeof($("#adultsPassengers").val()));
+
     })
 
-    $('#childrenPassengers').on('change', function() {
+    $('#apply-passengers').click(function () {
         var adultsPas = parseInt($("#adultsPassengers").val());
         var childrenPas = parseInt($("#childrenPassengers").val());
 
@@ -752,12 +823,56 @@ $(document).ready(function () {
         $("#total-passengers").text(totalPas);
     })
 
+    $('#childrenPassengers').on('change', function() {
+        /*var adultsPas = parseInt($("#adultsPassengers").val());
+        var childrenPas = parseInt($("#childrenPassengers").val());
+
+        var totalPas = adultsPas + childrenPas;
+
+        $("#total-adults").text(adultsPas);
+        $("#total-children").text(childrenPas);
+        $("#total-passengers").text(totalPas);*/
+    })
+
+    $('#vuelos-tab').click(function () {
+        $('#multipledestination').val(false);
+        console.log($('#multipledestination').val());
+    })
+
+    $('#modal-multi').click(function () {
+        $('#multipledestination').val(false);
+        $('#round_trip').attr('checked', true);
+        $("#dummy-end-flight").addClass('hidden');
+        $("#end-flight").show().attr("required");
+        // $('.round-trip-wrapper').show();
+        $('#only_out').val(false);
+        $('#multipledestination').val(false);
+        console.log($('#multipledestination').val());
+
+        // $('.wrapper').hide();
+        $('#remove-stretch').hide();
+        $('#add-stretch').hide();
+        $('.round-trip-wrapper').show();
+        $('#multipledestination').val(false);
+        console.log($('#multipledestination').val());
+        $('#div-end-flight').show();
+        $('#end-flight').attr('required', 'true');
+        $('#multidestination-from-flight0').removeAttr('required');
+        $('#multidestination-to-flight0').removeAttr('required');
+        $('#multidestination-from-flight1').removeAttr('required');
+        $('#multidestination-to-flight1').removeAttr('required');
+        $('#start-flight0').removeAttr('required');
+        $('#start-flight1').removeAttr('required');
+        $('#tab-2').css({'overflow': '', 'height': ''});
+        $('#round_trip').prop('checked', true);
+    })
 
     $("#typeTrip").change(function () {
         var flightType =  $('input[name=flightType]:checked', '#typeTrip').val();
         if(flightType == 'only_out'){
             $("#end-flight").removeAttr('required').hide();
             $("#dummy-end-flight").removeClass('hidden');
+            $("#dummy-end-flight").removeAttr('required');
             $('#only_out').val(true);
             $('#multipledestination').val(false);
             $('#only_out').is(':checked');
@@ -770,10 +885,9 @@ $(document).ready(function () {
             $("#end-flight").show().attr("required");
             // $('.round-trip-wrapper').show();
             $('#only_out').val(false);
-            $('#multipledestination').val(false);
             console.log($('#multipledestination').val());
 
-            $('.wrapper').hide();
+            // $('.wrapper').hide();
             $('#remove-stretch').hide();
             $('#add-stretch').hide();
             $('.round-trip-wrapper').show();
@@ -813,6 +927,16 @@ $(document).ready(function () {
     $('#openFlight').click(function () {
         $('#flightsModal').modal();
     })
+
+    $('#multiple_destination').click(function () {
+        $('#flightsModal').modal();
+        console.log('click multidestination')
+        if(device() == true){
+            $('.multiple-destinations-wrapper').removeClass('paddingSpecial')
+            $('.modal-flight-select-group').removeClass('selectGroup');
+            $('.modal-flight-select-group').addClass('col-sx-6');
+        }
+    });
 
 
     $('#sendFlight').on('click', function () {
@@ -868,10 +992,48 @@ $(document).ready(function () {
     //         }
     //     }
     // });
-    $(".col-md-5.col-md-pull-7").jScroll({speed : "slow"});
+    $(".col-xs-12.col-sm-4.sidebar-reservation").jScroll({speed : "slow"});
+
+    $( "#expiration-month" ).append($("#form_payments_card-expiration0_month"));
+    $( "#expiration-year" ).append($("#form_payments_card-expiration0_year"));
+    $("#form_payments_card-expiration0_month").attr({
+        class: 'form-control'
+    })
+    $("#form_payments_card-expiration0_year").attr({
+        class: 'form-control'
+    })
+
+    $('#form_contact_info_email-1').on('blur', function () {
+        if($('#form_contact_info_email-').val() != $('#form_contact_info_email-1').val()) {
+            $('#errorEmail').removeClass('hide');
+        } else {
+            $('#errorEmail').addClass('hide');
+        }
+    });
+
+    device();
 
 });
 function selectCuote(id){
     console.log('click');
     $('#cuote').text($('#span-text-'+id).text())
+}
+
+function device() {
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+        console.log('mobile');
+        return true;
+    } else {
+        console.log('desktop');
+        return false;
+    }
+}
+
+if(device() == true){
+    $(".col-xs-12.col-sm-4.sidebar-reservation").toggleClass('sidebar-reservation');
+    $('.modal-flight-select-group').removeClass('selectGroup');
+    $('.modal-flight-select-group').addClass('col-sx-6');
+}else{
+    $('.mobileSearch').html('');
+    $('.modal.fade.two').html('');
 }

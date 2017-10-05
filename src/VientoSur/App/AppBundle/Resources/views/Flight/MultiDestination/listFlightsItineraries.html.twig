@@ -2,57 +2,88 @@
 {% block title %}{{ 'index.flight_search' | trans }}{% endblock %}
 {% block content %}
     {#{{ dump() }}#}
+    <div id="banner"></div>
+
+    <div id="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ path('homepage') }}">{{ 'admin.home' | trans }}</a></li>
+                        <li><a href="#">{{ 'flights.flights' | trans }}</a></li>
+                        <li class="active">{{ 'index.flight_detail' | trans }}</li>
+                        {% if app.session.get('origin_flight').text is defined %}
+                            {% set origin = app.session.get('origin_flight').text|split(',') %}
+                        {% else %}
+                            {% set origin = "" %}
+                        {% endif %}
+                        {% if app.session.get('destination_flight').text is defined %}
+                            {% set destination = app.session.get('destination_flight').text|split(',') %}
+                        {% else %}
+                            {% set destination = "" %}
+                        {% endif %}
+                        {% if items.status is not defined %}
+                            {#<li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
+                                    {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
+                                </a></li>#}
+                        {% endif %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <ul class="breadcrumb">
-            <li><a href="#">Viento Sur</a></li>
-            <li><a href="#">{{ 'flights.flights' | trans }}</a></li>
-            {% if app.session.get('origin_flight').text is defined %}
-                {% set origin = app.session.get('origin_flight').text|split(',') %}
-            {% else %}
-                {% set origin = "" %}
-            {% endif %}
-            {% if app.session.get('destination_flight').text is defined %}
-                {% set destination = app.session.get('destination_flight').text|split(',') %}
-            {% else %}
-                {% set destination = "" %}
-            {% endif %}
-            {% if items.status is not defined %}
-            <li><a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
-                    {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
-                </a></li>
-            {% endif %}
-        </ul>
-
-        <br/>
-
-        <div class="row">
-
-            <div class="col-md-3">
-                {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+        <div class="wrapperFlights">
+            <div class="container">
+                <div class="row" style="display: none">
+                    <div class="col-xs-12 noPadding">
+                        <h1 class="message" class="totalHotels">
+                            <a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
+                                {% set lastDestination = multidestination | last %}
+                                {{ 'flights.flights_from_to' | trans({'%origin%': multidestination[0].fromFlight | split(',')[2], '%destination%': lastDestination.toFlight | split(',')[2]}) }}
+                            </a>
+                        </h1>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-9">
-                <div class="flight-filter">
+            <div class="row">
+
+
+
+                <div class="col-sm-8 col-sm-push-4" style="padding-left: 5px!important;">
+                    <div class="flight-filter">
+
+                    </div>
+
+                    <ul class="flight-list">
+                        {% include 'VientoSurAppAppBundle:Flight/MultiDestination:listDetailFlights.html.twig' %}
+                    </ul>
+
+                    <div class="row">
+                        <div class="col-md-12 center">
+                            <ul class="pagination" id="pagination">
+                            </ul>
+                        </div>
+                    </div>
 
                 </div>
 
-                <ul class="flight-list">
-                    {% include 'VientoSurAppAppBundle:Flight/MultiDestination:listDetailFlights.html.twig' %}
-                </ul>
-
-                {#{{ dump(items) }}#}
+                <div class="col-sm-4 col-sm-pull-8">
+                    {% include '@VientoSurAppApp/Flight/searchMenuLeft.html.twig' %}
+                </div>
 
             </div>
+
+
+
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="pagination" id="pagination">
-                </ul>
-            </div>
-        </div>
+
 
     </div>
+
 {% endblock %}
 
 

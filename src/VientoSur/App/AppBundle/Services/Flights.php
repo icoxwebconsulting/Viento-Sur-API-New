@@ -3,7 +3,12 @@
 namespace VientoSur\App\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Knp\Bundle\SnappyBundle\KnpSnappyBundle;
+use Knp\Bundle\SnappyBundle\Snappy\LoggableGenerator;
+use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use VientoSur\App\AppBundle\Entity\FlightPassengers;
 use VientoSur\App\AppBundle\Entity\FlightReservation;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -20,6 +25,9 @@ class Flights
     private $agentCode;
     private $emailService;
     private $logger;
+    private $knp_snappy_pdf;
+    private $templating;
+    private $container;
     private $resources = [
         'LOCAL_DOCUMENT' => 'DNI',
         'FINAL' => 'Consumidor Final',
@@ -36,13 +44,16 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger, LoggableGenerator $knp_snappy_pdf, TwigEngine $templating, ContainerInterface $container)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
         $this->em = $entityManager;
         $this->agentCode = $agentCode;
         $this->logger = $logger;
+        $this->knp_snappy_pdf = $knp_snappy_pdf;
+        $this->templating = $templating;
+        $this->container = $container;
     }
 
     public function getCheckoutData($urlParams)
@@ -550,6 +561,7 @@ class Flights
                 }
             }
             $this->em->flush();
+            if ($this->savedPdfToAttach($params['itinerary_id'], $reservation->getId()) == true) {
 
             //envío de correo
 //            try {
@@ -564,6 +576,7 @@ class Flights
 //            } catch (\Exception $e) {
 //                $this->logger->error('Booking Flight email error: ' . $e->getMessage());
 //            }
+            }
 
             return $reservation->getId();
         } else {
@@ -584,5 +597,38 @@ class Flights
         }
         ksort($paymentMethods, SORT_NUMERIC);
         return $paymentMethods;
+    }
+
+    public function savedPdfToAttach($itineraryId, $reservationId){
+        $fs = new Filesystem();
+
+        $itineraryDetail = $this->despegar->getFlightItineraryDetail($itineraryId);
+        $reservationResult = $this->em->getRepository('VientoSurAppAppBundle:FlightReservation')->find($reservationId);
+
+        $this->knp_snappy_pdf->generateFromHtml(
+            $this->templating->render(
+                '@VientoSurAppApp/layoutEmailFligthPdf.html.twig', array(
+                'itineraryDetail' => $itineraryDetail,
+                'id' => $itineraryId,
+                'reservation' => $reservationResult,
+                'pdf' => true
+            )),
+            $reservationResult->getReservationId().'.pdf'
+        );
+
+        $filePath = $this->container->getParameter('kernel.root_dir') . '/../web/'.$reservationResult->getReservationId().'.pdf';
+        $fs->rename($filePath, 'reservation-vs.pdf');
+
+        return true;
+    }
+
+    public function deleteFileAction()
+    {
+        $fs = new Filesystem();
+        $file = $this->container->getParameter('kernel.root_dir') . '/../web/reservation-vs.pdf';
+        if (file_exists($file)){
+            $fs->remove($file);
+        }
+        return 'file deleted';
     }
 }
