@@ -1,9 +1,9 @@
 <div class="list-group pay-methods-panel">
     {% for paymentMethod in paymentMethods %}
         {% if paymentMethod.type != 'debit_card' %}
-        <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})">
+        <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})" style="padding: 0px 15px;">
             {% set type = paymentMethod.type %}
-            <h4 class="list-group-item-heading">
+            <h4 class="list-group-item-heading" style="margin-bottom: 0px; font-size: 14px">
                 {{ form_widget(attribute(formNewPay.payment.paymentMethod, loop.index0)) }}
                 {% if paymentMethod.installment_quantity is defined %}
                     {% if paymentMethod.installment_quantity == 1 %}

@@ -451,8 +451,8 @@
                                             {# fee list to choose#}
                                             <div class="list-group pay-methods-panel">
                                                 {% for cuotas, bank in paymentMethods %}
-                                                    <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})" style="padding-bottom: 0px;">
-                                                        <h4 class="list-group-item-heading">
+                                                    <a href="javascript:void(0)" class="list-group-item" onclick="selectCuote({{ loop.index }})" style="padding: 0px 15px;">
+                                                        <h4 class="list-group-item-heading" style="margin-bottom: 0px; font-size: 14px">
                                                             <input type="radio" name="paymentOption" value="{{ cuotas }}" {% if loop.index == 1 %}checked="checked"{% endif %} required>
                                                             <span id="span-text-{{ loop.index }}">
                                         <b style="font-weight: bold !important;">{{ cuotas }}</b> {{ 'flights.quota' | trans }}{% if cuotas > 1 %}s{% endif %}
