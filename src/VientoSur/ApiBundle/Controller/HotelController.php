@@ -86,6 +86,20 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "description"="The currency upon which the prices will be shown."
      *      },
      *     {
+     *          "name"="offset",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0",
+     *          "description"="The pagination offset for the current collection."
+     *      },
+     *     {
+     *          "name"="limit",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0",
+     *          "description"="The number of collection results to display during pagination. Should be between 0 and 100 inclusive."
+     *      },
+     *     {
      *          "name"="sorting",
      *          "dataType"="string",
      *          "required"=true,
@@ -185,6 +199,8 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $profiles = $request->query->get('profiles');
         $hotelChains = $request->query->get('hotel_chains');
         $totalPriceRange = $request->query->get('total_price_range');
+        $offset = $request->query->get('offset');
+        $limit = $request->query->get('limit');
 
         /**
          * Processed date
@@ -200,6 +216,14 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
 
         if (!$sorting) {
             $sorting = 'best_selling_descending';
+        }
+
+        if (!$offset) {
+            $offset = 0;
+        }
+
+        if (!$limit) {
+            $limit = 10;
         }
 
         $urlParams = array(
@@ -223,8 +247,8 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             'profiles' => $profiles,
             'hotel_chains' => $hotelChains,
             'total_price_range' => $totalPriceRange,
-            'offset' => '0'/*,
-            'limit' => '25'*/
+            'offset' => $offset,
+            'limit' => $limit
         );
 
 //        echo "<pre>" . print_r($urlParams, true) . "</pre>";
