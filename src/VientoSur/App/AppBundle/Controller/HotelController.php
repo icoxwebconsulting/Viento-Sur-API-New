@@ -305,26 +305,43 @@ class HotelController extends Controller
             ]
         ];
 
+        $sortArrayMobile = [
+            'price' => '',
+            'star' => '',
+            'best' => '',
+            'other' => '',
+            'selected' => [
+                'category' => '',
+                'name' => ''
+            ]
+        ];
+
         foreach ($results['sorting']['values'] as $sort) {
             if (array_key_exists($sort['value'], $sortMapping)) {
                 $element = ' class="nav-drop-menu-a" data-value="' . $sort['value'] . '">' . $sortMapping[$sort['value']] . '</a></li>';
+                $elementMobile = ' class="nav-drop-menu-a mobile" data-value="' . $sort['value'] . '">' . $sortMapping[$sort['value']] . '</a></span></label></li>';
                 $category = '';
                 if (in_array($sort['value'], ['best_selling_descending', 'subtotal_price_ascending', 'subtotal_price_descending'])) {
                     $category = 'price';
                     $sortArray['price'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                    $sortArrayMobile['price'] .= '<li><label for="radio-two" class="radio-inline" data-dismiss="modal"><input type="radio" value="radio-two" name="quality" id="radio-two"><span><a href="javascript:void(0);" data-category="' . $category . '" ' . $elementMobile;
                 } else if (in_array($sort['value'], ['stars_descending', 'stars_ascending'])) {
                     $category = 'star';
                     $sortArray['star'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                    $sortArrayMobile['star'] .= '<li><label for="radio-two" class="radio-inline" data-dismiss="modal"><input type="radio" value="radio-two" name="quality" id="radio-two"><span><a href="javascript:void(0);" data-category="' . $category . '" ' . $elementMobile;
                 } else if (in_array($sort['value'], ['rate_descending', 'location_descending', 'quality_price_descending'])) {
                     $category = 'best';
                     $sortArray['best'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                    $sortArrayMobile['best'] .= '<li><label for="radio-two" class="radio-inline" data-dismiss="modal"><input type="radio" value="radio-two" name="quality" id="radio-two"><span><a href="javascript:void(0);" data-category="' . $category . '" ' . $elementMobile;
                 } else if (in_array($sort['value'], ['logged_user_descending', 'cross_selling_descending'])) {
                     $category = 'other';
                     $sortArray['other'] .= '<li><a href="javascript:void(0);" data-category="' . $category . '" ' . $element;
+                    $sortArrayMobile['other'] .= '<li><label for="radio-two" class="radio-inline" data-dismiss="modal"><input type="radio" value="radio-two" name="quality" id="radio-two"><span><a href="javascript:void(0);" data-category="' . $category . '" ' . $elementMobile;
                 }
                 if ($sort['selected']) {
                     $sortArray['selected']['category'] = $category;
                     $sortArray['selected']['name'] = $sortMapping[$sort['value']];
+                    $sortArrayMobile['selected']['name'] = $sortMapping[$sort['value']];
                 }
             }
         }
@@ -343,7 +360,8 @@ class HotelController extends Controller
             'travellers' => $travellers,
             'tripProfile' => $this->get('booking_helper')->getTripProfiles(),
             'destination' => $destination,
-            'sortArray' => $sortArray
+            'sortArray' => $sortArray,
+            'sortArrayMobile' => $sortArrayMobile
         );
 
         if ($request->isXmlHttpRequest()) {

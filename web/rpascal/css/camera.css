@@ -1070,3 +1070,8 @@
 .camera_yellow_skin .camera_commands > .camera_stop {
 	background-position: -120px -1240px	;
 }
+
+.camera_thumb{
+	width: 100px!important;
+	height: 70px!important;
+}

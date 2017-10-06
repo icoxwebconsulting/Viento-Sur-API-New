@@ -44,21 +44,15 @@
             <span class="sr-only">Next</span>
         </a>
         <!-- SEARCH -->
-        <div class="search">
+        <div class="search" id="desktop-wrapper">
 
             <div class="tabbed round">
                 <ul role="tablist">
-                    <li href="#vuelos" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> {{ 'index.flights' | trans }}</a></li>
+                    <li id="vuelos-tab" href="#vuelos" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> {{ 'index.flights' | trans }}</a></li>
                     <li class="active" href="#hoteles" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> {{ 'index.hotels' | trans }}</a></li>
                 </ul>
             </div>
-            <!-- Nav tabs -->
 
-            {#<ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#hoteles" onclick="showHotelItems()" aria-controls="hoteles" role="tab" data-toggle="tab" id="hotel-tab"><i class="fa fa-building" aria-hidden="true"></i> {{ 'index.hotels' | trans }}</a></li>
-                <li role="presentation"><a href="#vuelos" onclick="hideHotelItems()" aria-controls="vuelos" role="tab" data-toggle="tab" id="flight-tab"><i class="fa fa-plane" aria-hidden="true"></i> {{ 'index.flights' | trans }}</a></li>
-            </ul>#}
-            <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane {% if flightMenu is not defined  %}active{% endif %} row" id="hoteles">
                     {% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}
@@ -69,7 +63,39 @@
             </div>
         </div>
     </div>
-    <div class="top-area show-onload">
+
+    <div class="wrapper">
+        <div class="mobileSearch visible-xs" style="padding-top: 150px">
+            <div class="row" style="margin-right: 0px; margin-left: 0px">
+                <div class="col-xs-12">
+                    <div class="search">
+                        <div class="tabbed round">
+                            <ul role="tablist">
+                                <li href="#vuelos2" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> Vuelos</a></li>
+                                <li class="active" href="#hoteles2" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> Hoteles</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane {% if flightMenu is not defined  %}active{% endif %} row" id="hoteles2">
+                                {% include 'VientoSurAppAppBundle:Hotel:searchHotels.html.twig' %}
+                            </div>
+                            <div role="tabpanel" class="scroller-flight tab-pane {% if flightMenu is defined  %}active{% endif %}" id="vuelos2">
+                                {% include 'VientoSurAppAppBundle:Flight:searchFlight.html.twig' %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="promotions">
+            {% include 'VientoSurAppAppBundle:Index:promotions.html.twig' %}
+        </div>
+    </div>
+
+    {#<div class="top-area show-onload">
         {% if sections is defined %}
         <div class="tab-content"  id="tab-hotel-1">
             <div class="tab-pane in {% if flightMenu is not defined  %}active{% endif %}">
@@ -77,13 +103,14 @@
             </div>
         </div>
         {% endif %}
-    </div>
+    </div>#}
     <!-- END TOP AREA  -->
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
 <script src="{{ asset('js/flight-form.js') }}"></script>
+
 <script>
     function optionChangeCurrency(currency){
         change(currency);
@@ -156,4 +183,21 @@
         checkout.hide();
     }).data('datepicker');
 </script>
+    <script>
+        function device() {
+            if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if(device() == true){
+            $('#carousel-example-generic').html('');
+            $('#desktop-search-tab').html('');
+//            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" class="map-mobile" style="width:600px; height:450px;"></div></div>')
+        }else{
+            $('#mobile-search-tab').html('');
+        }
+    </script>
 {% endblock %}

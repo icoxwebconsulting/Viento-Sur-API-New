@@ -62,6 +62,9 @@ index:
            age: Age
            searching: Searching Hotels...
         flight:
+           where: Where
+           multidestination: Multidestination
+           round_trip: Round trip
            title: Find your Flight
            from: Origin
            from_placeholder: Enter from where you travel
@@ -130,6 +133,7 @@ hotels:
     show_rooms: Show rooms
     choose_room: Choose room
     pictures: Pictures
+    picture: Picture
     map: Mapa
     entry: Entry
     number_guests: Number of guests
@@ -178,7 +182,9 @@ hotels:
         filter_travel_profile: Filtro Perfil de viaje
     number_of_rooms: Number of rooms
     available_rooms: Availables rooms
+    capacity: Capacity
     max_capacity: Maximum capacity
+    options: options
     food_regime: Food regime
     cancellation_policies: Cancellation policies
     drinks_included: Drinks included
@@ -283,6 +289,7 @@ hotels:
         subscribe_newsletter: Subscribe to newsletter:
         travel_assistance: Travel assistance:
 flights:
+    since: Since
     flights: Flights
     flight: Flight
     not_found: Ops! For the date and destiny no flights were found available
@@ -325,7 +332,8 @@ flights:
     rate_per_adult: Rate per adult
     charges: Charges
     stop: Stop
-    waiting_time: Waiting time
+    stops: Stops
+    waiting_time: Flight time
     outgoing: Outgoing
     incoming: Incoming
     reservation_data: Reservation data
@@ -512,3 +520,4 @@ admin:
     pick_address: Please enter the hotel address and move the marker
     gallery_photo: Photo gallery
     complete_profile: Complete your profile
+    total_records: Total records

@@ -19,15 +19,29 @@ use BackendBundle\Form\PromotionSectionsType;
 class PromotionSectionsController extends Controller
 {
     /**
+     * @param $request
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="promotion_sections_list")
+     * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository("VientoSurAppAppBundle:PromotionSections")->findAll();
+
+        $dql = "SELECT ps 
+                FROM VientoSurAppAppBundle:PromotionSections ps 
+                ORDER BY ps.id ASC";
+        $query = $em->createQuery($dql);
+
+        $page = $request->query->getInt('page', 1);
+        $paginator = $this->get('knp_paginator');
+        $items_per_page = $this->getParameter('items_per_page');
+
+        $pagination = $paginator->paginate($query, $page, $items_per_page);
+
+
         return $this->render(':admin/promotionSections:list.html.twig', array(
-            'entities' => $entities
+            'pagination' => $pagination
         ));
     }
 

@@ -15,11 +15,13 @@
                 <i class="fa fa-align-justify"></i> {{ 'admin.room_manager' | trans }}
             </div>
             <div class="card-block">
+                <div class="count">
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ 'admin.period' | trans }}</th>
                         <th>{{ 'index.hotel' | trans }}</th>
                         <th>{{ 'admin.name' | trans }}</th>
                         <th>{{ 'hotels.payment_methods' | trans }}</th>
@@ -27,6 +29,7 @@
                         <th>{{ 'hotels.available_rooms' | trans }}</th>
                         <th>{{ 'hotels.max_capacity' | trans }}</th>
                         <th>{{ 'hotels.price_per_night' | trans }}</th>
+                        <th>{{ 'hotels.picture' | trans }}</th>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <th>{{ 'admin.created_by' | trans }}</th>
                         {% endif %}
@@ -34,7 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {%  for entity in entities %}
+                    {%  for entity in pagination %}
                         {% if is_granted('ROLE_ADMIN') %}
                             {% include ':admin/room:list_content.html.twig' %}
                         {% elseif is_granted('ROLE_HOTELIER') %}
@@ -45,7 +48,37 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .gallery
+        {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            //FANCYBOX
+            //https://github.com/fancyapps/fancyBox
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none",
+                arrows: false
+            });
+        });
+    </script>
 {% endblock %}

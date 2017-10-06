@@ -19,18 +19,39 @@ use BackendBundle\Form\RoomsType;
 class RoomController extends Controller
 {
     /**
+     * @param $request
      * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="room_list")
      * @Method("GET")
      * @return response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository("VientoSurAppAppBundle:Room")->findAll();
 
+        $images = array();
+        for($i = 0; $i < count($entities); $i++){
+            $images[$i] = $em->getRepository('VientoSurAppAppBundle:Picture')->findOneBy(
+                array('room' => $entities[$i]->getId()),
+                array('id' =>'ASC'),
+                1);
+        }
+
+        $dql = "SELECT r 
+                FROM VientoSurAppAppBundle:Room r 
+                ORDER BY r.id ASC";
+        $query = $em->createQuery($dql);
+
+        $page = $request->query->getInt('page', 1);
+        $paginator = $this->get('knp_paginator');
+        $items_per_page = $this->getParameter('items_per_page');
+
+        $pagination = $paginator->paginate($query, $page, $items_per_page);
+
         return $this->render(':admin/room:list.html.twig', array(
-            'entities' => $entities
+            'pagination' => $pagination,
+            'images' => $images
         ));
     }
 

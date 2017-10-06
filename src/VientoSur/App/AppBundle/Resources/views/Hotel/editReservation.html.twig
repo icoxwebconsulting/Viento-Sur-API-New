@@ -1,8 +1,19 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 
-{% block content %}
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
 
-    <div class="container">
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}{{ 'index.hotels' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'hotels.edit_reservation' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+    <div class="container" style="margin-bottom:20px; max-width: 1170px">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">

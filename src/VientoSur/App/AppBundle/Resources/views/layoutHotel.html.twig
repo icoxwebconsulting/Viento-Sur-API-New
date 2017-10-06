@@ -4,6 +4,12 @@
 
 {% block stylesheets %}
     <link href="{{ asset('css/ionRangeSlider.css') }}" rel="stylesheet"/>
+    <style>
+        span.irs-single, span.irs-from, span.irs-to {
+            font-size: 15px;
+            color: #fff;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -105,30 +111,69 @@
 
         $(document).ready(function () {
             {#Usa código heredado de base#}
-            var from = $("#field-hotel-checkin").datepicker({
-                dateFormat: dateFormat,
-                dayNamesMin: dayNamesMin,
-                monthNames: monthNames,
-                defaultDate: "+1w",
-                numberOfMonths: 2,
-                minDate: 0,
-                onClose: function (selectedDate) {
-                    var minDate = $(this).datepicker('getDate');
-                    if (minDate) {
-                        var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
-                        $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
-                    }
+
+            function device() {
+                if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+                    return true;
+                } else {
+                    return false;
                 }
-            });
-            var to = $("#field-hotel-checkout").datepicker({
-                dateFormat: dateFormat,
-                dayNamesMin: dayNamesMin,
-                monthNames: monthNames,
-                defaultDate: "+1w",
-                numberOfMonths: 2
-            }).on("change", function () {
-                from.datepicker("option", "maxDate", getDate(this));
-            });
+            }
+
+            if(device() == true){
+                var from = $("#field-hotel-checkin").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    numberOfMonths: 1,
+                    minDate: 0,
+                    onClose: function (selectedDate) {
+                        var minDate = $(this).datepicker('getDate');
+                        if (minDate) {
+                            var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                            $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
+                        }
+                    }
+                });
+            }else {
+                var from = $("#field-hotel-checkin").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    defaultDate: "+1w",
+                    numberOfMonths: 2,
+                    minDate: 0,
+                    onClose: function (selectedDate) {
+                        var minDate = $(this).datepicker('getDate');
+                        if (minDate) {
+                            var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                            $("#field-hotel-checkout").datepicker("option", "minDate", newMin);
+                        }
+                    }
+                });
+            }
+
+            if(device() == true){
+                var to = $("#field-hotel-checkout").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    numberOfMonths: 1
+                }).on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
+            }else{
+                var to = $("#field-hotel-checkout").datepicker({
+                    dateFormat: dateFormat,
+                    dayNamesMin: dayNamesMin,
+                    monthNames: monthNames,
+                    defaultDate: "+1w",
+                    numberOfMonths: 2
+                }).on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
+            }
+
         });
         function moveProgressBar(elem) {
             var width = 1;

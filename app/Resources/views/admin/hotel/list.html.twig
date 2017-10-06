@@ -15,6 +15,9 @@
                 <i class="fa fa-align-justify"></i> {{ 'admin.hotels_manager' | trans }}
             </div>
             <div class="card-block">
+                <div class="count">
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -23,6 +26,7 @@
                         <th>{{ 'hotels.address' | trans }}</th>
                         <th>{{ 'hotels.stars' | trans }}</th>
                         <th>{{ 'hotels.search_menu.type' | trans }}</th>
+                        <th>{{ 'hotels.picture' | trans }}</th>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <th>{{ 'admin.percentage_gain' | trans }}</th>
                         <th>{{ 'admin.created_by' | trans }}</th>
@@ -31,7 +35,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {%  for entity in entities %}
+                    {%  for entity in pagination %}
                         {% if is_granted('ROLE_ADMIN') %}
                             {% include ':admin/hotel:list_content.html.twig' %}
                         {% elseif is_granted('ROLE_HOTELIER') %}
@@ -42,7 +46,36 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .gallery
+        {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            //FANCYBOX
+            //https://github.com/fancyapps/fancyBox
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none",
+                arrows: false
+            });
+        });
+    </script>
 {% endblock %}

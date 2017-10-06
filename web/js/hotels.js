@@ -1,4 +1,10 @@
 $(document).ready(function () {
+
+    $('#data-adults').text(1);
+    $('#data-childs').text(0);
+    $('#data-room').text(1);
+    $('#roomsQty').val(1);
+
     $('.coupled').change(function () {
         var couple = $(this).data('couple');
         couple = couple.split('.');

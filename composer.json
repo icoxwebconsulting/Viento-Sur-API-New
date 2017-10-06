@@ -33,7 +33,8 @@
         "friendsofsymfony/user-bundle": "~1.3",
         "stof/doctrine-extensions-bundle": "^1.2",
         "knplabs/knp-time-bundle": "^1.7",
-        "vich/uploader-bundle": "^1.4"
+        "vich/uploader-bundle": "^1.4",
+        "knplabs/knp-paginator-bundle": "^2.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

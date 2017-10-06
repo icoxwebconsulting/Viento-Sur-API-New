@@ -1,6 +1,5 @@
 <tr>
     <td>{{ entity.id }}</td>
-    <td>{{ entity.created | ago }}</td>
     <td>
         {% if entity.hotel %}
             {{ entity.hotel.name }}
@@ -40,6 +39,15 @@
     <td>{{ entity.availability }}</td>
     <td>{{ entity.capacity }}</td>
     <td>{{ entity.nightlyPrice }}</td>
+    <td>
+        {% if images[loop.index0] is not null and images[loop.index0].room.id == entity.id %}
+            <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('uploads/gallery_image/') }}{{ images[loop.index0].imageName }}">
+                <img class="img-responsive" src="{{ asset('uploads/gallery_image/') }}{{ images[loop.index0].imageName }}" style="width: 100px;height: 100px;">
+            </a>
+        {% else %}
+            <img src="{{ asset('uploads/gallery_image/320x320.png') }}" style="width: 100px; height: 100px;">
+        {% endif %}
+    </td>
     {% if is_granted('ROLE_SUPER_ADMIN') %}
     <td>
         {% if entity.createdBy %}

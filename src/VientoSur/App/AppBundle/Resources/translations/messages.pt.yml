@@ -128,6 +128,7 @@ hotels:
     show_rooms: Ver quartos
     choose_room: Escolher quarto
     pictures: Fotos
+    picture: Foto
     map: Mapa
     entry: Entrada
     number_guests: Número de convidados
@@ -322,7 +323,8 @@ flights:
     rate_per_adult: Tarifa por adulto
     charges: Cargos
     stop: Parar
-    waiting_time: Tempo de espera
+    stops: Pára
+    waiting_time: Tempo de voo
     outgoing: Saída
     incoming: Chegada
     reservation_data: Dados de reserva
@@ -510,3 +512,4 @@ admin:
     pick_address: Digite o endereço do hotel e mover o marcador
     gallery_photo: Galeria de fotos
     complete_profile: Complete seu perfil
+    total_records: Registros totais

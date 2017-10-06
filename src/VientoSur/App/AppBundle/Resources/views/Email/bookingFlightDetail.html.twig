@@ -6,6 +6,12 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
+
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}{{ 'index.flights' | trans }}{% endblock %}
+        {% block sub_section %}{{ 'index.purchase_summary' | trans }}{% endblock %}
+    {% endembed %}
     <div class="container">
         <div class="container bs-docs-container">
             <br>
@@ -415,4 +421,14 @@
             {#{% endif %}#}
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+           $('.global-wrap').after($('#main-footer'))
+        });
+    </script>
+    {#<style>#}
+        {#.container > #main-footer {#}
+            {#display: none;#}
+        {#}#}
+    {#</style>#}
 {% endblock %}
