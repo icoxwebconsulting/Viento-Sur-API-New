@@ -1274,8 +1274,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .descriptionHotel p{
-	font-family: 'latolight';
-	color: #1C1C1C;
+	color: #333;
 	font-size: 1.33vw;
 	margin-bottom: 0.83vw;
 	line-height: 2vw;
@@ -1530,7 +1529,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel table td h4{
-	font-size: 15px;
+	font-size: 13px;
 	font-family: 'latobold';
 	color: #008cd0;
 }
