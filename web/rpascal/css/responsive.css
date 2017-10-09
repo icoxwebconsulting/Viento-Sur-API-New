@@ -131,7 +131,7 @@
     }
 
     .search .tab-content .modal-dialog .titleSection{
-        font-size: 18px;
+        font-size: 14px;
         padding-bottom: 10px;
     }
 
@@ -145,7 +145,7 @@
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -164,7 +164,7 @@
     }
 
     .search .tab-content .modal-dialog .addRoom a{
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .search .tab-content .selectPassengers  label {
@@ -386,7 +386,7 @@
 
     #thumbHotel .priceRoom h5{
         font-size: 15px;
-        margin: 40px 0 0 0;
+        margin: 15px 0 0 0;
     }
 
     #thumbHotel .priceRoom h5 span{
@@ -423,8 +423,8 @@
     }
 
     #descriptionHotel .adress{
-        font-size: 16px;
-        line-height: 38px;
+        font-size: 14px;
+        line-height: 27px;
     }
 
     #descriptionHotel .adress a{
@@ -433,7 +433,8 @@
     }
 
     #descriptionHotel ul.starsHotel{
-        margin-top: 10px;
+        margin-top: 5px;
+        margin-bottom: 0px;
     }
 
     #descriptionHotel ul.starsHotel li{
