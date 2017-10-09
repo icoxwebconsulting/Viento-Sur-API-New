@@ -246,7 +246,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
-                                <p class="adress">
+                                <p class="adress" style="margin-bottom: 0px">
                                     {{ hotelDetails.location.address }} {{ app.session.get('destination').text | split(',')[0] }}, {{ app.session.get('destination').text | split(',')[2] }}
                                     {#<a class="item-map-address" data-prevent="modal"  data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-name="{{ hotelDetails.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>#}
                                 </p>
