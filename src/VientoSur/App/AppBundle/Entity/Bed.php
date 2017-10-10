@@ -78,29 +78,6 @@ class Bed
     }
 
     /**
-     * Set size
-     *
-     * @param string $size
-     * @return Bed
-     */
-    public function setSize($size)
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    /**
-     * Get size
-     *
-     * @return string 
-     */
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-    /**
      * Set room
      *
      * @param \VientoSur\App\AppBundle\Entity\Room $room

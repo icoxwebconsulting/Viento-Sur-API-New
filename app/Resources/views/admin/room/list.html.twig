@@ -18,37 +18,49 @@
                 <div class="count">
                     <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
                 </div>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ 'index.hotel' | trans }}</th>
-                        <th>{{ 'admin.name' | trans }}</th>
-                        <th>{{ 'hotels.payment_methods' | trans }}</th>
-                        <th>{{ 'index.meal_plan' | trans }}</th>
-                        <th>{{ 'hotels.available_rooms' | trans }}</th>
-                        <th>{{ 'hotels.max_capacity' | trans }}</th>
-                        <th>{{ 'hotels.price_per_night' | trans }}</th>
-                        <th>{{ 'hotels.picture' | trans }}</th>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <th>{{ 'admin.created_by' | trans }}</th>
+                <div class="search">
+                    <form action="{{ path('room_list') }}">
+                        <input type="text" name="query" class="form-group" value="{{ app.request.get('query') }}" placeholder="{{ 'admin.search' | trans }}">
+                        <button class="btn btn-sm btn-success">{{ 'hotels.search_menu.apply' | trans }}</button>
+                        {% if app.request.get('query') %}
+                            <a href="{{ path('room_list') }}" class="btn btn-sm btn-danger">{{ 'admin.delete' | trans }}</a>
                         {% endif %}
-                        <th>{{ 'admin.actions' | trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {%  for entity in pagination %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            {% include ':admin/room:list_content.html.twig' %}
-                        {% elseif is_granted('ROLE_HOTELIER') %}
-                            {% if entity.createdBy.id == app.user.id %}
-                                {% include ':admin/room:list_content.html.twig' %}
+                    </form>
+                </div>
+                {% if not pagination | length %}
+                <h6 class="box-title">{{ 'admin.search_not_found' | trans }}</h6>
+                {% else %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'index.hotel' | trans }}</th>
+                            <th>{{ 'admin.name' | trans }}</th>
+                            <th>{{ 'hotels.payment_methods' | trans }}</th>
+                            <th>{{ 'index.meal_plan' | trans }}</th>
+                            <th>{{ 'hotels.available_rooms' | trans }}</th>
+                            <th>{{ 'hotels.max_capacity' | trans }}</th>
+                            <th>{{ 'hotels.price_per_night' | trans }}</th>
+                            <th>{{ 'hotels.picture' | trans }}</th>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <th>{{ 'admin.created_by' | trans }}</th>
                             {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
-
+                            <th>{{ 'admin.actions' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%  for entity in pagination %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {% include ':admin/room:list_content.html.twig' %}
+                            {% elseif is_granted('ROLE_HOTELIER') %}
+                                {% if entity.createdBy.id == app.user.id %}
+                                    {% include ':admin/room:list_content.html.twig' %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
                 <div class="navigation">
                     {{ knp_pagination_render(pagination) }}
                 </div>
@@ -64,6 +76,16 @@
         {
             display: inline-block;
             margin-top: 20px;
+        }
+        .search {
+            display: inline-block;
+            float: right;
+        }
+        .count {
+            display: inline-block;
+        }
+        h6.box-title{
+            margin-top: 50px;
         }
     </style>
 {% endblock %}

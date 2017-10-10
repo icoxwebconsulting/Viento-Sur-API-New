@@ -513,3 +513,5 @@ admin:
     gallery_photo: Galeria de fotos
     complete_profile: Complete seu perfil
     total_records: Registros totais
+    search: Para pesquisar
+    search_not_found: Não encontramos resultados para a sua pesquisa

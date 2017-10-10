@@ -521,3 +521,5 @@ admin:
     gallery_photo: Photo gallery
     complete_profile: Complete your profile
     total_records: Total records
+    search: Search
+    search_not_found: We did not find any results for your search
