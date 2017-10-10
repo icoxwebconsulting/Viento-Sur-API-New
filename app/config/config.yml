@@ -210,3 +210,108 @@ knp_paginator:
     template:
         pagination: 'KnpPaginatorBundle:Pagination:foundation_v5_pagination.html.twig'     # sliding pagination controls template
         sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig' # sort link template
+
+#foselastica config
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            types:
+                reservation:
+                    properties:
+                        hotelId: ~
+                        reservationId: ~
+                        totalPrice: ~
+                        holderName: ~
+                        checkin: ~
+                        checkout: ~
+                        origin: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\Reservation
+                        provider: ~
+                        finder: ~
+                hotel:
+                    properties:
+                        name: ~
+                        description: ~
+                        address: ~
+                        stars: ~
+                        origen: ~
+                        latitude: ~
+                        longitude: ~
+                        percentageGain: ~
+                        hotelTypes: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\Hotel
+                        provider: ~
+                        finder: ~
+                room:
+                    properties:
+                        name: ~
+                        roomCode: ~
+                        availability: ~
+                        capacity: ~
+                        nightlyPrice: ~
+                        cancellationPolicity: ~
+                        paymentType: ~
+                        mealPlan: ~
+                        hotel: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\Room
+                        provider: ~
+                        finder: ~
+                bed:
+                    properties:
+                        name: ~
+                        quantity: ~
+                        room: ~
+                        bedType: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\Bed
+                        provider: ~
+                        finder: ~
+                promotionSections:
+                    properties:
+                        title: ~
+                        subtitle: ~
+                        status: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\PromotionSections
+                        provider: ~
+                        finder: ~
+                promotion:
+                    properties:
+                        name: ~
+                        description: ~
+                        link: ~
+                        section: ~
+                        status: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\Promotions
+                        provider: ~
+                        finder: ~

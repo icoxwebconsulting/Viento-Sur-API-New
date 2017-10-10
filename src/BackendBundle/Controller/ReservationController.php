@@ -26,24 +26,31 @@ class ReservationController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $querySearch = $request->get('query');
+
         $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
 
-        if ($securityContext->isGranted('ROLE_ADMIN')) {
-            $dql = "SELECT r
-                FROM VientoSurAppAppBundle:Reservation r 
-                ORDER BY r.id ASC";
+        if(!empty($querySearch)){
+            $finder = $this->container->get('fos_elastica.finder.app.reservation');
+            $query = $finder->createPaginatorAdapter($querySearch);
         }else{
-            $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
-                'created_by' => $this->getUser()->getId()
-            ));
-            $dql = "SELECT r
-                FROM VientoSurAppAppBundle:Reservation r
-                WHERE r.hotelId = ".$hotel->getId()."
-                ORDER BY r.id ASC";
+            if ($securityContext->isGranted('ROLE_ADMIN')) {
+                $dql = "SELECT r
+                    FROM VientoSurAppAppBundle:Reservation r
+                    ORDER BY r.id ASC";
+            }else{
+                $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
+                    'created_by' => $this->getUser()->getId()
+                ));
+                $dql = "SELECT r
+                    FROM VientoSurAppAppBundle:Reservation r
+                    WHERE r.hotelId = ".$hotel->getId()."
+                    ORDER BY r.id ASC";
+            }
+            $query = $em->createQuery($dql);
         }
 
-        $query = $em->createQuery($dql);
 
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');

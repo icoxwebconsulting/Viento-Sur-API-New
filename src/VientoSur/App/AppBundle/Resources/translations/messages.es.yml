@@ -522,3 +522,5 @@ admin:
     gallery_photo: Galería de fotos
     complete_profile: Completa tu perfil
     total_records: Total de registros
+    search: Buscar
+    search_not_found: No se ha encontrado algún resultado por su búsqueda
