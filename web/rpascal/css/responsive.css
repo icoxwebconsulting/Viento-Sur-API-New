@@ -131,7 +131,7 @@
     }
 
     .search .tab-content .modal-dialog .titleSection{
-        font-size: 18px;
+        font-size: 14px;
         padding-bottom: 10px;
     }
 
@@ -145,7 +145,7 @@
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
-        font-size: 16px;
+        font-size: 12px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -164,7 +164,7 @@
     }
 
     .search .tab-content .modal-dialog .addRoom a{
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .search .tab-content .selectPassengers  label {
@@ -225,20 +225,20 @@
     /*----- END NAVBAR -----*/
     /*----- GO BREADCRUMB -----*/
     #breadcrumb{
-        padding: 10px 0;
+        padding: 5px 0;
     }
 
     #breadcrumb ol li a{
-        font-size: 13px;
+        font-size: 12px;
     }
 
     #breadcrumb ol li.active{
-        font-size: 15px;
+        font-size: 13px;
     }
 
     .breadcrumb li + li:before {
         padding: 0 5px;
-        font-size: 14px;
+        font-size: 13px;
     }
     /*----- END BREADCRUMB -----*/
 
@@ -386,7 +386,7 @@
 
     #thumbHotel .priceRoom h5{
         font-size: 15px;
-        margin: 40px 0 0 0;
+        margin: 15px 0 0 0;
     }
 
     #thumbHotel .priceRoom h5 span{
@@ -415,7 +415,7 @@
 
     /*----- GO DETAIL HOTEL -----*/
     .wrapperHotelDatail, .wrapperReservation{
-        padding: 30px 0;
+        padding: 15px 0;
     }
 
     #descriptionHotel .titleHotel{
@@ -423,8 +423,8 @@
     }
 
     #descriptionHotel .adress{
-        font-size: 16px;
-        line-height: 38px;
+        font-size: 14px;
+        line-height: 27px;
     }
 
     #descriptionHotel .adress a{
@@ -433,7 +433,8 @@
     }
 
     #descriptionHotel ul.starsHotel{
-        margin-top: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
     }
 
     #descriptionHotel ul.starsHotel li{
@@ -456,7 +457,7 @@
 
     #descriptionHotel .boxPrice h5{
         font-size: 24px;
-        margin: 10px 0;
+        margin: 5px 0;
     }
 
     #descriptionHotel .boxPrice button{
@@ -589,7 +590,7 @@
     }
 
     #processPayment .panel-default{
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     #processPayment .panel-heading{
@@ -597,24 +598,24 @@
     }
 
     #processPayment .panel-title{
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #processPayment .panel-body h5{
-        font-size: 18px;
+        font-size: 12px;
     }
 
     #processPayment .panel-body input{
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     #processPayment .panel-body select{
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     #processPayment .panel-body textarea{
         min-height: 200px;
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     #processPayment .panel-body .bg-success{
@@ -629,7 +630,7 @@
     }
 
     #processPayment .datesPayment{
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     #processPayment .datesPayment h2{

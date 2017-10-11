@@ -27,12 +27,17 @@ class PromotionsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $querySearch = $request->get('query');
 
-        $dql = "SELECT p 
+        if(!empty($querySearch)){
+            $finder = $this->container->get('fos_elastica.finder.app.promotion');
+            $query = $finder->createPaginatorAdapter($querySearch);
+        }else {
+            $dql = "SELECT p 
                 FROM VientoSurAppAppBundle:Promotions p 
                 ORDER BY p.id ASC";
-        $query = $em->createQuery($dql);
-
+            $query = $em->createQuery($dql);
+        }
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');
         $items_per_page = $this->getParameter('items_per_page');

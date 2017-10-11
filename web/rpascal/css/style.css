@@ -1235,7 +1235,7 @@ figure.effect-goliath:hover p {
 /*----- GO DETAIL HOTEL -----*/
 
 .wrapperHotelDatail, .wrapperReservation, .wrapperFlights{
-	padding: 2.5vw 0;
+	padding: 15px 0;
 }
 
 #descriptionHotel .titleHotel{
@@ -1311,7 +1311,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .galleryHotel{
-	margin-top: 20px;
+	margin-top: 0px;
 }
 
 #descriptionHotel .itemsHotel{
@@ -1461,6 +1461,7 @@ figure.effect-goliath:hover p {
 	background: #02003B;
 	font-family: 'latoregular';
 	font-size: 14px;
+	font-weight: normal;
 }
 
 .listRooms table td{
@@ -1675,7 +1676,7 @@ figure.effect-goliath:hover p {
 #processPayment .panel-body input{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 35px;
+	height: 30px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
@@ -1684,7 +1685,7 @@ figure.effect-goliath:hover p {
 #processPayment .panel-body select{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 35px;
+	height: 30px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;

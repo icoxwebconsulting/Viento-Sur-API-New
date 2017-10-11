@@ -26,6 +26,8 @@ class HotelController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $querySearch = $request->get('query');
+
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
 
@@ -37,10 +39,15 @@ class HotelController extends Controller
             1);
         }
 
-        $dql = "SELECT h
+        if(!empty($querySearch)){
+            $finder = $this->container->get('fos_elastica.finder.app.hotel');
+            $query = $finder->createPaginatorAdapter($querySearch);
+        }else {
+            $dql = "SELECT h
                 FROM VientoSurAppAppBundle:Hotel h 
                 ORDER BY h.id ASC";
-        $query = $em->createQuery($dql);
+            $query = $em->createQuery($dql);
+        }
 
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');

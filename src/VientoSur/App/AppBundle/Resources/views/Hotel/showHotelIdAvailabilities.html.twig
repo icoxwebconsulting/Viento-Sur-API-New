@@ -246,7 +246,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
-                                <p class="adress">
+                                <p class="adress" style="margin-bottom: 0px">
                                     {{ hotelDetails.location.address }} {{ app.session.get('destination').text | split(',')[0] }}, {{ app.session.get('destination').text | split(',')[2] }}
                                     {#<a class="item-map-address" data-prevent="modal"  data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-name="{{ hotelDetails.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>#}
                                 </p>
@@ -255,8 +255,7 @@
                                 <p>{{ 'hotels.room_per_night' | trans }}</p>
                                 <h5>{{ symbol }} {{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
                                 <button id="animarscroll">{{ 'hotels.choose_room' | trans }}</button>
-
-                                <div class="social-shared">
+                                {#<div class="social-shared">
                                     <div class="fb-share-button"
                                          data-href="https://vientosur.net{{ app.request.pathInfo }}"
                                          data-layout="button"
@@ -277,7 +276,7 @@
                                         Tweet</a>
 
                                     <g:plusone></g:plusone>
-                                </div>
+                                </div>#}
                             </div>
                         </div>
                         <div class="row">
@@ -316,9 +315,31 @@
                             </div>
                         </div>#}
                         <div class="row">
-                            <div class="descriptionHotel col-xs-12">
+                            <div class="descriptionHotel col-xs-9">
                                 {% set info = attribute(hotelDetails.information, app.request.locale) %}
                                 <p id="info">{{ info }}</p>
+                            </div>
+                            <div class="social-shared col-xs-3" style="margin: 30px 0px;">
+                                <div class="fb-share-button"
+                                     data-href="https://vientosur.net{{ app.request.pathInfo }}"
+                                     data-layout="button"
+                                     data-size="large"
+                                     data-mobile-iframe="true">
+                                    <a class="fb-xfbml-parse-ignore" target="_blank"
+                                       href="https://www.facebook.com/sharer/sharer.php?u=https://vientosur.net{{ app.request.pathInfo }}&src=sdkpreparse">
+                                        Compartir
+                                    </a>
+                                </div>
+                                <a id="shared-twitter" class="twitter-share-button"
+                                   href="https://twitter.com/intent/tweet"
+                                   data-via="vientosurnet"
+                                   data-text="Hotel {{hotelDetails.name}}"
+                                   data-lang="{{ app.request.locale }}"
+                                   data-hashtags="VientoSur"
+                                   data-size="large" style="float: left; margin-right: 10px;">
+                                    Tweet</a>
+
+                                <g:plusone></g:plusone>
                             </div>
                         </div>
                         <div class="row">

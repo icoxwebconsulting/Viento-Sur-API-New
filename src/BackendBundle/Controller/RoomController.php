@@ -38,10 +38,17 @@ class RoomController extends Controller
                 1);
         }
 
-        $dql = "SELECT r 
+        $querySearch = $request->get('query');
+
+        if(!empty($querySearch)){
+            $finder = $this->container->get('fos_elastica.finder.app.room');
+            $query = $finder->createPaginatorAdapter($querySearch);
+        }else {
+            $dql = "SELECT r 
                 FROM VientoSurAppAppBundle:Room r 
                 ORDER BY r.id ASC";
-        $query = $em->createQuery($dql);
+            $query = $em->createQuery($dql);
+        }
 
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');

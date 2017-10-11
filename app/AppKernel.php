@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
 
             //nuestros bundles
             new VientoSur\App\AppBundle\VientoSurAppAppBundle(),
