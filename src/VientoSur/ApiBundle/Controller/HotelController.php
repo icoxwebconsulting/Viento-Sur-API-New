@@ -331,7 +331,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $urlParams = array(
                 'ids' => $ids,
                 'language' => $language,
-                'options' => 'pictures',
+                'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
                 'resolve' => 'merge_info',
                 'catalog_info' => 'true'
             );
