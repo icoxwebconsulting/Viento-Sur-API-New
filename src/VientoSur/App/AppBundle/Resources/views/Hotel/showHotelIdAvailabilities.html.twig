@@ -291,11 +291,11 @@
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="fotos">
-                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
+                                    <div role="tabpanel" class="tab-pane active" id="fotos" style="height: 630px;">
+                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs" data-width="885" data-height="570">
                                             {% for key, pictures in hotelDetails.pictures %}
                                                 {% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}
-                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}" />
+                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}"/>
                                             {% endfor %}
                                         </div>
                                     </div>
