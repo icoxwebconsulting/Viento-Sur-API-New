@@ -302,11 +302,11 @@
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="fotos">
-                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
+                                    <div role="tabpanel" class="tab-pane active" id="fotos" style="height: 630px;">
+                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs" data-width="885" data-height="570">
                                             {% for key, pictures in hotelDetails.pictures %}
                                                 {% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}
-                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}" />
+                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}"/>
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -331,7 +331,14 @@
                                 <p id="info">{{ info }}</p>
                             </div>
                             <div class="social-shared col-xs-3" style="margin: 30px 0px;">
-                                <div class="fb-share-button"
+                                <div class="socialMedia">
+                                    <ul style="padding: 0px 46px;">
+                                        <li><a class="bgFacebook" href="" target="_blank" title="Compartir en Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a class="bgTwitter" href="" target="_blank" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a class="bgGooglePlus" href="" target="_blank" title="Compartir en Google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                                {#<div class="fb-share-button"
                                      data-href="https://vientosur.net{{ app.request.pathInfo }}"
                                      data-layout="button"
                                      data-size="large"
@@ -350,7 +357,7 @@
                                    data-size="large" style="float: left; margin-right: 10px;">
                                     Tweet</a>
 
-                                <g:plusone></g:plusone>
+                                <g:plusone></g:plusone>#}
                             </div>
                         </div>
                         <div class="row">

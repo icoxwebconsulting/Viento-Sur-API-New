@@ -342,6 +342,7 @@ header{
 
 .search .tab-content .modal-dialog .modal-body{
 	padding-bottom: 0 !important;
+	padding-top: 0 !important;
 }
 
 .search .tab-content .modal-dialog h4{
@@ -380,7 +381,7 @@ header{
 .search .tab-content .modal-dialog .selectRoom .selectGroup h3, .search .tab-content .modal-dialog .selectFlight .selectGroup h3{
 	color: #1d2d33;
 	font-family: 'latobold';
-	font-size: 1.33vw;
+	font-size: 12px;
 	text-transform: uppercase;
 }
 
@@ -393,7 +394,7 @@ header{
 }
 
 .search .tab-content .modal-dialog .selectRoom select, .search .tab-content .modal-dialog .selectFlight select{
-	height: 2.91vw;
+	height: 30px;
 	border-radius: 5px;
 	border: none;
 	background: url(../images/arrow-back-white.png) no-repeat 92% 50% #192731!important;
@@ -402,7 +403,7 @@ header{
 	appearance: none;
 	color: #e3e3e3;
 	font-family: 'latolight';
-	font-size: 1.33vw;
+	font-size: 12px;
 	cursor: pointer;
 	padding: 0 1.15vw;
 	width: 100%;
@@ -1246,7 +1247,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .adress{
-	color: #979797;
+	color: #233034;
 	font-size: 1.33vw;
 	font-family: 'latolight';
 	line-height: 3.16vw;
@@ -1274,7 +1275,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .descriptionHotel p{
-	color: #333;
+	color: #233034;
 	font-size: 1.33vw;
 	margin-bottom: 0.83vw;
 	line-height: 2vw;

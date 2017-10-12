@@ -146,6 +146,7 @@
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
         font-size: 12px;
+        margin-top: 5px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -154,13 +155,13 @@
     }
 
     .search .tab-content .modal-dialog .selectRoom select{
-        height: 35px;
-        font-size: 16px;
+        height: 30px;
+        font-size: 12px;
         padding: 0 15px;
     }
 
     .search .tab-content .modal-dialog .addRoom{
-        padding: 15px 0;
+        padding: 5px 0;
     }
 
     .search .tab-content .modal-dialog .addRoom a{
@@ -189,9 +190,9 @@
 
     .search .tab-content .btnSearch button{
         height: 40px;
-        font-size: 16px;
+        font-size: 14px;
         width: 130px;
-        margin-bottom: 40px;
+        margin-bottom: 25px;
     }
     /*----- END SLIDER -----*/
 
