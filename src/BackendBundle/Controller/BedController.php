@@ -14,7 +14,7 @@ use VientoSur\App\AppBundle\Entity\Bed;
 use BackendBundle\Form\BedType;
 
 /**
- * @Route("dashboard-bed")
+ * @Route("/{_locale}/dashboard-bed", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class BedController extends Controller
 {

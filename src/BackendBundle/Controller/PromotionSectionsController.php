@@ -14,7 +14,7 @@ use VientoSur\App\AppBundle\Entity\PromotionSections;
 use BackendBundle\Form\PromotionSectionsType;
 
 /**
- * @Route("/promotion-sections")
+ * @Route("/{_locale}/promotion-sections", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class PromotionSectionsController extends Controller
 {

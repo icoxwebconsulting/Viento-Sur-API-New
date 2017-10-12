@@ -470,10 +470,15 @@ admin:
     hotels_list: Lista de hoteles
     promotion_section_list: Lista
     promotion_new: Nueva promoción
+    promotion_edit: Editar promoción
     hotel_new: Nuevo hotel
+    hotel_edit: Editar hotel
     room_new: Nueva habitación
+    room_edit: Editar habitación
     bed_new: Nueva cama
+    bed_edit: Editar cama
     promotion_section_new: Nueva sección de promoción
+    promotion_section_edit: Editar sección de promoción
     promotion_add: Agregar promoción
     add: Agregar
     delete: Eliminar
@@ -524,3 +529,6 @@ admin:
     total_records: Total de registros
     search: Buscar
     search_not_found: No se ha encontrado algún resultado por su búsqueda
+    language: Idioma
+    are_you_sure: ¿Estás seguro?
+    are_you_sure_msg: ¿Desea continuar sin agregar las traducciones en los idiomas restantes?
