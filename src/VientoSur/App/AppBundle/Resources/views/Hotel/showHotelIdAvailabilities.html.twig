@@ -320,7 +320,14 @@
                                 <p id="info">{{ info }}</p>
                             </div>
                             <div class="social-shared col-xs-3" style="margin: 30px 0px;">
-                                <div class="fb-share-button"
+                                <div class="socialMedia">
+                                    <ul style="padding: 0px 46px;">
+                                        <li><a class="bgFacebook" href="" target="_blank" title="Compartir en Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a class="bgTwitter" href="" target="_blank" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a class="bgGooglePlus" href="" target="_blank" title="Compartir en Google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                                {#<div class="fb-share-button"
                                      data-href="https://vientosur.net{{ app.request.pathInfo }}"
                                      data-layout="button"
                                      data-size="large"
@@ -339,7 +346,7 @@
                                    data-size="large" style="float: left; margin-right: 10px;">
                                     Tweet</a>
 
-                                <g:plusone></g:plusone>
+                                <g:plusone></g:plusone>#}
                             </div>
                         </div>
                         <div class="row">
