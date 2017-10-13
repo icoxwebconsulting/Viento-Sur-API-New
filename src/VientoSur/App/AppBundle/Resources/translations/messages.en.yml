@@ -40,7 +40,7 @@ index:
            destination: Destination
            title: Find Hotels with the best rates
            from: Enter destination or hotel name
-           from_placeholder: Where are you going
+           from_placeholder: Where do you go
            checkin_date: Checkin Date
            date: Date
            checkout_date: Checkout Date
