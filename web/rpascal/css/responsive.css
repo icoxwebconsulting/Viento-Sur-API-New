@@ -675,7 +675,7 @@
     }
 
     #thumbsFlights .panel-heading h6{
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #thumbsFlights .panel-heading h6 span{
@@ -689,7 +689,7 @@
     }
 
     #thumbsFlights .panel-body  label {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #thumbsFlights .panel-body [type="radio"] + span:before {
