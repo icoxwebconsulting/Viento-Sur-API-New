@@ -16,7 +16,7 @@ use BackendBundle\PictureType;
 use VientoSur\App\AppBundle\Entity\Room;
 
 /**
- * @Route("dashboard-picture")
+ * @Route("/{_locale}/dashboard-picture", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class PictureController extends Controller
 {

@@ -470,10 +470,15 @@ admin:
     hotels_list: Hotels list
     promotion_section_list: List
     promotion_new: New promotion
+    promotion_edit: Edit promotion
     hotel_new: New hotel
+    hotel_edit: Edit hotel
     room_new: New room
+    room_edit: Edit room
     bed_new: New bed
+    bed_edit: Edit bed
     promotion_section_new: New promotion section
+    promotion_section_edit: Edit promotion section
     promotion_add: Add promotion
     add: Add
     delete: Delete
@@ -523,3 +528,6 @@ admin:
     total_records: Total records
     search: Search
     search_not_found: We did not find any results for your search
+    language: Language
+    are_you_sure: Are you sure?
+    are_you_sure_msg: Do you want to continue without adding the translations in the remaining languages?

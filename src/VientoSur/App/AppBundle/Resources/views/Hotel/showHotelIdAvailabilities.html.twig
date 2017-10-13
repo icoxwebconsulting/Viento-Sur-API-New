@@ -247,7 +247,18 @@
                                     {% endfor %}
                                 </ul>
                                 <p class="adress" style="margin-bottom: 0px">
-                                    {{ hotelDetails.location.address }} {{ app.session.get('destination').text | split(',')[0] }}, {{ app.session.get('destination').text | split(',')[2] }}
+                                    {% if app.session.get('destination') is not null %}
+                                        {% set destination = app.session.get('destination').text | split(',') %}
+                                    {% else %}
+                                        {% set destination = null %}
+                                    {% endif %}
+
+                                    {{ hotelDetails.location.address }}
+                                    {% if destination | length > 1 %}
+                                        - {{ destination[0] }}, {{ destination[2] }}
+                                    {% elseif destination is not null %}
+                                        - {{ destination[0] }}
+                                    {% endif %}
                                     {#<a class="item-map-address" data-prevent="modal"  data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-name="{{ hotelDetails.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>#}
                                 </p>
                             </div>
