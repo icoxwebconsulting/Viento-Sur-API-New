@@ -43,13 +43,12 @@
                         <div class="row">
                             <div class="col-sm-10">
                                 <div class="modalMap" style="font-size: 15px">
+                                    <i class="fa fa-map-marker fa-lg input-icon"  style="font-size: 15px"></i>&nbsp;
                                     <a class="booking-item-address" data-prevent="modal"
                                        data-latitude="{{ item.hotel.location.latitude }}"
                                        data-longitude="{{ item.hotel.location.longitude }}"
                                        data-name="{{ item.hotel.name }}">
-                                        {{ app.session.get('destination')['text'] }} <i
-                                                class="fa fa-map-marker fa-lg input-icon"
-                                                style="font-size: 15px"></i></a>
+                                        {{ app.session.get('destination')['text'] }} </a>
                                 </div>
                             </div>
                         </div>

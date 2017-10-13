@@ -250,7 +250,8 @@
 
     .message{
         padding: 30px 0;
-        font-size: 16px;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     #formSearch, #formFilters{
