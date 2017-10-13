@@ -3,7 +3,6 @@
 namespace VientoSur\App\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use Knp\Bundle\SnappyBundle\KnpSnappyBundle;
 use Knp\Bundle\SnappyBundle\Snappy\LoggableGenerator;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -25,7 +24,7 @@ class Flights
     private $agentCode;
     private $emailService;
     private $logger;
-    private $knp_snappy_pdf;
+    private $knp_snappy;
     private $templating;
     private $container;
     private $resources = [
@@ -44,14 +43,14 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger, LoggableGenerator $knp_snappy_pdf, TwigEngine $templating, ContainerInterface $container)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger, LoggableGenerator $knp_snappy, TwigEngine $templating, ContainerInterface $container)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
         $this->em = $entityManager;
         $this->agentCode = $agentCode;
         $this->logger = $logger;
-        $this->knp_snappy_pdf = $knp_snappy_pdf;
+        $this->knp_snappy = $knp_snappy;
         $this->templating = $templating;
         $this->container = $container;
     }
@@ -605,7 +604,7 @@ class Flights
         $itineraryDetail = $this->despegar->getFlightItineraryDetail($itineraryId);
         $reservationResult = $this->em->getRepository('VientoSurAppAppBundle:FlightReservation')->find($reservationId);
 
-        $this->knp_snappy_pdf->generateFromHtml(
+        $this->knp_snappy->generateFromHtml(
             $this->templating->render(
                 '@VientoSurAppApp/layoutEmailFligthPdf.html.twig', array(
                 'itineraryDetail' => $itineraryDetail,
