@@ -395,8 +395,8 @@
     }
 
     #thumbHotel .priceRoom button{
-        font-size: 12px;
-        padding: 15px;
+        font-size: 13px;
+        padding: 8px;
         margin-top: 40px;
     }
 
@@ -722,9 +722,9 @@
     }
 
     .footer .btnContact{
-        height: 43px;
-        width: 195px;
-        font-size: 16px;
+        height: 39px;
+        width: 115px;
+        font-size: 12px;
         padding: 10px 0;
         margin-top: 27px;
     }

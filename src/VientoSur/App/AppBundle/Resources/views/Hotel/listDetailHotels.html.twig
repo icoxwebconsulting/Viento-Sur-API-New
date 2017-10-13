@@ -115,7 +115,7 @@
 
                         {#<a href="{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude}) }}"#}
                            {#target="_blank">#}
-                            <button>Elegir Habitación</button>
+                            <button>{{ 'hotels.show_rooms' | trans }} <i class="fa fa-angle-right input-icon" style="font-size: 16px; font-weight: bold; text-align: right"></i></button>
                         {#</a>#}
                     </div>
                 </div>
