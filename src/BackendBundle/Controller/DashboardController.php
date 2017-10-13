@@ -13,7 +13,7 @@ use VientoSur\App\AppBundle\Entity\Hotel;
 use VientoSur\App\AppBundle\Entity\Room;
 
 /**
- * @Route("dashboard")
+ * @Route("/{_locale}/dashboard", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class DashboardController extends Controller
 {
@@ -44,11 +44,15 @@ class DashboardController extends Controller
 //        $room->setRoomCode(25);
 //        $room->setNightlyPrice(40);
 //        $em->persist($room);
+//        $em->flush();
+
 
 //        $room->setName('ingles');
 //        $room->setCancellationPolicity('cancelacion ingles');
 //        $room->setTranslatableLocale('en');
 //        $em->persist($room);
+//        $em->flush();
+
 
 //        $room->setName('portugues');
 //        $room->setCancellationPolicity('cancelacion portugues');
@@ -57,13 +61,13 @@ class DashboardController extends Controller
 //
 //        $em->flush();
 
-       /* $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
-        $translations = $repository->findTranslations($room);
+//        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+//        $translations = $repository->findTranslations($room);
 
         $entity = $em->getRepository("VientoSurAppAppBundle:Hotel")->findAll();
-        return $this->render('admin/index.html.twig', array(
-            'hotel' => $translations
-        ));*/
+//        return $this->render('admin/index.html.twig', array(
+//            'hotel' => $translations
+//        ));
         return $this->render('admin/index.html.twig');
     }
 

@@ -14,7 +14,7 @@ use VientoSur\App\AppBundle\Entity\Room;
 use BackendBundle\Form\RoomsType;
 
 /**
- * @Route("dashboard-room")
+ * @Route("/{_locale}/dashboard-room", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class RoomController extends Controller
 {

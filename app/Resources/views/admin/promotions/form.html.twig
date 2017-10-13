@@ -3,12 +3,18 @@
 {% block title %}{{ 'admin.promotion_new' | trans }}{% endblock %}
 
 {% block top_content %}
+    {% if app.request.attributes.get('_route') == 'promotion_new' %}
+        {% set title = 'admin.promotion_new' %}
+    {% else %}
+        {% set title = 'admin.promotion_edit' %}
+    {% endif %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}{{ 'admin.promotion_new' | trans }}{% endblock %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 
 {% block content %}
+
     <div class="col-md-10 offset-md-1">
         <div class="card">
             <div class="card-header">

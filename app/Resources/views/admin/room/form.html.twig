@@ -3,8 +3,14 @@
 {% block title %}{{ 'admin.room_new' | trans }}{% endblock %}
 
 {% block top_content %}
+
+    {% if app.request.attributes.get('_route') == 'room_new' %}
+        {% set title = 'admin.room_new' %}
+    {% else %}
+        {% set title = 'admin.room_edit' %}
+    {% endif %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}{{ 'admin.room_new' | trans }}{% endblock %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 

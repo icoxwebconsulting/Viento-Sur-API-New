@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Date;
 use VientoSur\App\AppBundle\Entity\Reservation;
 
 /**
- * @Route("dashboard-reservation")
+ * @Route("/{_locale}/dashboard-reservation", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class ReservationController extends Controller
 {

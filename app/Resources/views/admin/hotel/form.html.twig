@@ -3,8 +3,13 @@
 {% block title %}{{ 'admin.hotel_new' | trans }}{% endblock %}
 
 {% block top_content %}
+    {% if app.request.attributes.get('_route') == 'hotel_new' %}
+        {% set title = 'admin.hotel_new' %}
+    {% else %}
+        {% set title = 'admin.hotel_edit' %}
+    {% endif %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 
@@ -14,31 +19,75 @@
             <div class="card-header">
                 <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }}</strong>
             </div>
-            {{ form_start(form, {'attr':{ 'class': 'form-horizontal'}}) }}
+            {{ form_start(form, {'attr':{ 'id': 'form','class': 'form-horizontal'}}) }}
             <div class="card-block">
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
                     <div class="col-md-9">
                         {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.name) }}
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="first-name">{{ 'hotels.description' | trans }}</label>
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'hotels.description' | trans }}*</label>
                     <div class="col-md-9">
                         {{ form_widget(form.description, { 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.description) }}
                 </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="stars">{{ 'hotels.stars' | trans }}</label>
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'admin.name' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                    </div>
+                    {{ form_errors(form.namePt) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'hotels.description' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.descriptionPt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.description }} ) }}
+                    </div>
+                    {{ form_errors(form.descriptionPt) }}
+                </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'admin.name' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                    </div>
+                    {{ form_errors(form.nameEn) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'hotels.description' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.descriptionEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.description }} ) }}
+                    </div>
+                    {{ form_errors(form.descriptionEn) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="stars">{{ 'hotels.stars' | trans }}*</label>
                     <div class="col-md-9">
                         {{ form_widget(form.stars, { 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.stars) }}
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="email">{{ 'hotels.search_menu.type' | trans }}</label>
+                    <label class="col-md-3 form-control-label" for="email">{{ 'hotels.search_menu.type' | trans }}*</label>
                     <div class="col-md-9">
                         {{ form_widget(form.hotelTypes, { 'attr': { 'class': 'form-control', 'style': 'display:none;'}}) }}
                         <select id="hotelType" class="form-control">
@@ -53,7 +102,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="col-md-3 form-control-label" for="search-address">{{ 'hotels.address' | trans }}</label>
+                        <label class="col-md-3 form-control-label" for="search-address">{{ 'hotels.address' | trans }}*</label>
                         <span class="help-block">{{ 'admin.pick_address' | trans }}</span>
                     </div>
                     <div class="col-md-9">
@@ -68,11 +117,20 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-12 form-control-label" for="first-name">{{ 'amenities.label' | trans }}</label>
+                    <label class="col-md-12 form-control-label" for="first-name">{{ 'amenities.label' | trans }}*</label>
                     <div class="col-md-12">
                         {% for amenity in amenities %}
                         <div class="col-md-3 checkbox {% if loop.index > 12 %}amenities-hidden{% endif %}" {% if loop.index > 12 %}style="display: none; height: 50px;"{% endif %}>
-                            <input id="amenity" type="checkbox" name="amenity[{{ loop.index }}]" value="{{ amenity.id }}">
+                            {% if amenityHotels is not defined %}
+                                <input id="amenity" type="checkbox" name="amenity[{{ loop.index }}]" value="{{ amenity.id }}">
+                            {% else %}
+                                <input id="amenity" type="checkbox" name="amenity[{{ loop.index }}]"
+                                   value="{{ amenity.id }}"
+                                    {% for amenityHotel in amenityHotels %}
+                                       {% if amenity.id == amenityHotel.amenity.id %} checked {% endif %}
+                                    {% endfor %}
+                                >
+                            {% endif %}
                             {% set label = 'amenities.'~amenity.name %}
                             <span>{{ label | trans }}</span>
                         </div>
@@ -93,7 +151,6 @@
             {{ form_end(form)}}
         </div>
     </div>
-
 {% endblock %}
 
 {% block extra_css %}
@@ -128,6 +185,13 @@
         }
         #appbundle_hotel_address:focus {
             border-color: #4d90fe;
+        }
+        .flags-lg{
+            margin-left: 10px;
+            width: 20px;
+        }
+        .label-lg{
+            display: inline-block;
         }
     </style>
 {% endblock %}
@@ -253,7 +317,28 @@
                 var id = $( this ).val();
                 $('#appbundle_hotel_hotelTypes').val(id)
             })
-        })
+
+            $('#send').click(function(e){
+                var nameEn = $('#appbundle_hotel_nameEn').val();
+                var descriptionEn = $('#appbundle_hotel_descriptionEn').val();
+                var namePt = $('#appbundle_hotel_namePt').val();
+                var descriptionPt = $('#appbundle_hotel_descriptionPt').val();
+
+                if(nameEn == '' || namePt == '' || descriptionEn == '' || descriptionPt == ''){
+                    e.preventDefault();
+                    $('#confirm').modal('show');
+                }
+            });
+
+            $('#modal-submit').click(function(){
+                $('#form').submit();
+                $('#confirm').modal('hide');
+            });
+
+            $('#appbundle_hotel_descriptionPt').val($("#appbundle_hotel_descriptionPt").attr("value"));
+            $('#appbundle_hotel_descriptionEn').val($("#appbundle_hotel_descriptionEn").attr("value"));
+
+        });
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>
 {% endblock %}
