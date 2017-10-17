@@ -383,6 +383,8 @@ header{
 	font-family: 'latobold';
 	font-size: 12px;
 	text-transform: uppercase;
+        width: 50%;
+        float: left;
 }
 
 .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -403,10 +405,11 @@ header{
 	appearance: none;
 	color: #e3e3e3;
 	font-family: 'latolight';
-	font-size: 12px;
+	font-size: 11px;
 	cursor: pointer;
 	padding: 0 1.15vw;
-	width: 100%;
+	width: 45%;
+        margin-top: 10px;
 }
 
 .search .tab-content .modal-dialog .selectRoom select option, search .tab-content .modal-dialog .selectFlight select option{
