@@ -145,7 +145,11 @@
                         'sorting': $(this).data('value'),
                         'page': 1
                     }, function () {
-                        $('.sort_name').text('{{ 'hotels.select' | trans }}...').removeClass('vs-color-copy');
+                        {#$('.sort_name').text('{{ 'hotels.select' | trans }}...').removeClass('vs-color-copy');#}
+                        $('#sort_price').text('{{ 'hotels.price' | trans }}').removeClass('vs-color-copy');
+                        $('#sort_star').text('{{ 'hotels.stars' | trans }}').removeClass('vs-color-copy');
+                        $('#sort_best').text('{{ 'hotels.best' | trans }}').removeClass('vs-color-copy');
+                        $('#sort_other').text('{{ 'hotels.search_menu.others' | trans }}').removeClass('vs-color-copy');
                         $('#sort_' + category).text(text).addClass('vs-color-copy');
                     })
                     waitingDialog.delay(2000).hide();
