@@ -264,16 +264,16 @@
     }
 
     #formSearch, #formFilters{
-        padding: 30px 20px;
+        padding: 15px 20px;
         margin-bottom: 40px;
     }
 
     #formSearch .results{
-        margin-bottom: 50px;
+        margin-bottom: 15px;
     }
 
     #formSearch .results p{
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #formSearch label{
@@ -281,12 +281,27 @@
     }
 
     #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
-        height: 35px;
-        font-size: 14px;
+        height: 30px;
+        font-size: 12px;
     }
 
     #formSearch .form-group{
-        margin-bottom: 30px;
+        margin-bottom: 15px;
+    }
+    
+    .menu-lef-data{
+        width: 120px;
+    }
+    
+    .menu-lef-data input{
+        font-size: 11px !important;
+        padding-left: 20px !important;
+    }
+    
+    .menu-lef-data i{
+        bottom: 11px !important;
+        left: 20px !important;
+        font-size: 13px !important;
     }
 
     #formSearch i{
