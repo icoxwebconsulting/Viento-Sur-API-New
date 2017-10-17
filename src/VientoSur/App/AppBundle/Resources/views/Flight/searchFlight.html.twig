@@ -487,10 +487,10 @@
 
 
     {% set currency = app.session.get('targetCurrency') %}
-    <div class="col-xs-3 col-xs-offset-9 select-money-flight">
+    <div class="col-xs-2 col-xs-offset-10 selectMoney">
         <select class="form-control"  onchange="optionChangeCurrency(this.value)">
-            <option value="USD" {% if currency == 'USD' %}selected="selected"{% endif %}>USD - {{ 'index.search.hotel.us_dollar' | trans }}</option>
-            <option value="ARS" {% if currency == 'ARS' %}selected="selected"{% endif %}>AR$ - {{ 'index.search.hotel.us_argentinian' | trans }}</option>
+            <option value="USD" {% if currency == 'USD' %}selected="selected"{% endif %}>USD</option>
+            <option value="ARS" {% if currency == 'ARS' %}selected="selected"{% endif %}>AR$</option>
         </select>
     </div>
 

@@ -184,8 +184,8 @@
 
     .search .tab-content .selectMoney select{
         height: 35px;
-        font-size: 13px;
-        padding: 0 15px;
+        font-size: 12px;
+        padding: 0 5px;
     }
 
     .search .tab-content .btnSearch button{
