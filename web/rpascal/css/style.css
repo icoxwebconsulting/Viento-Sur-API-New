@@ -282,6 +282,12 @@ header{
 	position: relative;
 }
 
+.multiple-input-width{
+    width: 190px;
+    float: left;
+    margin-left: 15px;
+}
+
 .search .tab-content .form-group-icon-left i{
 	position: absolute;
 	z-index: 99;

@@ -191,13 +191,13 @@
 
                                         <div class="row wrapper" style="display: none">
                                             <div class="col-xs-12">
-                                                <div class="col-xs-5 ">
+                                                <div class="col-xs-8 ">
                                                     <p id="label-stretch"
                                                        class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }}
                                                         1</p>
                                                     <p id="label-stretch"
                                                        style="display: none">{{ 'index.search.stretch' | trans }}</p>
-                                                    <div class="form-group-icon-left marginBottom10">
+                                                    <div class="form-group-icon-left marginBottom10 multiple-input-width">
                                                         <i class="fa fa-map-marker input-icon"></i>
                                                         <input class="city-input form-control"
                                                                id="multidestination-from-flight0"
@@ -210,7 +210,7 @@
                                                                name="multidestination[0][originFlight]" type="hidden"
                                                                value="{% if app.session.get('origin_flight').id is defined %}{{ app.session.get('origin_flight').id }}{% endif %}"/>
                                                     </div>
-                                                    <div class="form-group-icon-left marginBottom10">
+                                                    <div class="form-group-icon-left marginBottom10 multiple-input-width">
                                                         <i class="fa fa-map-marker input-icon"></i>
                                                         <input class="city-input form-control"
                                                                id="multidestination-to-flight0"
@@ -242,10 +242,10 @@
                                         </div>
                                         <div class="row wrapper" style="display: none">
                                             <div class="col-xs-12">
-                                                <div class="col-xs-5 ">
+                                                <div class="col-xs-8 ">
                                                     <p class="multiple-destinations-label">{{ 'index.search.flight.stretch' | trans }}
                                                         2</p>
-                                                    <div class="form-group-icon-left marginBottom10">
+                                                    <div class="form-group-icon-left marginBottom10 multiple-input-width">
                                                         <i class="fa fa-map-marker input-icon"></i>
                                                         <input class="city-input form-control"
                                                                id="multidestination-from-flight1"
@@ -256,7 +256,7 @@
                                                                name="multidestination[1][originFlight]" type="hidden"
                                                                value=""/>
                                                     </div>
-                                                    <div class="form-group-icon-left marginBottom10">
+                                                    <div class="form-group-icon-left marginBottom10 multiple-input-width">
                                                         <i class="fa fa-map-marker input-icon"></i>
                                                         <input class="city-input form-control"
                                                                id="multidestination-to-flight1"
@@ -283,16 +283,14 @@
                                         </div>
 
                                         <div class="col-md-12 stretch">
-                                            <label for="">
-                                                <span class="pull-right">
-                                                    <a id="remove-stretch" style="display: none;">{{ 'index.search.flight.remove_stretch' | trans }}</a>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label for="">
+                                            <label for="" style="margin-left: 15px">
                                                 <span class="pull-right">
                                                     <a id="add-stretch" style="display: none;">{{ 'index.search.flight.add_stretch' | trans }}</a>
+                                                </span>
+                                            </label>
+                                            <label for="" style="margin-left: 15px;">
+                                                <span class="pull-right">
+                                                    <a id="remove-stretch" style="display: none; color: red">{{ 'index.search.flight.remove_stretch' | trans }}</a>
                                                 </span>
                                             </label>
                                         </div>
