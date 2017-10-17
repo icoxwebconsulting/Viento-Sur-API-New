@@ -46,7 +46,7 @@
             <span id="data-room">0</span> {{ 'index.search.hotel.room' | trans }}
         </button>
         <!-- Modal -->
-        <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin: 0px auto; width: 50%">
+        <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin: 0px auto; width: 55%">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content">
                     <div class="modal-header">
@@ -58,8 +58,8 @@
                         <div class="contectRoom">
                             {% for i in 1..4 %}
                             <div class="room room{{ i }}" {% if i > 1 %}style="display:none;"{% endif %}>
-                                <h5 class="titleSection">{{ 'index.search.hotel.room' | trans }} {{ i }}</h5>
                                 <div class="selectRoom">
+                                    <h5 class="titleSection">{{ 'index.search.hotel.room' | trans }} {{ i }}</h5>
                                     <div class="selectGroup">
                                         <h3>{{ 'index.search.hotel.adults' | trans }} <span>+18 {{ 'index.search.hotel.years' | trans }}</span></h3>
                                         <select id="adults{{ i }}" class="coupled" data-couple="childrenRoom{{ i }}.0" name="adultsSelector{{ i }}" {% if i > 1 %}required{% endif %}>
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="selectGroup">
                                         <h3>{{ 'index.search.hotel.childs' | trans }} / {{ 'index.search.hotel.babies' | trans }} <span>0 a 17 {{ 'index.search.hotel.years' | trans }}</span></h3>
-                                        <select id="childrenRoom{{ i }}" class="coupled" data-couple="adults{{ i }}.0" name="childrenRoomSelector{{ i }}">
+                                        <select id="childrenRoom{{ i }}" class="coupled" data-couple="adults{{ i }}.0" name="childrenRoomSelector{{ i }}" style="margin-left: 15px;">
                                             {% for j in 1..8 %}
                                                 <option value="{{ loop.index0 }}">{{ loop.index0 }}</option>
                                             {% endfor %}

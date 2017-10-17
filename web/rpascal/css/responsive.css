@@ -133,20 +133,26 @@
     .search .tab-content .modal-dialog .titleSection{
         font-size: 14px;
         padding-bottom: 10px;
+        width: 23%;
+        float: left;
     }
 
     .search .tab-content .modal-dialog .selectRoom {
-        padding-bottom: 5px;
+        padding-bottom: 0px;
+        padding-top: 10px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup{
         width: 35%;
-        margin-right: 15px;
+        margin-right: 5px;
+        margin-left: 10px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
         font-size: 12px;
         margin-top: 5px;
+        float: left;
+        width: 46%;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -156,8 +162,10 @@
 
     .search .tab-content .modal-dialog .selectRoom select{
         height: 30px;
-        font-size: 12px;
+        font-size: 11px;
         padding: 0 15px;
+        width: 35%;
+        float: left;
     }
 
     .search .tab-content .modal-dialog .addRoom{
