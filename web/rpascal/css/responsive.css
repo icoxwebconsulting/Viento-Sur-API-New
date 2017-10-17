@@ -463,9 +463,10 @@
     }
 
     #descriptionHotel .boxPrice button{
-        font-size: 12px;
-        padding: 10px;
-        width: 70% !important;
+        font-size: 14px;
+        padding: 12px;
+        width: 75% !important;
+        font-weight: bold;
     }
 
     #descriptionHotel .itemsHotel{

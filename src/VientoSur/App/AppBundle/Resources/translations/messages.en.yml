@@ -1,4 +1,5 @@
 index:
+    date_placeholder: dd/mm/yyyy
     room_code: Room code
     meal_plan: Meal plan
     hotel_footer: Please note that your reservation is already active, but your personal data will arrive at the hotel 24 hours before the arrival date
