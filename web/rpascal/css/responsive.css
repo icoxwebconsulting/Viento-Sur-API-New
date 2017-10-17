@@ -349,13 +349,13 @@
 
     /*----- GO LIST THUMBS HOTELS -----*/
     #thumbsSearch .filterThumb{
-        height: 35px;
-        margin-bottom: 20px;
+        height: 30px;
+        margin-bottom: 10px;
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        height: 30px;
-        font-size: 14px;
+        height: 22px;
+        font-size: 12px;
     }
 
     #thumbsSearch .filterThumb .caret {

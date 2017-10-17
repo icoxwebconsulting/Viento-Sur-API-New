@@ -859,10 +859,11 @@ header{
 	height: 4.41vw;
 	text-align: center;
 	text-transform: uppercase;
-	color: #233034;
+	color: #FFF;
 	font-family: 'latobold';
 	font-size: 1.33vw;
 	width: 100%;
+        background-color: #008cd0;
 }
 
 #thumbsSearch .filterThumb .caret {
