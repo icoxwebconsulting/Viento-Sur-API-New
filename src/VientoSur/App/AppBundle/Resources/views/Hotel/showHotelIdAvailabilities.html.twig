@@ -238,7 +238,7 @@
                     <div id="descriptionHotel">
                         <div class="row">
                             <div class="col-xs-12 col-sm-9">
-                                <h1 class="titleHotel" title="Hotel {{ hotelDetails.name }} - VientoSur.net">{{ hotelDetails.name }}</h1>
+                                <h2 class="titleHotel" title="Hotel {{ hotelDetails.name }} - VientoSur.net">{{ hotelDetails.name }}</h2>
                                 <ul class="starsHotel">
                                     {% for i in 1..5 %}
                                         {% if i <= hotelDetails.stars %}
@@ -246,6 +246,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
+                                <br style="clear: both"/>
                                 <p class="adress" style="margin-bottom: 0px">
                                     {% if app.session.get('destination') is not null %}
                                         {% set destination = app.session.get('destination').text | split(',') %}

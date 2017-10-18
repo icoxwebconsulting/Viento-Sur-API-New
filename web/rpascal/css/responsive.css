@@ -395,7 +395,7 @@
     }
 
     #thumbHotel .infoHotel li i.fa-star{
-        font-size: 15px;
+        font-size: 12px;
     }
 
     #thumbHotel .infoHotel a{
@@ -445,7 +445,9 @@
     }
 
     #descriptionHotel .titleHotel{
-        font-size: 28px;
+        font-size: 24px;
+        float: left;
+        margin-right: 15px;
     }
 
     #descriptionHotel .adress{
@@ -459,12 +461,14 @@
     }
 
     #descriptionHotel ul.starsHotel{
-        margin-top: 0px;
+        margin-top: 5px;
         margin-bottom: 0px;
+        width: 80px;
+        float: left;
     }
 
     #descriptionHotel ul.starsHotel li{
-        font-size: 20px;
+        font-size: 14px;
     }
 
     #descriptionHotel .descriptionHotel{

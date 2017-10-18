@@ -229,24 +229,26 @@ header{
 }
 
 .nav-tabs > li > a {
-	border: 1px solid transparent;
+        border-left: 1px solid #505152; 
+        border-top: 1px solid #505152; 
+        border-right: 1px solid #505152; 
 	border-radius: 5px 5px 0 0;
 	line-height: 1.42857;
 	margin-right: 2px;
-	background: #505152;
-	color: #ffffff;
+	background: #ffffff;
+	color: #505152;
 
 }
 
 .nav-tabs > li > a:hover {
-	background: rgba(255,255,255,0.7);
-	color: #233034;
+	background: #233034;
+	color: rgba(255,255,255,0.7);
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-	background: rgba(255,255,255,0.7);
+	background: #233034;
 	border-radius: 5px 5px 0 0;
-	color: #233034;
+	color: rgba(255,255,255,0.7);
 }
 
 .search .tab-pane{
@@ -1322,7 +1324,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .galleryHotel{
-	margin-top: 0px;
+	margin-top: -25px;
 }
 
 #descriptionHotel .itemsHotel{

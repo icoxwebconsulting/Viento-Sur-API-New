@@ -115,7 +115,7 @@ hotels:
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible
     lasts: Últimas
-    choose_room: Elige habitación
+    choose_room: Reservá ahora
     room_per_night: Habitación por noche
     hotels_in: Hoteles en
     hotel_availabilities: Hoteles disponibles para estas fechas en %place% con mejor precio
