@@ -19,11 +19,11 @@ a, a:hover, a:focus{
 
 .booking-item-img-num{
 	position: relative;
-	bottom: 36px;
+	bottom: 20px;
 	left: 141px;
-	color: #fff;
+	color: #000;
 	background: rgba(0,0,0,0.01);
-	opacity: 0.5;
+	opacity: 2.5;
 }
 
 .pagination {
@@ -1549,7 +1549,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel table td img{
-	margin: 15px 0;
+	margin: -5px 0;
 	cursor: pointer;
 }
 /*----- END DETAIL HOTEL -----*/

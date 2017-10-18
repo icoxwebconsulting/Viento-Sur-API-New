@@ -164,7 +164,7 @@ hotels:
         payment_choices: Alternativas de pago
         zones: Zonas
         services: Servicios
-        type: Tipo de alojamiento
+        type:  Tipo de habitación
         hotel_chain: Cadena Hotelera
         diet: Régimen
         breakfast: Desayuno
@@ -182,9 +182,9 @@ hotels:
         filter_diet: Filtro Régimen
         filter_travel_profile: Filtro Perfil de viaje
     number_of_rooms: Número de habitaciones
-    available_rooms: Habitaciones disponibles
+    available_rooms: Todas las habitaciones disponibles
     capacity: Capacidad
-    options: Opciones
+    options:  Tus opciones 
     max_capacity: Capacidad máxima
     food_regime: Régimen de comida
     cancellation_policies: Políticas de cancelación
