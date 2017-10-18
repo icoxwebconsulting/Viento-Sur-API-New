@@ -49,7 +49,7 @@
                             </select>
                         </div>
                         <div class="form-group col-xs-6">
-                            <label for="childrenRoom" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.childs' | trans }}:</label>
+                            <label for="childrenRoom" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}:</label>
                             <select id="childrenRoom" class="form-control coupled" data-couple="adults.1" name="childrenRoomSelector" style="width: 39%; padding-left: 10px;">
                                 {% for i in 0..7 %}
                                     <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="childrenRoom1" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                    <label for="childrenRoom1" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
                                     <select id="childrenRoom1" class="form-control coupled" data-couple="adults1.1" name="childrenRoomSelector1" style="width: 39%; padding-left: 10px;">
                                         {% for i in 1..8 %}
                                             <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="childrenRoom2" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                    <label for="childrenRoom2" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
                                     <select id="childrenRoom2" class="form-control coupled" data-couple="adults2.1" name="childrenRoomSelector2" style="width: 39%; padding-left: 10px;">
                                         {% for i in 1..8 %}
                                             <option value="{{ loop.index0 }}" {% if data_travelers[2].children is defined and data_travelers[2].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
@@ -190,7 +190,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="childrenRoom3" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                    <label for="childrenRoom3" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
                                     <select id="childrenRoom3" class="form-control coupled" data-couple="adults3.0" name="childrenRoomSelector3" style="width: 39%; padding-left: 10px;">
                                         {% for i in 1..8 %}
                                             <option value="{{ loop.index0 }}" {% if data_travelers[3].children is defined and data_travelers[3].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
@@ -238,7 +238,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="childrenRoom4" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                    <label for="childrenRoom4" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
                                     <select id="childrenRoom4" class="form-control coupled" data-couple="adults4.0" name="childrenRoomSelector4" style="width: 39%; padding-left: 10px;">
                                         {% for i in 1..8 %}
                                             <option value="{{ loop.index0 }}" {% if data_travelers[4].children is defined and data_travelers[4].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
