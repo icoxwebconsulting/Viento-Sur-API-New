@@ -19,11 +19,11 @@ a, a:hover, a:focus{
 
 .booking-item-img-num{
 	position: relative;
-	bottom: 36px;
+	bottom: 20px;
 	left: 141px;
-	color: #fff;
+	color: #000;
 	background: rgba(0,0,0,0.01);
-	opacity: 0.5;
+	opacity: 2.5;
 }
 
 .pagination {
@@ -229,24 +229,26 @@ header{
 }
 
 .nav-tabs > li > a {
-	border: 1px solid transparent;
+        border-left: 1px solid #505152; 
+        border-top: 1px solid #505152; 
+        border-right: 1px solid #505152; 
 	border-radius: 5px 5px 0 0;
 	line-height: 1.42857;
 	margin-right: 2px;
-	background: #505152;
-	color: #ffffff;
+	background: #ffffff;
+	color: #505152;
 
 }
 
 .nav-tabs > li > a:hover {
-	background: rgba(255,255,255,0.7);
-	color: #233034;
+	background: #233034;
+	color: rgba(255,255,255,0.7);
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-	background: rgba(255,255,255,0.7);
+	background: #233034;
 	border-radius: 5px 5px 0 0;
-	color: #233034;
+	color: rgba(255,255,255,0.7);
 }
 
 .search .tab-pane{
@@ -280,6 +282,12 @@ header{
 
 .search .tab-content .form-group-icon-left{
 	position: relative;
+}
+
+.multiple-input-width{
+    width: 190px;
+    float: left;
+    margin-left: 15px;
 }
 
 .search .tab-content .form-group-icon-left i{
@@ -383,6 +391,8 @@ header{
 	font-family: 'latobold';
 	font-size: 12px;
 	text-transform: uppercase;
+        width: 50%;
+        float: left;
 }
 
 .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -403,10 +413,11 @@ header{
 	appearance: none;
 	color: #e3e3e3;
 	font-family: 'latolight';
-	font-size: 12px;
+	font-size: 11px;
 	cursor: pointer;
 	padding: 0 1.15vw;
-	width: 100%;
+	width: 45%;
+        margin-top: 10px;
 }
 
 .search .tab-content .modal-dialog .selectRoom select option, search .tab-content .modal-dialog .selectFlight select option{
@@ -650,7 +661,7 @@ header{
 }
 
 #formSearch .form-group, #formFilters .form-group{
-	margin-bottom: 2.5vw;
+	margin-bottom: 1.5vw;
 }
 
 #formSearch .form-group i, #formFilters .form-group i{
@@ -850,10 +861,11 @@ header{
 	height: 4.41vw;
 	text-align: center;
 	text-transform: uppercase;
-	color: #233034;
+	color: #FFF;
 	font-family: 'latobold';
 	font-size: 1.33vw;
 	width: 100%;
+        background-color: #008cd0;
 }
 
 #thumbsSearch .filterThumb .caret {
@@ -1312,7 +1324,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .galleryHotel{
-	margin-top: 0px;
+	margin-top: -25px;
 }
 
 #descriptionHotel .itemsHotel{
@@ -1537,7 +1549,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel table td img{
-	margin: 15px 0;
+	margin: -5px 0;
 	cursor: pointer;
 }
 /*----- END DETAIL HOTEL -----*/

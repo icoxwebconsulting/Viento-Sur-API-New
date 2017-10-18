@@ -99,15 +99,16 @@
     }
 
     .search .tab-content .city-input{
-        height: 35px;
+        height: 32px;
         font-size: 11px;
         padding: 0 0 0 35px;
     }
 
     .search .tab-content .input-group .form-control{
-        height: 35px;
+        height: 32px;
         padding: 0 0 0 40px;
         font-size: 11px;
+        width: 115px;
     }
 
     .search .tab-content .input-group i{
@@ -133,20 +134,26 @@
     .search .tab-content .modal-dialog .titleSection{
         font-size: 14px;
         padding-bottom: 10px;
+        width: 23%;
+        float: left;
     }
 
     .search .tab-content .modal-dialog .selectRoom {
-        padding-bottom: 20px;
+        padding-bottom: 0px;
+        padding-top: 10px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup{
         width: 35%;
-        margin-right: 15px;
+        margin-right: 5px;
+        margin-left: 10px;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
         font-size: 12px;
         margin-top: 5px;
+        float: left;
+        width: 46%;
     }
 
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -156,8 +163,10 @@
 
     .search .tab-content .modal-dialog .selectRoom select{
         height: 30px;
-        font-size: 12px;
+        font-size: 11px;
         padding: 0 15px;
+        width: 35%;
+        float: left;
     }
 
     .search .tab-content .modal-dialog .addRoom{
@@ -184,8 +193,8 @@
 
     .search .tab-content .selectMoney select{
         height: 35px;
-        font-size: 13px;
-        padding: 0 15px;
+        font-size: 12px;
+        padding: 0 5px;
     }
 
     .search .tab-content .btnSearch button{
@@ -250,20 +259,21 @@
 
     .message{
         padding: 30px 0;
-        font-size: 16px;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     #formSearch, #formFilters{
-        padding: 30px 20px;
+        padding: 15px 20px;
         margin-bottom: 40px;
     }
 
     #formSearch .results{
-        margin-bottom: 50px;
+        margin-bottom: 15px;
     }
 
     #formSearch .results p{
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #formSearch label{
@@ -271,12 +281,27 @@
     }
 
     #formSearch input, #formFilters input, #formSearch select, #formSearch button, #formFilters button{
-        height: 35px;
-        font-size: 14px;
+        height: 30px;
+        font-size: 12px;
     }
 
     #formSearch .form-group{
-        margin-bottom: 30px;
+        margin-bottom: 15px;
+    }
+    
+    .menu-lef-data{
+        width: 125px;
+    }
+    
+    .menu-lef-data input{
+        font-size: 11px !important;
+        padding-left: 20px !important;
+    }
+    
+    .menu-lef-data i{
+        bottom: 11px !important;
+        left: 20px !important;
+        font-size: 13px !important;
     }
 
     #formSearch i{
@@ -295,8 +320,8 @@
     }
 
     #formFilters .titleFilters{
-        font-size: 20px;
-        margin: 0 0 40px 0;
+        font-size: 16px;
+        margin: 0 0 15px 0;
     }
 
     #formFilters .boxFilter h4{
@@ -339,13 +364,13 @@
 
     /*----- GO LIST THUMBS HOTELS -----*/
     #thumbsSearch .filterThumb{
-        height: 35px;
-        margin-bottom: 20px;
+        height: 30px;
+        margin-bottom: 10px;
     }
 
     #thumbsSearch .filterThumb .btnDropdown{
-        height: 30px;
-        font-size: 14px;
+        height: 22px;
+        font-size: 12px;
     }
 
     #thumbsSearch .filterThumb .caret {
@@ -370,7 +395,7 @@
     }
 
     #thumbHotel .infoHotel li i.fa-star{
-        font-size: 15px;
+        font-size: 12px;
     }
 
     #thumbHotel .infoHotel a{
@@ -395,8 +420,8 @@
     }
 
     #thumbHotel .priceRoom button{
-        font-size: 12px;
-        padding: 15px;
+        font-size: 13px;
+        padding: 8px;
         margin-top: 40px;
     }
 
@@ -420,7 +445,9 @@
     }
 
     #descriptionHotel .titleHotel{
-        font-size: 28px;
+        font-size: 24px;
+        float: left;
+        margin-right: 15px;
     }
 
     #descriptionHotel .adress{
@@ -434,12 +461,14 @@
     }
 
     #descriptionHotel ul.starsHotel{
-        margin-top: 0px;
+        margin-top: 5px;
         margin-bottom: 0px;
+        width: 80px;
+        float: left;
     }
 
     #descriptionHotel ul.starsHotel li{
-        font-size: 20px;
+        font-size: 14px;
     }
 
     #descriptionHotel .descriptionHotel{
@@ -462,9 +491,10 @@
     }
 
     #descriptionHotel .boxPrice button{
-        font-size: 12px;
-        padding: 10px;
-        width: 70% !important;
+        font-size: 14px;
+        padding: 12px;
+        width: 75% !important;
+        font-weight: bold;
     }
 
     #descriptionHotel .itemsHotel{
@@ -722,9 +752,9 @@
     }
 
     .footer .btnContact{
-        height: 43px;
-        width: 195px;
-        font-size: 16px;
+        height: 39px;
+        width: 115px;
+        font-size: 12px;
         padding: 10px 0;
         margin-top: 27px;
     }

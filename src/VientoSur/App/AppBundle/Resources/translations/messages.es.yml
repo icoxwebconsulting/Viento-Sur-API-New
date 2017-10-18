@@ -1,4 +1,5 @@
 index:
+    date_placeholder: dd/mm/aaaa
     room_code: Código de habitación
     meal_plan: Régimen de comida
     hotel_footer: Tenga en cuenta que su reserva ya se encuentra activa, pero sus datos personales llegarán al hotel 24hs antes de la fecha de ingreso
@@ -114,7 +115,7 @@ hotels:
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible
     lasts: Últimas
-    choose_room: Elige habitación
+    choose_room: Reservá ahora
     room_per_night: Habitación por noche
     hotels_in: Hoteles en
     hotel_availabilities: Hoteles disponibles para estas fechas en %place% con mejor precio
@@ -163,7 +164,7 @@ hotels:
         payment_choices: Alternativas de pago
         zones: Zonas
         services: Servicios
-        type: Tipo de alojamiento
+        type:  Tipo de habitación
         hotel_chain: Cadena Hotelera
         diet: Régimen
         breakfast: Desayuno
@@ -181,9 +182,9 @@ hotels:
         filter_diet: Filtro Régimen
         filter_travel_profile: Filtro Perfil de viaje
     number_of_rooms: Número de habitaciones
-    available_rooms: Habitaciones disponibles
+    available_rooms: Todas las habitaciones disponibles
     capacity: Capacidad
-    options: Opciones
+    options:  Tus opciones 
     max_capacity: Capacidad máxima
     food_regime: Régimen de comida
     cancellation_policies: Políticas de cancelación

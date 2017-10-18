@@ -1049,4 +1049,27 @@ class HotelController extends Controller
             )
         );
     }
+
+//    /**
+//     * @Route("/cards", name="viento_sur_app_get_cards")
+//     */
+//    public function getAllCardsAction()
+//    {
+//        $despegar = $this->get('despegar');
+//
+//        $cards = $despegar->getAllCards();
+//        $bankList = $this->get('app.bank')->getBanksSimple();
+//
+//        $i = 0;
+//        foreach ($cards as $card){
+//            if ($card['card_type'] == 'CREDIT' and $card['bank_code'] != '*'){
+//                if (!in_array($card['bank_code'], $bankList)){
+//                    echo "<pre>".print_r($card,true)."</pre>";
+//                    $i++;
+//                }
+//            }
+//        }
+//        echo $i;
+//        die();
+//    }
 }

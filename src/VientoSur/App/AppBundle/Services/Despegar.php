@@ -621,4 +621,14 @@ class Despegar
 
         return $this->curlExec($url, $header, 'POST', json_encode($params));
     }
+
+    public function getAllCards()
+    {
+        $url = $this->getServiceUrl() . "cards/";
+        $header = [
+            'X-ApiKey:' . $this->apiKey
+        ];
+
+        return $this->curlExec($url, $header, 'GET');
+    }
 }

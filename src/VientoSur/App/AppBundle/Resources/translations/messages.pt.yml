@@ -1,4 +1,5 @@
 index:
+    date_placeholder: dd/mm/aaaa
     room_code: Código do quarto
     meal_plan: Plano de refeição
     hotel_footer: Por favor, note que sua reserva já está ativa, mas seus dados pessoais chegarão ao hotel 24 horas antes da data de chegada

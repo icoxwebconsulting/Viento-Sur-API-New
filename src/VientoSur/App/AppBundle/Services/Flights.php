@@ -43,7 +43,7 @@ class Flights
         'AR' => 'Argentina'
     ];
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger, LoggableGenerator $knp_snappy, TwigEngine $templating, ContainerInterface $container)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, $agentCode, LoggerInterface $logger, $knp_snappy, TwigEngine $templating, ContainerInterface $container)
     {
         $this->despegar = $dp;
         $this->emailService = $email;

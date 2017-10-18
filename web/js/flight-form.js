@@ -670,14 +670,14 @@ $(document).ready(function () {
             $('.col-md-12.stretch')
                 .before('<div class="row wrapper '+className+'">'+
                             '<div class="col-xs-12">'+
-                                '<div class="col-xs-12 col-md-5">'+
+                                '<div class="col-xs-12 col-md-8">'+
                                     '<p class="multiple-destinations-label">'+labelStretch+' '+lenght+'</p>'+
-                                    '<div class="form-group-icon-left marginBottom10">'+
+                                    '<div class="form-group-icon-left marginBottom10 multiple-input-width">'+
                                         '<i class="fa fa-map-marker input-icon"></i>'+
                                         '<input class="city-input form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderFrom+'" />'+
                                         '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" value="" />'+
                                     '</div>'+
-                                    '<div class="form-group-icon-left marginBottom10">'+
+                                    '<div class="form-group-icon-left marginBottom10 multiple-input-width">'+
                                         '<i class="fa fa-map-marker input-icon"></i>'+
                                         '<input class="city-input form-control" id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderTo+'" />'+
                                         '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
