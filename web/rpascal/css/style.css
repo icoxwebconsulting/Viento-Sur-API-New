@@ -1573,6 +1573,8 @@ figure.effect-goliath:hover p {
 	height: auto;
 	border: #fcfeff 2px solid;
 	margin: 0 auto;
+        margin-top: -15px;
+        margin-bottom: 10px;
 }
 
 #infoReserva ul{

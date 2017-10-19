@@ -576,8 +576,8 @@
     }
 
     #infoReserva li{
-        font-size: 14px;
-        margin-right: 5px;
+        font-size: 12px;
+        margin-right: 0px;
     }
 
     #infoReserva p{
@@ -586,7 +586,7 @@
     }
 
     #infoReserva h3{
-        padding: 15px;
+        padding: 5px;
         font-size: 10px;
         margin: 20px 0;
 
@@ -650,8 +650,8 @@
     }
 
     #processPayment .panel-body .bg-success{
-        padding: 15px 10px;
-        font-size: 14px;
+        padding: 5px;
+        font-size: 12px;
     }
 
     #processPayment .buttonPayment button{

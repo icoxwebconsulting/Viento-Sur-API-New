@@ -32,7 +32,7 @@
                     <div id="sidebar">
                         <div id="infoReserva" class="hidden-sm hidden-md hidden-lg">
                             <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
-                            <p><span>{{ hotelBrief.name }}</span></p>
+                            <p style="float: left; margin-right: 10px;"><span>{{ hotelBrief.name }}</span></p>
                             <ul>
                                 {% for i in 1..5 %}
                                     {% if i <= hotelBrief.stars %}
@@ -40,7 +40,9 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
+                            <br style="clear: both" />
                             <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <br style="clear: both" />
                             <p>{{ hotelBrief.address }}</p>
                             {{ travellers|raw }}
                             <div class="datesPayment">
@@ -305,7 +307,7 @@
                     <div id="sidebar">
                         <div id="infoReserva" class="hidden-xs">
                             <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
-                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <p style="float: left; margin-right: 10px;"><span>{{ hotelBrief.name }}</span></p>
                             <ul>
                                 {% for i in 1..5 %}
                                     {% if i <= hotelBrief.stars %}
@@ -313,7 +315,9 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
-                            <p><span>{{ hotelBrief.name }}</span></p>
+                            <br style="clear: both" />
+                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <br style="clear: both" />
                             <p>{{ hotelBrief.address }}</p>
                             {{ travellers|raw }}
                             <div class="datesPayment">
