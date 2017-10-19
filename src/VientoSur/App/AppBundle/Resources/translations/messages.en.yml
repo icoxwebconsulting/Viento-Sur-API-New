@@ -117,6 +117,7 @@ hotels:
     lasts: Lasts
     choose_room: Choose room
     room_per_night: Room per night
+    share_in: Share in
     hotels_in: Hotels in
     hotel_availabilities: Hotels available for these dates in %place% with best price
     select: Select
@@ -197,6 +198,7 @@ hotels:
     full_pension: Full pension
     all_inclusive: All inclusive
     book: Book
+    continue_reservation: Continue reservation
     rooms_unavailables: Rooms unavailables
     services: Services
     activities: Activities

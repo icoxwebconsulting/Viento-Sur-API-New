@@ -507,7 +507,7 @@
     }
 
     #descriptionHotel .itemsHotel ul li{
-        font-size: 16px;
+        font-size: 12px;
         padding-bottom: 10px;
     }
 
@@ -566,7 +566,7 @@
 
     /*----- GO PROCESS PAYMENT RESERVATION -----*/
     #infoReserva{
-        padding: 20px 15px;
+        padding: 5px 15px;
         margin-bottom: 20px;
     }
 
