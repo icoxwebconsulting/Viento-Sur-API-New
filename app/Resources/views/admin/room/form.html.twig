@@ -31,10 +31,13 @@
                 <div class="form-group row">
                     <label class="col-md-4 form-control-label" for="first-name">{{ 'index.hotel' | trans }}</label>
                     <div class="col-md-8">
-                        {{ form_widget(form.hotel, { 'attr': { 'class': 'form-control'}}) }}
+                        {{ form_widget(form.hotel, { 'id': 'form', 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.hotel) }}
                 </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
                 <div class="form-group row">
                     <label class="col-md-4 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
                     <div class="col-md-8">
@@ -42,6 +45,52 @@
                     </div>
                     {{ form_errors(form.name) }}
                 </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'hotels.cancellation_policies' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.cancellationPolicity, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.cancellationPolicity) }}
+                </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                    </div>
+                    {{ form_errors(form.namePt) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'hotels.cancellation_policies' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.cancellationPolicityPt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.cancellationPolicity }} ) }}
+                    </div>
+                    {{ form_errors(form.cancellationPolicityPt) }}
+                </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                    </div>
+                    {{ form_errors(form.nameEn) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">{{ 'hotels.cancellation_policies' | trans }}</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.cancellationPolicityEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.cancellationPolicity }} ) }}
+                    </div>
+                    {{ form_errors(form.cancellationPolicityEn) }}
+                </div>
+
+                <br>
+                <hr>
+                <br>
+
                 <div class="form-group row">
                     <label class="col-md-4 form-control-label" for="first-name">{{ 'index.room_code' | trans }}</label>
                     <div class="col-md-8">
@@ -70,13 +119,7 @@
                     </div>
                     {{ form_errors(form.nightlyPrice) }}
                 </div>
-                <div class="form-group row">
-                    <label class="col-md-4 form-control-label" for="email">{{ 'hotels.cancellation_policies' | trans }}</label>
-                    <div class="col-md-8">
-                        {{ form_widget(form.cancellationPolicity, { 'attr': { 'class': 'form-control'}}) }}
-                    </div>
-                    {{ form_errors(form.cancellationPolicity) }}
-                </div>
+
                 <div class="form-group row">
                     <label class="col-md-4 form-control-label" for="email">{{ 'index.meal_plan' | trans }}</label>
                     <div class="col-md-8">
@@ -166,7 +209,7 @@
             {{ form_widget(form._token) }}
             <div class="card-footer">
                 <a href="{{ path('room_list') }}" class="btn btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <button id="send" type="submit" class="btn btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
         </form>
     </div>
@@ -232,12 +275,45 @@
 
             sortSelectOptions('#appbundle_rooms_mealPlan');
 
-            {% if amenityRooms is not defined %}
-                $('#amenity-select-0').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
+            {% if entity is not defined %}
+                {#$('#amenity-select-0').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");#}
                 $('#appbundle_rooms_mealPlan').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
             {% endif %}
 
+
+            $('#send').click(function(e){
+                var nameEn = $('#appbundle_rooms_nameEn').val();
+                var cancellationEn = $('#appbundle_rooms_cancellationPolicityEn').val();
+                var namePt = $('#appbundle_rooms_namePt').val();
+                var cancellationPt = $('#appbundle_rooms_cancellationPolicityPt').val();
+
+                if(nameEn == '' || namePt == '' || cancellationEn == '' || cancellationPt == ''){
+                    e.preventDefault();
+                    $('#confirm').modal('show');
+                }
+            });
+
+            $('#modal-submit').click(function(){
+                $('#form').submit();
+                $('#confirm').modal('hide');
+            });
+
+            $('#appbundle_rooms_cancellationPolicityPt').val($("#appbundle_rooms_cancellationPolicityPt").attr("value"));
+            $('#appbundle_rooms_cancellationPolicityEn').val($("#appbundle_rooms_cancellationPolicityEn").attr("value"));
         });
     </script>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+
+        .flags-lg{
+            margin-left: 10px;
+            width: 20px;
+        }
+        .label-lg{
+            display: inline-block;
+        }
+    </style>
 {% endblock %}
 
