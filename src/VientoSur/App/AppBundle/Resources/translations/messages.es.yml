@@ -253,9 +253,9 @@ hotels:
         name: Nombre(s):
         name_placeholder: Como aparece en el documento
         lastname: Apellido(s):
-        document: Documento de Identidad:
-        card_number: Número de tarjeta:
-        expiration: Vencimiento:
+        document: Doc. de Identidad:
+        card_number: N° de tarjeta:
+        expiration: Venc.:
         security_code: Código:
         cardholder: Titular de la tarjeta:
         such_as_card: Como aparece en la tarjeta
@@ -271,8 +271,8 @@ hotels:
         department: Depto:
         postal_code: Código postal:
         billing_address: Dirección de facturación:
-        invoice_name: Nombre para facturación:
-        fiscal_document: Documento Fiscal:
+        invoice_name: Nombre:
+        fiscal_document: Doc. Fiscal:
         invalid_fiscal_document: Documento fiscal inválido
         tax_status: Situación fiscal:
         fiscal_document_type: Tipo de documento Fiscal:

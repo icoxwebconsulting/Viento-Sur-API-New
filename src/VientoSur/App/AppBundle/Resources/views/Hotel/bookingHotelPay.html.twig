@@ -97,7 +97,7 @@
                                                             {% set fieldName = 'first_name' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.name' | trans %}
                                                             {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'placeholder': placeholder, 'class': 'form-control input-width'}}) }}
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
@@ -105,14 +105,14 @@
                                                             {% set fieldName = 'last_name' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.lastname' | trans %}
                                                             {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'placeholder': placeholder, 'class': 'form-control input-width'}}) }}
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             {% set fieldName = 'document_number' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.document' | trans %}
-                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'class': 'form-control input-width-50'}}) }}
                                                         </div>
                                                     </div>
                                                 </div>

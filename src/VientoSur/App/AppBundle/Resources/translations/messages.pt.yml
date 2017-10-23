@@ -247,11 +247,11 @@ hotels:
         lastname: Sobrenomes(s):
         document: Identidade
         card_number: Número do cartão:
-        expiration: Maturidade:
+        expiration: Matur.:
         security_code: Código de segurança:
-        cardholder: Titular do cartão:
+        cardholder: Cartão:
         such_as_card: Como aparece no cartão
-        owner_doc: Documento de Identidade do Titular:
+        owner_doc: Doc. do Titular:
         owner_documenttype: Tipo de documento:
         owner_documentnumber: Nro. do documento:
         owner_gender: Gênero:

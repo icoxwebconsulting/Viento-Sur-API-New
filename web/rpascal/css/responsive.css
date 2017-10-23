@@ -265,7 +265,7 @@
 
     #formSearch, #formFilters{
         padding: 15px 20px;
-        margin-bottom: 40px;
+        margin-bottom: 15px;
     }
 
     #formSearch .results{
@@ -639,6 +639,14 @@
     #processPayment .panel-body input{
         margin-top: 5px;
     }
+    
+    .input-width{
+        width: 65%
+    }
+    
+    .input-width-50{
+        width: 50%
+    }
 
     #processPayment .panel-body select{
         margin-top: 5px;
@@ -661,11 +669,13 @@
     }
 
     #processPayment .datesPayment{
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     #processPayment .datesPayment h2{
-        font-size: 20px;
+        font-size: 16px;
+        margin-top: 15px;
+        margin-bottom: 5px;
     }
 
     /*----- GO PROCESS PAYMENT RESERVATION -----*/

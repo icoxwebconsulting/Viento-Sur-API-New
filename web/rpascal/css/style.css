@@ -1690,16 +1690,17 @@ figure.effect-goliath:hover p {
 #processPayment .panel-body input{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 30px;
+	height: 25px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
+        font-size: 11px;
 }
 
 #processPayment .panel-body select{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 30px;
+	height: 25px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
@@ -1708,6 +1709,7 @@ figure.effect-goliath:hover p {
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
+        font-size: 11px;
 }
 
 #processPayment .panel-body textarea{

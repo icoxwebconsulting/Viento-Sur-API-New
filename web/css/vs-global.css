@@ -966,6 +966,11 @@ form.booking-form label {
   font-weight: bold;
 }
 
+.label-lef{
+   float: left;
+   margin-right: 11px;
+}
+
 .top-buffer {
   margin-top: 15px;
 }

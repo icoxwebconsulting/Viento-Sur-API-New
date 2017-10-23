@@ -255,13 +255,13 @@ hotels:
         lastname: Lastname(s):
         document: Document
         card_number: Card number:
-        expiration: Expiration:
+        expiration: Expi.:
         security_code: Security code:
         cardholder: Cardholder:
         such_as_card: As it appears on the card
-        owner_doc: Owner document:
-        owner_documenttype: Document type:
-        owner_documentnumber: Document number:
+        owner_doc: Owner doc:
+        owner_documenttype: Doc. type:
+        owner_documentnumber: Doc. number:
         owner_gender: Gender:
         country: Country
         state: State:
