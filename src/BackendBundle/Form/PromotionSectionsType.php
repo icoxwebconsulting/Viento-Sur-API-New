@@ -3,6 +3,7 @@
 namespace BackendBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -26,6 +27,38 @@ class PromotionSectionsType extends AbstractType
                 array(
                     'class' => 'VientoSur\App\AppBundle\Entity\Status',
                 )
+            )
+            ->add(
+                'titlePt',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'titleEn',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'subtitlePt',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'subtitleEn',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
             );
     }
     
@@ -44,6 +77,6 @@ class PromotionSectionsType extends AbstractType
      */
     public function getName()
     {
-        return 'vientosur_app_appbundle_promotionsections';
+        return 'appbundle_promotionsections';
     }
 }

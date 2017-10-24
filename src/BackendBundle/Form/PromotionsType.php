@@ -66,6 +66,38 @@ class PromotionsType extends AbstractType
                             ->setParameter('id', $id);
                     }
                 )
+            )
+            ->add(
+                'namePt',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'nameEn',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'descriptionPt',
+                TextareaType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'descriptionEn',
+                TextareaType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
             );
     }
 

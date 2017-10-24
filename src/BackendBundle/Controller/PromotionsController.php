@@ -22,7 +22,7 @@ class PromotionsController extends Controller
      * @param $request
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="promotion_list")
-     * @return array
+     * @return response
      */
     public function indexAction(Request $request)
     {
@@ -53,7 +53,7 @@ class PromotionsController extends Controller
      * @param Request $request
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/new", name="promotion_new")
-     * @return array
+     * @return response
      */
     public function newAcion(Request $request)
     {
@@ -64,6 +64,11 @@ class PromotionsController extends Controller
         
         if($form->handleRequest($request)->isValid())
         {
+            $namePt = $form->get('namePt')->getData();
+            $descriptionPt = $form->get('descriptionPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $descriptionEn = $form->get('descriptionEn')->getData();
+
             $em = $this->getDoctrine()->getManager();
 
             $image = $form->get('image')->getData();
@@ -76,6 +81,19 @@ class PromotionsController extends Controller
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setDescription($descriptionPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setDescription($descriptionEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.promotion_added')
@@ -92,19 +110,28 @@ class PromotionsController extends Controller
      * @param Promotions $entity entity
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/edit/{id}", name="promotion_edit")
-     * @return array
+     * @return response
      */
     public function putAction(Request $request, Promotions $entity)
     {
         $request->setMethod('PATCH');
 
+        $em = $this->getDoctrine()->getManager();
+
         $form = $this->createForm(new PromotionsType(), $entity, [
             "method" => $request->getMethod(),
             "id" => $this->getUser()->getId()
         ]);
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
+
         if ($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
+            $namePt = $form->get('namePt')->getData();
+            $descriptionPt = $form->get('descriptionPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $descriptionEn = $form->get('descriptionEn')->getData();
+
             $image = $form->get('image')->getData();
 
             if($image != NULL)
@@ -113,6 +140,19 @@ class PromotionsController extends Controller
             }
             $em->persist($entity);
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setDescription($descriptionPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setDescription($descriptionEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.promotion_updated')
@@ -121,7 +161,8 @@ class PromotionsController extends Controller
         }
         return $this->render(':admin/promotions:form.html.twig', array(
             'form' => $form->createView(),
-            'entity' => $entity
+            'entity' => $entity,
+            'translations' => $translations
         ));
     }
 
