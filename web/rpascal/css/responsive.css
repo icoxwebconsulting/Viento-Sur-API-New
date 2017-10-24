@@ -307,11 +307,11 @@
     #formSearch i{
         /*bottom: 19%;
         left: 5%;*/
-        font-size: 16px;
+        font-size: 14px;
     }
 
     #formSearch input{
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #formSearch .bottonSearch button{
@@ -719,7 +719,7 @@
     }
 
     #thumbsFlights .panel-heading h6 span{
-        font-size: 13px;
+        font-size: 12px;
     }
 
     #thumbsFlights .panel-body button{
