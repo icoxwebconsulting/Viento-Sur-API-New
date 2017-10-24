@@ -237,12 +237,12 @@
 
     <div class="row">
         {% if formNewPay.payment.owner_name is defined %}
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <div class="form-group">
                     {% set label = 'hotels.labels.cardholder' | trans %}
                     {% set placeholder = 'hotels.labels.such_as_card' | trans %}
-                    <label for="">{{ label }}</label>
-                    {{ form_widget(formNewPay.payment.owner_name, {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                    <label class="label-lef" for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.owner_name, {'attr': {'placeholder': placeholder, 'class': 'form-control input-width-50'}}) }}
                 </div>
             </div>
         {% endif %}

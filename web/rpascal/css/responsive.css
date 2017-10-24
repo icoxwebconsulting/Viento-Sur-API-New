@@ -653,7 +653,7 @@
     }
 
     #processPayment .panel-body textarea{
-        min-height: 200px;
+        min-height: 90px;
         margin-top: 5px;
     }
 

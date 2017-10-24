@@ -1690,17 +1690,17 @@ figure.effect-goliath:hover p {
 #processPayment .panel-body input{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 25px;
+	height: 27px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
-        font-size: 11px;
+        font-size: 12px;
 }
 
 #processPayment .panel-body select{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 25px;
+	height: 27px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
@@ -1709,7 +1709,11 @@ figure.effect-goliath:hover p {
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
-        font-size: 11px;
+        font-size: 12px;
+}
+
+.intl-tel-input.allow-dropdown {
+    width: 40% !important;
 }
 
 #processPayment .panel-body textarea{

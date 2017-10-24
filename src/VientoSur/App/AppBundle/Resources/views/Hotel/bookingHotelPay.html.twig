@@ -144,40 +144,40 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 {% for phone in formChoice.contact.phones %}
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = 'country_code' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.country_code' | trans %}
-                                                        <label for="">{{ label }}</label>
+                                                        <label class="label-lef" for="">{{ label }}</label>
                                                         {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'style': 'margin-top:5px !important;', 'class': 'form-control'}}) }}
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        {% set fieldName = 'type' ~ loop.index0 %}
-                                                        {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                                            {% set label = 'hotels.labels.type' | trans %}
-                                                            <label for="">{{ label }}</label>
-                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
-                                                        {% endif %}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <div class="form-group">
-                                                        {% set fieldName = 'area_code' ~ loop.index0 %}
+                                                        {% set fieldName = 'type' ~ loop.index0 %}
                                                         {% if attribute(formNewPay.contact, fieldName) is defined %}
-                                                            {% set label = 'hotels.labels.area_code' | trans %}
-                                                            <label for="">{{ label }}</label>
-                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            {% set label = 'hotels.labels.type' | trans %}
+                                                            <label class="label-lef" for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control', 'style': 'width: 60%'}}) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        {% set fieldName = 'area_code' ~ loop.index0 %}
+                                                        {% if attribute(formNewPay.contact, fieldName) is defined %}
+                                                            {% set label = 'hotels.labels.area_code' | trans %}
+                                                            <label class="label-lef" for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control', 'style': 'width: 60%'}}) }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'number' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.number' | trans %}
-                                                        <label for="">{{ label }}</label>
-                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        <label class="label-lef" for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control','style': 'width: 60%'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -191,15 +191,15 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="">Email:</label>
-                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError'}}) }}
+                                                        <label class="label-lef" for="">Email:</label>
+                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError', 'style': 'width: 80%;'}}) }}
 
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="">Confirme su Email:</label>
-                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">
+                                                        <label class="label-lef" for="">Confirme su Email:</label>
+                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off" style="width: 67%;">
 
                                                     </div>
                                                 </div>
@@ -231,8 +231,8 @@
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = loop.index0 %}
-                                                        <label for="">{{ 'hotels.vouchers' | trans }}:</label>
-                                                        {{ form_widget(attribute(formNewPay.vouchers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        <label class="label-lef" for="">{{ 'hotels.vouchers' | trans }}:</label>
+                                                        {{ form_widget(attribute(formNewPay.vouchers, fieldName), {'attr': {'class': 'form-control input-width'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -270,8 +270,8 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         {% set label = 'hotels.labels.subscribe_newsletter' | trans %}
-                                                        <label for="">{{ label }}</label>
-                                                        {{ form_widget(formNewPay.additionalData.subscribe_newsletter, {'attr': {'class': 'form-control'}}) }}
+                                                        <label class="label-lef"  for="">{{ label }}</label>
+                                                        {{ form_widget(formNewPay.additionalData.subscribe_newsletter, {'attr': {'class': 'form-control input-width'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endif %}
@@ -281,8 +281,8 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             {% set label = 'hotels.labels.travel_assistance' | trans %}
-                                                            <label for="">{{ label }}</label>
-                                                            {{ form_widget(formNewPay.additionalData.travel_assistance, {'attr': {'class': 'form-control'}}) }}
+                                                            <label class="label-lef" for="">{{ label }}</label>
+                                                            {{ form_widget(formNewPay.additionalData.travel_assistance, {'attr': {'class': 'form-control input-width'}}) }}
                                                         </div>
                                                     </div>
                                                 {% endif %}
