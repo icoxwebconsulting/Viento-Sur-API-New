@@ -5,3 +5,7 @@ api_autocomplete:
 api_hotel:
     type: rest
     resource: VientoSurApiBundle:Hotel
+
+api_payment:
+    type: rest
+    resource: VientoSurApiBundle:Payment
