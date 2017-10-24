@@ -1347,7 +1347,6 @@ figure.effect-goliath:hover p {
 #descriptionHotel .itemsHotel ul li{
 	color: #192731;
 	font-size: 1.33vw;
-	font-family: 'latolight';
 	padding-bottom: 0.83vw;
 }
 
@@ -1574,6 +1573,8 @@ figure.effect-goliath:hover p {
 	height: auto;
 	border: #fcfeff 2px solid;
 	margin: 0 auto;
+        margin-top: -15px;
+        margin-bottom: 10px;
 }
 
 #infoReserva ul{
@@ -1689,16 +1690,17 @@ figure.effect-goliath:hover p {
 #processPayment .panel-body input{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 30px;
+	height: 25px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
+        font-size: 11px;
 }
 
 #processPayment .panel-body select{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 30px;
+	height: 25px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
@@ -1707,6 +1709,7 @@ figure.effect-goliath:hover p {
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
+        font-size: 11px;
 }
 
 #processPayment .panel-body textarea{

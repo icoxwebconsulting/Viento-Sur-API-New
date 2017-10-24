@@ -265,7 +265,7 @@
 
     #formSearch, #formFilters{
         padding: 15px 20px;
-        margin-bottom: 40px;
+        margin-bottom: 15px;
     }
 
     #formSearch .results{
@@ -507,7 +507,7 @@
     }
 
     #descriptionHotel .itemsHotel ul li{
-        font-size: 16px;
+        font-size: 12px;
         padding-bottom: 10px;
     }
 
@@ -566,7 +566,7 @@
 
     /*----- GO PROCESS PAYMENT RESERVATION -----*/
     #infoReserva{
-        padding: 20px 15px;
+        padding: 5px 15px;
         margin-bottom: 20px;
     }
 
@@ -576,8 +576,8 @@
     }
 
     #infoReserva li{
-        font-size: 14px;
-        margin-right: 5px;
+        font-size: 12px;
+        margin-right: 0px;
     }
 
     #infoReserva p{
@@ -586,7 +586,7 @@
     }
 
     #infoReserva h3{
-        padding: 15px;
+        padding: 5px;
         font-size: 10px;
         margin: 20px 0;
 
@@ -639,6 +639,14 @@
     #processPayment .panel-body input{
         margin-top: 5px;
     }
+    
+    .input-width{
+        width: 65%
+    }
+    
+    .input-width-50{
+        width: 50%
+    }
 
     #processPayment .panel-body select{
         margin-top: 5px;
@@ -650,8 +658,8 @@
     }
 
     #processPayment .panel-body .bg-success{
-        padding: 15px 10px;
-        font-size: 14px;
+        padding: 5px;
+        font-size: 12px;
     }
 
     #processPayment .buttonPayment button{
@@ -661,11 +669,13 @@
     }
 
     #processPayment .datesPayment{
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     #processPayment .datesPayment h2{
-        font-size: 20px;
+        font-size: 16px;
+        margin-top: 15px;
+        margin-bottom: 5px;
     }
 
     /*----- GO PROCESS PAYMENT RESERVATION -----*/

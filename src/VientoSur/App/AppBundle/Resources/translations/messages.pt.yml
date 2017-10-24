@@ -111,6 +111,7 @@ hotels:
     lasts: Últimas
     choose_room: Escolha quarto
     room_per_night: Quarto por noite
+    share_in: Compartilhe em
     hotels_in: Hotéis em
     hotel_availabilities: Hotéis disponíveis nestas datas
     hotel_availabilities: hoteles disponibles para estas fechas en %place% con mejor precio disponível para essas datas em% place% hotéis com melhor preço
@@ -189,6 +190,7 @@ hotels:
     full_pension: Pensão completa
     all_inclusive: Todo incluido
     book: Reserva
+    continue_reservation: Continuar a reserva
     rooms_unavailables: Quartos não disponíveis
     services: Serviços
     activities: Atividades
@@ -245,11 +247,11 @@ hotels:
         lastname: Sobrenomes(s):
         document: Identidade
         card_number: Número do cartão:
-        expiration: Maturidade:
+        expiration: Matur.:
         security_code: Código de segurança:
-        cardholder: Titular do cartão:
+        cardholder: Cartão:
         such_as_card: Como aparece no cartão
-        owner_doc: Documento de Identidade do Titular:
+        owner_doc: Doc. do Titular:
         owner_documenttype: Tipo de documento:
         owner_documentnumber: Nro. do documento:
         owner_gender: Gênero:

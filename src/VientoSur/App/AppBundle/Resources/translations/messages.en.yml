@@ -117,6 +117,7 @@ hotels:
     lasts: Lasts
     choose_room: Choose room
     room_per_night: Room per night
+    share_in: Share in
     hotels_in: Hotels in
     hotel_availabilities: Hotels available for these dates in %place% with best price
     select: Select
@@ -197,6 +198,7 @@ hotels:
     full_pension: Full pension
     all_inclusive: All inclusive
     book: Book
+    continue_reservation: Continue reservation
     rooms_unavailables: Rooms unavailables
     services: Services
     activities: Activities
@@ -253,13 +255,13 @@ hotels:
         lastname: Lastname(s):
         document: Document
         card_number: Card number:
-        expiration: Expiration:
+        expiration: Expi.:
         security_code: Security code:
         cardholder: Cardholder:
         such_as_card: As it appears on the card
-        owner_doc: Owner document:
-        owner_documenttype: Document type:
-        owner_documentnumber: Document number:
+        owner_doc: Owner doc:
+        owner_documenttype: Doc. type:
+        owner_documentnumber: Doc. number:
         owner_gender: Gender:
         country: Country
         state: State:
