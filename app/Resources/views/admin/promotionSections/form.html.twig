@@ -19,8 +19,10 @@
             <div class="card-header">
                 <strong>{{ 'admin.promotion_section' | trans }}</strong>
             </div>
-            {{ form_start(form, {'attr':{ 'class': 'form-horizontal'}}) }}
+            {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.title' | trans }}</label>
                     <div class="col-md-9">
@@ -35,6 +37,38 @@
                     </div>
                     {{ form_errors(form.subtitle) }}
                 </div>
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.title' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.titlePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.title }} ) }}
+                    </div>
+                    {{ form_errors(form.titlePt) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.subtitle' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.subtitlePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.subtitle }} ) }}
+                    </div>
+                    {{ form_errors(form.subtitlePt) }}
+                </div>
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.title' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.titleEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.title }} ) }}
+                    </div>
+                    {{ form_errors(form.titleEn) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.subtitle' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.subtitleEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.subtitle }} ) }}
+                    </div>
+                    {{ form_errors(form.subtitleEn) }}
+                </div>
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="email">Status</label>
                     <div class="col-md-9">
@@ -46,9 +80,46 @@
             </div>
             <div class="card-footer">
                 <a href="{{ path('promotion_sections_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
             {{ form_end(form)}}
         </div>
     </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .flags-lg{
+            margin-left: 10px;
+            width: 20px;
+        }
+        .label-lg{
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('#send').click(function(e){
+                var titleEn = $('#appbundle_promotionsections_titleEn').val();
+                var subtitleEn = $('#appbundle_promotionsections_subtitleEn').val();
+                var titlePt = $('#appbundle_promotionsections_titlePt').val();
+                var subtitlePt = $('#appbundle_promotionsections_subtitlePt').val();
+
+                if(titleEn == '' || titlePt == '' || subtitleEn == '' || subtitlePt == ''){
+                    e.preventDefault();
+                    $('#confirm').modal('show');
+                }
+            });
+
+            $('#modal-submit').click(function(){
+                $('#form').submit();
+                $('#confirm').modal('hide');
+            });
+        });
+    </script>
 {% endblock %}

@@ -83,6 +83,12 @@ class RoomController extends Controller
         if($form->handleRequest($request)->isValid())
         {
             $payment_type = $em->getRepository('VientoSurAppAppBundle:PaymentType')->findOneBy(array('name' => 'at_destination'));
+
+            $namePt = $form->get('namePt')->getData();
+            $cancellationPolicityPt = $form->get('cancellationPolicityPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $cancellationPolicityEn = $form->get('cancellationPolicityEn')->getData();
+
 //            $amenity_value = $request->get('amenity');
 //            $amenity_price = $request->get('amenity_price');
 
@@ -99,8 +105,20 @@ class RoomController extends Controller
 //                $amenity_room->setPrice($amenity_price[$i]);
 //                $em->persist($amenity_room);
 //            }
-
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setCancellationPolicity($cancellationPolicityPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setCancellationPolicity($cancellationPolicityEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.added')
@@ -136,10 +154,17 @@ class RoomController extends Controller
             "id" => $this->getUser()->getId()
             ]);
 
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
+
         if ($form->handleRequest($request)->isValid())
         {
 //            $amenity_value = $request->get('amenity');
 //            $amenity_price = $request->get('amenity_price');
+            $namePt = $form->get('namePt')->getData();
+            $cancellationPolicityPt = $form->get('cancellationPolicityPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $cancellationPolicityEn = $form->get('cancellationPolicityEn')->getData();
 
             $em->persist($entity);
 
@@ -169,8 +194,20 @@ class RoomController extends Controller
 //                    $em->remove($amenityRooms[$j]);
 //                }
 //            }
-
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setCancellationPolicity($cancellationPolicityPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setCancellationPolicity($cancellationPolicityEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.updated')
@@ -180,8 +217,9 @@ class RoomController extends Controller
         return $this->render(':admin/room:form.html.twig', array(
             'form' => $form->createView(),
             'entity' => $entity,
-            'amenities' => $amenities,
-            'amenityRooms' => $amenityRooms
+//            'amenities' => $amenities,
+//            'amenityRooms' => $amenityRooms,
+            'translations' => $translations
         ));
     }
 

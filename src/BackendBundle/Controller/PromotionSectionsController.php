@@ -22,7 +22,7 @@ class PromotionSectionsController extends Controller
      * @param $request
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="promotion_sections_list")
-     * @return array
+     * @return response
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +54,7 @@ class PromotionSectionsController extends Controller
      * @param Request $request
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/new", name="promotion_sections_new")
-     * @return array
+     * @return response
      */
     public function newAcion(Request $request)
     {
@@ -63,10 +63,28 @@ class PromotionSectionsController extends Controller
 
         if($form->handleRequest($request)->isValid())
         {
+            $titlePt = $form->get('titlePt')->getData();
+            $subtitlePt = $form->get('subtitlePt')->getData();
+            $titleEn = $form->get('titleEn')->getData();
+            $subtitleEn = $form->get('subtitleEn')->getData();
+
             $em = $this->getDoctrine()->getManager();
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();
+
+            $entity->setTitle($titlePt);
+            $entity->setSubtitle($subtitlePt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setTitle($titleEn);
+            $entity->setSubtitle($subtitleEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.promotion_sections_added')
@@ -83,18 +101,39 @@ class PromotionSectionsController extends Controller
      * @param PromotionSections $entity entity
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/edit/{id}", name="promotion_sections_edit")
-     * @return array
+     * @return response
      */
     public function putAction(Request $request, PromotionSections $entity)
     {
         $request->setMethod('PATCH');
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
 
         $form = $this->createForm(new PromotionSectionsType(), $entity, ["method" => $request->getMethod()]);
         if ($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
+            $titlePt = $form->get('titlePt')->getData();
+            $subtitlePt = $form->get('subtitlePt')->getData();
+            $titleEn = $form->get('titleEn')->getData();
+            $subtitleEn = $form->get('subtitleEn')->getData();
+
             $em->persist($entity);
             $em->flush();
+
+            $entity->setTitle($titlePt);
+            $entity->setSubtitle($subtitlePt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setTitle($titleEn);
+            $entity->setSubtitle($subtitleEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.promotion_sections_updated')
@@ -103,7 +142,8 @@ class PromotionSectionsController extends Controller
         }
         return $this->render(':admin/promotionSections:form.html.twig', array(
             'form' => $form->createView(),
-            'entity' => $entity
+            'entity' => $entity,
+            'translations' => $translations
         ));
     }
 
@@ -111,7 +151,7 @@ class PromotionSectionsController extends Controller
      * @param PromotionSections $entity entity
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/delete/{id}", name="promotion_sections_delete")
-     * @return route
+     * @return response
      */
     public function deleteAction(PromotionSections $entity)
     {

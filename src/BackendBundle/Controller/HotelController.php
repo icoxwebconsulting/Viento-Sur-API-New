@@ -75,14 +75,14 @@ class HotelController extends Controller
             'created_by' => $this->getUser()->getId()
         ));
 
-//        if($hotel){
-//            $route = $this->get('router')->generate('hotel_list');
-//            $this->addFlash(
-//                'info',
-//                $this->get('translator')->trans('admin.messages.limit_hotel_by_user')
-//            );
-//            return new RedirectResponse($route);
-//        }
+        if($hotel){
+            $route = $this->get('router')->generate('hotel_list');
+            $this->addFlash(
+                'info',
+                $this->get('translator')->trans('admin.messages.limit_hotel_by_user')
+            );
+            return new RedirectResponse($route);
+        }
 
         $entity = new Hotel();
         $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();

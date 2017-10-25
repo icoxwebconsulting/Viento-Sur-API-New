@@ -72,6 +72,38 @@ class RoomsType extends AbstractType
                 array(
                     'class' => 'VientoSur\App\AppBundle\Entity\MealPlan'
                 )
+            )
+            ->add(
+                'namePt',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'nameEn',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'cancellationPolicityPt',
+                TextareaType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'cancellationPolicityEn',
+                TextareaType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
             );
     }
 
