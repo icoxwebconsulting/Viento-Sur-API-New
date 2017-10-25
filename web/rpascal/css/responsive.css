@@ -320,8 +320,8 @@
     }
 
     #formFilters .titleFilters{
-        font-size: 16px;
-        margin: 0 0 15px 0;
+        font-size: 14px;
+        margin: 0 0 0 0;
     }
 
     #formFilters .boxFilter h4{
@@ -699,8 +699,8 @@
     }
 
     #thumbsFlights .paymentFlight h5{
-        font-size: 24px;
-        margin: 30px 0;
+        font-size: 18px;
+        margin: 20px 0;
     }
 
     #thumbsFlights .paymentFlight button{

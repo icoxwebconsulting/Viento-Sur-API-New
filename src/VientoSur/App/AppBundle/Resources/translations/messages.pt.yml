@@ -300,6 +300,7 @@ flights:
     duration: Duração
     schedule: Horário
     detail: Detalhe
+    see_detail: Ver detalhes do vôo
     direct: Direto
     scale: Balança
     total_duration: Duração total

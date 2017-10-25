@@ -309,6 +309,7 @@ flights:
     duration: Duration
     schedule: Schedule
     detail: Detail
+    see_detail: See flight detail
     direct: Direct
     scale: Scale
     total_duration: Total Duration
