@@ -129,14 +129,12 @@
                         </div>
 
                         <div class="row">
-                            <div class='form-group date col-xs-7' id='datetimepicker5'>
+                            <div class='form-group date col-xs-7 menu-lef-data' id='datetimepicker5'>
                                 <label  id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
                                 <input id="start-flight" class="form-control required test" name="start" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('departure_date')}}"/>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class='form-group date col-xs-7' id='datetimepicker5'>
+                            <div class='form-group date col-xs-7 menu-lef-data' id='datetimepicker5'>
                                 <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
                                 <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('return_date')}}"/>
