@@ -704,10 +704,37 @@
     }
 
     #thumbsFlights .paymentFlight button{
-        font-size: 12px;
-        padding: 15px;
+        font-size: 14px;
+        padding: 10px;
     }
 
+    .hour{
+        font-weight: 700;
+        width: 8%;
+        text-align: left;
+        max-width: 70px;
+        font-size: 16px;
+        color: #444;
+    }
+
+    .time{
+        font-weight: 700;
+        width: 12%;
+        max-width: 75px;
+        justify-content: center;
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .scale{
+        max-width: 100px;
+        justify-content: center;
+        text-align: center;
+        padding-bottom: 5px;
+        width: 16%;
+        border-bottom: 1px solid;
+    }
+    
     #thumbsFlights .panel-heading h3{
         padding: 5px;
         font-size: 16px;

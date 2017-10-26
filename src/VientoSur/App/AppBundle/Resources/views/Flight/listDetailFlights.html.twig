@@ -52,7 +52,7 @@
                                                                         {% set airlines = airlines|merge([segment.airline]) %}
                                                                         <span class="inline-detail-airline-description review-text">
                                                                             <span>
-                                                                                <b>{{ airlineNames[segment.airline] }}</b>
+                                                                                <b style="color: #003580">{{ airlineNames[segment.airline] }}</b>
                                                                             </span>
                                                                         </span>
                                                                     {% endif %}
@@ -64,20 +64,20 @@
                                             </div>
                                             <div class="col-xs-7">
                                                 <p style="text-align: right">
-                                                    {{ outbound.segments[0].departure_datetime|date("H:i") }} &nbsp;
+                                                    <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i") }}</a> &nbsp;
                                                     {% set totalSeg = outbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;{{ 'flights.direct' | trans }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;<a class="scale">{{ 'flights.direct' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp; <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {% else %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp; <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {% endif %}
 
                                                     {% set lastSeg = outbound.segments|last %}
-                                                    &nbsp;&nbsp;&nbsp;&nbsp; {{ lastSeg.arrival_datetime|date("H:i") }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                    &nbsp;&nbsp;&nbsp; {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m &nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;<a class="time">{{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m</a> &nbsp;&nbsp;&nbsp;
                                                 </p>
                                             </div>
                                             <div class="col-xs-1 center" style="margin-bottom: 5px">
@@ -215,7 +215,7 @@
                                                                 {% set airlines = airlines|merge([segment.airline]) %}
                                                                 <span class="inline-detail-airline-description review-text">
                                                                     <span>
-                                                                        <b>{{ airlineNames[segment.airline] }}</b>
+                                                                        <b style="color: #003580">{{ airlineNames[segment.airline] }}</b>
                                                                     </span>
                                                                 </span>
                                                             {% endif %}
@@ -226,20 +226,20 @@
                                         </div>
                                             <div class="col-xs-7">
                                                 <p style="text-align: right">
-                                                    {{ inbound.segments[0].departure_datetime|date("H:i") }} &nbsp;
+                                                    <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i") }}</a> &nbsp;
                                                     {% set totalSeg = inbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;{{ 'flights.direct' | trans }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;<a class="scale">{{ 'flights.direct' | trans }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {% else %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {% endif %}
 
                                                     {% set lastSeg = inbound.segments|last %}
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;  {{ lastSeg.arrival_datetime|date("H:i") }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp; <a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                    &nbsp;&nbsp;&nbsp; {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m &nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp; <a class="time">{{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m </a>&nbsp;&nbsp;&nbsp;
                                                 </p>
                                             </div>
                                         <div class="col-xs-1 center" style="margin-bottom: 5px">
@@ -353,7 +353,7 @@
                                     {{ symbol }} {{ item.price_detail.total|round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.') }}
                                 {% endif %}
                             </h5>
-                            <span class="btn btn-primary">{{ 'hotels.buy' | trans }}</span>
+                            <button>{{ 'hotels.buy' | trans }}</button>
                             <input type="hidden" name="item_id" value="{{ item.id }}" />
                             {% for b_info in item.booking_info %}
                                 {% if b_info.inbound_choice is defined %}
