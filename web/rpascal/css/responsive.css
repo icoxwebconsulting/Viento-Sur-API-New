@@ -715,6 +715,7 @@
         max-width: 70px;
         font-size: 16px;
         color: #444;
+        margin-right: 25px;
     }
 
     .time{
@@ -733,6 +734,7 @@
         padding-bottom: 5px;
         width: 16%;
         border-bottom: 1px solid;
+        margin-right: 35px;
     }
     
     #thumbsFlights .panel-heading h3{

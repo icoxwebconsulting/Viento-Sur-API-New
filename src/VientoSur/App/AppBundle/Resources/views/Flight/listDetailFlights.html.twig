@@ -36,7 +36,7 @@
                                 <div id="collapse" class="panel-collapse">
                                     <div class="panel-body">
                                         {% for outbound in item.outbound_choices %}
-                                            <div class="col-xs-4">
+                                            <div class="col-xs-5">
                                                 <div class="radioButton">
                                                     <label for="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" class="radio-inline">
                                                         <input type="radio"
@@ -62,22 +62,21 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-7">
-                                                <p style="text-align: right">
-                                                    <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i") }}</a> &nbsp;
+                                            <div class="col-xs-6">
+                                                <p>
+                                                    <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i") }}</a>
                                                     {% set totalSeg = outbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;<a class="scale">{{ 'flights.direct' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}&nbsp;&nbsp;</a>
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a>
                                                     {% else %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
 
                                                     {% set lastSeg = outbound.segments|last %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
-
-                                                        &nbsp;&nbsp;&nbsp;<a class="time">{{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m</a> &nbsp;&nbsp;&nbsp;
+                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a>
+                                                        <a class="time">{{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m</a>
                                                 </p>
                                             </div>
                                             <div class="col-xs-1 center" style="margin-bottom: 5px">
@@ -202,7 +201,7 @@
                                     <div id="collapse" class="panel-collapse">
                                     <div class="panel-body">
                                         {% for inbound in item.inbound_choices %}
-                                        <div class="col-xs-4">
+                                        <div class="col-xs-5">
                                             <div class="radioButton">
                                                 <label for="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" class="radio-inline">
                                                     <input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} >
@@ -224,22 +223,20 @@
                                                 </label>
                                             </div>
                                         </div>
-                                            <div class="col-xs-7">
-                                                <p style="text-align: right">
-                                                    <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i") }}</a> &nbsp;
+                                            <div class="col-xs-6">
+                                                <p>
+                                                    <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i") }}</a>
                                                     {% set totalSeg = inbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;<a class="scale">{{ 'flights.direct' | trans }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}</a>
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a>
                                                     {% else %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
-
                                                     {% set lastSeg = inbound.segments|last %}
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; <a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                                        &nbsp;&nbsp;&nbsp; <a class="time">{{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m </a>&nbsp;&nbsp;&nbsp;
+                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a>
+                                                        <a class="time">{{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m </a>
                                                 </p>
                                             </div>
                                         <div class="col-xs-1 center" style="margin-bottom: 5px">
