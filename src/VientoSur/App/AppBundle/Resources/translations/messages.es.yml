@@ -208,7 +208,7 @@ hotels:
     thanks_booking: ¡Gracias, %name%! Tu reservación está confirmada
     address: Dirección
     description: Descripción
-    phone: Teléfono
+    phone: Teléfono:
     unavailable: No disponible
     gps_coordinates: Coordenandas GPS
     your_group: Tu grupo

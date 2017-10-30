@@ -144,15 +144,15 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 {% for phone in formChoice.contact.phones %}
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-2">
                                                     <div class="form-group">
                                                         {% set fieldName = 'country_code' ~ loop.index0 %}
-                                                        {% set label = 'hotels.labels.country_code' | trans %}
+                                                        {% set label = 'hotels.labels.country' | trans %}
                                                         <label class="label-lef" for="">{{ label }}</label>
                                                         {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'style': 'margin-top:5px !important;', 'class': 'form-control'}}) }}
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'type' ~ loop.index0 %}
                                                         {% if attribute(formNewPay.contact, fieldName) is defined %}
@@ -172,7 +172,7 @@
                                                         {% endif %}
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = 'number' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.number' | trans %}

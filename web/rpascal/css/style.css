@@ -1713,7 +1713,8 @@ figure.effect-goliath:hover p {
 }
 
 .intl-tel-input.allow-dropdown {
-    width: 40% !important;
+    width: 73% !important;
+    margin-right: -15px;
 }
 
 #processPayment .panel-body textarea{
