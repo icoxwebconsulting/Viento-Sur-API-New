@@ -666,6 +666,7 @@ $(document).ready(function () {
         var toDate = $('#date-m').text();
         var placeHolderFrom = $('#multidestination-from-flight0').attr('placeholder');
         var placeHolderTo = $('#multidestination-to-flight0').attr('placeholder');
+        var plasHolderDate = $('#start-flight0').attr('placeholder');
         if (lenght < 7){
             $('.col-md-12.stretch')
                 .before('<div class="row wrapper '+className+'">'+
@@ -687,7 +688,7 @@ $(document).ready(function () {
                                     '<p>'+toDate+'</p>'+
                                     '<div class="input-group date marginBottom10 col-xs-12" id="datetimepicker3">'+
                                     '<i class="glyphicon glyphicon-calendar"></i>'+
-                                    '<input class="form-control required departure" id="start-flight'+count+'" name="multidestination['+count+'][start]" type="text" required="" placeholder="dd/mm/yyyy"/>'+
+                                    '<input class="form-control required departure" id="start-flight'+count+'" name="multidestination['+count+'][start]" type="text" required="" placeholder="'+plasHolderDate+'"/>'+
                                 '</div>'+
                                 '</div>'+
                             '</div>'+

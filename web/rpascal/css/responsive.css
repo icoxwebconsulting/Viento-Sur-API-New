@@ -1038,12 +1038,34 @@
         font-size: 6px;
         height: 15px;
         width: 80px;
+        padding-top: 2px;
+    }
+    
+    .search .tab-content .selectMoney {
+        width: 23% !important;
     }
 
     .associations .linkConditions{
         font-size: 5px !important;
     }
 
+    .modal-front-search-hote{
+        width: 100% !important; 
+    }
+    
+    .modal-front-search-flight{
+        width: 100% !important;
+    }
+    
+    .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
+        width: 60%;
+    }
+    
+    .multiple-input-width{
+        width: 100%;
+        margin-left: 0px !important;
+    }
+    
     .copyright p{
         font-size: 4px !important;
     }

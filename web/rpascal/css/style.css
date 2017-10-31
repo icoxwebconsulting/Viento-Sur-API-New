@@ -2867,3 +2867,14 @@ figure.effect-goliath:hover p {
 .span-type-trip {
 	font-size: 8px!important;
 }
+
+.modal-front-search-hotel{
+    margin: 0px auto !important; 
+    width: 55% !important; 
+    margin-top: 100px !important;
+}
+
+.modal-front-search-flight{
+    margin: 0px auto; 
+    width: 60%
+}
