@@ -109,7 +109,7 @@
         </div>
     </div>
     {% set currency = app.session.get('targetCurrency') %}
-    <div class="col-xs-2 col-xs-offset-10 selectMoney">
+    <div class="col-xs-2 col-xs-offset-9 selectMoney">
         <select class="form-control"  onchange="optionChangeCurrency(this.value)">
             <option value="USD" {% if currency == 'USD' %}selected="selected"{% endif %}>USD</option>
             <option value="ARS" {% if currency == 'ARS' %}selected="selected"{% endif %}>AR$</option>
