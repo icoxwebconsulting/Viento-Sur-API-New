@@ -950,7 +950,11 @@
 
     #thumbHotel{
         width: 100%;
-        margin: 30px 0 0 0 !important;
+        margin: 10px 0 0 0 !important;
+    }
+    
+    .star-div{
+        margin-left: 0px;
     }
 
     #thumbHotel .infoHotel h4{
@@ -979,6 +983,7 @@
 
     #thumbHotel .priceRoom h5, #thumbHotel .priceRoom h5 span, #thumbHotel .priceRoom button{
         font-size: 10px;
+        width: 120%;
     }
 
     #thumbHotel .infoHotel, #thumbHotel .priceRoom{
@@ -986,7 +991,7 @@
     }
 
     #thumbHotel .infoHotel .modalMap {
-        line-height: 0;
+        line-height: 1;
     }
 
     #thumbHotel .infoHotel ul{
@@ -1005,6 +1010,9 @@
         width: 80px;
     }
 
+    .room-select{
+        width: 44%;
+    }
     #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
         font-size: 3vw;
     }
@@ -1064,6 +1072,14 @@
     .multiple-input-width{
         width: 100%;
         margin-left: 0px !important;
+    }
+    
+    .boxPrice{
+        margin-bottom: 50px;
+    }
+    
+    .share-social-media{
+        padding: 0px 15px !important;
     }
     
     .tabbed{
