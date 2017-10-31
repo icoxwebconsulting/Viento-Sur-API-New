@@ -2,12 +2,14 @@
 {% block title %}{{ 'index.rooms_available' | trans }} {{hotelDetails.name}} {% endblock %}
 
 {% block meta_open_graph %}
-    {% for key, pictures in hotelDetails.pictures %}
-        {% if loop.index == 1 %}
-            {% set image = pictures.url %}
-            <meta property="og:image" content="{{ image }}" />
-        {% endif %}
-    {% endfor %}
+    {% if hotelDetails.pictures is defined %}
+        {% for key, pictures in hotelDetails.pictures %}
+            {% if loop.index == 1 %}
+                {% set image = pictures.url %}
+                <meta property="og:image" content="{{ image }}" />
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:url"                content="https://vientosur.net{{ app.request.pathInfo }}" />
     <meta property="og:title"              content="{{hotelDetails.name}}" />
