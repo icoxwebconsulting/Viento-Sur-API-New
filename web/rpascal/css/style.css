@@ -254,7 +254,7 @@ header{
 .search .tab-pane{
 	background: rgba(255,255,255,0.7);
 	border-radius: 5px;
-	padding: 3.33vw 1.66vw 0 1.66vw;
+	padding: 3.33vw 1.66vw 0 1.6vw;
 }
 
 .search .tab-pane.active{

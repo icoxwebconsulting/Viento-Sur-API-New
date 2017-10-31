@@ -1066,6 +1066,10 @@
         margin-left: 0px !important;
     }
     
+    .tabbed{
+        min-width: 100% !important;
+    }
+    
     .copyright p{
         font-size: 4px !important;
     }
