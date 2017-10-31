@@ -1257,6 +1257,10 @@
             });
 
             device();
+
+            {% if cardSelected is defined %}
+            $('.clickable-card[data-all-data-card="{{ cardSelected }}"]').click();
+            {% endif %}
         });
 
         function device() {

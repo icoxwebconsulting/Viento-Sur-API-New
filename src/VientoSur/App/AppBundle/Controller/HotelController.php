@@ -640,7 +640,7 @@ class HotelController extends Controller
                     'travelers' => $data,
                     'contact' => $formData['country_code0'].' '.$formData['area_code0'].' '.$formData['number0']
                 ]);
-//                echo "<pre>".print_r($request->get('selected-card'), true)."</pre>";die();
+//                echo "<pre>".print_r($request->get('select-card'), true)."</pre>";die();
                 try {
                     $booking = $hotelService->bookingHotel(
                         $formBooking,
@@ -653,6 +653,7 @@ class HotelController extends Controller
                         $lang,
                         $request->getSession()->get('email')
                     );
+//                                    echo "<pre>".print_r($booking, true)."</pre>";die();
                 } catch (\Exception $e) {
                     if ($e->getMessage() == 'CREDIT_CARD') {
                         $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
@@ -675,7 +676,8 @@ class HotelController extends Controller
                             'roomNumbers' => count(explode("!", $distribution)),
                             'errors' => $formNewPaySend->getErrors(),
                             'travellers' => $travellers,
-                            'hotelBrief' => $session->get('hotel_brief')
+                            'hotelBrief' => $session->get('hotel_brief'),
+                            'cardSelected' => $request->get('select-card')
                         );
                     } else {
 //                        cuando la tarjeta falla el error aparece aqui
@@ -721,7 +723,8 @@ class HotelController extends Controller
                         'travellers' => $travellers,
                         'hotelBrief' => $session->get('hotel_brief'),
                         'cardList' => $cards,
-                        'bankList' => $bankList
+                        'bankList' => $bankList,
+                        'cardSelected' => $request->get('select-card')
                     );
                 }else{
                     $session->remove('hotel_entrance_code');
@@ -803,6 +806,7 @@ class HotelController extends Controller
             'hotelBrief' => $session->get('hotel_brief'),
             'cardList' => $cards,
             'bankList' => $bankList
+
         );
     }
     /**

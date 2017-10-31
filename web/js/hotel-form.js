@@ -18,7 +18,8 @@ $(document).ready(function () {
     var splitCard = cardId.split("-");
     $('#form_payment_card_code').val(splitCard[1]);
     $('#form_payment_card_type').val(splitCard[3]);
-    $('#card-selected').val(cardsObject[splitCard[1]]);
+
+    // $('#card-selected').val(cardsObject[splitCard[1]]);
 
     $('.list-group').on('click', '.clickable-card', function () {
         var cardId = $(this).data('card-id');
