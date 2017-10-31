@@ -207,10 +207,10 @@
                         <label class="label-lef" for="">{{ label }}</label>
                         <div class="row">
                             <div class="col-xs-4">
-                                {{ form_widget(formNewPay.payment.expiration.month, {'attr': {'class': 'form-control', 'style': 'width: 150%'}}) }}
+                                {{ form_widget(formNewPay.payment.expiration.month, {'attr': {'class': 'form-control expiration-date'}}) }}
                             </div>
                             <div class="col-xs-4">
-                                {{ form_widget(formNewPay.payment.expiration.year, {'attr': {'class': 'form-control', 'style': 'width: 150%'}}) }}
+                                {{ form_widget(formNewPay.payment.expiration.year, {'attr': {'class': 'form-control expiration-date'}}) }}
                                 {{ form_widget(formNewPay.payment.expiration.day, {'attr': {'style': 'display:nonoe;'}}) }}
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                     <div class="form-group">
                         {% set label = 'hotels.labels.security_code' | trans %}
                         <label class="label-lef" for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.security_code, {'attr': {'class': 'form-control input-ccv' , 'size': '5' , 'style': 'width:50% !important'}}) }}
+                        {{ form_widget(formNewPay.payment.security_code, {'attr': {'class': 'form-control input-ccv security_code' , 'size': '5'}}) }}
                     </div>
                 </div>
             {% endif %}

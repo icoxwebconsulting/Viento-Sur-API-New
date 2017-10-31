@@ -950,6 +950,26 @@ header{
     padding: 0px 46px !important;
 }
 
+.expiration-date{
+    width: 150%;
+}
+
+.security_code{
+    width: 50% !important;
+}
+
+.type_form{
+    width: 60% !important;
+}
+
+.email_form{
+    width: 80% !important;
+}
+
+.email_confirm_form{
+    width: 67% !important;
+}
+
 #thumbHotel .infoHotel ul{
 	padding: 0;
 	margin: 0 0 0 10px;

@@ -1065,6 +1065,30 @@
         width: 100% !important;
     }
     
+    .expiration-date{
+        width: 140%;
+    }
+    
+    .security_code{
+        width: 100% !important
+    }
+    
+    .intl-tel-input.allow-dropdown{
+        width: 100% !important;
+    }
+    
+    .type_form{
+        width: 100% !important;
+    }
+    
+    .email_form{
+        width: 100% !important;
+    }
+    
+    .email_confirm_form{
+        width: 100% !important;
+    }
+    
     .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
         width: 60%;
     }

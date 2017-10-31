@@ -158,7 +158,7 @@
                                                         {% if attribute(formNewPay.contact, fieldName) is defined %}
                                                             {% set label = 'hotels.labels.type' | trans %}
                                                             <label class="label-lef" for="">{{ label }}</label>
-                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control', 'style': 'width: 60%'}}) }}
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control type_form'}}) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -168,7 +168,7 @@
                                                         {% if attribute(formNewPay.contact, fieldName) is defined %}
                                                             {% set label = 'hotels.labels.area_code' | trans %}
                                                             <label class="label-lef" for="">{{ label }}</label>
-                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control', 'style': 'width: 60%'}}) }}
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control type_form'}}) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -177,7 +177,7 @@
                                                         {% set fieldName = 'number' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.number' | trans %}
                                                         <label class="label-lef" for="">{{ label }}</label>
-                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control','style': 'width: 60%'}}) }}
+                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control type_form'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -192,14 +192,14 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label class="label-lef" for="">Email:</label>
-                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError', 'style': 'width: 80%;'}}) }}
+                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError email_form'}}) }}
 
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label class="label-lef" for="">Confirme su Email:</label>
-                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off" style="width: 67%;">
+                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control email_confirm_form" autocomplete="off">
 
                                                     </div>
                                                 </div>
