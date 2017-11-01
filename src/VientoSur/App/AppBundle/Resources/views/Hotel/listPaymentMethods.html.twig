@@ -10,7 +10,7 @@
                         <span id="span-text-{{ loop.index }}">
                                                     <b style="font-weight: bold !important;">1</b> Pago
                                                 </span>
-                    {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
+                    {% elseif paymentMethod.installment_quantity > 1 and type != 'debit_card' %}
                         {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}#}
                         <span id="span-text-{{ loop.index }}">
                                                     <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
@@ -146,7 +146,7 @@
                     <select name="select-card" id="select-card3" class="form-control input-width" title="">
                         {% for cuotas, bank in paymentMethods %}
                             {% set n = loop.index %}
-                            {% if bank.installment_quantity is defined or bank.type != 'debit_card' %}
+                            {% if bank.installment_quantity is defined and bank.type != 'debit_card' %}
                                 <optgroup id="{{ loop.index }}" label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
                                 {% for key in bank.card_ids %}
 
