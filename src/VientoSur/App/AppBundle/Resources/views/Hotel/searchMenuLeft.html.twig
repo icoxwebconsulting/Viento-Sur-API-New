@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="form-group col-xs-12">
                         <label for="roomsQty" style="float: left; margin-right: 26px">{{ 'index.search.hotel.number_rooms' | trans }}:</label>
-                        <select id="roomsQty" class="form-control" name="habitacionesCant" style="width: 33%">
+                        <select id="roomsQty" class="form-control room-select" name="habitacionesCant">
                             <option value="1" {% if data_travelers| length == 1 %}selected{% endif %}>1 {{ 'index.search.hotel.room' | trans }}</option>
                             <option value="2" {% if data_travelers| length == 2 %}selected{% endif %}>2 {{ 'index.search.hotel.rooms' | trans }}</option>
                             <option value="3" {% if data_travelers| length == 3 %}selected{% endif %}>3 {{ 'index.search.hotel.rooms' | trans }}</option>

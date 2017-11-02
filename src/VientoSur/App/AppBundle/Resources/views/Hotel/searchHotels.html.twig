@@ -46,7 +46,7 @@
             <span id="data-room">0</span> {{ 'index.search.hotel.room' | trans }}
         </button>
         <!-- Modal -->
-        <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin: 0px auto; width: 55%; margin-top: 100px;">
+        <div class="modal fade modal-front-search-hotel" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content">
                     <div class="modal-header">
@@ -109,7 +109,7 @@
         </div>
     </div>
     {% set currency = app.session.get('targetCurrency') %}
-    <div class="col-xs-2 col-xs-offset-10 selectMoney">
+    <div class="col-xs-2 col-xs-offset-9 selectMoney">
         <select class="form-control"  onchange="optionChangeCurrency(this.value)">
             <option value="USD" {% if currency == 'USD' %}selected="selected"{% endif %}>USD</option>
             <option value="ARS" {% if currency == 'ARS' %}selected="selected"{% endif %}>AR$</option>

@@ -320,8 +320,8 @@
     }
 
     #formFilters .titleFilters{
-        font-size: 16px;
-        margin: 0 0 15px 0;
+        font-size: 14px;
+        margin: 0 0 0 0;
     }
 
     #formFilters .boxFilter h4{
@@ -699,15 +699,44 @@
     }
 
     #thumbsFlights .paymentFlight h5{
-        font-size: 24px;
-        margin: 30px 0;
+        font-size: 18px;
+        margin: 20px 0;
     }
 
     #thumbsFlights .paymentFlight button{
-        font-size: 12px;
-        padding: 15px;
+        font-size: 14px;
+        padding: 10px;
     }
 
+    .hour{
+        font-weight: 700;
+        width: 8%;
+        text-align: left;
+        max-width: 70px;
+        font-size: 16px;
+        color: #444;
+        margin-right: 25px;
+    }
+
+    .time{
+        font-weight: 700;
+        width: 12%;
+        max-width: 75px;
+        justify-content: center;
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .scale{
+        max-width: 100px;
+        justify-content: center;
+        text-align: center;
+        padding-bottom: 5px;
+        width: 16%;
+        border-bottom: 1px solid;
+        margin-right: 35px;
+    }
+    
     #thumbsFlights .panel-heading h3{
         padding: 5px;
         font-size: 16px;
@@ -921,7 +950,11 @@
 
     #thumbHotel{
         width: 100%;
-        margin: 30px 0 0 0 !important;
+        margin: 10px 0 0 0 !important;
+    }
+    
+    .star-div{
+        margin-left: 0px;
     }
 
     #thumbHotel .infoHotel h4{
@@ -950,6 +983,7 @@
 
     #thumbHotel .priceRoom h5, #thumbHotel .priceRoom h5 span, #thumbHotel .priceRoom button{
         font-size: 10px;
+        width: 120%;
     }
 
     #thumbHotel .infoHotel, #thumbHotel .priceRoom{
@@ -957,7 +991,7 @@
     }
 
     #thumbHotel .infoHotel .modalMap {
-        line-height: 0;
+        line-height: 1;
     }
 
     #thumbHotel .infoHotel ul{
@@ -976,6 +1010,9 @@
         width: 80px;
     }
 
+    .room-select{
+        width: 44%;
+    }
     #processPayment .panel-title, #processPayment .panel-body h5, #processPayment .datesPayment h2{
         font-size: 3vw;
     }
@@ -1009,12 +1046,70 @@
         font-size: 6px;
         height: 15px;
         width: 80px;
+        padding-top: 2px;
+    }
+    
+    .search .tab-content .selectMoney {
+        width: 23% !important;
     }
 
     .associations .linkConditions{
         font-size: 5px !important;
     }
 
+    .modal-front-search-hote{
+        width: 100% !important; 
+    }
+    
+    .modal-front-search-flight{
+        width: 100% !important;
+    }
+    
+    .expiration-date{
+        width: 140%;
+    }
+    
+    .security_code{
+        width: 100% !important
+    }
+    
+    .intl-tel-input.allow-dropdown{
+        width: 100% !important;
+    }
+    
+    .type_form{
+        width: 100% !important;
+    }
+    
+    .email_form{
+        width: 100% !important;
+    }
+    
+    .email_confirm_form{
+        width: 100% !important;
+    }
+    
+    .search .tab-content .modal-dialog .selectRoom .selectGroup h3{
+        width: 60%;
+    }
+    
+    .multiple-input-width{
+        width: 100%;
+        margin-left: 0px !important;
+    }
+    
+    .boxPrice{
+        margin-bottom: 50px;
+    }
+    
+    .share-social-media{
+        padding: 0px 15px !important;
+    }
+    
+    .tabbed{
+        min-width: 100% !important;
+    }
+    
     .copyright p{
         font-size: 4px !important;
     }

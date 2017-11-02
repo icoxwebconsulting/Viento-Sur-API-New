@@ -254,7 +254,7 @@ header{
 .search .tab-pane{
 	background: rgba(255,255,255,0.7);
 	border-radius: 5px;
-	padding: 3.33vw 1.66vw 0 1.66vw;
+	padding: 3.33vw 1.6vw 0 1.6vw;
 }
 
 .search .tab-pane.active{
@@ -938,6 +938,38 @@ header{
 	float: left;
 }
 
+.star-div{
+    margin-left: -10px;
+}
+
+.room-select{
+    width: 33%;
+}
+
+.share-social-media{
+    padding: 0px 46px !important;
+}
+
+.expiration-date{
+    width: 150%;
+}
+
+.security_code{
+    width: 46% !important;
+}
+
+.type_form{
+    width: 60% !important;
+}
+
+.email_form{
+    width: 80% !important;
+}
+
+.email_confirm_form{
+    width: 67% !important;
+}
+
 #thumbHotel .infoHotel ul{
 	padding: 0;
 	margin: 0 0 0 10px;
@@ -978,7 +1010,6 @@ header{
 
 #thumbHotel .infoHotel a{
 	font-size: 1.25vw;
-	font-family: 'latoregular';
 	color: #0777ae;
 }
 
@@ -1713,7 +1744,8 @@ figure.effect-goliath:hover p {
 }
 
 .intl-tel-input.allow-dropdown {
-    width: 40% !important;
+    width: 73% !important;
+    margin-right: -15px;
 }
 
 #processPayment .panel-body textarea{
@@ -1877,7 +1909,7 @@ figure.effect-goliath:hover p {
 
 #thumbsFlights .panel-body p{
 	color: #233034;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 #thumbsFlights .panel-body button{
@@ -2026,7 +2058,6 @@ figure.effect-goliath:hover p {
 
 
 .scroller-flight {
-	overflow: auto;
 	height: 300px;
 }
 
@@ -2865,4 +2896,15 @@ figure.effect-goliath:hover p {
 
 .span-type-trip {
 	font-size: 8px!important;
+}
+
+.modal-front-search-hotel{
+    margin: 0px auto !important; 
+    width: 55% !important; 
+    margin-top: 100px !important;
+}
+
+.modal-front-search-flight{
+    margin: 0px auto; 
+    width: 60%
 }

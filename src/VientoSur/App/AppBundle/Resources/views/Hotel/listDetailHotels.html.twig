@@ -29,7 +29,7 @@
                             {#</a>#}
                         </h4>
                         <div class="row">
-                            <div class="col-sm-6" style="margin-left: -10px;">
+                            <div class="col-sm-6 star-div">
                                 <ul>
                                     {% for i in 1..5 %}
                                         {% if i <= item.hotel.stars %}
@@ -42,7 +42,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-10">
-                                <div class="modalMap" style="font-size: 15px">
+                                <div class="modalMap" style="font-size: 12px">
                                     <i class="fa fa-map-marker fa-lg input-icon"  style="font-size: 15px"></i>&nbsp;
                                     <a class="booking-item-address" data-prevent="modal"
                                        data-latitude="{{ item.hotel.location.latitude }}"
