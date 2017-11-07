@@ -1,0 +1,23 @@
+<div class="modal fade" id="cancel-reservation">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">{{ 'admin.sure_cancel_reservation' | trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    {{ 'admin.type_reason' | trans }}
+                </p>
+                <textarea class="form-control" required id="reason" name="reason"></textarea>
+                <div class="alert alert-danger hidden" role="alert" id="errorCancellation" style="display: none;">
+                    <i class="glyphicon glyphicon-info-sign"></i> <b>{{ 'admin.error_ocurred_cancellation' | trans }}</b>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="close-modal">{{ 'hotels.close' | trans }}</button>
+                <button type="button" class="btn btn-primary" id="confirmCancel" data-loading-text="Procesando...">{{ 'admin.confirm_cancellation' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

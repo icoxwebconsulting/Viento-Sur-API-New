@@ -88,12 +88,13 @@ class RoomController extends Controller
             $cancellationPolicityPt = $form->get('cancellationPolicityPt')->getData();
             $nameEn = $form->get('nameEn')->getData();
             $cancellationPolicityEn = $form->get('cancellationPolicityEn')->getData();
-
+            $cancellationPolicityStatus = $form->get('statusCancellation')->getData();
 //            $amenity_value = $request->get('amenity');
 //            $amenity_price = $request->get('amenity_price');
 
             $entity->setPaymentType($payment_type);
             $entity->setCreatedBy($this->getUser());
+            $entity->setCancellationPolicityStatus($cancellationPolicityStatus);
             $em->persist($entity);
 
 //            for($i = 0; $i < count($amenity_value); $i++){
@@ -165,6 +166,8 @@ class RoomController extends Controller
             $cancellationPolicityPt = $form->get('cancellationPolicityPt')->getData();
             $nameEn = $form->get('nameEn')->getData();
             $cancellationPolicityEn = $form->get('cancellationPolicityEn')->getData();
+            $cancellationPolicityStatus = $form->get('statusCancellation')->getData();
+            $entity->setCancellationPolicityStatus($cancellationPolicityStatus);
 
             $em->persist($entity);
 

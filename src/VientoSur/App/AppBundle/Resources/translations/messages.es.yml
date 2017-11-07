@@ -536,3 +536,15 @@ admin:
     language: Idioma
     are_you_sure: ¿Estás seguro?
     are_you_sure_msg: ¿Desea continuar sin agregar las traducciones en los idiomas restantes?
+    sure_cancel_reservation: ¿Está seguro que desea cancelar la reservación?
+    type_reason: Coloque el motivo y pulse confirmar para proceder con la cancelación.
+    error_ocurred_cancellation: Ocurrió un error al momento de intentar cancelar su reservación.
+    confirm_cancellation: Confirmar cancelación
+    confirmation_cancel_reservation: La reserva fue cancelada exitosamente. Id de cancelación:
+    reason: Motivo
+    cancelled_by: Cancelado por
+    cancellation_history: Historial de cancelaciones
+    see_tdc_data: Ver datos de la tdc
+    request_cancellation: Solicitar cancelación de reserva
+    cancelled: Cancelado
+    ok: Ok

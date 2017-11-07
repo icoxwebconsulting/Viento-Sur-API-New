@@ -400,6 +400,7 @@
                                                                     <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
                                                                     <input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">
                                                                     <input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">
+                                                                    <input type="hidden" name="room_cancellation_status" value="{{room.cancellation_policy.status}}">
                                                                     <input type="hidden" name="room_cancellation" value="{{room.cancellation_policy.text}}">
                                                                     <button class="blue" type="submit" class="btn btn-primary">
                                                                         {{ 'hotels.book' | trans }}

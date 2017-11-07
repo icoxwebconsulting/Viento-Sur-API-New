@@ -14,6 +14,7 @@ use VientoSur\App\AppBundle\Entity\Passengers;
 use VientoSur\App\AppBundle\Entity\Reservation;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use VientoSur\App\AppBundle\Entity\ReservationCancellation;
 use VientoSur\App\AppBundle\Services\PaymentMethods;
 
 
@@ -504,10 +505,13 @@ class HotelController extends Controller
         $params = $request->query->all();
 
         $price_detail = json_decode($request->get('price_detail'));
+        $room_cancellation_status = $request->get('room_cancellation_status');
         $room_cancellation = $request->get('room_cancellation');
 
         $session->remove('price_detail');
         $session->set('price_detail', $price_detail);
+        $session->remove('room_cancellation_status');
+        $session->set('room_cancellation_status', $room_cancellation_status);
         $session->remove('room_cancellation');
         $session->set('room_cancellation', $room_cancellation);
 
@@ -1044,6 +1048,17 @@ class HotelController extends Controller
                     'internal' => $internal,
                     'idCancellation' => $cancel['id']
                 ));
+
+                $internal->setStatus('cancelled');
+
+                $reservationCancellation = new ReservationCancellation();
+                $reservationCancellation->setDescription('Cancelado desde la web de vientosur');
+                $reservationCancellation->setCreatedBy(null);
+                $reservationCancellation->setCode($cancel['id']);
+                $reservationCancellation->setReservation($internal);
+
+                $em->persist($reservationCancellation);
+                $em->flush();
             }
         }
         return new JsonResponse(
