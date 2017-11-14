@@ -25,6 +25,10 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
+        // variable
+        $promotionSections = null;
+        $promotions        = null;
+        
         $country = $this->get('session')->get('country');
         $this->get('session')->set('country', ($country) ? $country : 'ar');
         $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
@@ -32,8 +36,10 @@ class IndexController extends Controller
         $active = $em->getRepository('VientoSurAppAppBundle:Status')->findOneBy(array(
             'name' => 'Activo'
         ));
-        $promotionSections = $em->getRepository("VientoSurAppAppBundle:PromotionSections")->findPromotionSectionsAvailables($active->getId());
-        $promotions = $em->getRepository("VientoSurAppAppBundle:Promotions")->findPromotionsAvailables($active->getId());
+        if($active){
+            $promotionSections = $em->getRepository("VientoSurAppAppBundle:PromotionSections")->findPromotionSectionsAvailables($active->getId());
+            $promotions = $em->getRepository("VientoSurAppAppBundle:Promotions")->findPromotionsAvailables($active->getId());
+        }
         return array(
             'isTest' => $this->getParameter('is_test'),
             'isIndex' => true,

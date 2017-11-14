@@ -507,16 +507,18 @@
                                                             <select id="select-card" class="form-control input-width" title="{{ label }}">
                                                                 {% for cuotas, bank in paymentMethods %}
                                                                     {% for key, cards in bank %}
-                                                                        <optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">
-                                                                            {% for card in cards  %}
-                                                                                {% if key == 'generic' %}
-                                                                                    <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}" data-pay-text="">{{ cardList[card.generic_card_code] }}</option>
-                                                                                {% else %}
-                                                                                    {% set first_pay = 'flights.first_pay' | trans({'%first%': card.first_installment_amount, '%quota%': (card.installments - 1), '%last%': card.other_installments_amount}) %}
-                                                                                    <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}" data-pay-text="{{ first_pay }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
-                                                                                {% endif %}
-                                                                            {% endfor %}
-                                                                        </optgroup>
+                                                                        {% if bankList[key] is defined %}
+                                                                            <optgroup label="{{ bankList[key] }}" data-bank="{{ key }}" class="opt-{{ cuotas }} {% if loop.parent.loop.index != 1 %}others{% endif %}">
+                                                                                {% for card in cards  %}
+                                                                                    {% if key == 'generic' %}
+                                                                                        <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="" data-element="{{ card.generic_card_code }}" data-pay-text="">{{ cardList[card.generic_card_code] }}</option>
+                                                                                    {% else %}
+                                                                                        {% set first_pay = 'flights.first_pay' | trans({'%first%': card.first_installment_amount, '%quota%': (card.installments - 1), '%last%': card.other_installments_amount}) %}
+                                                                                        <option value="{{ card.generic_card_code }}" data-card-id="{{ card.card_code }}" data-bank-code="{{ card.bank_code }}" data-element="{{ loop.parent.loop.parent.loop.index  }}-{{ card.bank_code }}" data-pay-text="{{ first_pay }}">{{ cardList[card.generic_card_code] }} {{ bankList[card.bank_code] }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </optgroup>
+                                                                        {% endif %}
                                                                     {% endfor %}
                                                                 {% endfor %}
                                                             </select>
