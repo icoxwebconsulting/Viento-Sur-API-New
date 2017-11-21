@@ -40,7 +40,7 @@
                                         <div class='form-group date col-xs-7' id='datetimepicker5'>
                                             <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            <input id="start-flight" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
+                                            <input id="start-flight" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
                                         </div>
                                     </div>
 
@@ -68,7 +68,7 @@
                                             <label class="sfont">{{ 'index.search.flight.start' | trans }}</label>
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
 
-                                            <input id="start-flight{{ loop.index0 }}" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
+                                            <input id="start-flight{{ loop.index0 }}" class="form-control required" name="multidestination[{{ loop.index0 }}][start]" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('multipledestinations')[loop.index0].start}}"/>
                                         </div>
                                     </div>
 
@@ -96,11 +96,11 @@
                         <div>
                             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
                                 <label id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
-                                <input id="start-flight-test" class="form-control required" name="start" type="text" placeholder="dd/mm/yyyy"  value="{{app.session.get('departure_date')}}" />
+                                <input id="start-flight-test" class="form-control required" name="start" type="text" placeholder="{{ 'index.date_placeholder' | trans }}"  value="{{app.session.get('departure_date')}}" />
                             </div>
                             <div class="form-group form-group-icon-left form-icon-lg"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
                                 <label id="label-end" class="sfont">{{ 'index.search.flight.end' | trans }}</label>
-                                <input id="end-flight-test" class="form-control required" name="end" type="text" placeholder="dd/mm/yyyy"/>
+                                <input id="end-flight-test" class="form-control required" name="end" type="text" placeholder="{{ 'index.date_placeholder' | trans }}"/>
                             </div>
                         </div>
                     </div>
@@ -129,17 +129,15 @@
                         </div>
 
                         <div class="row">
-                            <div class='form-group date col-xs-7' id='datetimepicker5'>
+                            <div class='form-group date col-xs-7 menu-lef-data' id='datetimepicker5'>
                                 <label  id="label-start" class="sfont">{{ 'index.search.flight.start' | trans }}</label>
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
-                                <input id="start-flight" class="form-control required test" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('departure_date')}}"/>
+                                <input id="start-flight" class="form-control required test" name="start" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('departure_date')}}"/>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class='form-group date col-xs-7' id='datetimepicker5'>
+                            <div class='form-group date col-xs-7 menu-lef-data' id='datetimepicker5'>
                                 <label class="sfont">{{ 'index.search.flight.end' | trans }}</label>
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
-                                <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('return_date')}}"/>
+                                <input id="end-flight" class="form-control required" name="end" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('return_date')}}"/>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 index:
+    date_placeholder: dd/mm/aaaa
     room_code: Código de habitación
     meal_plan: Régimen de comida
     hotel_footer: Tenga en cuenta que su reserva ya se encuentra activa, pero sus datos personales llegarán al hotel 24hs antes de la fecha de ingreso
@@ -114,8 +115,9 @@ hotels:
     not_found: No se encontraron hoteles disponibles
     last_room: Última habitación disponible
     lasts: Últimas
-    choose_room: Elige habitación
+    choose_room: Reservá ahora
     room_per_night: Habitación por noche
+    share_in: Compartir en
     hotels_in: Hoteles en
     hotel_availabilities: Hoteles disponibles para estas fechas en %place% con mejor precio
     select: Seleccione
@@ -163,7 +165,7 @@ hotels:
         payment_choices: Alternativas de pago
         zones: Zonas
         services: Servicios
-        type: Tipo de alojamiento
+        type:  Tipo de habitación
         hotel_chain: Cadena Hotelera
         diet: Régimen
         breakfast: Desayuno
@@ -181,9 +183,9 @@ hotels:
         filter_diet: Filtro Régimen
         filter_travel_profile: Filtro Perfil de viaje
     number_of_rooms: Número de habitaciones
-    available_rooms: Habitaciones disponibles
+    available_rooms: Todas las habitaciones disponibles
     capacity: Capacidad
-    options: Opciones
+    options:  Tus opciones 
     max_capacity: Capacidad máxima
     food_regime: Régimen de comida
     cancellation_policies: Políticas de cancelación
@@ -196,6 +198,7 @@ hotels:
     full_pension: Pensión completa
     all_inclusive: Todo incluido
     book: Reservar
+    continue_reservation: Continuar la reserva 
     rooms_unavailables: Habitaciones no disponibles
     services: Servicios
     activities: Actividades
@@ -205,7 +208,7 @@ hotels:
     thanks_booking: ¡Gracias, %name%! Tu reservación está confirmada
     address: Dirección
     description: Descripción
-    phone: Teléfono
+    phone: Teléfono:
     unavailable: No disponible
     gps_coordinates: Coordenandas GPS
     your_group: Tu grupo
@@ -250,9 +253,9 @@ hotels:
         name: Nombre(s):
         name_placeholder: Como aparece en el documento
         lastname: Apellido(s):
-        document: Documento de Identidad:
-        card_number: Número de tarjeta:
-        expiration: Vencimiento:
+        document: Doc. de Identidad:
+        card_number: N° de tarjeta:
+        expiration: Venc.:
         security_code: Código:
         cardholder: Titular de la tarjeta:
         such_as_card: Como aparece en la tarjeta
@@ -268,8 +271,8 @@ hotels:
         department: Depto:
         postal_code: Código postal:
         billing_address: Dirección de facturación:
-        invoice_name: Nombre para facturación:
-        fiscal_document: Documento Fiscal:
+        invoice_name: Nombre:
+        fiscal_document: Doc. Fiscal:
         invalid_fiscal_document: Documento fiscal inválido
         tax_status: Situación fiscal:
         fiscal_document_type: Tipo de documento Fiscal:
@@ -306,6 +309,7 @@ flights:
     duration: Duración
     schedule: Horario
     detail: Detalle
+    see_detail: Ver detalle de vuelo
     direct: Directo
     scale: Escala
     total_duration: Duración total
@@ -470,10 +474,15 @@ admin:
     hotels_list: Lista de hoteles
     promotion_section_list: Lista
     promotion_new: Nueva promoción
+    promotion_edit: Editar promoción
     hotel_new: Nuevo hotel
+    hotel_edit: Editar hotel
     room_new: Nueva habitación
+    room_edit: Editar habitación
     bed_new: Nueva cama
+    bed_edit: Editar cama
     promotion_section_new: Nueva sección de promoción
+    promotion_section_edit: Editar sección de promoción
     promotion_add: Agregar promoción
     add: Agregar
     delete: Eliminar
@@ -524,3 +533,18 @@ admin:
     total_records: Total de registros
     search: Buscar
     search_not_found: No se ha encontrado algún resultado por su búsqueda
+    language: Idioma
+    are_you_sure: ¿Estás seguro?
+    are_you_sure_msg: ¿Desea continuar sin agregar las traducciones en los idiomas restantes?
+    sure_cancel_reservation: ¿Está seguro que desea cancelar la reservación?
+    type_reason: Coloque el motivo y pulse confirmar para proceder con la cancelación.
+    error_ocurred_cancellation: Ocurrió un error al momento de intentar cancelar su reservación.
+    confirm_cancellation: Confirmar cancelación
+    confirmation_cancel_reservation: La reserva fue cancelada exitosamente. Id de cancelación:
+    reason: Motivo
+    cancelled_by: Cancelado por
+    cancellation_history: Historial de cancelaciones
+    see_tdc_data: Ver datos de la tdc
+    request_cancellation: Solicitar cancelación de reserva
+    cancelled: Cancelado
+    ok: Ok

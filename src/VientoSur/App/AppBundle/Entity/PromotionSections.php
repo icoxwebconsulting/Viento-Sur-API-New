@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\PromotionSectionsRepository")
@@ -24,12 +25,14 @@ class PromotionSections
     protected $id;
 
     /**
+     * @Gedmo\Translatable
      * @Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(name="subtitle", type="string", length=255, nullable=true)
      */
     protected $subtitle;
@@ -45,6 +48,13 @@ class PromotionSections
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     protected $created_by;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
     /**
      * Get id
@@ -146,6 +156,11 @@ class PromotionSections
     public function getCreatedBy()
     {
         return $this->created_by;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     public function __toString() {

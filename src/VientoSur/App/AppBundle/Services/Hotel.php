@@ -5,6 +5,7 @@ namespace VientoSur\App\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use VientoSur\App\AppBundle\Controller\HotelController;
 use VientoSur\App\AppBundle\Entity\Passengers;
@@ -20,8 +21,9 @@ class Hotel
     private $logger;
     private $formHelper;
     private $isTest;
+    private $session;
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
@@ -29,6 +31,7 @@ class Hotel
         $this->logger = $logger;
         $this->formHelper = $formHelper;
         $this->isTest = $isTest;
+        $this->session = $session;
     }
 
     public function bookingHotel($formBooking, $formPay, $bookingId, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email)
@@ -111,6 +114,8 @@ class Hotel
 
     private function saveReservation($hotelId, $booking, $priceDetail, $formPay, $checkinDate, $checkoutDate, $passengers)
     {
+        $cancellation_status = $this->session->get('room_cancellation_status');
+
         $reservation = new Reservation();
         $reservation->setHotelId($hotelId);
         $reservation->setReservationId($booking['reservation_id']);
@@ -124,6 +129,14 @@ class Hotel
         $checkout = explode("/", $checkoutDate);
         $reservation->setCheckin(new \DateTime($checkin[1] . '/' . $checkin[0] . '/' . $checkin[2]));
         $reservation->setCheckout(new \DateTime($checkout[1] . '/' . $checkout[0] . '/' . $checkout[2]));
+
+        // checking if the reservation can be canceled
+        if($cancellation_status == 'non_refundable') {
+            $reservation->setRefundable(0);
+        }else{
+            $reservation->setRefundable(1);
+        }
+
         $this->em->persist($reservation);
 
         foreach ($passengers as $key => $value) {

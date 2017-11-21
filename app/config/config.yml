@@ -315,3 +315,15 @@ fos_elastica:
                         model: VientoSur\App\AppBundle\Entity\Promotions
                         provider: ~
                         finder: ~
+                hotel:
+                    properties:
+                        name: ~
+                        address: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: VientoSur\App\AppBundle\Entity\Hotel
+                        provider: ~
+                        finder: ~

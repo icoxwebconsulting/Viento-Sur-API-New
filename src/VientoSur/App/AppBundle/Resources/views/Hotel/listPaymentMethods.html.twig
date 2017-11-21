@@ -10,7 +10,7 @@
                         <span id="span-text-{{ loop.index }}">
                                                     <b style="font-weight: bold !important;">1</b> Pago
                                                 </span>
-                    {% elseif paymentMethod.installment_quantity > 1 and type == 'credit_card' %}
+                    {% elseif paymentMethod.installment_quantity > 1 and type != 'debit_card' %}
                         {#<b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de $ {{ paymentMethod.amounts.installment|number_format(2, ',', '.') }}#}
                         <span id="span-text-{{ loop.index }}">
                                                     <b style="font-weight: bold !important;">{{ paymentMethod.installment_quantity }}</b> Cuotas de {{ symbol }} {{ paymentMethod.amounts.installment| currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}
@@ -139,14 +139,14 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label>{{ 'hotels.selected_card' | trans }}:</label>
+                    <label class="label-lef">{{ 'hotels.selected_card' | trans }}:</label>
                     <input type="hidden" value="" name="selected-card" id="card-selected" class="form-control" readonly>
                     {% if paymentMethods|length > 1 %}
 
-                    <select id="select-card3" class="form-control" title="">
+                    <select name="select-card" id="select-card3" class="form-control input-width" title="">
                         {% for cuotas, bank in paymentMethods %}
                             {% set n = loop.index %}
-                            {% if bank.installment_quantity is defined or bank.type != 'debit_card' %}
+                            {% if bank.installment_quantity is defined and bank.type != 'debit_card' %}
                                 <optgroup id="{{ loop.index }}" label="{{ bank.installment_quantity }} {% if bank.installment_quantity < 2 %}{{ 'hotels.pay' | trans }}{% else %}{{ 'flights.quota' | trans }}s{% endif %} ">
                                 {% for key in bank.card_ids %}
 
@@ -175,7 +175,7 @@
                         {% endfor %}
                     </select>
                 {% else %}
-                    <select id="select-card2" class="form-control" title="">
+                    <select name="select-card" id="select-card2" class="form-control input-width" title="">
                         {% for card in paymentMethods[0].card_ids %}
                             {% set cardData = card|split('-') %}
 
@@ -193,10 +193,10 @@
             </div>
             {% if formNewPay.payment.number is defined %}
                 {% set label = 'hotels.labels.card_number' | trans %}
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.number, { 'attr': {'class': 'form-control'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.number, { 'attr': {'class': 'form-control input-width'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -204,13 +204,13 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         {% set label = 'hotels.labels.expiration' | trans %}
-                        <label for="">{{ label }}</label>
+                        <label class="label-lef" for="">{{ label }}</label>
                         <div class="row">
-                            <div class="col-xs-6">
-                                {{ form_widget(formNewPay.payment.expiration.month, {'attr': {'class': 'form-control'}}) }}
+                            <div class="col-xs-4">
+                                {{ form_widget(formNewPay.payment.expiration.month, {'attr': {'class': 'form-control expiration-date'}}) }}
                             </div>
-                            <div class="col-xs-6">
-                                {{ form_widget(formNewPay.payment.expiration.year, {'attr': {'class': 'form-control'}}) }}
+                            <div class="col-xs-4">
+                                {{ form_widget(formNewPay.payment.expiration.year, {'attr': {'class': 'form-control expiration-date'}}) }}
                                 {{ form_widget(formNewPay.payment.expiration.day, {'attr': {'style': 'display:nonoe;'}}) }}
                             </div>
                         </div>
@@ -218,11 +218,11 @@
                 </div>
             {% endif %}
             {% if formNewPay.payment.security_code is defined %}
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                         {% set label = 'hotels.labels.security_code' | trans %}
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.security_code, {'attr': {'class': 'form-control input-ccv' , 'size': '5' , 'style': 'width:100% !important'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.security_code, {'attr': {'class': 'form-control input-ccv security_code' , 'size': '5'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -241,7 +241,7 @@
                 <div class="form-group">
                     {% set label = 'hotels.labels.cardholder' | trans %}
                     {% set placeholder = 'hotels.labels.such_as_card' | trans %}
-                    <label for="">{{ label }}</label>
+                    <label class="label-lef" for="">{{ label }}</label>
                     {{ form_widget(formNewPay.payment.owner_name, {'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
                 </div>
             </div>

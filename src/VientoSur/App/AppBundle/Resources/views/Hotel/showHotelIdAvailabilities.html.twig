@@ -2,12 +2,14 @@
 {% block title %}{{ 'index.rooms_available' | trans }} {{hotelDetails.name}} {% endblock %}
 
 {% block meta_open_graph %}
-    {% for key, pictures in hotelDetails.pictures %}
-        {% if loop.index == 1 %}
-            {% set image = pictures.url %}
-            <meta property="og:image" content="{{ image }}" />
-        {% endif %}
-    {% endfor %}
+    {% if hotelDetails.pictures is defined %}
+        {% for key, pictures in hotelDetails.pictures %}
+            {% if loop.index == 1 %}
+                {% set image = pictures.url %}
+                <meta property="og:image" content="{{ image }}" />
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:url"                content="https://vientosur.net{{ app.request.pathInfo }}" />
     <meta property="og:title"              content="{{hotelDetails.name}}" />
@@ -238,7 +240,7 @@
                     <div id="descriptionHotel">
                         <div class="row">
                             <div class="col-xs-12 col-sm-9">
-                                <h1 class="titleHotel" title="Hotel {{ hotelDetails.name }} - VientoSur.net">{{ hotelDetails.name }}</h1>
+                                <h2 class="titleHotel" title="Hotel {{ hotelDetails.name }} - VientoSur.net">{{ hotelDetails.name }}</h2>
                                 <ul class="starsHotel">
                                     {% for i in 1..5 %}
                                         {% if i <= hotelDetails.stars %}
@@ -246,8 +248,20 @@
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
+                                <br style="clear: both"/>
                                 <p class="adress" style="margin-bottom: 0px">
-                                    {{ hotelDetails.location.address }} {{ app.session.get('destination').text | split(',')[0] }}, {{ app.session.get('destination').text | split(',')[2] }}
+                                    {% if app.session.get('destination') is not null %}
+                                        {% set destination = app.session.get('destination').text | split(',') %}
+                                    {% else %}
+                                        {% set destination = null %}
+                                    {% endif %}
+
+                                    {{ hotelDetails.location.address }}
+                                    {% if destination | length > 1 %}
+                                        - {{ destination[0] }}, {{ destination[2] }}
+                                    {% elseif destination is not null %}
+                                        - {{ destination[0] }}
+                                    {% endif %}
                                     {#<a class="item-map-address" data-prevent="modal"  data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-name="{{ hotelDetails.name }}"><i class="fa fa-map-marker input-icon"></i> {{ 'hotels.map_view' | trans }}</a>#}
                                 </p>
                             </div>
@@ -255,28 +269,6 @@
                                 <p>{{ 'hotels.room_per_night' | trans }}</p>
                                 <h5>{{ symbol }} {{ dispoHotel.roompacks[0].price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</h5>
                                 <button id="animarscroll">{{ 'hotels.choose_room' | trans }}</button>
-                                {#<div class="social-shared">
-                                    <div class="fb-share-button"
-                                         data-href="https://vientosur.net{{ app.request.pathInfo }}"
-                                         data-layout="button"
-                                         data-size="large"
-                                         data-mobile-iframe="true">
-                                        <a class="fb-xfbml-parse-ignore" target="_blank"
-                                           href="https://www.facebook.com/sharer/sharer.php?u=https://vientosur.net{{ app.request.pathInfo }}&src=sdkpreparse">
-                                            Compartir
-                                        </a>
-                                    </div>
-                                    <a id="shared-twitter" class="twitter-share-button"
-                                       href="https://twitter.com/intent/tweet"
-                                       data-via="vientosurnet"
-                                       data-text="Hotel {{hotelDetails.name}}"
-                                       data-lang="{{ app.request.locale }}"
-                                       data-hashtags="VientoSur"
-                                       data-size="large" style="float: left; margin-right: 10px;">
-                                        Tweet</a>
-
-                                    <g:plusone></g:plusone>
-                                </div>#}
                             </div>
                         </div>
                         <div class="row">
@@ -291,11 +283,11 @@
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="fotos">
-                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
+                                    <div role="tabpanel" class="tab-pane active" id="fotos" style="height: 630px;">
+                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs" data-width="885" data-height="570">
                                             {% for key, pictures in hotelDetails.pictures %}
                                                 {% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}
-                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}" />
+                                                <img src="{{ pictures.url }}" alt="{{ picture }}" title="{{ picture }}"/>
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -305,41 +297,20 @@
                                 </div>
                             </div>
                         </div>
-                        {#<div class="row">
-                            <div class="galleryHotel col-xs-12">
-                                <div class="camera_wrap camera_emboss" id="camera_wrap_3">
-                                    <div data-thumb="{{ asset('rpascal/images/gallery/slides/thumbs/big_bunny_fake.jpg') }}" data-src="{{ asset('rpascal/images/gallery/slides/big_bunny_fake.jpg') }}"></div>
-                                    <div data-thumb="{{ asset('rpascal/images/gallery/slides/thumbs/leaf.jpg') }}" data-src="{{ asset('rpascal/images/gallery/slides/leaf.jpg') }}"></div>
-                                    <div data-thumb="{{ asset('rpascal/images/gallery/slides/thumbs/leaf.jpg') }}" data-src="{{ asset('rpascal/images/gallery/slides/road.jpg') }}" data-time="1500" data-trasPeriod="4000" data-link="http://www.google.com/" data-target="_blank"></div>
-                                </div>
-                            </div>
-                        </div>#}
                         <div class="row">
                             <div class="descriptionHotel col-xs-9">
                                 {% set info = attribute(hotelDetails.information, app.request.locale) %}
                                 <p id="info">{{ info }}</p>
                             </div>
                             <div class="social-shared col-xs-3" style="margin: 30px 0px;">
-                                <div class="fb-share-button"
-                                     data-href="https://vientosur.net{{ app.request.pathInfo }}"
-                                     data-layout="button"
-                                     data-size="large"
-                                     data-mobile-iframe="true">
-                                    <a class="fb-xfbml-parse-ignore" target="_blank"
-                                       href="https://www.facebook.com/sharer/sharer.php?u=https://vientosur.net{{ app.request.pathInfo }}&src=sdkpreparse">
-                                        Compartir
-                                    </a>
+                                <p style="text-align: center; font-size: 14px; color: #008cd0; font-weight: bold;">{{ 'hotels.share_in' | trans }}:</p>
+                                <div class="socialMedia">
+                                    <ul class="share-social-media">
+                                        <li><a class="bgFacebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://vientosur.net{{ app.request.pathInfo }}&src=sdkpreparse" title="Compartir en Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a id="shared-twitter" target="_blank" class="bgTwitter" href="http://twitter.com/share?text=Hotel:%20{{hotelDetails.name}}&lang={{ app.request.locale }}&hashtags=VientoSur&via=vientosurnet" data-size="large" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a class="bgGooglePlus" href="https://plus.google.com/share?url=https://vientosur.net{{ app.request.pathInfo }}" target="_blank" title="Compartir en Google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    </ul>
                                 </div>
-                                <a id="shared-twitter" class="twitter-share-button"
-                                   href="https://twitter.com/intent/tweet"
-                                   data-via="vientosurnet"
-                                   data-text="Hotel {{hotelDetails.name}}"
-                                   data-lang="{{ app.request.locale }}"
-                                   data-hashtags="VientoSur"
-                                   data-size="large" style="float: left; margin-right: 10px;">
-                                    Tweet</a>
-
-                                <g:plusone></g:plusone>
                             </div>
                         </div>
                         <div class="row">
@@ -361,7 +332,7 @@
                                                             <th>{{ 'hotels.price_per_night' | trans }}</th>
                                                             <th>{{ 'hotels.options' | trans }}</th>
                                                             <th class="cancellation_policies">{{ 'hotels.cancellation_policies' | trans }}</th>
-                                                            <th>{{ 'hotels.book' | trans }}</th>
+                                                            <th>{{ 'hotels.continue_reservation' | trans }}</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -429,6 +400,7 @@
                                                                     <input type="hidden" name="hotel_name" value="{{hotelDetails.name}}">
                                                                     <input type="hidden" name="hotel_stars" value="{{hotelDetails.stars}}">
                                                                     <input type="hidden" name="hotel_address" value="{{hotelDetails.location.address}}">
+                                                                    <input type="hidden" name="room_cancellation_status" value="{{room.cancellation_policy.status}}">
                                                                     <input type="hidden" name="room_cancellation" value="{{room.cancellation_policy.text}}">
                                                                     <button class="blue" type="submit" class="btn btn-primary">
                                                                         {{ 'hotels.book' | trans }}

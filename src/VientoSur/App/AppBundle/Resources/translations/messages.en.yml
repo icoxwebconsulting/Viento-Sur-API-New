@@ -1,4 +1,5 @@
 index:
+    date_placeholder: dd/mm/yyyy
     room_code: Room code
     meal_plan: Meal plan
     hotel_footer: Please note that your reservation is already active, but your personal data will arrive at the hotel 24 hours before the arrival date
@@ -40,7 +41,7 @@ index:
            destination: Destination
            title: Find Hotels with the best rates
            from: Enter destination or hotel name
-           from_placeholder: Where are you going
+           from_placeholder: Where do you go
            checkin_date: Checkin Date
            date: Date
            checkout_date: Checkout Date
@@ -116,6 +117,7 @@ hotels:
     lasts: Lasts
     choose_room: Choose room
     room_per_night: Room per night
+    share_in: Share in
     hotels_in: Hotels in
     hotel_availabilities: Hotels available for these dates in %place% with best price
     select: Select
@@ -196,6 +198,7 @@ hotels:
     full_pension: Full pension
     all_inclusive: All inclusive
     book: Book
+    continue_reservation: Continue reservation
     rooms_unavailables: Rooms unavailables
     services: Services
     activities: Activities
@@ -252,13 +255,13 @@ hotels:
         lastname: Lastname(s):
         document: Document
         card_number: Card number:
-        expiration: Expiration:
+        expiration: Expi.:
         security_code: Security code:
         cardholder: Cardholder:
         such_as_card: As it appears on the card
-        owner_doc: Owner document:
-        owner_documenttype: Document type:
-        owner_documentnumber: Document number:
+        owner_doc: Owner doc:
+        owner_documenttype: Doc. type:
+        owner_documentnumber: Doc. number:
         owner_gender: Gender:
         country: Country
         state: State:
@@ -306,6 +309,7 @@ flights:
     duration: Duration
     schedule: Schedule
     detail: Detail
+    see_detail: See flight detail
     direct: Direct
     scale: Scale
     total_duration: Total Duration
@@ -470,10 +474,15 @@ admin:
     hotels_list: Hotels list
     promotion_section_list: List
     promotion_new: New promotion
+    promotion_edit: Edit promotion
     hotel_new: New hotel
+    hotel_edit: Edit hotel
     room_new: New room
+    room_edit: Edit room
     bed_new: New bed
+    bed_edit: Edit bed
     promotion_section_new: New promotion section
+    promotion_section_edit: Edit promotion section
     promotion_add: Add promotion
     add: Add
     delete: Delete
@@ -523,3 +532,18 @@ admin:
     total_records: Total records
     search: Search
     search_not_found: We did not find any results for your search
+    language: Language
+    are_you_sure: Are you sure?
+    are_you_sure_msg: Do you want to continue without adding the translations in the remaining languages?
+    sure_cancel_reservation: Are you sure you want to cancel the reservation?
+    type_reason: Place the reason and press confirm to proceed with the cancellation.
+    error_ocurred_cancellation: An error occurred when trying to cancel your reservation.
+    confirm_cancellation: Confirm cancellation
+    confirmation_cancel_reservation: The reservation was canceled successfully. Cancellation ID:
+    reason: Reason
+    cancelled_by: Cancelled by
+    cancellation_history: Cancellation history
+    see_tdc_data: See tdc data
+    request_cancellation: Request cancellation of reservation
+    cancelled: Cancelled
+    ok: Ok

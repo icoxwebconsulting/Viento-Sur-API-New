@@ -353,7 +353,7 @@ footer#main-footer .form-control:focus {
   border: 1px solid #008CD1;
 }
 .fa-star {
-  padding-right: 6px;
+  padding-right: 0px;
 }
 .form-group.form-icon-lg .input-icon {
   font-size: 22px;
@@ -964,6 +964,11 @@ form.booking-form {
 
 form.booking-form label {
   font-weight: bold;
+}
+
+.label-lef{
+   float: left;
+   margin-right: 11px;
 }
 
 .top-buffer {

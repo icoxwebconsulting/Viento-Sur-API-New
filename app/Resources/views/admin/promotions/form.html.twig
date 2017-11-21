@@ -3,8 +3,13 @@
 {% block title %}{{ 'admin.promotion_new' | trans }}{% endblock %}
 
 {% block top_content %}
+    {% if app.request.attributes.get('_route') == 'promotion_new' %}
+        {% set title = 'admin.promotion_new' %}
+    {% else %}
+        {% set title = 'admin.promotion_edit' %}
+    {% endif %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}{{ 'admin.promotion_new' | trans }}{% endblock %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 
@@ -14,14 +19,65 @@
             <div class="card-header">
                 <strong>{{ 'admin.promotion' | trans }}</strong>
             </div>
-            {{ form_start(form, {'attr':{ 'class': 'form-horizontal'}}) }}
+            {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
                     <div class="col-md-9">
                         {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'hotels.description' | trans }}*</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.description, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'admin.name' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                    </div>
+                    {{ form_errors(form.namePt) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'hotels.description' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.descriptionPt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.description }} ) }}
+                    </div>
+                    {{ form_errors(form.descriptionPt) }}
+                </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'admin.name' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                    </div>
+                    {{ form_errors(form.nameEn) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'hotels.description' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.descriptionEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.description }} ) }}
+                    </div>
+                    {{ form_errors(form.descriptionEn) }}
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="first-name">Link</label>
@@ -29,13 +85,6 @@
                         {{ form_widget(form.link, { 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.link) }}
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="appbundle_description">{{ 'hotels.description' | trans }}</label>
-                    <div class="col-md-12">
-                        {{ form_widget(form.description) }}
-                    </div>
-                    {{ form_errors(form.description) }}
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="last-name">{{ 'image' | trans }}</label>
@@ -70,7 +119,7 @@
             </div>
             <div class="card-footer">
                 <a href="{{ path('promotion_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
             {{ form_end(form)}}
         </div>
@@ -79,6 +128,7 @@
 
 
 {% block extra_css %}
+    {{ parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
     <!-- Include Editor style. -->
@@ -87,6 +137,13 @@
     <style>
         body > main > div > div > div > div > div > form > div.card-block > div:nth-child(4) > div > div > a:nth-child(3) > img {
             width: 50%;
+        }
+        .flags-lg{
+            margin-left: 10px;
+            width: 20px;
+        }
+        .label-lg{
+            display: inline-block;
         }
     </style>
 {% endblock %}
@@ -105,9 +162,38 @@
     <!-- Initialize the editor. -->
     <script>
         $(function() {
+            $('#appbundle_promotions_descriptionPt').val($("#appbundle_promotions_descriptionPt").attr("value"));
+            $('#appbundle_promotions_descriptionEn').val($("#appbundle_promotions_descriptionEn").attr("value"));
             $('#appbundle_promotions_description').froalaEditor({
                 height: 300
             })
+            $('#appbundle_promotions_descriptionPt').froalaEditor({
+                height: 300
+            })
+            $('#appbundle_promotions_descriptionEn').froalaEditor({
+                height: 300
+            })
+        });
+
+        $(document).ready(function(){
+            $('#send').click(function(e){
+                var nameEn = $('#appbundle_promotions_nameEn').val();
+                var descriptionEn = $('#appbundle_promotions_descriptionEn').val();
+                var namePt = $('#appbundle_promotions_namePt').val();
+                var descriptionPt = $('#appbundle_promotions_descriptionPt').val();
+
+                if(nameEn == '' || namePt == '' || descriptionEn == '' || descriptionPt == ''){
+                    e.preventDefault();
+                    $('#confirm').modal('show');
+                }
+            });
+
+            $('#modal-submit').click(function(){
+                $('#form').submit();
+                $('#confirm').modal('hide');
+            });
+
+
         });
     </script>
 {% endblock %}

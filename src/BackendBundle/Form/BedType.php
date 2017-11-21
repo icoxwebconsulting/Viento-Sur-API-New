@@ -52,6 +52,22 @@ class BedType extends AbstractType
                         'max' => 10
                     )
                 )
+            )
+            ->add(
+                'namePt',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'nameEn',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
             );
     }
 

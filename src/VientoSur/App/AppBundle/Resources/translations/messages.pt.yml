@@ -1,4 +1,5 @@
 index:
+    date_placeholder: dd/mm/aaaa
     room_code: Código do quarto
     meal_plan: Plano de refeição
     hotel_footer: Por favor, note que sua reserva já está ativa, mas seus dados pessoais chegarão ao hotel 24 horas antes da data de chegada
@@ -110,6 +111,7 @@ hotels:
     lasts: Últimas
     choose_room: Escolha quarto
     room_per_night: Quarto por noite
+    share_in: Compartilhe em
     hotels_in: Hotéis em
     hotel_availabilities: Hotéis disponíveis nestas datas
     hotel_availabilities: hoteles disponibles para estas fechas en %place% con mejor precio disponível para essas datas em% place% hotéis com melhor preço
@@ -188,6 +190,7 @@ hotels:
     full_pension: Pensão completa
     all_inclusive: Todo incluido
     book: Reserva
+    continue_reservation: Continuar a reserva
     rooms_unavailables: Quartos não disponíveis
     services: Serviços
     activities: Atividades
@@ -244,11 +247,11 @@ hotels:
         lastname: Sobrenomes(s):
         document: Identidade
         card_number: Número do cartão:
-        expiration: Maturidade:
+        expiration: Matur.:
         security_code: Código de segurança:
-        cardholder: Titular do cartão:
+        cardholder: Cartão:
         such_as_card: Como aparece no cartão
-        owner_doc: Documento de Identidade do Titular:
+        owner_doc: Doc. do Titular:
         owner_documenttype: Tipo de documento:
         owner_documentnumber: Nro. do documento:
         owner_gender: Gênero:
@@ -297,6 +300,7 @@ flights:
     duration: Duração
     schedule: Horário
     detail: Detalhe
+    see_detail: Ver detalhes do vôo
     direct: Direto
     scale: Balança
     total_duration: Duração total
@@ -462,10 +466,15 @@ admin:
     hotels_list: Lista de hotéis
     promotion_section_list: Lista
     promotion_new: Nova promoção
+    promotion_edit: Editar promoção
     hotel_new: Novo hotel
+    hotel_edit: Editar hotel
     room_new: Novo quarto
+    room_edit: Editar quarto
     bed_new: Nova cama
+    bed_edit: Editar cama
     promotion_section_new: Nova seção de promoção
+    promotion_section_edit: Editar seção de promoção
     promotion_add: Adicionar promoção
     add: Adicionar
     delete: Para eliminar
@@ -515,3 +524,18 @@ admin:
     total_records: Registros totais
     search: Para pesquisar
     search_not_found: Não encontramos resultados para a sua pesquisa
+    language: Língua
+    are_you_sure: Você tem certeza?
+    are_you_sure_msg: Deseja continuar sem adicionar as traduções nos idiomas restantes?
+    sure_cancel_reservation: Tem certeza de que deseja cancelar a reserva?
+    type_reason: Coloque o motivo e pressione confirmar para continuar com o cancelamento.
+    error_ocurred_cancellation: Ocorreu um erro ao tentar cancelar sua reserva.
+    confirm_cancellation: Confirmar cancelamento
+    confirmation_cancel_reservation: A reserva foi cancelada com sucesso. ID de cancelamento:
+    reason: Razão
+    cancelled_by: Cancelado por
+    cancellation_history: Histórico de cancelamento
+    see_tdc_data: Veja dados tdc
+    request_cancellation: Solicitar o cancelamento da reserva
+    cancelled: Cancelado
+    ok: Ok

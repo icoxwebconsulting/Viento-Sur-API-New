@@ -14,11 +14,12 @@ use VientoSur\App\AppBundle\Entity\Hotel;
 use BackendBundle\Form\HotelFormType;
 
 /**
- * @Route("dashboard-hotel")
+ * @Route("/{_locale}/dashboard-hotel", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class HotelController extends Controller
 {
     /**
+     * @param $request
      * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="hotel_list")
      * @Method("GET")
@@ -90,6 +91,11 @@ class HotelController extends Controller
 
         if($form->handleRequest($request)->isValid())
         {
+            $namePt = $form->get('namePt')->getData();
+            $descriptionPt = $form->get('descriptionPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $descriptionEn = $form->get('descriptionEn')->getData();
+
             $entity->setPercentageGain(0);
             $entity->setOrigen('VS');
             $entity->setCreatedBy($this->getUser());
@@ -102,6 +108,18 @@ class HotelController extends Controller
                 $amenity_hotel->setHotel($entity);
                 $em->persist($amenity_hotel);
             }
+            $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setDescription($descriptionPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setDescription($descriptionEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
             $em->flush();
 
             $this->addFlash(
@@ -129,14 +147,36 @@ class HotelController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $amenities = $em->getRepository('VientoSurAppAppBundle:Amenity')->findAll();
-        $amenityHotels = $em->getRepository('VientoSurAppAppBundle:AmenityHotel')->findAll();
+        $amenityHotels = $em->getRepository('VientoSurAppAppBundle:AmenityHotel')->findBy(array(
+            'hotel' => $entity
+        ));
+
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
 
         $form = $this->createForm(new HotelFormType(), $entity, ["method" => $request->getMethod()]);
         if ($form->handleRequest($request)->isValid())
         {
+            $namePt = $form->get('namePt')->getData();
+            $descriptionPt = $form->get('descriptionPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $descriptionEn = $form->get('descriptionEn')->getData();
 
             $em->persist($entity);
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setDescription($descriptionPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setDescription($descriptionEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.updated')
@@ -147,7 +187,8 @@ class HotelController extends Controller
             'form' => $form->createView(),
             'entity' => $entity,
             'amenities' => $amenities,
-            'amenityHotels' => $amenityHotels
+            'amenityHotels' => $amenityHotels,
+            'translations' => $translations
     ));
     }
 

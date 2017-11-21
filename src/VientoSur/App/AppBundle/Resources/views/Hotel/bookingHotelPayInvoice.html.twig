@@ -6,8 +6,8 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         {% set label = 'hotels.labels.billing_address' | trans %}
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.billing_address, {'attr': {'class': 'form-control'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.billing_address, {'attr': {'class': 'form-control input-width'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -16,8 +16,8 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         {% set label = 'hotels.labels.invoice_name' | trans %}
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.invoice_name, {'attr': {'class': 'form-control'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.invoice_name, {'attr': {'class': 'form-control input-width'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -26,8 +26,8 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         {% set label = 'hotels.labels.fiscal_document' | trans %}
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.fiscal_document, {'attr': {'class': 'form-control'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.fiscal_document, {'attr': {'class': 'form-control input-width'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -36,8 +36,8 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         {% set label = 'hotels.labels.tax_status' | trans %}
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.tax_status , {'attr': {'class': 'form-control'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.tax_status , {'attr': {'class': 'form-control input-width-50'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -131,8 +131,8 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     {% set label = 'hotels.labels.country' | trans %}
-                    <label for="">{{ label }}</label>
-                    {{ form_widget(formNewPay.payment.billing_addresscountry , {'attr': {'class': 'form-control'}}) }}
+                    <label class="label-lef" for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.billing_addresscountry , {'attr': {'class': 'form-control input-width'}}) }}
                 </div>
             </div>
             {% endif %}
@@ -141,8 +141,8 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         {% set label = 'hotels.labels.street' | trans %}
-                        <label for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.billing_addressstreet , {'attr': {'class': 'form-control'}}) }}
+                        <label class="label-lef" for="">{{ label }}</label>
+                        {{ form_widget(formNewPay.payment.billing_addressstreet , {'attr': {'class': 'form-control input-width'}}) }}
                     </div>
                 </div>
             {% endif %}
@@ -151,8 +151,8 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     {% set label = 'hotels.labels.billing_addressnumber' | trans %}
-                    <label for="">{{ label }}</label>
-                    {{ form_widget(formNewPay.payment.billing_addressnumber , {'attr': {'class': 'form-control'}}) }}
+                    <label class="label-lef" for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.billing_addressnumber , {'attr': {'class': 'form-control input-width'}}) }}
                 </div>
             </div>
             {% endif %}
@@ -161,11 +161,19 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     {% set label = 'hotels.labels.floor' | trans %}
-                    <label for="">{{ label }}</label>
-                    {{ form_widget(formNewPay.payment.billing_addressfloor , {'attr': {'class': 'form-control'}}) }}
+                    <label class="label-lef" for="">{{ label }}</label>
+                    {{ form_widget(formNewPay.payment.billing_addressfloor , {'attr': {'class': 'form-control input-width'}}) }}
                 </div>
             </div>
             {% endif %}
+            {% if formNewPay.payment.billing_addresspostal_code is defined %}
+                {% set label = 'hotels.labels.postal_code' | trans %}
+                <div class="col-md-3">
+                    <div class="form-group">
+                        {{ form_row(formNewPay.payment.billing_addresspostal_code , {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'class': 'form-control input-width', 'style':'width: 45%;'}}) }}
+                    </div>
+                </div>
+            {% endif %}    
         </div>
     </div>
 
@@ -174,19 +182,19 @@
         <div class="col-md-3">
             <div class="form-group">
                 {% set label = 'hotels.labels.department' | trans %}
-                <label for="">{{ label }}</label>
-                {{ form_widget(formNewPay.payment.billing_addressdepartment , {'attr': {'class': 'form-control'}}) }}
+                <label class="label-lef" for="">{{ label }}</label>
+                {{ form_widget(formNewPay.payment.billing_addressdepartment , {'attr': {'class': 'form-control input-width'}}) }}
             </div>
         </div>
         {% endif %}
 
         {% if formNewPay.payment.billing_addressstate_id is defined %}
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     {% set label = 'hotels.labels.state' | trans %}
-                    {{ form_label(formNewPay.payment.billing_addressstate_id, label) }}
+                    {{ form_label(formNewPay.payment.billing_addressstate_id, label, {'label_attr': {'class': 'label-lef'}}) }}
                     {% set label = 'hotels.labels.find_state' | trans %}
-                    <input type="text" id="autocomplete-state" data-provide="typeahead" placeholder="{{ label }}" required autocomplete="off" class="form-control" />
+                    <input type="text" id="autocomplete-state" data-provide="typeahead" placeholder="{{ label }}" required autocomplete="off" class="form-control input-width" />
                     {{ form_widget(formNewPay.payment.billing_addressstate_id , {'attr': {'class': 'hide'}}) }}
                     {{ form_errors(formNewPay.payment.billing_addressstate_id) }}
                 </div>
@@ -197,20 +205,11 @@
             <div class="col-md-3">
                 <div class="form-group">
                     {% set label = 'hotels.labels.city' | trans %}
-                    {{ form_label(formNewPay.payment.billing_addresscity_id, label) }}
+                    {{ form_label(formNewPay.payment.billing_addresscity_id, label, {'label_attr': {'class': 'label-lef'}}) }}
                     {% set label = 'hotels.labels.fill_state' | trans %}
-                    <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ label }}" readonly required autocomplete="off" class="form-control" />
+                    <input type="text" id="autocomplete-city" data-provide="typeahead" placeholder="{{ label }}" readonly required autocomplete="off" class="form-control input-width" />
                     {{ form_widget(formNewPay.payment.billing_addresscity_id , {'attr': {'class' : 'hide'}}) }}
                     {{ form_errors(formNewPay.payment.billing_addresscity_id) }}
-                </div>
-            </div>
-        {% endif %}
-
-        {% if formNewPay.payment.billing_addresspostal_code is defined %}
-            {% set label = 'hotels.labels.postal_code' | trans %}
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form_row(formNewPay.payment.billing_addresspostal_code , {'label': label, 'attr': {'class': 'form-control'}}) }}
                 </div>
             </div>
         {% endif %}

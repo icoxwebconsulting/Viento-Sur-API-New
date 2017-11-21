@@ -8,26 +8,26 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
-    {#<pre>{{ dump(items) }}</pre>#}
     {% for item in items.items  %}
         <li>
             <form target="_blank" name="flight-form-{{ loop.index }}" id="flight-form-{{ loop.index }}" action="{{ path('viento_sur_send_flight_booking') }}" method="post">
 
                 <div id="thumbsFlights">
                     <div class="row">
+                        {#{{ dump(item) }}#}
                         <div class="col-xs-12 col-sm-10">
                             {# nuevo ida#}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">
-                                        <div class="col-xs-3 col-sm-2">
-                                            <h3>{{ 'flights.going' | trans }}</h3>
+                                        <div class="col-xs-3 col-sm-4">
+                                            <h3>{{ 'flights.going' | trans }} <i class="fa fa-plane input-icon" style="float: right"></i></h3>
                                         </div>
-                                        <div class="col-xs-4 col-sm-5 noPadding">
+                                        <div class="col-xs-4 col-sm-4 noPadding">
                                             <h6>{{ item.outbound_choices[0].segments[0].from }}<span>{{ airportNames[item.outbound_choices[0].segments[0].from] }}</span></h6>
                                             <h6 class="no-margin-top"><span class="no-margin-left">{{ item.outbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span></h6>
                                         </div>
-                                        <div class="col-xs-4 col-sm-5 noPadding">
+                                        <div class="col-xs-4 col-sm-4 noPadding">
                                             {% set last = item.outbound_choices[0].segments|last %}
                                             <h6>{{ last.to }} <span>{{ airportNames[last.to] }}</span></h6>
                                         </div>
@@ -36,7 +36,7 @@
                                 <div id="collapse" class="panel-collapse">
                                     <div class="panel-body">
                                         {% for outbound in item.outbound_choices %}
-                                            <div class="col-xs-2">
+                                            <div class="col-xs-5">
                                                 <div class="radioButton">
                                                     <label for="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" class="radio-inline">
                                                         <input type="radio"
@@ -50,6 +50,11 @@
                                                                     {% if loop.index == 1 %}
                                                                         <img class="" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}" width="25" height="25"/>
                                                                         {% set airlines = airlines|merge([segment.airline]) %}
+                                                                        <span class="inline-detail-airline-description review-text">
+                                                                            <span>
+                                                                                <b style="color: #003580">{{ airlineNames[segment.airline] }}</b>
+                                                                            </span>
+                                                                        </span>
                                                                     {% endif %}
                                                                 {% endif %}
                                                             {% endfor %}
@@ -59,24 +64,23 @@
                                             </div>
                                             <div class="col-xs-6">
                                                 <p>
-                                                    {{ outbound.segments[0].departure_datetime|date("H:i") }} &nbsp;
+                                                    <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i", false) }}</a>
                                                     {% set totalSeg = outbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;{{ 'flights.direct' | trans }} &nbsp;
+                                                        <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}&nbsp;&nbsp;</a>
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }} &nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a>
                                                     {% else %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }} &nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
 
                                                     {% set lastSeg = outbound.segments|last %}
-                                                    &nbsp; {{ lastSeg.arrival_datetime|date("H:i") }} &nbsp;
-
-                                                    &nbsp; {{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m &nbsp;
+                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i", false) }}</a>
+                                                        <a class="time">{{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m</a>
                                                 </p>
                                             </div>
-                                            <div class="col-xs-4 center" style="margin-bottom: 5px">
-                                                <span class="btn btn-primary btn-detail" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}">{{ 'flights.detail' | trans }}</span>
+                                            <div class="col-xs-1 center" style="margin-bottom: 5px">
+                                                <span class="btn" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" title="{{ 'flights.see_detail' | trans }}" style="padding-left: 7px;"><i class="fa fa-info-circle input-icon" style="font-size: 18px;"></i></span>
                                             </div><br clear="all"/>
                                             <div id="detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12">
                                                 <div class="table-responsive" style=" overflow-x: visible;">
@@ -140,6 +144,7 @@
                                                         </span>
                                                         <span class="inline-detail-airport-code-wrapper">
                                                             <span class="inline-detail-airport-code">{{ segment.to }}</span>
+                                                            {#<span class="inline-detail-airport-hour">{{ segment.arrival_datetime|date("H:i", false) }}</span>#}
                                                             <span class="inline-detail-airport-hour">{{ segment.arrival_datetime|date("H:i", false) }}</span>
                                                         </span>
                                                         <span class="inline-detail-airport-description">
@@ -181,14 +186,14 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <div class="row">
-                                            <div class="col-xs-3 col-sm-2">
-                                                <h3>{{ 'flights.return' | trans }}</h3>
+                                            <div class="col-xs-3 col-sm-4">
+                                                <h3>{{ 'flights.return' | trans }} <i class="fa fa-plane input-icon" style="float: right"></i></h3>
                                             </div>
-                                            <div class="col-xs-4 col-sm-5 noPadding">
+                                            <div class="col-xs-4 col-sm-4 noPadding">
                                                 <h6>{{ item.inbound_choices[0].segments[0].from }}<span>{{ airportNames[item.inbound_choices[0].segments[0].from] }}</span></h6>
                                                 <h6 class="no-margin-top"><span class="no-margin-left">{{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span></h6>
                                             </div>
-                                            <div class="col-xs-4 col-sm-5 noPadding">
+                                            <div class="col-xs-4 col-sm-4 noPadding">
                                                 {% set last = item.inbound_choices[0].segments|last %}
                                                 <h6>{{ last.to }}<span>{{ airportNames[last.to] }}</span></h6>
                                             </div>
@@ -197,7 +202,7 @@
                                     <div id="collapse" class="panel-collapse">
                                     <div class="panel-body">
                                         {% for inbound in item.inbound_choices %}
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-5">
                                             <div class="radioButton">
                                                 <label for="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" class="radio-inline">
                                                     <input type="radio" name="optionsRadiosIn{{ loop.parent.loop.index }}" id="optionsRadios{{ loop.parent.loop.index }}-{{ loop.index }}" value="{{ inbound.choice }}" {% if loop.index == 1 %}checked{% endif %} >
@@ -208,6 +213,11 @@
                                                             {% if segment.airline not in airlines %}
                                                                 <img style="margin-right: 10xp" src="http://ar.staticontent.com/flights-images/2.1.12/dist/common/airlines/25x25/{{ segment.airline }}.png" title="{{ airlineNames[segment.airline] }}" data-loop="{{ loop.length }}" width="25" height="25"/>
                                                                 {% set airlines = airlines|merge([segment.airline]) %}
+                                                                <span class="inline-detail-airline-description review-text">
+                                                                    <span>
+                                                                        <b style="color: #003580">{{ airlineNames[segment.airline] }}</b>
+                                                                    </span>
+                                                                </span>
                                                             {% endif %}
                                                         {% endfor %}
                                                         </span>
@@ -216,24 +226,22 @@
                                         </div>
                                             <div class="col-xs-6">
                                                 <p>
-                                                    {{ inbound.segments[0].departure_datetime|date("H:i") }} &nbsp;
+                                                    <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i", false) }}</a>
                                                     {% set totalSeg = inbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        &nbsp;{{ 'flights.direct' | trans }} &nbsp;
+                                                        <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}</a>
                                                     {% elseif totalSeg == 1 %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scale' | trans }} &nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a>
                                                     {% else %}
-                                                        &nbsp; {{ totalSeg }} {{ 'flights.scales' | trans }} &nbsp;
+                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
-
                                                     {% set lastSeg = inbound.segments|last %}
-                                                    &nbsp; {{ lastSeg.arrival_datetime|date("H:i") }} &nbsp;
-
-                                                    &nbsp; {{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m &nbsp;
+                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i", false) }}</a>
+                                                        <a class="time">{{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m </a>
                                                 </p>
                                             </div>
-                                        <div class="col-xs-4 center" style="margin-bottom: 5px">
-                                            <span class="btn btn-primary btn-detail" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}">{{ 'flights.detail' | trans }}</span>
+                                        <div class="col-xs-1 center" style="margin-bottom: 5px">
+                                            <span class="btn" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" title="{{ 'flights.see_detail' | trans }}" style="padding-left: 7px;"><i class="fa fa-info-circle input-icon" style="font-size: 18px;"></i></span>
                                         </div><br clear="all"/>
                                             <div id="detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12">
                                                 <div class="table-responsive" style=" overflow-x: visible;">
@@ -343,7 +351,7 @@
                                     {{ symbol }} {{ item.price_detail.total|round| currency_convert_format(targetCurrency,decimal,false)| number_format(0, ',', '.') }}
                                 {% endif %}
                             </h5>
-                            <span class="btn btn-primary">{{ 'hotels.buy' | trans }}</span>
+                            <button>{{ 'hotels.buy' | trans }}</button>
                             <input type="hidden" name="item_id" value="{{ item.id }}" />
                             {% for b_info in item.booking_info %}
                                 {% if b_info.inbound_choice is defined %}

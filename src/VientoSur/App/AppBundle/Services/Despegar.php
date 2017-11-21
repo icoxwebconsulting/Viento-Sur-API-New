@@ -119,11 +119,11 @@ class Despegar
         $header = [
             'X-ApiKey:' . $this->apiKey
         ];
-        $session = $this->session->set('getHotelsAvailabilitiesDetail', [
-            'url' => $url,
-            'header' => $header,
-            'params' => json_encode($urlParams)
-        ]);
+//        $session = $this->session->set('getHotelsAvailabilitiesDetail', [
+//            'url' => $url,
+//            'header' => $header,
+//            'params' => json_encode($urlParams)
+//        ]);
         return $this->curlExec($url, $header, 'GET');
     }
 
@@ -160,22 +160,22 @@ class Despegar
             'X-Client: ' . $this->apiKey,
             'X-ApiKey: ' . $this->apiKey
         ];
-        $session = $this->session->set('postHotelsBookings', [
-            'url' => $url,
-            'header' => $header,
-            'params' => json_encode($params),
-            'response' => $this->curlExec($url, $header, 'POST', json_encode($params))
-        ]);
+//        $session = $this->session->set('postHotelsBookings', [
+//            'url' => $url,
+//            'header' => $header,
+//            'params' => json_encode($params),
+//            'response' => $this->curlExec($url, $header, 'POST', json_encode($params))
+//        ]);
         return $this->curlExec($url, $header, 'POST', json_encode($params));
     }
 
     public function getHotelsBookingsNextStepUrl($bookingId)
     {
-        $session = $this->session->set('getHotelsBookingsNextStepUrl', [
-            'header' => 'X-ApiKey',
-            'bookingId' => $bookingId,
-            'response' => $this->serviceUrl . $bookingId . (($this->isTest) ? '?example=true' : '')
-        ]);
+//        $session = $this->session->set('getHotelsBookingsNextStepUrl', [
+//            'header' => 'X-ApiKey',
+//            'bookingId' => $bookingId,
+//            'response' => $this->serviceUrl . $bookingId . (($this->isTest) ? '?example=true' : '')
+//        ]);
         return $this->serviceUrl . $bookingId . (($this->isTest) ? '?example=true' : '');
     }
 
@@ -184,11 +184,11 @@ class Despegar
         $header = [
             'X-ApiKey:' . $this->apiKey
         ];
-        $session = $this->session->set('hotelsBookingsNextStep', [
-            'header' => $header,
-            'bookingId' => $bookingId,
-            'response' => json_encode($this->curlExec($this->getHotelsBookingsNextStepUrl($bookingId), $header, 'GET'))
-        ]);
+//        $session = $this->session->set('hotelsBookingsNextStep', [
+//            'header' => $header,
+//            'bookingId' => $bookingId,
+//            'response' => json_encode($this->curlExec($this->getHotelsBookingsNextStepUrl($bookingId), $header, 'GET'))
+//        ]);
         return $this->curlExec($this->getHotelsBookingsNextStepUrl($bookingId), $header, 'GET');
     }
 
@@ -214,12 +214,12 @@ class Despegar
             'X-ApiKey: ' . $this->apiKey
         ];
         $response = $this->curlExec($url, $header, 'PATCH', json_encode($params));
-        $session = $this->session->set('patchHotelsBookings', [
-            'url-patch' => $url,
-            'header-patch' => $header,
-            'params-patch' => $params,
-            'response' => $response
-        ]);
+//        $session = $this->session->set('patchHotelsBookings', [
+//            'url-patch' => $url,
+//            'header-patch' => $header,
+//            'params-patch' => $params,
+//            'response' => $response
+//        ]);
 //        return $this->curlExec($url, $header, 'PATCH', json_encode($params));
         return $response;
     }
@@ -299,12 +299,12 @@ class Despegar
         $results = curl_exec($cSession);
         //step4
         curl_close($cSession);
-        $session = $this->session->set('tokenize-vaultPbdyy', [
-            'url' => $url,
-            'header' => $header,
-            'params' => $params,
-            'response' => json_encode($results)
-        ]);
+//        $session = $this->session->set('tokenize-vaultPbdyy', [
+//            'url' => $url,
+//            'header' => $header,
+//            'params' => $params,
+//            'response' => json_encode($results)
+//        ]);
         return json_decode($results);
     }
 
@@ -620,5 +620,15 @@ class Despegar
         }
 
         return $this->curlExec($url, $header, 'POST', json_encode($params));
+    }
+
+    public function getAllCards()
+    {
+        $url = $this->getServiceUrl() . "cards/";
+        $header = [
+            'X-ApiKey:' . $this->apiKey
+        ];
+
+        return $this->curlExec($url, $header, 'GET');
     }
 }

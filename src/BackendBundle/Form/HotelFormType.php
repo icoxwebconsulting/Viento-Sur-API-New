@@ -62,6 +62,38 @@ class HotelFormType extends AbstractType
                     'class' => 'VientoSur\App\AppBundle\Entity\HotelType'
                 )
             )
+            ->add(
+                'namePt',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'nameEn',
+                TextType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'descriptionPt',
+                TextareaType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
+            ->add(
+                'descriptionEn',
+                TextareaType::class,
+                array(
+                    'mapped' => false,
+                    'required' => false
+                )
+            )
         ;
     }
 

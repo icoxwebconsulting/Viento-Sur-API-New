@@ -14,7 +14,7 @@ use VientoSur\App\AppBundle\Entity\Bed;
 use BackendBundle\Form\BedType;
 
 /**
- * @Route("dashboard-bed")
+ * @Route("/{_locale}/dashboard-bed", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class BedController extends Controller
 {
@@ -65,10 +65,25 @@ class BedController extends Controller
 
         if($form->handleRequest($request)->isValid())
         {
+
+            $namePt = $form->get('namePt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+
             $em = $this->getDoctrine()->getManager();
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.added')
@@ -90,16 +105,33 @@ class BedController extends Controller
     public function putAction(Request $request, Bed $entity)
     {
         $request->setMethod('PATCH');
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new BedType(), $entity, [
             "method" => $request->getMethod(),
             "id" => $this->getUser()->getId()
         ]);
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
+
         if ($form->handleRequest($request)->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
+            $namePt = $form->get('namePt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+
             $em->persist($entity);
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.updated')
@@ -108,7 +140,8 @@ class BedController extends Controller
         }
         return $this->render(':admin/bed:form.html.twig', array(
             'form' => $form->createView(),
-            'entity' => $entity
+            'entity' => $entity,
+            'translations' => $translations
         ));
     }
 

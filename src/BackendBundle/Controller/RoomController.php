@@ -14,7 +14,7 @@ use VientoSur\App\AppBundle\Entity\Room;
 use BackendBundle\Form\RoomsType;
 
 /**
- * @Route("dashboard-room")
+ * @Route("/{_locale}/dashboard-room", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class RoomController extends Controller
 {
@@ -83,11 +83,18 @@ class RoomController extends Controller
         if($form->handleRequest($request)->isValid())
         {
             $payment_type = $em->getRepository('VientoSurAppAppBundle:PaymentType')->findOneBy(array('name' => 'at_destination'));
+
+            $namePt = $form->get('namePt')->getData();
+            $cancellationPolicityPt = $form->get('cancellationPolicityPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $cancellationPolicityEn = $form->get('cancellationPolicityEn')->getData();
+            $cancellationPolicityStatus = $form->get('statusCancellation')->getData();
 //            $amenity_value = $request->get('amenity');
 //            $amenity_price = $request->get('amenity_price');
 
             $entity->setPaymentType($payment_type);
             $entity->setCreatedBy($this->getUser());
+            $entity->setCancellationPolicityStatus($cancellationPolicityStatus);
             $em->persist($entity);
 
 //            for($i = 0; $i < count($amenity_value); $i++){
@@ -99,8 +106,20 @@ class RoomController extends Controller
 //                $amenity_room->setPrice($amenity_price[$i]);
 //                $em->persist($amenity_room);
 //            }
-
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setCancellationPolicity($cancellationPolicityPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setCancellationPolicity($cancellationPolicityEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.added')
@@ -136,10 +155,19 @@ class RoomController extends Controller
             "id" => $this->getUser()->getId()
             ]);
 
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
+
         if ($form->handleRequest($request)->isValid())
         {
 //            $amenity_value = $request->get('amenity');
 //            $amenity_price = $request->get('amenity_price');
+            $namePt = $form->get('namePt')->getData();
+            $cancellationPolicityPt = $form->get('cancellationPolicityPt')->getData();
+            $nameEn = $form->get('nameEn')->getData();
+            $cancellationPolicityEn = $form->get('cancellationPolicityEn')->getData();
+            $cancellationPolicityStatus = $form->get('statusCancellation')->getData();
+            $entity->setCancellationPolicityStatus($cancellationPolicityStatus);
 
             $em->persist($entity);
 
@@ -169,8 +197,20 @@ class RoomController extends Controller
 //                    $em->remove($amenityRooms[$j]);
 //                }
 //            }
-
             $em->flush();
+
+            $entity->setName($namePt);
+            $entity->setCancellationPolicity($cancellationPolicityPt);
+            $entity->setTranslatableLocale('pt');
+            $em->persist($entity);
+            $em->flush();
+
+            $entity->setName($nameEn);
+            $entity->setCancellationPolicity($cancellationPolicityEn);
+            $entity->setTranslatableLocale('en');
+            $em->persist($entity);
+            $em->flush();
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('admin.messages.updated')
@@ -180,8 +220,9 @@ class RoomController extends Controller
         return $this->render(':admin/room:form.html.twig', array(
             'form' => $form->createView(),
             'entity' => $entity,
-            'amenities' => $amenities,
-            'amenityRooms' => $amenityRooms
+//            'amenities' => $amenities,
+//            'amenityRooms' => $amenityRooms,
+            'translations' => $translations
         ));
     }
 

@@ -32,7 +32,7 @@
                     <div id="sidebar">
                         <div id="infoReserva" class="hidden-sm hidden-md hidden-lg">
                             <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
-                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <p style="float: left; margin-right: 10px;"><span>{{ hotelBrief.name }}</span></p>
                             <ul>
                                 {% for i in 1..5 %}
                                     {% if i <= hotelBrief.stars %}
@@ -40,7 +40,9 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
-                            <p><span>{{ hotelBrief.name }}</span></p>
+                            <br style="clear: both" />
+                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <br style="clear: both" />
                             <p>{{ hotelBrief.address }}</p>
                             {{ travellers|raw }}
                             <div class="datesPayment">
@@ -77,8 +79,8 @@
                 <!-- GO RESERVATION HOTEL -->
                 <div class="col-xs-12 col-sm-9 col-sm-push-3">
                     <div id="processPayment">
-                        {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
                         {% include '@VientoSurAppApp/messages/danger.html.twig' %}
+                        {{ form_start(formNewPay, {'attr': {'class': 'booking-form'}}) }}
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -95,7 +97,7 @@
                                                             {% set fieldName = 'first_name' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.name' | trans %}
                                                             {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'placeholder': placeholder, 'class': 'form-control input-width'}}) }}
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
@@ -103,14 +105,14 @@
                                                             {% set fieldName = 'last_name' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.lastname' | trans %}
                                                             {% set placeholder = 'hotels.labels.name_placeholder' | trans %}
-                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'placeholder': placeholder, 'class': 'form-control'}}) }}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'placeholder': placeholder, 'class': 'form-control input-width'}}) }}
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             {% set fieldName = 'document_number' ~ loop.index0 %}
                                                             {% set label = 'hotels.labels.document' | trans %}
-                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'attr': {'class': 'form-control'}}) }}
+                                                            {{ form_row(attribute(formNewPay.passengers, fieldName), {'label': label, 'label_attr': {'class': 'label-lef'}, 'attr': {'class': 'form-control input-width-50'}}) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -142,11 +144,11 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 {% for phone in formChoice.contact.phones %}
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="form-group">
                                                         {% set fieldName = 'country_code' ~ loop.index0 %}
-                                                        {% set label = 'hotels.labels.country_code' | trans %}
-                                                        <label for="">{{ label }}</label>
+                                                        {% set label = 'hotels.labels.country' | trans %}
+                                                        <label class="label-lef" for="">{{ label }}</label>
                                                         {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'style': 'margin-top:5px !important;', 'class': 'form-control'}}) }}
                                                     </div>
                                                 </div>
@@ -155,18 +157,18 @@
                                                         {% set fieldName = 'type' ~ loop.index0 %}
                                                         {% if attribute(formNewPay.contact, fieldName) is defined %}
                                                             {% set label = 'hotels.labels.type' | trans %}
-                                                            <label for="">{{ label }}</label>
-                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            <label class="label-lef" for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control type_form'}}) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-3">
                                                     <div class="form-group">
                                                         {% set fieldName = 'area_code' ~ loop.index0 %}
                                                         {% if attribute(formNewPay.contact, fieldName) is defined %}
                                                             {% set label = 'hotels.labels.area_code' | trans %}
-                                                            <label for="">{{ label }}</label>
-                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                            <label class="label-lef" for="">{{ label }}</label>
+                                                            {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control type_form'}}) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -174,8 +176,8 @@
                                                     <div class="form-group">
                                                         {% set fieldName = 'number' ~ loop.index0 %}
                                                         {% set label = 'hotels.labels.number' | trans %}
-                                                        <label for="">{{ label }}</label>
-                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        <label class="label-lef" for="">{{ label }}</label>
+                                                        {{ form_widget(attribute(formNewPay.contact, fieldName), {'attr': {'class': 'form-control type_form'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -189,15 +191,15 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="">Email:</label>
-                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError'}}) }}
+                                                        <label class="label-lef" for="">Email:</label>
+                                                        {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError email_form'}}) }}
 
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="">Confirme su Email:</label>
-                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control" autocomplete="off">
+                                                        <label class="label-lef" for="">Confirme su Email:</label>
+                                                        <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control email_confirm_form" autocomplete="off">
 
                                                     </div>
                                                 </div>
@@ -229,8 +231,8 @@
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         {% set fieldName = loop.index0 %}
-                                                        <label for="">{{ 'hotels.vouchers' | trans }}:</label>
-                                                        {{ form_widget(attribute(formNewPay.vouchers, fieldName), {'attr': {'class': 'form-control'}}) }}
+                                                        <label class="label-lef" for="">{{ 'hotels.vouchers' | trans }}:</label>
+                                                        {{ form_widget(attribute(formNewPay.vouchers, fieldName), {'attr': {'class': 'form-control input-width'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -268,8 +270,8 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         {% set label = 'hotels.labels.subscribe_newsletter' | trans %}
-                                                        <label for="">{{ label }}</label>
-                                                        {{ form_widget(formNewPay.additionalData.subscribe_newsletter, {'attr': {'class': 'form-control'}}) }}
+                                                        <label class="label-lef"  for="">{{ label }}</label>
+                                                        {{ form_widget(formNewPay.additionalData.subscribe_newsletter, {'attr': {'class': 'form-control input-width'}}) }}
                                                     </div>
                                                 </div>
                                                 {% endif %}
@@ -279,8 +281,8 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             {% set label = 'hotels.labels.travel_assistance' | trans %}
-                                                            <label for="">{{ label }}</label>
-                                                            {{ form_widget(formNewPay.additionalData.travel_assistance, {'attr': {'class': 'form-control'}}) }}
+                                                            <label class="label-lef" for="">{{ label }}</label>
+                                                            {{ form_widget(formNewPay.additionalData.travel_assistance, {'attr': {'class': 'form-control input-width'}}) }}
                                                         </div>
                                                     </div>
                                                 {% endif %}
@@ -305,7 +307,7 @@
                     <div id="sidebar">
                         <div id="infoReserva" class="hidden-xs">
                             <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
-                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <p style="float: left; margin-right: 10px;"><span>{{ hotelBrief.name }}</span></p>
                             <ul>
                                 {% for i in 1..5 %}
                                     {% if i <= hotelBrief.stars %}
@@ -313,7 +315,9 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
-                            <p><span>{{ hotelBrief.name }}</span></p>
+                            <br style="clear: both" />
+                            <img src="{{ hotelBrief.img }}/95x95" alt="">
+                            <br style="clear: both" />
                             <p>{{ hotelBrief.address }}</p>
                             {{ travellers|raw }}
                             <div class="datesPayment">
@@ -355,23 +359,21 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class='form-group date col-xs-7' id='datetimepicker5'>
-                                        <label>{{ 'index.search.hotel.checkin_date' | trans }}</label>
+                                    <div class='form-group date col-xs-7 menu-lef-data' id='datetimepicker5'>
+                                        <label>{{ 'hotels.entry' | trans }}</label>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkin_date')}}"/>
+                                        <input id="field-hotel-checkin" class="form-control required" name="start" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('checkin_date')}}"/>
+                                    </div>
+                                    <div class='form-group date col-xs-7 menu-lef-data' id='datetimepicker6'>
+                                        <label>{{ 'flights.outgoing' | trans }}</label>
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="{{ 'index.date_placeholder' | trans }}" value="{{app.session.get('checkout_date')}}"/>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class='form-group date col-xs-7' id='datetimepicker6'>
-                                        <label>{{ 'index.search.hotel.checkout_date' | trans }}</label>
-                                        <<i class="fa fa-calendar" aria-hidden="true"></i>
-                                        <input id="field-hotel-checkout" class="form-control required" name="end" type="text" required="" placeholder="dd/mm/yyyy" value="{{app.session.get('checkout_date')}}"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-xs-7">
-                                        <label for="roomsQty">{{ 'index.search.hotel.number_rooms' | trans }}</label>
-                                        <select id="roomsQty" class="form-control" name="habitacionesCant">
+                                    <div class="form-group col-xs-12">
+                                        <label for="roomsQty" style="float: left; margin-right: 26px">{{ 'index.search.hotel.number_rooms' | trans }}</label>
+                                        <select id="roomsQty" class="form-control" name="habitacionesCant" style="width: 33%">
                                             <option value="1" {% if data_travelers| length == 1 %}selected{% endif %}>1 {{ 'index.search.hotel.room' | trans }}</option>
                                             <option value="2" {% if data_travelers| length == 2 %}selected{% endif %}>2 {{ 'index.search.hotel.rooms' | trans }}</option>
                                             <option value="3" {% if data_travelers| length == 3 %}selected{% endif %}>3 {{ 'index.search.hotel.rooms' | trans }}</option>
@@ -382,17 +384,17 @@
                                 <div id="room" {% if data_travelers | length > 1 %}style="display: none;"{% endif %}>
                                     <div class="row">
                                         <div class="form-group  col-xs-6">
-                                            <label for="adults">{{ 'index.search.hotel.adults' | trans }}</label>
+                                            <label for="adults" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.adults' | trans }}</label>
                                             <input type="hidden" value="0" id="adultsRoom">
-                                            <select id="adults" class="form-control coupled" data-couple="childrenRoom.0" name="adultsSelector">
+                                            <select id="adults" class="form-control coupled" data-couple="childrenRoom.0" name="adultsSelector" style="width: 39%; padding-left: 10px;">
                                                 {% for i in 1..8 %}
                                                     <option value="{{ loop.index }}" {% if data_travelers != null and data_travelers[1].adults == loop.index %}selected="selected"{% endif %}>{{ loop.index }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group col-xs-6">
-                                            <label for="childrenRoom">{{ 'index.search.hotel.childs' | trans }}</label>
-                                            <select id="childrenRoom" class="form-control coupled" data-couple="adults.1" name="childrenRoomSelector">
+                                            <label for="childrenRoom" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                            <select id="childrenRoom" class="form-control coupled" data-couple="adults.1" name="childrenRoomSelector" style="width: 39%; padding-left: 10px;">
                                                 {% for i in 0..7 %}
                                                     <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
                                                 {% endfor %}
@@ -425,9 +427,9 @@
                                         <div class="row" style="padding:0 14px;">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="adults1">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <label for="adults1" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.adults' | trans }}</label>
                                                     <input type="hidden" value="0" id="adultsRoom1">
-                                                    <select id="adults1" class="form-control coupled" data-couple="childrenRoom1.0" name="adultsSelector1">
+                                                    <select id="adults1" class="form-control coupled" data-couple="childrenRoom1.0" name="adultsSelector1" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ i }}" {% if data_travelers[1].adults is defined and data_travelers[1].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
                                                         {% endfor %}
@@ -436,8 +438,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="childrenRoom1">{{ 'index.search.hotel.childs' | trans }}</label>
-                                                    <select id="childrenRoom1" class="form-control coupled" data-couple="adults1.1" name="childrenRoomSelector1">
+                                                    <label for="childrenRoom1" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom1" class="form-control coupled" data-couple="adults1.1" name="childrenRoomSelector1" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ loop.index0 }}" {% if data_travelers[1].children is defined and data_travelers[1].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
                                                         {% endfor %}
@@ -473,9 +475,9 @@
                                         <div class="row" style="padding:0px 14px;">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="adults2">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <label for="adults2" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.adults' | trans }}</label>
                                                     <input type="hidden" value="0" id="adultsRoom2">
-                                                    <select id="adults2" class="form-control coupled" data-couple="childrenRoom2.0" name="adultsSelector2">
+                                                    <select id="adults2" class="form-control coupled" data-couple="childrenRoom2.0" name="adultsSelector2" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ i }}" {% if data_travelers[2].adults is defined and data_travelers[2].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
                                                         {% endfor %}
@@ -484,8 +486,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="childrenRoom2">{{ 'index.search.hotel.childs' | trans }}</label>
-                                                    <select id="childrenRoom2" class="form-control coupled" data-couple="adults2.1" name="childrenRoomSelector2">
+                                                    <label for="childrenRoom2" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom2" class="form-control coupled" data-couple="adults2.1" name="childrenRoomSelector2" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ loop.index0 }}" {% if data_travelers[2].children is defined and data_travelers[2].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
                                                         {% endfor %}
@@ -521,9 +523,9 @@
                                         <div class="row" style="padding:0px 14px;">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="adults3">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <label for="adults3" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.adults' | trans }}</label>
                                                     <input type="hidden" value="0" id="adultsRoom3">
-                                                    <select id="adults3" class="form-control coupled" data-couple="childrenRoom3.0" name="adultsSelector3">
+                                                    <select id="adults3" class="form-control coupled" data-couple="childrenRoom3.0" name="adultsSelector3" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ i }}" {% if data_travelers[3].adults is defined and data_travelers[3].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
                                                         {% endfor %}
@@ -532,8 +534,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="childrenRoom3">{{ 'index.search.hotel.childs' | trans }}</label>
-                                                    <select id="childrenRoom3" class="form-control coupled" data-couple="adults3.0" name="childrenRoomSelector3">
+                                                    <label for="childrenRoom3" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom3" class="form-control coupled" data-couple="adults3.0" name="childrenRoomSelector3" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ loop.index0 }}" {% if data_travelers[3].children is defined and data_travelers[3].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
                                                         {% endfor %}
@@ -569,9 +571,9 @@
                                         <div class="row" style="padding:0px 14px;">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="adults4">{{ 'index.search.hotel.adults' | trans }}</label>
+                                                    <label for="adults4" style="float: left; margin-right: 5px;">{{ 'index.search.hotel.adults' | trans }}</label>
                                                     <input type="hidden" value="0" id="adultsRoom4">
-                                                    <select id="adults4" class="form-control coupled" data-couple="childrenRoom4.0" name="adultsSelector4">
+                                                    <select id="adults4" class="form-control coupled" data-couple="childrenRoom4.0" name="adultsSelector4" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ i }}" {% if data_travelers[4].adults is defined and data_travelers[4].adults == i %}selected="selected"{% endif %}>{{ i }}</option>
                                                         {% endfor %}
@@ -580,8 +582,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="childrenRoom4">{{ 'index.search.hotel.childs' | trans }}</label>
-                                                    <select id="childrenRoom4" class="form-control coupled" data-couple="adults4.0" name="childrenRoomSelector4">
+                                                    <label for="childrenRoom4" style="float: left; margin-right: 15px;">{{ 'index.search.hotel.childs' | trans }}</label>
+                                                    <select id="childrenRoom4" class="form-control coupled" data-couple="adults4.0" name="childrenRoomSelector4" style="width: 39%; padding-left: 10px;">
                                                         {% for i in 1..8 %}
                                                             <option value="{{ loop.index0 }}" {% if data_travelers[4].children is defined and data_travelers[4].children | length == loop.index0 %}selected="selected"{% endif %}>{{ loop.index0 }}</option>
                                                         {% endfor %}
@@ -1255,6 +1257,10 @@
             });
 
             device();
+
+            {% if cardSelected is defined %}
+            $('.clickable-card[data-all-data-card="{{ cardSelected }}"]').click();
+            {% endif %}
         });
 
         function device() {

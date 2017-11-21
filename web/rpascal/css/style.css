@@ -19,11 +19,11 @@ a, a:hover, a:focus{
 
 .booking-item-img-num{
 	position: relative;
-	bottom: 36px;
+	bottom: 20px;
 	left: 141px;
-	color: #fff;
+	color: #000;
 	background: rgba(0,0,0,0.01);
-	opacity: 0.5;
+	opacity: 2.5;
 }
 
 .pagination {
@@ -229,30 +229,32 @@ header{
 }
 
 .nav-tabs > li > a {
-	border: 1px solid transparent;
+        border-left: 1px solid #505152; 
+        border-top: 1px solid #505152; 
+        border-right: 1px solid #505152; 
 	border-radius: 5px 5px 0 0;
 	line-height: 1.42857;
 	margin-right: 2px;
-	background: #505152;
-	color: #ffffff;
+	background: #ffffff;
+	color: #505152;
 
 }
 
 .nav-tabs > li > a:hover {
-	background: rgba(255,255,255,0.7);
-	color: #233034;
+	background: #233034;
+	color: rgba(255,255,255,0.7);
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-	background: rgba(255,255,255,0.7);
+	background: #233034;
 	border-radius: 5px 5px 0 0;
-	color: #233034;
+	color: rgba(255,255,255,0.7);
 }
 
 .search .tab-pane{
 	background: rgba(255,255,255,0.7);
 	border-radius: 5px;
-	padding: 3.33vw 1.66vw 0 1.66vw;
+	padding: 3.33vw 1.6vw 0 1.6vw;
 }
 
 .search .tab-pane.active{
@@ -280,6 +282,12 @@ header{
 
 .search .tab-content .form-group-icon-left{
 	position: relative;
+}
+
+.multiple-input-width{
+    width: 190px;
+    float: left;
+    margin-left: 15px;
 }
 
 .search .tab-content .form-group-icon-left i{
@@ -342,6 +350,7 @@ header{
 
 .search .tab-content .modal-dialog .modal-body{
 	padding-bottom: 0 !important;
+	padding-top: 0 !important;
 }
 
 .search .tab-content .modal-dialog h4{
@@ -380,8 +389,10 @@ header{
 .search .tab-content .modal-dialog .selectRoom .selectGroup h3, .search .tab-content .modal-dialog .selectFlight .selectGroup h3{
 	color: #1d2d33;
 	font-family: 'latobold';
-	font-size: 1.33vw;
+	font-size: 12px;
 	text-transform: uppercase;
+        width: 50%;
+        float: left;
 }
 
 .search .tab-content .modal-dialog .selectRoom .selectGroup h3 span{
@@ -393,7 +404,7 @@ header{
 }
 
 .search .tab-content .modal-dialog .selectRoom select, .search .tab-content .modal-dialog .selectFlight select{
-	height: 2.91vw;
+	height: 30px;
 	border-radius: 5px;
 	border: none;
 	background: url(../images/arrow-back-white.png) no-repeat 92% 50% #192731!important;
@@ -402,10 +413,11 @@ header{
 	appearance: none;
 	color: #e3e3e3;
 	font-family: 'latolight';
-	font-size: 1.33vw;
+	font-size: 11px;
 	cursor: pointer;
 	padding: 0 1.15vw;
-	width: 100%;
+	width: 45%;
+        margin-top: 10px;
 }
 
 .search .tab-content .modal-dialog .selectRoom select option, search .tab-content .modal-dialog .selectFlight select option{
@@ -649,7 +661,7 @@ header{
 }
 
 #formSearch .form-group, #formFilters .form-group{
-	margin-bottom: 2.5vw;
+	margin-bottom: 1.5vw;
 }
 
 #formSearch .form-group i, #formFilters .form-group i{
@@ -849,10 +861,11 @@ header{
 	height: 4.41vw;
 	text-align: center;
 	text-transform: uppercase;
-	color: #233034;
+	color: #FFF;
 	font-family: 'latobold';
 	font-size: 1.33vw;
 	width: 100%;
+        background-color: #008cd0;
 }
 
 #thumbsSearch .filterThumb .caret {
@@ -925,6 +938,38 @@ header{
 	float: left;
 }
 
+.star-div{
+    margin-left: -10px;
+}
+
+.room-select{
+    width: 33%;
+}
+
+.share-social-media{
+    padding: 0px 46px !important;
+}
+
+.expiration-date{
+    width: 150%;
+}
+
+.security_code{
+    width: 46% !important;
+}
+
+.type_form{
+    width: 60% !important;
+}
+
+.email_form{
+    width: 80% !important;
+}
+
+.email_confirm_form{
+    width: 67% !important;
+}
+
 #thumbHotel .infoHotel ul{
 	padding: 0;
 	margin: 0 0 0 10px;
@@ -965,7 +1010,6 @@ header{
 
 #thumbHotel .infoHotel a{
 	font-size: 1.25vw;
-	font-family: 'latoregular';
 	color: #0777ae;
 }
 
@@ -1246,7 +1290,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .adress{
-	color: #979797;
+	color: #233034;
 	font-size: 1.33vw;
 	font-family: 'latolight';
 	line-height: 3.16vw;
@@ -1274,7 +1318,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .descriptionHotel p{
-	color: #333;
+	color: #233034;
 	font-size: 1.33vw;
 	margin-bottom: 0.83vw;
 	line-height: 2vw;
@@ -1311,7 +1355,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel .galleryHotel{
-	margin-top: 0px;
+	margin-top: -25px;
 }
 
 #descriptionHotel .itemsHotel{
@@ -1334,7 +1378,6 @@ figure.effect-goliath:hover p {
 #descriptionHotel .itemsHotel ul li{
 	color: #192731;
 	font-size: 1.33vw;
-	font-family: 'latolight';
 	padding-bottom: 0.83vw;
 }
 
@@ -1536,7 +1579,7 @@ figure.effect-goliath:hover p {
 }
 
 #descriptionHotel table td img{
-	margin: 15px 0;
+	margin: -5px 0;
 	cursor: pointer;
 }
 /*----- END DETAIL HOTEL -----*/
@@ -1561,6 +1604,8 @@ figure.effect-goliath:hover p {
 	height: auto;
 	border: #fcfeff 2px solid;
 	margin: 0 auto;
+        margin-top: -15px;
+        margin-bottom: 10px;
 }
 
 #infoReserva ul{
@@ -1676,16 +1721,17 @@ figure.effect-goliath:hover p {
 #processPayment .panel-body input{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 30px;
+	height: 27px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
+        font-size: 12px;
 }
 
 #processPayment .panel-body select{
 	border-radius: 5px;
 	font-family: 'latolight';
-	height: 30px;
+	height: 27px;
 	color: #192731;
 	border: #192731 1px solid;
 	margin-top: 0.83vw;
@@ -1694,6 +1740,12 @@ figure.effect-goliath:hover p {
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
+        font-size: 12px;
+}
+
+.intl-tel-input.allow-dropdown {
+    width: 73% !important;
+    margin-right: -15px;
 }
 
 #processPayment .panel-body textarea{
@@ -1804,21 +1856,19 @@ figure.effect-goliath:hover p {
 	padding: 0.41vw;
 	color: #fff;
 	font-size: 1.33vw;
-	font-family: 'latobold';
 	margin: 1vw 0;
 }
 
 #thumbsFlights .panel-heading h6{
 	color: #fcfeff;
 	font-size: 1.33vw;
-	font-family: 'latobold';
 	margin-bottom: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #thumbsFlights .panel-heading h6 span{
 	color: #fcfeff;
 	font-size: 1.08vw;
-	font-family: 'latolight';
 	margin-left: 7px;
 }
 
@@ -1859,8 +1909,7 @@ figure.effect-goliath:hover p {
 
 #thumbsFlights .panel-body p{
 	color: #233034;
-	font-size: 14px;
-	font-family: 'latolight';
+	font-size: 12px;
 }
 
 #thumbsFlights .panel-body button{
@@ -1869,7 +1918,6 @@ figure.effect-goliath:hover p {
 	border-radius: 5px;
 	box-shadow: none;
 	color: #ffffff;
-	font-family: 'latobold';
 	font-size: 1vw;
 	padding: 1.25vw;
 	text-align: center;
@@ -2010,7 +2058,6 @@ figure.effect-goliath:hover p {
 
 
 .scroller-flight {
-	overflow: auto;
 	height: 300px;
 }
 
@@ -2849,4 +2896,15 @@ figure.effect-goliath:hover p {
 
 .span-type-trip {
 	font-size: 8px!important;
+}
+
+.modal-front-search-hotel{
+    margin: 0px auto !important; 
+    width: 55% !important; 
+    margin-top: 100px !important;
+}
+
+.modal-front-search-flight{
+    margin: 0px auto; 
+    width: 60%
 }

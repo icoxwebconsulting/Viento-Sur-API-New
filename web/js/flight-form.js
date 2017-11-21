@@ -666,18 +666,19 @@ $(document).ready(function () {
         var toDate = $('#date-m').text();
         var placeHolderFrom = $('#multidestination-from-flight0').attr('placeholder');
         var placeHolderTo = $('#multidestination-to-flight0').attr('placeholder');
+        var plasHolderDate = $('#start-flight0').attr('placeholder');
         if (lenght < 7){
             $('.col-md-12.stretch')
                 .before('<div class="row wrapper '+className+'">'+
                             '<div class="col-xs-12">'+
-                                '<div class="col-xs-12 col-md-5">'+
+                                '<div class="col-xs-12 col-md-8">'+
                                     '<p class="multiple-destinations-label">'+labelStretch+' '+lenght+'</p>'+
-                                    '<div class="form-group-icon-left marginBottom10">'+
+                                    '<div class="form-group-icon-left marginBottom10 multiple-input-width">'+
                                         '<i class="fa fa-map-marker input-icon"></i>'+
                                         '<input class="city-input form-control" id="multidestination-from-flight'+count+'" name="multidestination['+count+'][fromFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderFrom+'" />'+
                                         '<input id="multidestination-originFlight'+count+'" name="multidestination['+count+'][originFlight]" type="hidden" value="" />'+
                                     '</div>'+
-                                    '<div class="form-group-icon-left marginBottom10">'+
+                                    '<div class="form-group-icon-left marginBottom10 multiple-input-width">'+
                                         '<i class="fa fa-map-marker input-icon"></i>'+
                                         '<input class="city-input form-control" id="multidestination-to-flight'+count+'" name="multidestination['+count+'][toFlight]" data-provide="typeahead" required type="text" placeholder="'+placeHolderTo+'" />'+
                                         '<input id="multidestination-destinationFlight'+count+'" name="multidestination['+count+'][destinationFlight]" type="hidden" value="" />'+
@@ -687,7 +688,7 @@ $(document).ready(function () {
                                     '<p>'+toDate+'</p>'+
                                     '<div class="input-group date marginBottom10 col-xs-12" id="datetimepicker3">'+
                                     '<i class="glyphicon glyphicon-calendar"></i>'+
-                                    '<input class="form-control required departure" id="start-flight'+count+'" name="multidestination['+count+'][start]" type="text" required="" placeholder="dd/mm/yyyy"/>'+
+                                    '<input class="form-control required departure" id="start-flight'+count+'" name="multidestination['+count+'][start]" type="text" required="" placeholder="'+plasHolderDate+'"/>'+
                                 '</div>'+
                                 '</div>'+
                             '</div>'+

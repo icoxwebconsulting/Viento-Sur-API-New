@@ -100,10 +100,21 @@ class Reservation
      */
     private $origin;
 
+    /**
+     * @ORM\Column(name="refundable", type="boolean")
+     */
+    private $refundable;
+
+    /**
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->origin = 'despegar';
+        $this->status = 'ok';
     }
 
     /**
@@ -436,5 +447,51 @@ class Reservation
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    /**
+     * Set refundable
+     *
+     * @param boolean $refundable
+     * @return Reservation
+     */
+    public function setRefundable($refundable)
+    {
+        $this->refundable = $refundable;
+
+        return $this;
+    }
+
+    /**
+     * Get refundable
+     *
+     * @return boolean 
+     */
+    public function getRefundable()
+    {
+        return $this->refundable;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return Reservation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

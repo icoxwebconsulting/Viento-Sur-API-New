@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Room
  *
  * @ORM\Table(name="rooms")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="VientoSur\App\AppBundle\Repository\RoomRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Room
@@ -70,6 +70,12 @@ class Room
      * @ORM\Column(name="cancellation_policity", type="string", length=255)
      */
     private $cancellationPolicity;
+
+    /**
+     * @var string
+     * @ORM\Column(name="cancellation_policity_status", type="string", length=255)
+     */
+    private $cancellationPolicityStatus;
 
     /**
      * @ORM\ManyToOne(targetEntity="PaymentType", inversedBy="rooms")
@@ -379,5 +385,28 @@ class Room
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * Set cancellationPolicityStatus
+     *
+     * @param string $cancellationPolicityStatus
+     * @return Room
+     */
+    public function setCancellationPolicityStatus($cancellationPolicityStatus)
+    {
+        $this->cancellationPolicityStatus = $cancellationPolicityStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get cancellationPolicityStatus
+     *
+     * @return string 
+     */
+    public function getCancellationPolicityStatus()
+    {
+        return $this->cancellationPolicityStatus;
     }
 }

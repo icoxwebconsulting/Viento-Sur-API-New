@@ -77,6 +77,7 @@ $(document).ready(function () {
             $('#room').hide();
             $('#childrenRoom').val(0).change();
             $('#extraRooms').removeClass('hide');
+            $('.room1').removeClass('hide');
             $('.room2').removeClass('hide');
             $('.room3').removeClass('hide');
             $('.room4').removeClass('hide');

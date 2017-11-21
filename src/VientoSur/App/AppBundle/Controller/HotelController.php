@@ -14,6 +14,7 @@ use VientoSur\App\AppBundle\Entity\Passengers;
 use VientoSur\App\AppBundle\Entity\Reservation;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use VientoSur\App\AppBundle\Entity\ReservationCancellation;
 use VientoSur\App\AppBundle\Services\PaymentMethods;
 
 
@@ -504,10 +505,13 @@ class HotelController extends Controller
         $params = $request->query->all();
 
         $price_detail = json_decode($request->get('price_detail'));
+        $room_cancellation_status = $request->get('room_cancellation_status');
         $room_cancellation = $request->get('room_cancellation');
 
         $session->remove('price_detail');
         $session->set('price_detail', $price_detail);
+        $session->remove('room_cancellation_status');
+        $session->set('room_cancellation_status', $room_cancellation_status);
         $session->remove('room_cancellation');
         $session->set('room_cancellation', $room_cancellation);
 
@@ -640,7 +644,7 @@ class HotelController extends Controller
                     'travelers' => $data,
                     'contact' => $formData['country_code0'].' '.$formData['area_code0'].' '.$formData['number0']
                 ]);
-//                echo "<pre>".print_r($request->get('selected-card'), true)."</pre>";die();
+//                echo "<pre>".print_r($request->get('select-card'), true)."</pre>";die();
                 try {
                     $booking = $hotelService->bookingHotel(
                         $formBooking,
@@ -653,6 +657,7 @@ class HotelController extends Controller
                         $lang,
                         $request->getSession()->get('email')
                     );
+//                                    echo "<pre>".print_r($booking, true)."</pre>";die();
                 } catch (\Exception $e) {
                     if ($e->getMessage() == 'CREDIT_CARD') {
                         $cardsGroup = $hotelService->getCardsGroup($paymentMethods);
@@ -675,7 +680,8 @@ class HotelController extends Controller
                             'roomNumbers' => count(explode("!", $distribution)),
                             'errors' => $formNewPaySend->getErrors(),
                             'travellers' => $travellers,
-                            'hotelBrief' => $session->get('hotel_brief')
+                            'hotelBrief' => $session->get('hotel_brief'),
+                            'cardSelected' => $request->get('select-card')
                         );
                     } else {
 //                        cuando la tarjeta falla el error aparece aqui
@@ -721,7 +727,8 @@ class HotelController extends Controller
                         'travellers' => $travellers,
                         'hotelBrief' => $session->get('hotel_brief'),
                         'cardList' => $cards,
-                        'bankList' => $bankList
+                        'bankList' => $bankList,
+                        'cardSelected' => $request->get('select-card')
                     );
                 }else{
                     $session->remove('hotel_entrance_code');
@@ -803,6 +810,7 @@ class HotelController extends Controller
             'hotelBrief' => $session->get('hotel_brief'),
             'cardList' => $cards,
             'bankList' => $bankList
+
         );
     }
     /**
@@ -1040,6 +1048,17 @@ class HotelController extends Controller
                     'internal' => $internal,
                     'idCancellation' => $cancel['id']
                 ));
+
+                $internal->setStatus('cancelled');
+
+                $reservationCancellation = new ReservationCancellation();
+                $reservationCancellation->setDescription('Cancelado desde la web de vientosur');
+                $reservationCancellation->setCreatedBy(null);
+                $reservationCancellation->setCode($cancel['id']);
+                $reservationCancellation->setReservation($internal);
+
+                $em->persist($reservationCancellation);
+                $em->flush();
             }
         }
         return new JsonResponse(
@@ -1049,4 +1068,27 @@ class HotelController extends Controller
             )
         );
     }
+
+//    /**
+//     * @Route("/cards", name="viento_sur_app_get_cards")
+//     */
+//    public function getAllCardsAction()
+//    {
+//        $despegar = $this->get('despegar');
+//
+//        $cards = $despegar->getAllCards();
+//        $bankList = $this->get('app.bank')->getBanksSimple();
+//
+//        $i = 0;
+//        foreach ($cards as $card){
+//            if ($card['card_type'] == 'CREDIT' and $card['bank_code'] != '*'){
+//                if (!in_array($card['bank_code'], $bankList)){
+//                    echo "<pre>".print_r($card,true)."</pre>";
+//                    $i++;
+//                }
+//            }
+//        }
+//        echo $i;
+//        die();
+//    }
 }

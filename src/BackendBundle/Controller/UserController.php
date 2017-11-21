@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
- * @Route("/profile")
+ * @Route("/{_locale}/profile", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
 class UserController extends Controller
 {

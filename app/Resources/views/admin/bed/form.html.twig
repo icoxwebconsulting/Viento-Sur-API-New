@@ -3,8 +3,13 @@
 {% block title %}{{ 'admin.bed_new' | trans }}{% endblock %}
 
 {% block top_content %}
+    {% if app.request.attributes.get('_route') == 'bed_new' %}
+        {% set title = 'admin.bed_new' %}
+    {% else %}
+        {% set title = 'admin.bed_edit' %}
+    {% endif %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}{{ 'admin.bed_new' | trans }}{% endblock %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
     {% endembed %}
 {% endblock %}
 
@@ -22,7 +27,7 @@
             <div class="card-header">
                 <strong style="text-transform:capitalize;">{{ 'hotels.bed' | trans }}</strong>
             </div>
-            <form method="POST" action="{{ path }}" {{ form_enctype(form) }} class="card">
+            <form id="form" method="POST" action="{{ path }}" {{ form_enctype(form) }} class="card">
             <div class="card-block">
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="first-name">{{ 'index.search.hotel.room' | trans }}</label>
@@ -31,6 +36,8 @@
                     </div>
                     {{ form_errors(form.room) }}
                 </div>
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
                     <div class="col-md-9">
@@ -38,6 +45,30 @@
                     </div>
                     {{ form_errors(form.name) }}
                 </div>
+
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                    </div>
+                    {{ form_errors(form.namePt) }}
+                </div>
+
+                <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">
+                        {{ 'admin.name' | trans }}
+                    </label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                    </div>
+                    {{ form_errors(form.nameEn) }}
+                </div>
+
                 <div class="form-group row">
                     <label class="col-md-3 form-control-label" for="first-name">{{ 'hotels.search_menu.type' | trans }}</label>
                     <div class="col-md-9">
@@ -62,9 +93,45 @@
             {{ form_widget(form._token) }}
             <div class="card-footer">
                 <a href="{{ path('bed_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
             </form>
         </div>
     </div>
+{% endblock %}
+
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .flags-lg{
+            margin-left: 10px;
+            width: 20px;
+        }
+        .label-lg{
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#send').click(function(e){
+                var nameEn = $('#appbundle_bed_nameEn').val();
+                var namePt = $('#appbundle_bed_namePt').val();
+
+                if(nameEn == '' || namePt == ''){
+                    e.preventDefault();
+                    $('#confirm').modal('show');
+                }
+            });
+
+            $('#modal-submit').click(function(){
+                $('#form').submit();
+                $('#confirm').modal('hide');
+            });
+        })
+    </script>
 {% endblock %}
