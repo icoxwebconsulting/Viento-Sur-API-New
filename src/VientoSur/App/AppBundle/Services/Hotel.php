@@ -189,4 +189,121 @@ class Hotel
 
         return $cardsGroup;
     }
+
+    public function bookingHotelApi($formData, $formBookingUrl, $selectedPack, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email)
+    {
+
+        $vaultToken = $this->getVaultToken($formData);
+//        $vaultToken = '12fb709eada0b38b6e2d01019bc9c561c115583d1782de250c8456285dd7e3501f084e7cf953008344e1b535bbe022547ccba91bcbfe8560c48fa05b933c2efd621ee5';
+
+        $formIdBooking = $selectedPack['id'];
+        $patchParams = [];
+        $patchParams['payment_method_choice'] = $formData['paymentMethod'];
+        $patchParams['secure_token_information'] = array('secure_token' => $vaultToken);
+
+        $passengers = $formData['passengers'];
+
+        for($i = 0; count($passengers) > $i; $i++){
+            $formData['first_name' . $i] = $passengers[$i]['first_name'];
+            $formData['last_name' . $i] = $passengers[$i]['last_name'];
+            $formData['document_number' . $i] = $passengers[$i]['document_number'];
+            $formData['room_reference' . $i] = '';
+        }
+
+        if(isset($formData['passengers'])){
+            $patchParams['form']['passengers'] = $formData['passengers'];
+        }
+
+        if(isset($formData['owner_name'])){
+            $creditCard = [
+                'owner_name' => $formData['owner_name'],
+                'owner_document' => [
+                    'type' => $formData['owner_documenttype'],
+                    'number' => $formData['owner_documentnumber']
+                ]
+            ];
+        }
+
+        if(isset($formData['invoice_name'])){
+            if(isset($formData['tax_status'])){$invoice['tax_status'] = $formData['tax_status'];}
+            if(isset($formData['fiscal_document'])){$invoice['fiscal_document'] = $formData['fiscal_document'];}
+            if(isset($formData['billing_addressstreet'])){
+                $invoice['billing_address'] = [
+                    'street' => $formData['billing_addressstreet'],
+                    'number' => $formData['billing_addressnumber'],
+                    'floor' => $formData['billing_addressfloor'],
+                    'department' => $formData['billing_addressdepartment'],
+                    'state_id' => $formData['billing_addressstate_id'],
+                    'city_id' => $formData['billing_addresscity_id'],
+                    'postal_code' => $formData['billing_addresspostal_code']
+                ];
+            }
+        }
+
+        if(isset($formData['email'])){
+            $contact = [
+                'email' => $formData['email'],
+                'phones' => [
+                    [
+                        'type' => $formData['type0'],
+                        'number' => $formData['number0'],
+                        'country_code' =>  str_replace("+", "", $formData['country_code0']),
+                        'area_code' => $formData['area_code0']
+                    ]
+                ]
+            ];
+        }
+
+        $additionalData = [
+            'comment' => $formData['comment'],
+            'should_use_nightly_prices' => $formData['should_use_nightly_prices']
+        ];
+
+        $vouchers = [$formData['vouchers']];
+
+
+        $patchParams['form']['payment']['credit_card'] = $creditCard;
+        $patchParams['form']['payment']['invoice'] = $invoice;
+        $patchParams['form']['payment']['overridden_information'] = ['shown_total_amount' => '', 'fees' => []];
+        $patchParams['form']['contact'] = $contact;
+        $patchParams['form']['additional_data'] = $additionalData;
+        $patchParams['form']['vouchers'] = $vouchers;
+
+        $booking = $this->patchHotelsBooking($formBookingUrl, $formIdBooking, $patchParams);
+
+        if (isset($booking['code'])){
+            return $booking;
+        }
+        if (isset($booking['status']) && $booking['status'] == 'NEW_CREDIT_CARD') {
+            throw new \Exception('CREDIT_CARD');
+        }
+
+        $reservation = $this->saveReservation($hotelId, $booking, $priceDetail, $formData, $checkinDate, $checkoutDate, $formData['passengers']);
+
+        $hotelDetails = $this->despegar->getHotelsDetails(array(
+            'ids' => $hotelId,
+            'language' => $lang,
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ));
+
+        $hotelDetails = (is_array($hotelDetails)) ? $hotelDetails[0] : null;
+
+        $reservationDetails = $this->despegar->getReservationDetails(
+            $booking['reservation_id'],
+            array(
+                'email' => 'info@vientosur.net',
+                'language' => $lang,
+                'site' => 'AR'
+            ), $this->isTest
+        );
+
+        return [
+            'reservationDetails' => $reservationDetails,
+            'hotelDetails' => $hotelDetails,
+            'booking' => $booking,
+            'reservation' => $reservation
+        ];
+    }
 }
