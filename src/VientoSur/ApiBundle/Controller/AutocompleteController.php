@@ -64,6 +64,121 @@ class AutocompleteController extends FOSRestController implements ClassResourceI
             'hotel_result' => '5'
         );
 
+        $data = $this->get('despegar')->autocomplete($urlParams);
+
+        if (!in_array('code', $data)) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
+        return new JsonResponse($results);
+    }
+
+    /**
+     * Get autocompleteState
+     *
+     * @param String $query
+     * @return mixed
+     *
+     * @FOSRestBundleAnnotations\Route("/autocomplete-state/{query}")
+     * @ApiDoc(
+     *  section="Autocomplete",
+     *  description="Get Autocomplete State",
+     *  requirements={
+     *     {
+     *          "name"="query",
+     *          "dataType"="string",
+     *          "requirement"="true",
+     *          "description"="city | hotel"
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Result not found"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getAutocompleteStateAction($query){
+        $urlParams = array(
+            'query' => $query,
+            'product' => 'HOTELS',
+            'locale' => 'es-AR',
+            'administrative_division_result' => '10'
+        );
+
+//        $results = $this->get('despegar')->autocomplete($urlParams);
+//        $response = new JsonResponse($results);
+
+        $data = $this->get('despegar')->autocomplete($urlParams);
+
+        if (!in_array('code', $data)) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $data
+            ];
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
+        return new JsonResponse($results);
+    }
+
+
+    /**
+     * Get autocompleteCity
+     *
+     * @param Request $request
+     * @param String $id
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/autocomplete-city/{id}")
+     * @ApiDoc(
+     *  section="Autocomplete",
+     *  description="Get Autocomplete City",
+     *  requirements={
+     *     {
+     *          "name"="query",
+     *          "dataType"="string",
+     *          "requirement"="true",
+     *          "description"="city | hotel"
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Result not found"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getAutocompleteCityAction(Request $request, $id){
+        $query = $request->query->get('query');
+        $urlParams = array(
+            'query' => $query,
+            'product' => 'HOTELS',
+            'locale' => 'es-AR',
+            'city_result' => '10',
+            'political_divisions_to_filter_results' => $id
+        );
+
 //        $results = $this->get('despegar')->autocomplete($urlParams);
 //        $response = new JsonResponse($results);
 
