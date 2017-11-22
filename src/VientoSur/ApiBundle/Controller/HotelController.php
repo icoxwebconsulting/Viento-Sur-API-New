@@ -614,7 +614,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *  description="Get room availability for hotel",
      *  parameters={
      *     {
-     *          "name"="hotel_availabilities",
+     *          "name"="hotel_availabilitiesId",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="JSON Data",
@@ -684,11 +684,11 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "description"="Number Card"
      *      },
      *     {
-     *          "name"="expiration_date",
+     *          "name"="expiration",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="2018-02-01 00:00:00.000000",
-     *          "description"="Expiration Date"
+     *          "description"="Expiration Date card"
      *      },
      *     {
      *          "name"="security_code",
@@ -703,6 +703,27 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "required"=true,
      *          "format"="",
      *          "description"="Owner Name"
+     *      },
+     *     {
+     *          "name"="owner_documenttype",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Type document card"
+     *      },
+     *     {
+     *          "name"="owner_documentnumber",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Number document card"
+     *      },
+     *     {
+     *          "name"="owner_gender",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Gender"
      *      },
      *     {
      *          "name"="bank_code",
@@ -726,11 +747,81 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "description"="Card Type"
      *      },
      *     {
-     *          "name"="reservation_name",
+     *          "name"="tax_status",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="",
-     *          "description"="First name, Last name, Document Number"
+     *          "description"="Taxt status"
+     *      },
+     *     {
+     *          "name"="invoice_name",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Invoice name"
+     *      },
+     *     {
+     *          "name"="fiscal_document",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Fiscal document"
+     *      },
+     *     {
+     *          "name"="billing_addressstreet",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Street address billing"
+     *      },
+     *     {
+     *          "name"="billing_addressnumber",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Number address billing"
+     *      },
+     *     {
+     *          "name"="billing_addressfloor",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Floor address billing"
+     *      },
+     *     {
+     *          "name"="billing_addressdepartment",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Departament address billing"
+     *      },
+     *     {
+     *          "name"="billing_addressstate_id",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Id state address billing"
+     *      },
+     *     {
+     *          "name"="billing_addresscity_id",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Id city address billing"
+     *      },
+     *     {
+     *          "name"="billing_addresspostal_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Code Postal address billing"
+     *      },
+     *     {
+     *          "name"="passengers",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="Data json",
+     *          "description"="Full name passengers"
      *      },
      *     {
      *          "name"="email",
@@ -740,28 +831,28 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "description"="email"
      *      },
      *     {
-     *          "name"="type_phone",
+     *          "name"="type0",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="",
      *          "description"="Type Phone: Local, Cell Phone, Office"
      *      },
      *     {
-     *          "name"="number",
+     *          "name"="number0",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="",
      *          "description"="Phone Number"
      *      },
      *     {
-     *          "name"="country_code",
+     *          "name"="country_code0",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="",
      *          "description"="+54 Country Code"
      *      },
      *     {
-     *          "name"="area_code",
+     *          "name"="area_code0",
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="",
@@ -779,7 +870,28 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="",
-     *          "description"="should_use_nightly_prices"
+     *          "description"="Should use nightly prices"
+     *      },
+     *     {
+     *          "name"="vouchers",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Vouchers"
+     *      },
+     *     {
+     *          "name"="selected_pack",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Selected pack"
+     *      },
+     *     {
+     *          "name"="cancellation_status",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Cancellation status"
      *      }
      *  },
      *  statusCodes={
@@ -794,69 +906,106 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      */
     public function patchBookingAction(Request $request)
     {
-        /**
-         * Parameters
-         */
-//        $formBooking: formulario bookin
-//        $formPay: formulario bookin  $bookingId, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email
-//        paymentMethod: payment_methods->choice
-//        hotel_availabilities: obtener el availability_token, idHotel
-
+        $session = $request->getSession();
         $params = $this->getRequest()->request->all();
-
+        $priceDetail = json_decode(json_encode($params['price_detail']));
         $bookingId = $params['booking_id'];
+        $tokenizeKey = $params['tokenize_key'];
+        $dataPassengers = $params['passengers'];
+        $hotelAvailabilitiesId = $params['hotel_availabilitiesId'];
         $paymentMethod = $params['payment_method'];
         $numberCard = $params['number_card'];
-        $expirationDate = $params['expiration_date'];
+        $number = $params['number0'];
+        $expirationDate = $params['expiration'];
         $securityCode = $params['security_code'];
         $ownerName = $params['owner_name'];
+        $ownerDocumenttype = $params['owner_documenttype'];
+        $ownerDocumentnumber = $params['owner_documentnumber'];
+        $ownerGender = $params['owner_gender'];
         $bankCode = $params['bank_code'];
         $cardCode = $params['card_code'];
         $cardType = $params['card_type'];
-        $typePhone = $params['type_phone'];
-        $number = $params['number'];
-        $countryCode = $params['country_code'];
-        $areaCode = $params['area_code'];
+        $taxStatus = $params['tax_status'];
+        $invoiceName = $params['invoice_name'];
+        $fiscalDocument = $params['fiscal_document'];
+        $billingAddressStreet = $params['billing_addressstreet'];
+        $billingAddressNumber = $params['billing_addressnumber'];
+        $billingAddressFloor = $params['billing_addressfloor'];
+        $billingAddressDepartment = $params['billing_addressdepartment'];
+        $billingAddressStateId = $params['billing_addressstate_id'];
+        $billingAddressCityId = $params['billing_addresscity_id'];
+        $billingAddressPostalCode = $params['billing_addresspostal_code'];
+        $typePhone = $params['type0'];
+        $countryCode = '+'.$params['country_code0'];
+        $areaCode = $params['area_code0'];
         $comment = $params['comment'];
-        $email = $params['email'];
         $shouldUseNightlyPrices = $params['should_use_nightly_prices'];
-
-        $hotelAvailabilities = $params['hotel_availabilities'];
-        $priceDetail = $params['price_detail'];
+        $cancellationStatus = $params['cancellation_status'];
+        $date = new \DateTime($expirationDate);
         $checkinDate = $params['checkin_date'];
         $checkoutDate = $params['checkout_date'];
         $lang = $params['lang'];
-        $$email = $params['email'];
-
-        $formBookingId = '/v3/hotels/bookings/' . $bookingId . '/forms';
-
-        $date = new \DateTime($expirationDate);
+        $email = $params['email'];
+        $vouchers = $params['vouchers'];
+        $selectedPack = $params['selected_pack'];
+        $formBookingUrl = '/v3/hotels/bookings/' . $bookingId . '/forms';
 
         $formBooking = $this->get('despegar')->getHotelsBookingsForms($bookingId);
+        unset($formBooking['tokenize_key']);
+        $formBooking['tokenize_key'] = $tokenizeKey;
 
-        // Adding data to booking form
-        $formData = $this->get('despegar')->getHotelsBookingsForms($bookingId);
+        $formData = [];
+        $passengers = [];
+        for ($i = 0; count($dataPassengers) > $i; $i++){
+            if($dataPassengers[$i]['first_name'] != ''){
+                array_push($passengers, $dataPassengers[$i]);
+            }
+        }
+
         $formData['paymentMethod'] = $paymentMethod;
-        $formData['$number'] = $numberCard;
-        $formData['expiration'] = $date;
-        $formData['security_code'] = $securityCode;
-        $formData['owner_name'] = $ownerName;
-        $formData['bank_code'] = $bankCode;
-        $formData['card_code'] = $cardCode;
-        $formData['card_type'] = $cardType;
-        $formData['email'] = $email;
-        $formData['type0'] = $typePhone;
-        $formData['number0'] = $number;
-        $formData['country_code0'] = $countryCode;
-        $formData['area_code0'] = $areaCode;
+        if(!empty($numberCard)){$formData['number'] = $numberCard;}
+        if(!empty($date)){$formData['expiration'] = $date;}
+        if(!empty($securityCode)){$formData['security_code'] = $securityCode;}
+        if(!empty($ownerName)){$formData['owner_name'] = $ownerName;}
+        if(!empty($ownerDocumenttype)){$formData['owner_documenttype'] = $ownerDocumenttype;}
+        if(!empty($ownerDocumentnumber)){$formData['owner_documentnumber'] = $ownerDocumentnumber;}
+        if(!empty($ownerGender)){$formData['owner_gender'] = $ownerGender;}
+        if(!empty($bankCode)){$formData['bank_code'] = $bankCode;}
+        if(!empty($cardCode)){$formData['card_code'] = $cardCode;}
+        if(!empty($cardType)){$formData['card_type'] = $cardType;}
+        if(!empty($taxStatus)){$formData['tax_status'] = $taxStatus;}
+        if(!empty($invoiceName)){$formData['invoice_name'] = $invoiceName;}
+        if(!empty($fiscalDocument)){$formData['fiscal_document']= $fiscalDocument;}
+        if(!empty($billingAddressStreet)){$formData['billing_addressstreet'] = $billingAddressStreet;}
+        if(!empty($billingAddressNumber)){$formData['billing_addressnumber'] = $billingAddressNumber;}
+        if(!empty($billingAddressFloor)){$formData['billing_addressfloor'] = $billingAddressFloor;}
+        if(!empty($billingAddressDepartment)){$formData['billing_addressdepartment'] = $billingAddressDepartment;}
+        if(!empty($billingAddressStateId)){$formData['billing_addressstate_id'] = $billingAddressStateId;}
+        if(!empty($billingAddressCityId)){$formData['billing_addresscity_id'] = $billingAddressCityId;}
+        if(!empty($billingAddressPostalCode)){$formData['billing_addresspostal_code'] = $billingAddressPostalCode;}
+        if(!empty($email)){$formData['email'] = $email;}
+        if(!empty($typePhone)){$formData['type0'] = $typePhone;}
+        if(!empty($number)){$formData['number0'] = $number;}
+        if(!empty($countryCode)){$formData['country_code0'] = $countryCode;}
+        if(!empty($areaCode)){$formData['area_code0'] = $areaCode;}
+        if(!empty($passengers)){$formData['passengers'] = $passengers;}
+        if(!empty($shouldUseNightlyPrices)){$formData['should_use_nightly_prices'] = $shouldUseNightlyPrices;}
         $formData['comment'] = $comment;
-        $formData['should_use_nightly_prices'] = $shouldUseNightlyPrices;
+        $formData['id0'] = '';
+        $formData['amount0'] = '';
+        $formData['vouchers'] = $vouchers;
+        $formData['idspecial_requests'] = '';
+        $formData['paramsspecial_requests'] = '';
+        $formData['tokenize_key'] = $tokenizeKey;
+        $session->set('room_cancellation_status', $cancellationStatus);
 
-        $bookingHotel = $this->get('hotel_service')->bookingHotel(
-            $formBooking,
+//        echo "<pre>".print_r(json_encode($params['price_detail']), true)."</pre>";
+//        die();
+        $bookingHotel = $this->get('hotel_service')->bookingHotelApi(
             $formData,
-            $formBookingId,
-            $hotelAvailabilities->hotel->id,
+            $formBookingUrl,
+            $selectedPack,
+            $hotelAvailabilitiesId,
             $priceDetail,
             $checkinDate,
             $checkoutDate,
