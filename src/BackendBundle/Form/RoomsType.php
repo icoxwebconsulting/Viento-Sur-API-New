@@ -4,6 +4,8 @@ namespace BackendBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -104,7 +106,19 @@ class RoomsType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 )
-            );
+            )
+            ->add(
+                'statusCancellation',
+                ChoiceType::class,
+                array(
+                    'mapped' => false,
+                    'choices' => array(
+                        'fully_refundable' => 'admin.yes',
+                        'non_refundable' => 'no'
+                    )
+                )
+            )
+        ;
     }
 
     /**

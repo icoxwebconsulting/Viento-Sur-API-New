@@ -23,7 +23,7 @@
         {% else %}
             {% set path = path(route_name) %}
         {% endif %}
-        <form method="POST" action="{{ path }}" {{ form_enctype(form) }} class="card">
+        <form id="form" method="POST" action="{{ path }}" {{ form_enctype(form) }} class="card">
             <div class="card-header">
                 <strong style="text-transform:capitalize;">{{ 'index.search.hotel.room' | trans }}</strong>
             </div>
@@ -44,6 +44,13 @@
                         {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
                     </div>
                     {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 form-control-label" for="email">Permite cancelacion</label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.statusCancellation, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.statusCancellation) }}
                 </div>
                 <div class="form-group row">
                     <label class="col-md-4 form-control-label" for="email">{{ 'hotels.cancellation_policies' | trans }}</label>
@@ -278,6 +285,7 @@
             {% if entity is not defined %}
                 {#$('#amenity-select-0').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");#}
                 $('#appbundle_rooms_mealPlan').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
+                $('#appbundle_rooms_statusCancellation').prepend("<option value='' selected='selected'>{{ 'hotels.select' | trans }}</option>");
             {% endif %}
 
 

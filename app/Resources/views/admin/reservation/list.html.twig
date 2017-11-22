@@ -40,6 +40,7 @@
                             <th>{{ 'index.hotel' | trans }}</th>
                             <th>{{ 'hotels.reservation_number' | trans }}</th>
                             <th>{{ 'hotels.total_price' | trans }}</th>
+                            <th>Status</th>
                             {#<th>{{ 'hotels.card' | trans }}</th>#}
                             {#<th>{{ 'hotels.phone' | trans }}</th>#}
                             {#<th>{{ 'admin.email' | trans }}</th>#}
@@ -64,6 +65,14 @@
                                 <td>{{ entity.reservationId }}</td>
                                 <td>
                                 {{ entity.totalPrice }}
+                                </td>
+                                <td>
+                                    {% if entity.status == '' %}
+                                        Ok
+                                    {% else %}
+                                        {% set status = 'admin.'~entity.status %}
+                                        {{ status | trans }}
+                                    {% endif %}
                                 </td>
                                 {#<td>{{ entity.cardType }}</td>#}
                                 {#<td>{{ entity.phoneNumber }}</td>#}

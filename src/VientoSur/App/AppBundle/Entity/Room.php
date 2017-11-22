@@ -72,6 +72,12 @@ class Room
     private $cancellationPolicity;
 
     /**
+     * @var string
+     * @ORM\Column(name="cancellation_policity_status", type="string", length=255)
+     */
+    private $cancellationPolicityStatus;
+
+    /**
      * @ORM\ManyToOne(targetEntity="PaymentType", inversedBy="rooms")
      * @ORM\JoinColumn(name="payment_type", referencedColumnName="id")
      */
@@ -379,5 +385,28 @@ class Room
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * Set cancellationPolicityStatus
+     *
+     * @param string $cancellationPolicityStatus
+     * @return Room
+     */
+    public function setCancellationPolicityStatus($cancellationPolicityStatus)
+    {
+        $this->cancellationPolicityStatus = $cancellationPolicityStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get cancellationPolicityStatus
+     *
+     * @return string 
+     */
+    public function getCancellationPolicityStatus()
+    {
+        return $this->cancellationPolicityStatus;
     }
 }

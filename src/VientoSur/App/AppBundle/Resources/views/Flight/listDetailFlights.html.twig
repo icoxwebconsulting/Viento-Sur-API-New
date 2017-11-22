@@ -8,13 +8,13 @@
         {% set symbol = 'AR$' %}
     {% endif %}
     {% set decimal =false %}
-    {#<pre>{{ dump(items) }}</pre>#}
     {% for item in items.items  %}
         <li>
             <form target="_blank" name="flight-form-{{ loop.index }}" id="flight-form-{{ loop.index }}" action="{{ path('viento_sur_send_flight_booking') }}" method="post">
 
                 <div id="thumbsFlights">
                     <div class="row">
+                        {#{{ dump(item) }}#}
                         <div class="col-xs-12 col-sm-10">
                             {# nuevo ida#}
                             <div class="panel panel-default">
@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-xs-6">
                                                 <p>
-                                                    <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i") }}</a>
+                                                    <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i", false) }}</a>
                                                     {% set totalSeg = outbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
                                                         <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}&nbsp;&nbsp;</a>
@@ -75,7 +75,7 @@
                                                     {% endif %}
 
                                                     {% set lastSeg = outbound.segments|last %}
-                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a>
+                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i", false) }}</a>
                                                         <a class="time">{{ outbound.duration|split(':')[0] }}h {{ outbound.duration|split(':')[1] }}m</a>
                                                 </p>
                                             </div>
@@ -144,6 +144,7 @@
                                                         </span>
                                                         <span class="inline-detail-airport-code-wrapper">
                                                             <span class="inline-detail-airport-code">{{ segment.to }}</span>
+                                                            {#<span class="inline-detail-airport-hour">{{ segment.arrival_datetime|date("H:i", false) }}</span>#}
                                                             <span class="inline-detail-airport-hour">{{ segment.arrival_datetime|date("H:i", false) }}</span>
                                                         </span>
                                                         <span class="inline-detail-airport-description">
@@ -225,7 +226,7 @@
                                         </div>
                                             <div class="col-xs-6">
                                                 <p>
-                                                    <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i") }}</a>
+                                                    <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i", false) }}</a>
                                                     {% set totalSeg = inbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
                                                         <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}</a>
@@ -235,7 +236,7 @@
                                                         <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
                                                     {% set lastSeg = inbound.segments|last %}
-                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i") }}</a>
+                                                        <a class="hour">{{ lastSeg.arrival_datetime|date("H:i", false) }}</a>
                                                         <a class="time">{{ inbound.duration|split(':')[0] }}h {{ inbound.duration|split(':')[1] }}m </a>
                                                 </p>
                                             </div>
