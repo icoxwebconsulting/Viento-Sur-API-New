@@ -4,6 +4,7 @@
 namespace VientoSur\App\AppBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -11,6 +12,7 @@ use VientoSur\App\AppBundle\Controller\HotelController;
 use VientoSur\App\AppBundle\Entity\Passengers;
 use VientoSur\App\AppBundle\Entity\Reservation;
 use VientoSur\App\AppBundle\Entity\ResultLog;
+use Knp\Bundle\SnappyBundle\Snappy\LoggableGenerator;
 
 
 class Hotel
@@ -22,16 +24,19 @@ class Hotel
     private $formHelper;
     private $isTest;
     private $session;
+    private $knp_snappy;
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session, $knp_snappy, TwigEngine $templating)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
         $this->em = $entityManager;
         $this->logger = $logger;
+        $this->knp_snappy = $knp_snappy;
         $this->formHelper = $formHelper;
         $this->isTest = $isTest;
         $this->session = $session;
+        $this->templating = $templating;
     }
 
     public function bookingHotel($formBooking, $formPay, $bookingId, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email)
@@ -306,4 +311,45 @@ class Hotel
             'reservation' => $reservation
         ];
     }
+
+
+    public function savePdfToAttach($detail, $hotelId, $email, $reservationId)
+    {
+
+        $reservation = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+
+        $hotelDetails = $this->despegar->getHotelsDetails(array(
+            'ids' => $hotelId,
+            'language' => 'es',
+            'options' => 'information,amenities,pictures,room_types(pictures,information,amenities)',
+            'resolve' => 'merge_info',
+            'catalog_info' => 'true'
+        ));
+
+        $reservationDetails = $this->despegar->getReservationDetails($detail['reservation_id'], array(
+            'email' => 'info@vientosur.net',
+            'language' => 'es',
+            'site' => 'AR'
+        ), $this->isTest);
+
+        $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
+
+
+        $this->knp_snappy->generateFromHtml(
+            $this->templating->render(
+                '@VientoSurAppApp/Pdf/booking.html.twig', array(
+                'hotelDetails' => $hotelDetails[0],
+                'reservationDetails' => $reservationDetails,
+                'detail' => $detail,
+                'hotelId' => $hotelId,
+                'internal' => $reservation,
+                'logoUrl' => $logoUrl,
+                'pdf' => true
+            )),
+            $reservation->getId().'.pdf'
+        );
+
+        return new Response('work');
+    }
+
 }

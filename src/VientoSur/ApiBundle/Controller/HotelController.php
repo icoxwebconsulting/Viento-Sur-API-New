@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use VientoSur\App\AppBundle\Entity\Reservation;
 
 /**
  * Class HotelController
@@ -747,6 +747,13 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "description"="Card Type"
      *      },
      *     {
+     *          "name"="card",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Card"
+     *      },
+     *     {
      *          "name"="tax_status",
      *          "dataType"="string",
      *          "required"=true,
@@ -892,6 +899,13 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "required"=true,
      *          "format"="",
      *          "description"="Cancellation status"
+     *      },
+     *     {
+     *          "name"="name_hotel",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="",
+     *          "description"="Name hotel"
      *      }
      *  },
      *  statusCodes={
@@ -925,6 +939,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $bankCode = $params['bank_code'];
         $cardCode = $params['card_code'];
         $cardType = $params['card_type'];
+        $card = $params['card'];
         $taxStatus = $params['tax_status'];
         $invoiceName = $params['invoice_name'];
         $fiscalDocument = $params['fiscal_document'];
@@ -939,6 +954,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $countryCode = '+'.$params['country_code0'];
         $areaCode = $params['area_code0'];
         $comment = $params['comment'];
+        $nameHotel = $params['name_hotel'];
         $shouldUseNightlyPrices = $params['should_use_nightly_prices'];
         $cancellationStatus = $params['cancellation_status'];
         $date = new \DateTime($expirationDate);
@@ -961,7 +977,8 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
                 array_push($passengers, $dataPassengers[$i]);
             }
         }
-
+        $session->remove('price_detail');
+        $session->set('price_detail', $priceDetail);
         $formData['paymentMethod'] = $paymentMethod;
         if(!empty($numberCard)){$formData['number'] = $numberCard;}
         if(!empty($date)){$formData['expiration'] = $date;}
@@ -973,6 +990,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         if(!empty($bankCode)){$formData['bank_code'] = $bankCode;}
         if(!empty($cardCode)){$formData['card_code'] = $cardCode;}
         if(!empty($cardType)){$formData['card_type'] = $cardType;}
+        if(!empty($card)){$formData['card'] = $card;}
         if(!empty($taxStatus)){$formData['tax_status'] = $taxStatus;}
         if(!empty($invoiceName)){$formData['invoice_name'] = $invoiceName;}
         if(!empty($fiscalDocument)){$formData['fiscal_document']= $fiscalDocument;}
@@ -999,9 +1017,36 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $formData['tokenize_key'] = $tokenizeKey;
         $session->set('room_cancellation_status', $cancellationStatus);
 
-//        echo "<pre>".print_r(json_encode($params['price_detail']), true)."</pre>";
+        $last_digits = explode(' ',$numberCard);
+        $data = [];
+        for($i = 0; $i < 3; $i++){
+            if(isset($passengers[$i]['first_name'])){
+                $data[$i] = array(
+                    'full_name' => $passengers[$i]['first_name'].' '.$passengers[$i]['last_name'],
+                    'first_name' => $passengers[$i]['first_name'],
+                    'last_name' => $passengers[$i]['last_name'],
+                    'document_number' => $passengers[$i]['document_number']
+                );
+            }
+        }
+
+        $session->set('booking_all_data',[
+            'payment' => [
+                'last_digits' => $last_digits[3],
+                'card_code' => $formData['card_code'],
+                'selected' => $card
+            ],
+            'travelers' => $data,
+            'contact' => $formData['country_code0'].' '.$formData['area_code0'].' '.$formData['number0']
+        ]);
+        $session->set('destination', [
+            'text' => $nameHotel,
+            'id' => $hotelAvailabilitiesId
+        ]);
+
+//        echo "<pre>".print_r($session->get('destination'), true)."</pre>";
 //        die();
-        $bookingHotel = $this->get('hotel_service')->bookingHotelApi(
+        $booking = $this->get('hotel_service')->bookingHotelApi(
             $formData,
             $formBookingUrl,
             $selectedPack,
@@ -1012,10 +1057,16 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
+        $this->get('hotel_service')->savePdfToAttach(
+            $booking['booking'],
+            $hotelAvailabilitiesId,
+            $email,
+            $booking['reservation']->getId());
+
         $results = [
             'status' => 'success',
             'code' => 200,
-            'data' => $bookingHotel
+            'data' => $booking
         ];
 
         if ($results['data'] == null) {
