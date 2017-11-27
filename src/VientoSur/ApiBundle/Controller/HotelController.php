@@ -1063,6 +1063,16 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $email,
             $booking['reservation']->getId());
 
+        $this->get('hotel_service')->savePdfToAttach(
+            $booking,
+            $booking['reservation']->getId(),
+            $hotelAvailabilitiesId,
+            $lang,
+            $email,
+            $booking['hotelDetails'],
+            $booking['reservationDetails']
+        );
+
         $results = [
             'status' => 'success',
             'code' => 200,
