@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use VientoSur\App\AppBundle\Entity\Reservation;
+use VientoSur\App\AppBundle\Entity\Hotel;
 
 /**
  * Class HotelController
@@ -1089,5 +1090,331 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $response = new JsonResponse($results);
 
         return $response;
+    }
+
+    /**
+     * Get vs hotels with available rooms
+     *
+     * @param Request $request
+     * @return response
+     *
+     * @FOSRestBundleAnnotations\Route("/vs/hotel/availabilities/")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get vs hotels with available rooms",
+     *  parameters={
+     *     {
+     *          "name"="checkin_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkin."
+     *      },
+     *     {
+     *          "name"="checkout_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkout."
+     *      },
+     *     {
+     *          "name"="destination",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0000",
+     *          "description"="Id city or Id hotel"
+     *      },
+     *     {
+     *          "name"="language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts involved in the response."
+     *      },
+     *     {
+     *          "name"="offset",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0",
+     *          "description"="The pagination offset for the current collection."
+     *      },
+     *     {
+     *          "name"="limit",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0",
+     *          "description"="The number of collection results to display during pagination. Should be between 0 and 100 inclusive."
+     *      },
+     *     {
+     *          "name"="sorting",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="Sorting criteria. Available sortings are in sorting field of response."
+     *      },
+     *     {
+     *          "name"="amenities",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given amenities."
+     *      },
+     *     {
+     *          "name"="hotel_type",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given hotel types"
+     *      },
+     *     {
+     *          "name"="payment_type",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given payment types"
+     *      },
+     *     {
+     *          "name"="meal_plans",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given meal plans."
+     *      },
+     *     {
+     *          "name"="stars",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to hotels with the given stars."
+     *      },
+     *     {
+     *          "name"="zones",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given zones."
+     *      },
+     *     {
+     *          "name"="profiles",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given profiles."
+     *      },
+     *     {
+     *          "name"="hotel_chains",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"=""
+     *      },
+     *     {
+     *          "name"="total_price_range",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Limits the result to the given total price range (Nightly rate). ie: 120-270."
+     *      },
+     *     {
+     *          "name"="origen",
+     *          "dataType"="string",
+     *          "required"=false,
+     *          "description"="Origen from hotel"
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getVsAvailabilitiesAction(Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        /**
+         * Parameters
+         */
+        $checkinDate = $request->query->get('checkin_date');
+        $checkoutDate = $request->query->get('checkout_date');
+        $destination = $request->query->get('destination');
+        $language = $request->query->get('language', 'es');
+        $sorting = $request->query->get('sorting');
+        $amenities = $request->query->get('amenities');
+        $hotelType = $request->query->get('hotel_type');
+        $paymentType = $request->query->get('payment_type');
+        $mealPlans = $request->query->get('meal_plans');
+        $stars = $request->query->get('stars');
+        $zones = $request->query->get('zones');
+        $profiles = $request->query->get('profiles');
+        $hotelChains = $request->query->get('hotel_chains');
+        $totalPriceRange = $request->query->get('total_price_range');
+        $offset = $request->query->get('offset', 1);
+        $limit = $request->query->get('limit', 10);
+        $origen = $request->query->get('origen', 'VS');
+
+        /**
+         * Processed date
+         */
+        $urlParams = array(
+            'checkin_date' => $checkinDate,
+            'checkout_date' => $checkoutDate,
+            'destination' => $destination,
+            'language' => $language,
+            'sorting' => $sorting,
+            'amenities' => $amenities,
+            'hotel_type' => $hotelType,
+            'payment_type' => $paymentType,
+            'meal_plans' => $mealPlans,
+            'stars' => $stars,
+            'zones' => $zones,
+            'profiles' => $profiles,
+            'hotel_chains' => $hotelChains,
+            'total_price_range' => $totalPriceRange,
+            'offset' => $offset,
+            'limit' => $limit,
+            'origen' => $origen
+        );
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($hotelType){
+            $entity = $em->getRepository('VientoSurAppAppBundle:HotelType')->findOneBy(array('name' => $hotelType));
+            $urlParams['hotel_type'] = $entity->getId();
+        }
+
+        if($hotelChains){
+            $entity = $em->getRepository("VientoSurAppAppBundle:HotelChain")->findOneBy(array('name' => $hotelChains));
+            $urlParams['hotel_chains'] = $entity->getId();
+        }
+
+        $dql = $em->getRepository("VientoSurAppAppBundle:Hotel")->findHotelWithParameters($urlParams);
+        $query = $em->createQuery($dql);
+//        print_r( $query);die();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $offset, $limit);
+
+        if ($pagination) {
+            $array = [];
+            foreach ($pagination->getItems() as $entity){
+                $amenitiesService = $em->getRepository('VientoSurAppAppBundle:AmenityHotel')->findBy(array('hotel' => $entity->getId()));
+
+//                if ($amenities){
+//                    $amenity = explode(',', $amenities);
+//                }
+
+                $picturesEntity = $em->getRepository('VientoSurAppAppBundle:Picture')->findBy(array('hotel' => $entity->getId()));
+
+                $appPath = $this->container->getParameter('kernel.root_dir');
+                $webPath = $appPath.'/../web/uploads/gallery_image/';
+                $pictures = [];
+                foreach($picturesEntity as $value){
+                    $pictures[] = $webPath.$value->getImageName();
+                }
+
+                $services = [];
+                foreach ($amenitiesService as $service){
+                    $services[] = $service->getAmenity()->getName();
+                }
+
+//                $room = $em->getRepository('VientoSurAppAppBundle:Room')->findOneBy(array('hotel'=>$entity->getId()))
+
+
+                $array[] = [
+                    'id' => $entity->getId(),
+                    'hotel' => [
+                        'id' => $entity->getId(),
+                        'name' => $entity->getName(),
+                        'address' => $entity->getAddress(),
+                        'hotel_type_id' => $entity->getHotelTypes()->getName(),
+                        'location' => [
+                            'latitude' => $entity->getLatitude(),
+                            'longitude' => $entity->getLongitude()
+                        ],
+                        'amenity_ids' => $services,
+                        'stars' => $entity->getStars(),
+                        'origen' => $entity->getOrigen(),
+                        'percentage_gain' => $entity->getPercentageGain(),
+                        'pictures' => $pictures,
+                        'hotel_chain' => $entity->getHotelChain()->getName(),
+                        'price' => $room->getNightlyPrice()
+                    ]
+                ];
+
+//                if($room){
+//
+//                }
+            }
+
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+//                'data' => $pagination,
+                'items' => $array
+            ];
+
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
+        return new Response($serializer->serialize($results, 'json'));
+    }
+
+    /**
+     * Get roompacks by hotel
+     *
+     * @param Request $request
+     * @param Hotel $hotel
+     * @return array
+     *
+     * @FOSRestBundleAnnotations\Route("/vs/hotel/{id}/roompacks/")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get roompacks by hotel",
+     *  parameters={
+     *     {
+     *          "name"="language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts involved in the response."
+     *      },
+     *     {
+     *          "name"="distribution",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="1-2-5!1-12-9",
+     *          "description"="Room distribution."
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getRoompacksAction(Request $request, Hotel $hotel)
+    {
+//              echo "<pre>" . print_r($hotel, true) . "</pre>";die();
+
+        $language = $request->query->get('language', 'es');
+        $distributions = $request->query->get('distribution');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $rooms = $em->getRepository('VientoSurAppAppBundle:Room')->findRoomAvailables($entity->getId());
+
+        $roomDistribution = explode('!', $distributions);
+//      echo "<pre>" . print_r($roomDistribution, true) . "</pre>";die();
+
+        for ($i = 0; $i > count($roomDistribution); $i++){
+            if ($i = 0){
+                $adults = explode('-', $roomDistribution[$i]);
+            }
+            echo "<pre>" . print_r($roomDistribution[$i], true) . "</pre>";
+        }
+
+        return new Response('hola');
     }
 }
