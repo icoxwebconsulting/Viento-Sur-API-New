@@ -221,13 +221,19 @@ class Hotel
         }
 
         if(isset($formData['owner_name'])){
-            $creditCard = [
-                'owner_name' => $formData['owner_name'],
-                'owner_document' => [
-                    'type' => $formData['owner_documenttype'],
-                    'number' => $formData['owner_documentnumber']
-                ]
-            ];
+            $creditCard['owner_name'] = $formData['owner_name'];
+        }
+        if(isset($formData['owner_documenttype'])){
+            $creditCard['owner_document']['type'] = $formData['owner_documenttype'];
+        }
+        if(isset($formData['owner_documenttype'])){
+            $creditCard['owner_document']['number'] = $formData['owner_documentnumber'];
+        }
+        if(isset($formData['owner_gender'])){
+            $creditCard['owner_gender'] = $formData['owner_gender'];
+        }
+        if(isset($formData['card_type'])){
+            $creditCard['card_type'] = $formData['card_type'];
         }
 
         if(isset($formData['invoice_name'])){
@@ -269,7 +275,7 @@ class Hotel
 
 
         $patchParams['form']['payment']['credit_card'] = $creditCard;
-        $patchParams['form']['payment']['invoice'] = $invoice;
+        if(isset($formData['invoice_name'])){$patchParams['form']['payment']['invoice'] = $invoice;}
         $patchParams['form']['payment']['overridden_information'] = ['shown_total_amount' => '', 'fees' => []];
         $patchParams['form']['contact'] = $contact;
         $patchParams['form']['additional_data'] = $additionalData;
@@ -327,6 +333,7 @@ class Hotel
             'catalog_info' => 'true'
         ));
 
+//        echo "<pre>".print_r($reservation->getReservationId(), true)."</pre>";die();
         $reservationDetails = $this->despegar->getReservationDetails($detail['reservation_id'], array(
             'email' => 'info@vientosur.net',
             'language' => 'es',

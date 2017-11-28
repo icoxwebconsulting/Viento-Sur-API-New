@@ -636,6 +636,13 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "description"="Language of texts involved in the response."
      *      },
      *     {
+     *          "name"="currency",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="ARS,USD",
+     *          "description"="Currency."
+     *      },
+     *     {
      *          "name"="checkin_date",
      *          "dataType"="string",
      *          "required"=true,
@@ -673,238 +680,238 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *     {
      *          "name"="payment_method",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Payment Method"
      *      },
      *     {
      *          "name"="number_card",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="0000-0000-0000-0000",
      *          "description"="Number Card"
      *      },
      *     {
      *          "name"="expiration",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="2018-02-01 00:00:00.000000",
      *          "description"="Expiration Date card"
      *      },
      *     {
      *          "name"="security_code",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="000 or 0000",
      *          "description"="Security Code"
      *      },
      *     {
      *          "name"="owner_name",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Owner Name"
      *      },
      *     {
      *          "name"="owner_documenttype",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Type document card"
      *      },
      *     {
      *          "name"="owner_documentnumber",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Number document card"
      *      },
      *     {
      *          "name"="owner_gender",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Gender"
      *      },
      *     {
      *          "name"="bank_code",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Bank Code"
      *      },
      *     {
      *          "name"="card_code",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Card Code"
      *      },
      *     {
      *          "name"="card_type",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Card Type"
      *      },
      *     {
      *          "name"="card",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Card"
      *      },
      *     {
      *          "name"="tax_status",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Taxt status"
      *      },
      *     {
      *          "name"="invoice_name",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Invoice name"
      *      },
      *     {
      *          "name"="fiscal_document",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Fiscal document"
      *      },
      *     {
      *          "name"="billing_addressstreet",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Street address billing"
      *      },
      *     {
      *          "name"="billing_addressnumber",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Number address billing"
      *      },
      *     {
      *          "name"="billing_addressfloor",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Floor address billing"
      *      },
      *     {
      *          "name"="billing_addressdepartment",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Departament address billing"
      *      },
      *     {
      *          "name"="billing_addressstate_id",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Id state address billing"
      *      },
      *     {
      *          "name"="billing_addresscity_id",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Id city address billing"
      *      },
      *     {
      *          "name"="billing_addresspostal_code",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Code Postal address billing"
      *      },
      *     {
      *          "name"="passengers",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="Data json",
      *          "description"="Full name passengers"
      *      },
      *     {
      *          "name"="email",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="email"
      *      },
      *     {
      *          "name"="type0",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Type Phone: Local, Cell Phone, Office"
      *      },
      *     {
      *          "name"="number0",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Phone Number"
      *      },
      *     {
      *          "name"="country_code0",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="+54 Country Code"
      *      },
      *     {
      *          "name"="area_code0",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Area Code"
      *      },
      *     {
      *          "name"="comment",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Comment"
      *      },
      *     {
      *          "name"="should_use_nightly_prices",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Should use nightly prices"
      *      },
      *     {
      *          "name"="vouchers",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Vouchers"
      *      },
      *     {
      *          "name"="selected_pack",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Selected pack"
      *      },
      *     {
      *          "name"="cancellation_status",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Cancellation status"
      *      },
      *     {
      *          "name"="name_hotel",
      *          "dataType"="string",
-     *          "required"=true,
+     *          "required"=false,
      *          "format"="",
      *          "description"="Name hotel"
      *      }
@@ -941,6 +948,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
         $cardCode = $params['card_code'];
         $cardType = $params['card_type'];
         $card = $params['card'];
+        $currency = $params['currency'];
         $taxStatus = $params['tax_status'];
         $invoiceName = $params['invoice_name'];
         $fiscalDocument = $params['fiscal_document'];
@@ -1058,13 +1066,17 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
+        $session->set('reservationInternalId', $booking['reservation']->getId());
+        $session->set('despegarReservationId', $booking['reservation']->getReservationId());
+        $session->set('targetCurrency', 'ARS');
+
         $this->get('hotel_service')->savePdfToAttach(
             $booking['booking'],
             $hotelAvailabilitiesId,
             $email,
             $booking['reservation']->getId());
 
-        $this->get('hotel_service')->savePdfToAttach(
+        $this->get('hotel_service')->sendBookingEmail(
             $booking,
             $booking['reservation']->getId(),
             $hotelAvailabilitiesId,
