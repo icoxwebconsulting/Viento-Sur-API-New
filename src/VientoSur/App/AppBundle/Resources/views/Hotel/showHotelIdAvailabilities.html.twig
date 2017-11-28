@@ -258,7 +258,7 @@
 
                                     {{ hotelDetails.location.address }}
                                     {% if destination | length > 1 %}
-                                        - {{ destination[0] }}, {{ destination[2] }}
+                                        - {{ destination[0] }}{% if destination[2] is defined %}, {{ destination[2] }} {% endif %}
                                     {% elseif destination is not null %}
                                         - {{ destination[0] }}
                                     {% endif %}
