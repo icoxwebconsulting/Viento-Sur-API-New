@@ -6,6 +6,7 @@ namespace VientoSur\App\AppBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -25,19 +26,21 @@ class Hotel
     private $formHelper;
     private $isTest;
     private $session;
-    private $knp_snappy;
+    private $knpSnappy;
+    private $container;
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session, $knp_snappy, TwigEngine $templating)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session, $knpSnappy, TwigEngine $templating, $container)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
         $this->em = $entityManager;
         $this->logger = $logger;
-        $this->knp_snappy = $knp_snappy;
+        $this->knpSnappy = $knpSnappy;
         $this->formHelper = $formHelper;
         $this->isTest = $isTest;
         $this->session = $session;
         $this->templating = $templating;
+        $this->container = $container;
     }
 
     public function bookingHotel($formBooking, $formPay, $bookingId, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email)
@@ -343,7 +346,7 @@ class Hotel
         $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
 
 
-        $this->knp_snappy->generateFromHtml(
+        $this->knpSnappy->generateFromHtml(
             $this->templating->render(
                 '@VientoSurAppApp/Pdf/booking.html.twig', array(
                 'hotelDetails' => $hotelDetails[0],
@@ -359,5 +362,16 @@ class Hotel
 
         return new Response('work');
     }
+
+    public function deleteFile()
+    {
+        $fs = new Filesystem();
+        $file = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+        if (file_exists($file)){
+            $fs->remove($file);
+        }
+        return new Response('file deleted');
+    }
+
 
 }

@@ -928,6 +928,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      */
     public function patchBookingAction(Request $request)
     {
+        $this->get('hotel_service')->deleteFile();
         $session = $request->getSession();
         $params = $this->getRequest()->request->all();
         $priceDetail = json_decode(json_encode($params['price_detail']));
