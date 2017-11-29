@@ -1101,7 +1101,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
                 $email,
                 $booking['reservation']->getId());
 
-            $this->get('hotel_service')->sendBookingEmail(
+            $this->get('hotel_service')->sendBookingEmailApi(
                 $booking,
                 $booking['reservation']->getId(),
                 $hotelAvailabilitiesId,

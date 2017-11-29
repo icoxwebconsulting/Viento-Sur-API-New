@@ -325,8 +325,8 @@ class Hotel
 
     public function savePdfToAttach($detail, $hotelId, $email, $reservationId)
     {
-
         $reservation = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+        $patch = $this->container->getParameter('kernel.root_dir') . '/../web/uploads/'.$reservation->getId().'/voucher-vs.pdf';
 
         $hotelDetails = $this->despegar->getHotelsDetails(array(
             'ids' => $hotelId,
@@ -357,10 +357,30 @@ class Hotel
                 'logoUrl' => $logoUrl,
                 'pdf' => true
             )),
-            $reservation->getId().'.pdf'
+            $patch
         );
 
         return new Response('work');
+    }
+
+    public function sendBookingEmailApi($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails)
+    {
+        $internal = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->find($reservation);
+//        try {
+//            if ($email) {
+        $this->emailService->sendBookingEmailApi($email, array(
+            'hotelDetails' => $hotelDetails,
+            'reservationDetails' => $reservationDetails,
+            'reservationId' => base64_encode($reservation),
+            'detail' => $booking,
+            'hotelId' => $hotelId,
+            'internal' => $internal,
+            'pdf' => false
+        ));
+//            }
+//        } catch (\Exception $e) {
+//            $this->logger->error('Booking email error: ' . $email);
+//        }
     }
 
     public function deleteFile()
