@@ -1067,36 +1067,53 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
-        $session->set('reservationInternalId', $booking['reservation']->getId());
-        $session->set('despegarReservationId', $booking['reservation']->getReservationId());
-        $session->set('targetCurrency', 'ARS');
+        $error = null;
+        if(isset($booking['code']) && $booking['code'] == 500){
+            foreach ($booking['causes'] as $cause){
+                if(strpos($cause, 'INVALID_LENGTH') !== false){
+                    $error = 'Documento de identidad inválido';
+                }elseif(strpos($cause, 'Invalid credit card for selected roompack ') !== false){
+                    $error = 'Tarjeta de crédito seleccionada no válida';
+                }else{
+                    $error = 'No se pudo hacer la compra';
+                }
+            }
 
-        $this->get('hotel_service')->savePdfToAttach(
-            $booking['booking'],
-            $hotelAvailabilitiesId,
-            $email,
-            $booking['reservation']->getId());
-
-        $this->get('hotel_service')->sendBookingEmail(
-            $booking,
-            $booking['reservation']->getId(),
-            $hotelAvailabilitiesId,
-            $lang,
-            $email,
-            $booking['hotelDetails'],
-            $booking['reservationDetails']
-        );
-
-        $results = [
-            'status' => 'success',
-            'code' => 200,
-            'data' => $booking
-        ];
-
-        if ($results['data'] == null) {
             $results = [
                 'status' => 'error',
-                'code' => 404,
+                'code' => 500,
+                'data' => $error
+            ];
+
+        }else{
+            $pnr = NULL;
+            if(isset($booking['booking']['pnr'])) {
+                $pnr = $booking['booking']['pnr'];
+            }
+            $session->set('hotel_entrance_code', $pnr);
+            $session->set('reservationInternalId', $booking['reservation']->getId());
+            $session->set('despegarReservationId', $booking['reservation']->getReservationId());
+            $session->set('targetCurrency', 'ARS');
+
+            $this->get('hotel_service')->savePdfToAttach(
+                $booking['booking'],
+                $hotelAvailabilitiesId,
+                $email,
+                $booking['reservation']->getId());
+
+            $this->get('hotel_service')->sendBookingEmail(
+                $booking,
+                $booking['reservation']->getId(),
+                $hotelAvailabilitiesId,
+                $lang,
+                $email,
+                $booking['hotelDetails'],
+                $booking['reservationDetails']
+            );
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $booking
             ];
         }
 
