@@ -1067,7 +1067,6 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
-        $error = null;
         if(isset($booking['code']) && $booking['code'] == 500){
             foreach ($booking['causes'] as $cause){
                 if(strpos($cause, 'INVALID_LENGTH') !== false){
@@ -1093,7 +1092,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $session->set('hotel_entrance_code', $pnr);
             $session->set('reservationInternalId', $booking['reservation']->getId());
             $session->set('despegarReservationId', $booking['reservation']->getReservationId());
-            $session->set('targetCurrency', 'ARS');
+            $session->set('targetCurrency', $currency);
 
             $this->get('hotel_service')->savePdfToAttach(
                 $booking['booking'],
