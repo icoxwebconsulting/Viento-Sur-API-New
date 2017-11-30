@@ -117,4 +117,28 @@ class Email
             )->attach(\Swift_Attachment::fromPath($filenName));
         $this->mailer->send($message);
     }
+
+    public function sendBookingEmailApi($email, $data)
+    {
+        $reservationId = $this->session->get('despegarReservationId');
+        $internalId = $this->session->get('reservationInternalId');
+
+        $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/uploads/'.$internalId.'/voucher-vs.pdf';
+//        $fs->rename($filePath, 'voucher-vs.pdf');
+//        $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Viento Sur Operadores Turísticos - Solicitud de compra de Hotel - Número: '.$reservationId)
+//            ->setFrom('info@vientosur.net','VientoSur.net')
+            ->setFrom("no-replay@vientosur.net", 'Viento Sur Operadores Turísticos')
+            ->setTo([$email])
+            ->setBody(
+                $this->templating->render(
+                    '@VientoSurAppApp/layoutEmailHotelPdf.html.twig',
+                    $data
+                ),
+                'text/html'
+            )->attach(\Swift_Attachment::fromPath($filenName));
+        $this->mailer->send($message);
+    }
 }

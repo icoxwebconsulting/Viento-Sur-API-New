@@ -319,6 +319,7 @@ fos_elastica:
                     properties:
                         name: ~
                         address: ~
+                        hotelTypes: ~
                     persistence:
                         # the driver can be orm, mongodb, phpcr or propel
                         # listener and finder are not supported by

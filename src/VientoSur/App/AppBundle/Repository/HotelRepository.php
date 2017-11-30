@@ -12,4 +12,38 @@ use Doctrine\ORM\EntityRepository;
  */
 class HotelRepository extends EntityRepository
 {
+    public function findHotelWithParameters($parameters)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('h')
+            ->from('VientoSurAppAppBundle:Hotel', 'h')
+            ->where('h.origen = \''.$parameters['origen'].'\' ')
+            ->andWhere('h.name LIKE \'%'.$parameters['destination'].'%\' OR h.address LIKE \'%'.$parameters['destination'].'%\'');
+
+//        echo "<pre>" . print_r($parameters, true) . "</pre>";die();
+        if($parameters['stars']){
+            $qb->andWhere('h.stars = '.$parameters['stars']);
+        }
+
+        if($parameters['hotel_type']){
+            $qb->andWhere('h.hotelTypes = \''.$parameters['hotel_type'].'\'');
+        }
+
+//        if($parameters['zones']){
+//            $qb->andWhere('h.zones = '.$parameters['zones']);
+//        }
+
+//        if($parameters['profiles']){
+//            $qb->andWhere('h.profiles = '.$parameters['profiles']);
+//        }
+
+        if($parameters['hotel_chains']){
+            $qb->andWhere('h.hotelChain = \''.$parameters['hotel_chains'].'\'');
+        }
+
+        $qb->setMaxResults($parameters['limit']);
+
+        return $qb->getDQL();
+    }
 }

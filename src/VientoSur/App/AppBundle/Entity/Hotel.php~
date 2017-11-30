@@ -104,6 +104,12 @@ class Hotel
     protected $created_by;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HotelChain", inversedBy="hotels")
+     * @ORM\JoinColumn(name="hotel_chain", referencedColumnName="id")
+     */
+    protected $hotelChain;
+
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property

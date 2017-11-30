@@ -29,8 +29,9 @@ services:
             "form": "@form_helper"
             "isTest": "%is_test%"
             "session": "@session"
-            "knp_snappy": "@knp_snappy.pdf"
+            "knpSnappy": "@knp_snappy.pdf"
             "templating": "@templating"
+            "container": "@service_container"
 
     despegar:
         class: VientoSur\App\AppBundle\Services\Despegar

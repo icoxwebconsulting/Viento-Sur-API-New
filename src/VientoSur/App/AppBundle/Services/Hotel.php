@@ -6,6 +6,7 @@ namespace VientoSur\App\AppBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -25,19 +26,21 @@ class Hotel
     private $formHelper;
     private $isTest;
     private $session;
-    private $knp_snappy;
+    private $knpSnappy;
+    private $container;
 
-    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session, $knp_snappy, TwigEngine $templating)
+    public function __construct(Despegar $dp, Email $email, EntityManager $entityManager, LoggerInterface $logger, $formHelper, $isTest, Session $session, $knpSnappy, TwigEngine $templating, $container)
     {
         $this->despegar = $dp;
         $this->emailService = $email;
         $this->em = $entityManager;
         $this->logger = $logger;
-        $this->knp_snappy = $knp_snappy;
+        $this->knpSnappy = $knpSnappy;
         $this->formHelper = $formHelper;
         $this->isTest = $isTest;
         $this->session = $session;
         $this->templating = $templating;
+        $this->container = $container;
     }
 
     public function bookingHotel($formBooking, $formPay, $bookingId, $hotelId, $priceDetail, $checkinDate, $checkoutDate, $lang, $email)
@@ -221,13 +224,19 @@ class Hotel
         }
 
         if(isset($formData['owner_name'])){
-            $creditCard = [
-                'owner_name' => $formData['owner_name'],
-                'owner_document' => [
-                    'type' => $formData['owner_documenttype'],
-                    'number' => $formData['owner_documentnumber']
-                ]
-            ];
+            $creditCard['owner_name'] = $formData['owner_name'];
+        }
+        if(isset($formData['owner_documenttype'])){
+            $creditCard['owner_document']['type'] = $formData['owner_documenttype'];
+        }
+        if(isset($formData['owner_documenttype'])){
+            $creditCard['owner_document']['number'] = $formData['owner_documentnumber'];
+        }
+        if(isset($formData['owner_gender'])){
+            $creditCard['owner_gender'] = $formData['owner_gender'];
+        }
+        if(isset($formData['card_type'])){
+            $creditCard['card_type'] = $formData['card_type'];
         }
 
         if(isset($formData['invoice_name'])){
@@ -269,7 +278,7 @@ class Hotel
 
 
         $patchParams['form']['payment']['credit_card'] = $creditCard;
-        $patchParams['form']['payment']['invoice'] = $invoice;
+        if(isset($formData['invoice_name'])){$patchParams['form']['payment']['invoice'] = $invoice;}
         $patchParams['form']['payment']['overridden_information'] = ['shown_total_amount' => '', 'fees' => []];
         $patchParams['form']['contact'] = $contact;
         $patchParams['form']['additional_data'] = $additionalData;
@@ -316,8 +325,8 @@ class Hotel
 
     public function savePdfToAttach($detail, $hotelId, $email, $reservationId)
     {
-
         $reservation = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+        $patch = $this->container->getParameter('kernel.root_dir') . '/../web/uploads/'.$reservation->getId().'/voucher-vs.pdf';
 
         $hotelDetails = $this->despegar->getHotelsDetails(array(
             'ids' => $hotelId,
@@ -327,6 +336,7 @@ class Hotel
             'catalog_info' => 'true'
         ));
 
+//        echo "<pre>".print_r($reservation->getReservationId(), true)."</pre>";die();
         $reservationDetails = $this->despegar->getReservationDetails($detail['reservation_id'], array(
             'email' => 'info@vientosur.net',
             'language' => 'es',
@@ -336,7 +346,7 @@ class Hotel
         $logoUrl = 'https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png';
 
 
-        $this->knp_snappy->generateFromHtml(
+        $this->knpSnappy->generateFromHtml(
             $this->templating->render(
                 '@VientoSurAppApp/Pdf/booking.html.twig', array(
                 'hotelDetails' => $hotelDetails[0],
@@ -347,10 +357,41 @@ class Hotel
                 'logoUrl' => $logoUrl,
                 'pdf' => true
             )),
-            $reservation->getId().'.pdf'
+            $patch
         );
 
         return new Response('work');
     }
+
+    public function sendBookingEmailApi($booking, $reservation, $hotelId, $lang, $email, $hotelDetails, $reservationDetails)
+    {
+        $internal = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->find($reservation);
+//        try {
+//            if ($email) {
+        $this->emailService->sendBookingEmailApi($email, array(
+            'hotelDetails' => $hotelDetails,
+            'reservationDetails' => $reservationDetails,
+            'reservationId' => base64_encode($reservation),
+            'detail' => $booking,
+            'hotelId' => $hotelId,
+            'internal' => $internal,
+            'pdf' => false
+        ));
+//            }
+//        } catch (\Exception $e) {
+//            $this->logger->error('Booking email error: ' . $email);
+//        }
+    }
+
+    public function deleteFile()
+    {
+        $fs = new Filesystem();
+        $file = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+        if (file_exists($file)){
+            $fs->remove($file);
+        }
+        return new Response('file deleted');
+    }
+
 
 }
