@@ -110,6 +110,11 @@ class Hotel
     protected $hotelChain;
 
     /**
+     * @ORM\Column(name="profile_trip", type="string", length=255)
+     */
+    private $profileTrip;
+
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -267,8 +272,7 @@ class Hotel
      * Constructor
      */
     public function __construct()
-    {
-    }
+    {}
 
     /**
      * Set hotelTypes
@@ -393,5 +397,29 @@ class Hotel
     public function getHotelChain()
     {
         return $this->hotelChain;
+    }
+
+    /**
+     * Set profileTrip
+     *
+     * @param string $profileTrip
+     *
+     * @return Hotel
+     */
+    public function setProfileTrip($profileTrip)
+    {
+        $this->profileTrip = $profileTrip;
+
+        return $this;
+    }
+
+    /**
+     * Get profileTrip
+     *
+     * @return string
+     */
+    public function getProfileTrip()
+    {
+        return $this->profileTrip;
     }
 }

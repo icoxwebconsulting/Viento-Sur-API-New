@@ -547,3 +547,19 @@ admin:
     request_cancellation: Request cancellation of reservation
     cancelled: Cancelled
     ok: Ok
+    profile_trip:
+        label: Hotel profile
+        businessTrip: Business trip
+        castle: Castle
+        cheap: Economical
+        design: Design
+        family: Family
+        gourmet: Gastronomic
+        luxury: Luxury trip
+        nature: Nature
+        other: Other
+        relax: Relax
+        romantic: Romantic
+        shopping: Shopping
+        singles: Alone and alone
+        sport: Sports

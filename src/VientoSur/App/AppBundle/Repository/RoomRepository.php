@@ -27,9 +27,11 @@ class RoomRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->select('r')
             ->from('VientoSurAppAppBundle:Room', 'r')
-            ->andWhere('r.hotel = :hotel');
+            ->andWhere('r.hotel = :hotel')
+            ->andWhere('r.availability > 0');
 
         $qb->setParameter('hotel', $hotelId);
 
+        return $qb->getQuery()->getResult();
     }
 }

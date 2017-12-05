@@ -354,7 +354,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Get id for booking form
+     * Get detail hotel
      *
      * @param Request $request
      * @param String $id
@@ -363,7 +363,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/availabilities/{id}")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Get detail hotel",
      *  parameters={
      *     {
      *          "name"="language",
@@ -465,7 +465,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
 
 
     /**
-     * Get room availability for hotel
+     * Generate booking id for form
      *
      * @param Request $request
      * @return array
@@ -473,7 +473,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/booking/")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Generate booking id for form",
      *  parameters={
      *     {
      *          "name"="country_code",
@@ -604,7 +604,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Get room availability for hotel
+     * Generate hotel reservation
      *
      * @param Request $request
      * @return array
@@ -612,7 +612,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/booking/")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Generate hotel reservation",
      *  parameters={
      *     {
      *          "name"="hotel_availabilitiesId",
@@ -928,6 +928,8 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      */
     public function patchBookingAction(Request $request)
     {
+        $serializer = $this->get('jms_serializer');
+
         $this->get('hotel_service')->deleteFile();
         $session = $request->getSession();
         $params = $this->getRequest()->request->all();
@@ -1067,6 +1069,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
+        $error = null;
         if(isset($booking['code']) && $booking['code'] == 500){
             foreach ($booking['causes'] as $cause){
                 if(strpos($cause, 'INVALID_LENGTH') !== false){
@@ -1116,9 +1119,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             ];
         }
 
-        $response = new JsonResponse($results);
-
-        return $response;
+        return new Response($serializer->serialize($results, 'json'));
     }
 
     /**
@@ -1151,7 +1152,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      *          "dataType"="string",
      *          "required"=true,
      *          "format"="0000",
-     *          "description"="Id city or Id hotel"
+     *          "description"="City or Hotel name"
      *      },
      *     {
      *          "name"="language",
@@ -1311,9 +1312,42 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $urlParams['hotel_chains'] = $entity->getId();
         }
 
+        if($mealPlans){
+            $entity = $em->getRepository('VientoSurAppAppBundle:MealPlan')->findOneBy(array('name' => $mealPlans));
+
+            $rooms = $em->getRepository('VientoSurAppAppBundle:Room')->findBy(array('mealPlan' => $entity->getId()));
+
+            $hotel = [];
+            foreach ($rooms as $room){
+                if (!in_array($room->getHotel()->getId(), $hotel)){
+                    $hotel[] = $room->getHotel()->getId();
+                }
+            }
+
+            $urlParams['meal_plans'] = $hotel;
+        }
+
+        if($paymentType){
+            $entity = $em->getRepository('VientoSurAppAppBundle:PaymentType')->findOneBy(array('name' => $paymentType));
+            $rooms = $em->getRepository('VientoSurAppAppBundle:Room')->findBy(array('paymentType' => $entity->getId()));
+
+            $hotel = [];
+            foreach ($rooms as $room){
+                if (!in_array($room->getHotel()->getId(), $hotel)){
+                    $hotel[] = $room->getHotel()->getId();
+                }
+            }
+
+            $urlParams['payment_type'] = $hotel;
+        }
+
+        if ($profiles){
+            $urlParams['profiles'] = $profiles;
+        }
+
         $dql = $em->getRepository("VientoSurAppAppBundle:Hotel")->findHotelWithParameters($urlParams);
         $query = $em->createQuery($dql);
-//        print_r( $query);die();
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $offset, $limit);
 
@@ -1321,10 +1355,6 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $array = [];
             foreach ($pagination->getItems() as $entity){
                 $amenitiesService = $em->getRepository('VientoSurAppAppBundle:AmenityHotel')->findBy(array('hotel' => $entity->getId()));
-
-//                if ($amenities){
-//                    $amenity = explode(',', $amenities);
-//                }
 
                 $picturesEntity = $em->getRepository('VientoSurAppAppBundle:Picture')->findBy(array('hotel' => $entity->getId()));
 
@@ -1340,8 +1370,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
                     $services[] = $service->getAmenity()->getName();
                 }
 
-//                $room = $em->getRepository('VientoSurAppAppBundle:Room')->findOneBy(array('hotel'=>$entity->getId()))
-
+                $room= $em->getRepository('VientoSurAppAppBundle:Room')->findOneBy(array('hotel'=>$entity->getId()));
 
                 $array[] = [
                     'id' => $entity->getId(),
@@ -1360,19 +1389,16 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
                         'percentage_gain' => $entity->getPercentageGain(),
                         'pictures' => $pictures,
                         'hotel_chain' => $entity->getHotelChain()->getName(),
-                        'price' => $room->getNightlyPrice()
+                        'hotel_profile' => $entity->getProfileTrip(),
+                        'room' => $room
                     ]
                 ];
-
-//                if($room){
-//
-//                }
             }
 
             $results = [
                 'status' => 'success',
                 'code' => 200,
-//                'data' => $pagination,
+                'data' => $pagination,
                 'items' => $array
             ];
 
@@ -1387,11 +1413,53 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * Get detail for vs hotel
+     *
+     * @param Hotel $hotel
+     * @return response
+     *
+     * @FOSRestBundleAnnotations\Route("/vs/hotel/availabilities/{id}")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Get hotel detail for id",
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function getVsAvailabilitiesIdAction(Hotel $hotel)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        if ($hotel) {
+            $results = [
+                'status' => 'success',
+                'code' => 200,
+                'data' => $hotel
+            ];
+
+        } else {
+            $results = [
+                'status' => 'error',
+                'code' => 404,
+            ];
+        }
+
+        return new Response($serializer->serialize($results, 'json'));
+    }
+
+
+    /**
      * Get roompacks by hotel
      *
      * @param Request $request
      * @param Hotel $hotel
-     * @return array
+     * @return response
      *
      * @FOSRestBundleAnnotations\Route("/vs/hotel/{id}/roompacks/")
      * @ApiDoc(
@@ -1425,25 +1493,70 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      */
     public function getRoompacksAction(Request $request, Hotel $hotel)
     {
-//              echo "<pre>" . print_r($hotel, true) . "</pre>";die();
+        $serializer = $this->get('jms_serializer');
 
         $language = $request->query->get('language', 'es');
         $distributions = $request->query->get('distribution');
 
         $em = $this->getDoctrine()->getManager();
 
-        $rooms = $em->getRepository('VientoSurAppAppBundle:Room')->findRoomAvailables($entity->getId());
+        $entities = $em->getRepository('VientoSurAppAppBundle:Room')->findRoomAvailables($hotel->getId());
 
         $roomDistribution = explode('!', $distributions);
-//      echo "<pre>" . print_r($roomDistribution, true) . "</pre>";die();
 
-        for ($i = 0; $i > count($roomDistribution); $i++){
-            if ($i = 0){
-                $adults = explode('-', $roomDistribution[$i]);
+        $roomGuests = array();
+
+        for ($i = 0; $i < count($roomDistribution); $i++){
+            if(strpos($roomDistribution[$i], '-')){
+                $guests[$i] = explode('-', $roomDistribution[$i]);
+                $roomGuests[$i]['adults'] = $guests[$i][0];
+                $childs = 0;
+                for ($j = 0; $j < count($guests[$i]); $j++){
+                    $roomGuests[$i]['childs'] = $childs++;
+                }
+                $roomGuests[$i]['total'] = $roomGuests[$i]['childs'] + $roomGuests[$i]['adults'];
+            }else{
+                $roomGuests[$i]['adults'] = $roomDistribution[$i];
+                $roomGuests[$i]['total'] = $roomGuests[$i]['adults'];
             }
-            echo "<pre>" . print_r($roomDistribution[$i], true) . "</pre>";
         }
 
-        return new Response('hola');
+        $array = [
+            'hotel' => [
+                'id' => $hotel->getId()
+            ],
+            'roomGuests' => $roomGuests
+        ];
+
+        for ($i = 0; $i < count($entities); $i++){
+            for ($j = 0; $j < count($roomGuests); $j++){
+                if ($entities[$i]->getCapacity() >= $roomGuests[$j]['total']) {
+                    $beds = $em->getRepository('VientoSurAppAppBundle:Bed')->findBy(array('room' => $entities[$i]->getId()));
+
+                    $array['roompacks'][$i]['rooms'] = [
+                        'id' => $entities[$i]->getId(),
+                        'payment_type' => $entities[$i]->getPaymenttype()->getName(),
+                        'meal_plan' => [
+                            'id' => $entities[$i]->getMealPlan()->getName()
+                        ],
+                        'bed_options' => $beds,
+                        'cancellation_policy' => [
+                            'text' => $entities[$i]->getCancellationPolicity(),
+                            'status' =>$entities[$i]->getCancellationPolicityStatus(),
+                        ],
+                        'price_detail' => [
+                            'price_by_nigth' => $entities[$i]->getNightlyPrice()
+                        ]
+                    ];
+                }
+            }
+        }
+
+        $results = [
+            'status' => 'success',
+            'code' => 200,
+            'data' => $array
+        ];
+        return new Response($serializer->serialize($results, 'json'));
     }
 }
