@@ -30,16 +30,28 @@ class HotelRepository extends EntityRepository
             $qb->andWhere('h.hotelTypes = \''.$parameters['hotel_type'].'\'');
         }
 
-//        if($parameters['zones']){
-//            $qb->andWhere('h.zones = '.$parameters['zones']);
-//        }
+        if($parameters['zones']){
+            $qb->andWhere('h.address LIKE \'%'.$parameters['zones'].'%\'');
+        }
 
-//        if($parameters['profiles']){
-//            $qb->andWhere('h.profiles = '.$parameters['profiles']);
-//        }
+        if($parameters['profiles']){
+            $qb->andWhere('h.profileTrip = \''.$parameters['profiles'].'\'');
+        }
 
         if($parameters['hotel_chains']){
             $qb->andWhere('h.hotelChain = \''.$parameters['hotel_chains'].'\'');
+        }
+
+        if($parameters['meal_plans']){
+            foreach ($parameters['meal_plans'] as $meal_plan){
+                $qb->orWhere('h.id = '.$meal_plan);
+            }
+        }
+
+        if($parameters['payment_type']){
+            foreach ($parameters['payment_type'] as $meal_plan){
+                $qb->orWhere('h.id = '.$meal_plan);
+            }
         }
 
         $qb->setMaxResults($parameters['limit']);
