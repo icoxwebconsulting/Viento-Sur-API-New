@@ -67,7 +67,8 @@ class RoomsType extends AbstractType
                 TextType::class
             )
             ->add('cancellationPolicity',
-                TextareaType::class)
+                TextareaType::class
+            )
             ->add(
                 'mealPlan',
                 EntityType::class,

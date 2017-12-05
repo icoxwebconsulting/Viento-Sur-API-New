@@ -3,6 +3,7 @@
 namespace BackendBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -60,6 +61,35 @@ class HotelFormType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => 'VientoSur\App\AppBundle\Entity\HotelType'
+                )
+            )
+            ->add(
+                'profileTrip',
+                ChoiceType::class,
+                array(
+                    'choices' => array(
+                       'businessTrip' => 'admin.profile_trip.businessTrip',
+                       'castle' => 'admin.profile_trip.castle',
+                       'cheap' => 'admin.profile_trip.cheap',
+                       'design' => 'admin.profile_trip.design',
+                       'family' => 'admin.profile_trip.family',
+                       'gourmet' => 'admin.profile_trip.gourmet',
+                       'luxury' => 'admin.profile_trip.luxury',
+                       'nature' => 'admin.profile_trip.nature',
+                       'other' => 'admin.profile_trip.other',
+                       'relax' => 'admin.profile_trip.relax',
+                       'romantic' => 'admin.profile_trip.romantic',
+                       'shopping' => 'admin.profile_trip.shopping',
+                       'singles' => 'admin.profile_trip.singles',
+                       'sport' => 'admin.profile_trip.sport',
+                    )
+                )
+            )
+            ->add(
+                'hotelChain',
+                EntityType::class,
+                array(
+                    'class'=> 'VientoSur\App\AppBundle\Entity\HotelChain'
                 )
             )
             ->add(
