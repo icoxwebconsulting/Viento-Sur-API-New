@@ -354,7 +354,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Get id for booking form
+     * Get detail hotel
      *
      * @param Request $request
      * @param String $id
@@ -363,7 +363,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/availabilities/{id}")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Get detail hotel",
      *  parameters={
      *     {
      *          "name"="language",
@@ -465,7 +465,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
 
 
     /**
-     * Get room availability for hotel
+     * Generate booking id for form
      *
      * @param Request $request
      * @return array
@@ -473,7 +473,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/booking/")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Generate booking id for form",
      *  parameters={
      *     {
      *          "name"="country_code",
@@ -604,7 +604,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Get room availability for hotel
+     * Generate hotel reservation
      *
      * @param Request $request
      * @return array
@@ -612,7 +612,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/booking/")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Generate hotel reservation",
      *  parameters={
      *     {
      *          "name"="hotel_availabilitiesId",
@@ -928,6 +928,8 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      */
     public function patchBookingAction(Request $request)
     {
+        $serializer = $this->get('jms_serializer');
+
         $this->get('hotel_service')->deleteFile();
         $session = $request->getSession();
         $params = $this->getRequest()->request->all();
@@ -1067,6 +1069,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             $lang,
             $email);
 
+        $error = null;
         if(isset($booking['code']) && $booking['code'] == 500){
             foreach ($booking['causes'] as $cause){
                 if(strpos($cause, 'INVALID_LENGTH') !== false){
@@ -1116,9 +1119,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             ];
         }
 
-        $response = new JsonResponse($results);
-
-        return $response;
+        return new Response($serializer->serialize($results, 'json'));
     }
 
     /**
