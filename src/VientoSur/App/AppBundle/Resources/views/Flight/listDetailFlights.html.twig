@@ -67,11 +67,11 @@
                                                     <a class="hour">{{ outbound.segments[0].departure_datetime|date("H:i", false) }}</a>
                                                     {% set totalSeg = outbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}&nbsp;&nbsp;</a>
+                                                        <a class="scale" style="color:green">&nbsp;&nbsp;{{ 'flights.direct' | trans }}&nbsp;&nbsp;</a>
                                                     {% elseif totalSeg == 1 %}
                                                         <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a>
                                                     {% else %}
-                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
+                                                        <a class="scale" style="color: red">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
 
                                                     {% set lastSeg = outbound.segments|last %}
@@ -229,11 +229,11 @@
                                                     <a class="hour">{{ inbound.segments[0].departure_datetime|date("H:i", false) }}</a>
                                                     {% set totalSeg = inbound.segments|length - 1 %}
                                                     {% if totalSeg == 0 %}
-                                                        <a class="scale">&nbsp;&nbsp;{{ 'flights.direct' | trans }}</a>
+                                                        <a class="scale" style="color:green">&nbsp;&nbsp;{{ 'flights.direct' | trans }}</a>
                                                     {% elseif totalSeg == 1 %}
                                                         <a class="scale">{{ totalSeg }} {{ 'flights.scale' | trans }}</a>
                                                     {% else %}
-                                                        <a class="scale">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
+                                                        <a class="scale" style="color: red">{{ totalSeg }} {{ 'flights.scales' | trans }}</a>
                                                     {% endif %}
                                                     {% set lastSeg = inbound.segments|last %}
                                                         <a class="hour">{{ lastSeg.arrival_datetime|date("H:i", false) }}</a>

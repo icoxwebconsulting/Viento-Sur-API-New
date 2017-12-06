@@ -735,6 +735,7 @@
         width: 16%;
         border-bottom: 1px solid;
         margin-right: 35px;
+        font-weight: bold;
     }
     
     #thumbsFlights .panel-heading h3{
