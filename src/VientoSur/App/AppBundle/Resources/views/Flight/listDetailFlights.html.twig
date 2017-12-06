@@ -25,11 +25,22 @@
                                         </div>
                                         <div class="col-xs-4 col-sm-4 noPadding">
                                             <h6>{{ item.outbound_choices[0].segments[0].from }}<span>{{ airportNames[item.outbound_choices[0].segments[0].from] }}</span></h6>
-                                            <h6 class="no-margin-top"><span class="no-margin-left">{{ item.outbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span></h6>
+                                            <span class="inline-detail-airport-date" style="color: white">
+                                                <span>
+                                                    <span class="inline-detail-airport-date-text">{{ 'flights.departure' | trans }}:</span>
+                                                    <span>{{ item.outbound_choices[0].segments[0].departure_datetime|date("d/m/Y", false) }}</span>
+                                                </span>
+                                            </span>
                                         </div>
                                         <div class="col-xs-4 col-sm-4 noPadding">
                                             {% set last = item.outbound_choices[0].segments|last %}
                                             <h6>{{ last.to }} <span>{{ airportNames[last.to] }}</span></h6>
+                                            <span class="inline-detail-airport-date" style="color: white">
+                                                <span>
+                                                    <span class="inline-detail-airport-date-text">{{ 'flights.arrival' | trans }}:</span>
+                                                    <span>{{ last.arrival_datetime|date("d/m/Y", false) }}</span>
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>{# nuevo ida #}
@@ -82,7 +93,7 @@
                                             <div class="col-xs-1 center" style="margin-bottom: 5px">
                                                 <span class="btn" data-toggle="collapse" data-target="#detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" title="{{ 'flights.see_detail' | trans }}" style="padding-left: 7px;"><i class="fa fa-info-circle input-icon" style="font-size: 18px;"></i></span>
                                             </div><br clear="all"/>
-                                            <div id="detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12">
+                                            <div id="detail-out-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12" style="margin-bottom: 20px;">
                                                 <div class="table-responsive" style=" overflow-x: visible;">
                                                     <table class="table table-condensed">
                                                         <tr class="active">
@@ -191,11 +202,22 @@
                                             </div>
                                             <div class="col-xs-4 col-sm-4 noPadding">
                                                 <h6>{{ item.inbound_choices[0].segments[0].from }}<span>{{ airportNames[item.inbound_choices[0].segments[0].from] }}</span></h6>
-                                                <h6 class="no-margin-top"><span class="no-margin-left">{{ item.inbound_choices[0].segments[0].departure_datetime|date("D d F Y") }}</span></h6>
+                                                <span class="inline-detail-airport-date" style="color: white">
+                                                    <span>
+                                                        <span class="inline-detail-airport-date-text">{{ 'flights.departure' | trans }}:</span>
+                                                        <span>{{ item.inbound_choices[0].segments[0].departure_datetime|date("d/m/Y", false) }}</span>
+                                                    </span>
+                                                </span>
                                             </div>
                                             <div class="col-xs-4 col-sm-4 noPadding">
                                                 {% set last = item.inbound_choices[0].segments|last %}
                                                 <h6>{{ last.to }}<span>{{ airportNames[last.to] }}</span></h6>
+                                                <span class="inline-detail-airport-date" style="color: white">
+                                                    <span>
+                                                        <span class="inline-detail-airport-date-text">{{ 'flights.arrival' | trans }}:</span>
+                                                        <span>{{ last.arrival_datetime|date("d/m/Y", false) }}</span>
+                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -243,7 +265,7 @@
                                         <div class="col-xs-1 center" style="margin-bottom: 5px">
                                             <span class="btn" data-toggle="collapse" data-target="#detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" title="{{ 'flights.see_detail' | trans }}" style="padding-left: 7px;"><i class="fa fa-info-circle input-icon" style="font-size: 18px;"></i></span>
                                         </div><br clear="all"/>
-                                            <div id="detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12">
+                                            <div id="detail-in-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse col-xs-12" style="margin-bottom: 20px;">
                                                 <div class="table-responsive" style=" overflow-x: visible;">
                                                     <table class="table table-condensed">
                                                         <tr class="active">
