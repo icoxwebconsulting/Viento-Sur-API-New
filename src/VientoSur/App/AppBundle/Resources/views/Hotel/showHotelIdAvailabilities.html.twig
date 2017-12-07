@@ -274,16 +274,16 @@
                         <div class="row">
                             <div class="galleryHotel col-xs-12">
                                 <!-- Nav tabs -->
-                                <ul class="nav nav-tabs" id="tabsDetail" role="tablist">
-                                    <li role="presentation" class="active"><a href="#fotos" aria-controls="fotos" role="tab" data-toggle="tab"><i class="fa fa-camera" aria-hidden="true"></i> Fotos</a></li>
+                                <ul class="nav nav-tabs" id="tabsDetail" role="tablist" style="border: 0px; margin-left: -1px;">
+                                    <li role="presentation" class="active" style="margin-bottom: 0px"><a href="#fotos" aria-controls="fotos" role="tab" data-toggle="tab"><i class="fa fa-camera" aria-hidden="true"></i> Fotos</a></li>
                                     <li role="presentation">
-                                        <a href="#google-map-tab" data-toggle="tab" id="tab-mapa"><i class="fa fa-map-marker"></i> {{ 'hotels.map' | trans }}</a>
+                                        <a href="#google-map-tab" data-toggle="tab" id="tab-mapa" style="margin-bottom: 0px"><i class="fa fa-map-marker"></i> {{ 'hotels.map' | trans }}</a>
                                     </li>
                                 </ul>
 
                                 <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="fotos" style="height: 630px;">
+                                <div class="tab-content" style="border-top: 2px solid #233034; box-shadow: 0px 0px 13px 1px rgba(0,19,33,0.65);">
+                                    <div role="tabpanel" class="tab-pane active" id="fotos">
                                         <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs" data-width="885" data-height="570">
                                             {% for key, pictures in hotelDetails.pictures %}
                                                 {% set picture = attribute(pictures.picture_category.descriptions, app.request.locale) %}
@@ -291,7 +291,7 @@
                                             {% endfor %}
                                         </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="google-map-tab">
+                                    <div role="tabpanel" class="tab-pane fade" id="google-map-tab" style="height: 500px;">
 
                                     </div>
                                 </div>
@@ -603,7 +603,7 @@
             $('.contentDesktop').html('');
             $('#google-map-tab').html('<div class="col-xs-12"><div id="map" class="map-mobile" style="width:600px; height:450px;"></div></div>')
         }else{
-            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" style="width:832px; height:500px;"></div> </div>');
+            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" style="width:847px; height:500px; margin-left: -15px;"></div> </div>');
             $('.contentMobile').html('');
         }
 
