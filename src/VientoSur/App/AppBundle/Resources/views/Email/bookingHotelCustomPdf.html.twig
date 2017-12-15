@@ -202,38 +202,43 @@
                             <tr>
                                 <td class="col" valign="top" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;color:#333333;width:100%">
                                     <br>
-                                    {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') %}
-                                    {% set total_price_per_night = room_per_night * reservationDetails.night_count %}
-                                    {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
-                                    {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
-                                    {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
+                                    {#{% set room_per_night = price_detail.nightly_subtotal | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') %}#}
+                                    {#{% set total_price_per_night = room_per_night * reservationDetails.night_count %}#}
+                                    {#{% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}#}
+                                    {#{% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}#}
+                                    {#{% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}#}
+
+                                    {% set discounts = price_detail.discounts %}
+                                    {% set taxesFees = price_detail.taxes + price_detail.fee %}
+                                    {% set total =  price_detail.subtotal + taxesFees - discounts %}
+
 
                                     <div style="padding: 0 45px">
                                         <div style="width: 48%; display: inline-block;text-align: left;">
                                             <strong style="font-size: 9px;">{{ 'hotels.room_per_night' | trans }}</strong>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: right;">
-                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.nightly_subtotal | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') }}</p>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: left;">
                                             <strong style="font-size: 9px;">{{ 'hotels.taxes_and_rates' | trans }}</strong>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: right;">
-                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ taxes + fee }}</p>
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ taxesFees | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.')}}</p>
                                         </div>
                                         {% if price_detail.discounts > 0 %}
                                             <div style="width: 48%; display: inline-block;text-align: left;">
                                                 <strong style="font-size: 9px;">{{ 'index.discounts' | trans }}</strong>
                                             </div>
                                             <div style="width: 48%; display: inline-block;text-align: right;">
-                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                                <p style="margin: 0; padding: 0;"> {{ symbol }} {{ price_detail.discounts |  currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') }}</p>
                                             </div>
                                         {% endif %}
                                         <div style="width: 48%; display: inline-block;text-align: left;">
                                             <strong>{{ 'hotels.total_price' | trans }}</strong>
                                         </div>
                                         <div style="width: 48%; display: inline-block;text-align: right;">
-                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</p>
+                                            <p style="margin: 0; padding: 0;"> {{ symbol }} {{ total | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') }}</p>
                                         </div>
                                     </div>
                                     {#<strong>{{ 'hotels.total_price' | trans }}</strong>#}
