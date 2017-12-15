@@ -104,6 +104,17 @@ class Hotel
     protected $created_by;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HotelChain", inversedBy="hotels")
+     * @ORM\JoinColumn(name="hotel_chain", referencedColumnName="id")
+     */
+    protected $hotelChain;
+
+    /**
+     * @ORM\Column(name="profile_trip", type="string", length=255)
+     */
+    private $profileTrip;
+
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -261,8 +272,7 @@ class Hotel
      * Constructor
      */
     public function __construct()
-    {
-    }
+    {}
 
     /**
      * Set hotelTypes
@@ -363,5 +373,53 @@ class Hotel
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set hotelChain
+     *
+     * @param \VientoSur\App\AppBundle\Entity\HotelChain $hotelChain
+     *
+     * @return Hotel
+     */
+    public function setHotelChain(\VientoSur\App\AppBundle\Entity\HotelChain $hotelChain = null)
+    {
+        $this->hotelChain = $hotelChain;
+
+        return $this;
+    }
+
+    /**
+     * Get hotelChain
+     *
+     * @return \VientoSur\App\AppBundle\Entity\HotelChain
+     */
+    public function getHotelChain()
+    {
+        return $this->hotelChain;
+    }
+
+    /**
+     * Set profileTrip
+     *
+     * @param string $profileTrip
+     *
+     * @return Hotel
+     */
+    public function setProfileTrip($profileTrip)
+    {
+        $this->profileTrip = $profileTrip;
+
+        return $this;
+    }
+
+    /**
+     * Get profileTrip
+     *
+     * @return string
+     */
+    public function getProfileTrip()
+    {
+        return $this->profileTrip;
     }
 }

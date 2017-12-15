@@ -3,6 +3,7 @@
 namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Date;
 use VientoSur\App\AppBundle\Entity\Reservation;
+use VientoSur\App\AppBundle\Entity\ReservationCancellation;
 
 /**
  * @Route("/{_locale}/dashboard-reservation", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
@@ -73,6 +75,9 @@ class ReservationController extends Controller
     public function showAction(Reservation $entity)
     {
         $em = $this->getDoctrine()->getManager();
+        $cancellationData = $em->getRepository("VientoSurAppAppBundle:ReservationCancellation")->findBy(array(
+            'reservation' => $entity
+        ));
 
         if ($entity->getOrigin() == 'despegar'){
             $guests = $em->getRepository('VientoSurAppAppBundle:Passengers')->findBy(array(
@@ -105,14 +110,17 @@ class ReservationController extends Controller
         }elseif ($entity->getOrigin() == 'vientosur'){
             $extraData = json_decode($entity->getExtraData());
 
+            if ($extraData){
             $rooms = $em->getRepository('VientoSurAppAppBundle:Room')->findRoomsByIds($extraData->room);
             $this->get('session')->set('rooms', $rooms);
+            }
 
         }
 
         return $this->render(':admin/reservation:show.html.twig', array(
             'entity' => $entity,
-            'extraData' => $extraData
+            'extraData' => $extraData,
+            'cancellationData' => $cancellationData
         ));
     }
 
@@ -172,10 +180,110 @@ class ReservationController extends Controller
         $entity->setComments('comentarios');
         $entity->setOrigin('vientosur');
         $entity->setExtraData(json_encode($extra_data));
+        $entity->setRefundable(1);
 
         $em->persist($entity);
         $em->flush();
 
         return $this->redirectToRoute('reservation_list');
+    }
+
+
+    /**
+     * cancel reservation if it belongs to despegar
+     * @param $id
+     * @param $request
+     * @Route("/reservation/despegar/edit/{id}", options={"expose"=true}, name="cancel_reservation_despegar")
+     * @Method("PATCH")
+     * @return response
+     */
+    public function cancelReservationAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $despegar = $this->get('despegar');
+        $cancel = $despegar->cancelReservation($id);
+        $result = false;
+
+        if ($cancel && isset($cancel['id'])) {
+            $result = true;
+            $reason = $request->get('reason');
+
+            $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneBy(array(
+                'reservationId' => $id,
+                'origin' => 'despegar'
+            ));
+
+            $reservation->setStatus('cancelled');
+
+            $reservationCancellation = new ReservationCancellation();
+            $reservationCancellation->setDescription($reason);
+            $reservationCancellation->setCreatedBy($this->getUser());
+            $reservationCancellation->setCode($cancel['id']);
+            $reservationCancellation->setReservation($reservation);
+
+            $em->persist($reservationCancellation);
+            $em->persist($reservation);
+            $em->flush();
+        }
+        return new JsonResponse(
+            array(
+                "cancelled" => $result,
+                "id" => (($cancel != null) ? $cancel['id'] : 0)
+            )
+        );
+    }
+    /**
+     * cancel reservation if it belongs to vientosur
+     * @param $id
+     * @param $request
+     * @Route("/reservation/vientosur/edit/{id}", options={"expose"=true}, name="cancel_reservation_vientosur")
+     * @Method("PATCH")
+     * @return response
+     */
+    public function cancelReservationVientosurAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $result = true;
+        $reason = $request->get('reason');
+
+        $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->find($id);
+
+        $reservation->setStatus('cancelled');
+
+        $code = $this->getCodeHash();
+
+        $entity = $em->getRepository('VientoSurAppAppBundle:ReservationCancellation')->findBy(array(
+            'code' => $code
+        ));
+
+        if ($entity){
+            $code = $this->getCodeHash();
+        }
+
+        $reservationCancellation = new ReservationCancellation();
+        $reservationCancellation->setDescription($reason);
+        $reservationCancellation->setCreatedBy($this->getUser());
+        $reservationCancellation->setCode($code);
+        $reservationCancellation->setReservation($reservation);
+
+        $em->persist($reservationCancellation);
+        $em->persist($reservation);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                "cancelled" => $result,
+                "id" => (($code != null) ? $code : 0)
+            )
+        );
+    }
+
+    /**
+     * Make reservation code to
+     * @return number
+     */
+    public function getCodeHash() {
+        $date  = new \DateTime();
+        return hexdec($date->format('d-m-y his'));
     }
 }

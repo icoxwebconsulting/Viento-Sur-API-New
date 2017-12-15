@@ -100,6 +100,20 @@
                     </div>
                     {{ form_errors(form.hotelTypes) }}
                 </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="stars">{{ 'admin.profile_trip.label' | trans }}*</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.profileTrip, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.profileTrip) }}
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="stars">{{ 'hotels.search_menu.hotel_chain' | trans }}*</label>
+                    <div class="col-md-9">
+                        {{ form_widget(form.hotelChain, { 'attr': { 'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.hotelChain) }}
+                </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="col-md-3 form-control-label" for="search-address">{{ 'hotels.address' | trans }}*</label>
