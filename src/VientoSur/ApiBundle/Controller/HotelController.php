@@ -16,6 +16,7 @@ use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use VientoSur\App\AppBundle\Entity\Reservation;
 use VientoSur\App\AppBundle\Entity\Hotel;
+use VientoSur\App\AppBundle\Entity\ReservationCancellation;
 
 /**
  * Class HotelController
@@ -286,7 +287,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotels/")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Get hotel details as available hotels",
      *  parameters={
      *     {
      *          "name"="ids",
@@ -560,7 +561,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Get form bookings
+     * Get forms to booking id
      *
      * @param String $id
      * @return array
@@ -568,7 +569,7 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
      * @FOSRestBundleAnnotations\Route("/hotel/booking/{id}/forms")
      * @ApiDoc(
      *  section="Hotel",
-     *  description="Get room availability for hotel",
+     *  description="Get forms to booking id",
      *  statusCodes={
      *     200="Returned when successful",
      *     404="Wrong data"
@@ -1558,5 +1559,214 @@ class HotelController extends FOSRestController implements ClassResourceInterfac
             'data' => $array
         ];
         return new Response($serializer->serialize($results, 'json'));
+    }
+
+    /**
+     * Generate reservation
+     *
+     * @param Request $request
+     * @return response
+     *
+     * @FOSRestBundleAnnotations\Route("/vs/hotel/{id}/reservation/")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Generate reservation",
+     *  parameters={
+     *     {
+     *          "name"="language",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="en, es, pt",
+     *          "description"="Language of texts involved in the response."
+     *      },
+     *     {
+     *          "name"="rooms",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="1,2,3",
+     *          "description"="List ids."
+     *      },
+     *     {
+     *          "name"="checkin_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkin."
+     *      },
+     *     {
+     *          "name"="checkout_date",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="YYYY-MM-DD",
+     *          "description"="Date of checkout."
+     *      },
+     *     {
+     *          "name"="distribution",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="1-2-5!1-12-9",
+     *          "description"="Room distribution."
+     *      },
+     *     {
+     *          "name"="card_type",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="VI,CA,AX",
+     *          "description"="CreditCard type."
+     *      },
+     *     {
+     *          "name"="number_card",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="0000-0000-0000-0000",
+     *          "description"="Number CreditCard type."
+     *      },
+     *     {
+     *          "name"="expiration",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="2018-02-01",
+     *          "description"="Expiration date."
+     *      },
+     *     {
+     *          "name"="security_code",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="000 or 0000",
+     *          "description"="Security."
+     *      },
+     *     {
+     *          "name"="owner_name",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="Owner name."
+     *      },
+     *     {
+     *          "name"="owner_document_type",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="Document type."
+     *      },
+     *     {
+     *          "name"="owner_document_number",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="Document number."
+     *      },
+     *     {
+     *          "name"="email",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="Contact email."
+     *      },
+     *     {
+     *          "name"="phone",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="+54-412-5487485",
+     *          "description"="Contact phone number."
+     *      },
+     *     {
+     *          "name"="guests",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "format"="JSON Data",
+     *          "description"="Guests JSON"
+     *      }
+     *  },
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function postReservationAction(Hotel $hotel,Request $request){
+        $serializer = $this->get('jms_serializer');
+
+        $em = $this->getDoctrine()->getManager();
+        $reservation = new Reservation();
+
+        $reservation->setHotelId($hotel->getId());
+        $reservation->setReservationId(rand(1,1000));
+        $reservation->setEmail($request->get('email'));
+        $reservation->setPhoneNumber($request->get('phone'));
+        $reservation->setTotalPrice(rand(1,1003));
+        $reservation->setCheckin($request->get('checkin'));
+        $reservation->setCheckout($request->get('checkout'));
+        $reservation->setCardType($request->get('card_type'));
+        $reservation->setHolderName($request->get('owner_name'));
+        $reservation->setRefundable(1);
+        $reservation->setOrigin('VS');
+
+        $em->persist($reservation);
+        $em->flush();
+
+        $results = [
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'reservation done',
+            'data' => $reservation
+        ];
+
+        return new Response($serializer->serialize($results, 'json'));
+    }
+
+    /**
+     * Cancel reservation by guest
+     *
+     * @param Reservation $reservation
+     * @return response
+     *
+     * @FOSRestBundleAnnotations\Route("/vs/reservation/{id}/cancellation")
+     * @ApiDoc(
+     *  section="Hotel",
+     *  description="Cancel reservation by guest",
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="Wrong data"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "v1" = "#ff0000"
+     *  }
+     * )
+     */
+    public function cancelReservationVientosurAction(Reservation $reservation)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $reservation->setStatus('cancelled');
+
+        $reservationCancellation = new ReservationCancellation();
+        $reservationCancellation->setDescription('Cancelado desde la web de vientosur');
+        $reservationCancellation->setCreatedBy(null);
+        $reservationCancellation->setCode($this->getCodeHash());
+        $reservationCancellation->setReservation($reservation);
+
+        $em->persist($reservationCancellation);
+        $em->flush();
+
+        $results = [
+            'status' => 'success',
+            'code' => 200,
+            'message' => 'reservation cancellation done'
+        ];
+
+        return new Response($serializer->serialize($results, 'json'));
+    }
+
+    /**
+     * Make reservation code to
+     * @return number
+     */
+    public function getCodeHash() {
+        $date  = new \DateTime();
+        return hexdec($date->format('d-m-y his'));
     }
 }
