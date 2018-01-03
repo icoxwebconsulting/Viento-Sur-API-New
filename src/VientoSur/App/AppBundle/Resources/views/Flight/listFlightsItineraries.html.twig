@@ -50,15 +50,14 @@
 
         <div class="wrapperFlights">
             <div class="container">
-                <div class="row" style="display: none;">
-                    <div class="col-xs-12 noPadding">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% set last = items.items[0].outbound_choices[0].segments|last %}
                         <h1 class="message" class="totalHotels">
-                            <a href="#"><span class="totalFlights">{{ items.paging.total_itineraries }}</span>
-                                {% if origin  %}
-                                    {{ 'flights.flights_from_to' | trans({'%origin%': origin[0], '%destination%': destination[0]}) }}
-                                {% endif %}
-                            </a>
-
+                            {{ items.paging.total_itineraries }}
+                            
+                            {{ 'flights.flights_from_to' | trans({'%origin%': items.items[0].outbound_choices[0].segments[0].from~" "~airportNames[items.items[0].outbound_choices[0].segments[0].from], '%destination%': last.to ~" "~ airportNames[last.to]}) }}
+                            
                         </h1>
                     </div>
                 </div>

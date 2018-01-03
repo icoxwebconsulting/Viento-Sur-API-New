@@ -143,7 +143,7 @@
                     <input type="hidden" value="" name="selected-card" id="card-selected" class="form-control" readonly>
                     {% if paymentMethods|length > 1 %}
 
-                    <select name="select-card" id="select-card3" class="form-control input-width" title="">
+                    <select name="select-card" id="select-card3" class="form-control input-width" title="" style='width: 45%'>
                         {% for cuotas, bank in paymentMethods %}
                             {% set n = loop.index %}
                             {% if bank.installment_quantity is defined and bank.type != 'debit_card' %}
@@ -175,7 +175,7 @@
                         {% endfor %}
                     </select>
                 {% else %}
-                    <select name="select-card" id="select-card2" class="form-control input-width" title="">
+                    <select name="select-card" id="select-card2" class="form-control input-width" title="" style='width: 45%'>
                         {% for card in paymentMethods[0].card_ids %}
                             {% set cardData = card|split('-') %}
 
@@ -196,7 +196,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="label-lef" for="">{{ label }}</label>
-                        {{ form_widget(formNewPay.payment.number, { 'attr': {'class': 'form-control input-width'}}) }}
+                        {{ form_widget(formNewPay.payment.number, { 'attr': {'class': 'form-control input-width', 'style':'width: 50% !important;'}}) }}
                     </div>
                 </div>
             {% endif %}

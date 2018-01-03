@@ -189,14 +189,14 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-5">
                                                     <div class="form-group">
                                                         <label class="label-lef" for="">Email:</label>
                                                         {{ form_widget(formNewPay.contact.email, {'attr': {'class': 'form-control inputError email_form'}}) }}
 
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-7">
                                                     <div class="form-group">
                                                         <label class="label-lef" for="">Confirme su Email:</label>
                                                         <input type="email" id="form_contact_info_email-1" name="form[contact_info][email-1]" required="required" placeholder="Confirme su email" class="form-control email_confirm_form" autocomplete="off">
@@ -333,18 +333,20 @@
                                 </p>
                                 <h3>{{ hotelBrief.room_cancellation }}</h3>
                                 <b><span id="cuoteDesktop"  style="color: #fff"></span></b>
-                                {% set room_per_night = price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.')  %}
-                                {% set total_price_per_night = room_per_night * reservationDays %}
-                                {% set taxes = price_detail.taxes | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
-                                {% set fee = price_detail.fee | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
-                                {% set discounts = price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') %}
 
-                                <p>{{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal|round|currency_convert_format(targetCurrency, decimal, false)| number_format(0, ',', '.') }}</p>
-                                <p>{{ 'hotels.taxes_and_rates' | trans }}: {{ taxes + fee }}</p>
+                                {% set discounts = price_detail.discounts %}
+                                {% set taxesFees = price_detail.taxes + price_detail.fee %}
+                                {% set total =  price_detail.subtotal + taxesFees - discounts %}
+
+                                <p>{{ 'hotels.room_per_night' | trans }}: {{ symbol }} {{ price_detail.nightly_subtotal | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') }}</p>
+
+                                <p>{{ 'hotels.taxes_and_rates' | trans }}: {{ symbol }} {{ taxesFees | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.')}}</p>
                                 {% if price_detail.discounts > 0 %}
-                                    <p>{{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts | round| currency_convert_format(targetCurrency, decimal,false)| number_format(0, ',', '.') }}</p>
+                                    <p>{{ 'index.discounts' | trans }}: {{ symbol }} {{ price_detail.discounts |  currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') }}</p>
                                 {% endif %}
-                                <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total_price_per_night + taxes + fee - discounts }}</span></p>
+
+                                <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ total | currency_convert_format(targetCurrency, decimal,false)| number_format(2, ',', '.') }}</span></p>
+
                                 <aside>{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</aside>
                             </div>
                         </div>

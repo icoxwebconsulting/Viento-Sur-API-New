@@ -68,7 +68,7 @@
                             {% endif %}
                         {% endfor %}
                         <ul class="servicesIcons">
-                            {% for key, amenity in item.hotel.amenity_ids %}
+                            {% for key, amenity in item.hotel.amenity_ids is defined %}
                                 {% if amenity == 'INGRAH' %}
                                     <li title="{{ 'amenities.INGRAH' | trans }}"><i class="fa fa-wifi"
                                                                                     aria-hidden="true"></i></li>
