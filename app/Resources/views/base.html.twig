@@ -99,10 +99,11 @@
                 <div class="footer">
                     <div class="container">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-4 logoFooter">
-                                <a href="{{ path('homepage') }}">
-                                    <img src="{{ asset('rpascal/images/logo.png') }}" alt="">
-                                </a>
+                            <div class="col-xs-6 col-sm-4">
+                                <h3>{{ 'index.contact_us2' | trans }}</h3>
+                                <p>{{ 'index.answer_text' | trans }}</p>
+                                <a href="#" title="{{ 'index.consult' | trans }}" class="btnContact" data-path="{{ path('viento_sur_app_consult') }}" data-toggle="modal" data-target="#submitConsult" data-title="{{ 'index.consult' | trans }}">{{ 'index.contact' | trans }}</a>
+
                             </div>
                             <div class="col-xs-6 col-sm-4">
                                 <h3>{{ 'index.follow_us' | trans }}</h3>
@@ -118,12 +119,14 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-4">
-                                <h3>{{ 'index.contact_us2' | trans }}</h3>
-                                <p>{{ 'index.answer_text' | trans }}</p>
-                                <a href="#" title="{{ 'index.consult' | trans }}" class="btnContact" data-path="{{ path('viento_sur_app_consult') }}" data-toggle="modal" data-target="#submitConsult" data-title="{{ 'index.consult' | trans }}">{{ 'index.contact' | trans }}</a>
-
-                            </div>
+                            <div class="col-xs-12 col-sm-4 logoFooter">
+                                <a href="{{ path('homepage') }}">
+                                    <img src="{{ asset('rpascal/images/logo.png') }}" alt="" style="padding-top: 0px; margin-top: -10px">
+                                </a>
+                                <a href="https://play.google.com/store/apps/details?id=com.vientosurapp.vientosur&hl=es" target="_blanck">
+                                    <img src="{{ asset('img/google-play-'~app.request.locale~'.png') }}" alt="" style="padding-top: 50px;">
+                                </a>
+                            </div>    
                         </div>
                     </div>
                 </div>
