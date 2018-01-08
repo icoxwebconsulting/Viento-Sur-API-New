@@ -435,6 +435,9 @@ amenities:
     VALETPRK: Valet Parking
     WAKEUP: Servicio de Despertador
 admin:
+    hotels: Establecimiento
+    General_information: Información General
+    Much_more: Mucho más
     create_account: Crear cuenta
     confirm_account: Por favor revise su correo electrónico. Contiene un enlace de activación al que debe hacer clic para activar su cuenta.
     register: Registrarse

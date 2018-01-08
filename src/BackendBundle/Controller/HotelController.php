@@ -216,4 +216,31 @@ class HotelController extends Controller
         );
         return $this->redirectToRoute('hotel_list');
     }
+    
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/name", name="hotel_name")
+     * @return response
+     */
+    public function nameAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
+            'created_by' => $this->getUser()->getId()
+        ));
+        
+        if(!$hotel){
+          $hotel = new Hotel(); 
+          $hotel->setPercentageGain(0);
+          $hotel->setOrigen('VS');
+          $hotel->setCreatedBy($this->getUser());
+        }
+        
+        $name = $hotel->getName();
+        
+        return $this->render(':admin/hotel:name.html.twig', array(
+            'name' => $name,
+        ));
+    }        
 }

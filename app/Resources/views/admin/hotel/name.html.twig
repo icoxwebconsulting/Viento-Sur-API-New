@@ -1,0 +1,38 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% if app.request.attributes.get('_route') == 'hotel_new' %}
+        {% set title = 'admin.hotel_new' %}
+    {% else %}
+        {% set title = 'admin.hotel_edit' %}
+    {% endif %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}    
+<div>
+    <div class="card">
+        <div class="card-header">
+            <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }}</strong>
+        </div>
+        <form name="appbundle_hotel" method="post" id="form" class="form-horizontal">
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
+                    <div class="col-md-9">
+                        <input id="appbundle_hotel_name" name="appbundle_hotel[name]" required="required" class="form-control" type="text">
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('hotel_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+            </div>        
+        </form>   
+    </div>    
+</div>                
+{% endblock %}    

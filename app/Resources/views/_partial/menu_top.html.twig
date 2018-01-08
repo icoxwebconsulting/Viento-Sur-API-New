@@ -16,44 +16,88 @@
        otro elemento que se pueda ocultar al minimizar la barra -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="{{ path('reservation_list') }}">{{ 'index.reservations' | trans }}</a></li>
-      <li><a href="#">Enlace #2</a></li>
-      <li class="dropdown">
+      <li><a href="{{ path('reservation_list') }}">{{ 'index.reservations' | trans }}</a></li>  
+      <li class="dropdown mega-dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'admin.hotels' | trans }} <span class="caret"></span></a>				
+            <ul class="dropdown-menu mega-dropdown-menu">
+                <li class="col-sm-3">
+                    <ul>
+                        <li class="dropdown-header">{{ 'admin.General_information' | trans }}</li>
+                        <li><a href="{{ path('hotel_name') }}">{{ 'admin.name' | trans }}</a></li>
+                        <li><a href="#">{{ 'hotels.address' | trans }}</a></li>
+                        <li><a href="#">{{ 'hotels.stars' | trans }}</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">{{ 'admin.gallery_photo' | trans }}</li>
+                        <li><a href="#">{{ 'hotels.pictures' | trans }}</a></li>
+                    </ul>
+                </li>
+                <li class="col-sm-3">
+                    <ul>
+                        <li class="dropdown-header">{{ 'admin.profile_trip.label' | trans }}</li>
+                        <li><a href="#">{{ 'hotels.search_menu.type' | trans }}</a></li>
+                        <li><a href="#">{{ 'hotels.search_menu.hotel_chain' | trans }}</a></li>                            
+                        <li><a href="#">{{ 'admin.profile_trip.label' | trans }}</a></li>
+                        <li><a href="#">{{ 'hotels.services' | trans }}</a></li>
+                    </ul>
+                </li>
+                <li class="col-sm-3">
+                    <ul>
+                        <li class="dropdown-header">{{ 'admin.Much_more' | trans }}</li>
+                        <li><a href="#">{{ 'hotels.description' | trans }}</a></li>                      
+                    </ul>
+                </li>
+            </ul>				
+      </li>  
+      <!--<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Menú #1 <b class="caret"></b>
+          {#{ 'admin.hotels' | trans }} <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="#">Acción #1</a></li>
-          <li><a href="#">Acción #2</a></li>
-          <li><a href="#">Acción #3</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Acción #4</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Acción #5</a></li>
+          <li><a href="{{ path('hotel_list') }}">{{ 'admin.hotels_list' | trans }}</a></li>
+          <li><a href="{{ path('hotel_new') }}">{{ 'admin.add' | trans }#}</a></li>
+        </ul>
+      </li>-->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          {{ 'index.search.hotel.rooms' | trans }} <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ path('room_list') }}">{{ 'admin.promotion_section_list' | trans }}</a></li>
+          <li><a href="{{ path('room_new') }}">{{ 'admin.add' | trans }}</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          {{ 'hotels.beds' | trans }} <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ path('bed_list') }}">{{ 'admin.promotion_section_list' | trans }}</a></li>
+          <li><a href="{{ path('bed_new') }}">{{ 'admin.add' | trans }}</a></li>
         </ul>
       </li>
     </ul>
- 
-    <form class="navbar-form navbar-left" role="search">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Buscar">
-      </div>
-      <button type="submit" class="btn btn-default">Enviar</button>
-    </form>
- 
+        
     <ul class="nav navbar-nav navbar-right">
+      {% if is_granted('ROLE_ADMIN') %}  
       <li><a href="#">Enlace #3</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Menú #2 <b class="caret"></b>
+          {{ 'admin.promotions' | trans }} <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="#">Acción #1</a></li>
-          <li><a href="#">Acción #2</a></li>
-          <li><a href="#">Acción #3</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Acción #4</a></li>
+          <li><a href="#">{{ 'admin.promotion_section' | trans }}</a></li>
+          <li><a href="{{ path('promotion_sections_list') }}">{{ 'admin.promotion_section_list' | trans }}</a></li>
+          <li><a href="{{ path('promotion_sections_new') }}">{{ 'admin.add' | trans }}</a></li>
+          <li><a href="{{ path('promotion_list') }}">{{ 'admin.promotions_list' | trans }}</a></li>
+          <li><a href="{{ path('promotion_new') }}">{{ 'admin.promotion_add' | trans }}</a></li>
         </ul>
       </li>
+      {% endif %}
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Buscar">
+        </div>
+        <button type="submit" class="btn btn-default">Enviar</button>
+      </form>
     </ul>
   </div>
