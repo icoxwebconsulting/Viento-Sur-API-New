@@ -20,6 +20,19 @@
         }
     </style>
 
+    
+
+    <!-- Versión compilada y comprimida del CSS de Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('assets/components/bootstrap/dist/css/bootstrap.min.css') }}">
+
+    <!-- Tema opcional -->
+    <link rel="stylesheet" href="{{ asset('assets/components/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+
+    <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
+    <script src="{{ asset('assets/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+
+    
     <!-- Bootstrap and necessary plugins -->
     <script src="{{ asset('assets/components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/components/tether/dist/js/tether.min.js') }}"></script>
@@ -55,6 +68,12 @@
     </header>
     <!-- /header -->
 
+    <nav class="navbar navbar-inverse menu_top" role="navigation">
+        {% block menutop %}
+            {% embed ':_partial:menu_top.html.twig' %}{% endembed %}
+        {% endblock %}
+    </nav>
+    
     <!-- left sidebar menu -->
     <div class="sidebar">
         <nav class="sidebar-nav">

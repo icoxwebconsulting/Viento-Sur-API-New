@@ -1,41 +1,52 @@
 <div class="container-fluid">
     <button class="navbar-toggler mobile-toggler hidden-lg-up" type="button">☰</button>
-    <a class="navbar-brand" href="{{ path('dashboard') }}">
-        <img style="display: block; width: 120px;" src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-color.png') }}" alt="">
-    </a>
-    {#<ul class="nav navbar-nav float-xs-right">#}
-        {#<li class="nav-item dropdown">#}
-            {#<a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#}
-                {#{% if app.user.imageName %}#}
-                    {#<img src="{{ asset(vich_uploader_asset(app.user, 'image')) }}" class="img-avatar" alt="{{ app.user.firstName }}">#}
-                {#{% else %}#}
-                    {#<i class="fa fa-user fa-2x"></i>#}
-                {#{% endif %}#}
-                {#<span class="hidden-md-down">{{ app.user.firstName }} {{ app.user.lastName }}</span>#}
-            {#</a>#}
-            {#<div class="dropdown-menu dropdown-menu-right">#}
-
-                {#<div class="dropdown-header text-xs-center">#}
-                    {#<strong>Account</strong>#}
-                {#</div>#}
-
-                {#<a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="tag tag-info">42</span></a>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="tag tag-success">42</span></a>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="tag tag-danger">42</span></a>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="tag tag-warning">42</span></a>#}
-
-                {#<div class="dropdown-header text-xs-center">#}
-                    {#<strong>Settings</strong>#}
-                {#</div>#}
-
-                {#<a class="dropdown-item" href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i> {{ 'Profile' | trans }}</a>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="tag tag-default">42</span></a>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="tag tag-primary">42</span></a>#}
-                {#<div class="divider"></div>#}
-                {#<a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>#}
-                {#<a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i> {{ 'Logout' | trans }}</a>#}
-            {#</div>#}
-        {#</li>#}
-    {#</ul>#}
+    <div class="col-md-6">
+        <a class="navbar-brand" href="{{ path('dashboard') }}">
+            <img style="display: block; width: 130px;" src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-color.png') }}" alt="">
+        </a>
+        <div class="titletext">Extranet</div>
+    </div> 
+    {% if app.user %}  
+    <ul class="nav navbar-nav navbar-right" style="margin-right: 25px;">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span> 
+                <strong>{{ app.user.firstName }} {{ app.user.lastName }}</strong>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div class="navbar-login">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p class="text-center">
+                                    <span class="glyphicon glyphicon-user icon-size" style="font-size: 93px;"></span>
+                                </p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="text-left"><strong>{{ app.user.firstName }} {{ app.user.lastName }}</strong></p>
+                                <p class="text-left small">{{ app.user.email }}</p>
+                                <p class="text-left">
+                                    <a href="{{ path('fos_user_profile_show') }}" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <div class="navbar-login navbar-login-session">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p>
+                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-danger btn-block">Cerrar Sesion</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>    
+    {% endif %}        
 </div>

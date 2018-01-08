@@ -601,6 +601,51 @@ pre {
     content: "";
     display: table;
     clear: both; }
+  
+.container-loging{
+   margin-top: -30%;   
+  } 
+  
+.container-register{
+   margin-top: -10%;   
+  }   
+  
+.titletext {
+    padding: 8px;
+    display: inline-block;
+    float: left;
+    color: blue;
+    font-size: 14px;
+    line-height: 20px;
+    border: 1px solid blue;
+    margin-top: 10px;
+    margin-left: 60px;
+}  
+
+.text-ter-pol-coo{
+    font-size: 12px;
+    text-align: center;
+}
+
+.navbar-login {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 10px;
+    padding-bottom: 0px;
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+  
+.menu_top{
+    margin-top: 58px;
+    background-color: #fff;
+}
+
   @media (min-width: 576px) {
     .container {
       width: 540px;
@@ -2194,7 +2239,7 @@ tbody.collapse.in {
   position: relative; }
 
 .dropdown-toggle::after {
-  display: inline-block;
+  display: none;
   width: 0;
   height: 0;
   margin-left: 0.3em;
@@ -2986,7 +3031,7 @@ tbody.collapse.in {
 
 header.navbar {
   position: relative;
-  height: 55px;
+  height: 58px;
   padding: 0;
   line-height: 55px;
   background-color: #fff;
@@ -3020,8 +3065,7 @@ header.navbar {
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 70px auto;
-    border-bottom: 1px solid #cfd8dc; }
+    background-size: 70px auto; }
 
 header.navbar .navbar-brand {
   margin-right: 0; }
@@ -3044,7 +3088,7 @@ header.navbar .navbar-nav .nav-link {
     color: rgba(0, 0, 0, 0.8); }
 
 .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.3); }
+  color: rgba(0, 0, 0); }
   .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover {
     color: rgba(0, 0, 0, 0.6); }
 
@@ -5317,9 +5361,6 @@ body.std {
   body.std .main {
     padding-left: 200px; }
 
-body.navbar-fixed .main {
-  padding-top: 55px; }
-
 body.navbar-fixed.top-nav.fixed-nav nav.top-nav {
   position: fixed; }
 
@@ -5331,7 +5372,7 @@ body:not(.top-nav) header.navbar {
 
 body:not(.top-nav) .sidebar {
   display: inline;
-  padding-top: 55px !important; }
+  padding-top: 62px !important; }
 
 body:not(.top-nav).sidebar-nav.compact-nav .main {
   padding-left: 50px; }
@@ -5394,12 +5435,6 @@ body:not(.top-nav).sidebar-opened.sidebar-off-canvas-with-shadow {
 
 body.sidebar-nav .sidebar {
   left: 0; }
-
-body.sidebar-nav .main {
-  padding-left: 200px; }
-
-body.sidebar-nav .footer {
-  left: 200px; }
 
 body.top-nav .layout-toggler {
   display: none !important; }

@@ -2,10 +2,26 @@
 
 {% block body %}
     <body {% block body_class %}{% endblock %}>
+        <!-- header -->
+    <header class="navbar">
+        {% block header %}
+            {% embed ':_partial:header.html.twig' %}{% endembed %}
+        {% endblock %}
+    </header>
+    <!-- /header -->
     <div class="container d-table">
         <div class="d-100vh-va-middle">
             <div class="row">
                 {% block content %}
+                    <div class="col-md-6 offset-md-3 container-loging">
+                        <div class="card-group">
+                            <div class="card p-2">
+                                <div class="card-block">
+                                    <h1>Login</h1>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>    
                     <h4>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</h4>
                 {% endblock %}
             </div>

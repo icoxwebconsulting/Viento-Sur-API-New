@@ -2,11 +2,18 @@
 
 {% block body %}
     <body {% block body_class %}{% endblock %}>
+    <!-- header -->
+    <header class="navbar">
+        {% block header %}
+            {% embed ':_partial:header.html.twig' %}{% endembed %}
+        {% endblock %}
+    </header>
+    <!-- /header -->    
     <div class="container d-table">
         <div class="d-100vh-va-middle">
             <div class="row">
                 {% block content %}
-                    <div class="col-md-6 offset-md-3">
+                    <div class="col-md-6 offset-md-3 container-register">
                         <div class="card mx-2">
                             <div class="card-block p-2">
                                 <h1>{{ 'admin.register' | trans }}</h1>
@@ -67,6 +74,9 @@
                                     <a href="{{ path('fos_user_security_login') }}" class="btn btn-block btn-primary"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
                                 </form>
                             </div>
+                            <div>
+                                <p class="text-center text-ter-pol-coo">Al registrarse, aceptas nuestros Términos de uso y nuestra Política de privacidad y cookies.</p>
+                            </div>     
                         </div>
                     </div>
                 {% endblock %}

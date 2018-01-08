@@ -45,6 +45,9 @@ class ReservationController extends Controller
                 $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
                     'created_by' => $this->getUser()->getId()
                 ));
+                if(!$hotel){
+                 return $this->redirectToRoute('hotel_new');   
+                }
                 $dql = "SELECT r
                     FROM VientoSurAppAppBundle:Reservation r
                     WHERE r.hotelId = ".$hotel->getId()."
