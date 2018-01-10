@@ -223,7 +223,111 @@ class HotelController extends Controller
      * @Route("/name", name="hotel_name")
      * @return response
      */
-    public function nameAction()
+    public function nameAction(Request $request)
+    {
+        $hotel = $this->getHotelByUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if($request->isMethod('POST')){
+            $name = $request->get('name_hotel');
+            
+            $hotel->setName($name);
+            $em->persist($hotel);
+            $em->flush();
+            
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_name', $hotel->getName());
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_name');
+        }
+        
+        $name = $hotel->getName();
+        
+        return $this->render(':admin/hotel:name.html.twig', array(
+            'name' => $name,
+        ));
+    }
+    
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/address", name="hotel_address")
+     * @return response
+     */
+    public function addressAction(Request $request)
+    {
+        $hotel = $this->getHotelByUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if($request->isMethod('POST')){
+            
+            $address = $request->get('address');
+            $lat     = $request->get('latitude');
+            $log     = $request->get('longitude');
+            
+            $hotel->setAddress($address);
+            $hotel->setLatitude($lat);
+            $hotel->setLongitude($log);
+            $em->persist($hotel);
+            $em->flush();
+            
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_address', $hotel->getAddress());
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_address');
+            
+        }
+        
+        $address = $hotel->getAddress();
+        $lat     = $hotel->getLatitude();
+        $log     = $hotel->getLongitude();
+        
+        return $this->render(':admin/hotel:address.html.twig', array(
+            'address' => $address,
+            'lat'     => $lat,
+            'log'     => $log,
+        ));
+    }
+    
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/stars", name="hotel_stars")
+     * @return response
+     */
+    
+    public function starsAction(Request $request)
+    {
+        $hotel = $this->getHotelByUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if($request->isMethod('POST')){
+            
+        }
+        
+        $stars = $hotel->getStars();
+        
+        return $this->render(':admin/hotel:stars.html.twig', array(
+            'stars' => $stars,
+        ));
+    }        
+    
+    /**
+     * 
+     * @return \VientoSur\App\AppBundle\Entity\Hotel
+     */
+    private function getHotelByUser()
     {
         $em = $this->getDoctrine()->getManager();
         $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
@@ -237,10 +341,6 @@ class HotelController extends Controller
           $hotel->setCreatedBy($this->getUser());
         }
         
-        $name = $hotel->getName();
-        
-        return $this->render(':admin/hotel:name.html.twig', array(
-            'name' => $name,
-        ));
+        return $hotel;
     }        
 }

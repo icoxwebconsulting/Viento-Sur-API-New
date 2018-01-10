@@ -19,6 +19,30 @@ class DashboardController extends Controller
 {
     /**
      * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/hotel-control", name="hotel_control")
+     * @Method("GET")
+     * @return array
+     */
+    public function hotelControlAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
+            'created_by' => $this->getUser()->getId()
+        ));
+        
+        if($hotel){
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_name', $hotel->getName());
+            $this->get('session')->set('hotel_address', $hotel->getAddress());
+            $this->get('session')->set('hotel_stars', $hotel->getStars());
+        }
+        
+        return $this->redirect($this->generateUrl('reservation_list'));
+        
+    }   
+    
+    /**
+     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="dashboard")
      * @Method("GET")
      * @return array

@@ -435,6 +435,7 @@ amenities:
     VALETPRK: Valet Parking
     WAKEUP: Wake Up Service
 admin:
+    To_update: To update
     hotels: Establishment
     General_information: General information
     Much_more: Much more

@@ -427,6 +427,7 @@ amenities:
     VALETPRK: Estacionamento com manobrista
     WAKEUP: Serviço de despertador
 admin:
+    To_update: To update
     hotels: Estabelecimento
     General_information: Informações gerais
     Much_more: Muito mais

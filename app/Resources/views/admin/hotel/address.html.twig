@@ -1,0 +1,183 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% if app.request.attributes.get('_route') == 'hotel_new' %}
+        {% set title = 'admin.hotel_new' %}
+    {% else %}
+        {% set title = 'admin.hotel_edit' %}
+    {% endif %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}    
+<div>
+    <div class="card">
+        <div class="card-header">
+            <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }} {% if app.session.get('hotel_name') %} ({{ app.session.get('hotel_name') }})  {% endif %}</strong>
+        </div>
+        <form name="appbundle_hotel" method="post" id="form" class="form-horizontal">
+            <div class="card-block">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="col-md-3 form-control-label" for="search-address">{{ 'hotels.address' | trans }}*</label>
+                        <span class="help-block">{{ 'admin.pick_address' | trans }}</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input id="appbundle_hotel_address" name="address" required="required" class="form-control controls" value="{{ address }}" placeholder="Escribe una consulta." autocomplete="off" style="z-index: 0; position: absolute; left: 119px; top: 0px;" type="text">
+                        <input id="appbundle_hotel_longitude" name="longitude" value="{{ log }}" type="hidden">
+                        <input id="appbundle_hotel_latitude" name="latitude" value="{{ lat }}" type="hidden"></div>
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 0rem;">
+                    <div class="col-md-12">
+                        <div id="map-canvas"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.To_update' | trans }}</button>
+            </div>        
+        </form>   
+    </div>    
+</div>                
+{% endblock %}    
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .hide {
+            display: none !important;
+        }
+        #map-canvas {
+            height: 400px;
+            width: 100%;
+        }
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        #appbundle_hotel_address {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+        }
+        #appbundle_hotel_address:focus {
+            border-color: #4d90fe;
+        }
+        .flags-lg{
+            margin-left: 10px;
+            width: 20px;
+        }
+        .label-lg{
+            display: inline-block;
+        }
+        .pac-container{
+            margin-top: -55px !important;
+            margin-left: 2px !important;;
+        }
+    </style>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        function initialize() {
+            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+                center: {lat: {{ lat }}, lng: {{ log }} },
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById("appbundle_hotel_address");
+            var myLatLng = new google.maps.LatLng({{ lat }}, {{ log }});
+            marker = new google.maps.Marker( {position: myLatLng, map: map, draggable: true } );
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                document.getElementById("appbundle_hotel_latitude").value = this.getPosition().lat();
+                document.getElementById("appbundle_hotel_longitude").value = this.getPosition().lng();
+                console.log("lat->",this.getPosition().lat());
+                console.log("log->",this.getPosition().lng());
+            });
+            marker.setMap( map );
+
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // [START region_getplaces]
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+                console.log(places[0].geometry);
+                document.getElementById("appbundle_hotel_latitude").value = places[0].geometry.viewport.f.b;
+                document.getElementById("appbundle_hotel_longitude").value = places[0].geometry.viewport.b.b;
+                console.log("auto complete lat->",places[0].geometry.viewport.f.b);
+                console.log("auto complete long->",places[0].geometry.viewport.b.b);
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        title: place.name,
+                        position: place.geometry.location,
+                        draggable: true,
+                    });
+                    // Create a marker for each place.
+                    markers.push(marker);
+
+                    google.maps.event.addListener(marker, 'dragend', function (event) {
+                        document.getElementById("appbundle_hotel_latitude").value = this.getPosition().lat();
+                        document.getElementById("appbundle_hotel_longitude").value = this.getPosition().lng();
+                        console.log("lat->",this.getPosition().lat());
+                        console.log("log->",this.getPosition().lng());
+                    });
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            // [END region_getplaces]
+        }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>
+{% endblock %}        

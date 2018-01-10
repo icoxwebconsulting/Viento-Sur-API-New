@@ -16,21 +16,20 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }}</strong>
+            <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }} {% if app.session.get('hotel_name') %} ({{ app.session.get('hotel_name') }})  {% endif %}</strong>
         </div>
         <form name="appbundle_hotel" method="post" id="form" class="form-horizontal">
             <div class="card-block">
                 <div class="form-group row">
-                    <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
+                    <label class="col-md-1 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
                     <div class="col-md-9">
-                        <input id="appbundle_hotel_name" name="appbundle_hotel[name]" required="required" class="form-control" type="text">
+                        <input id="name_hotel" name="name_hotel" required="required" class="form-control form-control-lg" type="text" value="{{ name }}">
                     </div>
 
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{{ path('hotel_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
-                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.To_update' | trans }}</button>
             </div>        
         </form>   
     </div>    
