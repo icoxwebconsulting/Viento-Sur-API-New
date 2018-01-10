@@ -30,12 +30,14 @@ class DashboardController extends Controller
             'created_by' => $this->getUser()->getId()
         ));
         
+        
         if($hotel){
             $this->get('session')->set('hotel_id', $hotel->getId());
             $this->get('session')->set('hotel_name', $hotel->getName());
             $this->get('session')->set('hotel_address', $hotel->getAddress());
             $this->get('session')->set('hotel_stars', $hotel->getStars());
         }
+       
         
         return $this->redirect($this->generateUrl('reservation_list'));
         

@@ -24,8 +24,9 @@
                     <label class="col-md-1 form-control-label" for="first-name">{{ 'hotels.stars' | trans }}*</label>
                     <div class="col-md-9">
                         <div class="row lead">
-                            <div id="stars-existing" class="starrr" data-rating='4'></div>
+                            <div id="stars-existing" class="starrr" data-rating='{{ stars }}'></div>
                         </div>
+                        <input type="hidden" name="stars" value="{{ stars }}" id="stars" />
                     </div>
 
                 </div>
@@ -84,7 +85,7 @@ var __slice = [].slice;
 
       _results = [];
       for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty' style='font-size: 30px; color: yellow'></span>"));
+        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty' style='font-size: 30px; color: yellowgreen'></span>"));
       }
       return _results;
     };
@@ -145,13 +146,8 @@ $(function() {
 });
 
 $( document ).ready(function() {
-      
-  $('#stars').on('starrr:change', function(e, value){
-    $('#count').html(value);
-  });
-  
   $('#stars-existing').on('starrr:change', function(e, value){
-    $('#count-existing').html(value);
+        $('#stars').val(value);
   });
 });    
 </script>

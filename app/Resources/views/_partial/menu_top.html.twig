@@ -34,10 +34,10 @@
                 <li class="col-sm-3">
                     <ul>
                         <li class="dropdown-header">{{ 'admin.profile_trip.label' | trans }}</li>
-                        <li><a href="#">{{ 'hotels.search_menu.type' | trans }}</a></li>
-                        <li><a href="#">{{ 'hotels.search_menu.hotel_chain' | trans }}</a></li>                            
-                        <li><a href="#">{{ 'admin.profile_trip.label' | trans }}</a></li>
-                        <li><a href="#">{{ 'hotels.services' | trans }}</a></li>
+                        <li><a href="#">{{ 'hotels.search_menu.type' | trans }} {% if not app.session.get('hotel_type') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
+                        <li><a href="#">{{ 'hotels.search_menu.hotel_chain' | trans }} {% if not app.session.get('hotel_chain') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>                            
+                        <li><a href="#">{{ 'admin.profile_trip.label' | trans }} {% if not app.session.get('hotel_label') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
+                        <li><a href="#">{{ 'hotels.services' | trans }} {% if not app.session.get('hotel_services') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                     </ul>
                 </li>
                 <li class="col-sm-3">

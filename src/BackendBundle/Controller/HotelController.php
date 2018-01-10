@@ -313,7 +313,20 @@ class HotelController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         if($request->isMethod('POST')){
+            $stars = $request->get('stars');
             
+            $hotel->setStars($stars);
+            $em->persist($hotel);
+            $em->flush();
+            
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_stars', $hotel->getStars());
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_stars');
         }
         
         $stars = $hotel->getStars();
