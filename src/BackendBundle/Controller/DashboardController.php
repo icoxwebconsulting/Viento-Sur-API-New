@@ -36,6 +36,7 @@ class DashboardController extends Controller
             $this->get('session')->set('hotel_name', $hotel->getName());
             $this->get('session')->set('hotel_address', $hotel->getAddress());
             $this->get('session')->set('hotel_stars', $hotel->getStars());
+            $this->get('session')->set('hotel_type', $hotel->getHotelTypes());
         }
        
         

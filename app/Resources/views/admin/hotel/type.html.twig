@@ -1,0 +1,42 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'admin.hotel_new' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% if app.request.attributes.get('_route') == 'hotel_new' %}
+        {% set title = 'admin.hotel_new' %}
+    {% else %}
+        {% set title = 'admin.hotel_edit' %}
+    {% endif %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ title | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}    
+<div>
+    <div class="card">
+        <div class="card-header">
+            <strong style="text-transform:capitalize;">{{ 'index.hotel' | trans }} {% if app.session.get('hotel_name') %} ({{ app.session.get('hotel_name') }})  {% endif %}</strong>
+        </div>
+        <form name="appbundle_hotel" method="post" id="form" class="form-horizontal">
+            <div class="card-block">
+                <div class="form-group row">
+                    <label class="col-md-1 form-control-label" for="first-name">{{ 'hotels.search_menu.type' | trans }}*</label>
+                    <div class="col-md-9">
+                        <select id="hotelType" name="hotel_type" class="selectpicker show-tick" style="width: 100%">
+                            {% for val in hoteltypeAll %}
+                                {% set label = 'admin.hotel_type.'~val.name %}
+                                <option value="{{ val.id }}" {% if val.id == type %} selected {% endif %}>{{ label | trans }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.To_update' | trans }}</button>
+            </div>        
+        </form>   
+    </div>    
+</div>                
+{% endblock %}         

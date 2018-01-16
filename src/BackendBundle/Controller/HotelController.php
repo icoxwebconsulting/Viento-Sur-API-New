@@ -334,7 +334,93 @@ class HotelController extends Controller
         return $this->render(':admin/hotel:stars.html.twig', array(
             'stars' => $stars,
         ));
-    }        
+    }    
+    
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/type", name="hotel_type")
+     * @return response
+     */
+    
+    public function hotelTypesAction(Request $request)
+    {
+        $hotel = $this->getHotelByUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if($request->isMethod('POST')){
+            $type = $request->get('hotel_type');
+            
+            $hoteltypeId = $em->getRepository('VientoSurAppAppBundle:HotelType')->findOneById($type);
+            
+            $hotel->setHotelTypes($hoteltypeId);
+            $em->persist($hotel);
+            $em->flush();
+            
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_type', $hotel->getHotelTypes());
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_type');
+        }
+        
+        $hoteltypeAll = $em->getRepository('VientoSurAppAppBundle:HotelType')->findAll();
+        
+        $type = $hotel->getHotelTypes()?$hotel->getHotelTypes()->getId():'';
+        
+        return $this->render(':admin/hotel:type.html.twig', array(
+            'type' => $type,
+            'hoteltypeAll'=> $hoteltypeAll
+        ));
+    }
+    
+    
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/chain", name="hotel_chain")
+     * @return response
+     */
+    
+    public function hotelChainAction(Request $request)
+    {
+        $hotel = $this->getHotelByUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if($request->isMethod('POST')){
+            $chain = $request->get('hotel_chain');
+            
+            $hotelChainId = $em->getRepository('VientoSurAppAppBundle:HotelChain')->findOneById($chain);
+            
+            $hotel->setHotelChain($hotelChainId);
+            $em->persist($hotel);
+            $em->flush();
+            
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_chain', $hotel->getHotelChain());
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_chain');
+        }
+        
+        $hotelChainAll = $em->getRepository('VientoSurAppAppBundle:HotelChain')->findAll();
+        
+        $chain = $hotel->getHotelChain()?$hotel->getHotelChain()->getId():'';
+        
+        return $this->render(':admin/hotel:chain.html.twig', array(
+            'chain' => $chain,
+            'hotelChainAll'=> $hotelChainAll
+        ));
+    }
+    
     
     /**
      * 
