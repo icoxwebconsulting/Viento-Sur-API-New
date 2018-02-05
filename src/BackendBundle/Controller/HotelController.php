@@ -421,6 +421,61 @@ class HotelController extends Controller
         ));
     }
     
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/profile-trip", name="hotel_profile")
+     * @return response
+     */
+    
+    public function hotelProfileAction(Request $request)
+    {
+        $hotel = $this->getHotelByUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        if($request->isMethod('POST')){
+            $profile = $request->get('hotel_profile');
+            
+            $hotel->setProfileTrip($profile);
+            $em->persist($hotel);
+            $em->flush();
+            
+            $this->get('session')->set('hotel_id', $hotel->getId());
+            $this->get('session')->set('hotel_profile', $hotel->getProfileTrip());
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('admin.messages.updated')
+            );
+            return $this->redirectToRoute('hotel_profile');
+        }
+        
+        $hotelProfile = array(
+                       'businessTrip' => 'admin.profile_trip.businessTrip',
+                       'castle' => 'admin.profile_trip.castle',
+                       'cheap' => 'admin.profile_trip.cheap',
+                       'design' => 'admin.profile_trip.design',
+                       'family' => 'admin.profile_trip.family',
+                       'gourmet' => 'admin.profile_trip.gourmet',
+                       'luxury' => 'admin.profile_trip.luxury',
+                       'nature' => 'admin.profile_trip.nature',
+                       'other' => 'admin.profile_trip.other',
+                       'relax' => 'admin.profile_trip.relax',
+                       'romantic' => 'admin.profile_trip.romantic',
+                       'shopping' => 'admin.profile_trip.shopping',
+                       'singles' => 'admin.profile_trip.singles',
+                       'sport' => 'admin.profile_trip.sport',
+                    );
+        
+        $profile = $hotel->getProfileTrip();
+        
+        return $this->render(':admin/hotel:profile_trip.html.twig', array(
+            'profile' => $profile,
+            'hotelProfile'=> $hotelProfile
+        ));
+    }
+    
     
     /**
      * 

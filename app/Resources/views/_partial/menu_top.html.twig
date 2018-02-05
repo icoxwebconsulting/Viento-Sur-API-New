@@ -28,7 +28,7 @@
                         <li><a href="{{ path('hotel_stars') }}">{{ 'hotels.stars' | trans }} {% if not app.session.get('hotel_stars') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-header">{{ 'admin.gallery_photo' | trans }}</li>
-                        <li><a href="#">{{ 'hotels.pictures' | trans }} {% if not app.session.get('hotel_pictures') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
+                        <li><a href="{% if app.session.get('hotel_id') %} {{ path('hotel_picture_list', {id: app.session.get('hotel_id')}) }} {% endif %}">{{ 'hotels.pictures' | trans }} {% if not app.session.get('hotel_pictures') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                     </ul>
                 </li>
                 <li class="col-sm-3">
@@ -36,7 +36,7 @@
                         <li class="dropdown-header">{{ 'admin.profile_trip.label' | trans }}</li>
                         <li><a href="{{ path('hotel_type') }}">{{ 'hotels.search_menu.type' | trans }} {% if not app.session.get('hotel_type') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                         <!--<li><a href="{#{ path('hotel_chain') }}">{{ 'hotels.search_menu.hotel_chain' | trans }} {% if not app.session.get('hotel_chain') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %#}</a></li>-->                            
-                        <li><a href="#">{{ 'admin.profile_trip.label' | trans }} {% if not app.session.get('hotel_label') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
+                        <li><a href="{{ path('hotel_profile') }}">{{ 'admin.profile_trip.label' | trans }} {% if not app.session.get('hotel_profile') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                         <li><a href="#">{{ 'hotels.services' | trans }} {% if not app.session.get('hotel_services') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                     </ul>
                 </li>
