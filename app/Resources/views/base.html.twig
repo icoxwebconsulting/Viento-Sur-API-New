@@ -165,7 +165,18 @@
         </div>
 
         <div id="fb-root"></div>
-
+        <div id="content-app" class="contend-app">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 div-contend-app">
+                        <span id="close-div-app"><b>X</b></span>
+                        <p><b>{{ 'index.title_modal_app' | trans }}</b></p>
+                        <p style="margin-bottom: 5px">{{ 'index.text_modal_app' | trans }}</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.vientosurapp.vientosur&hl=es" target="_blanck" title="{{ 'index.consult' | trans }}" class="contend-app-download">{{ 'index.download' | trans }}</a>
+                    </div>
+                </div>    
+            </div>    
+        </div>    
         <div class="modal fade" id="submitConsult" role="dialog" aria-labelledby="submitConsultLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -235,6 +246,38 @@
             $('#roomModal').modal('show')
         });*/
 
+        $('#close-div-app').click(function(){
+            $('#content-app').hide();
+        });
+        
+        jQuery(document).ready(function () {
+            var os = getMobileOperatingSystem
+            if(os === 'Android'){
+              $('#content-app').show();  
+            }
+        });
+        
+        function getMobileOperatingSystem() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                // Windows Phone must come first because its UA also contains "Android"
+              if (/windows phone/i.test(userAgent)) {
+                  return "Windows Phone";
+              }
+
+              if (/android/i.test(userAgent)) {
+                  return "Android";
+              }
+
+              // iOS detection from: http://stackoverflow.com/a/9039885/177710
+              if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                  return "iOS";
+              }
+
+              return "unknown";
+        }
+        
+        
         var dateFormat = "dd/mm/yy";
         {% if app.request.locale == 'en' %}
             var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
