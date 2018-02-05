@@ -2054,6 +2054,47 @@ figure.effect-goliath:hover p {
 	color: #008cd1;
 	text-transform: uppercase;
 }
+
+.contend-app{
+    height: 150px;
+    width: 100%;
+    bottom: 0px;
+    position: fixed;
+    background-color: gray;
+    z-index: 100;
+    opacity: 0.9;
+    display: none;
+}
+
+.div-contend-app{
+    height: 150px;
+}
+
+.contend-app p{
+    padding: 10px;
+    color: white;
+    margin-bottom: -5px;
+}
+
+.contend-app span{
+    float: right;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.contend-app-download{
+    height: 28px;
+    width: 176px;
+    border-radius: 5px;
+    border: #464646 1px solid;
+    background-color: rgba(0,0,0,1);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding-top: 4px;
+}
+
 /*----- END FOOTER -----*/
 
 

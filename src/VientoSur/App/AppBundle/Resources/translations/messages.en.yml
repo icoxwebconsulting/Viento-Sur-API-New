@@ -36,6 +36,9 @@ index:
     cancellation_msg: We have canceled a reservation with the following characteristics
     cancellation_number: Cancellation Number
     credit_card: Credit card
+    title_modal_app: ¡FREE Use the application of VientoSur.net!
+    text_modal_app: Discover the best experience when booking hotels and buying flights
+    download: Download
     search:
         hotel:
            destination: Destination
