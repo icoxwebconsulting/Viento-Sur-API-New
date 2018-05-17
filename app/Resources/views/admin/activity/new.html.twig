@@ -1,0 +1,24 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}Agergar Actividad{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}Agergar Actividad{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Agergar Actividad
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+{% endblock %}
