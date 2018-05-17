@@ -79,7 +79,15 @@
         
     <ul class="nav navbar-nav navbar-right">
       {% if is_granted('ROLE_ADMIN') %}  
-      <li><a href="#">Enlace #3</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Actividad <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="">Lista de Actividades</a></li>
+          <li><a href="">Agergar Actividad</a></li>
+        </ul>
+      </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           {{ 'admin.promotions' | trans }} <b class="caret"></b>
