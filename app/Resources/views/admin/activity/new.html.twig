@@ -2,15 +2,6 @@
 
 {% block title %}Agergar Actividad{% endblock %}
 
-{% block stylesheets %}
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">    
-{% endblock %}
-
-{% block last_jquery %} 
-<script src="{{ asset('//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('//code.jquery.com/jquery-1.11.1.min.js') }}"></script>
-{% endblock %}
-
 {% block top_content %}
     {% embed ':_partial:breadcrumb.html.twig' %}
         {% block breadcrumb %}Agergar Actividad{% endblock %}
@@ -138,7 +129,7 @@
         }
     </style>
 {% endblock %}
-{% block javascripts %}
+{% block extra_js %}
     {{ parent() }}
     <script>
         $(document).ready(function () {
