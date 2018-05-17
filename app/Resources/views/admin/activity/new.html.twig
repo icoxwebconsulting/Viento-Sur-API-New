@@ -194,103 +194,83 @@
 {% block extra_css %}
     {{ parent() }}
     <style>
-        @import 'https://fonts.googleapis.com/css?family=Roboto';
-
         .step-wrapper {
-            padding: 20px 0;
-            display: none;
-
-            &.active {
-                display: block;
-            }
+          padding: 20px 0;
+          display: none;
         }
+        .step-wrapper.active {
+          display: block;
+        }
+
         .step-indicator {
-            border-collapse: separate;
-            display: table;
-            margin-left: 0px;
-            position: relative;
-            table-layout: fixed;
-            text-align: center;
-            vertical-align: middle;
-            padding-left: 0;
-            padding-top: 20px;
-
-            li {
-                display: table-cell;
-                position: relative;
-                float: none;
-                padding: 0;
-                width: 1%;
-
-                &:after {
-                    background-color: #ccc !default;
-                    content: "";
-                    display: block;
-                    height: 1px;
-                    position: absolute;
-                    width: 100%;
-                    top: 64px !default;/2;
-                }
-
-                &:after {
-                    left: 50%;
-                }
-
-                &:last-child {
-                    &:after {
-                        display: none;
-                    }
-                }
-
-                &.active {
-                    .step {
-                        border-color: #4183D7 !default;
-                        color: #4183D7 !default;
-                    }
-
-                    .caption {
-                        color: #4183D7 !default;
-                    }
-                }
-
-                &.complete {
-                    &:after {
-                        background-color: #87D37C !default;
-                    }
-
-                    .step {
-                        border-color: #87D37C !default;
-                        color: #87D37C !default;
-                    }
-
-                    .caption {
-                        color: #87D37C !default;
-                    }
-                }
-            }
-
-            .step {
-                background-color: #fff;
-                border-radius: 50%;
-                border: 1px solid #ccc !default;
-                color: #ccc !default;
-                font-size: 24px !default;
-                height: 64px !default;;
-                line-height: 64px !default;;
-                margin: 0 auto;
-                position: relative;
-                width: 64px !default;;
-                z-index: 1;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-
-            .caption {
-                color: #ccc !default;
-                padding: 11px 16px;
-            }
+          border-collapse: separate;
+          display: table;
+          margin-left: 0px;
+          position: relative;
+          table-layout: fixed;
+          text-align: center;
+          vertical-align: middle;
+          padding-left: 0;
+          padding-top: 20px;
+        }
+        .step-indicator li {
+          display: table-cell;
+          position: relative;
+          float: none;
+          padding: 0;
+          width: 1%;
+        }
+        .step-indicator li:after {
+          background-color: #ccc;
+          content: "";
+          display: block;
+          height: 1px;
+          position: absolute;
+          width: 100%;
+          top: 32px;
+        }
+        .step-indicator li:after {
+          left: 50%;
+        }
+        .step-indicator li:last-child:after {
+          display: none;
+        }
+        .step-indicator li.active .step {
+          border-color: #4183D7;
+          color: #4183D7;
+        }
+        .step-indicator li.active .caption {
+          color: #4183D7;
+        }
+        .step-indicator li.complete:after {
+          background-color: #87D37C;
+        }
+        .step-indicator li.complete .step {
+          border-color: #87D37C;
+          color: #87D37C;
+        }
+        .step-indicator li.complete .caption {
+          color: #87D37C;
+        }
+        .step-indicator .step {
+          background-color: #fff;
+          border-radius: 50%;
+          border: 1px solid #ccc;
+          color: #ccc;
+          font-size: 24px;
+          height: 64px;
+          line-height: 64px;
+          margin: 0 auto;
+          position: relative;
+          width: 64px;
+          z-index: 1;
+        }
+        .step-indicator .step:hover {
+          cursor: pointer;
+        }
+        .step-indicator .caption {
+          color: #ccc;
+          padding: 11px 16px;
         }
     </style>
 {% endblock %}
