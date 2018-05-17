@@ -41,11 +41,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {%  for entity in pagination %}
                             {% if is_granted('ROLE_ADMIN') %}
                                 {% include ':admin/activity:list_content.html.twig' %}
                             {% endif %}
-                        {% endfor %}
                         </tbody>
                     </table>            
             </div>
