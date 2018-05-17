@@ -2,6 +2,11 @@
 
 {% block title %}Agergar Actividad{% endblock %}
 
+{% block stylesheets %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+{% endblock %}
+
 {% block top_content %}
     {% embed ':_partial:breadcrumb.html.twig' %}
         {% block breadcrumb %}Agergar Actividad{% endblock %}
@@ -95,6 +100,10 @@
             </div>    
         </div>
     </div>
+{% endblock %}
+
+{% block last_jquery %} 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js"></script>
 {% endblock %}
 
 {% block extra_js %}
