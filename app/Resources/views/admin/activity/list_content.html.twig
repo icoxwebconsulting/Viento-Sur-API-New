@@ -1,18 +1,13 @@
 <tr>
-    <td>{{ entity.id }}</td>
-    <td>{{ entity.created | ago }}</td>
-    <td>{{ entity.title }}</td>
-    <td>{{ entity.subtitle }}</td>
-    <td>{{ entity.status.name }}</td>
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <td>
-            {% if entity.createdBy %}
-                {{ entity.createdBy.username }}
-            {% endif %}
-        </td>
-    {% endif %}
+    <td>1</td>
+    <td>hace 7 meses</td>
+    <td>Excursión a Villa Carlos Paz</td>
+    <td>Córdoba, Argentina</td>
+    <td>4 Hs</td>
+    <td>Todos los días</td>
+    <td>Activo</td>
     <td>
-        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('promotion_sections_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
-        <a href="{{ path('promotion_sections_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        <a href="" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
     </td>
 </tr>
