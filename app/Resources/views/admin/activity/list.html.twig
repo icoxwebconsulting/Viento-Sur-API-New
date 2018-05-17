@@ -1,0 +1,82 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}{{ 'admin.promotion_section' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'admin.promotion_section' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> {{ 'admin.promotion_section_manager' | trans }}
+            </div>
+            <div class="card-block">
+                <div class="count">
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
+                </div>
+                <div class="search">
+                    <form action="{{ path('promotion_sections_list') }}">
+                        <input type="text" name="query" class="form-group" value="{{ app.request.get('query') }}" placeholder="{{ 'admin.search' | trans }}">
+                        <button class="btn btn-sm btn-success">{{ 'hotels.search_menu.apply' | trans }}</button>
+                        {% if app.request.get('query') %}
+                            <a href="{{ path('promotion_sections_list') }}" class="btn btn-sm btn-danger">{{ 'admin.delete' | trans }}</a>
+                        {% endif %}
+                    </form>
+                </div>
+                {% if not pagination | length %}
+                    <h6 class="box-title">{{ 'admin.search_not_found' | trans }}</h6>
+                {% else %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'admin.period' | trans }}</th>
+                            <th>{{ 'admin.title' | trans }}</th>
+                            <th>{{ 'admin.subtitle' | trans }}</th>
+                            <th>Status</th>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <th>{{ 'admin.created_by' | trans }}</th>
+                            {% endif %}
+                            <th>{{ 'admin.actions' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%  for entity in pagination %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {% include ':admin/promotionSections:list_content.html.twig' %}
+                            {% elseif is_granted('ROLE_HOTELIER') %}
+                                {% if entity.createdBy.id == app.user.id %}
+                                    {% include ':admin/promotionSections:list_content.html.twig' %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .search {
+            display: inline-block;
+            float: right;
+        }
+        .count {
+            display: inline-block;
+        }
+        h6.box-title{
+            margin-top: 50px;
+        }
+    </style>
+{% endblock %}

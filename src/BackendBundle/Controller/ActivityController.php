@@ -19,11 +19,22 @@ class ActivityController extends Controller
 {
      /**
      * @Security("has_role('ROLE_HOTELIER')")
-     * @Route("/", name="actyvity")
+     * @Route("/", name="actyvity_list")
      * @Method("GET")
      * @return array
      */
     public function indexAction()
+    {
+        return $this->render(':admin/activity:list.html.twig');
+    }
+    
+    /**
+     * @Security("has_role('ROLE_HOTELIER')")
+     * @Route("/new", name="actyvity")
+     * @Method("GET")
+     * @return array
+     */
+    public function newAction()
     {
         return $this->render('admin/index.html.twig');
     }
