@@ -80,7 +80,6 @@
                             <div class="col-md-12">
                                 <h3>Descripción</h3>
                                 <div class="form-group">
-                                    <label class="control-label">Descripción</label>
                                     <textarea id="summernote" name="editordata"></textarea>
                                 </div>
                                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
@@ -92,11 +91,11 @@
                             <div class="col-md-12">
                                 <h3>Opciones</h3>
                                 <div class="form-group">
-                                    <label class="control-label">Company Name</label>
+                                    <label class="control-label">AM</label>
                                     <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Company Address</label>
+                                    <label class="control-label">PM</label>
                                     <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address"  />
                                 </div>
                                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
@@ -107,6 +106,17 @@
                         <div class="col-xs-12">
                             <div class="col-md-12">
                                 <h3>Informacion general</h3>
+                                <div class="form-group">
+                                     <div class="radio">
+                                        <label><input type="radio" name="optradio">Option 1</label>
+                                      </div>
+                                      <div class="radio">
+                                        <label><input type="radio" name="optradio">Option 2</label>
+                                      </div>
+                                      <div class="radio disabled">
+                                        <label><input type="radio" name="optradio" disabled>Option 3</label>
+                                      </div> 
+                                </div>
                                 <button class="btn btn-success btn-lg pull-right" type="submit">Finish!</button>
                             </div>
                         </div>
