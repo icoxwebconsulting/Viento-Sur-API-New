@@ -154,17 +154,28 @@ button:-moz-focusring,
   outline: 1px dotted ButtonText; }
 
 fieldset {
-  border: 1px solid #c0c0c0;
-  margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em; }
+  border: 1px solid #c0c0c0 !important;
+  margin: 0 2px !important;
+  padding: 0.35em 0.625em 0.75em !important; }
 
-legend {
-  box-sizing: border-box;
-  color: inherit;
-  display: table;
-  max-width: 100%;
-  padding: 0;
-  white-space: normal; }
+.class-legend {
+  display: block;
+width: 100%;
+padding: 0px;
+margin-bottom: 20px;
+font-size: 18px;
+line-height: inherit;
+color: #333;
+border-width: 0px 0px 1px;
+border-style: none none solid;
+border-color: -moz-use-text-color -moz-use-text-color #E5E5E5;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+font-weight: 400 !important;    
+}
 
 textarea {
   overflow: auto; }

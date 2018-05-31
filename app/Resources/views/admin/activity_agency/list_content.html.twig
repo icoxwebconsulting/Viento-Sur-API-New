@@ -1,0 +1,13 @@
+<tr>
+    <td>{{ entity.id }}</td>
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.address }}</td>
+    <td>{{ entity.phone }}</td>
+    <td>{{ entity.user.email }}</td>
+    <td>{{ entity.user.firstName }} {{ entity.user.lastName }}</td>
+    <td>{% if entity.enabled %} <i class="fa fa-check-circle"></i>{% else %} <i class="fa fa fa-times-circle"></i> {% endif %}</td>
+    <td>
+        <a href="{{ path('activity_agency_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('activity_agency_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+    </td>
+</tr>

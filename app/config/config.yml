@@ -162,9 +162,27 @@ vich_uploader:
         image_promotion:
             uri_prefix:         /uploads/promotions/image
             upload_destination: '%kernel.root_dir%/../web/uploads/promotions/image'
+            namer:
+                service: vich_uploader.namer_uniqid 
             inject_on_load:     false
             delete_on_update:   false
             delete_on_remove:   false
+        image_activiti_agency:
+            uri_prefix:         /uploads/activiti_agency/image
+            upload_destination: '%kernel.root_dir%/../web/uploads/activiti_agency/image'
+            namer:
+                service: vich_uploader.namer_uniqid 
+            inject_on_load:     false
+            delete_on_update:   false
+            delete_on_remove:   false    
+        file_activiti_agency:
+            uri_prefix:         /uploads/activiti_agency/file
+            upload_destination: '%kernel.root_dir%/../web/uploads/activiti_agency/file'
+            namer:
+                service: vich_uploader.namer_uniqid 
+            inject_on_load:     false
+            delete_on_update:   false
+            delete_on_remove:   false     
 #        gallery_image:
 #            uri_prefix:         /uploads/gallery
 #            upload_destination: '%kernel.root_dir%/../web/uploads/gallery'

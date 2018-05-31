@@ -5,7 +5,7 @@ security:
                           cost: 15
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_HOTELIER, ROLE_CUSTOMER]
+        ROLE_ADMIN: [ROLE_HOTELIER, ROLE_CUSTOMER, ROLE_ACTIVITY]
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:

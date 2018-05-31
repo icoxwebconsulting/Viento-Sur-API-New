@@ -7,11 +7,14 @@ use FOS\UserBundle\Entity\User as BaseUser;
 use VientoSur\App\AppBundle\Entity\Traits\TimestampableTrait;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @UniqueEntity(fields="email", message="Email is already in use")
+ * @UniqueEntity(fields="username", message="Username is already in use")
  */
 class User extends BaseUser
 {
@@ -45,6 +48,15 @@ class User extends BaseUser
      * )
      */
     protected $userHotels;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="ActivityAgency")
+     * @ORM\JoinTable(name="user_activity_agency",
+     *     joinColumns={@ORM\JoinColumn(name="activity_agency_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
+     */
+    protected $userActivityAgency;
     
     /** Set first_name
     *
@@ -94,7 +106,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->addRole("ROLE_HOTELIER");
+        //$this->addRole("ROLE_HOTELIER");
     }
 
     /**
@@ -128,5 +140,39 @@ class User extends BaseUser
     public function getUserHotels()
     {
         return $this->userHotels;
+    }
+
+    /**
+     * Add userActivityAgency
+     *
+     * @param \VientoSur\App\AppBundle\Entity\ActivityAgency $userActivityAgency
+     *
+     * @return User
+     */
+    public function addUserActivityAgency(\VientoSur\App\AppBundle\Entity\ActivityAgency $userActivityAgency)
+    {
+        $this->userActivityAgency[] = $userActivityAgency;
+
+        return $this;
+    }
+
+    /**
+     * Remove userActivityAgency
+     *
+     * @param \VientoSur\App\AppBundle\Entity\ActivityAgency $userActivityAgency
+     */
+    public function removeUserActivityAgency(\VientoSur\App\AppBundle\Entity\ActivityAgency $userActivityAgency)
+    {
+        $this->userActivityAgency->removeElement($userActivityAgency);
+    }
+
+    /**
+     * Get userActivityAgency
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserActivityAgency()
+    {
+        return $this->userActivityAgency;
     }
 }
