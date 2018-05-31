@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use \Gedmo\Translatable\Translatable;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use VientoSur\App\AppBundle\Entity\GeneralInformation;
 
 class GeneralInformationType extends AbstractType
 {
@@ -16,11 +17,7 @@ class GeneralInformationType extends AbstractType
         $builder
             ->add(
                 'name',
-                TextType::class,
-                array(
-                    'mapped' => false,
-                    'required' => false
-                )    
+                TextType::class   
             )
             ->add(
                 'namePt',
@@ -46,9 +43,8 @@ class GeneralInformationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VientoSur\App\AppBundle\Entity\GeneralInformation',
+            'data_class' => GeneralInformation::class,
             'id' => null,
-            'cascade_validation' => true
         ));
     }
 

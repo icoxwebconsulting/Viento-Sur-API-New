@@ -13,7 +13,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="general_information")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
-class GeneralInformation implements Translatable
+class GeneralInformation
 {
     use TimestampableTrait;
     
@@ -25,6 +25,7 @@ class GeneralInformation implements Translatable
     protected $id;
     
     /**
+     * @var string
      * @Gedmo\Translatable
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)

@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
+use VientoSur\App\AppBundle\Entity\GeneralInformation;
+use BackendBundle\Form\GeneralInformationType;
 
 /**
  * @Route("/{_locale}/general_information", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
  */
-class GeneralInformationControllerController extends Controller
+class GeneralInformationController extends Controller
 {
      /**
      * @param $request
@@ -31,7 +33,7 @@ class GeneralInformationControllerController extends Controller
             $finder = $this->container->get('fos_elastica.finder.app.bed');
             $query = $finder->createPaginatorAdapter($querySearch);
         }else {
-        $dql = "SELECT ag
+        $dql = "SELECT gi
                 FROM VientoSurAppAppBundle:GeneralInformation gi
                 ORDER BY gi.id ASC";
         $query = $em->createQuery($dql);
@@ -84,11 +86,15 @@ class GeneralInformationControllerController extends Controller
             "method" => $request->getMethod(),
         ]);
         
+        $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
+        $translations = $repository->findTranslations($entity);
+        
         $this->formAction($form, $request, $em, $entity, 'editado', 'edit');
         
         return $this->render(':admin/general_information:form.html.twig', array(
             'form' => $form->createView(),
-            'entity' => $entity
+            'entity' => $entity,
+            'translations' => $translations
         ));
         
     }
@@ -125,10 +131,10 @@ class GeneralInformationControllerController extends Controller
         
         if($form->handleRequest($request)->isValid())
         {
+            
             $namePt = $form->get('namePt')->getData();
             $nameEn = $form->get('nameEn')->getData();
-
-            $em = $this->getDoctrine()->getManager();
+            
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();

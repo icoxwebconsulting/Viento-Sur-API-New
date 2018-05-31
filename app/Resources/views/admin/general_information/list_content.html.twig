@@ -2,7 +2,7 @@
     <td>{{ entity.id }}</td>
     <td>{{ entity.name }}</td>
     <td>
-        <a href="{{ path('activity_agency_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
-        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('activity_agency_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        <a href="{{ path('general_information_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('general_information_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
     </td>
 </tr>

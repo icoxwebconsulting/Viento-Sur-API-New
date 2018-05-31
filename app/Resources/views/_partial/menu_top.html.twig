@@ -27,13 +27,22 @@
           {#<li><a href="{{ path('hotel_new') }}">{{ 'admin.add' | trans }}</a></li>#}
         </ul>
       </li>
-      <li class="dropdown">
+      <li class="dropdown mega-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Agencia de Actividades <b class="caret"></b>
+          Actividades <b class="caret"></b>
         </a>
-        <ul class="dropdown-menu">
-          <li><a href="{{ path('activity_agency_list') }}">Lista de Agencias</a></li>
-          <li><a href="{{ path('activity_agency_new') }}">Agregar Agencia</a></li>
+        <ul class="dropdown-menu mega-dropdown-menu">
+            <li class="col-sm-3">
+                <ul>
+                    <li class="dropdown-header">Agencia de Actividades</li>
+                    <li><a href="{{ path('activity_agency_list') }}">Lista de Agencias</a></li>
+                    <li><a href="{{ path('activity_agency_new') }}">Agregar Agencia</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Información General </li>
+                    <li><a href="{{ path('general_information_list') }}">Lista de Información</a></li>
+                    <li><a href="{{ path('general_information_new') }}">Agregar Información</a></li>
+                </ul>
+            </li>            
         </ul>
       </li>
       {% elseif is_granted('ROLE_HOTELIER') %} 

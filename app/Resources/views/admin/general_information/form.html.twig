@@ -1,6 +1,6 @@
 {% extends "admin/base.html.twig" %}
 
-{% block title %} Nueva Agencia de Actividades {% endblock %}
+{% block title %} Nueva Información general de Actividades {% endblock %}
 
 {% block top_content %}
     {% if app.request.attributes.get('_route') == 'activity_agency_new' %}
@@ -21,127 +21,47 @@
             </div>
             {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <fieldset>
                         <label class="class-legend">Datos de la Información General</label>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                            <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                            <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
+                            <div class="form-group row">
+                                <label class="col-md-1 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                                </div>
+                                <em>{{ form_errors(form.name) }}</em>
                             </div>
-                        </div>
-                        {{ form_errors(form.name) }}  
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Legajo</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.file_number, { 'attr': { 'class': 'form-control'}}) }}
+
+
+                            <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                            <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
+                            <div class="form-group row">
+                                <label class="col-md-1 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                                </div>
+                                <em>{{ form_errors(form.namePt) }}</em>
                             </div>
-                        </div>
-                        <em>{{ form_errors(form.file_number) }}</em>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="address">Dirección *</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.address, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.address) }}</em> 
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="phone">Teléfono *</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.phone, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.phone) }}</em>  
-                        <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="logo">Logo</label>
-                            <div class="col-md-8">
-                                {{ form_widget(form.image, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.image) }}</em> 
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="enabled">Habilitada</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.enabled, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.enabled) }}</em> 
+
+                            <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
+                            <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
+                            <div class="form-group row">
+                                <label class="col-md-1 form-control-label" for="first-name">
+                                    {{ 'admin.name' | trans }}
+                                </label>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                                </div>
+                                <em>{{ form_errors(form.nameEn) }}</em>
+                            </div> 
                     </fieldset>    
                 </div>
-                <div class="col-md-6">
-                    <fieldset>
-                        <label class="class-legend">Usuario de Contacto</label>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="first-name">Nombre *</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.user.first_name, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.user.first_name) }}</em>  
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="last-name">Apellido *</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.user.last_name, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.user.last_name) }}</em> 
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="email">E-mail *</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.user.email, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.user.email) }}</em>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="username">Usuario *</label>
-                            <div class="col-md-7">
-                                {{ form_widget(form.user.username, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.user.username) }}</em>
-                    </fieldset> 
-                    <br/>
-                    <fieldset>
-                        <label class="class-legend">Contrato</label>
-                        <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="logo">Contrato</label>
-                            <div class="col-md-8">
-                                {{ form_widget(form.file_pdf, { 'attr': { 'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.file_pdf) }}</em>
-                    </fieldset> 
-                </div>    
-                <div class="col-md-12" style="margin-top: 15px">
-                    <fieldset>
-                        <label class="class-legend">Comisiones</label>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Porcentaje Viento Sur</label>
-                            <div class="col-md-2">
-                                {{ form_widget(form.percentage_vs, { 'attr': { 'class': 'form-control', 'placeholder':'%'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.percentage_vs) }}</em>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Porcentaje Agencias</label>
-                            <div class="col-md-2">
-                                {{ form_widget(form.percentage_others, { 'attr': { 'class': 'form-control', 'placeholder':'%'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.percentage_others) }}</em>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Descuento Comercial</label>
-                            <div class="col-md-2">
-                                {{ form_widget(form.commercial_discounts, { 'attr': { 'class': 'form-control', 'placeholder':'%'}}) }}
-                            </div>
-                        </div>
-                        <em>{{ form_errors(form.commercial_discounts) }}</em>
-                    </fieldset>   
-                </div>  
                 {{ form_rest(form) }}    
             </div>
             <div class="card-footer">
-                <a href="{{ path('activity_agency_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
+                <a href="{{ path('general_information_list') }}" class="btn btn-sm btn-success"><i class="fa fa-mail-reply"></i> {{ 'admin.back' | trans }}</a>
                 <button id="send" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
             </div>
             {{ form_end(form)}}
