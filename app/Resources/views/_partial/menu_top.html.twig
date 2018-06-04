@@ -40,9 +40,16 @@
                     <li class="divider"></li>
                     <li class="dropdown-header">Información General </li>
                     <li><a href="{{ path('general_information_list') }}">Lista de Información</a></li>
-                    <li><a href="{{ path('general_information_new') }}">Agregar Información</a></li>
+                    <li><a href="{{ path('general_information_new') }}">Agregar Información</a></li>    
                 </ul>
             </li>            
+            <li class="col-sm-3">
+                <ul>
+                    <li class="dropdown-header">Actividad</li>
+                    <li><a href="{{ path('actyvity_list') }}">Lista de Actividades</a></li>
+                    <li><a href="{{ path('actyvity_new') }}">Agergar Actividad</a></li>
+                </ul>    
+            </li>
         </ul>
       </li>
       {% elseif is_granted('ROLE_HOTELIER') %} 
@@ -100,15 +107,6 @@
         
     <ul class="nav navbar-nav navbar-right">
       {% if is_granted('ROLE_ADMIN') %}  
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Actividad <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="{{ path('actyvity_list') }}">Lista de Actividades</a></li>
-          <li><a href="{{ path('actyvity_new') }}">Agergar Actividad</a></li>
-        </ul>
-      </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           {{ 'admin.promotions' | trans }} <b class="caret"></b>
