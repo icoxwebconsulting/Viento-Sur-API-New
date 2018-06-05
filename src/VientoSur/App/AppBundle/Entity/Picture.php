@@ -63,6 +63,18 @@ class Picture
      * @ORM\JoinColumn(nullable=true)
      */
     private $room;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Activity", inversedBy="pictures")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $activity;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * Get id
@@ -208,5 +220,53 @@ class Picture
     public function getMainPicture()
     {
         return $this->mainPicture;
+    }
+
+    /**
+     * Set activity
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Activity $activity
+     *
+     * @return Picture
+     */
+    public function setActivity(\VientoSur\App\AppBundle\Entity\Activity $activity = null)
+    {
+        $this->activity = $activity;
+
+        return $this;
+    }
+
+    /**
+     * Get activity
+     *
+     * @return \VientoSur\App\AppBundle\Entity\Activity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Picture
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }
