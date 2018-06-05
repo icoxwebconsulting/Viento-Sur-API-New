@@ -198,6 +198,11 @@ class Activity
      * @ORM\Column(name="pick_up_pm", type="string", length=255)
      */
     protected $pick_up_pm;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="GeneralInformation")
+     */
+    protected $general_information;
 
     /**
      * @Gedmo\Locale
@@ -839,5 +844,46 @@ class Activity
     public function getPickUpPm()
     {
         return $this->pick_up_pm;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->general_information = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add generalInformation
+     *
+     * @param \VientoSur\App\AppBundle\Entity\GeneralInformation $generalInformation
+     *
+     * @return Activity
+     */
+    public function addGeneralInformation(\VientoSur\App\AppBundle\Entity\GeneralInformation $generalInformation)
+    {
+        $this->general_information[] = $generalInformation;
+
+        return $this;
+    }
+
+    /**
+     * Remove generalInformation
+     *
+     * @param \VientoSur\App\AppBundle\Entity\GeneralInformation $generalInformation
+     */
+    public function removeGeneralInformation(\VientoSur\App\AppBundle\Entity\GeneralInformation $generalInformation)
+    {
+        $this->general_information->removeElement($generalInformation);
+    }
+
+    /**
+     * Get generalInformation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGeneralInformation()
+    {
+        return $this->general_information;
     }
 }

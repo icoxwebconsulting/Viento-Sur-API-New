@@ -106,7 +106,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        //$this->addRole("ROLE_HOTELIER");
+        
+        $this->addRole("ROLE_HOTELIER");
     }
 
     /**

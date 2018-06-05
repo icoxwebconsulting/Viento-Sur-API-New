@@ -151,7 +151,7 @@ class ActivityAgencyController extends Controller
 
                 $entity->getUser()->setPlainPassword($plainPassword);
                 
-                $entity->getUser()->addRole("ROLE_ACTIVITY");
+                $entity->getUser()->setRoles(['ROLE_ACTIVITY']);
                 
                 $entity->getUser()->setEnabled(true);
             }

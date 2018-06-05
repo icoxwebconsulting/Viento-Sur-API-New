@@ -25,6 +25,7 @@ class ActivityController extends Controller
      */
     public function indexAction()
     {
+        
         return $this->render(':admin/activity:list.html.twig');
     }
     

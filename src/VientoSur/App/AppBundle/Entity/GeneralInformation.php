@@ -39,6 +39,15 @@ class GeneralInformation
     protected $created_by;
     
     /**
+     * @ORM\ManyToMany(targetEntity="Activity")
+     * @ORM\JoinTable(name="general_information_activity",
+     *     joinColumns={@ORM\JoinColumn(name="activity_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="general_information_id", referencedColumnName="id")}
+     * )
+     */
+    protected $activity;
+    
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -106,5 +115,46 @@ class GeneralInformation
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add activity
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Activity $activity
+     *
+     * @return GeneralInformation
+     */
+    public function addActivity(\VientoSur\App\AppBundle\Entity\Activity $activity)
+    {
+        $this->activity[] = $activity;
+
+        return $this;
+    }
+
+    /**
+     * Remove activity
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Activity $activity
+     */
+    public function removeActivity(\VientoSur\App\AppBundle\Entity\Activity $activity)
+    {
+        $this->activity->removeElement($activity);
+    }
+
+    /**
+     * Get activity
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }
