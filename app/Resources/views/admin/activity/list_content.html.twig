@@ -1,28 +1,13 @@
 <tr>
-    <td>1</td>
-    <td>hace 7 meses</td>
-    <td>Excursión a Villa Carlos Paz</td>
-    <td>Córdoba, Argentina</td>
-    <td>4 Hs</td>
-    <td>Todos los días</td>
-    <td>Activo</td>
+    <td>{{ entity.id }}</td>
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.address }}</td>
+    <td>{{ entity.duration }}</td>
+    <td></td>
+    <td>{{ entity.price }}</td>
+    <td>{% if entity.availability %} <i class="fa fa-check-circle"></i>{% else %} <i class="fa fa fa-times-circle"></i> {% endif %}</td>
     <td>
-        <a data-target="#delete-modal" data-toggle="modal" data-whatever="" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
-        <a href="" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
-        <a href="" data-toggle="tooltip" title="Gallery"><i class="fa fa-picture-o"></i></a>
-    </td>
-</tr>
-<tr>
-    <td>2</td>
-    <td>hace 3 meses</td>
-    <td>City Tour con Manzana Jesuítica</td>
-    <td>Córdoba, Argentina</td>
-    <td>4 Hs</td>
-    <td>de Martes a Sábado</td>
-    <td>Activo</td>
-    <td>
-        <a data-target="#delete-modal" data-toggle="modal" data-whatever="" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
-        <a href="" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
-        <a href="" data-toggle="tooltip" title="Gallery"><i class="fa fa-picture-o"></i></a>
+        <a href="{{ path('activity_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('activity_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
     </td>
 </tr>

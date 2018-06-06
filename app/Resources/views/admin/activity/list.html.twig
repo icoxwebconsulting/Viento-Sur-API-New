@@ -16,7 +16,7 @@
             </div>
             <div class="card-block">
                 <div class="count">
-                    <h6>{{ 'admin.total_records' | trans }}: 2</h6>
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
                 </div>
                 <div class="search">
                     <form action="">
@@ -27,25 +27,35 @@
                         {% endif %}
                     </form>
                 </div>
+                {% if not pagination | length %}
+                    <h6 class="box-title">{{ 'admin.search_not_found' | trans }}</h6>
+                {% else %}    
                     <table class="table">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>{{ 'admin.period' | trans }}</th>
                             <th>Actividad</th>
-                            <th>Destino</th>
+                            <th>Dirección</th>
                             <th>Duración</th>
                             <th>Periodo</th>
+                            <th>Monto</th>
                             <th>Estado</th>
                             <th>{{ 'admin.actions' | trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                            {% if is_granted('ROLE_ADMIN') %}
+                        {%  for entity in pagination %}    
+                            {% if is_granted('ROLE_ACTIVITY') %}
                                 {% include ':admin/activity:list_content.html.twig' %}
                             {% endif %}
+                        {% endfor %}    
                         </tbody>
-                    </table>            
+                    </table> 
+                {% endif %}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>        
             </div>
         </div>
     </div>

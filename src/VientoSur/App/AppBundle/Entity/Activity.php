@@ -89,9 +89,8 @@ class Activity
     private $price;
     
     /**
-     * @var integer
-     * @Assert\NotBlank()
-     * @ORM\Column(name="availability", type="integer")
+     * @var bool
+     * @ORM\Column(name="availability", type="boolean")
      */
     private $availability;
 
@@ -345,7 +344,7 @@ class Activity
     /**
      * Set availability
      *
-     * @param integer $availability
+     * @param boolean $availability
      *
      * @return Activity
      */
@@ -359,7 +358,7 @@ class Activity
     /**
      * Get availability
      *
-     * @return integer
+     * @return boolean
      */
     public function getAvailability()
     {

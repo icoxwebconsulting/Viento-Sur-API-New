@@ -18,15 +18,35 @@ use VientoSur\App\AppBundle\Entity\Room;
 class ActivityController extends Controller
 {
      /**
-     * @Security("has_role('ROLE_HOTELIER')")
+     * @param Request $request
+     * @Security("has_role('ROLE_ACTIVITY')")
      * @Route("/", name="actyvity_list")
      * @Method("GET")
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         
-        return $this->render(':admin/activity:list.html.twig');
+        $dql = "SELECT a
+                FROM VientoSurAppAppBundle:Activity a 
+                ORDER BY a.id ASC";
+        
+        $query = $em->createQuery($dql);
+        
+        $page = $request->query->getInt('page', 1);
+        $paginator = $this->get('knp_paginator');
+        $items_per_page = $this->getParameter('items_per_page');
+
+        $pagination = $paginator->paginate($query, $page, $items_per_page);
+        
+        return $this->render(':admin/activity_agency:list.html.twig', array(
+            'pagination' => $pagination
+        ));
+        
+        return $this->render(':admin/activity:list.html.twig',array(
+            'pagination' => $pagination
+        ));
     }
     
     /**
