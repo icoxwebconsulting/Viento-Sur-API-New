@@ -9,8 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
-use VientoSur\App\AppBundle\Entity\Hotel;
-use VientoSur\App\AppBundle\Entity\Room;
+use VientoSur\App\AppBundle\Entity\Activity;
 
 /**
  * @Route("/{_locale}/activity", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
@@ -57,6 +56,7 @@ class ActivityController extends Controller
      */
     public function newAction()
     {
-        return $this->render(':admin/activity:new.html.twig');
+        $entity = new Activity();
+        return $this->render(':admin/activity:new.html.twig', array('entity'=>$entity));
     }
 }
