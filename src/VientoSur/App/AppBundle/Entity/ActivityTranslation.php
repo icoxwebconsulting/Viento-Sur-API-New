@@ -13,7 +13,7 @@ use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
  *     })}
  * )
  */
-class GeneralInformationTranslation extends AbstractPersonalTranslation
+class ActivityTranslation extends AbstractPersonalTranslation
 {
     /**
      * Convinient constructor
