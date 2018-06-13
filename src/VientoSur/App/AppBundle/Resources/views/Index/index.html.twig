@@ -1,16 +1,16 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.hotels' | trans }} - {{ 'index.flights' | trans }}{% endblock %}
 {% block stylesheets %}
-  <style>
-      div#ui-datepicker-div {
-          z-index: 9999 !important;
-      }
-      .room-body {
-          max-height: calc(70vh - 150px);
-          overflow-y: auto;
-      }
-  </style>
-  {% endblock %}
+    <style>
+        div#ui-datepicker-div {
+            z-index: 9999 !important;
+        }
+        .room-body {
+            max-height: calc(70vh - 150px);
+            overflow-y: auto;
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <!-- TOP AREA -->
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -89,12 +89,12 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" id="url_current" value="{{ app.request.pathInfo }}">
+
         <div class="promotions">
             {% include 'VientoSurAppAppBundle:Index:promotions.html.twig' %}
         </div>
     </div>
-
+    <input type="hidden" id="url_current" value="{{ app.request.pathInfo }}">
     {#<div class="top-area show-onload">
         {% if sections is defined %}
         <div class="tab-content"  id="tab-hotel-1">
@@ -108,92 +108,93 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('js/flight-form.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('js/flight-form.js') }}"></script>
 
-<script>
-    function optionChangeCurrency(currency){
-        change(currency);
-    }
-    function showHotelItems() {
-        $('#tab-hotel-1').show()
-    }
-    function hideHotelItems() {
-        $('#tab-hotel-1').hide()
-    }
-    $(document).ready(function () {
-        var url_current = $("#url_current").val();
-        var split_url = url_current.split("/");
-        console.log('url_current',url_current);
-        console.log(split_url[2]);
-
-        if(split_url[2]){
-            var typeCategory = split_url[2];
-            if (typeCategory == 'vuelos' || typeCategory == 'flights' || typeCategory == 'voos') {
-                $('#vuelos-tab').trigger('click')
-            }
+    <script>
+        function optionChangeCurrency(currency){
+            change(currency);
         }
+        function showHotelItems() {
+            $('#tab-hotel-1').show()
+        }
+        function hideHotelItems() {
+            $('#tab-hotel-1').hide()
+        }
+        $(document).ready(function () {
 
-        $('.nav.nav-tabs li').on('click', function (event) {
-            //event.preventDefault();
-            console.log('work');
-            if (!$(this).hasClass('active')) {
-                console.log('click1')
-                var clase = 'flight';
-                var tab = '1';
-                var promo = 'hotel-1';
-                if ($(this).hasClass('flight')) {
-                    tab = '2';
-                    clase = 'hotel'
-                    promo = 'flight-1';
+            var url_current = $("#url_current").val();
+            var split_url = url_current.split("/");
+            console.log('url_current',url_current);
+            console.log(split_url[2]);
+
+            if(split_url[2]){
+                var typeCategory = split_url[2];
+                if (typeCategory == 'vuelos' || typeCategory == 'flights' || typeCategory == 'voos') {
+                    $('#vuelos-tab').trigger('click')
                 }
-                $('.slimmenu li.' + clase).removeClass('active');
-                $(this).addClass('active');
-                $(".tab-content .active").removeClass("active");
-                console.log(promo)
-                $('#tab-' + tab).addClass('active')
-                $('#tab-' + promo).addClass('active')
             }
+
+            $('.nav.nav-tabs li').on('click', function (event) {
+                //event.preventDefault();
+                console.log('work');
+                if (!$(this).hasClass('active')) {
+                    console.log('click1')
+                    var clase = 'flight';
+                    var tab = '1';
+                    var promo = 'hotel-1';
+                    if ($(this).hasClass('flight')) {
+                        tab = '2';
+                        clase = 'hotel'
+                        promo = 'flight-1';
+                    }
+                    $('.slimmenu li.' + clase).removeClass('active');
+                    $(this).addClass('active');
+                    $(".tab-content .active").removeClass("active");
+                    console.log(promo)
+                    $('#tab-' + tab).addClass('active')
+                    $('#tab-' + promo).addClass('active')
+                }
+            });
         });
-    });
-</script>
-<script>
-    var nowTemp = new Date();
-    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-    {% if app.request.locale == 'en' %}
-    var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var monthNamesShort = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
-    {% elseif app.request.locale == 'pt' %}
-    var dayNamesMin = ["Do", "Se", "Te", "Qu", "Qa", "Se", "Sa"];
-    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var monthNamesShort = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-    {% else %}
-    var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
-    var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    var monthNamesShort = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Aug", "Sep", "Out", "Nov", "Dez" ];
-    {% endif %}
-    var checkin = $('#dpd1, #dpd3').datepicker({
-        onRender: function(date) {
-            return date.valueOf() < now.valueOf() ? 'disabled' : '';
-        }
-    }).on('changeDate', function(ev) {
-        if (ev.date.valueOf() > checkout.date.valueOf()) {
-            var newDate = new Date(ev.date)
-            newDate.setDate(newDate.getDate() + 1);
-            checkout.setValue(newDate);
-        }
-        checkin.hide();
-        $('#dpd2, #dpd4')[0].focus();
-    }).data('datepicker');
-    var checkout = $('#dpd2, #dpd4').datepicker({
-        onRender: function(date) {
-            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-        }
-    }).on('changeDate', function(ev) {
-        checkout.hide();
-    }).data('datepicker');
-</script>
+    </script>
+    <script>
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+        {% if app.request.locale == 'en' %}
+        var dayNamesMin = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var monthNamesShort = [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ];
+        {% elseif app.request.locale == 'pt' %}
+        var dayNamesMin = ["Do", "Se", "Te", "Qu", "Qa", "Se", "Sa"];
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var monthNamesShort = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+        {% else %}
+        var dayNamesMin = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"];
+        var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        var monthNamesShort = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Aug", "Sep", "Out", "Nov", "Dez" ];
+        {% endif %}
+        var checkin = $('#dpd1, #dpd3').datepicker({
+            onRender: function(date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function(ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate() + 1);
+                checkout.setValue(newDate);
+            }
+            checkin.hide();
+            $('#dpd2, #dpd4')[0].focus();
+        }).data('datepicker');
+        var checkout = $('#dpd2, #dpd4').datepicker({
+            onRender: function(date) {
+                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function(ev) {
+            checkout.hide();
+        }).data('datepicker');
+    </script>
     <script>
         function device() {
             if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){

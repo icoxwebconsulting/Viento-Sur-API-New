@@ -19,17 +19,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends Controller
 {
+
     /**
      * @Route("/{_locale}", name="prehomepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
-    public function prevIndexAction(Request $request)
+    /*public function prevIndexAction(Request $request)
     {
-        return $this->redirectToRoute('homepage');
-    }
+        return $this->redirectToRoute('homepage', array('_locale'=> 'es'));
+    }*/
 
     /**
-     * @Route("/{_locale}/hotel", name="homepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
+     * @Route("/{_locale}/{_type}", name="homepage", requirements={"_locale": "es|en|pt", "_type": "vuelos|flights|voos"}, defaults={"_locale": "es", "_type": "vuelos"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -37,47 +38,19 @@ class IndexController extends Controller
         // variable
         $promotionSections = null;
         $promotions        = null;
-
-        $country = $this->get('session')->get('country');
-        $this->get('session')->set('country', ($country) ? $country : 'ar');
-        $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());
-        $em = $this->getDoctrine()->getManager();
-        $active = $em->getRepository('VientoSurAppAppBundle:Status')->findOneBy(array(
-            'name' => 'Activo'
-        ));
-        if($active){
-            $promotionSections = $em->getRepository("VientoSurAppAppBundle:PromotionSections")->findPromotionSectionsAvailables($active->getId());
-            $promotions = $em->getRepository("VientoSurAppAppBundle:Promotions")->findPromotionsAvailables($active->getId());
-        }
-        return array(
-            'isTest' => $this->getParameter('is_test'),
-            'isIndex' => true,
-            'sections' => $promotionSections,
-            'promotions' => $promotions
-        );
-    }
-
-    /**
-     * @Route("/{_locale}/{_type}", name="homepage_index_flight", requirements={"_locale": "es|en|pt","_type": "vuelos|flights|voos"}, defaults={"_locale": "es", "_type": "vuelos"})
-     * @Template("VientoSurAppAppBundle:Index:index.html.twig")
-     */
-    public function indexHomeFlightAction(Request $request)
-    {
-        // variable
-        $promotionSections = null;
-        $promotions        = null;
         $locale = $request->get('_locale');
         $type = $request->get('_type');
 
-
-        if($locale == 'es' && ($type == 'flights' || $type == 'voos')){
-            return $this->redirectToRoute('homepage_index_flight', array('_locale'=> $locale, '_type' => 'vuelos'));
+        if($locale == 'es' && $type ==''){
+            echo 'hola';die();
+        } elseif($locale == 'es' && ($type == 'flights' || $type == 'voos')){
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'vuelos'));
 
         }elseif ($locale == 'en' && ($type == 'vuelos' || $type == 'voos')){
-            return $this->redirectToRoute('homepage_index_flight', array('_locale'=> $locale, '_type' => 'flights'));
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'flights'));
 
         }elseif ($locale == 'pt' && ($type == 'vuelos' || $type == 'flights')){
-            return $this->redirectToRoute('homepage_index_flight', array('_locale'=> $locale, '_type' => 'voos'));
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'voos'));
         }
 
         $country = $this->get('session')->get('country');
