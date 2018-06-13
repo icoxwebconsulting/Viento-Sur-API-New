@@ -19,8 +19,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends Controller
 {
+
     /**
-     * @Route("/{_locale}", name="homepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
+     * @Route("/{_locale}", name="prehomepage", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
+     * @Template("VientoSurAppAppBundle:Index:index.html.twig")
+     */
+    /*public function prevIndexAction(Request $request)
+    {
+        return $this->redirectToRoute('homepage', array('_locale'=> 'es'));
+    }*/
+
+    /**
+     * @Route("/{_locale}/{_type}", name="homepage", requirements={"_locale": "es|en|pt", "_type": "vuelos|flights|voos"}, defaults={"_locale": "es", "_type": "vuelos"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -28,7 +38,21 @@ class IndexController extends Controller
         // variable
         $promotionSections = null;
         $promotions        = null;
-        
+        $locale = $request->get('_locale');
+        $type = $request->get('_type');
+
+        if($locale == 'es' && $type ==''){
+            echo 'hola';die();
+        } elseif($locale == 'es' && ($type == 'flights' || $type == 'voos')){
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'vuelos'));
+
+        }elseif ($locale == 'en' && ($type == 'vuelos' || $type == 'voos')){
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'flights'));
+
+        }elseif ($locale == 'pt' && ($type == 'vuelos' || $type == 'flights')){
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'voos'));
+        }
+
         $country = $this->get('session')->get('country');
         $this->get('session')->set('country', ($country) ? $country : 'ar');
         $request->setLocale(($request->getLocale() == '/') ? 'es' : $request->getLocale());

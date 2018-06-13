@@ -88,6 +88,12 @@ class Promotions
      */
     private $updatedAt;
 
+     /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+    
     /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
