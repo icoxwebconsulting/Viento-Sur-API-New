@@ -90,7 +90,7 @@ class Activity
     
     /**
      * @var bool
-     * @ORM\Column(name="availability", type="boolean")
+     * @ORM\Column(name="availability", type="boolean", options={"default" : 0})
      */
     private $availability;
 
@@ -103,81 +103,99 @@ class Activity
     
     /**
      * @var bool
-     * @ORM\Column(name="monday", type="boolean")
+     * @ORM\Column(name="monday", type="boolean", options={"default" : 0})
      */
     protected $monday;
     
     /**
      * @var bool
-     * @ORM\Column(name="tuesday", type="boolean")
+     * @ORM\Column(name="tuesday", type="boolean", options={"default" : 0})
      */
     protected $tuesday;
     
     /**
      * @var bool
-     * @ORM\Column(name="wednesday", type="boolean")
+     * @ORM\Column(name="wednesday", type="boolean", options={"default" : 0})
      */
     protected $wednesday;
     
     /**
      * @var bool
-     * @ORM\Column(name="thursday", type="boolean")
+     * @ORM\Column(name="thursday", type="boolean", options={"default" : 0})
      */
     protected $thursday;
     
     /**
      * @var bool
-     * @ORM\Column(name="friday", type="boolean")
+     * @ORM\Column(name="friday", type="boolean", options={"default" : 0})
      */
     protected $friday;
     
     /**
      * @var bool
-     * @ORM\Column(name="saturday", type="boolean")
+     * @ORM\Column(name="saturday", type="boolean", options={"default" : 0})
      */
     protected $saturday;
     
     /**
      * @var bool
-     * @ORM\Column(name="sunday", type="boolean")
+     * @ORM\Column(name="sunday", type="boolean", options={"default" : 0})
      */
     protected $sunday;
     
     /**
-     * @var time
-     * @ORM\Column(name="from_am", type="time")
+     * @var string
+     * @ORM\Column(name="from_am", type="string")
      */
     protected $from_am;
     
     /**
-     * @var time
-     * @ORM\Column(name="to_am", type="time")
+     * @var string
+     * @ORM\Column(name="to_am", type="string")
      */
     protected $to_am;
     
     /**
-     * @var time
-     * @ORM\Column(name="from_pm", type="time")
+     * @var bool
+     * @ORM\Column(name="am", type="boolean",options={"default" : 0})
+     */
+    protected $am;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="from_pm", type="string")
      */
     protected $from_pm;
     
     /**
-     * @var time
-     * @ORM\Column(name="to_pm", type="time")
+     * @var string
+     * @ORM\Column(name="to_pm", type="string")
      */
     protected $to_pm;
     
     /**
-     * @var time
-     * @ORM\Column(name="from_all", type="time")
+     * @var bool
+     * @ORM\Column(name="pm", type="boolean",options={"default" : 0})
+     */
+    protected $pm;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="from_all", type="string")
      */
     protected $from_all;
     
     /**
-     * @var time
-     * @ORM\Column(name="to_all", type="time")
+     * @var string
+     * @ORM\Column(name="to_all", type="string")
      */
     protected $to_all;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="all_day", type="boolean",options={"default" : 0})
+     */
+    protected $all_day;
     
     /**
      * @var string
@@ -199,6 +217,12 @@ class Activity
     protected $pick_up_pm;
     
     /**
+     * @var string
+     * @ORM\Column(name="pick_up_all", type="string", length=255)
+     */
+    protected $pick_up_all;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="GeneralInformation")
      */
     protected $general_information;
@@ -210,6 +234,10 @@ class Activity
      */
     private $locale;
     
+    /*
+     * array day availability
+     */
+    private $array_day = [];
 
     /**
      * Get id
@@ -885,4 +913,157 @@ class Activity
     {
         return $this->general_information;
     }
+
+    /**
+     * Set pickUpAll
+     *
+     * @param string $pickUpAll
+     *
+     * @return Activity
+     */
+    public function setPickUpAll($pickUpAll)
+    {
+        $this->pick_up_all = $pickUpAll;
+
+        return $this;
+    }
+
+    /**
+     * Get pickUpAll
+     *
+     * @return string
+     */
+    public function getPickUpAll()
+    {
+        return $this->pick_up_all;
+    }
+
+    /**
+     * Set am
+     *
+     * @param boolean $am
+     *
+     * @return Activity
+     */
+    public function setAm($am)
+    {
+        $this->am = $am;
+
+        return $this;
+    }
+
+    /**
+     * Get am
+     *
+     * @return boolean
+     */
+    public function getAm()
+    {
+        return $this->am;
+    }
+
+    /**
+     * Set pm
+     *
+     * @param boolean $pm
+     *
+     * @return Activity
+     */
+    public function setPm($pm)
+    {
+        $this->pm = $pm;
+
+        return $this;
+    }
+
+    /**
+     * Get pm
+     *
+     * @return boolean
+     */
+    public function getPm()
+    {
+        return $this->pm;
+    }
+
+    /**
+     * Set allDay
+     *
+     * @param boolean $allDay
+     *
+     * @return Activity
+     */
+    public function setAllDay($allDay)
+    {
+        $this->all_day = $allDay;
+
+        return $this;
+    }
+
+    /**
+     * Get allDay
+     *
+     * @return boolean
+     */
+    public function getAllDay()
+    {
+        return $this->all_day;
+    }
+    
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+    
+    /*
+     * getArrayDAy()
+     */
+    public function getArrayDAy()
+    {
+        $this->array_day = [
+            'Lunes'=>$this->monday,
+            'Martes'=>$this->tuesday,
+            'Miercoles'=>$this->wednesday,
+            'Jueves'=>$this->thursday,
+            'Viernes'=>$this->friday,
+            'Sabado'=>$this->saturday,
+            'Domingo'=>$this->sunday];
+    }  
+    
+    /*
+     * getFirstDay()
+     */
+    public function getFirstDay(){
+      
+        $this->getArrayDAy();
+        $newValues=array_filter($this->array_day, "strlen");
+        $coutn = count($newValues);
+        $index = 0;
+        $data = '';
+      
+        foreach ($newValues as $key => $value) {
+            $index++;
+            if($index < $coutn){
+                $data.= $key.',';
+            }else{
+                $data = substr($data, 0, -1);
+                $data.=' y '. $key;
+            }    
+        }
+        return $data;
+    } 
+    
+    /*
+     * getEndDay
+     */
+    public function getEndDay(){
+        $val = '';
+        foreach ($this->array_day as $key => $value) {
+            if($value == 1){
+                $val = $key;
+            }
+        }
+        
+        return $val;
+    } 
 }

@@ -157,4 +157,8 @@ class GeneralInformation
     {
         return $this->activity;
     }
+    
+    public function __toString() {
+        return $this->name;
+    }
 }

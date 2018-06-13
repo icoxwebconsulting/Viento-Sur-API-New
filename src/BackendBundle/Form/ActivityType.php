@@ -5,15 +5,14 @@ namespace BackendBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use VientoSur\App\AppBundle\Entity\ActivityAgency;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use BackendBundle\Form\UserType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use VientoSur\App\AppBundle\Entity\GeneralInformation;
+use \VientoSur\App\AppBundle\Entity\ActivityAgency;
 
 class ActivityType extends AbstractType
 {
@@ -91,9 +90,79 @@ class ActivityType extends AbstractType
                  'availability',
                  'checkbox',
                  array(
-                    'attr' => array('checked'   => 'checked'),
+                    'required' => false
                 )   
             )
+            ->add(
+                 'monday',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )   
+            )  
+            ->add(
+                 'tuesday',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )   
+            )   
+            ->add(
+                 'wednesday',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )   
+            )  
+            ->add(
+                 'thursday',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )   
+            )   
+            ->add(
+                 'friday',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )   
+            )   
+            ->add(
+                 'saturday',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )   
+            ) 
+            ->add(
+                 'sunday',
+                 'checkbox',
+                 array(
+                    'required' => false,                     
+                )   
+            )  
+            ->add(
+                 'am',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )    
+            )
+            ->add(
+                 'pm',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )    
+            )  
+            ->add(
+                 'all_day',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )    
+            )     
             ->add(
                 'capacity_for_shift',
                 ChoiceType::class,
@@ -314,6 +383,54 @@ class ActivityType extends AbstractType
                                   '22:00'=>'22:00',
                                   '23:00'=>'23:00',]
                 )
+            )
+            ->add(
+                'pick_up_all',
+                ChoiceType::class,
+                array(
+                    'choices' => ['00:00'=>'00:00',
+                                  '01:00'=>'01:00',  
+                                  '02:00'=>'02:00',
+                                  '03:00'=>'03:00',
+                                  '04:00'=>'04:00',
+                                  '05:00'=>'05:00',
+                                  '06:00'=>'06:00',
+                                  '07:00'=>'07:00',
+                                  '08:00'=>'08:00',
+                                  '09:00'=>'09:00',
+                                  '10:00'=>'10:00',
+                                  '11:00'=>'11:00',
+                                  '12:00'=>'12:00',  
+                                  '13:00'=>'13:00',
+                                  '14:00'=>'14:00',  
+                                  '15:00'=>'15:00',
+                                  '16:00'=>'16:00',
+                                  '17:00'=>'17:00',
+                                  '18:00'=>'18:00',
+                                  '19:00'=>'19:00',
+                                  '20:00'=>'20:00',
+                                  '21:00'=>'21:00',
+                                  '22:00'=>'22:00',
+                                  '23:00'=>'23:00',]
+                )
+            )
+            ->add('general_information' , EntityType::class , array(
+                      'class'    => GeneralInformation::class ,
+                      'query_builder' => function (EntityRepository $er) {
+                                        return $er->createQueryBuilder('gi')
+                                            ->orderBy('gi.name', 'ASC');
+                      },  
+                      'multiple' => true , )
+            )
+            ->add(
+                'activity_agency',
+                EntityType::class,
+                array(
+                      'class'    => ActivityAgency::class ,
+                      'query_builder' => function (EntityRepository $er) {
+                                        return $er->createQueryBuilder('ag')
+                                            ->orderBy('ag.name', 'ASC');
+                      })
             );
     }
 
@@ -323,7 +440,7 @@ class ActivityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VientoSur\App\AppBundle\Entity\ActivityAgency',
+            'data_class' => 'VientoSur\App\AppBundle\Entity\Activity',
             'id' => null,
             'cascade_validation' => true
         ));
@@ -334,6 +451,6 @@ class ActivityType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_activity_agency';
+        return 'appbundle_activity';
     }
 }

@@ -1,13 +1,13 @@
 <tr>
     <td>{{ entity.id }}</td>
+    <td>{{ entity.getFirstDay() }}</td>
     <td>{{ entity.name }}</td>
     <td>{{ entity.address }}</td>
     <td>{{ entity.duration }}</td>
-    <td></td>
     <td>{{ entity.price }}</td>
     <td>{% if entity.availability %} <i class="fa fa-check-circle"></i>{% else %} <i class="fa fa fa-times-circle"></i> {% endif %}</td>
     <td>
-        <a href="{{ path('activity_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
-        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('activity_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        <a href="{{ path('actyvity_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
+        <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('actyvity_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
     </td>
 </tr>
