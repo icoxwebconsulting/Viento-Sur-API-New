@@ -82,12 +82,6 @@ class Promotions
      */
     protected $created_by;
     
-    /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
-     */
-    private $updatedAt;
-
      /**
      * @ORM\Column(type="datetime")
      * @var \DateTime
