@@ -30,7 +30,7 @@ class IndexController extends Controller
     }*/
 
     /**
-     * @Route("/{_locale}/{_type}", name="homepage", requirements={"_locale": "es|en|pt", "_type": "vuelos|flights|voos"}, defaults={"_locale": "es", "_type": "vuelos"})
+     * @Route("/{_locale}/{_type}", name="homepage", requirements={"_locale": "es|en|pt", "_type": "hotel|vuelos|flights|voos"}, defaults={"_locale": "es", "_type": "vuelos"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -41,9 +41,7 @@ class IndexController extends Controller
         $locale = $request->get('_locale');
         $type = $request->get('_type');
 
-        if($locale == 'es' && $type ==''){
-            echo 'hola';die();
-        } elseif($locale == 'es' && ($type == 'flights' || $type == 'voos')){
+        if($locale == 'es' && ($type == 'flights' || $type == 'voos')){
             return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'vuelos'));
 
         }elseif ($locale == 'en' && ($type == 'vuelos' || $type == 'voos')){
