@@ -96,7 +96,31 @@ class ActivityController extends Controller
     
     /**
      * @param Activity $entity entity
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ACTIVITY')")
+     * @Route("/activate/{id}/{activate}", name="actyvity_activate")
+     * @return route
+     */
+    public function activateAction(Request $request, Activity $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activate = $request->get('activate');
+        
+        $entity->setAvailability($activate);
+        $em->persist($entity);
+        $em->flush();
+        
+        $text = $activate?'activado':'desactivado'; 
+        
+        $this->addFlash(
+            'success',
+            'La actividad se ha '.$text.' correctamente!'
+        );
+        return $this->redirectToRoute('actyvity_list');
+    }    
+    
+    /**
+     * @param Activity $entity entity
+     * @Security("has_role('ROLE_ACTIVITY')")
      * @Route("/delete/{id}", name="actyvity_delete")
      * @return route
      */

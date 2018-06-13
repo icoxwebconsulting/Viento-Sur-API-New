@@ -1,0 +1,29 @@
+<div class="modal fade" id="activate-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">{{ 'admin.confirmation' | trans }}</h4>
+            </div>
+            <div class="modal-body">
+                ¿Desea activar este elemento? 
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info" data-dismiss="modal">NO</button>
+                <a id="activate-entity" href="activate" class="btn btn-danger">{{ 'admin.yes' | trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            $('#activate-modal').on('show.bs.modal', function (event) {
+                var a = $(event.relatedTarget) // link that triggered the modal
+                var href = a.data('whatever')
+                $("#activate-entity").attr("href",href);
+            })
+        });
+    </script>
+{% endblock %}

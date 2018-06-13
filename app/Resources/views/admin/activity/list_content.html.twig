@@ -5,9 +5,22 @@
     <td>{{ entity.address }}</td>
     <td>{{ entity.duration }}</td>
     <td>{{ entity.price }}</td>
-    <td>{% if entity.availability %} <i class="fa fa-check-circle"></i>{% else %} <i class="fa fa fa-times-circle"></i> {% endif %}</td>
     <td>
+        {% if entity.availability %} 
+            <a data-target="#deactivate-modal" data-toggle="modal" data-whatever="{{ path('actyvity_activate', {id: entity.id, activate: 0}) }}" data-toggle="tooltip" title="Deactivate" style="cursor: pointer">
+                <i class="fa fa-check-circle"></i> 
+            </a>    
+        {% else %} 
+            <a data-target="#activate-modal" data-toggle="modal" data-whatever="{{ path('actyvity_activate', {id: entity.id, activate: 1}) }}" data-toggle="tooltip" title="Activate" style="cursor: pointer">
+                <i class="fa fa fa-times-circle"></i> 
+            </a>    
+        {% endif %}
+    </td>
+    <td>
+        <i class="fa fa-image"></i>
+        <i class="fa fa-calendar"></i>
         <a href="{{ path('actyvity_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
         <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('actyvity_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+        
     </td>
 </tr>
