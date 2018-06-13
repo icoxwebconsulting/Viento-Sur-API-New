@@ -89,7 +89,7 @@
                 </div>
             </div>
         </div>
-
+        <input type="hidden" id="url_current" value="{{ app.request.pathInfo }}">
         <div class="promotions">
             {% include 'VientoSurAppAppBundle:Index:promotions.html.twig' %}
         </div>
@@ -122,6 +122,17 @@
         $('#tab-hotel-1').hide()
     }
     $(document).ready(function () {
+        var url_current = $("#url_current").val();
+        var split_url = url_current.split("/");
+        console.log('url_current',url_current);
+        console.log(split_url[2]);
+
+        if(split_url[2]){
+            var typeCategory = split_url[2];
+            if (typeCategory == 'vuelos' || typeCategory == 'flights' || typeCategory == 'voos') {
+                $('#vuelos-tab').trigger('click')
+            }
+        }
 
         $('.nav.nav-tabs li').on('click', function (event) {
             //event.preventDefault();
