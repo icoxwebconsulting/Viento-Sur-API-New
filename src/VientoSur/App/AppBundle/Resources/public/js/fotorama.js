@@ -252,7 +252,7 @@
                 k = "scaledown" === c,
                 l = "contain" === c,
                 m = "cover" === c;
-            j && (k || l) || !j && m ? (f = h(b.w, 0, k ? f : 1 / 0), g = f / e.ratio):(j && m || !j && (k || l)) && (g = h(b.h, 0, k ? g : 1 / 0),f = g * e.ratio), a.css({
+            j && (k || l) || !j && m ? (f = h(b.w, 0, k ? f : 1 / 0), g = f / e.ratio) : (j && m || !j && (k || l)) && (g = h(b.h, 0, k ? g : 1 / 0), f = g * e.ratio), a.css({
                 width: Math.ceil(f),
                 height: Math.ceil(g),
                 marginLeft: Math.floor(-f / 2),
