@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use VientoSur\App\AppBundle\Entity\Hotel;
+use VientoSur\App\AppBundle\Entity\Activity;
 use VientoSur\App\AppBundle\Entity\Picture;
 use BackendBundle\PictureType;
 use VientoSur\App\AppBundle\Entity\Room;
@@ -142,5 +143,71 @@ class PictureController extends Controller
             $this->get('translator')->trans('admin.messages.deleted')
         );
         return $this->redirectToRoute('room_picture_list', array('id' => $room->getId()));
+    }
+    
+    /**
+     * @param Activity $activity
+     * @Security("has_role('ROLE_ACTIVITY')")
+     * @Route("/activity/{id}", name="activity_picture_list")
+     * @Method("GET")
+     * @return response
+     */
+    public function activityPictureListAction(Activity $activity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository("VientoSurAppAppBundle:Picture")->findBy(array('activity' => $activity));
+        return $this->render(':admin/Picture:activity_image_list.html.twig', array(
+            'entities' => $entities,
+            'activity' => $activity
+        ));
+    }
+
+    /**
+     * @param Activity $activity
+     * @Security("has_role('ROLE_ACTIVITY')")
+     * @Route("/activity-picture/new/{id}", name="activity_picture_new")
+     * @return response
+     */
+    public function activityPictureNewAcion(Activity $activity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $image = new Picture();
+        $_FILES['file']['name'] = time()."_".$_FILES['file']['name'];
+        $image->setImageName($_FILES['file']['name']);
+        $image->setActivity($activity);
+        $em->persist($image);
+        $em->flush();
+
+        if (!empty($_FILES)) {
+            $appPath = $this->container->getParameter('kernel.root_dir');
+            $webPath = $appPath.'/../web/uploads/activity/image/'.$activity->getId().'/';
+            
+            if (!mkdir($webPath, 0777, true)) {
+                die('Failed to create folders...');
+            }
+
+            $tempFile = $_FILES['file']['tmp_name'];
+            move_uploaded_file($tempFile,$webPath. $_FILES['file']['name']);
+        }
+        return new JsonResponse(array('success' => true));
+    }
+
+    /**
+     * @param Activity $activity Picture $picture
+     * @Security("has_role('ROLE_ACTIVITY')")
+     * @Route("/activity-picture/{activity}/delete/{picture}", name="activity_picture_delete")
+     * @return response
+     */
+    public function activityPictureDeleteAcion(Activity $activity,Picture $picture)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($picture);
+        $em->flush();
+        $this->addFlash(
+            'success',
+            $this->get('translator')->trans('admin.messages.deleted')
+        );
+        return $this->redirectToRoute('activity_picture_list', array('id' => $activity->getId()));
     }
 }
