@@ -22,37 +22,32 @@
             {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
                 <div class="col-md-12">
-                    <fieldset>
-                        <label class="class-legend">Datos de la Información General</label>
-                            <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
-                            <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español">
+                    <fieldset class="fieldset-custom">
+                        <label class="label-fieldset">Datos de la Información General</label>
                             <div class="form-group row">
                                 <label class="col-md-1 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
                                 <div class="col-md-7">
-                                    {{ form_widget(form.name, { 'attr': { 'class': 'form-control'}}) }}
+                                    {{ form_widget(form.name, { 'attr': { 'class': 'form-control', 'style': 'width: 75%; float: left;'}}) }}
+                                    <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español" style="margin-top: -7px">
                                 </div>
                                 <em>{{ form_errors(form.name) }}</em>
                             </div>
-
-
-                            <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
-                            <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português">
+                            
                             <div class="form-group row">
-                                <label class="col-md-1 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
+                                <label class="col-md-1 form-control-label" for="first-name">Nome</label>
                                 <div class="col-md-7">
-                                    {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                                    {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control', 'style': 'width: 75%; float: left;'}} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name }} ) }}
+                                    <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português" style="margin-top: -7px">
                                 </div>
                                 <em>{{ form_errors(form.namePt) }}</em>
                             </div>
-
-                            <h6 class="label-lg">{{ 'admin.language' | trans }}</h6>
-                            <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English">
                             <div class="form-group row">
                                 <label class="col-md-1 form-control-label" for="first-name">
-                                    {{ 'admin.name' | trans }}
+                                    Name
                                 </label>
                                 <div class="col-md-7">
-                                    {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                                    {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control', 'style': 'width: 75%; float: left;'}} : { 'attr': { 'class': 'form-control', 'value': translations.en.name }} ) }}
+                                    <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English" style="margin-top: -7px">
                                 </div>
                                 <em>{{ form_errors(form.nameEn) }}</em>
                             </div> 

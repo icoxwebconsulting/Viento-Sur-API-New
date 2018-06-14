@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <button class="navbar-toggler mobile-toggler hidden-lg-up" type="button">☰</button>
-    <div class="col-md-6">
+    <div class="col-md-11">
         <a class="navbar-brand" href="{{ path('dashboard') }}">
             <img style="display: block; width: 130px;" src="{{ asset('bundles/vientosurappapp/images/vientosur-logo-color.png') }}" alt="">
         </a>
@@ -14,13 +14,13 @@
                 <strong>{{ app.user.firstName }} {{ app.user.lastName }}</strong>
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="width: 280px; padding: 5px;">
                 <li>
                     <div class="navbar-login">
                         <div class="row">
                             <div class="col-lg-4">
                                 <p class="text-center">
-                                    <span class="glyphicon glyphicon-user icon-size" style="font-size: 93px;"></span>
+                                    <span class="glyphicon glyphicon-user icon-size" style="font-size: 93px; padding: 20px 20px 10px 5px;"></span>
                                 </p>
                             </div>
                             <div class="col-lg-8">

@@ -22,8 +22,8 @@
             {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
                 <div class="col-md-6">
-                    <fieldset>
-                        <label class="class-legend">Datos de la Agencia</label>
+                    <fieldset class="fieldset-custom">
+                        <label class="label-fieldset">Datos de la Agencia</label>
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
                             <div class="col-md-7">
@@ -69,8 +69,8 @@
                     </fieldset>    
                 </div>
                 <div class="col-md-6">
-                    <fieldset>
-                        <label class="class-legend">Usuario de Contacto</label>
+                    <fieldset class="fieldset-custom"∫>
+                        <label class="label-fieldset">Usuario de Contacto</label>
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="first-name">Nombre *</label>
                             <div class="col-md-7">
@@ -101,8 +101,9 @@
                         <em>{{ form_errors(form.user.username) }}</em>
                     </fieldset> 
                     <br/>
-                    <fieldset>
-                        <label class="class-legend">Contrato</label>
+                    <br/>
+                    <fieldset class="fieldset-custom">
+                        <label class="label-fieldset">Contrato</label>
                         <div class="form-group row">
                             <label class="col-md-2 form-control-label" for="logo">Contrato</label>
                             <div class="col-md-8">
@@ -113,8 +114,8 @@
                     </fieldset> 
                 </div>    
                 <div class="col-md-12" style="margin-top: 15px">
-                    <fieldset>
-                        <label class="class-legend">Comisiones</label>
+                    <fieldset class="fieldset-custom">
+                        <label class="label-fieldset">Comisiones</label>
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="file-number">Porcentaje Viento Sur</label>
                             <div class="col-md-2">

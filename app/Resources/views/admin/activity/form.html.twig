@@ -118,8 +118,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                  <fieldset>
-                                    <label class="class-legend">Dias Habilitado</label>  
+                                  <fieldset class="fieldset-custom" style="margin: 0px;">
+                                    <label class="label-fieldset" style="left: 45px;">Dias Habilitado</label>  
                                     <div class="col-md-1">
                                         <label class="control-label">Domingo</label><br/>
                                         {{ form_widget(form.sunday, { 'attr': { 'class': 'form-control'}}) }}
@@ -153,8 +153,8 @@
                                 </div>    
                                 
                                 <div class="form-group">
-                                    <fieldset>
-                                        <label class="class-legend">AM</label>
+                                    <fieldset class="fieldset-custom" style="margin: 0px;">
+                                        <label class="label-fieldset" style="left: 45px;">AM</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
                                             {{ form_widget(form.pick_up_am) }}
@@ -177,8 +177,8 @@
                                     </fieldset>
                                 </div>
                                 <div class="form-group">
-                                    <fieldset>
-                                        <label class="class-legend">PM</label>
+                                    <fieldset class="fieldset-custom" style="margin: 0px;">
+                                        <label class="label-fieldset" style="left: 45px;">PM</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
                                             {{ form_widget(form.pick_up_pm) }}
@@ -201,8 +201,8 @@
                                     </fieldset>
                                 </div>
                                 <div class="form-group">
-                                    <fieldset>
-                                        <label class="class-legend">Todo el Dia</label>
+                                    <fieldset class="fieldset-custom" style="margin: 0px;">
+                                        <label class="label-fieldset" style="left: 45px;">Todo el Dia</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
                                             {{ form_widget(form.pick_up_all) }}
@@ -232,11 +232,11 @@
                         <div class="col-xs-12">
                             <div class="col-md-12">
                                 <h3>Informacion general</h3>
-                                <fieldset>
-                                        <label class="class-legend">Seleccionar</label>
+                                <fieldset class="fieldset-custom" style="margin: 0px;">
+                                        <label class="label-fieldset" style="left: 45px;">Seleccionar</label>
                                         <div class="form-group">
                                             <label class="control-label">Agencia</label><br/>
-                                           {{ form_widget(form.activity_agency) }}   
+                                           {{ form_widget(form.activity_agency, {'attr': {'style': 'height: 40px; width: 250px;'}}) }}   
                                         </div>
                                         <div class="form-group">
                                            {{ form_widget(form.general_information, { 'attr': { 'class': 'form-control selectpicker' }}) }}   
