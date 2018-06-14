@@ -21,7 +21,6 @@ class ReservationController extends Controller
 {
     /**
      * @param $request
-     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/", name="reservation_list")
      * @Method("GET")
      * @return response
@@ -42,18 +41,22 @@ class ReservationController extends Controller
                     FROM VientoSurAppAppBundle:Reservation r
                     ORDER BY r.id ASC";
             }else{
-                $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
-                    'created_by' => $this->getUser()->getId()
-                ));
-                if(!$hotel){
-                 return $this->redirectToRoute('hotel_new');   
+                if ($securityContext->isGranted('ROLE_ACTIVITY')) {
+                    return $this->redirectToRoute('actyvity_list');   
+                }else{
+                    $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
+                        'created_by' => $this->getUser()->getId()
+                    ));
+                    if(!$hotel){
+                     return $this->redirectToRoute('hotel_new');   
+                    }
+                    $dql = "SELECT r
+                        FROM VientoSurAppAppBundle:Reservation r
+                        WHERE r.hotelId = ".$hotel->getId()."
+                        ORDER BY r.id ASC";
                 }
-                $dql = "SELECT r
-                    FROM VientoSurAppAppBundle:Reservation r
-                    WHERE r.hotelId = ".$hotel->getId()."
-                    ORDER BY r.id ASC";
-            }
-            $query = $em->createQuery($dql);
+                $query = $em->createQuery($dql);
+            }    
         }
 
 

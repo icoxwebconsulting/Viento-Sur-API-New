@@ -18,7 +18,6 @@ use VientoSur\App\AppBundle\Entity\Room;
 class DashboardController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_HOTELIER')")
      * @Route("/hotel-control", name="hotel_control")
      * @Method("GET")
      * @return array

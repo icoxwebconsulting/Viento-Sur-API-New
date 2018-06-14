@@ -5345,7 +5345,7 @@ body.std {
     padding-left: 200px; }
 
 body.navbar-fixed .main {
-  padding-top: 55px; }
+  padding-top: 0px; }
 
 body.navbar-fixed.top-nav.fixed-nav nav.top-nav {
   position: fixed; }
