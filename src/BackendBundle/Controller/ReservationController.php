@@ -55,10 +55,10 @@ class ReservationController extends Controller
                         WHERE r.hotelId = ".$hotel->getId()."
                         ORDER BY r.id ASC";
                 }
-                $query = $em->createQuery($dql);
             }    
         }
 
+        $query = $em->createQuery($dql);
 
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');
