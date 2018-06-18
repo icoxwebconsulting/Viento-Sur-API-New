@@ -55,3 +55,7 @@ services:
          class: Twig_Extensions_Extension_Text
          tags:
              - { name: twig.extension }
+
+    mail_manager:
+            class:     VientoSur\App\AppBundle\Services\MailManager
+            arguments: ["@mailer", "@twig", "@service_container"]
