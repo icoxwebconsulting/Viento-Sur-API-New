@@ -182,9 +182,11 @@ class PictureController extends Controller
             $appPath = $this->container->getParameter('kernel.root_dir');
             $webPath = $appPath.'/../web/uploads/activity/image/'.$activity->getId().'/';
             
-            if (!mkdir($webPath, 0777, true)) {
-                die('Failed to create folders...');
-            }
+            if(!is_dir($webPath)){
+                if (!mkdir($webPath, 0777, true)) {
+                    die('Failed to create folders...');
+                }
+            }     
 
             $tempFile = $_FILES['file']['tmp_name'];
             move_uploaded_file($tempFile,$webPath. $_FILES['file']['name']);
