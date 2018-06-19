@@ -234,15 +234,18 @@
                                 <h3>Informacion general</h3>
                                 <fieldset class="fieldset-custom" style="margin: 0px;">
                                         <label class="label-fieldset" style="left: 45px;">Seleccionar</label>
+                                        {% if is_granted('ROLE_ADMIN') %}
                                         <div class="form-group">
                                             <label class="control-label">Agencia</label><br/>
                                            {{ form_widget(form.activity_agency, {'attr': {'style': 'height: 40px; width: 250px;'}}) }}   
                                         </div>
+                                        {% else %}
+                                            <input type="hidden" value="{{ activity_agency.id }}" name="activity_agency_id" /> 
+                                        {% endif %}    
                                         <div class="form-group">
                                            {{ form_widget(form.general_information, { 'attr': { 'class': 'form-control selectpicker' }}) }}   
                                         </div>
-                                </fieldset> 
-                                {{ form_rest(form) }}     
+                                </fieldset>     
                                 <button id="send" type="submit" class="btn btn-success btn-lg pull-right"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
                             </div>
                         </div>

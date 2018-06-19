@@ -15,9 +15,11 @@ use VientoSur\App\AppBundle\Entity\GeneralInformation;
 use \VientoSur\App\AppBundle\Entity\ActivityAgency;
 
 class ActivityType extends AbstractType
-{
+{   
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $rol = $options['rol'];
+        
         $builder
             ->add(
                 'name',
@@ -421,17 +423,22 @@ class ActivityType extends AbstractType
                                             ->orderBy('gi.name', 'ASC');
                       },  
                       'multiple' => true , )
-            )
-            ->add(
-                'activity_agency',
-                EntityType::class,
-                array(
-                      'class'    => ActivityAgency::class ,
-                      'query_builder' => function (EntityRepository $er) {
-                                        return $er->createQueryBuilder('ag')
-                                            ->orderBy('ag.name', 'ASC');
-                      })
             );
+             
+            if($rol===0){        
+                $builder->add(
+                    'activity_agency',
+                    EntityType::class,
+                    array(
+                          'class'    => ActivityAgency::class ,
+                          'query_builder' => function (EntityRepository $er) {
+                                            return $er->createQueryBuilder('ag')
+                                                ->orderBy('ag.name', 'ASC');
+                          })
+                );
+            }
+                      
+                      
     }
 
     /**
@@ -444,6 +451,8 @@ class ActivityType extends AbstractType
             'id' => null,
             'cascade_validation' => true
         ));
+        $resolver->setRequired('rol'); // Requires that currentOrg be set by the caller.
+        $resolver->setAllowedTypes('rol',['int']); // Validates the type(s) of option(s) passed.
     }
 
     /**
