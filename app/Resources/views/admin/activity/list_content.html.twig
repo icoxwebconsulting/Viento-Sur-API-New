@@ -17,8 +17,8 @@
         {% endif %}
     </td>
     <td>
-        <a href="{{ path('activity_picture_list', {id: entity.id}) }}" data-toggle="tooltip" title="Imagen"><i class="fa fa-image"></i>
-        <i class="fa fa-calendar"></i>
+        <a href="{{ path('activity_picture_list', {id: entity.id}) }}" data-toggle="tooltip" title="Imagen"><i class="fa fa-image"></i></a>
+        <a href="{{ path('activity_date_disable', {id: entity.id}) }}" data-toggle="tooltip" title="Disable Activity by Dates"><i class="fa fa-calendar"></i></a>
         <a href="{{ path('actyvity_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>
         <a data-target="#delete-modal" data-toggle="modal" data-whatever="{{ path('actyvity_delete', {id: entity.id}) }}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
         
