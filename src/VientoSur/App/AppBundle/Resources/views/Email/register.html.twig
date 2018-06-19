@@ -1,0 +1,24 @@
+{% extends "VientoSurAppAppBundle:Email:template.html.twig" %}
+
+{% block subject %}
+    Registro de usuario
+{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+        Name: {{ fullName }}
+        Username: {{ username }}
+        Email: {{ email }}
+        Confirmation Token : {{ confirmationToken }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+    {% autoescape false %}
+        <p>Name: {{ fullName }} </p>
+        <p>Username: {{ username }} </p>
+        <p>Email: {{ email }} </p>
+        <p>Confirmation Token : {{ confirmationToken }}</p>
+        {{ url('homepage') }}register/confirm/{{ confirmationToken }}
+    {% endautoescape %}
+{% endblock %}
