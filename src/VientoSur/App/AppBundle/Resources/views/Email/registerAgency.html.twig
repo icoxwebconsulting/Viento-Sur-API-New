@@ -1,0 +1,24 @@
+{% extends "VientoSurAppAppBundle:Email:template.html.twig" %}
+
+{% block subject %}
+    Bienvenido {{ fullName }}
+{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+        Name: {{ fullName }}
+        Agencia: {{ nameAgency }}
+        Email: {{ email }}
+        Password: {{ password }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+    {% autoescape false %}
+        <p>Name: {{ fullName }}</p>
+        <p>Agencia: {{ nameAgency }}</p>
+        <p>Email: {{ email }}</p>
+        <p>Password: {{ password }}</p>
+        {{ url('homepage') }}login
+    {% endautoescape %}
+{% endblock %}
