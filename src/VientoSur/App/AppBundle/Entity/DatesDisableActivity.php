@@ -31,8 +31,8 @@ class DatesDisableActivity
     private $id;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
+     * @ORM\Column(name="disable_at", type="text")
+     * @var string
      */
     private $disableAt;
     
@@ -61,7 +61,7 @@ class DatesDisableActivity
     /**
      * Set disableAt
      *
-     * @param \DateTime $disableAt
+     * @param string $disableAt
      *
      * @return DatesDisableActivity
      */
@@ -75,7 +75,7 @@ class DatesDisableActivity
     /**
      * Get disableAt
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDisableAt()
     {

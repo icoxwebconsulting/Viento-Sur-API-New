@@ -3,18 +3,14 @@
 namespace BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Response;
-use VientoSur\App\AppBundle\Entity\Hotel;
 use VientoSur\App\AppBundle\Entity\Activity;
-use VientoSur\App\AppBundle\Entity\Picture;
-use BackendBundle\PictureType;
-use VientoSur\App\AppBundle\Entity\Room;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use VientoSur\App\AppBundle\Repository\DatesDisableActivityRepository;
+use VientoSur\App\AppBundle\Entity\DatesDisableActivity;
+
 
 /**
  * @Route("/{_locale}/dashboard-date-disable-activity", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
@@ -28,6 +24,32 @@ class DatesDisableActivityController extends Controller{
      */
     public function activityDateDisableAcion(Request $request, Activity $activity)
     {
-        return $this->render(':admin/activity:activity_date_disable.html.twig',['activity'=>$activity]);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository("VientoSurAppAppBundle:DatesDisableActivity")->findOneBy(array('activity' => $activity));
+        
+        if(!$entity){
+            $entity = new DatesDisableActivity();
+        }
+        
+        if($request->isMethod('POST')){
+            $date = $request->get('date');
+            
+            $entity->setDisableAt($date);
+            $entity->setActivity($activity);
+            $entity->setCreatedBy($this->getUser());
+            $em->persist($entity);
+            $em->flush();
+            
+            $this->addFlash(
+                'success',
+                $this->get('translator')->trans('Se ha registrado correctamente!')
+            );
+            return $this->redirectToRoute('activity_date_disable',['id'=>$activity->getId()]);
+        }
+            
+        return $this->render(':admin/activity:activity_date_disable.html.twig',
+                ['activity'=>$activity,
+                 'entity'=>$entity]
+        );
     }
 }
