@@ -29,7 +29,6 @@ class MailManager
     public function sendEmail($template, $parameters)
     {
         $from = $this->container->getParameter('mailer_user');
-//        echo '<pre>'.var_export($parameters, true).'</pre>';die();
 
         $template = $this->twig->loadTemplate('@VientoSurAppApp/Email/' . $template . '.html.twig');
 
@@ -40,7 +39,7 @@ class MailManager
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom($from)
-            ->setTo($from)
+            ->setTo($parameters['email'])
             ->setBody($bodyHtml, 'text/html')
             ->addPart($bodyText, 'text/plain')
         ;

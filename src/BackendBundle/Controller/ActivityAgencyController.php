@@ -125,8 +125,9 @@ class ActivityAgencyController extends Controller
      * @param String $action action
      * @return response
      */
-    protected function formAction($form, $request, $em, $entity, $textMsj, $action){
-        
+    protected function formAction($form, $request, $em, $entity, $textMsj, $action)
+    {
+        $managerEntity = $this->getDoctrine()->getManager();
         if($form->handleRequest($request)->isValid())
         {
             $image = $form->get('image')->getData();
@@ -147,7 +148,7 @@ class ActivityAgencyController extends Controller
             
             if($action == 'new'){
                 /* cambiar la clave*/
-                $plainPassword = "test1";
+                $plainPassword = substr( md5(microtime()), 1, 8);
 
                 $entity->getUser()->setPlainPassword($plainPassword);
                 
@@ -160,7 +161,30 @@ class ActivityAgencyController extends Controller
             $em->flush();
             
             /* si la agencia es nueva se debe enviar un email con el usuario y la clave de acceso*/
-            
+
+            $dql = 'SELECT u.email
+                FROM VientoSurAppAppBundle:User u
+                WHERE u.email LIKE :email';
+            $query = $managerEntity->createQuery($dql)->setParameter('email', $entity->getUser()->getEmail());
+            $result = $query->getResult();
+
+            if(!empty($result)){
+                $template = 'registerAgency';
+                $nameAgency = $entity->getName();
+                $fullName = $entity->getUser()->getFirstName(). ' ' .$entity->getUser()->getLastName();
+                $email = $entity->getUser()->getEmail();
+                $plainPassword = "test1";
+                $mail_params = array(
+                    'fullName' => $fullName,
+                    'nameAgency' => $nameAgency,
+                    'email' => $email,
+                    'password' => $plainPassword
+                );
+
+                $message = $this->container->get('mail_manager');
+                $message->sendEmail($template, $mail_params);
+            }
+
             $this->addFlash(
                 'success',
                 $this->get('translator')->trans('Se ha '.$textMsj.' correctamente la agencia!')

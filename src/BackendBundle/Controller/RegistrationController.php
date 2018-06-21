@@ -35,7 +35,6 @@ class RegistrationController extends BaseController
 
             $userManager->updateUser($user);
 
-            /*echo '<pre>'.var_export($user, true).'</pre>';die();*/
 
             if ($confirmationEnabled) {
                 $route = 'fos_user_security_login';
@@ -43,19 +42,6 @@ class RegistrationController extends BaseController
                     'success',
                     'Por favor revise su correo electrónico. Contiene un enlace de activación al que debe hacer clic para activar su cuenta.'
                 );
-
-                $template = 'register';
-                $mail_params = array(
-                    'fullName' => $user->getFirstName() . ' ' .$user->getLastName(),
-                    'username' => $user->getUsername(),
-                    'email' => $user->getEmail(),
-                    'confirmationToken' => $user->getConfirmationToken()
-                );
-
-                $message = $this->container->get('mail_manager');
-                $message->sendEmail($template, $mail_params);
-
-
             } else {
                 $this->_authenticateAccount($user);
                 $route = 'fos_user_registration_confirmed';
