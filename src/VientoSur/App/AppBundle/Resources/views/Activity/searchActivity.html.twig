@@ -1,0 +1,30 @@
+<form name="searchHotel" id="search-hotels" action ="" method="POST" style="margin-top: 35px;">
+    <div class="col-xs-12 col-md-10" style="margin-bottom: 25px;">
+        <h4>Ingresar destino</h4>
+        <div class="form-group-icon-left">
+            <i class="fa fa-map-marker input-icon"></i>
+            <input id="autocomplete" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Ingresa una ciudad" autocomplete="on"  {% if not isTest %}required{% endif %}>
+            <input id="destinationCity" name="cityInput" type="hidden" {% if not isTest %}required{% endif %} />
+        </div>
+    </div>    
+    {% set currency = app.session.get('targetCurrency') %}
+    <div class="col-xs-2 col-xs-offset-9 selectMoney">
+        <select class="form-control"  onchange="optionChangeCurrency(this.value)">
+            <option value="USD" {% if currency == 'USD' %}selected="selected"{% endif %}>USD</option>
+            <option value="ARS" {% if currency == 'ARS' %}selected="selected"{% endif %}>AR$</option>
+        </select>
+    </div>
+    <div class="col-xs-12 btnSearch">
+        <button id="submitHotel">{{ 'index.search_text' | trans }}</button>
+    </div>
+</form>
+
+<div class="hide" id="searchHotelMsg">
+    <h3 title="{{ 'index.search.hotel.searching' | trans }} - VientoSur.net"><b>{{ 'index.search.hotel.searching' | trans }}</b></h3>
+    <div class="progress">
+        <div class="progress-bar" id="hotel_pb" role="progressbar" aria-valuenow="60"
+             aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+</div>
