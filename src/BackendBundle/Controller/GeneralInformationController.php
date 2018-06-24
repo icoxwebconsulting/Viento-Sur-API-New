@@ -148,10 +148,19 @@ class GeneralInformationController extends Controller
             $entity->setTranslatableLocale('en');
             $em->persist($entity);
             $em->flush();
-            
+
+            switch ($textMsj){
+                case 'agregado':
+                    $message = 'admin.message.add_information_general';
+                    break;
+                case 'editado':
+                    $message = 'admin.message.edit_information_general';
+                    break;
+            }
+
             $this->addFlash(
                 'success',
-                $this->get('translator')->trans('Se ha '.$textMsj.' correctamente la Información general de la actividad!')
+                $this->get('translator')->trans($message)
             );
             return $this->redirectToRoute('general_information_list');
         }

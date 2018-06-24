@@ -213,10 +213,19 @@ class ActivityController extends Controller
             $entity->setTranslatableLocale('en');
             $em->persist($entity);
             $em->flush();
-            
+
+            switch ($textMsj){
+                case 'agregado':
+                    $message = 'admin.messages.add_activity';
+                    break;
+                case 'editado':
+                    $message = 'admin.messages.edit_activity';
+                    break;
+            }
+
             $this->addFlash(
                 'success',
-                $this->get('translator')->trans('Se ha '.$textMsj.' correctamente La Actividad!')
+                $this->get('translator')->trans($message)
             );
             return $this->redirectToRoute('actyvity_list');
         }

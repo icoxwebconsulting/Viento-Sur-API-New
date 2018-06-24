@@ -29,7 +29,7 @@ index:
     loading: Loading
     filter: Filter
     reservation: Reservation
-    reservations: Reservacions
+    reservations: Reservations
     reservation_error: An error occurred when making your reservation
     error_code: Error code
     cancellation_proceed: Your cancellation request has been processed
@@ -440,7 +440,6 @@ amenities:
 admin:
     To_update: To update
     hotels: Establishment
-    General_information: General information
     Much_more: Much more
     create_account: Create account
     confirm_account: Please check your email. It contains an activation link that you must click to activate your account.
@@ -507,6 +506,55 @@ admin:
     promotion_section: Promotion section
     title: Title
     subtitle: Subtitle
+    activities: Activities
+    activity: Activity
+    activities_list: Activities List
+    add_activity: Add Activity
+    activity_agency: Activity Agency
+    list_agencies: List of Agencies
+    add_agency: Add Agency
+    general_information: General Information
+    list_information: List of Information
+    add_information: Add Information
+    address: Address
+    duration: Duration
+    amount: Amount
+    status: Status
+    list_ctivities_agency: List of Activities Agency
+    phone: Phone
+    contact_user: Contact User
+    new_activities_agency: New Activities Agency
+    edit_activities_agency: Edit Activities Agency
+    data_from_agency: Data from the Agency
+    enabled: Enabled
+    user: User
+    contract: Contract
+    commissions: Commissions
+    percentage_vs: Percentage Viento Sur
+    percentage_agency: Agencies Percentage
+    commercial_discounts: Commercial Discounts
+    general_information_data: General Information Data
+    list_general_activities_information: List of General Activities Information
+    title_destination: Title & Destination
+    description: Description
+    options: Options
+    price: Price
+    capacity_per_shift: Capacity per shift
+    duration_per_shift: Duration per shift
+    days_enabled: Days Enabled
+    sunday: Sunday
+    monday: Monday
+    tuesday: Tuesday
+    wednesday: Wednesday
+    thursday: Thursday
+    friday: Friday
+    saturday: Saturday
+    from_the: From the
+    from_the: Until
+    people: People
+    select: Select
+    agency: Agency
+    hotel: Hotel
     messages:
         promotion_sections_added: Promotion sections has been successfully added!
         promotion_sections_updated: Promotion sections has been successfully updated!
@@ -518,6 +566,10 @@ admin:
         updated: Successfully updated!
         deleted: Successfully deleted!
         limit_hotel_by_user: You already met the limit of hotel creation
+        add_information_general: The general information of the activity has been created correctly!
+        edit_information_general: The general information of the activity has been edited correctly!
+        add_activity: The activity has been created correctly!
+        edit_activity: The activity has been edited correctly!
     confirmation: Confirmation
     delete_element: Do you want to delete this element?
     yes: Yes

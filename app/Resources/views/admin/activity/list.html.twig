@@ -1,10 +1,10 @@
 {% extends ':admin:base.html.twig' %}
 
-{% block title %}Lista de Actividades{% endblock %}
+{% block title %} {{ "admin.activities_list" | trans }} {% endblock %}
 
 {% block top_content %}
     {% embed ':_partial:breadcrumb.html.twig' %}
-        {% block breadcrumb %}Lista de Actividades{% endblock %}
+        {% block breadcrumb %} {{ "admin.activities_list" | trans }} {% endblock %}
     {% endembed %}
 {% endblock %}
 
@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-align-justify"></i> Lista de Actividades
+                <i class="fa fa-align-justify"></i>  {{ "admin.activities_list" | trans }}
             </div>
             <div class="card-block">
                 <div class="count">
@@ -35,11 +35,11 @@
                         <tr>
                             <th>#</th>
                             <th>{{ 'admin.period' | trans }}</th>
-                            <th>Actividad</th>
-                            <th>Dirección</th>
-                            <th>Duración</th>
-                            <th>Monto</th>
-                            <th>Estado</th>
+                            <th>{{ "admin.activity" | trans }}</th>
+                            <th>{{ "admin.address" | trans }}</th>
+                            <th>{{ "admin.duration" | trans }}</th>
+                            <th>{{ "admin.amount" | trans }}</th>
+                            <th>{{ "admin.status" | trans }}</th>
                             <th>{{ 'admin.actions' | trans }}</th>
                         </tr>
                         </thead>

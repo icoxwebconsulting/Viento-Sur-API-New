@@ -17,13 +17,13 @@
     <div class="col-md-10 offset-md-1">
         <div class="card">
             <div class="card-header">
-                <strong>Información General</strong>
+                <strong>{{ 'admin.general_information' | trans }}</strong>
             </div>
             {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
                 <div class="col-md-12">
                     <fieldset class="fieldset-custom">
-                        <label class="label-fieldset">Datos de la Información General</label>
+                        <label class="label-fieldset">{{ 'admin.general_information_data' | trans }}</label>
                             <div class="form-group row">
                                 <label class="col-md-1 form-control-label" for="first-name">{{ 'admin.name' | trans }}</label>
                                 <div class="col-md-7">

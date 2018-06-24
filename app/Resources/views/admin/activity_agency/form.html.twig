@@ -1,12 +1,12 @@
 {% extends "admin/base.html.twig" %}
 
-{% block title %} Nueva Agencia de Actividades {% endblock %}
+{% block title %} {{ 'admin.new_activities_agency' | trans }} {% endblock %}
 
 {% block top_content %}
     {% if app.request.attributes.get('_route') == 'activity_agency_new' %}
-        {% set title = 'Nueva Agencia de Actividades' %}
+        {% set title = 'admin.new_activities_agency' %}
     {% else %}
-        {% set title = 'Editar Agencia de Actividades' %}
+        {% set title = 'admin,edit_activities_agency' %}
     {% endif %}
     {% embed ':_partial:breadcrumb.html.twig' %}
         {% block breadcrumb %}{{ title | trans }}{% endblock %}
@@ -17,13 +17,13 @@
     <div class="col-md-10 offset-md-1">
         <div class="card">
             <div class="card-header">
-                <strong>Agencia de Actividades</strong>
+                <strong>{{ 'admin.activity_agency' | trans }}</strong>
             </div>
             {{ form_start(form, {'attr':{ 'id': 'form', 'class': 'form-horizontal'}}) }}
             <div class="card-block">
                 <div class="col-md-6">
                     <fieldset class="fieldset-custom">
-                        <label class="label-fieldset">Datos de la Agencia</label>
+                        <label class="label-fieldset">{{ 'admin.data_from_agency' | trans }}</label>
                         <div class="form-group row">
                             <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }}*</label>
                             <div class="col-md-7">
@@ -39,14 +39,14 @@
                         </div>
                         <em>{{ form_errors(form.file_number) }}</em>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="address">Dirección *</label>
+                            <label class="col-md-3 form-control-label" for="address">{{ 'admin.address' | trans }} *</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.address, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
                         </div>
                         <em>{{ form_errors(form.address) }}</em> 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="phone">Teléfono *</label>
+                            <label class="col-md-3 form-control-label" for="phone">{{ 'admin.phone' | trans }} *</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.phone, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
@@ -60,7 +60,7 @@
                         </div>
                         <em>{{ form_errors(form.image) }}</em> 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="enabled">Habilitada</label>
+                            <label class="col-md-3 form-control-label" for="enabled">{{ 'admin.enabled' | trans }}</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.enabled, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
@@ -70,30 +70,30 @@
                 </div>
                 <div class="col-md-6">
                     <fieldset class="fieldset-custom"∫>
-                        <label class="label-fieldset">Usuario de Contacto</label>
+                        <label class="label-fieldset">{{ 'admin.contact_user' | trans }}</label>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="first-name">Nombre *</label>
+                            <label class="col-md-3 form-control-label" for="first-name">{{ 'admin.name' | trans }} *</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.user.first_name, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
                         </div>
                         <em>{{ form_errors(form.user.first_name) }}</em>  
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="last-name">Apellido *</label>
+                            <label class="col-md-3 form-control-label" for="last-name">{{ 'admin.last_name' | trans }} *</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.user.last_name, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
                         </div>
                         <em>{{ form_errors(form.user.last_name) }}</em> 
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="email">E-mail *</label>
+                            <label class="col-md-3 form-control-label" for="email">{{ 'admin.email' | trans }} *</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.user.email, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
                         </div>
                         <em>{{ form_errors(form.user.email) }}</em>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="username">Usuario *</label>
+                            <label class="col-md-3 form-control-label" for="username">{{ 'admin.user' | trans }} *</label>
                             <div class="col-md-7">
                                 {{ form_widget(form.user.username, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
@@ -103,9 +103,9 @@
                     <br/>
                     <br/>
                     <fieldset class="fieldset-custom">
-                        <label class="label-fieldset">Contrato</label>
+                        <label class="label-fieldset">{{ 'admin.contract' | trans }}</label>
                         <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="logo">Contrato</label>
+                            <label class="col-md-2 form-control-label" for="logo">{{ 'admin.contract' | trans }}</label>
                             <div class="col-md-8">
                                 {{ form_widget(form.file_pdf, { 'attr': { 'class': 'form-control'}}) }}
                             </div>
@@ -115,23 +115,23 @@
                 </div>    
                 <div class="col-md-12" style="margin-top: 15px">
                     <fieldset class="fieldset-custom">
-                        <label class="label-fieldset">Comisiones</label>
+                        <label class="label-fieldset">{{ 'admin.commissions' | trans }}</label>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Porcentaje Viento Sur</label>
+                            <label class="col-md-3 form-control-label" for="file-number">{{ 'admin.percentage_vs' | trans }}</label>
                             <div class="col-md-2">
                                 {{ form_widget(form.percentage_vs, { 'attr': { 'class': 'form-control', 'placeholder':'%'}}) }}
                             </div>
                         </div>
                         <em>{{ form_errors(form.percentage_vs) }}</em>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Porcentaje Agencias</label>
+                            <label class="col-md-3 form-control-label" for="file-number">{{ 'admin.percentage_agency' | trans }}</label>
                             <div class="col-md-2">
                                 {{ form_widget(form.percentage_others, { 'attr': { 'class': 'form-control', 'placeholder':'%'}}) }}
                             </div>
                         </div>
                         <em>{{ form_errors(form.percentage_others) }}</em>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-number">Descuento Comercial</label>
+                            <label class="col-md-3 form-control-label" for="file-number">{{ 'admin.commercial_discounts' | trans }}</label>
                             <div class="col-md-2">
                                 {{ form_widget(form.commercial_discounts, { 'attr': { 'class': 'form-control', 'placeholder':'%'}}) }}
                             </div>

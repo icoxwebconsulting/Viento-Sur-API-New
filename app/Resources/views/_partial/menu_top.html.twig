@@ -26,24 +26,24 @@
                 </ul>
             </li>    
             <li class="dropdown dropdown-large">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actividades<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'admin.activities' | trans }}<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-large row" style="width: 50%;">
                         <li class="col-sm-6">
                             <ul>
-                                <li class="dropdown-header">Agencia de Actividades</li>
-                                <li><a href="{{ path('activity_agency_list') }}">Lista de Agencias</a></li>
-                                <li><a href="{{ path('activity_agency_new') }}">Agregar Agencia</a></li>
+                                <li class="dropdown-header">{{ 'admin.activity_agency' | trans }}</li>
+                                <li><a href="{{ path('activity_agency_list') }}">{{ 'admin.list_agencies' | trans }}</a></li>
+                                <li><a href="{{ path('activity_agency_new') }}">{{ 'admin.add_agency' | trans }}</a></li>
                                 <li class="divider"></li>
-                                <li class="dropdown-header">Información General</li>
-                                <li><a href="{{ path('general_information_list') }}">Lista de Información</a></li>
-                                <li><a href="{{ path('general_information_new') }}">Agregar Información</a></li> 
+                                <li class="dropdown-header">{{ 'admin.general_information' | trans }}</li>
+                                <li><a href="{{ path('general_information_list') }}">{{ 'admin.list_information' | trans }}</a></li>
+                                <li><a href="{{ path('general_information_new') }}">{{ 'admin.add_information' | trans }}</a></li>
                             </ul>
                         </li>
                         <li class="col-sm-6">
                             <ul>
-                                <li class="dropdown-header">Actividad</li>
-                                <li><a href="{{ path('actyvity_list') }}">Lista de Actividades</a></li>
-                                <li><a href="{{ path('actyvity_new') }}">Agergar Actividad</a></li>
+                                <li class="dropdown-header">{{ 'admin.activity' | trans }}</li>
+                                <li><a href="{{ path('actyvity_list') }}">{{ 'admin.activities_list' | trans }}</a></li>
+                                <li><a href="{{ path('actyvity_new') }}">{{ 'admin.add_activity' | trans }}</a></li>
                                 <li class="divider"></li>
                             </ul>
                         </li>
@@ -79,7 +79,7 @@
                     <ul class="dropdown-menu dropdown-menu-large row" style="width: 50%;">
                         <li class="col-sm-6">
                             <ul>
-                                <li class="dropdown-header">{{ 'admin.General_information' | trans }}</li>
+                                <li class="dropdown-header">{{ 'admin.general_information' | trans }}</li>
                                 <li><a href="{{ path('hotel_name') }}">{{ 'admin.name' | trans }} {% if not app.session.get('hotel_name') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                                 <li><a href="{{ path('hotel_address') }}">{{ 'hotels.address' | trans }} {% if not app.session.get('hotel_address') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
                                 <li><a href="{{ path('hotel_stars') }}">{{ 'hotels.stars' | trans }} {% if not app.session.get('hotel_stars') %} <span class="glyphicon glyphicon-asterisk" style="color: red"></span> {% endif %}</a></li>
@@ -105,13 +105,13 @@
         </ul>	    
         {% elseif is_granted('ROLE_ACTIVITY') %} 
         <li class="dropdown dropdown-large">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actividades<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'admin.activities' | trans }}<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-large row" style="width: 50%;">
                         <li class="col-sm-6">
                             <ul>
-                                <li class="dropdown-header">Actividad</li>
-                                <li><a href="{{ path('actyvity_list') }}">Lista de Actividades</a></li>
-                                <li><a href="{{ path('actyvity_new') }}">Agergar Actividad</a></li>
+                                <li class="dropdown-header">{{ 'admin.activity' | trans }}</li>
+                                <li><a href="{{ path('actyvity_list') }}">{{ 'admin.activities_list' | trans }}</a></li>
+                                <li><a href="{{ path('actyvity_new') }}">{{ 'admin.add_activity' | trans }}</a></li>
                                 <li class="divider"></li>
                             </ul>
                         </li>

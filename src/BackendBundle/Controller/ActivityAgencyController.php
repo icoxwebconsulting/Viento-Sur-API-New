@@ -168,26 +168,38 @@ class ActivityAgencyController extends Controller
             $query = $managerEntity->createQuery($dql)->setParameter('email', $entity->getUser()->getEmail());
             $result = $query->getResult();
 
-            if(!empty($result)){
-                $template = 'registerAgency';
-                $nameAgency = $entity->getName();
-                $fullName = $entity->getUser()->getFirstName(). ' ' .$entity->getUser()->getLastName();
-                $email = $entity->getUser()->getEmail();
-                $plainPassword = "test1";
-                $mail_params = array(
-                    'fullName' => $fullName,
-                    'nameAgency' => $nameAgency,
-                    'email' => $email,
-                    'password' => $plainPassword
-                );
+            if($action == 'new'){
+                if(!empty($result)){
+                    $template = 'registerAgency';
+                    $nameAgency = $entity->getName();
+                    $fullName = $entity->getUser()->getFirstName(). ' ' .$entity->getUser()->getLastName();
+                    $email = $entity->getUser()->getEmail();
+                    $mail_params = array(
+                        'fullName' => $fullName,
+                        'nameAgency' => $nameAgency,
+                        'email' => $email,
+                        'password' => $plainPassword
+                    );
+                    $message = $this->container->get('mail_manager');
 
-                $message = $this->container->get('mail_manager');
-                $message->sendEmail($template, $mail_params);
+                    $message->sendEmail($template, $mail_params);
+
+                }
+            }
+
+
+            switch ($textMsj){
+                case 'agregado':
+                    $message = 'admin.messages.add_activity';
+                    break;
+                case 'editado':
+                    $message = 'admin.messages.edit_activity';
+                    break;
             }
 
             $this->addFlash(
                 'success',
-                $this->get('translator')->trans('Se ha '.$textMsj.' correctamente la agencia!')
+                $this->get('translator')->trans($message)
             );
             return $this->redirectToRoute('activity_agency_list');
         }

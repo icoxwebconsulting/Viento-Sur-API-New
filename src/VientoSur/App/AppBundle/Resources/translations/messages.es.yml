@@ -440,7 +440,6 @@ amenities:
 admin:
     To_update: Actualizar
     hotels: Establecimiento
-    General_information: Información General
     Much_more: Mucho más
     create_account: Crear cuenta
     confirm_account: Por favor revise su correo electrónico. Contiene un enlace de activación al que debe hacer clic para activar su cuenta.
@@ -508,6 +507,52 @@ admin:
     promotion_section: Sección de promoción
     title: Título
     subtitle: Subtítulo
+    activities: Actividades
+    activity: Actividad
+    activities_list: Lista de Actividades
+    add_activity: Agregar Actividad
+    activity_agency: Agencia de Actividades
+    list_agencies: Lista de Agencias
+    add_agency: Agregar Agencia
+    general_information: Información General
+    list_information: Lista de Información
+    add_information: Agregar Información
+    address: Dirección
+    amount: Monto
+    status: Estatus
+    list_ctivities_agency: Lista de Agencia de Actividades
+    phone: Teléfono
+    contact_user: Usuario de Contacto
+    new_activities_agency: Nueva Agencia de Actividades
+    edit_activities_agency: Edit Activities Agency
+    data_from_agency: Datos de la Agencia
+    enabled: Habilitada
+    user: Usuario
+    contract: Contrato
+    commissions: Comisiones
+    percentage_vs: Porcentaje Viento Sur
+    percentage_agency: Porcentaje Agencias
+    commercial_discounts: Descuento Comercial
+    general_information_data: Datos de la Información General
+    list_general_activities_information: Lista de Información general de Actividades
+    title_destination: Título & Destino
+    description: Descripción
+    options: Opciones
+    capacity_per_shift: Capacidad por turno
+    duration_per_shift: Duración por turno
+    sunday: Domingo
+    monday: Lunes
+    tuesday:  Martes
+    wednesday: Miércoles
+    thursday: Jueves
+    friday: Viernes
+    saturday: Sábado
+    from_the: Desde
+    until: Until
+    people: People
+    select: Seleccionar
+    agency: Agencia
+    hotel: Hotel
     messages:
         promotion_sections_added: Se ha agregado correctamente la sección de promoción!
         promotion_sections_updated: Se ha actualizado correctamente la sección de promoción!
@@ -519,6 +564,10 @@ admin:
         updated: Se ha actualizado correctamente!
         deleted: Se ha eliminado correctamente!
         limit_hotel_by_user: Ya cumpliste el limite de creación de hoteles
+        add_information_general: ¡La información general de la actividad ha sido creada correctamente!
+        edit_information_general: ¡La información general de la actividad ha sido editada correctamente!
+        add_activity: ¡La actividad ha sido creada correctamente!
+        edit_activity: ¡La actividad ha sido editada correctamente!
     confirmation: Confirmación
     delete_element: ¿Desea eliminar este elemento?
     yes: Si
