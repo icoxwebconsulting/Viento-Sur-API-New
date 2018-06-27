@@ -182,7 +182,7 @@ class ActivityController extends Controller
      * @return response
      */
     protected function formAction($form, $request, $em, $entity, $textMsj, $action, $rol){
-        
+        $managerEntity = $this->getDoctrine()->getManager();
         if($form->handleRequest($request)->isValid())
         {
             
@@ -214,6 +214,41 @@ class ActivityController extends Controller
             $em->persist($entity);
             $em->flush();
 
+
+            $dql = 'SELECT a.id, ag.name as agency, a.name, a.address, a.latitude, a.longitude
+                FROM VientoSurAppAppBundle:Activity as a, VientoSurAppAppBundle:ActivityAgency as ag
+                WHERE a.activity_agency = ag.id
+                AND a.id <>'.$entity->getId();
+            $query = $managerEntity->createQuery($dql);
+            $resultQuery = $query->getResult();
+
+            $dqlB = 'SELECT ag.name
+                FROM VientoSurAppAppBundle:Activity as a, VientoSurAppAppBundle:ActivityAgency as ag
+                WHERE a.activity_agency = ag.id AND ag.id =' .$activity_agency;
+
+            $queryB = $managerEntity->createQuery($dqlB);
+            $resultB = $queryB->getResult();
+            $nameAgency = $resultB[0]['name'];
+            $requestActivity = $request->get('appbundle_activity');
+
+            $dataActivity = [
+                    'agency' => $nameAgency,
+                    'activity' => $requestActivity['name'],
+                    'address' => $requestActivity['address'],
+                    'latitude' => $requestActivity['latitude'],
+                    'longitude' => $requestActivity['longitude']
+                ];
+
+            $resultPoints = $this->orderPoints($dataActivity, $resultQuery, 5);
+
+            $emailParams = ['activities' => $resultPoints, 'dataActivity' => $dataActivity];
+
+            if(count($resultPoints) > 0){
+                $template = 'nearbyActivities';
+                $message = $this->container->get('mail_manager');
+                $message->sendEmail($template, $emailParams, 'activity');
+            }
+
             switch ($textMsj){
                 case 'agregado':
                     $message = 'admin.messages.add_activity';
@@ -230,4 +265,58 @@ class ActivityController extends Controller
             return $this->redirectToRoute('actyvity_list');
         }
     }
+
+
+    /**
+     * @param array $pointInit Some argument description
+     * @param array  $pointEnd
+     * @return string result
+     */
+    function distance($pointInit, $pointEnd) {
+        $latInit = $pointInit['latitude'];
+        $longInit = $pointInit['longitude'];
+
+        $latEnd = $pointEnd['latitude'];
+        $longEnd = $pointEnd['longitude'];
+
+        $theta = $longInit - $longEnd;
+        $dist = sin(deg2rad($latInit)) * sin(deg2rad($latEnd)) +  cos(deg2rad($latInit)) * cos(deg2rad($latEnd)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+
+        $results = round($miles * 1.609344, 2);
+
+        return $results;
+
+    }
+
+
+    /**
+     * @param $pointInit array initial location parameters
+     * @param $listPoints array list list of nearby points
+     * @param $limit limit of distances in km
+     * @return array
+     */
+    function orderPoints($pointInit, $listPoints, $limit ){
+        $arrDistance = [];
+        for ($i=0; $i < count($listPoints) ; $i++) {
+            $distance = $this->distance($pointInit,$listPoints[$i]);
+
+
+            if($distance <= $limit){
+                array_push($arrDistance, [
+                    "address" => $listPoints[$i]['address'],
+                    "agency" => $listPoints[$i]['agency'],
+                    "name" => $listPoints[$i]['name'],
+                    "distance" => $distance
+                ]);
+            }
+
+        }
+        array_multisort(array_column($arrDistance, 'distance'), SORT_ASC, $arrDistance);
+
+        return $arrDistance;
+    }
+
 }

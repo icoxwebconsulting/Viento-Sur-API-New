@@ -555,6 +555,7 @@ admin:
     select: Select
     agency: Agency
     hotel: Hotel
+    distance: Distance
     messages:
         promotion_sections_added: Promotion sections has been successfully added!
         promotion_sections_updated: Promotion sections has been successfully updated!

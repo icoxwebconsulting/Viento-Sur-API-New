@@ -553,6 +553,7 @@ admin:
     select: Seleccionar
     agency: Agencia
     hotel: Hotel
+    distance: Distancia
     messages:
         promotion_sections_added: Se ha agregado correctamente la sección de promoción!
         promotion_sections_updated: Se ha actualizado correctamente la sección de promoción!

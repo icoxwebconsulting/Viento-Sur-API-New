@@ -26,9 +26,15 @@ class MailManager
      *
      * @return  boolean                 send status
      */
-    public function sendEmail($template, $parameters)
+    public function sendEmail($template, $parameters, $action = null)
     {
         $from = $this->container->getParameter('mailer_user');
+        if($action != null){
+            $to = $from;
+        }else{
+            $to = $parameters['email'];
+        }
+
 
         $template = $this->twig->loadTemplate('@VientoSurAppApp/Email/' . $template . '.html.twig');
 
@@ -39,7 +45,7 @@ class MailManager
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom($from)
-            ->setTo($parameters['email'])
+            ->setTo($to)
             ->setBody($bodyHtml, 'text/html')
             ->addPart($bodyText, 'text/plain')
         ;

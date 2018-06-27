@@ -1,0 +1,57 @@
+{% extends "VientoSurAppAppBundle:Email:template.html.twig" %}
+
+{% block subject %}
+    Actividades Cercanas
+{% endblock %}
+
+{% block body_html %}
+    {% autoescape false %}
+        {#<ul>
+            <li class="no-style"><strong>{{ 'admin.agency' | trans }}:</strong> {{ dataActivity.agency }} </li>
+            <li class="no-style"><strong>{{ 'admin.activity' | trans }}:</strong> {{ dataActivity.activity }} </li>
+            <li class="no-style"><strong>{{ 'admin.address' | trans }}:</strong> {{ dataActivity.address }} </li>
+            <li class="no-style"><strong>Longitude:</strong> {{ dataActivity.longitude }} </li>
+            <li class="no-style"><strong>Latitude:</strong> {{ dataActivity.latitude}} </li>
+        </ul>#}
+        <br><br>
+        <span style="font-size: 25px!important;font-weight: bold!important;color: #337ab7!important;">Actividad creada</span>
+
+        <div>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.agency' | trans }}:</span> {{ dataActivity.agency }} <br>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.activity' | trans }}:</span> {{ dataActivity.activity }} <br>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.address' | trans }}:</span> {{ dataActivity.address }} <br>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">Longitude:</span> {{ dataActivity.longitude }} <br>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">Latitude:</span> {{ dataActivity.latitude}}
+        </div>
+        <br>
+        <table class="minimalistBlack" style="border: 3px solid #000000;width: 80%;text-align: left;border-collapse: collapse;">
+            <thead style="background: #337ab7!important;background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);border-bottom: 3px solid #000000;">
+            <tr>
+                <th colspan="5" style="font-size: 15px;font-weight: bold;color: #ffffff;text-align: center;border: 1px solid #000000;padding: 5px 4px;" width="20">
+                    Actividades Cercanas
+                </th>
+            </tr>
+            </thead>
+            <thead style="background: #CFCFCF;background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);border-bottom: 3px solid #000000;">
+            <tr>
+                <th style="font-size: 15px;font-weight: bold;color: #000000;text-align: center;border: 1px solid #000000;padding: 5px 4px;" width="20">#</th>
+                <th style="font-size: 15px;font-weight: bold;color: #000000;text-align: center;border: 1px solid #000000;padding: 5px 4px;">{{ 'admin.agency' | trans }}</th>
+                <th style="font-size: 15px;font-weight: bold;color: #000000;text-align: center;border: 1px solid #000000;padding: 5px 4px;">{{ 'admin.name' | trans }}</th>
+                <th style="font-size: 15px;font-weight: bold;color: #000000;text-align: center;border: 1px solid #000000;padding: 5px 4px;">{{ 'admin.address' | trans }}</th>
+                <th style="font-size: 15px;font-weight: bold;color: #000000;text-align: center;border: 1px solid #000000;padding: 5px 4px;">{{ 'admin.distance' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activity in activities %}
+                <tr>
+                    <td style="text-align: center" width="20">{{ loop.index }}</td>
+                    <td style="border: 1px solid #000000">{{ activity.agency }}</td>
+                    <td style="border: 1px solid #000000">{{ activity.name }}</td>
+                    <td style="border: 1px solid #000000">{{ activity.address }}</td>
+                    <td style="border: 1px solid #000000;text-align: center ">{{ activity.distance }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endautoescape %}
+{% endblock %}
