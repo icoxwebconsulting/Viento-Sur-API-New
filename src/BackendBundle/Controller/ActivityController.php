@@ -215,28 +215,21 @@ class ActivityController extends Controller
             $em->flush();
 
 
-            $dql = 'SELECT a.id, ag.name as agency, a.name, a.address, a.latitude, a.longitude
+            $dql = 'SELECT a.id, ag.name as agency, a.name, a.address_destination, a.latitude_destination, a.longitude_destination
                 FROM VientoSurAppAppBundle:Activity as a, VientoSurAppAppBundle:ActivityAgency as ag
                 WHERE a.activity_agency = ag.id
                 AND a.id <>'.$entity->getId();
             $query = $managerEntity->createQuery($dql);
             $resultQuery = $query->getResult();
 
-            $dqlB = 'SELECT ag.name
-                FROM VientoSurAppAppBundle:Activity as a, VientoSurAppAppBundle:ActivityAgency as ag
-                WHERE a.activity_agency = ag.id AND ag.id =' .$activity_agency;
-
-            $queryB = $managerEntity->createQuery($dqlB);
-            $resultB = $queryB->getResult();
-            $nameAgency = $resultB[0]['name'];
             $requestActivity = $request->get('appbundle_activity');
 
             $dataActivity = [
-                    'agency' => $nameAgency,
+                    'agency' => $entity->getActivityAgency()->getName(),
                     'activity' => $requestActivity['name'],
-                    'address' => $requestActivity['address'],
-                    'latitude' => $requestActivity['latitude'],
-                    'longitude' => $requestActivity['longitude']
+                    'address_destination' => $requestActivity['address_destination'],
+                    'latitude_destination' => $requestActivity['latitude_destination'],
+                    'longitude_destination' => $requestActivity['longitude_destination']
                 ];
 
             $resultPoints = $this->orderPoints($dataActivity, $resultQuery, 5);
@@ -262,7 +255,7 @@ class ActivityController extends Controller
                 'success',
                 $this->get('translator')->trans($message)
             );
-            return $this->redirectToRoute('actyvity_list');
+            return $this->redirect($this->generateUrl('actyvity_list'));
         }
     }
 
@@ -273,11 +266,11 @@ class ActivityController extends Controller
      * @return string result
      */
     function distance($pointInit, $pointEnd) {
-        $latInit = $pointInit['latitude'];
-        $longInit = $pointInit['longitude'];
+        $latInit = $pointInit['latitude_destination'];
+        $longInit = $pointInit['longitude_destination'];
 
-        $latEnd = $pointEnd['latitude'];
-        $longEnd = $pointEnd['longitude'];
+        $latEnd = $pointEnd['latitude_destination'];
+        $longEnd = $pointEnd['longitude_destination'];
 
         $theta = $longInit - $longEnd;
         $dist = sin(deg2rad($latInit)) * sin(deg2rad($latEnd)) +  cos(deg2rad($latInit)) * cos(deg2rad($latEnd)) * cos(deg2rad($theta));
@@ -306,7 +299,7 @@ class ActivityController extends Controller
 
             if($distance <= $limit){
                 array_push($arrDistance, [
-                    "address" => $listPoints[$i]['address'],
+                    "address_destination" => $listPoints[$i]['address_destination'],
                     "agency" => $listPoints[$i]['agency'],
                     "name" => $listPoints[$i]['name'],
                     "distance" => $distance

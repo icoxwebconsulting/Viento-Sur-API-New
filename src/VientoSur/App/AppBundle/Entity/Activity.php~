@@ -51,23 +51,44 @@ class Activity
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address_origin", type="string", length=255)
      */
-    private $address;
+    private $address_origin;
     
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="latitude", type="string", length=255)
+     * @ORM\Column(name="latitude_origin", type="string", length=255)
      */
-    private $latitude;
+    private $latitude_origin;
 
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="longitude", type="string", length=255)
+     * @ORM\Column(name="longitude_origin", type="string", length=255)
      */
-    private $longitude;
+    private $longitude_origin;
+    
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="address_destination", type="string", length=255)
+     */
+    private $address_destination;
+    
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="latitude_destination", type="string", length=255)
+     */
+    private $latitude_destination;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="longitude_destination", type="string", length=255)
+     */
+    private $longitude_destination;
     
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -295,54 +316,6 @@ class Activity
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set latitude
-     *
-     * @param string $latitude
-     *
-     * @return Activity
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    /**
-     * Get latitude
-     *
-     * @return string
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * Set longitude
-     *
-     * @param string $longitude
-     *
-     * @return Activity
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return string
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
     }
 
     /**
@@ -778,30 +751,6 @@ class Activity
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Activity
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
      * Set duration
      *
      * @param string $duration
@@ -1020,26 +969,37 @@ class Activity
      */
     public function getArrayDAy()
     {
-        $this->array_day = ['Domingo'=>$this->sunday,
+        $this->array_day = [
             'Lunes'=>$this->monday,
             'Martes'=>$this->tuesday,
             'Miercoles'=>$this->wednesday,
             'Jueves'=>$this->thursday,
             'Viernes'=>$this->friday,
-            'Sabado'=>$this->saturday];
-        
-        return $this->array_day;   
+            'Sabado'=>$this->saturday,
+            'Domingo'=>$this->sunday];
     }  
     
     /*
      * getFirstDay()
      */
     public function getFirstDay(){
-        foreach ($this->array_day as $key => $value) {
-            if($value == 1){
-                return $key;
-            }
+      
+        $this->getArrayDAy();
+        $newValues=array_filter($this->array_day, "strlen");
+        $coutn = count($newValues);
+        $index = 0;
+        $data = '';
+      
+        foreach ($newValues as $key => $value) {
+            $index++;
+            if($index < $coutn){
+                $data.= $key.',';
+            }else{
+                $data = substr($data, 0, -1);
+                $data.=' y '. $key;
+            }    
         }
+        return $data;
     } 
     
     /*

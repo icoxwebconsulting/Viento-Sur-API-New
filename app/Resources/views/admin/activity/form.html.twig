@@ -52,20 +52,45 @@
                                     {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control', 'placeholder': 'Enter activity name', 'style': 'width: 50%; float: left;', 'required': 'required' }} : { 'attr': { 'class': 'form-control', 'value': translations.en.name, 'style': 'width: 50%; float: left;', 'required': 'required'  }} ) }}<br/><br/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ 'hotels.address' | trans }}*</label>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-9">
-                                        {{ form_widget(form.address, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
-                                        {{ form_widget(form.latitude) }}
-                                        {{ form_widget(form.longitude) }}
-                                    </div>
-                                </div>  
-                                <div class="form-group row" style="margin-bottom: 0rem;">
+                                <fieldset class="fieldset-custom" style="margin: 0px;">
                                     <div class="col-md-12">
-                                        <div id="map-canvas"></div>
-                                    </div>
-                                </div>    
+                                        <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Salida *</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-9">
+                                                    {{ form_widget(form.address_origin, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Salida.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.latitude_origin) }}
+                                                    {{ form_widget(form.longitude_origin) }}
+                                                </div>
+                                            </div>  
+                                            <div class="form-group row" style="margin-bottom: 0rem;">
+                                                <div class="col-md-12">
+                                                    <div id="map-canvas-origin"></div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Destino *</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-9">
+                                                    {{ form_widget(form.address_destination, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Destino.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.latitude_destination) }}
+                                                    {{ form_widget(form.longitude_destination) }}
+                                                </div>
+                                            </div>  
+                                            <div class="form-group row" style="margin-bottom: 0rem;">
+                                                <div class="col-md-12">
+                                                    <div id="map-canvas-destination"></div>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>    
+                                </fieldset>    
+                                </div>   
                                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
                             </div>
                         </div>
@@ -389,7 +414,7 @@
         .hide {
             display: none !important;
         }
-        #map-canvas {
+        #map-canvas-destination, #map-canvas-origin  {
             height: 400px;
             width: 100%;
         }
@@ -437,24 +462,46 @@
                 $('#imagemodal').modal('show');
             });
         });
-        function initialize() {
-            var lat = '{{ form.latitude.vars.value }}';
-            var log = '{{ form.latitude.vars.value }}';
+        function initialize(){
+            initializeorigin();
+            initializedestination();
+        }
+        function initializeorigin(){
+            var lat = '{{ form.latitude_origin.vars.value }}';
+            var log = '{{ form.latitude_origin.vars.value }}';
+            var idmap = 'map-canvas-origin';
+            var idaddress = 'appbundle_activity_address_origin';
+            var idlat = 'appbundle_activity_latitude_origin';
+            var idlog = 'appbundle_activity_longitude_origin';
+            initializeall(lat, log, idmap, idaddress, idlat, idlog);
+        }
+        
+        function initializedestination(){
+            var lat = '{{ form.latitude_destination.vars.value }}';
+            var log = '{{ form.latitude_destination.vars.value }}';
+            var idmap = 'map-canvas-destination';
+            var idaddress = 'appbundle_activity_address_destination';
+            var idlat = 'appbundle_activity_latitude_destination';
+            var idlog = 'appbundle_activity_longitude_destination';
+            initializeall(lat, log, idmap, idaddress, idlat, idlog);
+        }
+        
+        function initializeall(lat, log, idmap, idaddress, idlat, idlog) {
             
-            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+            var map = new google.maps.Map(document.getElementById(idmap), {
                 center: {lat: lat, lng: log },
                 zoom: 4,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             
             // Create the search box and link it to the UI element.
-            var input = document.getElementById("appbundle_activity_address");
+            var input = document.getElementById(idaddress);
             var myLatLng = new google.maps.LatLng(lat, log);
             
             marker = new google.maps.Marker( {position: myLatLng, map: map, draggable: true } );
             google.maps.event.addListener(marker, 'dragend', function (event) {
-                document.getElementById("appbundle_activity_latitude").value = this.getPosition().lat();
-                document.getElementById("appbundle_activity_longitude").value = this.getPosition().lng();
+                document.getElementById(idlat).value = this.getPosition().lat();
+                document.getElementById(idlog).value = this.getPosition().lng();
                 console.log("lat->",this.getPosition().lat());
                 console.log("log->",this.getPosition().lng());
             });
@@ -475,8 +522,8 @@
             searchBox.addListener('places_changed', function() {
                 var places = searchBox.getPlaces();
                 console.log(places[0].geometry);
-                document.getElementById("appbundle_activity_latitude").value = places[0].geometry.viewport.f.b;
-                document.getElementById("appbundle_activity_longitude").value = places[0].geometry.viewport.b.b;
+                document.getElementById(idlat).value = places[0].geometry.viewport.f.b;
+                document.getElementById(idlog).value = places[0].geometry.viewport.b.b;
                 console.log("auto complete lat->",places[0].geometry.viewport.f.b);
                 console.log("auto complete long->",places[0].geometry.viewport.b.b);
                 if (places.length == 0) {
@@ -510,8 +557,8 @@
                     markers.push(marker);
 
                     google.maps.event.addListener(marker, 'dragend', function (event) {
-                        document.getElementById("appbundle_activity_latitude").value = this.getPosition().lat();
-                        document.getElementById("appbundle_activity_longitude").value = this.getPosition().lng();
+                        document.getElementById(idlat).value = this.getPosition().lat();
+                        document.getElementById(idlog).value = this.getPosition().lng();
                         console.log("lat->",this.getPosition().lat());
                         console.log("log->",this.getPosition().lng());
                     });

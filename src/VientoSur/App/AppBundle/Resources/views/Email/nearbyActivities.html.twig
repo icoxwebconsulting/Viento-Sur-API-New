@@ -19,9 +19,9 @@
         <div>
             <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.agency' | trans }}:</span> {{ dataActivity.agency }} <br>
             <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.activity' | trans }}:</span> {{ dataActivity.activity }} <br>
-            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.address' | trans }}:</span> {{ dataActivity.address }} <br>
-            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">Longitude:</span> {{ dataActivity.longitude }} <br>
-            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">Latitude:</span> {{ dataActivity.latitude}}
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">{{ 'admin.address' | trans }}:</span> {{ dataActivity.address_destination }} <br>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">Longitude:</span> {{ dataActivity.longitude_destination }} <br>
+            <span style="font-weight: bold;margin-left: 15px;list-style: none!important;">Latitude:</span> {{ dataActivity.latitude_destination}}
         </div>
         <br>
         <table class="minimalistBlack" style="border: 3px solid #000000;width: 80%;text-align: left;border-collapse: collapse;">
@@ -47,7 +47,7 @@
                     <td style="text-align: center" width="20">{{ loop.index }}</td>
                     <td style="border: 1px solid #000000">{{ activity.agency }}</td>
                     <td style="border: 1px solid #000000">{{ activity.name }}</td>
-                    <td style="border: 1px solid #000000">{{ activity.address }}</td>
+                    <td style="border: 1px solid #000000">{{ activity.address_destination }}</td>
                     <td style="border: 1px solid #000000;text-align: center ">{{ activity.distance }}</td>
                 </tr>
             {% endfor %}

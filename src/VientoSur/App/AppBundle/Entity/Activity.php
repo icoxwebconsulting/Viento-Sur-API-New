@@ -51,23 +51,44 @@ class Activity
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address_origin", type="string", length=255)
      */
-    private $address;
+    private $address_origin;
     
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="latitude", type="string", length=255)
+     * @ORM\Column(name="latitude_origin", type="string", length=255)
      */
-    private $latitude;
+    private $latitude_origin;
 
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="longitude", type="string", length=255)
+     * @ORM\Column(name="longitude_origin", type="string", length=255)
      */
-    private $longitude;
+    private $longitude_origin;
+    
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="address_destination", type="string", length=255)
+     */
+    private $address_destination;
+    
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="latitude_destination", type="string", length=255)
+     */
+    private $latitude_destination;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="longitude_destination", type="string", length=255)
+     */
+    private $longitude_destination;
     
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -295,54 +316,6 @@ class Activity
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set latitude
-     *
-     * @param string $latitude
-     *
-     * @return Activity
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    /**
-     * Get latitude
-     *
-     * @return string
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * Set longitude
-     *
-     * @param string $longitude
-     *
-     * @return Activity
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return string
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
     }
 
     /**
@@ -778,30 +751,6 @@ class Activity
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Activity
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
      * Set duration
      *
      * @param string $duration
@@ -1043,6 +992,9 @@ class Activity
       
         foreach ($newValues as $key => $value) {
             $index++;
+            if($coutn === 1){
+                $data.= $key;
+            }
             if($index < $coutn){
                 $data.= $key.',';
             }else{
@@ -1066,4 +1018,148 @@ class Activity
         
         return $val;
     } 
+
+    /**
+     * Set addressOrigin
+     *
+     * @param string $addressOrigin
+     *
+     * @return Activity
+     */
+    public function setAddressOrigin($addressOrigin)
+    {
+        $this->address_origin = $addressOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get addressOrigin
+     *
+     * @return string
+     */
+    public function getAddressOrigin()
+    {
+        return $this->address_origin;
+    }
+
+    /**
+     * Set latitudeOrigin
+     *
+     * @param string $latitudeOrigin
+     *
+     * @return Activity
+     */
+    public function setLatitudeOrigin($latitudeOrigin)
+    {
+        $this->latitude_origin = $latitudeOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get latitudeOrigin
+     *
+     * @return string
+     */
+    public function getLatitudeOrigin()
+    {
+        return $this->latitude_origin;
+    }
+
+    /**
+     * Set longitudeOrigin
+     *
+     * @param string $longitudeOrigin
+     *
+     * @return Activity
+     */
+    public function setLongitudeOrigin($longitudeOrigin)
+    {
+        $this->longitude_origin = $longitudeOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get longitudeOrigin
+     *
+     * @return string
+     */
+    public function getLongitudeOrigin()
+    {
+        return $this->longitude_origin;
+    }
+
+    /**
+     * Set addressDestination
+     *
+     * @param string $addressDestination
+     *
+     * @return Activity
+     */
+    public function setAddressDestination($addressDestination)
+    {
+        $this->address_destination = $addressDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get addressDestination
+     *
+     * @return string
+     */
+    public function getAddressDestination()
+    {
+        return $this->address_destination;
+    }
+
+    /**
+     * Set latitudeDestination
+     *
+     * @param string $latitudeDestination
+     *
+     * @return Activity
+     */
+    public function setLatitudeDestination($latitudeDestination)
+    {
+        $this->latitude_destination = $latitudeDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get latitudeDestination
+     *
+     * @return string
+     */
+    public function getLatitudeDestination()
+    {
+        return $this->latitude_destination;
+    }
+
+    /**
+     * Set longitudeDestination
+     *
+     * @param string $longitudeDestination
+     *
+     * @return Activity
+     */
+    public function setLongitudeDestination($longitudeDestination)
+    {
+        $this->longitude_destination = $longitudeDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get longitudeDestination
+     *
+     * @return string
+     */
+    public function getLongitudeDestination()
+    {
+        return $this->longitude_destination;
+    }
 }
