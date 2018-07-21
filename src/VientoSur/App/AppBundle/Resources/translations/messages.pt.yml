@@ -430,6 +430,23 @@ amenities:
     VALETPRK: Estacionamento com manobrista
     WAKEUP: Serviço de despertador
 admin:
+    #inicio mensajes en tooltip
+    too_data_esp: Neste campo de texto, insira o título da atividade no idioma espanhol
+    too_data_pt: Neste campo de texto, insira o título da atividade em português
+    too_data_en: Neste campo de texto, insira o título da atividade no idioma inglês
+    too_period: Dias da semana em que a atividade está ativada
+    too_activity: Nome da atividade
+    too_desc_esp: Neste campo de texto, insira a descrição da atividade no idioma espanhol
+    too_desc_pt: Neste campo de texto, digite a descrição da atividade em português
+    too_desc_en: Neste campo de texto, digite a descrição da atividade no idioma inglês
+    #fin mensajes en tooltip
+    days_enabled: Dias Habilitados
+    add_img: Adicionar Imagens
+    back: De volta 
+    next: Seguindo
+    duration: Duração
+    price: Preço
+    until: Até
     To_update: To update
     hotels: Estabelecimento
     general_information: Informações gerais
@@ -499,7 +516,7 @@ admin:
     promotion_section: Seção de promoção
     title: Título
     subtitle: Subtítulo
-    activities: actividades
+    activities: Atividades
     activity: Atividade
     activities_list: Lista de Atividades
     add_activity: Adicionar atividade

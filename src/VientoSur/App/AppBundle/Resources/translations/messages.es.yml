@@ -295,6 +295,7 @@ hotels:
         subscribe_newsletter: Subscribir a noticias:
         travel_assistance: Asistencia en viaje:
 flights:
+    duration: Duración
     since: Desde
     flights: Vuelos
     flight: Vuelo
@@ -309,7 +310,6 @@ flights:
     going: Ida
     return: Vuelta
     airports: Aeropuertos
-    duration: Duración
     schedule: Horario
     detail: Detalle
     see_detail: Ver detalle de vuelo
@@ -438,6 +438,20 @@ amenities:
     VALETPRK: Valet Parking
     WAKEUP: Servicio de Despertador
 admin:
+    #inicio mensajes en tooltip
+    too_data_esp: En este campo de texto introduzca el título de la actividad en lenguaje español
+    too_data_pt: En este campo de texto introduzca el título de la actividad en lenguaje portugues
+    too_data_en: En este campo de texto introduzca el título de la actividad en lenguaje inglés
+    too_desc_esp: En este campo de texto introduzca la descripción de la actividad en lenguaje español 
+    too_desc_pt: En este campo de texto introduzca la descripción de la actividad en lenguaje portugues
+    too_desc_en: En este campo de texto introduzca la descripción de la actividad en lenguaje inglés
+    #fin mensajes en tooltip
+    days_enabled: Días Habilitados
+    add_img: Agregar Imágenes
+    back: atrás
+    next: Siguiente
+    price: Precio
+    duration: Duración
     To_update: Actualizar
     hotels: Establecimiento
     Much_more: Mucho más
@@ -548,8 +562,8 @@ admin:
     friday: Viernes
     saturday: Sábado
     from_the: Desde
-    until: Until
-    people: People
+    until: Hasta
+    people: Personas
     select: Seleccionar
     agency: Agencia
     hotel: Hotel

@@ -438,6 +438,20 @@ amenities:
     VALETPRK: Valet Parking
     WAKEUP: Wake Up Service
 admin:
+    #inicio mensajes en tooltip
+    too_data_esp: In this text field enter the title of the activity in Spanish language
+    too_data_pt: In this text field enter the title of the activity in Portuguese language
+    too_data_en: In this text field enter the title of the activity in English language
+    too_desc_esp: In this text field enter the description of the activity in Spanish language
+    too_desc_pt: In this text field enter the description of the activity in Portuguese language
+    too_desc_en: In this text field enter the description of the activity in English language
+    #fin mensajes en tooltip
+    days_enabled: Enabled Days
+    add_img: Add Images
+    back: Back
+    next: Next
+    duration: Duration
+    price: Price
     To_update: To update
     hotels: Establishment
     Much_more: Much more
