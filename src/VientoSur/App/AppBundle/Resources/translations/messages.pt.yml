@@ -430,6 +430,7 @@ amenities:
     VALETPRK: Estacionamento com manobrista
     WAKEUP: Serviço de despertador
 admin:
+    of_departure: de saída
     #inicio mensajes en tooltip
     too_data_esp: Neste campo de texto, insira o título da atividade no idioma espanhol
     too_data_pt: Neste campo de texto, insira o título da atividade em português

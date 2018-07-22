@@ -15,7 +15,9 @@
                 <i class="fa fa-align-justify"></i>  {{ 'admin.add_activity' | trans }}
             </div>
             <div class="card-block">
-                <div class="stepwizard">
+            <!--inicio linea de subpaginas con enlaces cuadrados (display:
+             none hace que este invisible y que no ocupe espacio-->
+                <div class="stepwizard" style="display: none;">
                     <div class="stepwizard-row setup-panel">
                         <div class="stepwizard-step">
                             <!--href="#step-1"-->
@@ -44,6 +46,35 @@
                         </div>
                     </div>
                 </div>
+            <!--fin linea de subpaginas con enlaces cuadrados-->
+
+ <!--inicio linea de subpaginas pero con botones redondos-->
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step">
+                            <!--href="#step-1"-->
+                            <button id="boton1" type="button" class="btn btn-primary btn-circle" disabled="enabled">1</button>
+                            <p>{{ 'admin.title_destination' | trans }}</p>
+                        </div>
+                        <div class="stepwizard-step">
+                        <!--href="#step-2" style="transform: translate(-20px);"-->
+                            <button id="boton2" type="button" class="btn btn-default btn-circle" disabled="enabled">2</button>
+                            <p>{{ 'admin.description' | trans }}</p>
+                        </div>
+                        <div class="stepwizard-step">
+                        <!--href="#step-3" style="transform: translate(-10px);"-->
+                            <button id="boton3" type="button" class="btn btn-default btn-circle" disabled="enabled">3</button>
+                            <p>{{ 'admin.options' | trans }}</p>
+                        </div>
+                        <div class="stepwizard-step">
+                        <!--href="#step-4" style="transform: translate(-35px);"-->
+                            <button id="boton4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</button>
+                            <p>{{ 'admin.general_information' | trans }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!--fin repeticion linea de subpaginas pero con botones redondos-->
+
                 {{ form_start(form, {'attr':{ 'id': 'form', 'role': 'form'}}) }}
                     <div class="row setup-content" id="step-1">
                         <div class="col-xs-12">
@@ -54,22 +85,22 @@
                                 </div>
                                 <div class="form-group">
                                     <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español" style="margin-top: -7px" data-toggle="tooltip" data-placement="right" title="{{ 'admin.too_data_esp' | trans }}">
-                                    {{ form_widget(form.name, { 'attr': { 'class': 'form-control', 'placeholder': 'Ingrese el nombre de la actividad', 'style': 'width: 50%; float: left;', 'required': 'required' }}) }}<br/><br/>
+                                    {{ form_widget(form.name, { 'id': 'inties', 'class': 'form-control', 'attr': { 'class': 'form-control', 'placeholder': 'Ingrese el nombre de la actividad', 'style': 'width: 50%; float: left;', 'required': 'required' }}) }}<br/><br/>
                                     <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português" style="margin-top: -7px" data-toggle="tooltip" data-placement="right" title="{{ 'admin.too_data_pt' | trans }}">
-                                    {{ form_widget(form.namePt, translations.pt is not defined ? { 'attr': { 'class': 'form-control', 'placeholder': 'Digite o nome da atividade', 'style': 'width: 50%; float: left;', 'required': 'required' }} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name, 'style': 'width: 50%; float: left;', 'required': 'required'  }} ) }}<br/><br/>
+                                    {{ form_widget(form.namePt, translations.pt is not defined ? { 'id': 'intipt', 'attr': { 'class': 'form-control', 'placeholder': 'Digite o nome da atividade', 'style': 'width: 50%; float: left;', 'required': 'required' }} : { 'attr': { 'class': 'form-control', 'value': translations.pt.name, 'style': 'width: 50%; float: left;', 'required': 'required'  }} ) }}<br/><br/>
                                     <img class="flags-lg" src="{{ asset('assets/img/flags/USA.png') }}" alt="English" style="margin-top: -7px" data-toggle="tooltip" data-placement="right" title="{{ 'admin.too_data_en' | trans }}">
-                                    {{ form_widget(form.nameEn, translations.en is not defined ? { 'attr': { 'class': 'form-control', 'placeholder': 'Enter activity name', 'style': 'width: 50%; float: left;', 'required': 'required' }} : { 'attr': { 'class': 'form-control', 'value': translations.en.name, 'style': 'width: 50%; float: left;', 'required': 'required'  }} ) }}<br/><br/>
+                                    {{ form_widget(form.nameEn, translations.en is not defined ? { 'id': 'intien', 'attr': { 'class': 'form-control', 'placeholder': 'Enter activity name', 'style': 'width: 50%; float: left;', 'required': 'required' }} : { 'attr': { 'class': 'form-control', 'value': translations.en.name, 'style': 'width: 50%; float: left;', 'required': 'required'  }} ) }}<br/><br/>
                                 </div>
                                 <div class="form-group">
                                 <fieldset class="fieldset-custom" style="margin: 0px;">
                                     <div class="col-md-12">
                                         <div class="col-md-6">
                                             <div class="col-md-12">
-                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Salida *</label>
+                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} {{ 'admin.of_departure' | trans }} *</label>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-9">
-                                                    {{ form_widget(form.address_origin, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Salida.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.address_origin, { 'attr': { 'id': 'insalida', 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Salida.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
                                                     {{ form_widget(form.latitude_origin) }}
                                                     {{ form_widget(form.longitude_origin) }}
                                                 </div>
@@ -86,7 +117,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-9">
-                                                    {{ form_widget(form.address_destination, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Destino.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.address_destination, { 'attr': { 'id': 'indestino', 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Destino.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
                                                     {{ form_widget(form.latitude_destination) }}
                                                     {{ form_widget(form.longitude_destination) }}
                                                 </div>
@@ -100,7 +131,7 @@
                                     </div>    
                                 </fieldset>    
                                 </div>   
-                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >{{ 'admin.next' | trans }}</button>
+                                <button id="btbsubpag1" class="btn btn-primary nextBtn btn-lg pull-right" type="button">{{ 'admin.next' | trans }}</button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +141,7 @@
                                 <h3>{{ 'admin.description' | trans }}</h3>
                                 <div class="form-group">
                                     <img class="flags-lg" src="{{ asset('assets/img/flags/Argentina.png') }}" alt="Español" style="margin-top: -7px" data-toggle="tooltip" data-placement="right" title="{{ 'admin.too_desc_esp' | trans }}">
-                                    {{ form_widget(form.description, { 'attr': { 'class': 'form-control'}}) }}
+                                    {{ form_widget(form.description, { 'attr': { 'class': 'form-control' }}) }}
                                 </div>
                                 <div class="form-group">
                                     <img class="flags-lg" src="{{ asset('assets/img/flags/Portugal.png') }}" alt="Português" style="margin-top: -7px" data-toggle="tooltip" data-placement="right" title="{{ 'admin.too_desc_pt' | trans }}">
@@ -122,12 +153,15 @@
                                 </div> 
                                 <div class="setup-panel">
                                     <div>
-                                        <a href="#step-1" class="btn btn-primary btn-lg pull-left">
+                                        <button id="butirsubpag1" class="btn btn-primary btn-lg pull-left">
+                                         {{ 'admin.back' | trans }}
+                                         </button>
+                                        <a style="display: none;" id="enlirsubpag1" href="#step-1" class="btn btn-primary btn-lg pull-left">
                                            {{ 'admin.back' | trans }}
                                         </a> 
                                     </div>    
                                 </div>    
-                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >{{ 'admin.next' | trans }}</button>
+                                <button id="btbsubpag2" class="btn btn-primary nextBtn btn-lg pull-right" type="button">{{ 'admin.next' | trans }}</button>
                             </div>
                         </div>
                     </div>
@@ -162,7 +196,7 @@
                                   <fieldset class="fieldset-custom" style="margin: 0px;">
                                     <label class="label-fieldset" style="left: 45px;">{{ 'admin.days_enabled' | trans }}</label>
                                     <div class="col-md-1">
-                                        <label class="control-label">{{ 'admin.sunday' | trans }}</label><br/>
+                                        <label class="control-label" style="left: 45px;">{{ 'admin.sunday' | trans }}</label><br/>
                                         {{ form_widget(form.sunday, { 'attr': { 'class': 'form-control'}}) }}
                                     </div>
                                     <div class="col-md-1">
@@ -267,12 +301,15 @@
                                 </div>
                                 <div class="setup-panel">
                                     <div>
-                                        <a href="#step-2" type="button" class="btn btn-primary btn-lg pull-left">
-                                            {{ 'admin.back' | trans }}
+                                    <button id="butirsubpag2" class="btn btn-primary btn-lg pull-left">
+                                         {{ 'admin.back' | trans }}
+                                         </button>
+                                        <a style="display: none;" id="enlirsubpag2" href="#step-2" class="btn btn-primary btn-lg pull-left">
+                                           {{ 'admin.back' | trans }}
                                         </a> 
                                     </div>    
                                 </div>         
-                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >{{ 'admin.next' | trans }}</button>
+                                <button id="btbsubpag3" class="btn btn-primary nextBtn btn-lg pull-right" type="button" >{{ 'admin.next' | trans }}</button>
                             </div>
                         </div>
                     </div>                
@@ -296,9 +333,15 @@
                                 </fieldset>     
                                 <div class="setup-panel">
                                     <div>
-                                        <a href="#step-3" type="button" class="btn btn-primary btn-lg pull-left">
+                                    <!--coneste y todos los botones con el nombre estandar de butirsubpagX es un boton destinado
+                                    para regresar entre las distintas subpaginas-->
+                                    <button id="butirsubpag3" class="btn btn-primary btn-lg pull-left">
+                                         {{ 'admin.back' | trans }}
+                                         </button>
+                                         <!--la intencio es que este enlace no se vea, por eso style="display: none;"-->
+                                        <a style="display: none;" id="enlirsubpag3" href="#step-3" class="btn btn-primary btn-lg pull-left">
                                            {{ 'admin.back' | trans }}
-                                        </a> 
+                                        </a>
                                     </div>    
                                 </div>         
                                 <button id="send" type="submit" class="btn btn-success btn-lg pull-right"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
@@ -465,7 +508,7 @@
     {{ parent() }}
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
-    <script>
+    <script> 
         $(function() {
             $('.open-modal').on('click', function() {
                 $('.imagepreview').attr('src', $(this).find('img').attr('src'));
@@ -589,18 +632,21 @@
      $(document).ready(function () {
          
             $('#appbundle_activity_description').append('<textarea rows="5" cols="50">');
+            $('#appbundle_activity_description').attr("id", "indescripes");
             $('#appbundle_activity_description').attr("placeholder", "Descripción");
             $('#appbundle_activity_description').attr("maxlength", "256");
             $('#appbundle_activity_description').height(80);
             //$('#appbundle_activity_description').width(600);
           
             $('#appbundle_activity_descriptionPt').append('<textarea rows="5" cols="50">');
+            $('#appbundle_activity_descriptionPt').attr("id", "indescrippt");
             $('#appbundle_activity_descriptionPt').attr("placeholder", "Descrição");
             $('#appbundle_activity_descriptionPt').attr("maxlength", "256");
             $('#appbundle_activity_descriptionPt').height(80);
             
 
              $('#appbundle_activity_descriptionEn').append('<textarea rows="5" cols="50">');
+             $('#appbundle_activity_descriptionEn').attr("id", "indescripen");
              $('#appbundle_activity_descriptionEn').attr("placeholder", "Description");
              $('#appbundle_activity_descriptionEn').attr("maxlength", "256");
              $('#appbundle_activity_descriptionEn').height(80);
@@ -632,9 +678,84 @@
             //=======================
             //VALIDAR INPUT DE PRECIO SOLO NUMEROS
            $('.input-number').on('input', function () { 
-    this.value = this.value.replace(/[^0-9]/g,'');
-});
+            this.value = this.value.replace(/[^0-9]/g,'');
+            });
+           //=======================
             //=======================
+            /*PUNTO(I). MARCADO DE BOTON CIRCULAR 2 EN NAVEGACION
+            DE SUBPAGINAS EN CASO DE PRESIONAR EL BOTON
+            PARA AVANZAR A LA SIGUIENTE SUBPAGINA SIEMPRE
+            Y CUANDO SE SATIFAGAN LAS VALIDACIONES PERTINENTES
+            EN REFERENCIA A QUE TODOS LOS CAMPOS DEBEN ESTAR LLENOS*/
+
+            $("#btbsubpag1").click(function() {
+                //tomamos el valor de cada input y guardamos en variables
+                var inties = $('#inties').val();
+                var intipt = $('#intipt').val();
+                var intien = $('#intien').val();
+                var insalida = $('#insalida').val();
+                var indestino = $('#indestino').val();
+                //alert(inties + intipt + intien);
+                
+                if (inties != '' && intipt != '' && intien != '' && insalida != '' && indestino != '') {
+                 //alert("Not a valid character");
+                 $('#boton1').removeClass("btn-primary").addClass("btn-default");
+                 $('#boton2').removeClass("btn-default").addClass("btn-primary");
+                }   
+            });
+            //======================
+            /*PUNTO(II). MARCADO DE BOTON CIRCULAR 1 EN NAVEGACION
+            DE SUBPAGINAS EN CASO DE PRESIONAR EL ENLACE CON FORMA
+            DE BOTON PARA RETROCEDER A LA ANTERIOR SUBPAGINA*/
+
+                $("#butirsubpag1").click(function() {
+                $("#enlirsubpag1").click();   
+                 $('#boton2').removeClass("btn-primary").addClass("btn-default");
+                 $('#boton1').removeClass("btn-default").addClass("btn-primary");  
+            });
+            //======================
+             /*EL MISMO OBJETIVO DEL PUNTO(I) PERO APLICADO AL BOTON CIRCULAR 3*/
+            //&&&&&&&
+            $("#btbsubpag2").click(function() {
+                //tomamos el valor de cada input y guardamos en variables
+                //var indescripes = $('#indescripes').val();
+                //var indescrippt = $('#indescrippt').val();
+                //var indescripen = $('#indescripen').val();
+                
+                //if (indescripes != '' && indescrippt != '' && indescripen != '') {  
+                //alert("prueba");
+                 $('#boton2').removeClass("btn-primary").addClass("btn-default");
+                 $('#boton3').removeClass("btn-default").addClass("btn-primary");
+               // }
+            });
+            //======================
+            /*EL MISMO OBJETIVO DEL PUNTO(II) PERO APLICADO AL BOTON CIRCULAR 2*/
+
+            $("#butirsubpag2").click(function() {
+                $("#enlirsubpag2").click();
+                $('#boton3').removeClass("btn-primary").addClass("btn-default");
+                $('#boton2').removeClass("btn-default").addClass("btn-primary");   
+            });
+            //======================
+             /*EL MISMO OBJETIVO DEL PUNTO(I) PERO APLICADO AL BOTON CIRCULAR 4*/
+            $("#btbsubpag3").click(function() {
+                //tomamos el valor de cada input y guardamos en variables
+                var inpprecio = $('#appbundle_activity_price').val();
+              
+                if (inpprecio != ""){
+                 $('#boton3').removeClass("btn-primary").addClass("btn-default");
+                 $('#boton4').removeClass("btn-default").addClass("btn-primary");
+                }
+            });
+            //=====================
+            /*EL MISMO OBJETIVO DEL PUNTO(II) PERO APLICADO AL BOTON CIRCULAR 3*/
+
+            $("#butirsubpag3").click(function() {
+                $("#enlirsubpag3").click();
+                $('#boton4').removeClass("btn-primary").addClass("btn-default");
+                $('#boton3').removeClass("btn-default").addClass("btn-primary");   
+            });
+            //======================
 
             var navListItems = $('div.setup-panel div a'),
                     allWells = $('.setup-content'),
@@ -697,7 +818,7 @@
             $(this).addClass("active");
             
         });
-        
-    </script>
+
+</script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>
 {% endblock %}

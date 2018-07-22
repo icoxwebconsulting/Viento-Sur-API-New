@@ -438,6 +438,7 @@ amenities:
     VALETPRK: Valet Parking
     WAKEUP: Wake Up Service
 admin:
+    of_departure: of Departure
     #inicio mensajes en tooltip
     too_data_esp: In this text field enter the title of the activity in Spanish language
     too_data_pt: In this text field enter the title of the activity in Portuguese language
