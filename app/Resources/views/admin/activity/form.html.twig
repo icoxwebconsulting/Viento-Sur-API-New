@@ -96,11 +96,11 @@
                                     <div class="col-md-12">
                                         <div class="col-md-6">
                                             <div class="col-md-12">
-                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} {{ 'admin.of_departure' | trans }} *</label>
+                                                <label id="direccion_salida" class="col-md-6 form-control-label" for="search-address">{{ 'admin.exit_address' | trans }} *</label>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-9">
-                                                    {{ form_widget(form.address_origin, { 'attr': { 'id': 'insalida', 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Salida.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.address_origin, { 'attr': { 'id': 'insalida', 'class': 'form-control controls', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
                                                     {{ form_widget(form.latitude_origin) }}
                                                     {{ form_widget(form.longitude_origin) }}
                                                 </div>
@@ -113,11 +113,11 @@
                                         </div> 
                                         <div class="col-md-6">
                                             <div class="col-md-12">
-                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Destino *</label>
+                                                <label id="direccion_destino" class="col-md-6 form-control-label" for="search-address">{{ 'admin.address_of_destination' | trans }} *</label>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-9">
-                                                    {{ form_widget(form.address_destination, { 'attr': { 'id': 'indestino', 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Destino.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.address_destination, { 'attr': { 'id': 'indestino', 'class': 'form-control controls', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
                                                     {{ form_widget(form.latitude_destination) }}
                                                     {{ form_widget(form.longitude_destination) }}
                                                 </div>
@@ -630,7 +630,42 @@
         }
         
      $(document).ready(function () {
-         
+
+         //=====================================================
+         /*
+         (+)Algoritmos para traduccion de placeholder no realizada 
+         de la manera convencional en todo el proyecto debido a que
+          no se puede anadir algo asi -->{{ 'admin.of_departure' | trans }}
+          dentro de las etiquetas para indicar el placeholder en una codigo
+          como este-->{{ form_widget(form.address_destination, { 'attr': { 'id': 'indestino', 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Destino.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+          ya que hay problema si colocamos dentro de comillas un contenido que en si mismo hace uso de comillas, independientemente de que usemos comillas simples y dobles*/                                          
+         var direc_salida_place = null;
+         var direccion_salida = $("#direccion_salida").text();
+
+         if(direccion_salida === "Dirección de Salida *"){
+             direc_salida_place = "Escribe la Dirección de Salida";
+             }else if (direccion_salida === "Endereço de Saída *"){
+                 direc_salida_place = "Escreva o Endereço de Saída";
+             }
+             else if (direccion_salida === "Exit Address *"){
+                direc_salida_place = "Write the Exit Address";
+             }
+         $('#appbundle_activity_address_origin').attr("placeholder", direc_salida_place);
+         //========================================================
+         /*La misma explicacion dada en (+) pero ahora para usarla en otro placeholder*/
+         var direc_destino_place = null;
+         var direccion_destino = $("#direccion_destino").text();
+
+         if(direccion_destino === "Dirección de Destino *"){
+             direc_destino_place = "Escribe la Dirección de Destino";
+             }else if (direccion_destino === "Endereço de Destino *"){
+                 direc_destino_place = "Escreva o Endereço de Destino";
+             }
+             else if (direccion_destino === "Destination Address *"){
+                direc_destino_place = "Write the Destination Address";
+             }
+            $('#appbundle_activity_address_destination').attr("placeholder", direc_destino_place);
+         //========================================================
             $('#appbundle_activity_description').append('<textarea rows="5" cols="50">');
             $('#appbundle_activity_description').attr("id", "indescripes");
             $('#appbundle_activity_description').attr("placeholder", "Descripción");

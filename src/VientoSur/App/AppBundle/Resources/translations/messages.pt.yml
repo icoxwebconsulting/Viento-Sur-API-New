@@ -431,6 +431,9 @@ amenities:
     WAKEUP: Serviço de despertador
 admin:
     of_departure: de saída
+    of_destination: endereço de destino
+    exit_address: Endereço de Saída
+    address_of_destination: Endereço de Destino
     #inicio mensajes en tooltip
     too_data_esp: Neste campo de texto, insira o título da atividade no idioma espanhol
     too_data_pt: Neste campo de texto, insira o título da atividade em português
