@@ -1,11 +1,12 @@
 <tr>
-    <td style="text-align: center;">{{ entity.id }}</td>
-    <td style="text-align: center;">{{ entity.getFirstDay() }}</td>
-    <td style="text-align: center;">{{ entity.name }}</td>
-    <td style="text-align: center;">{{ entity.addressDestination }}</td>
-    <td style="text-align: center;">{{ entity.duration }}</td>
-    <td style="text-align: center;">{{ entity.price }}</td>
-    <td style="text-align: center;">
+<!--cada uno de los td siguientes tenia este style style="text-align: center;"-->
+    <td>{{ entity.id }}</td>
+    <td>{{ entity.getFirstDay() }}</td>
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.addressDestination }}</td>
+    <td>{{ entity.duration }}</td>
+    <td>{{ entity.price }}</td>
+    <td>
         {% if entity.availability %} 
             <a data-target="#deactivate-modal" data-toggle="modal" data-whatever="{{ path('actyvity_activate', {id: entity.id, activate: 0}) }}" data-toggle="tooltip" title="Deactivate" style="cursor: pointer">
                 <i class="fa fa-check-circle"></i> 

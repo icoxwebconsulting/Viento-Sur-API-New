@@ -255,7 +255,13 @@ class ActivityController extends Controller
                 'success',
                 $this->get('translator')->trans($message)
             );
-            return $this->redirect($this->generateUrl('actyvity_list'));
+
+            //return $this->redirectToRoute('activity_picture_list', array('id' => 2));
+            //return $this->redirect($this->generateUrl('actyvity_list'));
+            
+            //$this->redirect('activity_picture_list', array('id' => 1));
+
+           // return $this->generateUrl('activity_picture_list', array('id' => '1'));
         }
     }
 

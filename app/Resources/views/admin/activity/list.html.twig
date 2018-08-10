@@ -9,7 +9,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-lg-12" style="background: #EBF5FB;">
+<!--el siguiente div tenia el siguiente style style="background: #EBF5FB;"-->
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-align-justify"></i>  {{ "admin.activities_list" | trans }}
@@ -30,13 +31,16 @@
                 {% if not pagination | length %}
                     <h6 class="box-title">{{ 'admin.search_not_found' | trans }}</h6>
                 {% else %}    
-                    <table class="table table-bordered table-hover">
+                    <!--<table class="table table-bordered table-hover">-->
+                    <table class="table">
                         <thead>
-                        <tr class="table-active">
+                        <!--<tr class="table-active">-->
+                        <tr class="">
                             <th><h5><b>#</th>
-                            <th style="text-align: center;"><h5><b>{{ 'admin.period' | trans }}</h5></b></th>
-                            <th style="text-align: center;"><h5><b>{{ "admin.activity" | trans }}</h5></b></th>
-                            <th style="text-align: center;"><h5><b>{{ "admin.address" | trans }}</h5></b></th>
+                            <!--este style style="text-align: center;"lo teia en los tres ptimeros th-->
+                            <th><h5><b>{{ 'admin.period' | trans }}</h5></b></th>
+                            <th><h5><b>{{ "admin.activity" | trans }}</h5></b></th>
+                            <th><h5><b>{{ "admin.address" | trans }}</h5></b></th>
                             <th><h5><b>{{ "admin.duration" | trans }}</h5></b></th>
                             <th><h5><b>{{ "admin.amount" | trans }}</h5></b></th>
                             <th><h5><b>{{ "admin.status" | trans }}</h5></b></th>
