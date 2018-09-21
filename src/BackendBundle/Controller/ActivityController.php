@@ -69,21 +69,32 @@ class ActivityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $rol = 0;
         $activity_agency = new ActivityAgency();
-        
+
         if (false === $securityContext->isGranted('ROLE_ADMIN')) {
             $rol = 1;
             $activity_agency = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneBy(array(
                 'user' => $this->getUser()
             ));
         }
-        
-        $form = $this->createForm(new ActivityType(), $entity, array('rol'=>$rol));
-        
-        $this->formAction($form, $request, $em, $entity, 'agregado', 'new', $rol);
-        
+
+        $form = $this->createForm(new ActivityType(), $entity, [
+            "method" => $request->getMethod(),
+            "rol"=>$rol
+        ]);
+        $id = $this->formAction($form, $request, $em, $entity, 'agregado', 'new', $securityContext);
+        $entities = $em->getRepository("VientoSurAppAppBundle:Picture")->findBy(array('activity' => $entity));
+
+            if($id == 0){
+                $action=0;
+            }else{
+                $action=1;
+            }
         return $this->render(':admin/activity:form.html.twig', array(
             'form' => $form->createView(),
             'rol'  => $rol,
+            'id' => $id,
+            'action' => $action,
+            'entities' => $entities,
             'activity_agency' => $activity_agency
         ));
     }
@@ -96,39 +107,44 @@ class ActivityController extends Controller
      * @return response
      */
     public function editAction(Request $request, Activity $entity) {
-        
+
         $request->setMethod('PATCH');
         $securityContext = $this->container->get('security.context');
         $em = $this->getDoctrine()->getManager();
         $rol = 0;
         $activity_agency = new ActivityAgency();
-        
+
         if (false === $securityContext->isGranted('ROLE_ADMIN')) {
             $rol = 1;
             $activity_agency = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneBy(array(
                 'user' => $this->getUser()
             ));
         }
-        
+
         $form = $this->createForm(new ActivityType(), $entity, [
             "method" => $request->getMethod(),
             "rol"=>$rol
         ]);
-        
+
         $repository = $em->getRepository('Gedmo\Translatable\Entity\Translation');
         $translations = $repository->findTranslations($entity);
-        
+        $entities = $em->getRepository("VientoSurAppAppBundle:Picture")->findBy(array('activity' => $entity));
+
         $this->formAction($form, $request, $em, $entity, 'editado', 'edit', $securityContext);
-        
+        $id=$entity->getId();
+
         return $this->render(':admin/activity:form.html.twig', array(
             'form' => $form->createView(),
             'entity' => $entity,
             'translations' => $translations,
             'rol'  => $rol,
+            'id'  => $id,
+            'action' => 2,
+            'entities' => $entities,
             'activity_agency' => $activity_agency
         ));
-    }    
-    
+    }
+
     /**
      * @param Activity $entity entity
      * @Security("has_role('ROLE_ACTIVITY')")
@@ -139,19 +155,19 @@ class ActivityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $activate = $request->get('activate');
-        
+
         $entity->setAvailability($activate);
         $em->persist($entity);
         $em->flush();
-        
-        $text = $activate?'activado':'desactivado'; 
-        
+
+        $text = $activate?'activado':'desactivado';
+
         $this->addFlash(
             'success',
             'La actividad se ha '.$text.' correctamente!'
         );
         return $this->redirectToRoute('actyvity_list');
-    }    
+    }
     
     /**
      * @param Activity $entity entity
@@ -183,9 +199,10 @@ class ActivityController extends Controller
      */
     protected function formAction($form, $request, $em, $entity, $textMsj, $action, $rol){
         $managerEntity = $this->getDoctrine()->getManager();
+
         if($form->handleRequest($request)->isValid())
         {
-            
+            //var_dump($form);exit;
             $namePt = $form->get('namePt')->getData();
             $nameEn = $form->get('nameEn')->getData();
             
@@ -197,7 +214,7 @@ class ActivityController extends Controller
                 $activity_agency_object = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneById($activity_agency);
                 $entity->setActivityAgency($activity_agency_object);                
             }
-            
+
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();
@@ -213,6 +230,8 @@ class ActivityController extends Controller
             $entity->setTranslatableLocale('en');
             $em->persist($entity);
             $em->flush();
+
+            $id=$entity->getId();
 
 
             $dql = 'SELECT a.id, ag.name as agency, a.name, a.address_destination, a.latitude_destination, a.longitude_destination
@@ -238,8 +257,8 @@ class ActivityController extends Controller
 
             if(count($resultPoints) > 0){
                 $template = 'nearbyActivities';
-                $message = $this->container->get('mail_manager');
-                $message->sendEmail($template, $emailParams, 'activity');
+                $messages = $this->container->get('mail_manager');
+                $messages->sendEmail($template, $emailParams, 'activity');
             }
 
             switch ($textMsj){
@@ -256,13 +275,19 @@ class ActivityController extends Controller
                 $this->get('translator')->trans($message)
             );
 
+            //Modificacion Breiddy
+
+
+
+            return $id;
             //return $this->redirectToRoute('activity_picture_list', array('id' => 2));
             //return $this->redirect($this->generateUrl('actyvity_list'));
             
             //$this->redirect('activity_picture_list', array('id' => 1));
 
-           // return $this->generateUrl('activity_picture_list', array('id' => '1'));
+            //return $this->generateUrl('activity_picture_list', array('id' => '1'));
         }
+        return $id=0;
     }
 
 

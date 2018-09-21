@@ -128,10 +128,10 @@ class GeneralInformationController extends Controller
      * @return response
      */
     protected function formAction($form, $request, $em, $entity, $textMsj, $action){
-        
+
         if($form->handleRequest($request)->isValid())
         {
-            
+
             $namePt = $form->get('namePt')->getData();
             $nameEn = $form->get('nameEn')->getData();
             
@@ -151,10 +151,10 @@ class GeneralInformationController extends Controller
 
             switch ($textMsj){
                 case 'agregado':
-                    $message = 'admin.message.add_information_general';
+                    $message = 'admin.messages.add_information_general';
                     break;
                 case 'editado':
-                    $message = 'admin.message.edit_information_general';
+                    $message = 'admin.messages.edit_information_general';
                     break;
             }
 

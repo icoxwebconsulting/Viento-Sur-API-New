@@ -455,6 +455,7 @@ admin:
     To_update: To update
     hotels: Establishment
     Much_more: Much more
+    end_step: Finalize
     create_account: Create account
     confirm_account: Please check your email. It contains an activation link that you must click to activate your account.
     register: Register
@@ -527,6 +528,7 @@ admin:
     activity_agency: Activity Agency
     list_agencies: List of Agencies
     add_agency: Add Agency
+    edit_agency: Edit agency
     general_information: General Information
     list_information: List of Information
     add_information: Add Information

@@ -63,13 +63,13 @@ class Picture
      * @ORM\JoinColumn(nullable=true)
      */
     private $room;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Activity", inversedBy="pictures")
      * @ORM\JoinColumn(nullable=true)
      */
     private $activity;
-    
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime

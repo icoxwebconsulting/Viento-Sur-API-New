@@ -451,6 +451,7 @@ admin:
     hotels: Estabelecimento
     general_information: Informações gerais
     Much_more: Muito mais
+    end_step: Terminar
     create_account: Criar Conta
     confirm_account: Verifique seu e-mail. Ele contém um link de ativação que você deve clicar para ativar sua conta.
     register: Registo
@@ -523,6 +524,7 @@ admin:
     activity_agency: Agência de atividade
     list_agencies: Lista de Agências
     add_agency: Adicionar agência
+    edit_agency: Edite agência
     general_information: Informação geral
     list_information: Lista de Informação
     add_information: Adicionar informação

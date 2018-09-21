@@ -190,10 +190,10 @@ class ActivityAgencyController extends Controller
 
             switch ($textMsj){
                 case 'agregado':
-                    $message = 'admin.messages.add_activity';
+                    $message = 'admin.messages.add_agency';
                     break;
                 case 'editado':
-                    $message = 'admin.messages.edit_activity';
+                    $message = 'admin.messages.edit_agency';
                     break;
             }
 
