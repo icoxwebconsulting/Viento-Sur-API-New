@@ -74,7 +74,7 @@ class ActivityType extends AbstractType
             )
             ->add(
                 'address_origin',
-                TextType::class
+                HiddenType::class
             )
             ->add(
                 'latitude_origin',
@@ -86,7 +86,7 @@ class ActivityType extends AbstractType
             )  
             ->add(
                 'address_destination',
-                TextType::class
+                HiddenType::class
             )
             ->add(
                 'latitude_destination',

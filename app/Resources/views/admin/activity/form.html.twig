@@ -107,13 +107,16 @@
                                     <div class="col-md-12">
                                         <div class="col-md-6">
                                             <div class="col-md-12">
-                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Salida *</label>
+                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Salida y / o Destino*</label>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-9">
-                                                    {{ form_widget(form.address_origin, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Salida.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
+                                                    {{ form_widget(form.address_origin) }}
                                                     {{ form_widget(form.latitude_origin) }}
                                                     {{ form_widget(form.longitude_origin) }}
+                                                    {{ form_widget(form.address_destination) }}
+                                                    {{ form_widget(form.latitude_destination) }}
+                                                    {{ form_widget(form.longitude_destination) }}
                                                 </div>
                                             </div>
                                             <div class="form-group row" style="margin-bottom: 0rem;">
@@ -124,21 +127,15 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="col-md-12">
-                                                <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Destino *</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    {{ form_widget(form.address_destination, { 'attr': { 'class': 'form-control controls', 'placeholder': 'Escribe la Dirección de Destino.', 'style': 'z-index: 100; position: absolute; left: 119px; top: 0px;', 'required': 'required', 'autocomplete': 'off' }}) }}
-                                                    {{ form_widget(form.latitude_destination) }}
-                                                    {{ form_widget(form.longitude_destination) }}
-                                                </div>
-                                            </div>
-                                            <div class="form-group row" style="margin-bottom: 0rem;">
-                                                <div class="col-md-12">
-                                                    <div id="map-canvas-destination"></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                <div class="row" style="padding: 15px">
+                                                    <h4>Direccion de Salida:  <em id="show-exit">{{ form.address_origin.vars.value }}</em></h4>
+                                                    <br>
+                                                    <h4>Direccion de Destino: <em id="show-destination">{{ form.address_destination.vars.value }}</em></h4>
+                                                    <br>
+                                                    <button type="button" id="reset-location">Reiniciar</button>
+                                                </div>    
+                                            </div>    
+                                        </div>    
                                     </div>
                                 </fieldset>
                                 </div>
@@ -607,16 +604,16 @@
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script>
 
-    //-------------------------------------------------------
-    function mytreasados(){
+        //-------------------------------------------------------
+        function mytreasados(){
             $('#steptresbotonatras').click();
-             $('#boton3').removeClass("btn-primary").addClass("btn-default");
+            $('#boton3').removeClass("btn-primary").addClass("btn-default");
             $('#boton2').removeClass("btn-default").addClass("btn-primary");
         }
         //-------------------------------------------------------
 
         //-------------------------------------------------------
-    function mycuatroatres(){
+        function mycuatroatres(){
             $('#botonatdelpcu').click();
             $('#boton4').removeClass("btn-primary").addClass("btn-default");
             $('#boton3').removeClass("btn-default").addClass("btn-primary");
@@ -624,10 +621,10 @@
         }
         //-------------------------------------------------------
          //-------------------------------------------------------
-    function mycuatroaprcuat(){
+        function mycuatroaprcuat(){
             $('#btbsubpag3').click();
-             $('#boton5').removeClass("btn-primary").addClass("btn-default");
-             $('#boton4').removeClass("btn-default").addClass("btn-primary");
+            $('#boton5').removeClass("btn-primary").addClass("btn-default");
+            $('#boton4').removeClass("btn-default").addClass("btn-primary");
 
              //adicionalmente
             $('#casiultimoboton').removeClass('blnives');
@@ -643,188 +640,146 @@
                 $('#imagemodal').modal('show');
             });
         });
-        function initialize(){
-            initializeorigin();
-            initializedestination();
-        }
-        function initializeorigin(){
-            var lat = parseFloat('{{ form.latitude_origin.vars.value }}');
-            var log = parseFloat('{{ form.latitude_origin.vars.value }}');
+        
+        function initializeorigin(count){
+            var value_lat = parseFloat('{{ form.latitude_origin.vars.value }}');
+            var value_log = parseFloat('{{ form.longitude_origin.vars.value }}');
+            var lat = '';
+            var log = '';
+            var location = [];
+            if(isNaN(value_lat)){
+                lat = -31.3426627;
+            }else{
+                lat = value_lat;
+            }    
+            
+            if(isNaN(value_log)){
+                log = -64.331251,15;
+            }else{
+                log = value_log;
+            }   
+           
             var idmap = 'map-canvas-origin';
-            var idaddress = 'appbundle_activity_address_origin';
-            var idlat = 'appbundle_activity_latitude_origin';
-            var idlog = 'appbundle_activity_longitude_origin';
-            initializeall(lat, log, idmap, idaddress, idlat, idlog);
+            
+            initializamap(lat, log, idmap, count);    
+        }
+        
+        function initializamap(lat, log, idmap, count){
+            L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
+            var address    = '';
+            var map = L.mapquest.map(idmap, {
+              center: [lat, log],
+              layers: L.mapquest.tileLayer('map'),
+              zoom: 12
+            });
 
+            L.mapquest.control().addTo(map);
+            L.mapquest.geocodingControl({
+              position: 'topleft',
+              keepOpen: true,
+              removePreviousMarker: true,
+              placeholderText: 'Escribe la Dirección.',
+              searchAhead: true,
+              compactResults: true,
+              closeResultsOnClick: true,
+              searchAheadOptions: {
+                  limit: 2
+              }
+            }).on('geocode_response', function(eventResponse) {
+                console.log(eventResponse);
+                var lat = document.getElementById("appbundle_activity_latitude_origin").value;
+                if(lat === ''){
+                    count = 0;
+                }    
+                
+                if(count === 0 ){
+                   document.getElementById("appbundle_activity_latitude_origin").value = eventResponse.results[0].locations[0].latLng.lat;
+                   document.getElementById("appbundle_activity_longitude_origin").value = eventResponse.results[0].locations[0].latLng.lng; 
+                   address = eventResponse.results[0].locations[0].street+', '+eventResponse.results[0].locations[0].adminArea5+', '+eventResponse.results[0].locations[0].adminArea3+', '+eventResponse.results[0].locations[0].adminArea1+', '+eventResponse.results[0].locations[0].postalCode;
+                   document.getElementById("show-exit").innerHTML = address;
+                   document.getElementById("appbundle_activity_address_origin").value = address;
+                   count++;
+                }else{
+                   document.getElementById("appbundle_activity_latitude_destination").value = eventResponse.results[0].locations[0].latLng.lat;
+                   document.getElementById("appbundle_activity_longitude_destination").value = eventResponse.results[0].locations[0].latLng.lng; 
+                   address = eventResponse.results[0].locations[0].street+', '+eventResponse.results[0].locations[0].adminArea5+', '+eventResponse.results[0].locations[0].adminArea3+', '+eventResponse.results[0].locations[0].adminArea1+', '+eventResponse.results[0].locations[0].postalCode;
+                   document.getElementById("show-destination").innerHTML = address;
+                   document.getElementById("appbundle_activity_address_destination").value = address; 
+                   count = 0;
+                }    
+            }).addTo(map);
         }
 
-        function initializedestination(){
 
-            var lat = parseFloat('{{ form.latitude_destination.vars.value }}');
-            var log = parseFloat('{{ form.latitude_destination.vars.value }}');
-            var idmap = 'map-canvas-destination';
-            var idaddress = 'appbundle_activity_address_destination';
-            var idlat = 'appbundle_activity_latitude_destination';
-            var idlog = 'appbundle_activity_longitude_destination';
-            initializeall(lat, log, idmap, idaddress, idlat, idlog);
-        }
+        $(document).ready(function () {
+            var id     = document.getElementById("id").value;
+            var action = document.getElementById("action").value;
+            var count  = 0;
+            
+            initializeorigin(count);
+            
+            $('#reset-location').click(function(){
+                document.getElementById("appbundle_activity_latitude_origin").value = '';
+                document.getElementById("appbundle_activity_longitude_origin").value = ''; 
+                document.getElementById("show-exit").innerHTML = '';
+                document.getElementById("appbundle_activity_address_origin").value = '';
+                document.getElementById("appbundle_activity_latitude_destination").value = '';
+                document.getElementById("appbundle_activity_longitude_destination").value = ''; 
+                document.getElementById("show-destination").innerHTML = '';
+                document.getElementById("appbundle_activity_address_destination").value = ''; 
+                count = 0;
+                initializamap(-31.3426627, -64.331251,15, 'map-canvas-origin', count);
+            });
+            
+            $('#irscsd').click(function(){
+                 $('#noencinc').addClass('blnives');
+                 $('#contdropstcyc').removeClass('blnives');
+                 $('#ultimoboton').removeClass('blnives');
+                 $('#casiultimoboton').addClass('blnives');
+                  if( action = 1){
+                   $('#ultimoboton2').removeClass('blnives');
+                  }
+                 if( action !=0){
+                     $('#casiultimoboton1').addClass('blnives');
+                 }else{
+                     $('#casiultimoboton1').removeClass('blnives');
+                 }
+             });
 
-        function initializeall(lat, log, idmap, idaddress, idlat, idlog) {
 
-            var map = new google.maps.Map(document.getElementById(idmap), {
-                center: {lat: lat, lng: log },
-                zoom: 4,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+            $('#casiultimoboton').click(function(){
+                //$('#irscsd').click();
+                //PILAS ESTO
+                 $('#boton4').removeClass("btn-primary").addClass("btn-default");
+                 $('#boton5').removeClass("btn-default").addClass("btn-primary");
+
+                 //ademas
+                 $('#zcuatirapricuat').removeClass("blnives");
+                 $('#zcuatroiratres').addClass("blnives");
+            });
+
+            //Función para redirecionar el boton final
+            $('#ultimoboton2').click(function(){
+
+                window.location.href = "{{ path('actyvity_list') }}";
 
             });
 
-            // Create the search box and link it to the UI element.
-            var input = document.getElementById(idaddress);
-            var myLatLng = new google.maps.LatLng(lat, log);
-
-            marker = new google.maps.Marker( {position: myLatLng, map: map, draggable: true } );
-            google.maps.event.addListener(marker, 'dragend', function (event) {
-                document.getElementById(idlat).value = this.getPosition().lat();
-                document.getElementById(idlog).value = this.getPosition().lng();
-                console.log("lat->",this.getPosition().lat());
-                console.log("log->",this.getPosition().lng());
-            });
-            marker.setMap( map );
-
-            var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-            //Carga quemada de longitud y latitud para poder probar el crear.
-            document.getElementById(idlat).value = 37.148611;
-            document.getElementById(idlog).value = -3.598056;
-
-            // Bias the SearchBox results towards current map's viewport.
-            map.addListener('bounds_changed', function() {
-                searchBox.setBounds(map.getBounds());
+            $('#casiultimoboton1').click(function(){
+                $('#irscsd').click();
+                //PILAS ESTO
+                 $('#boton4').removeClass("btn-primary").addClass("btn-default");
+                 $('#boton5').removeClass("btn-default").addClass("btn-primary");
+                 $('#casiultimoboton1').addClass('blnives');
+                 //ademas
+                 $('#zcuatirapricuat').removeClass("blnives");
+                 $('#zcuatroiratres').addClass("blnives");
             });
 
-            var markers = [];
-            // [START region_getplaces]
-            // Listen for the event fired when the user selects a prediction and retrieve
-            // more details for that place.
-            searchBox.addListener('places_changed', function() {
-                var places = searchBox.getPlaces();
-
-                // Importante descmentar.
-//               document.getElementById(idlat).value = places.geometry.location.lat();
-//               console.log("auto complete lat->", document.getElementById(idlog).value);
-//               document.getElementById(idlog).value = places[0].geometry.viewport.b.b;
-//               console.log("auto complete long->",document.getElementById(idlog).value);
-
-                if (places.length == 0) {
-                    return;
-                }
-
-                // Clear out the old markers.
-                markers.forEach(function(marker) {
-                    marker.setMap(null);
-                });
-                markers = [];
-
-                // For each place, get the icon, name and location.
-                var bounds = new google.maps.LatLngBounds();
-                places.forEach(function(place) {
-                    var icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        title: place.name,
-                        position: place.geometry.location,
-                        draggable: true,
-                    });
-                    // Create a marker for each place.
-                    markers.push(marker);
-
-                    google.maps.event.addListener(marker, 'dragend', function (event) {
-                        document.getElementById(idlat).value = this.getPosition().lat();
-                        document.getElementById(idlog).value = this.getPosition().lng();
-                        console.log("lat->",this.getPosition().lat());
-                        console.log("log->",this.getPosition().lng());
-                    });
-
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                map.fitBounds(bounds);
+            $('#cuatro').click(function(){
+                $('#contdropstcyc').addClass('blnives');
+                $('#noencinc').removeClass('blnives');
             });
-            // [END region_getplaces]
-
-        }
-
-     $(document).ready(function () {
-
-     var id = document.getElementById("id").value;
-     var action = document.getElementById("action").value;
-
-   $('#irscsd').click(function(){
-   $('#noencinc').addClass('blnives');
-   $('#contdropstcyc').removeClass('blnives');
-   $('#ultimoboton').removeClass('blnives');
-   $('#casiultimoboton').addClass('blnives');
-    if( action = 1){
-     $('#ultimoboton2').removeClass('blnives');
-    }
-   if( action !=0){
-       $('#casiultimoboton1').addClass('blnives');
-   }else{
-       $('#casiultimoboton1').removeClass('blnives');
-   }
-});
-
-
-   $('#casiultimoboton').click(function(){
-    //$('#irscsd').click();
-    //PILAS ESTO
-     $('#boton4').removeClass("btn-primary").addClass("btn-default");
-     $('#boton5').removeClass("btn-default").addClass("btn-primary");
-
-     //ademas
-     $('#zcuatirapricuat').removeClass("blnives");
-     $('#zcuatroiratres').addClass("blnives");
-
-
-});
-
-    //Función para redirecionar el boton final
-    $('#ultimoboton2').click(function(){
-
-        window.location.href = "{{ path('actyvity_list') }}";
-
-    });
-
-   $('#casiultimoboton1').click(function(){
-    $('#irscsd').click();
-    //PILAS ESTO
-     $('#boton4').removeClass("btn-primary").addClass("btn-default");
-     $('#boton5').removeClass("btn-default").addClass("btn-primary");
-     $('#casiultimoboton1').addClass('blnives');
-     //ademas
-     $('#zcuatirapricuat').removeClass("blnives");
-     $('#zcuatroiratres').addClass("blnives");
-
-
-});
-
- $('#cuatro').click(function(){
-   $('#contdropstcyc').addClass('blnives');
-   $('#noencinc').removeClass('blnives');
-
-});
 
             //------------------------------------
             //inicio inputs asociados a descripcion
@@ -855,8 +810,8 @@
 
             //===========================================
             //VALIDAR INPUT DE PRECIO SOLO NUMEROS
-           $('.input-number').on('input', function () {
-            this.value = this.value.replace(/[^0-9]/g,'');
+            $('.input-number').on('input', function () {
+             this.value = this.value.replace(/[^0-9]/g,'');
             });
            //============================================
                //intento de enviar a subida de imagenes por medio de un enlace y un boton
@@ -900,34 +855,34 @@
             });
 
 
-             /*if($("#botonatdelpcu").click()){
-                 $('#boton4').removeClass("btn-primary").addClass("btn-default");
-                 $('#boton3').removeClass("btn-default").addClass("btn-primary");
-                } */
+            /*if($("#botonatdelpcu").click()){
+                $('#boton4').removeClass("btn-primary").addClass("btn-default");
+                $('#boton3').removeClass("btn-default").addClass("btn-primary");
+               } */
             //=====================
 
             //======================
-             /*EL MISMO OBJETIVO DEL PUNTO(I) PERO APLICADO AL BOTON CIRCULAR 3*/
+            /*EL MISMO OBJETIVO DEL PUNTO(I) PERO APLICADO AL BOTON CIRCULAR 3*/
             //&&&&&&&
             $("#btbsubpag2").click(function() {
-                //tomamos el valor de cada input y guardamos en variables
-                //var indescripes = $('#appbundle_activity_description').val();
-                //var indescrippt = $('#appbundle_activity_descriptionPt').val();
-                //var indescripen = $('#appbundle_activity_descriptionEn').val();
+               //tomamos el valor de cada input y guardamos en variables
+               //var indescripes = $('#appbundle_activity_description').val();
+               //var indescrippt = $('#appbundle_activity_descriptionPt').val();
+               //var indescripen = $('#appbundle_activity_descriptionEn').val();
 
-                 //alert(indescripes + indescrippt + indescripen);
-
-                //if (indescripes != '' && indescrippt != '' && indescripen != ''){
-               // $("#btbsubpag2").addClass("nextBtn");
                 //alert(indescripes + indescrippt + indescripen);
-                $('#boton2').removeClass("btn-primary").addClass("btn-default");
-                $('#boton3').removeClass("btn-default").addClass("btn-primary");
-                //$("#enlirsubpag3").click();
-               //}
+
+               //if (indescripes != '' && indescrippt != '' && indescripen != ''){
+              // $("#btbsubpag2").addClass("nextBtn");
+               //alert(indescripes + indescrippt + indescripen);
+               $('#boton2').removeClass("btn-primary").addClass("btn-default");
+               $('#boton3').removeClass("btn-default").addClass("btn-primary");
+               //$("#enlirsubpag3").click();
+              //}
             });
             //======================
             //======================
-             /*if($("#botonatdelpcu").click()){
+            /*if($("#botonatdelpcu").click()){
                  $('#boton4').removeClass("btn-primary").addClass("btn-default");
                  $('#boton3').removeClass("btn-default").addClass("btn-primary");
                 }*/
@@ -937,7 +892,7 @@
             /*EL MISMO OBJETIVO DEL PUNTO(II) PERO APLICADO AL BOTON CIRCULAR 2*/
             //ztresirados
             //steptresbotonatras
-           /* if($("#ztresirados").click())
+            /* if($("#ztresirados").click())
              {
                  $("#steptresbotonatras").click();
                  $('#boton3').removeClass("btn-primary").addClass("btn-default");
@@ -948,7 +903,7 @@
             //======================
 
             //======================
-             /*EL MISMO OBJETIVO DEL PUNTO(I) PERO APLICADO AL BOTON CIRCULAR 3*/
+            /*EL MISMO OBJETIVO DEL PUNTO(I) PERO APLICADO AL BOTON CIRCULAR 3*/
             //&&&&&&&
             $("#btbsubpag3").click(function() {
                  var el_precio = $('#appbundle_activity_price').val();
@@ -1026,25 +981,21 @@
             }
             $(this).addClass("active");
 
-//       Cambios Breiddy Monterrey
-//       Condición para mostrar el paso 5 despues de guardar cuando se esta creando de nuevo
-       if(id > 0 && action == 1 ){
-           console.log('Completar');
-          $('#boton1').removeClass("btn-primary").addClass("btn-default");
-          $('#boton5').removeClass("btn-default").addClass("btn-primary");
-          // Función que carga el paso 5
-          $('#irscsd').click();
+            // Cambios Breiddy Monterrey
+            // Condición para mostrar el paso 5 despues de guardar cuando se esta creando de nuevo
+            if(id > 0 && action == 1 ){
+                console.log('Completar');
+                $('#boton1').removeClass("btn-primary").addClass("btn-default");
+                $('#boton5').removeClass("btn-default").addClass("btn-primary");
+                // Función que carga el paso 5
+                $('#irscsd').click();
 
-         //Boton de atras
-         $('#zcuatirapricuat').removeClass("blnives");
-         $('#zcuatroiratres').addClass("blnives");
-
-       }
-
+               //Boton de atras
+               $('#zcuatirapricuat').removeClass("blnives");
+               $('#zcuatroiratres').addClass("blnives");
+            }
         });
-
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1dtSkxqSIbtWoF-DfeUTZb906mihfh4&libraries=places&callback=initialize"></script>
-      {#<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9kIvUXwb50k7WXENapIf-BC4kWoKBc24&libraries=places&callback=initialize"#}
-  {#type="text/javascript"></script>#}
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 {% endblock %}
