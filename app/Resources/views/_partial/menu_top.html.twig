@@ -12,7 +12,7 @@
 	
     <div class="collapse navbar-collapse js-navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="dropdown dropdown-large">
+            {#<li class="dropdown dropdown-large">
                 <a href="{{ path('reservation_list') }}">{{ 'index.reservations' | trans }}</a>
             </li>
             {% if is_granted('ROLE_ADMIN') %} 
@@ -23,8 +23,8 @@
                 <ul class="dropdown-menu">
                   <li><a href="{{ path('hotel_list') }}">{{ 'admin.hotels_list' | trans }}</a></li>
                   {#<li><a href="{{ path('hotel_new') }}">{{ 'admin.add' | trans }}</a></li>#}
-                </ul>
-            </li>    
+                {#</ul>
+            </li> #}   
             <li class="dropdown dropdown-large">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'admin.activities' | trans }}<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-large row" style="width: 50%;">
