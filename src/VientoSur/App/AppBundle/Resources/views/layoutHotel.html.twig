@@ -45,7 +45,7 @@
             });
             $('#autocomplete').on('blur', function () {
                 setTimeout(function () {
-                    if ($("#destinationCity").val() == '') {
+                    if ($("#destinationCity").val() === '') {
                         $('#autocomplete').val('');
                     }
                 }, 200)
@@ -58,7 +58,6 @@
                 minChars: 3,
                 groupBy: 'category',
                 onInvalidateSelection: function () {
-                    console.log("invalidado");
                     $("#destinationCity").val('');
                 }
             });

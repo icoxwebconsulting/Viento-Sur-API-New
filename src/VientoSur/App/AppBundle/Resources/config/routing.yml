@@ -5,6 +5,10 @@ viento_sur_homepage:
 viento_sur_hotel:
     resource: "@VientoSurAppAppBundle/Controller/HotelController.php"
     type:     annotation
+    
+viento_sur_activity:
+    resource: "@VientoSurAppAppBundle/Controller/ActivityController.php"
+    type:     annotation    
 
 viento_sur_flight:
     resource: "@VientoSurAppAppBundle/Controller/FlightController.php"

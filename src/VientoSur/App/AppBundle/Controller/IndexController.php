@@ -30,7 +30,7 @@ class IndexController extends Controller
     }*/
 
     /**
-     * @Route("/{_locale}/{_type}", name="homepage", requirements={"_locale": "es|en|pt", "_type": "hotel|vuelos|flights|voos"}, defaults={"_locale": "es", "_type": "vuelos"})
+     * @Route("/{_locale}/{_type}", name="homepage", requirements={"_locale": "es|en|pt", "_type": "hotel|vuelos|flights|voos|actividad|activity|atividade"}, defaults={"_locale": "es", "_type": "vuelos"})
      * @Template("VientoSurAppAppBundle:Index:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -41,14 +41,28 @@ class IndexController extends Controller
         $locale = $request->get('_locale');
         $type = $request->get('_type');
 
-        if($locale == 'es' && ($type == 'flights' || $type == 'voos')){
-            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'vuelos'));
-
-        }elseif ($locale == 'en' && ($type == 'vuelos' || $type == 'voos')){
-            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'flights'));
-
-        }elseif ($locale == 'pt' && ($type == 'vuelos' || $type == 'flights')){
-            return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'voos'));
+        switch ($locale) {
+            case 'es':
+                if($type == 'flights' || $type == 'voos'){
+                    return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'vuelos'));
+                }elseif($type == 'activity' || $type == 'atividade'){
+                    return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'actividad'));
+                }
+            break;
+            case 'en':
+                if($type == 'vuelos' || $type == 'voos'){
+                    return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'flights'));
+                }elseif($type == 'actividad' || $type == 'atividade'){
+                    return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'activity'));
+                }
+            break;
+            case 'pt':
+                if($type == 'vuelos' || $type == 'flights'){
+                return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'voos'));
+                }elseif($type == 'actividad' || $type == 'activity'){
+                    return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'atividade'));
+                }
+            break;
         }
 
         $country = $this->get('session')->get('country');
@@ -166,6 +180,41 @@ class IndexController extends Controller
         return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
     }
 
+    /**
+     *
+     * @Route("/autocomplete-city/", name="search_city_autocomplete")
+     * @Method("GET")
+     */
+    public function autoCompleteDespegarCityAction(Request $request)
+    {
+        $type = 'HOTELS';
+        $urlParams = [
+            'query' => $request->get('query'),
+            'product' => $type,
+            'locale' => 'es-AR',
+            'city_result' => '10',
+            'hotel_result' => '5'
+        ];
+
+        $results = $this->get('despegar')->autocomplete($urlParams);
+        $response = [];
+        if ($results && !isset($results['code'])) {
+            foreach ($results as $item) {
+                if ($item['facet'] == 'CITY') {
+                    $response[] = [
+                        'value' => $item["description"],
+                        'data' => [
+                            'category' => 'Ciudades',
+                            'id' => $item["id"],
+                            'value' => $item["description"],
+                        ]
+                    ];
+                } 
+            }
+        }
+        return new JsonResponse(array("suggestions" => $response, 'query' => $request->get('query'), 'test' => $results));
+    }
+    
     /**
      *
      * @Route("/autocomplete-hotel/{division}", name="hotel_autocomplete")
