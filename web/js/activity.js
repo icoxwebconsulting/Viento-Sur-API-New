@@ -17,6 +17,7 @@ $(document).ready(function () {
         serviceUrl: url,
         onSelect: function (suggestion) {
             $("#destinationCity-activity").val(suggestion.data.value);
+            getLatLongMap(suggestion.data.value)
         },
         minChars: 3,
         groupBy: 'category',
@@ -45,6 +46,20 @@ $(document).ready(function () {
             moveProgressBar($('#activity_pb')[0]);
         }
     });
+    
+    function getLatLongMap(city){
+        L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
+        L.mapquest.open = true;
+
+        L.mapquest.geocoding().geocode(city, createMap);  
+    }
+    function createMap(error,response) {
+        var location = response.results[0].locations[0];
+        var lat = location.displayLatLng.lat;
+        var lng = location.displayLatLng.lng;
+        $("#latitude").val(lat);
+        $("#longitude").val(lng);
+    }
 });
 
 

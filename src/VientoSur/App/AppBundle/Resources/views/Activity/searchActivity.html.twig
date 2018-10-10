@@ -5,6 +5,8 @@
             <i class="fa fa-map-marker input-icon"></i>
             <input id="autocomplete-activity" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" placeholder="Ingresa una ciudad" autocomplete="on"  {% if not isTest %}required{% endif %}>
             <input id="destinationCity-activity" name="cityInput" type="hidden" {% if not isTest %}required{% endif %} />
+            <input id="latitude" name="latitude" type="hidden">
+            <input id="longitude" name="longitude" type="hidden">
         </div>
     </div>    
     {% set currency = app.session.get('targetCurrency') %}

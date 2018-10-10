@@ -35,7 +35,8 @@
         "knplabs/knp-time-bundle": "^1.7",
         "vich/uploader-bundle": "^1.4",
         "knplabs/knp-paginator-bundle": "^2.6",
-        "friendsofsymfony/elastica-bundle": "^4.0"
+        "friendsofsymfony/elastica-bundle": "^4.0",
+        "beberlei/DoctrineExtensions": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

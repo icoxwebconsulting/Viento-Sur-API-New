@@ -20,7 +20,14 @@ class ActivityController extends Controller
     public function sendActivityProcessSearch(Request $request)
     {
         $destinationText = $request->get('autocomplete');
-        echo $destinationText;
-        exit();
+        $lat = $request->get('latitude');
+        $lgn = $request->get('longitude');
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findByLatAndLgn($lat, $lgn);
+        
+        
+        
     }
 }
