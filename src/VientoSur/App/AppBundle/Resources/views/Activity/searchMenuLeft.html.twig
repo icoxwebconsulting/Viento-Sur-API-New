@@ -1,0 +1,73 @@
+<div class="col-sm-3 col-sm-pull-9">
+    <div id="sidebar">
+        <div id="formSearch">
+            <form name="searchActivity" id="search-activity" action ="{{ path('viento_sur_process_search_activity', {'_locale': app.request.locale})}}" method="GET">
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <label>Destino</label>
+                        <i class="fa fa-map-marker input-icon"></i>
+                        <input id="autocomplete-activity" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" value="{{ autocomplete }}">
+                        <input id="latitude" name="latitude" type="hidden" value="{{ latitude }}">
+                        <input id="longitude" name="longitude" type="hidden" value="{{ longitude }}">
+                    </div>
+                </div>    
+                <div class="row">
+                        <div class="bottonSearch col-xs-12">
+                            <button>{{ 'index.search_text' | trans }}</button>
+                        </div>
+                </div>
+            </form>             
+        </div>
+        <div id="formSearch">                
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <label>Mapa de destinos</label>
+                    <div id="MultiMap" style="width: 100%; height: 150px;"></div>
+                </div>
+            </div>      
+        </div>    
+    </div>
+</div>  
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>   
+<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+<script type="text/javascript">
+    window.onload = function() {
+      L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
+
+      // Geocode three locations, then call the createMap callback
+      L.mapquest.geocoding().geocode(['Avenida San Martín, Villa General Belgrano, Córdoba, AR, X5191'], createMap);
+
+      function createMap(error, response) {
+        // Initialize the Map
+        var value_lat = parseFloat('{{ latitude }}');
+        var value_log = parseFloat('{{ longitude }}');
+        var map = L.mapquest.map('MultiMap', {
+          layers: L.mapquest.tileLayer('map'),
+          center: [value_lat, value_log],
+          zoom: 12
+        });
+
+        // Generate the feature group containing markers from the geocoded locations
+        var featureGroup = generateMarkersFeatureGroup(response);
+
+        // Add markers to the map and zoom to the features
+        featureGroup.addTo(map);
+        map.fitBounds(featureGroup.getBounds());
+      }
+
+      function generateMarkersFeatureGroup(response) {
+        var group = [];
+        for (var i = 0; i < response.results.length; i++) {
+          var location = response.results[i].locations[0];
+          var locationLatLng = location.latLng;
+
+          // Create a marker for each location
+          var marker = L.marker(locationLatLng, {icon: L.mapquest.icons.marker()})
+            .bindPopup(location.street+', '+location.adminArea5+', '+location.adminArea3+', '+location.adminArea1+', '+location.postalCode);
+
+          group.push(marker);
+        }
+        return L.featureGroup(group);
+      }
+    }
+</script>                        

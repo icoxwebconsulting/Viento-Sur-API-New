@@ -637,3 +637,6 @@ admin:
         shopping: Compras
         singles: Solos y solas
         sport: Deportes
+activity:
+    activity_availabilities: Actividades disponibles para estas fechas en %place% con mejor precio
+    activity_in: Actividades en

@@ -1,0 +1,248 @@
+{#filter desktop#}
+<form action="{{ path('viento_sur_process_search_activity', {'_locale': app.request.locale})}}" id="form-filter" method="GET">
+<input type="hidden" name="autocomplete" value="{{ autocomplete }}">  
+<input id="latitude" name="latitude" type="hidden" value="{{ latitude }}">
+<input id="longitude" name="longitude" type="hidden" value="{{ longitude }}">
+<div class="filterThumb hidden-xs">
+    <div class="btn-group booking-sort col-xs-3 noPadding">
+        <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="{{ 'activity.activity_in' | trans }} {{ app.session.get('destination_activity').text }} {{ 'hotels.by_price' | trans }} - VientoSur.net">
+            <span class="sort_name" id="sort_price" style="font-size: 11px;">{{ 'hotels.price' | trans }}
+            </span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a data-category="price" class="nav-drop-menu-a" >Desde:</a>
+                <input name="from_price" type="text" value="{{ from_price | trans}}">
+            </li>
+            <li>
+                <a data-category="price" class="nav-drop-menu-a" >Hasta:</a>
+                <input name="to_price" type="text" value="{{ to_price | trans}}">
+            </li>
+        </ul>
+    </div>
+    <div class="btn-group booking-sort col-xs-3 noPadding">
+        <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="Actividades con días Habilitados en {{ app.session.get('destination_activity').text }} - VientoSur.net">
+            <span class="sort_name" id="sort_price" style="font-size: 11px;">
+                Días Habilitados
+            </span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.sunday' | trans }} <input name="day_1" type="checkbox" value="1" {% if day_1 %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.monday' | trans }} <input name="day_2" type="checkbox" value="1" {% if day_2 %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.tuesday' | trans }} <input name="day_3" type="checkbox" value="1" {% if day_3 %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.wednesday' | trans }} <input name="day_4" type="checkbox" value="1" {% if day_4 %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.thursday' | trans }} <input name="day_5" type="checkbox" value="1" {% if day_5 %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.friday' | trans }} <input name="day_6" type="checkbox" value="1" {% if day_6 %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="day" class="nav-drop-menu-a" >
+                    {{ 'admin.saturday' | trans }} <input name="day_7" type="checkbox" value="1" {% if day_7 %} checked {% endif %}>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="btn-group booking-sort col-xs-3 noPadding">
+        <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="Actividades disponible para mañana, tarde o todo el día en {{ app.session.get('destination_activity').text }} - VientoSur.net">
+            <span class="sort_name" id="sort_price" style="font-size: 11px;">
+                Disponible
+            </span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a data-category="available" class="nav-drop-menu-a" >
+                    AM <input name="available" type="radio" value="am" {% if available == 'am' %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="available" class="nav-drop-menu-a" >
+                    PM <input name="available" type="radio" value="pm" {% if available == 'pm' %} checked {% endif %}>
+                </a>
+            </li>
+            <li>
+                <a data-category="available" class="nav-drop-menu-a" >
+                    Todo el Día <input name="available" type="radio" value="all" {% if available == 'all' %} checked {% endif %}>
+                </a>
+            </li>
+        </ul>
+    </div> 
+    <div class="btn-group booking-sort col-xs-3 noPadding">
+        <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="Actividades de duración por turno en {{ app.session.get('destination_activity').text }} - VientoSur.net">
+            <span class="sort_name" id="sort_price" style="font-size: 11px;">
+                Duración por turno - (Horas)
+            </span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% for i in 1..10 %}
+                <li>
+                    <a data-category="duration" class="nav-drop-menu-a" >
+                        {{ i }} <input name="duration" type="checkbox" value="{{ i }}" {% if duration == i %} checked {% endif %}>
+                    </a>
+                </li>
+            {% endfor %}    
+        </ul>
+    </div>         
+</div>
+</form>
+
+{#filter mobile#}
+{# <div class="filterThumb hidden-sm hidden-md hidden-lg">
+    {% if sortArrayMobile.price is not empty %}
+    <div class="btn-group col-xs-3 noPadding">
+        <button type="button" class="btnDropdown" data-toggle="modal" data-target="#myModal1">
+            {% if sortArrayMobile.selected.category == 'price' %}
+                {{ sortArray.selected.name }}<span class="caret"></span>
+            {% else %}
+                {{ 'hotels.price' | trans }} <span class="caret"></span>
+            {% endif %}
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="sort_price">
+                            {% if sortArrayMobile.selected.category == 'price' %}
+                                {{ sortArray.selected.name }}
+                            {% else %}
+                                {{ 'hotels.price' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.price|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="btn-group col-xs-3 noPadding">
+        <button type="button" class="btnDropdown" data-toggle="modal" data-target="#myModal2">
+            {% if sortArrayMobile.selected.category == 'star' %}
+                {{ sortArrayMobile.selected.name }}
+            {% else %}
+                {{ 'hotels.stars' | trans }}
+            {% endif %}
+            <span class="caret"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4  class="modal-title" id="sort_star" id="myModalLabel">
+                            {% if sortArrayMobile.selected.category == 'star' %}
+                                {{ sortArrayMobile.selected.name }}
+                            {% else %}
+                                {{ 'hotels.stars' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.star|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group col-xs-3 noPadding">
+        <button type="button" class="btnDropdown" data-toggle="modal" data-target="#myModal3">
+            {% if sortArrayMobile.selected.category == 'best' %}
+                {{ sortArrayMobile.selected.name }}
+            {% else %}
+                {{ 'hotels.best' | trans }}
+            {% endif %}
+            <span class="caret"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="sort_best">
+                            {% if sortArrayMobile.selected.category == 'best' %}
+                                {{ sortArrayMobile.selected.name }}
+                            {% else %}
+                                {{ 'hotels.best' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.best|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group col-xs-3 noPadding">
+        <button id="sort_other" type="button" class="btnDropdown borderNone" data-toggle="modal" data-target="#myModal4">
+            {% if sortArrayMobile.selected.category == 'other' %}
+                {{ sortArrayMobile.selected.name }}
+            {% else %}
+                {{ 'hotels.search_menu.others' | trans }}
+            {% endif %}
+            <span class="caret"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 id="sort_other" class="modal-title">
+                            {% if sortArrayMobile.selected.category == 'other' %}
+                                {{ sortArrayMobile.selected.name }}
+                            {% else %}
+                                {{ 'hotels.search_menu.others' | trans }}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="listOrder">
+                            {{ sortArrayMobile.other|raw }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>#}
+

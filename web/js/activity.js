@@ -1,29 +1,20 @@
 $(document).ready(function () {
     var url = Routing.generate('search_city_autocomplete');
+    
+    var $form = $('#form-filter'),
+    origForm = $form.serialize();
 
     $('#autocomplete-activity').on('click', function () {
         $(this).select();
-    });
-
-    $('#autocomplete-activity').on('blur', function () {
-        setTimeout(function () {
-            if ($("#destinationCity-activity").val() === '') {
-                $('#autocomplete-activity').val('');
-            }
-        }, 120);
     });
     
     $('#autocomplete-activity').autocomplete({
         serviceUrl: url,
         onSelect: function (suggestion) {
-            $("#destinationCity-activity").val(suggestion.data.value);
-            getLatLongMap(suggestion.data.value)
+            getLatLongMap(suggestion.data.value);
         },
         minChars: 3,
         groupBy: 'category',
-        onInvalidateSelection: function () {
-            $("#destinationCity-activity").val('');
-        }
     });
     
     function moveProgressBar(elem) {
@@ -38,6 +29,7 @@ $(document).ready(function () {
                 }
             }
         }
+        
     $('#submitActivity').on('click', function () {
         var form = $('#search-activity')[0];
         if(form.checkValidity()){
@@ -50,9 +42,9 @@ $(document).ready(function () {
     function getLatLongMap(city){
         L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
         L.mapquest.open = true;
-
         L.mapquest.geocoding().geocode(city, createMap);  
     }
+    
     function createMap(error,response) {
         var location = response.results[0].locations[0];
         var lat = location.displayLatLng.lat;
@@ -60,6 +52,17 @@ $(document).ready(function () {
         $("#latitude").val(lat);
         $("#longitude").val(lng);
     }
+    
+    $('#form-filter :input').on('change input', function() {
+        if(origForm !== $form.serialize()){
+             $(this).keypress(function (e) {
+                if (e.which === 13) {
+                  $form.submit();
+                  return false;    //<---- Add this line
+                }
+              });
+        }
+    });
 });
 
 

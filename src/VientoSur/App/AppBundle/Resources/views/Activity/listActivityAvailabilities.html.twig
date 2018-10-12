@@ -1,0 +1,52 @@
+{% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% block title %}Búsqueda de Actividades{% endblock %}
+
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
+
+{#{% block switch_service %}
+    {% include '@VientoSurAppApp/_partial/navBar.html.twig' %}
+{% endblock %}#}
+
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}Actividades{% endblock %}
+        {% block sub_section %}detalle de actividades{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}
+    {{ parent() }}
+    <div class="container" style="max-width: 1170px;">
+        <div class="wrapperSearch">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1 class="message" class="totalHotels">{{ pagination.getTotalItemCount }}  {{ 'activity.activity_availabilities' | trans({'%place%': app.session.get('destination_activity').text|split(',')[0]}) }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-9 col-sm-push-3 " style="padding-left: 5px!important;">
+                        <div id="thumbsSearch">
+                            {% include '@VientoSurAppApp/Activity/filterSortTop.html.twig' %} {#
+                            {% include '@VientoSurAppApp/Hotel/listDetailHotels.html.twig' %}#}
+                            {% include 'VientoSurAppAppBundle:_partial:pagination.html.twig' %}
+                        </div>
+                    </div>
+                    {% include '@VientoSurAppApp/Activity/searchMenuLeft.html.twig' %}
+                </div>
+            </div>
+        </div>
+        {# {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}#}
+    </div>
+    <style>
+        a.nav-drop-menu-a.mobile {
+            color: #1d2d33;
+        }
+    </style>
+{% endblock %}    
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/activity.js') }}"></script>   
+{% endblock %}    
