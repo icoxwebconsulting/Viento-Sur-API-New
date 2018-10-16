@@ -3,6 +3,8 @@
 namespace VientoSur\App\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Gedmo\Translatable\TranslatableListener;
 
 class ActivityRepository extends EntityRepository
 {
@@ -16,15 +18,24 @@ class ActivityRepository extends EntityRepository
 
         $config->addCustomNumericFunction('RADIANS', 'DoctrineExtensions\Query\Mysql\Radians');
 
-        $config->addCustomNumericFunction('SIN', 'DoctrineExtensions\Query\Mysql\Sin'); 
+        $config->addCustomNumericFunction('SIN', 'DoctrineExtensions\Query\Mysql\Sin');
         
         $qb = $this->getEntityManager()->createQueryBuilder();
         
-        $qb->select('a, ( 6371 * acos(cos(radians('.$lat.')) * cos(radians(a.latitude_destination)) * cos(radians(a.longitude_destination) - radians('.$lgn.')) + sin(radians('.$lat.')) * sin(radians(a.latitude_destination)))) AS distance ')
-            ->from('VientoSurAppAppBundle:Activity', 'a')
+        $qb->select('a, a.id AS id, a.name AS name, a.latitude_destination AS latitude, a.longitude_destination AS longitude, a.price AS price, ( 6371 * acos(cos(radians('.$lat.')) * cos(radians(a.latitude_destination)) * cos(radians(a.longitude_destination) - radians('.$lgn.')) + sin(radians('.$lat.')) * sin(radians(a.latitude_destination)))) AS distance ')
+            ->from('VientoSurAppAppBundle:Activity', 'a') 
             ->where("a.availability = 1")    
-            ->having('distance < 70');
-        
-        return $qb->getQuery();
+            ->having('distance < 5');
+
+        $query = $qb->getQuery();
+ 
+        $query->setHint(
+        Query::HINT_CUSTOM_OUTPUT_WALKER,
+        'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'es');
+
+        return $query;
     }
 }
