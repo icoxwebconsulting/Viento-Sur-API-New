@@ -16,7 +16,7 @@
     {% endembed %}
 {% endblock %}
 {% block content %}
-    {{ parent() }}
+    {{ parent() }}  
     <div class="container" style="max-width: 1170px;">
         <div class="wrapperSearch">
             <div class="container">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        {# {% include 'VientoSurAppAppBundle:Hotel:hotelMapModal.html.twig' %}#}
+        {% include 'VientoSurAppAppBundle:Activity:activityMapModal.html.twig' %}
     </div>
     <style>
         a.nav-drop-menu-a.mobile {
@@ -48,5 +48,50 @@
 {% endblock %}    
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/activity.js') }}"></script>   
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>   
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/> 
+    <script src="{{ asset('js/activity.js') }}"></script> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var latLng;
+            var hotelName;
+            
+            $('.ListHotel').on('click', '.booking-item, .booking-item-address', function (event) {
+                event.stopPropagation();
+                var element = event.target;
+                if ($(element).data('prevent') != 'modal') {
+                    window.open(this.dataset.href, '_blank');
+                } else {
+                    latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
+                    hotelName = $(element).data('name');
+                    console.log(latLng);
+                    $('#mapModal').modal('show');
+                    $('#myModalLabel').text(hotelName);
+                }
+            });
+
+            $('#mapModal').on('shown.bs.modal', function (e) {
+                L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
+
+                // 'map' refers to a <div> element with the ID map
+                var map = L.mapquest.map('mapHotel', {
+                  center: latLng,
+                  layers: L.mapquest.tileLayer('map'),
+                  zoom: 12
+                });
+                
+                L.mapquest.textMarker(latLng, {
+                    text: hotelName,
+                    position: 'right',
+                    type: 'marker',
+                    icon: {
+                      primaryColor: '#333333',
+                      secondaryColor: '#333333',
+                      size: 'sm'
+                    }
+                  }).addTo(map);
+                
+            });
+        });
+    </script>    
 {% endblock %}    

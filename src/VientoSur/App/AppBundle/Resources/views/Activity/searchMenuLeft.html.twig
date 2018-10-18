@@ -27,7 +27,7 @@
             </div>      
         </div>    
     </div>
-</div>  
+</div>                          
 <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>   
 <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 <script type="text/javascript">
@@ -35,7 +35,7 @@
       L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
 
       // Geocode three locations, then call the createMap callback
-      L.mapquest.geocoding().geocode(['Avenida San Martín, Villa General Belgrano, Córdoba, AR, X5191'], createMap);
+      L.mapquest.geocoding().geocode([{{ address|raw }}], createMap);
 
       function createMap(error, response) {
         // Initialize the Map

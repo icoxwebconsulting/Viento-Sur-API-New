@@ -10,12 +10,12 @@
     {% set decimal =false %}
     <div class="ListHotel">
 
-        {% for item in pagination %}
+        {% for item in pagination %}  
         <span class="booking-item cursor-pointer" data-href="{#{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}#}">
                 <div id="thumbHotel">
 
                     <div class="imgHotel col-xs-4">
-                        <img src="" width="200" height="150"
+                        <img src="{{ render(controller('VientoSurAppAppBundle:Activity:getPictureByActivity',{ 'id':  item.id})) }}" width="200" height="150"
                              alt="{{ item.name }}">
                     </div>
                     <div class="infoHotel col-xs-12 col-sm-6 noPadding">
@@ -23,10 +23,9 @@
                                 {{ item.name }}
                         </h4>
                         <div class="row">
-                            <div class="col-sm-6 star-div">
-                                {# {{ item.getFirstDay() }} #}
+                            <div class="col-sm-6 star-div" style="margin-left: 0px;">
+                                {{ render(controller('VientoSurAppAppBundle:Activity:getDayByActivity',{ 'id':  item.id})) }}
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-sm-10">
@@ -36,7 +35,7 @@
                                        data-latitude="{{ item.latitude }}"
                                        data-longitude="{{ item.longitude }}"
                                        data-name="{{ item.name }}">
-                                        {{ app.session.get('destination_activity')['text'] }} </a>
+                                        {{ item.address_destination }} </a>
                                 </div>
                             </div>
                         </div>
@@ -45,10 +44,9 @@
                         <p> Precio final por adulto </p>
                             <h5>{{ 'flights.since' | trans }} {{ symbol }} {{ item.price|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}</h5>
 
-                            <button>{{ 'hotels.show_rooms' | trans }} <i class="fa fa-angle-right input-icon" style="font-size: 16px; font-weight: bold; text-align: right; margin-left: 4px"></i></button>
+                            <button>Ver detalle <i class="fa fa-angle-right input-icon" style="font-size: 16px; font-weight: bold; text-align: right; margin-left: 4px"></i></button>
                     </div>
                 </div>
-            {#</a>#}
         </span>
         {% endfor %}
     </div>

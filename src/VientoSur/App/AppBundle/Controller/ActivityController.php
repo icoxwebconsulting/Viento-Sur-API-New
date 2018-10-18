@@ -20,6 +20,7 @@ class ActivityController extends Controller
     public function sendActivityProcessSearch(Request $request)
     {
         $session = $request->getSession();
+        $address = '';
         
         $destinationText = $request->get('autocomplete');
         $lat = $request->get('latitude');
@@ -55,6 +56,11 @@ class ActivityController extends Controller
 
         $pagination = $paginator->paginate($entities, $page, $items_per_page,array('wrap-queries'=>true));
         
+        foreach ($pagination as $value) {
+            $address .= "'".$value['address_destination']."', ";
+        }
+        $address = trim($address, ',');
+        
         return $this->render('VientoSurAppAppBundle:Activity:listActivityAvailabilities.html.twig', array(
             'pagination' => $pagination,
             'autocomplete' => $destinationText,
@@ -70,8 +76,42 @@ class ActivityController extends Controller
             'day_6'=>$day_6,
             'day_7'=>$day_7,
             'available'=>$available,
-            'duration'=>$duration
+            'duration'=>$duration,
+            'address'=>$address
         ));
         
+    }
+    
+    /**
+     *
+     * @Route("/send/activity/get-picture", name="viento_sur_activity_picture")
+     * @Method("GET")
+     */
+    public function getPictureByActivityAction(Request $request){
+        $id_activity = $request->get('id');
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $actvity = $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findOneById($id_activity);
+        
+        $picture = $em->getRepository("VientoSurAppAppBundle:Picture")->findOneByActivity($actvity);
+        
+        
+        if($picture){
+            return new Response('/uploads/activity/image/'.$actvity->getId().'/'.$picture->getImageName());
+        }else{
+            return new Response("/img/no-img.jpg");
+        }
+    }
+    
+    public function getDayByActivityAction(Request $request){
+        
+        $id_activity = $request->get('id');
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $actvity = $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findOneById($id_activity);
+        
+        return new Response($actvity->getFirstDay());
     }
 }
