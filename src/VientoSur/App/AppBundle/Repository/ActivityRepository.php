@@ -33,7 +33,7 @@ class ActivityRepository extends EntityRepository
             ->where("a.availability = 1")    
             ->andWhere('a.price >= '.$from_price)
             ->andWhere('a.price <= '.$to_price)
-            ->having('distance < 5');
+            ->having('distance < 70');
             
             if($day_1){
                 $qb->andWhere('a.sunday = '.$day_1);

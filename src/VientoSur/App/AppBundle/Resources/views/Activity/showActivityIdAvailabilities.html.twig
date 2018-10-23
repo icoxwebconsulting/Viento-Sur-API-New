@@ -1,0 +1,299 @@
+{% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% block title %}{{ 'index.rooms_available' | trans }} {{item.name}} {% endblock %}
+{% set url = 'uploads/activity/image/'~item.id~'/' %}
+{% block meta_open_graph %}
+    {% if pictures is defined %}
+        {% for key, picture in pictures %}
+            {% if loop.index == 1 %}
+                {% set image = asset(url)~picture.imageName %}
+                <meta property="og:image" content="{{ image }}" />
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url"                content="https://vientosur.net{{ app.request.pathInfo }}" />
+    <meta property="og:title"              content="{{item.name}}" />
+    <meta property="og:description"        content="{{ item.description | truncate(200, true) }}" />
+{% endblock %}
+
+{% block gplus_script %}
+    <link rel="canonical" href="https://vientosur.net{{ app.request.pathInfo }}" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        {lang: '{{ app.request.locale }}' }
+    </script>
+{% endblock %}
+
+{% block shorter_script %}
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        function getUrlShorter(){
+            var long_url = "https://vientosur.net{{ app.request.pathInfo }}";
+            var url = "{{ path('get_url_shorter') }}";
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: 'long_url=' + long_url
+            }).done(function(data) {
+                console.log('url', data);
+                $('#shared-twitter').attr('data-url', data)
+            });
+        }
+        getUrlShorter();
+    </script>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>   
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/> 
+    <script>
+        window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                    t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+            console.log('twitter load');
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+    <script type="text/javascript"> 
+        $("#animarscroll").on("click", function(){
+            var posicion = $(".listRooms").offset().top;
+            $("html, body").animate({
+                scrollTop: posicion
+            }, 1500);
+        });
+
+        $(document).ready(function () {
+            var str = $('#info').text();
+            $("#info").html( str.replace(/\n/g, "<br />"));
+            
+            $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
+                
+                var latLng = {lat: {{ latitude }}, lng: {{ longitude }} };
+                var hotelName = '{{item.name}}';
+                
+                L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
+                
+                // 'map' refers to a <div> element with the ID map
+                var map = L.mapquest.map('google-map-tab', {
+                  center: latLng,
+                  layers: L.mapquest.tileLayer('map'),
+                  zoom: 12
+                });
+                
+                L.mapquest.textMarker(latLng, {
+                    text: hotelName,
+                    position: 'right',
+                    type: 'marker',
+                    icon: {
+                      primaryColor: '#333333',
+                      secondaryColor: '#333333',
+                      size: 'sm'
+                    }
+                  }).addTo(map);
+            });
+            
+        });
+    </script>
+    <script>
+        //TABS DETAIL
+        $('#tabsDetail a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+    </script>
+
+{% endblock %}
+
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
+
+{% block switch_service %}
+    {#{% include '@VientoSurAppApp/_partial/navBar.html.twig' %}#}
+{% endblock %}
+
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}Actividades{% endblock %}
+        {% block sub_section %}Detalle de actividades{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+    {% if app.request.locale == 'es' %}
+        {% set locale = 'es_LA' %}
+    {% elseif app.request.locale == 'pt' %}
+        {% set locale = 'pt_BR' %}
+    {% else %}
+        {% set locale = 'en_US' %}
+    {% endif %}
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/{{ locale }}/sdk.js#xfbml=1&version=v2.9&appId=1215654845212450";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <style>
+        .social-shared > div#___plusone_0,.fb-share-button.fb_iframe_widget,iframe#twitter-widget-0{
+            display:block;
+            margin-top:7px !important;
+        }
+        .booking-item-details .booking-item-header {
+            margin-bottom: -10px;
+        }
+    </style>
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% elseif targetCurrency == 'ARS' %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
+
+    <div class="wrapperHotelDatail">
+        <div class="container" style="max-width: 1170px;">
+            <div class="row">
+
+                <div class="col-sm-9 col-sm-push-3">
+                    <div id="descriptionHotel">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-9">
+                                <h2 class="titleHotel" title="Actividad {{ item.name }} - VientoSur.net">{{ item.name }}</h2>
+                                <br/>
+                                <ul class="starsHotel" style="float: none; width: 475px">
+                                    {{ render(controller('VientoSurAppAppBundle:Activity:getDayByActivity',{ 'id':  item.id})) }}
+                                </ul>
+                                <p class="adress" style="margin-bottom: 0px">
+                                    {{ item.addressDestination }}
+                                </p>
+                            </div>
+                            <div class="boxPrice col-xs-12 col-sm-3">
+                                <p>Precio final por adulto</p>
+                                <h5>{{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  item.price, 'symbol': symbol})) }}</h5>
+                                <button id="animarscroll">{{ 'hotels.choose_room' | trans }}</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="galleryHotel col-xs-12">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" id="tabsDetail" role="tablist" style="border: 0px; margin-left: -1px;">
+                                    <li role="presentation" class="active" style="margin-bottom: 0px"><a href="#fotos" aria-controls="fotos" role="tab" data-toggle="tab"><i class="fa fa-camera" aria-hidden="true"></i> Fotos</a></li>
+                                    <li role="presentation">
+                                        <a href="#google-map-tab" data-toggle="tab" id="tab-mapa" style="margin-bottom: 0px"><i class="fa fa-map-marker"></i> {{ 'hotels.map' | trans }}</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content" style="border-top: 2px solid #233034; box-shadow: 0px 0px 13px 1px rgba(0,19,33,0.65);">
+                                    <div role="tabpanel" class="tab-pane active" id="fotos">
+                                        <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs" data-width="885" data-height="570">
+                                            {% for key, picture  in pictures %}
+                                                <img src="{{ asset(url)~picture.imageName }}" alt="" title=""/>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="google-map-tab" style="height: 500px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="descriptionHotel col-xs-9">
+                                {% set info = item.description %}
+                                <p id="info">{{ info }}</p>
+                            </div>
+                            <div class="social-shared col-xs-3" style="margin: 30px 0px;">
+                                <p style="text-align: center; font-size: 14px; color: #008cd0; font-weight: bold;">{{ 'hotels.share_in' | trans }}:</p>
+                                <div class="socialMedia">
+                                    <ul class="share-social-media">
+                                        <li><a class="bgFacebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://vientosur.net{{ app.request.pathInfo }}&src=sdkpreparse" title="Compartir en Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a id="shared-twitter" target="_blank" class="bgTwitter" href="http://twitter.com/share?text=Hotel:%20{{item.name}}&lang={{ app.request.locale }}&hashtags=VientoSur&via=vientosurnet" data-size="large" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a class="bgGooglePlus" href="https://plus.google.com/share?url=https://vientosur.net{{ app.request.pathInfo }}" target="_blank" title="Compartir en Google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="listRooms col-xs-12">
+                                <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">Seleccione fecha y cantidad de pasajeros</h2>
+                            </div>    
+                        </div>  
+                        <div class="row">
+                            <div class="listRooms col-xs-12">
+                                <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">Información general</h2>
+                                <div class="descriptionHotel col-xs-9">
+                                    <p id="info">Direccion de Salida: {{ item.addressOrigin}}</p>
+                                    <p id="info">Direccion de Destino: {{ item.addressDestination }}</p>
+                                    <h3>Incluye</h3>
+                                    <ul>
+                                        {% for information  in item.generalInformation %}
+                                            <li>{{ information.name }}</li>
+                                        {% endfor %}    
+                                    </ul>    
+                                </div>    
+                            </div>    
+                        </div>    
+                        <!-- facebook -->
+                        {#<div class="row">
+                            <div class="feedFacebook col-xs-12">
+                                <h2 class="titleSection col">{{ 'hotels.hotel_reviews' | trans }}</h2>
+                                <div class="row row-wrap">
+                                    <div class="col-md-11">
+                                        <!--<div class="fb-comments" data-href="http://viento-sur.icox.mobi" data-width="600 px" data-numposts="5"></div>-->
+                                        <div class="fb-comments" data-href="http://viento-sur.icox.mobi/hotel/show/{{idHotel}}" data-width="600 px" data-numposts="10"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>#}
+                    </div>
+                </div>
+                {% include '@VientoSurAppApp/Activity/searchMenuLeft.html.twig' %}
+            </div>
+        </div>
+    </div>
+    <style>
+        /*div#google-map-tab {
+            width: 750px !important;
+        }
+        div#map {
+            width: 750px !important;
+        }*/
+
+        .map-mobile{
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    <script>
+        function device() {
+            if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if(device() == true){
+            $('.contentDesktop').html('');
+            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" class="map-mobile" style="width:600px; height:450px;"></div></div>')
+        }else{
+            $('#google-map-tab').html('<div class="col-xs-12"><div id="map" style="width:847px; height:500px; margin-left: -15px;"></div> </div>');
+            $('.contentMobile').html('');
+        }
+
+    </script>
+   {% include '@VientoSurAppApp/Hotel/hotelModalRoomImages.html.twig' %}
+{% endblock %}

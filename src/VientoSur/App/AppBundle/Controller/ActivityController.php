@@ -88,6 +88,32 @@ class ActivityController extends Controller
     }
     
     /**
+     * @Route("/show/{id}/availabilities/{latitude}/{longitude}", name="viento_sur_app_app_homepage_show_activity_id", defaults={"latitude": -0.0, "longitude": -0.0})
+     * @Method("GET")
+     */
+    public function showHotelIdAvailabilitiesAction(Request $request, $id, $latitude, $longitude)
+    {
+        $id_activity = $request->get('id');
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $activity = $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findOneById($id_activity);
+        
+        $pictures = $em->getRepository("VientoSurAppAppBundle:Picture")->findByActivity($activity);
+        
+        $destinationText = $activity->getAddressDestination();
+        
+        return $this->render('VientoSurAppAppBundle:Activity:showActivityIdAvailabilities.html.twig', array(
+            'item'=>$activity,
+            'pictures'=>$pictures,
+            'autocomplete' => $destinationText,
+            'latitude' => $activity->getLatitudeDestination(),
+            'longitude' => $activity->getLongitudeDestination(),
+            'address' => $destinationText,
+        ));
+    }
+    
+    /**
      *
      * @Route("/send/activity/get-picture", name="viento_sur_activity_picture")
      * @Method("GET")

@@ -995,7 +995,7 @@ class Activity
             if($coutn === 1){
                 $data.= $key;
             }elseif($index < $coutn){
-                $data.= $key.',';
+                $data.= $key.', ';
             }else{
                 $data = substr($data, 0, -1);
                 $data.=' y '. $key;

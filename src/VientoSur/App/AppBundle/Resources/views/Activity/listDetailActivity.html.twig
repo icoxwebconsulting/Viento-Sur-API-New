@@ -11,7 +11,7 @@
     <div class="ListHotel">
 
         {% for item in pagination %}  
-        <span class="booking-item cursor-pointer" data-href="{#{{ path('viento_sur_app_app_homepage_show_hotel_id',{'_locale': app.request.locale, 'idHotel': item.id, 'checkin_date': reservation.checkin_date, 'checkout_date': reservation.checkout_date, 'distribution': reservation.distribution, 'latitude': item.hotel.location.latitude, 'longitude':item.hotel.location.longitude})}}#}">
+        <span class="booking-item cursor-pointer" data-href="{{ path('viento_sur_app_app_homepage_show_activity_id',{'_locale': app.request.locale, 'id': item.id, 'latitude': item.latitude, 'longitude':item.longitude})}}">
                 <div id="thumbHotel">
 
                     <div class="imgHotel col-xs-4">
