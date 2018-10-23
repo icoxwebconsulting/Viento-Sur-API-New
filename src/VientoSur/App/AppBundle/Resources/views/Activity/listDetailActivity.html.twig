@@ -42,7 +42,9 @@
                     </div>
                     <div class="col-xs-5 col-sm-2 textRight priceRoom">
                         <p> Precio final por adulto </p>
-                            <h5>{{ 'flights.since' | trans }} {{ symbol }} {{ item.price|round|currency_convert_format(targetCurrency, decimal, false)|number_format(0, '.', '.') }}</h5>
+                            <h5>{{ 'flights.since' | trans }} {{ symbol }}
+                                {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  item.price, 'symbol': symbol})) }}
+                            </h5>
 
                             <button>Ver detalle <i class="fa fa-angle-right input-icon" style="font-size: 16px; font-weight: bold; text-align: right; margin-left: 4px"></i></button>
                     </div>

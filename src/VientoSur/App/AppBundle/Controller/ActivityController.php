@@ -10,14 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Activity controller.
+ *
+ * @Route("/{_locale}/activity", requirements={"_locale": "es|en|pt"}, defaults={"_locale": "es"})
+ */
 class ActivityController extends Controller
 {
     /**
      *
      * @Route("/send/activity/process-search", name="viento_sur_process_search_activity")
-     * @Method("GET")
+     * @Method("POST")
      */
-    public function sendActivityProcessSearch(Request $request)
+    public function sendActivityProcessSearchAction(Request $request)
     {
         $session = $request->getSession();
         $address = '';
@@ -48,7 +53,7 @@ class ActivityController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         
-        $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findByLatAndLgn($lat, $lgn);
+        $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findByLatAndLgn($lat, $lgn, $from_price, $to_price, $day_1, $day_2, $day_3, $day_4, $day_5, $day_6, $day_7, $available, $duration);
         
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');
@@ -104,6 +109,12 @@ class ActivityController extends Controller
         }
     }
     
+    
+    /**
+     *
+     * @Route("/send/activity/get-day", name="viento_sur_activity_day")
+     * @Method("GET")
+     */
     public function getDayByActivityAction(Request $request){
         
         $id_activity = $request->get('id');
@@ -114,4 +125,30 @@ class ActivityController extends Controller
         
         return new Response($actvity->getFirstDay());
     }
+    
+    /**
+     *
+     * @Route("/send/activity/get-convert-currency", name="viento_sur_activity_convert_currency")
+     * @Method("GET")
+     */
+    public function getConvertCurrencyAction(Request $request){
+        
+        $symbol = $request->get('symbol');
+        $from   = $symbol === 'US$'?'USD':'ARS';
+        $from_Currency = urlencode($from);
+        $to_Currency = urlencode('ARS');
+        $query =  "{$from_Currency}_{$to_Currency}";
+        $amount = $request->get('amount');
+        
+        $json = file_get_contents("http://free.currencyconverterapi.com/api/v5/convert?q={$query}&compact=y");
+        $obj = json_decode($json, true);
+        
+        $val = floatval($obj["$query"]['val']);
+
+        $total = $val * $amount;
+        
+        return new Response(number_format($total, 0, '.', ','));
+        
+    }
+    
 }

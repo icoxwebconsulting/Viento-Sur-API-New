@@ -1,5 +1,5 @@
 {#filter desktop#}
-<form action="{{ path('viento_sur_process_search_activity', {'_locale': app.request.locale})}}" id="form-filter" method="GET">
+<form action="{{ path('viento_sur_process_search_activity', {'_locale': app.request.locale})}}" id="form-filter" method="POST">
 <input type="hidden" name="autocomplete" value="{{ autocomplete }}">  
 <input id="latitude" name="latitude" type="hidden" value="{{ latitude }}">
 <input id="longitude" name="longitude" type="hidden" value="{{ longitude }}">
@@ -77,17 +77,17 @@
         <ul class="dropdown-menu">
             <li>
                 <a data-category="available" class="nav-drop-menu-a" >
-                    AM <input name="available" type="radio" value="am" {% if available == 'am' %} checked {% endif %}>
+                    AM <input name="available" type="radio" value="am" {% if available == 'am' %} checked {% endif %} style="display: inline">
                 </a>
             </li>
             <li>
                 <a data-category="available" class="nav-drop-menu-a" >
-                    PM <input name="available" type="radio" value="pm" {% if available == 'pm' %} checked {% endif %}>
+                    PM <input name="available" type="radio" value="pm" {% if available == 'pm' %} checked {% endif %} style="display: inline">
                 </a>
             </li>
             <li>
                 <a data-category="available" class="nav-drop-menu-a" >
-                    Todo el Día <input name="available" type="radio" value="all" {% if available == 'all' %} checked {% endif %}>
+                    Todo el Día <input name="available" type="radio" value="all" {% if available == 'all' %} checked {% endif %} style="display: inline">
                 </a>
             </li>
         </ul>
