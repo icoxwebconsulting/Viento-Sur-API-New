@@ -43,6 +43,8 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>   
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/> 
     <script>
@@ -73,7 +75,68 @@
 
         $(document).ready(function () {
             var str = $('#info').text();
+            var currency = $("#currency").text();
+            var multiplo_true = 0;
+            var total_amount  = 0;
+            
             $("#info").html( str.replace(/\n/g, "<br />"));
+            
+            $('#datetimepicker11').datepicker({
+                daysOfWeekDisabled: '{{ array_week_disabled }}',
+                format: "dd/mm/yyyy",
+                datesDisabled: {{ text_date_disabled | raw }}
+            });
+            
+            $('#can-adul').change(function(){
+                var value_option = $("#can-adul option:selected").val();
+                var total_chil   = {{ item.capacityForShift }} - value_option;
+                
+                var select_chil = $('#can-chil');
+                var value_chil  = select_chil.val();
+                $('option', select_chil).remove();
+                
+                for ( var i = 0, l = total_chil; i <= l; i++ ) {
+                    select_chil.append(new Option(i, i, true, true));;
+                } 
+                select_chil.val(value_chil);
+                
+                total_amount = (parseFloat(currency) * (parseInt(value_option) + parseInt(value_chil)));
+                $("#currency").text(total_amount);
+                
+            });
+            
+            $('#can-chil').change(function(){
+                var value_option = $("#can-chil option:selected").val();
+                var total_adul   = {{ item.capacityForShift }} - value_option;
+                
+                var select_adul = $('#can-adul');
+                var value_adul  = select_adul.val();
+                $('option', select_adul).remove();
+                
+                for ( var i = 0, l = total_adul; i <= l; i++ ) {
+                    select_adul.append(new Option(i, i, true, true));;
+                } 
+                select_adul.val(value_adul);
+                
+                total_amount = (parseFloat(currency) * (parseInt(value_option) + parseInt(value_adul)));
+                $("#currency").text(total_amount);
+                
+            });
+            
+            $('#schedule').change(function(){
+                var value_option = $("#schedule option:selected").val();
+                
+                if(value_option === 'AM'){
+                    $('#schedulePM').hide();
+                    $('#scheduleAM').show();
+                    $('#schedule').val('am');
+                }else{
+                    $('#scheduleAM').hide();
+                    $('#schedulePM').show();
+                    $('#schedule').val('pm');
+                }    
+                
+            });
             
             $('a[href="#google-map-tab"]').on('shown.bs.tab', function(e) {
                 
@@ -229,6 +292,79 @@
                         <div class="row">
                             <div class="listRooms col-xs-12">
                                 <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">Seleccione fecha y cantidad de pasajeros</h2>
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Duración: {{ item.duration }} hs - {{ render(controller('VientoSurAppAppBundle:Activity:getDayByActivity',{ 'id':  item.id})) }}
+                                <fieldset style="margin-top: 15px; margin-bottom: 15px">
+                                    {% set display_am = 'none' %}
+                                    {% set display_pm = 'none' %}
+                                    {% set display_all = 'none' %}
+                                    {% set schedule = "" %}
+                                    {%if item.Am == 1 and item.Pm == 1 %}
+                                        {% set display_am = 'block' %}
+                                        {% set schedule = "am" %}
+                                        <select id="schedule" name="schedule" class="form-control room-select" style="width: 10%">
+                                            <option>AM</option>
+                                            <option>PM</option>
+                                        </select>    
+                                    {% elseif item.Am == 1 %}    
+                                        <legend>AM</legend> 
+                                        {% set display_am = 'block' %}
+                                        {% set schedule = "am" %}
+                                    {% elseif item.Pm == 1%} 
+                                        <legend>PM</legend>
+                                        {% set display_pm = 'block' %}
+                                        {% set schedule = "pm" %}
+                                    {% elseif item.allDay == 1%}  
+                                        <legend>Todo el día</legend>
+                                        {% set display_all = 'block' %}
+                                        {% set schedule = "all_day" %}
+                                    {% endif %}    
+                                    <form>
+                                        <br/>
+                                        <p id="scheduleAM" style="display: {{ display_am }}">Pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}}<p>
+                                        <p id="schedulePM" style="display: {{ display_pm }}">Pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}}<p>
+                                        <p id="scheduleAll" style="display: {{ display_all }}">Pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll}} hasta las {{ item.toAll}}<p>
+                                        <br>   
+                                        <div class="col-xs-10">
+                                            <div class="col-xs-3">
+                                                <p>Elegir fecha</p>
+                                                <div class="form-group">
+                                                    <div class='input-group date' id='datetimepicker11'>
+                                                        <input type='text' name="date" class="form-control" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar">
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>    
+                                            </div> 
+                                            <div class="col-xs-3">
+                                                <p>Adultos (13 años o más)</p>
+                                                <select id="can-adul" name="can-adul" class="form-control room-select" style="width: 50%">
+                                                    {% for i in 0..item.capacityForShift %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <p>Menores (3 a 12 años)</p>
+                                                <select id="can-chil" name="can-chil" class="form-control room-select" style="width: 50%">
+                                                    {% for i in 0..item.capacityForShift %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> 
+                                        <div class="col-xs-2">
+                                            <div class="boxPrice">
+                                                <p>Precio final</p>
+                                                <h5>{{ symbol }} <samp id="currency">{{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  item.price, 'symbol': symbol})) }}</samp></h5>
+                                                <button id="animarscroll">{{ 'hotels.book' | trans }}</button>
+                                            </div>       
+                                        </div>
+                                        <input type="hidden" name="activity" value="{{ item.id }}" />
+                                        <input type="hidden" name="schedule" id="schedule" value="{{ schedule }}" />
+                                    </form>
+                                </fieldset>    
                             </div>    
                         </div>  
                         <div class="row">
@@ -236,14 +372,23 @@
                                 <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">Información general</h2>
                                 <div class="descriptionHotel col-xs-9">
                                     <p id="info">Direccion de Salida: {{ item.addressOrigin}}</p>
-                                    <p id="info">Direccion de Destino: {{ item.addressDestination }}</p>
-                                    <h3>Incluye</h3>
-                                    <ul>
-                                        {% for information  in item.generalInformation %}
-                                            <li>{{ information.name }}</li>
-                                        {% endfor %}    
-                                    </ul>    
+                                    <p id="info">Direccion de Destino: {{ item.addressDestination }}</p> 
+                                    <p id="info">Duración: {{ item.duration }} hs</p> 
                                 </div>    
+                            </div>    
+                        </div> 
+                        <div class="row">
+                            <div class="itemsHotel col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h5 title="Actividad {{ item.name }} -  VientoSur.net">Incluye</h5>
+                                        <ul class="amenities-list list-services">
+                                            {% for information  in item.generalInformation %}
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{ information.name }}</li>
+                                            {% endfor %} 
+                                        </ul>    
+                                    </div>
+                                </div>
                             </div>    
                         </div>    
                         <!-- facebook -->

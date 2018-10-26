@@ -101,7 +101,20 @@ class ActivityController extends Controller
         
         $pictures = $em->getRepository("VientoSurAppAppBundle:Picture")->findByActivity($activity);
         
-        $destinationText = $activity->getAddressDestination();
+        $array_week_disabled = $this->getArrayWeekDisabled($activity);
+        
+        $destinationText = "'".$activity->getAddressDestination()."'";
+        
+        $date_disabled   = $em->getRepository("VientoSurAppAppBundle:DatesDisableActivity")->findByActivity($activity);
+        
+        $text_date_disabled = '["';
+        
+        foreach ($date_disabled as $value) {
+            $text_date_disabled .= str_replace([',','-'], ['","','/'], $value->getDisableAt());
+        }
+        
+        $text_date_disabled .= '"]';
+        
         
         return $this->render('VientoSurAppAppBundle:Activity:showActivityIdAvailabilities.html.twig', array(
             'item'=>$activity,
@@ -109,8 +122,58 @@ class ActivityController extends Controller
             'autocomplete' => $destinationText,
             'latitude' => $activity->getLatitudeDestination(),
             'longitude' => $activity->getLongitudeDestination(),
-            'address' => $destinationText,
+            'address' => trim($destinationText, ','),
+            'array_week_disabled'=>$array_week_disabled,
+            'text_date_disabled' => $text_date_disabled
         ));
+    }
+    
+    private function getArrayWeekDisabled($activity){
+        $array_week_disabled = "[%d, %l, %ma, %mi, %j, %v, %s]";
+        
+        if(!$activity->getSunday()){
+            $array_week_disabled = str_replace ("%d", "0", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%d,", "", $array_week_disabled);
+        }    
+        
+        if(!$activity->getMonday()){
+            $array_week_disabled = str_replace ("%l", "1", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%l,", "", $array_week_disabled);
+        }    
+        
+        if(!$activity->getTuesday()){
+            $array_week_disabled = str_replace ("%ma", "2", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%ma,", "", $array_week_disabled);
+        }    
+        
+        if(!$activity->getWednesday()){
+            $array_week_disabled = str_replace ("%mi", "3", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%mi,", "", $array_week_disabled);
+        }    
+        
+        if(!$activity->getThursday()){
+            $array_week_disabled = str_replace ("%j", "4", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%j,", "", $array_week_disabled);
+        }    
+        
+        if(!$activity->getFriday()){
+            $array_week_disabled = str_replace ("%v", "5", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%v,", "", $array_week_disabled);
+        }    
+            
+        if(!$activity->getSaturday()){
+            $array_week_disabled = str_replace ("%s", "6", $array_week_disabled);
+        }else{
+            $array_week_disabled = str_replace ("%s", "", $array_week_disabled);
+        }
+        
+        return $array_week_disabled;            
     }
     
     /**
