@@ -75,7 +75,7 @@
 
         $(document).ready(function () {
             var str = $('#info').text();
-            var currency = $("#currency").text();
+            var currency = {{ item.price }};
             var multiplo_true = 0;
             var total_amount  = 0;
             
@@ -102,6 +102,7 @@
                 
                 total_amount = (parseFloat(currency) * (parseInt(value_option) + parseInt(value_chil)));
                 $("#currency").text(total_amount);
+                $("#price").val(total_amount);
                 
             });
             
@@ -120,11 +121,12 @@
                 
                 total_amount = (parseFloat(currency) * (parseInt(value_option) + parseInt(value_adul)));
                 $("#currency").text(total_amount);
+                $("#price").val(total_amount);
                 
             });
             
-            $('#schedule').change(function(){
-                var value_option = $("#schedule option:selected").val();
+            $('#schedule_select').change(function(){
+                var value_option = $("#schedule_select option:selected").val();
                 
                 if(value_option === 'AM'){
                     $('#schedulePM').hide();
@@ -299,17 +301,25 @@
                                     {% set display_all = 'none' %}
                                     {% set schedule = "" %}
                                     {%if item.Am == 1 and item.Pm == 1 %}
-                                        {% set display_am = 'block' %}
-                                        {% set schedule = "am" %}
-                                        <select id="schedule" name="schedule" class="form-control room-select" style="width: 10%">
-                                            <option>AM</option>
-                                            <option>PM</option>
+                                        {% if schedule == 'am ' %}
+                                            {% set schedule = "am" %}
+                                            {% set display_am = 'block' %}
+                                        {% elseif schedule == 'pm' %}
+                                            {% set schedule = "pm" %}
+                                            {% set display_pm = 'block' %}
+                                        {% else %}
+                                            {% set schedule = "am" %}
+                                            {% set display_am = 'block' %}
+                                        {% endif %}    
+                                        <select id="schedule_select" name="schedule_am_pm" class="form-control room-select" style="width: 10%">
+                                            <option {% if schedule == 'am '%} selected="selected" {% endif %}>AM</option>
+                                            <option {% if schedule == 'pm' %} selected="selected" {% endif %}>PM</option>
                                         </select>    
                                     {% elseif item.Am == 1 %}    
                                         <legend>AM</legend> 
                                         {% set display_am = 'block' %}
                                         {% set schedule = "am" %}
-                                    {% elseif item.Pm == 1%} 
+                                    {% elseif item.Pm == 1 %} 
                                         <legend>PM</legend>
                                         {% set display_pm = 'block' %}
                                         {% set schedule = "pm" %}
@@ -318,7 +328,7 @@
                                         {% set display_all = 'block' %}
                                         {% set schedule = "all_day" %}
                                     {% endif %}    
-                                    <form>
+                                    <form action ="{{ path('viento_sur_app_boking_action_pay', {'_locale': app.request.locale})}}" method="POST">
                                         <br/>
                                         <p id="scheduleAM" style="display: {{ display_am }}">Pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}}<p>
                                         <p id="schedulePM" style="display: {{ display_pm }}">Pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}}<p>
@@ -329,7 +339,7 @@
                                                 <p>Elegir fecha</p>
                                                 <div class="form-group">
                                                     <div class='input-group date' id='datetimepicker11'>
-                                                        <input type='text' name="date" class="form-control" />
+                                                        <input type='text' name="date" class="form-control" required="required" value='{{ date }}' />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar">
                                                             </span>
@@ -339,17 +349,17 @@
                                             </div> 
                                             <div class="col-xs-3">
                                                 <p>Adultos (13 años o más)</p>
-                                                <select id="can-adul" name="can-adul" class="form-control room-select" style="width: 50%">
+                                                <select id="can-adul" name="can-adul" class="form-control room-select" style="width: 50%" required="required">
                                                     {% for i in 0..item.capacityForShift %}
-                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        <option {% if 0 != i %} value="{{ i }}" {% endif %} {% if can_adul  == i  %} selected="selected" {% endif %}>{{ i }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-xs-3">
-                                                <p>Menores (3 a 12 años)</p>
-                                                <select id="can-chil" name="can-chil" class="form-control room-select" style="width: 50%">
+                                                <p>Menores (0 a 12 años)</p>
+                                                <select id="can-chil" name="can-chil" class="form-control room-select" style="width: 50%" required="required">
                                                     {% for i in 0..item.capacityForShift %}
-                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        <option {% if 0 != i %} value="{{ i }}" {% endif %} {% if can_chil == i %} selected="selected" {% endif %}> {{ i }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -357,12 +367,14 @@
                                         <div class="col-xs-2">
                                             <div class="boxPrice">
                                                 <p>Precio final</p>
-                                                <h5>{{ symbol }} <samp id="currency">{{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  item.price, 'symbol': symbol})) }}</samp></h5>
-                                                <button id="animarscroll">{{ 'hotels.book' | trans }}</button>
+                                                <h5>{{ symbol }} <samp id="currency">{{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</samp></h5>
+                                                <button id="animarscroll" type="submit">{{ 'hotels.book' | trans }}</button>
                                             </div>       
                                         </div>
                                         <input type="hidden" name="activity" value="{{ item.id }}" />
                                         <input type="hidden" name="schedule" id="schedule" value="{{ schedule }}" />
+                                        <input type="hidden" name="price" id="price" value="{{ price }}" />
+                                        <input type="hidden" name="symbol" id="symbol" value="{{ symbol }}" />
                                     </form>
                                 </fieldset>    
                             </div>    

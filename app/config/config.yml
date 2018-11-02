@@ -229,6 +229,12 @@ knp_paginator:
         pagination: 'KnpPaginatorBundle:Pagination:foundation_v5_pagination.html.twig'     # sliding pagination controls template
         sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig' # sort link template
 
+#mercadopago config
+grunch_mercadopago:
+    client_id: 7376995284904382
+    client_secret: EWTmtODaiFxb2VVQyvYnli7vO9vthlDQ
+    sandbox: true
+
 #foselastica config
 fos_elastica:
     clients:
