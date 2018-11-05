@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use VientoSur\App\AppBundle\Entity\Reservation;
 
 /**
  * Activity controller.
@@ -164,6 +165,8 @@ class ActivityController extends Controller
         $session->set('can_chil', $can_chil);
         $session->set('schedule', $schedule);
         $session->set('date', $date);
+        $session->set('currencies_id', $currencies_id);
+        $session->set('activity_id', $activity_id);
         
         
         $em = $this->getDoctrine()->getManager();
@@ -176,7 +179,7 @@ class ActivityController extends Controller
         
         $destinationTextMap = "'".$activity->getAddressDestination()."'";
         
-        $regreso = $this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
+        $regreso = 'http://vientosur.local:8080'.$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
         $cancelado = '';
         
         // Crea el objeto MP
@@ -184,7 +187,7 @@ class ActivityController extends Controller
         // Crea un token
         $token = $mp->get_access_token();
         
-        $payment = $mp->get(
+        /*$payment = $mp->get(
             "/v1/payments/search",
             array(
                 "external_reference" => "Reference_1234"
@@ -209,7 +212,7 @@ class ActivityController extends Controller
         $preference_data = array(
             "items" => [
                     [
-                        "title" => $activity->getId().'/'.$activity->getName().' - '.$activity->getActivityAgency()->getId().'/'.$activity->getActivityAgency()->getName() ,
+                        "title" => $activity->getId().'-'.$activity->getName().' - '.$activity->getActivityAgency()->getId().'-'.$activity->getActivityAgency()->getName() ,
                         "quantity" => 1,
                         "currency_id" => $currencies_id, // Si deseas saber con que tipos de monedas puedes cobrar visita https://api.mercadopago.com/currencies
                         "unit_price" => (double) $price
@@ -245,22 +248,86 @@ class ActivityController extends Controller
     }
     
     /**
+     * @Route("/booking/session/data/ok/", name="viento_sur_app_boking_session_ok")
+     * @Method("GET")
+     */
+    public function bookingSessionOkAction(Request $request)
+    {
+        $session = $request->getSession();
+        $session->set('name_buyer', $request->get('first_name'));
+        $session->set('lastname_buyer', $request->get('last_name'));
+        $session->set('document_number', $request->get('document_number'));
+        $session->set('country_code', $request->get('country_code'));
+        $session->set('contact_type', $request->get('contact_type'));
+        $session->set('contact_number', $request->get('contact_number'));
+        $session->set('contact_email', $request->get('contact_email'));
+        
+        echo 'ok';
+        exit();
+        
+    }
+    
+    
+    /**
      * @Route("/booking/mp/ok/", name="viento_sur_app_boking_action_pay_mp_ok")
      * @Method("GET")
      */
     public function bookingPayMPOkAction(Request $request)
     {
-        $response = new Response();
-
-        $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
-        $response->setStatusCode(Response::HTTP_OK);
-
-        // sets a HTTP response header
-        $response->headers->set('Content-Type', 'text/html');
-
-        // prints the HTTP headers followed by the content
-        $response->send();
-        exit();
+        $session     = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        
+        $collection_id      = $request->get('collection_id');
+        $external_reference = $request->get('external_reference');
+        $payment_type       = $request->get('payment_type');
+        
+        $price         = $session->get('price');
+        $can_adul      = $session->get('can_adul');
+        $can_chil      = $session->get('can_chil');
+        $schedule      = $session->get('schedule');
+        $date          = $session->get('date');
+        $currencies_id = $session->get('currencies_id');
+        
+        $name_buyer      = $session->get('name_buyer');
+        $lastname_buyer  = $session->get('lastname_buyer');
+        $document_number = $session->get('document_number');
+        $country_code    = $session->get('country_code');
+        $contact_type    = $session->get('contact_type');
+        $contact_number  = $session->get('contact_number');
+        $contact_email   = $session->get('contact_email');
+        
+        $activity_id     = $session->get('activity_id');
+        
+        $activity =  $em->getRepository("VientoSurAppAppBundle:Activity")->findOneById($activity_id);
+        
+        $reservation = new Reservation();
+        
+        $reservation->setCollectionId($collection_id);
+        $reservation->setExternalReference($external_reference);
+        $reservation->setPaymentType($payment_type);
+        $reservation->setTotalPrice($price);
+        $reservation->setCanAdul($can_adul);
+        $reservation->setCanChil($can_chil);
+        $reservation->setCheckin($date);
+        $reservation->setCheckout($date);
+        $reservation->setSchedule($schedule);
+        $reservation->setCurrenciesId($currencies_id);
+        $reservation->setHolderName($name_buyer.' '.$lastname_buyer);
+        $reservation->setContactType($contact_type);
+        $reservation->setPhoneNumber($country_code.' '.$contact_number);
+        $reservation->setEmail($contact_email);
+        $reservation->setDocumentNumber($document_number);
+        $reservation->setActivity($activity);
+        $reservation->setActivityAgency($activity->getActivityAgency());
+        
+        $em->persist($reservation);
+        $em->flush();
+        
+        
+        $session->set('resevation_id', $reservation->getId());
+        
+        
+        return $this->render('VientoSurAppAppBundle:Activity:bookingPayMPOk.html.twig');  
     }
     
     private function getArrayWeekDisabled($activity){

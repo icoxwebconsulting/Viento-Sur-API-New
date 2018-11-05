@@ -28,11 +28,43 @@ class Reservation
      * @ORM\Column(name="hotel_id", type="integer", nullable=true)
      */
     private $hotelId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="collection_id", type="integer", nullable=true)
+     */
+    private $collectionId;
 
     /**
      * @ORM\Column(name="reservation_id", type="string", nullable=true)
      */
     private $reservationId;
+    
+    /**
+     * @ORM\Column(name="external_reference", type="string", nullable=true)
+     */
+    private $externalReference;
+    
+    /**
+     * @ORM\Column(name="payment_type", type="string", nullable=true)
+     */
+    private $paymentType;
+    
+    /**
+     * @ORM\Column(name="can_adul", type="integer", nullable=true)
+     */
+    private $canAdul;
+    
+    /**
+     * @ORM\Column(name="can_chil", type="integer", nullable=true)
+     */
+    private $canChil;
+    
+    /**
+     * @ORM\Column(name="schedule", type="string", nullable=true)
+     */
+    private $schedule;
 
     /**
      * @var
@@ -110,6 +142,33 @@ class Reservation
      */
     private $status;
 
+    /**
+     * @ORM\Column(name="currencies_id", type="string", length=255, nullable=true)
+     */
+    private $currenciesId;
+    
+    /**
+     * @ORM\Column(name="contact_type", type="string", length=255, nullable=true)
+     */
+    private $contactType;
+    
+    /**
+     * @ORM\Column(name="document_number", type="string", length=255, nullable=true)
+     */
+    private $documentNumber;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="ActivityAgency")
+     * @ORM\JoinColumn(name="activity_agency", referencedColumnName="id", nullable=true)
+     */
+    protected $activity_agency;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Activity")
+     * @ORM\JoinColumn(name="activity", referencedColumnName="id", nullable=true)
+     */
+    protected $activity;
+    
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -493,5 +552,269 @@ class Reservation
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set collectionId
+     *
+     * @param integer $collectionId
+     *
+     * @return Reservation
+     */
+    public function setCollectionId($collectionId)
+    {
+        $this->collectionId = $collectionId;
+
+        return $this;
+    }
+
+    /**
+     * Get collectionId
+     *
+     * @return integer
+     */
+    public function getCollectionId()
+    {
+        return $this->collectionId;
+    }
+
+    /**
+     * Set externalReference
+     *
+     * @param string $externalReference
+     *
+     * @return Reservation
+     */
+    public function setExternalReference($externalReference)
+    {
+        $this->externalReference = $externalReference;
+
+        return $this;
+    }
+
+    /**
+     * Get externalReference
+     *
+     * @return string
+     */
+    public function getExternalReference()
+    {
+        return $this->externalReference;
+    }
+
+    /**
+     * Set paymentType
+     *
+     * @param string $paymentType
+     *
+     * @return Reservation
+     */
+    public function setPaymentType($paymentType)
+    {
+        $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentType
+     *
+     * @return string
+     */
+    public function getPaymentType()
+    {
+        return $this->paymentType;
+    }
+
+    /**
+     * Set canAdul
+     *
+     * @param integer $canAdul
+     *
+     * @return Reservation
+     */
+    public function setCanAdul($canAdul)
+    {
+        $this->canAdul = $canAdul;
+
+        return $this;
+    }
+
+    /**
+     * Get canAdul
+     *
+     * @return integer
+     */
+    public function getCanAdul()
+    {
+        return $this->canAdul;
+    }
+
+    /**
+     * Set canChil
+     *
+     * @param integer $canChil
+     *
+     * @return Reservation
+     */
+    public function setCanChil($canChil)
+    {
+        $this->canChil = $canChil;
+
+        return $this;
+    }
+
+    /**
+     * Get canChil
+     *
+     * @return integer
+     */
+    public function getCanChil()
+    {
+        return $this->canChil;
+    }
+
+    /**
+     * Set schedule
+     *
+     * @param string $schedule
+     *
+     * @return Reservation
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
+     * Get schedule
+     *
+     * @return string
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
+
+    /**
+     * Set currenciesId
+     *
+     * @param string $currenciesId
+     *
+     * @return Reservation
+     */
+    public function setCurrenciesId($currenciesId)
+    {
+        $this->currenciesId = $currenciesId;
+
+        return $this;
+    }
+
+    /**
+     * Get currenciesId
+     *
+     * @return string
+     */
+    public function getCurrenciesId()
+    {
+        return $this->currenciesId;
+    }
+
+    /**
+     * Set activityAgency
+     *
+     * @param \VientoSur\App\AppBundle\Entity\ActivityAgency $activityAgency
+     *
+     * @return Reservation
+     */
+    public function setActivityAgency(\VientoSur\App\AppBundle\Entity\ActivityAgency $activityAgency = null)
+    {
+        $this->activity_agency = $activityAgency;
+
+        return $this;
+    }
+
+    /**
+     * Get activityAgency
+     *
+     * @return \VientoSur\App\AppBundle\Entity\ActivityAgency
+     */
+    public function getActivityAgency()
+    {
+        return $this->activity_agency;
+    }
+
+    /**
+     * Set activity
+     *
+     * @param \VientoSur\App\AppBundle\Entity\Activity $activity
+     *
+     * @return Reservation
+     */
+    public function setActivity(\VientoSur\App\AppBundle\Entity\Activity $activity = null)
+    {
+        $this->activity = $activity;
+
+        return $this;
+    }
+
+    /**
+     * Get activity
+     *
+     * @return \VientoSur\App\AppBundle\Entity\Activity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    /**
+     * Set contactType
+     *
+     * @param string $contactType
+     *
+     * @return Reservation
+     */
+    public function setContactType($contactType)
+    {
+        $this->contactType = $contactType;
+
+        return $this;
+    }
+
+    /**
+     * Get contactType
+     *
+     * @return string
+     */
+    public function getContactType()
+    {
+        return $this->contactType;
+    }
+
+    /**
+     * Set documentNumber
+     *
+     * @param string $documentNumber
+     *
+     * @return Reservation
+     */
+    public function setDocumentNumber($documentNumber)
+    {
+        $this->documentNumber = $documentNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get documentNumber
+     *
+     * @return string
+     */
+    public function getDocumentNumber()
+    {
+        return $this->documentNumber;
     }
 }
