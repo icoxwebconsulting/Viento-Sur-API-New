@@ -180,6 +180,31 @@ class Hotel
 //            $this->logger->error('Booking email error: ' . $email);
 //        }
     }
+    
+    public function sendBookingActivityEmail($reservation_id, $email)
+    {
+        $reservation = $this->em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservation_id);
+//        try {
+//            if ($email) {
+                $this->emailService->sendBookingActivityEmail($email, $reservation_id, array(
+                    'reservation'=>$reservation,
+                    'item'=>$reservation->getActivity(),
+                    'latitude' => $reservation->getActivity()->getLatitudeDestination(),
+                    'longitude' => $reservation->getActivity()->getLongitudeDestination(),
+                    'address_map' => trim($reservation->getActivity()->getAddressDestination(), ','),
+                    'activity_phone'=>$reservation->getActivityAgency()->getPhone(),
+                    'checking_date'=>$reservation->getCheckin(),
+                    'schedule'=>$reservation->getSchedule(),
+                    'cant_adut'=>$reservation->getCanAdul(),
+                    'cant_chil'=>$reservation->getCanChil(),
+                    'price'=>$reservation->getTotalPrice(),
+                    'pdf' => false
+                ));
+//            }
+//        } catch (\Exception $e) {
+//            $this->logger->error('Booking email error: ' . $email);
+//        }
+    }
 
     public function getCardsGroup($paymentMethods)
     {

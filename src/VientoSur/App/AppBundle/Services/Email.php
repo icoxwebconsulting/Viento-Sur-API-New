@@ -72,6 +72,40 @@ class Email
         ;
         $this->mailer->send($message);
     }
+    
+    public function sendBookingActivityEmail($email, $reservatio_id, $data)
+    {
+        $fs = new Filesystem();
+
+        $filePath = $this->container->getParameter('kernel.root_dir') . '/../web/'.$reservatio_id.'.pdf';
+        $fs->rename($filePath, 'voucher-vs.pdf');
+        $filenName = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Viento Sur Operadores Turísticos - Solicitud de compra de Actividades - Número: '.$reservatio_id)
+//            ->setFrom('info@vientosur.net','VientoSur.net')
+            ->setFrom("no-replay@vientosur.net", 'Viento Sur Operadores Turísticos')
+            ->setTo([$email])
+            ->setBody(
+                $this->templating->render(
+                    '@VientoSurAppApp/layoutEmailActivityPdf.html.twig',
+                    $data
+                ),
+                'text/html'
+            )->attach(\Swift_Attachment::fromPath($filenName))
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->mailer->send($message);
+    }
 
     public function sendCancellationEmail($email, $data)
     {

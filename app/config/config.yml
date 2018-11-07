@@ -238,7 +238,7 @@ grunch_mercadopago:
 #foselastica config
 fos_elastica:
     clients:
-        default: { host: localhost, port: 9200 }
+        default: { host: localhost, port: 8080 }
     indexes:
         app:
             types:

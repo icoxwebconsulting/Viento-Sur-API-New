@@ -378,15 +378,9 @@ class ActivityController extends Controller
         
         $reservation =  $em->getRepository("VientoSurAppAppBundle:Reservation")->findOneById($reservation_id);
         
-        $this->container->get('hotel_service')->sendBookingEmail(
-                        $booking,
-                        $booking['reservation']->getId(),
-                        $hotelAvailabilities->hotel->id,
-                        $lang,
-                        $session->get('email'),
-                        $hotelDetails, $reservationDetails);
+        $this->container->get('hotel_service')->sendBookingActivityEmail($reservation->getId(), $reservation->getEmail());
         
-        return $this->render('VientoSurAppAppBundle:Activity:summaryActivityBooking.html.twig',
+        return $this->render('VientoSurAppAppBundle:layoutEmailActivityPdf.html.twig',
                 array(
                     'reservation'=>$reservation,
                     'item'=>$reservation->getActivity(),
