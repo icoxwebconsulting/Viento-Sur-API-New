@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use VientoSur\App\AppBundle\Entity\Reservation;
+use Symfony\Component\Validator\Constraints\DateTime;
+use VientoSur\App\AppBundle\Entity\Passengers;
 
 /**
  * Activity controller.
@@ -150,6 +152,14 @@ class ActivityController extends Controller
     public function bookingActionPayAction(Request $request)
     {
         $session     = $request->getSession();
+        
+        $reservation_id = $session->get('resevation_id');
+        
+        if($reservation_id != ''){
+            return $this->redirect($this->generateUrl('viento_sur_app_booking_activity_summary'));
+        }
+        
+        
         $activity_id = $request->get('activity');
         $schedule    = $request->get('schedule');
         $symbol      = $request->get('symbol');
@@ -270,12 +280,17 @@ class ActivityController extends Controller
     
     /**
      * @Route("/booking/mp/ok/", name="viento_sur_app_boking_action_pay_mp_ok")
-     * @Method("GET")
      */
     public function bookingPayMPOkAction(Request $request)
     {
         $session     = $request->getSession();
         $em = $this->getDoctrine()->getManager();
+        
+        $reservation_id = $session->get('resevation_id');
+        
+        if($reservation_id != ''){
+            return $this->redirect($this->generateUrl('viento_sur_app_booking_activity_summary'));
+        }
         
         $collection_id      = $request->get('collection_id');
         $external_reference = $request->get('external_reference');
@@ -302,14 +317,19 @@ class ActivityController extends Controller
         
         $reservation = new Reservation();
         
+        // A Hack using pages.dateformat.default: 'm-d-Y'`
+        $datetime = explode('/', $date);
+        
+        $cheking = new \DateTime($datetime[1].'/'.$datetime[0].'/'.$datetime[2]);
+        
         $reservation->setCollectionId($collection_id);
         $reservation->setExternalReference($external_reference);
         $reservation->setPaymentType($payment_type);
         $reservation->setTotalPrice($price);
         $reservation->setCanAdul($can_adul);
         $reservation->setCanChil($can_chil);
-        $reservation->setCheckin($date);
-        $reservation->setCheckout($date);
+        $reservation->setCheckin($cheking);
+        $reservation->setCheckout($cheking);
         $reservation->setSchedule($schedule);
         $reservation->setCurrenciesId($currencies_id);
         $reservation->setHolderName($name_buyer.' '.$lastname_buyer);
@@ -319,8 +339,18 @@ class ActivityController extends Controller
         $reservation->setDocumentNumber($document_number);
         $reservation->setActivity($activity);
         $reservation->setActivityAgency($activity->getActivityAgency());
+        $reservation->setRefundable(0);
+        $reservation->setOrigin('vientosur');
         
         $em->persist($reservation);
+        
+        $passenger = new Passengers();
+        $passenger->setName($name_buyer);
+        $passenger->setLastName($lastname_buyer);
+        $passenger->setDocument($document_number);
+        $passenger->setReservation($reservation);
+        $em->persist($passenger);
+        
         $em->flush();
         
         
@@ -328,6 +358,50 @@ class ActivityController extends Controller
         
         
         return $this->render('VientoSurAppAppBundle:Activity:bookingPayMPOk.html.twig');  
+    }
+    
+    /**
+     *
+     * @Route("/booking/summary/", name="viento_sur_app_booking_activity_summary")
+     */
+    public function payActivityBookingAction(Request $request)
+    {
+        $session     = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $locale = $request->get('_locale');
+        
+        $reservation_id = $session->get('resevation_id');
+                    
+        if($reservation_id === ''){
+            return $this->redirectToRoute('homepage', array('_locale'=> $locale));
+        }
+        
+        $reservation =  $em->getRepository("VientoSurAppAppBundle:Reservation")->findOneById($reservation_id);
+        
+        $this->container->get('hotel_service')->sendBookingEmail(
+                        $booking,
+                        $booking['reservation']->getId(),
+                        $hotelAvailabilities->hotel->id,
+                        $lang,
+                        $session->get('email'),
+                        $hotelDetails, $reservationDetails);
+        
+        return $this->render('VientoSurAppAppBundle:Activity:summaryActivityBooking.html.twig',
+                array(
+                    'reservation'=>$reservation,
+                    'item'=>$reservation->getActivity(),
+                    'latitude' => $reservation->getActivity()->getLatitudeDestination(),
+                    'longitude' => $reservation->getActivity()->getLongitudeDestination(),
+                    'address_map' => trim($reservation->getActivity()->getAddressDestination(), ','),
+                    'activity_phone'=>$reservation->getActivityAgency()->getPhone(),
+                    'checking_date'=>$reservation->getCheckin(),
+                    'schedule'=>$reservation->getSchedule(),
+                    'cant_adut'=>$reservation->getCanAdul(),
+                    'cant_chil'=>$reservation->getCanChil(),
+                    'price'=>$reservation->getTotalPrice(),
+                    'pdf' => false
+                ));
+        
     }
     
     private function getArrayWeekDisabled($activity){
