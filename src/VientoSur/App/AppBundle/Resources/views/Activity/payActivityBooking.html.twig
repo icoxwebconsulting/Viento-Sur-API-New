@@ -1,0 +1,322 @@
+{% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% block title %}{{ 'index.rooms_available' | trans }} {{item.name}} {% endblock %}
+{% block meta_open_graph %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url"                content="https://vientosur.net{{ app.request.pathInfo }}" />
+    <meta property="og:title"              content="{{item.name}}" />
+    <meta property="og:description"        content="{{ item.description | truncate(200, true) }}" />
+{% endblock %}
+{% block gplus_script %}
+    <link rel="canonical" href="https://vientosur.net{{ app.request.pathInfo }}" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        {lang: '{{ app.request.locale }}' }
+    </script>
+{% endblock %}
+{% block banner %}
+    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+{% endblock %}
+{% block breadcrumb %}
+    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+        {% block section %}Actividades{% endblock %}
+        {% block sub_section %}Detalle de actividades{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}
+    {{ parent() }}
+    {% set data_travelers = app.session.get('data_travelers') %}
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% elseif targetCurrency == 'ARS' %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+    {% set decimal =false %}
+    {#new design#}
+    <div class="wrapperReservation">
+        <div class="container" style="max-width: 1170px;">
+            <div class="row">
+                <!-- GO SIDE BAR MOBILE-->
+                <div class="col-xs-12">
+                    <div id="sidebar">
+                        <div id="infoReserva" class="hidden-sm hidden-md hidden-lg">
+                            <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
+                            <p style="float: left; margin-right: 10px;"><span>{{ item.name }}</span></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END SIDE BAR MOBILE-->
+                <!-- GO RESERVATION HOTEL -->
+                <div class="col-xs-12 col-sm-9 col-sm-push-3">    
+                    <div id="processPayment">
+                        {% include '@VientoSurAppApp/messages/danger.html.twig' %}
+                        <form action="{{ path('viento_sur_app_boking_session_ok') }}" method="POST" class="booking-form" id="pay-data-form">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Titular</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <label class="label-lef required" for="form_passengers_first_name0">Nombre(s):</label>
+                                                            <input type="text" id="first_name" name="first_name" required="required" placeholder="Como aparece en el documento" class="form-control input-width">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <label class="label-lef required" for="form_passengers_first_name0">Apellido(s):</label>
+                                                            <input type="text" id="last_name" name="last_name" required="required" placeholder="Como aparece en el documento" class="form-control input-width">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <label class="label-lef required" for="form_passengers_document_number0">Doc. de Identidad:</label>
+                                                            <input type="text" id="document_number" name="document_number" required="required" class="form-control input-width-50">                                                                                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>    
+                                        </div>    
+                                    </div>    
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">{{ 'hotels.contact_info' | trans }}</h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <label class="label-lef" for="">País:</label>
+                                                        <div class="intl-tel-input allow-dropdown" style="width: 85% !important">
+                                                            <input type="text" id="country_code" name="country_code" required="required" style="margin-top:5px !important; width: 50px;" class="form-control" autocomplete="off" value="+54">
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">                                                                          
+                                                        <label class="label-lef" for="">Tipo:</label>
+                                                        <select id="contact_type" name="contact_type" class="form-control type_form">
+                                                            <option value="CELULAR">Celular</option>
+                                                            <option value="HOME">Casa</option>
+                                                            <option value="WORK">Trabajo</option>
+                                                            <option value="FAX">Fax</option>
+                                                            <option value="OTHER">Otro</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">                       
+                                                        <label class="label-lef" for="">Número:</label>
+                                                        <input type="text" id="contact_number" name="contact_number" required="required" class="form-control type_form">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">{{ 'hotels.contact_msg' | trans }}.</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <div class="form-group">
+                                                        <label class="label-lef" for="">Email:</label>
+                                                        <input type="text" id="contact_email" name="contact_email" required="required" class="form-control inputError email_form">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <div class="form-group">
+                                                        <label class="label-lef" for="">Confirme su Email:</label>
+                                                        <input type="email" id="info_email" name="info_email" required="required" placeholder="Confirme su email" class="form-control email_confirm_form" autocomplete="off">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 top-buffer" id="errorEmail" style="display: none;">
+                                                    <div class="alert alert-danger" role="alert" style="background: #ea0000; border-color: #ea0000; color:#fff;">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        Las direcciones de email no coinciden.
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">Enviaremos la confirmación de tu reserva a esta dirección.</p>
+                                                </div>
+                                            </div> 
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="bg-success">Una vez realizado el pago debera volver a nuestra pagina para terminar el registro de venta</p>
+                                                </div>
+                                            </div>     
+                                        </div>
+                                    </div>    
+                                </div>    
+                            </div> 
+                            <span class="booking-item cursor-pointer">
+                                <div id="thumbHotel">
+                                    <div class="row col-xs-12 col-sm-12 priceRoom" style="text-align: center; padding-left: 25px; ">
+                                        <div class="col-xs-6 col-sm-6">
+                                            <button onclick="javascript:location.href='{{ path('viento_sur_app_app_homepage_show_activity_id',{'_locale': app.request.locale, 'id': item.id, 'latitude': latitude, 'longitude': longitude})}}'" style='background: #BBB;'>Editar</button>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6">
+                                            <button type="submit" id='viewModalPay' data-title="Pagar- {{ item.name }}">Pagar</button>
+                                        </div>    
+                                    </div>         
+                                </div>             
+                            </span>                     
+                        </form>       
+                    </div>        
+                </div>
+                <!-- END RESERVATION HOTEL -->
+                <!-- GO SIDE BAR DESKTOP-->
+                <div class="col-xs-12 col-sm-3 col-sm-pull-9">
+                    <div id="sidebar">
+                        <div id="infoReserva" class="hidden-xs">
+                            <h5 class="titleReserva">Su Actividad:</h5>
+                            <p style="float: left; margin-right: 10px;"><span>{{ item.name }}</span></p>
+                            <br style="clear: both" />
+                            <img src="{{ render(controller('VientoSurAppAppBundle:Activity:getPictureByActivity',{ 'id':  item.id})) }}" width="95" height="95"
+                                         alt="{{ item.name }}" style="margin: 15px;">
+                            <br style="clear: both" />
+                            <div class="modalMap" style="font-size: 12px; color: whitesmoke; cursor: pointer">
+                                <i class="fa fa-map-marker fa-lg input-icon"  style="font-size: 12px"></i>&nbsp;
+                                <a class="booking-item-address" data-prevent="modal"
+                                   data-latitude="{{ latitude }}"
+                                   data-longitude="{{ longitude }}"
+                                   data-name="{{ item.name }}" style="font-size: 12px; color: whitesmoke">
+                                    {{ address_map }} </a>
+                            </div>
+                            <div class="datesPayment">
+                                <h5>{{ 'hotels.paying' | trans }}:</h5>
+                                <p><b>Cantidad de pasajeros:</b> {% if can_adul > 0 %}{{ can_adul }} Adultos {% endif %} {% if can_chil > 0 and can_adul > 0 %} y {% endif %} {% if can_chil > 0 %}{{ can_chil }} Menores {% endif %}</p>
+                                <p><b>Duración:</b> {{ item.duration }} hs</p>
+                                <p>
+                                    <span>
+                                        {% if schedule == 'am' %}
+                                            <b>Turno: AM - pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}} el día {{ date }}</b>
+                                        {% elseif schedule == 'pm' %}
+                                            <b>Turno: PM - pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}} el día {{ date }}</b>    
+                                        {% else %}  
+                                            <b>Turno: pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll }} hasta las {{ item.toAll}} el día {{ date }}</b>    
+                                        {% endif %}
+                                    </span>
+                                </p>
+                                <b><span id="cuoteDesktop"  style="color: #fff"></span></b>
+                                <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</span></p>
+                                <aside>{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</aside>
+                            </div> 
+                        </div>    
+                    </div>
+                </div>        
+            </div> 
+        </div>
+        {% include 'VientoSurAppAppBundle:Activity:activityMapModal.html.twig' %}                            
+    </div>    
+{% endblock %}    
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>   
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/> 
+    <script src="{{ asset('js/activity.js') }}"></script> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $(document).focus(parent_disable());
+            $(document).click(parent_disable());
+            
+            var popupWindow=null;
+
+            function popup()
+            {
+                popupWindow = window.open('{{ preference['response']['sandbox_init_point'] }}','Pagar- {{ item.name }} - vientosur.net', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, top=300, left=500, width=700, height=700');
+            }
+
+            function parent_disable() {
+                if(popupWindow && !popupWindow.closed)
+                popupWindow.focus();
+            }
+            
+            $('#viewModalPay').click(function(){
+                var name = $('#first_name');
+                var lastname = $('#last_name');
+                var dni = $('#document_number');
+                var pais = $('#country_code');
+                var type = $('#country_code');
+                var numeros = $('#contact_number');
+                var email = $('#contact_email');
+                var conf_email = $('#info_email');
+                if(name.val() === ''){alert('Complete el campo Nombre(s)'); name.focus();return false;}
+                if(lastname.val() === ''){alert('Complete el campo Apellido(s)'); lastname.focus();return false;}
+                if(dni.val() === ''){alert('Complete el campo Doc. de Identidad'); dni.focus();return false;}
+                if(pais.val() === ''){alert('Complete el campo País'); pais.focus();return false;}
+                if(type.val() === ''){alert('Complete el campo Tipo'); type.focus();return false;}
+                if(numeros.val() === ''){alert('Complete el campo Número'); numeros.focus();return false;}
+                if(email.val() === ''){alert('Complete el campo Email'); email.focus();return false;}
+                if(conf_email.val() === ''){alert('Complete el campo Confirme su Email'); conf_email.focus();return false;}
+                if(email.val() === conf_email.val()){$('#errorEmail').hide();}else{$('#errorEmail').show(); return false;}
+                
+                $.ajax({
+                    type: 'GET',
+                    url: $('#pay-data-form').attr('action'),
+                    data: $('#pay-data-form').serialize(),
+                    success: function(result) {
+                        if(result === 'ok'){
+                            popup();
+                        }
+                    }
+                });
+                return false;
+            });
+            
+            var latLng;
+            var hotelName;
+            
+            $('.wrapperReservation').on('click', '.booking-item-address', function (event) {
+                event.stopPropagation();
+                var element = event.target;
+                if ($(element).data('prevent') != 'modal') {
+                    window.open(this.dataset.href, '_blank');
+                } else {
+                    latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
+                    hotelName = $(element).data('name');
+                    console.log(latLng);
+                    $('#mapModal').modal('show');
+                    $('#myModalLabel').text(hotelName);
+                }
+            });
+
+            $('#mapModal').on('shown.bs.modal', function (e) {
+                L.mapquest.key = 'vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG';
+
+                // 'map' refers to a <div> element with the ID map
+                var map = L.mapquest.map('mapHotel', {
+                  center: latLng,
+                  layers: L.mapquest.tileLayer('map'),
+                  zoom: 12
+                });
+                
+                L.mapquest.textMarker(latLng, {
+                    text: hotelName,
+                    position: 'right',
+                    type: 'marker',
+                    icon: {
+                      primaryColor: '#333333',
+                      secondaryColor: '#333333',
+                      size: 'sm'
+                    }
+                  }).addTo(map);
+                
+            });
+        });
+    </script>    
+{% endblock %}      

@@ -1,0 +1,11 @@
+{% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% block gplus_script %}
+    <link rel="canonical" href="https://vientosur.net{{ app.request.pathInfo }}" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        {lang: '{{ app.request.locale }}' }
+    </script>
+    <script>
+        opener.location.reload();
+        window.self.close();
+    </script>
+{% endblock %}
