@@ -325,6 +325,9 @@ class ActivityController extends Controller
         // A Hack using pages.dateformat.default: 'm-d-Y'`
         $datetime = explode('/', $date);
         
+        print_r($datetime);
+        exit();
+        
         $cheking = new \DateTime($datetime[1].'/'.$datetime[0].'/'.$datetime[2]);
         
         $reservation->setCollectionId($collection_id);
