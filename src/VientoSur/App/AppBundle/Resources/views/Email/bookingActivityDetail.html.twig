@@ -103,26 +103,17 @@
                 </table> 
                 <table class="table table-bordered">
                     <tr style="text-align: center;">
-                        <td width="33%">
+                        <td width="50%">
                             <h2 style="font-size: 12px">{{ 'hotels.reservation_by' | trans }}:</h2>
                             <h4 style="font-size: 12px">{{ reservation.holderName }}</h4>
                             <h4 style="font-size: 12px">Email: {{ reservation.email }}</h4>
                             <h4 style="font-size: 12px">{{ 'hotels.labels.number' | trans }} {{ reservation.phoneNumber }}</h4>
                         </td>
-                        <td width="33%">
+                        <td width="40%">
                             <h2 style=";font-size: 12px">{{ 'hotels.pay' | trans }}</h2>
                             <h5 style="font-size: 12px">
                                 {{ 'hotels.payment_method_chosen' | trans }}:<br/>
                                 MercadoPago.com - referencia de pago Nº: {{ reservation.collectionId }}
-                            </h5>
-                        </td>
-                        <td width="33%">
-                            <h2 style=";font-size: 12px">{{ 'hotels.cancellation_policies' | trans }}</h2>
-                            <h5 style="font-size: 12px">
-                                Puede cancelar hasta 24 hs antes<br/><br/>
-                                <a class="btn btn-danger" href="{# { url('viento_sur_app_booking_hotel_pdf', {'status': 'ok','detail': detail, 'hotel_id': hotelId, 'email': internal.email, 'id': internal.id}) }#}">
-                                    Cancelar Reserva
-                                </a>
                             </h5>
                         </td>
                     </tr>

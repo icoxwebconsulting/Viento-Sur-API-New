@@ -30,6 +30,8 @@ class ActivityController extends Controller
         $session = $request->getSession();
         $address = '';
         
+        $session->remove('resevation_id');
+        
         $destinationText = $request->get('autocomplete');
         $lat = $request->get('latitude');
         $lgn = $request->get('longitude');
@@ -151,6 +153,7 @@ class ActivityController extends Controller
      */
     public function bookingActionPayAction(Request $request)
     {
+        $this->deleteFileAction();
         $session     = $request->getSession();
         
         $reservation_id = $session->get('resevation_id');
@@ -523,6 +526,7 @@ class ActivityController extends Controller
         $reservationId = $request->get('reservationId');
         
         $em = $this->getDoctrine()->getManager();
+        
         if(!file_exists($request->server->get('DOCUMENT_ROOT').'/'.$reservationId.'.pdf')){
             $this->setPdfActivity($reservationId, $em, $request, $this->get('knp_snappy.pdf'));
         }
@@ -539,6 +543,14 @@ class ActivityController extends Controller
         return $response;
     }
     
+    /**
+     * 
+     * @param type $reservationId
+     * @param type $em
+     * @param Request $request
+     * @param type $knp_snappy
+     * @return boolean
+     */
     private function setPdfActivity($reservationId, $em, Request $request, $knp_snappy){
         
         $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
@@ -567,5 +579,47 @@ class ActivityController extends Controller
         );
         
         return true;
+    }
+    
+    /**
+     * @Route("/delete/fs", name="dete_file")
+     *
+     */
+    public function deleteFileAction()
+    {
+        $fs = new Filesystem();
+        $file = $this->container->getParameter('kernel.root_dir') . '/../web/voucher-vs.pdf';
+        if (file_exists($file)){
+        $fs->remove($file);
+        }
+        return new Response('file deleted');
+    }
+    
+    /**
+     * @Route("/booking/cancel/reservation/{reservationId}/{external}", name="viento_sur_app_cancel_reservation_activity")
+     */
+    public function cancelReservationActivity(Request $request){
+        
+        $reservationId = $request->get('reservationId');
+        $external      = $request->get('external');
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneBy(['id'=>$reservationId, 'externalReference'=>$external]);
+        
+        $reservation->setStatus('cancelled');
+        
+        $reservationCancellation = new ReservationCancellation();
+        $reservationCancellation->setDescription('Cancelado desde la web de vientosur');
+        $reservationCancellation->setCreatedBy(null);
+        $reservationCancellation->setCode($cancel['id']);
+        $reservationCancellation->setReservation($internal);
+
+        $em->persist($reservationCancellation);
+        $em->flush();
+        
+        echo $reservation->getId();
+        exit();
+        
     }
 }
