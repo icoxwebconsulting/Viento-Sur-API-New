@@ -194,7 +194,7 @@ class ActivityController extends Controller
         
         $destinationTextMap = "'".$activity->getAddressDestination()."'";
         
-        $regreso = 'http://vientosur.local:8080'.$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
+        $regreso = 'http://viento-sur.icox.mobi'.$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
         $cancelado = '';
         
         // Crea el objeto MP
@@ -324,9 +324,6 @@ class ActivityController extends Controller
         
         // A Hack using pages.dateformat.default: 'm-d-Y'`
         $datetime = explode('/', $date);
-        
-        print_r($datetime);
-        exit();
         
         $cheking = new \DateTime($datetime[1].'/'.$datetime[0].'/'.$datetime[2]);
         
