@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vientosur.net | {{ 'index.hotel' |trans }} - {{ 'index.reservation' | trans }}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .header-top {
+            padding: 5px 0;
+            background: #404040;
+        }
+        .logo {
+            display: block;
+        }
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        header#main-header {
+            border-bottom: 2px solid #ed8323;
+        }
+        .header-top {
+            padding: 5px 0;
+            background: #404040;
+        }
+        #map {
+            height: 428px;
+            width: 493px;
+        }
+        #main_picture > img{
+            width:100%;
+        }
+    </style>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/3b7bfd9c44.js"></script>
+</head>
+<body>
+<header id="main-header">
+    <div class="" style="height: 100px;">
+        <div class="" style="padding: 0 15px; line-height: 0; height: 100px">
+            <div class="col-md-3">
+                <a class="logo" href="#">
+                    <img src="https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png" alt="Viento Sur" title="">
+                </a>
+            </div>
+            <div class="col-md-9" style="position: relative; top: -40px;">
+              <p style="color:#000; text-align: right; padding-top:15px;">{{ 'hotels.reservation_number' | trans }}:
+                  <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservation.id }}</span>
+              </p>
+              <p>&nbsp;</p>
+              <p style="color:#000; text-align: right;">
+                  Código de ingreso:
+                  <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservation.collectionId }}</span>
+              </p>
+            </div>
+        </div>
+    </div>
+</header>
+{% set symbol = '' %}
+{% set targetCurrency = app.session.get('targetCurrency') %}
+{% if targetCurrency == 'USD' %}
+    {% set symbol = 'US$' %}
+{% elseif targetCurrency == 'ARS' %}
+    {% set symbol = 'AR$' %}
+{% else %}
+    {% set symbol = 'AR$' %}
+{% endif %}
+{% set decimal =false %}
+{% set price_detail = app.session.get('price_detail') %}
+{% set booking_all_data = app.session.get('booking_all_data') %}
+{% set destination = app.session.get('destination') %}
+
+<h6>{{ 'hotels.thanks_booking' | trans({'%name%': reservation.holderName}) }}</h6>
+<div class="container bs-docs-container" style="font-size: 11px">
+    <table class="table" style="margin-bottom:0px;">
+        <tr>
+            <th colspan="2">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div id="main_picture" style="width: 200px; height: 156px;">
+                                <img style="width: 200px; height: 156px; margin: auto;display: block;" src="{{ base_path }}" class="origin" />
+                            </div>
+                        </td>
+                        <td>
+                            <div id="main_picture_map" style="width: 200px; height: 156px;">
+                                <img src="https://www.mapquestapi.com/staticmap/v4/getplacemap?key=vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG&location={{latitude}},{{longitude}}&size=500,300&zoom=9&showicon=red_1-1" alt="" style="width: 200px; height: 156px; margin: auto;display: block;">
+                            </div> 
+                            {#<div id="map"></div>#}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <h4>{{ item.name }}</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ 'hotels.gps_coordinates' | trans }}
+                        </th>
+                        <td>
+                            Lat {{ latitude }}, Long {{ longitude }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="30%">
+                            {{ 'hotels.address' | trans }}:
+                        </th>
+                        <td>
+                            {{ address_map }}
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <td width="30%" style="text-align: center">
+                            <h2>{{ checking_date |localizeddate('medium', 'none', app.request.locale) }}</h2>
+                            <h4 style="margin: 0; padding: 0;">
+                                <span>
+                                    {% if schedule == 'am' %}
+                                        <b>Turno: AM - pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}}</b>
+                                    {% elseif schedule == 'pm' %}
+                                        <b>Turno: PM - pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}}</b>    
+                                    {% else %}  
+                                        <b>Turno: pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll }} hasta las {{ item.toAll}}</b>    
+                                    {% endif %}
+                                        - <b>Duración:</b> {{ item.duration }} hs
+                                </span>
+                            </h4>
+                        </td>
+                        <td width="30%">
+                            <div class="col-md-12" style="text-align: center">
+                                <h7 style="display: block;">{{ 'hotels.your_group' | trans }}</h7>
+                                {% if cant_adut > 0 %}
+                                <div class="col-md-{% if cant_chil > 0 %}6{% else %}12{% endif %}">
+                                    <h5>{{ cant_adut }} {{ 'index.search.hotel.adult' | trans }}(s)</h5>
+                                </div>
+                                {% endif %}
+                                {% if cant_chil > 0 %}
+                                    <div class="col-md-{% if cant_adut > 0 %}6{% else %}12{% endif %}">
+                                        <h5>{{ cant_chil }} {{ 'index.search.hotel.child' | trans }}(s)</h5>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </td>  
+                        <td width="30%" style="text-align: center">
+                            {{ 'hotels.total_price' | trans }}:<br>
+                            <h2>{{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</h2>
+                        </td>    
+                    </tr>
+                </table>
+                <table class="table table-bordered">
+                    <tr style="text-align: center;">
+                        <td width="33%">
+                            <h2 style="font-size: 12px">{{ 'hotels.reservation_by' | trans }}:</h2>
+                            <h4 style="font-size: 12px">{{ reservation.holderName }}</h4>
+                            <h4 style="font-size: 12px">Email: {{ reservation.email }}</h4>
+                            <h4 style="font-size: 12px">{{ 'hotels.labels.number' | trans }} {{ reservation.phoneNumber }}</h4>
+                        </td>
+                        <td width="33%">
+                            <h2 style=";font-size: 12px">{{ 'hotels.pay' | trans }}</h2>
+                            <h5 style="font-size: 12px">
+                                {{ 'hotels.payment_method_chosen' | trans }}:<br/>
+                                MercadoPago.com - referencia de pago Nº: {{ reservation.collectionId }}
+                            </h5>
+                        </td>
+                        <td width="33%">
+                            <h2 style=";font-size: 12px">{{ 'hotels.cancellation_policies' | trans }}</h2>
+                            <h5 style="font-size: 12px">
+                                Puede cancelar hasta 24 hs antes<br/><br/>
+                            </h5>
+                        </td>
+                    </tr>
+                </table>         
+            </th>
+        </tr>
+    </table> 
+    <div class="hr" style="height:1px;border-bottom:1px solid #cccccc;clear: both;">&nbsp;</div>
+    <i class="fa fa-clock-o"></i> <em><small style="font-size: 8px">{{ 'index.hotel_footer' | trans }}</small></em>
+    <br>
+    <em><small style="font-size: 8px">{{ 'index.hotel_footer2' | trans }}</small></em>
+    <br>
+    <em style="font-size: 8px;"><small>{{ 'index.footer_copy.responsible' | trans }} <span>Viento Sur</span> {{ 'index.footer_copy.tour' | trans }}</small></em>                        
+</div>    
+</body>
+</html>            
