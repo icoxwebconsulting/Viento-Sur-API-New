@@ -1,0 +1,111 @@
+{% extends ':admin:base.html.twig' %}
+
+{% block title %}{{ 'index.reservations' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'index.reservations' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> {{ 'admin.reservation_manager' | trans }}
+            </div>
+            <div class="card-block">
+                <div class="count">
+                    <h6>{{ 'admin.total_records' | trans }}: {{ pagination.getTotalItemCount }}</h6>
+                </div>
+                <div class="search">
+                    <form action="{{ path('reservation_list') }}">
+                        <input type="text" name="query" class="form-group" value="{{ app.request.get('query') }}" placeholder="{{ 'admin.search' | trans }}">
+                        <button class="btn btn-sm btn-success">{{ 'hotels.search_menu.apply' | trans }}</button>
+                        {% if app.request.get('query') %}
+                            <a href="{{ path('reservation_list') }}" class="btn btn-sm btn-danger">{{ 'admin.delete' | trans }}</a>
+                        {% endif %}
+                    </form>
+                </div>
+                {% if not pagination | length %}
+                    <h6 class="box-title">{{ 'admin.search_not_found' | trans }}</h6>
+                {% else %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'hotels.holder_name' | trans }}</th>
+                            <th>{{ 'index.search.hotel.checkin_date' | trans }}</th>
+                            <th>Actividad</th>
+                            <th>{{ 'hotels.reservation_number' | trans }}</th>
+                            <th>{{ 'hotels.total_price' | trans }}</th>
+                            <th>{{ 'admin.status' | trans }}</th>
+                            {#<th>{{ 'hotels.card' | trans }}</th>#}
+                            {#<th>{{ 'hotels.phone' | trans }}</th>#}
+                            {#<th>{{ 'admin.email' | trans }}</th>#}
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <th>{{ 'admin.origin' | trans }}</th>
+                            {% endif %}
+                            <th>{{ 'admin.actions' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%  for entity in pagination %}
+                            <tr>
+                                <td>{{ entity.id }}</td>
+                                <td>{{ entity.holderName }}</td>
+                                <td>{{ entity.checkin | localizeddate('medium', 'none', app.request.locale) }}</td>
+                                <td>
+                                {% if entity.activity %}
+                                {{ entity.activity.name }}
+                                {% endif %}
+                                </td>
+                                <td>{{ entity.reservationId }}</td>
+                                <td>
+                                {{ entity.totalPrice }}
+                                </td>
+                                <td>
+                                    {% if entity.status == '' %}
+                                        Ok
+                                    {% else %}
+                                        {% set status = 'admin.'~entity.status %}
+                                        {{ status | trans }}
+                                    {% endif %}
+                                </td>
+                                {#<td>{{ entity.cardType }}</td>#}
+                                {#<td>{{ entity.phoneNumber }}</td>#}
+                                {#<td>{{ entity.email }}</td>#}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <td>{{ entity.origin }}</td>
+                                {% endif %}
+                                <td>
+                                    <a href="{{ path('reservation_show_activity', {id: entity.id}) }}"><i class="fa fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <style>
+        .search {
+            display: inline-block;
+            float: right;
+        }
+        .count {
+            display: inline-block;
+        }
+        h6.box-title{
+            margin-top: 50px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,285 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ 'flights.reservation_data' | trans }}{% endblock %}
+
+{% block top_content %}
+    {% embed ':_partial:breadcrumb.html.twig' %}
+        {% block breadcrumb %}{{ 'flights.reservation_data' | trans }}{% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {% set targetCurrency = app.session.get('targetCurrency') %}
+    {% if targetCurrency == 'USD' %}
+        {% set symbol = 'US$' %}
+    {% else %}
+        {% set symbol = 'AR$' %}
+    {% endif %}
+
+    <div class="col-md-10">
+      <div class="container bs-docs-container">
+            <table class="table">
+                <tr>
+                    <th colspan="2">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <div id="main_picture" style="width: 493px; height: 328px;">
+                                        <img style="width: 493px; height: 328px;" src="{{ render(controller('VientoSurAppAppBundle:Activity:getPictureByActivity',{ 'id':  item.id})) }}" class="origin" />
+                                    </div>
+                                </td>
+                                <td style="width: 493px; height: 328px; display: block;">
+                                    <div id="main_picture" style="width: 493px; height: 328px;">
+                                        <img src="https://www.mapquestapi.com/staticmap/v4/getplacemap?key=vcdIMmp9OiCGm1lsGE4Z1QRz5AVABDyG&location={{latitude}},{{longitude}}&size=500,300&zoom=9&showicon=red_1-1" alt="" style="width: 493px; height: 328px;">
+                                    </div>                            
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <h3>Reserva Nº: {{ reservation.id }}</h3>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <h3>{{ item.name }}</h3>
+                                    {{ address_map }}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'hotels.phone' | trans }}
+                                </th>
+                                <td>
+                                    {{ activity_phone }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'hotels.gps_coordinates' | trans }}
+                                </th>
+                                <td>
+                                    Lat {{ latitude }}, Long {{ longitude }}
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered">
+                            <tr style="text-align: center;">
+                                <td width="40%">
+                                    <h2>{{ checking_date |localizeddate('medium', 'none', app.request.locale) }}</h2>
+                                    <h4 style="margin: 0; padding: 0;">
+                                        <span>
+                                            {% if schedule == 'am' %}
+                                                <b>Turno: AM - pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}}</b>
+                                            {% elseif schedule == 'pm' %}
+                                                <b>Turno: PM - pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}}</b>    
+                                            {% else %}  
+                                                <b>Turno: pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll }} hasta las {{ item.toAll}}</b>    
+                                            {% endif %}
+                                                - <b>Duración:</b> {{ item.duration }} hs
+                                        </span>
+                                    </h4>
+                                </td> 
+                                <td width="20%">
+                                    <div class="col-md-12">
+                                        <h7 style="display: block;">{{ 'hotels.your_group' | trans }}</h7>
+                                        {% if cant_adut > 0 %}
+                                        <div class="col-md-{% if cant_chil > 0 %}6{% else %}12{% endif %}">
+                                            <h5>{{ cant_adut }} {{ 'index.search.hotel.adult' | trans }}(s)</h5>
+                                        </div>
+                                        {% endif %}
+                                        {% if cant_chil > 0 %}
+                                            <div class="col-md-{% if cant_adut > 0 %}6{% else %}12{% endif %}">
+                                                <h5>{{ cant_chil }} {{ 'index.search.hotel.child' | trans }}(s)</h5>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td width="40%">
+                                    {{ 'hotels.total_price' | trans }}:<br>
+                                    <h2>{{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</h2>
+                                </td>    
+                            </tr>    
+                        </table> 
+                        <table class="table table-bordered">
+                            <tr style="text-align: center;">
+                                <td width="50%">
+                                    <h2 style="font-size: 12px">{{ 'hotels.reservation_by' | trans }}:</h2>
+                                    <h4 style="font-size: 12px">{{ reservation.holderName }}</h4>
+                                    <h4 style="font-size: 12px">Email: {{ reservation.email }}</h4>
+                                    <h4 style="font-size: 12px">{{ 'hotels.labels.number' | trans }} {{ reservation.phoneNumber }}</h4>
+                                </td>
+                                <td width="40%">
+                                    <h2 style=";font-size: 12px">{{ 'hotels.pay' | trans }}</h2>
+                                    <h5 style="font-size: 12px">
+                                        {{ 'hotels.payment_method_chosen' | trans }}:<br/>
+                                        MercadoPago.com - referencia de pago Nº: {{ reservation.collectionId }}
+                                    </h5>
+                                </td>
+                            </tr>
+                        </table> 
+                        <table>
+                            <tr width="70%">
+                                <th width="10%">{{ 'hotels.description' | trans }}:</th>
+                                <td class="text-justify" style="width: 60%">
+                                    {% set info = item.description %}
+                                    <p id="info" style="font-size: 11px">{{ info }}</p>
+                                </td>  
+                            <tr>
+                        </table>        
+                    </th>
+                </tr>
+            </table>
+            {% if not pdf %}
+            <div style="width: 100%; display: inline-block; text-align: center; margin-bottom: 25px ">
+                <a class="btn btn-success" href="{{ url('viento_sur_app_save_activity_pdf', {'reservationId': reservation.id}) }}">
+                    {{ 'hotels.download_pdf' | trans }}
+                </a>
+            </div>
+            {% endif %}
+            <div>
+                <p>{{ 'index.hotel_footer' | trans }}</p>
+                <p>{{ 'index.hotel_footer2' | trans }}</p>
+            </div>
+            <div>
+                {{ 'index.footer_copy.responsible' | trans }} <span>Viento Sur</span> {{ 'index.footer_copy.tour' | trans }}
+            </div>
+            <br><br>                            
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                <a href="{{ path('reservation_list_activity') }}" class="btn btn-md btn-info" style="margin-top: 1px; width: 100%">{{ 'admin.back' | trans }}</a>
+            </div>
+            {#<div class="card-block" style="text-align: center">
+                {% if entity.refundable == 1 %}
+                    {% if entity.status == 'ok' %}
+                        <a id="open-modal-cancel-reservation" data-target="#cancel-reservation" data-toggle="modal" class="btn btn-danger" style="width:100%;margin-bottom:20px;color:#fff;" >{{ 'admin.request_cancellation' | trans }}</a>
+                        <p id="textCancellation"></p>
+                        <hr>
+                    {% endif %}
+                {% else %}
+                    <p>{{ 'hotels.not_cancelation' | trans }}</p>
+                    <hr>
+                {% endif %}
+
+                {% if entity.origin != 'despegar' %}
+                <a data-target="#show-tdc-data-modal" data-toggle="modal" class="btn btn-success" style="width:100%;margin-bottom:20px;color:#fff;">{{ 'admin.see_tdc_data' | trans }}</a>
+                {% endif %}
+
+                {% if entity.status == '' %}
+                    {% set status = 'admin.ok' %}
+                {% else %}
+                    {% set status = 'admin.'~entity.status %}
+                {% endif %}
+
+                <p><strong>Status:</strong>{{ status | trans }} </p>
+                {% if entity.refundable == 1 %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{{ 'admin.cancellation_history' | trans }}</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="box-group" id="accordion">
+                                    {% if cancellationData is not empty %}
+                                        {% for data in cancellationData %}
+                                            <div class="panel box box-primary">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#cancellation-{{ loop.index }}">
+                                                            <i class="fa fa-clock-o"></i>
+                                                            {{ data.modified | localizeddate('medium', 'short', app.request.locale) }}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="cancellation-{{ loop.index }}" class="panel-collapse collapse">
+                                                    <div class="box-body">
+                                                        <p>{{ 'admin.reason' | trans }}: {{ data.description }}</p>
+                                                        <p>
+                                                            {{ 'admin.cancelled_by' | trans }}:
+                                                            {% if data.createdBy is null %}
+                                                                {{ entity.holderName }}
+                                                            {% else %}
+                                                                {{ data.createdBy.firstName }}
+                                                            {% endif %}
+                                                        </p>
+                                                        <p>{{ 'index.cancellation_number' | trans }}: {{ data.code }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .card-block {
+            min-height: 360px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/skins/_all-skins.min.css') }}">
+{% endblock %}
+
+{#{% block extra_js %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#confirmCancel').attr('disabled', true);
+
+            $('#reason').keyup(function () {
+                if($(this).val().length !=0)
+                    $('#confirmCancel').attr('disabled', false);
+                else
+                    $('#confirmCancel').attr('disabled',true);
+            });
+        })
+        $('#close-modal').click(function() {
+            $('#errorCancellation').hide();
+        });
+        $('#confirmCancel').on('click', function () {
+            var $btn = $(this).button('loading');
+            var reason = $('#reason').val();
+            var url;
+
+            {% if entity.origin == 'despegar' %}
+                url = Routing.generate('cancel_reservation_despegar') + '/{{ entity.reservationId }}?reason=' + reason;
+            {% else %}
+                url = Routing.generate('cancel_reservation_vientosur') + '/{{ entity.id }}?reason=' + reason;
+            {% endif %}
+            $.ajax({
+                url: url,
+                type: 'PATCH',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.cancelled) {
+                    $('#textCancellation').text('{{ 'admin.confirmation_cancel_reservation' | trans }}' + data.id);
+                    $('#cancel-reservation').modal('hide');
+                    $('#cancelButton').hide();
+                    $('#resultCancellation').show();
+                    $('#open-modal-cancel-reservation').hide();
+                }
+            }).fail(function () {
+                $('#errorCancellation').show()
+            }).always(function () {
+                $btn.button('reset')
+            });
+        })
+    </script>
+{% endblock %}#}

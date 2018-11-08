@@ -40,8 +40,11 @@ class ReservationController extends Controller
                 $dql = "SELECT r
                     FROM VientoSurAppAppBundle:Reservation r
                     ORDER BY r.id ASC";
+                
+                $query = $em->createQuery($dql);
             }else{
                 if ($securityContext->isGranted('ROLE_ACTIVITY')) {
+                    
                     return $this->redirectToRoute('actyvity_list');   
                 }else{
                     $hotel = $em->getRepository('VientoSurAppAppBundle:Hotel')->findOneBy(array(
@@ -54,11 +57,11 @@ class ReservationController extends Controller
                         FROM VientoSurAppAppBundle:Reservation r
                         WHERE r.hotelId = ".$hotel->getId()."
                         ORDER BY r.id ASC";
+                    
+                    $query = $em->createQuery($dql);
                 }
             }    
         }
-
-        $query = $em->createQuery($dql);
 
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');
@@ -71,6 +74,81 @@ class ReservationController extends Controller
         ));
     }
 
+    /**
+     * @param $request
+     * @Route("/activity", name="reservation_list_activity")
+     * @Method("GET")
+     * @return response
+     */
+    public function reservationActivity(Request $request){
+        
+        $querySearch = $request->get('query');
+
+        $em = $this->getDoctrine()->getManager();
+        $securityContext = $this->container->get('security.context');
+        if(!empty($querySearch)){
+            $finder = $this->container->get('fos_elastica.finder.app.reservation');
+            $query = $finder->createPaginatorAdapter($querySearch);
+        }else if ($securityContext->isGranted('ROLE_ADMIN')) {
+            $dql = "SELECT r
+                    FROM VientoSurAppAppBundle:Reservation r
+                    WHERE r.activity_agency != ''
+                    ORDER BY r.id ASC";
+                
+            $query = $em->createQuery($dql);
+        }else{
+            $user = $this->getUser()->getId();
+            
+            $activity_agency = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneByUser($user);
+            
+            $dql = "SELECT r
+                    FROM VientoSurAppAppBundle:Reservation r
+                    WHERE r.activity_agency = ".$activity_agency->getId()."
+                    ORDER BY r.id ASC";
+                
+            $query = $em->createQuery($dql);
+        }
+        
+        $page = $request->query->getInt('page', 1);
+        $paginator = $this->get('knp_paginator');
+        $items_per_page = $this->getParameter('items_per_page');
+
+        $pagination = $paginator->paginate($query, $page, $items_per_page);
+
+        return $this->render(':admin/reservation:listActivity.html.twig', array(
+            'pagination' => $pagination
+        ));
+        
+    }
+    
+    /**
+     * @param $entity
+     * @Security("has_role('ROLE_ACTIVITY')")
+     * @Route("/show/activity/{id}", name="reservation_show_activity")
+     * @Method("GET")
+     * @return response
+     */
+    public function showActivityAction(Reservation $entity){
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $entity;
+        
+        return $this->render(':admin/reservation:showActivity.html.twig',
+            array(
+                'reservation'=>$reservation,
+                'item'=>$reservation->getActivity(),
+                'latitude' => $reservation->getActivity()->getLatitudeDestination(),
+                'longitude' => $reservation->getActivity()->getLongitudeDestination(),
+                'address_map' => trim($reservation->getActivity()->getAddressDestination(), ','),
+                'activity_phone'=>$reservation->getActivityAgency()->getPhone(),
+                'checking_date'=>$reservation->getCheckin(),
+                'schedule'=>$reservation->getSchedule(),
+                'cant_adut'=>$reservation->getCanAdul(),
+                'cant_chil'=>$reservation->getCanChil(),
+                'price'=>$reservation->getTotalPrice(),
+                'pdf' => false
+        ));
+    }
+    
     /**
      * @param $entity
      * @Security("has_role('ROLE_HOTELIER')")

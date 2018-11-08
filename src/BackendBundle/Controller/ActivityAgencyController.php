@@ -148,7 +148,8 @@ class ActivityAgencyController extends Controller
             
             if($action == 'new'){
                 /* cambiar la clave*/
-                $plainPassword = substr( md5(microtime()), 1, 8);
+                //$plainPassword = substr( md5(microtime()), 1, 8);
+                $plainPassword = '123456';
 
                 $entity->getUser()->setPlainPassword($plainPassword);
                 
