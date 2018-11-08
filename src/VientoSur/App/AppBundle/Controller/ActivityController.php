@@ -36,8 +36,6 @@ class ActivityController extends Controller
         $lat = $request->get('latitude');
         $lgn = $request->get('longitude');
         
-        echo $lat.'  '.$lgn;
-        exit();
         
         //form filter 
         $from_price = $request->get('from_price', 250);
