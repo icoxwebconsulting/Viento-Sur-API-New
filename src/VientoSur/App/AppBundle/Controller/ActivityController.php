@@ -377,10 +377,15 @@ class ActivityController extends Controller
         }
         
         $reservation =  $em->getRepository("VientoSurAppAppBundle:Reservation")->findOneById($reservation_id);
+       
+        
+        if(!file_exists($request->server->get('DOCUMENT_ROOT').'/'.$reservation_id.'.pdf')){
+            $this->setPdfActivity($reservation_id, $em, $request, $this->get('knp_snappy.pdf'));
+        }
         
         $this->container->get('hotel_service')->sendBookingActivityEmail($reservation->getId(), $reservation->getEmail());
         
-        return $this->render('VientoSurAppAppBundle:layoutEmailActivityPdf.html.twig',
+        return $this->render('VientoSurAppAppBundle:Activity:summaryActivityBooking.html.twig',
                 array(
                     'reservation'=>$reservation,
                     'item'=>$reservation->getActivity(),
@@ -510,4 +515,57 @@ class ActivityController extends Controller
         
     }
     
+    /**
+     * @Route("/booking/pdf/save/{reservationId}", name="viento_sur_app_save_activity_pdf")
+     */
+    public function savePdfToAttachAction(Request $request)
+    {
+        $reservationId = $request->get('reservationId');
+        
+        $em = $this->getDoctrine()->getManager();
+        if(!file_exists($request->server->get('DOCUMENT_ROOT').'/'.$reservationId.'.pdf')){
+            $this->setPdfActivity($reservationId, $em, $request, $this->get('knp_snappy.pdf'));
+        }
+        
+        $content = file_get_contents($request->server->get('DOCUMENT_ROOT').'/'.$reservationId.'.pdf');
+
+        $response = new Response();
+
+        //set headers
+        $response->headers->set('Content-Type', 'mime/type');
+        $response->headers->set('Content-Disposition', 'attachment;filename="'.$reservationId.'.pdf"');
+
+        $response->setContent($content);
+        return $response;
+    }
+    
+    private function setPdfActivity($reservationId, $em, Request $request, $knp_snappy){
+        
+        $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
+        $picture = $em->getRepository("VientoSurAppAppBundle:Picture")->findOneByActivity($reservation->getActivity());
+        
+        $base_path = $request->server->get('DOCUMENT_ROOT').'/uploads/activity/image/'.$reservation->getActivity()->getId().'/'.$picture->getImageName();
+        
+        $knp_snappy->generateFromHtml(
+            $this->renderView(
+                'VientoSurAppAppBundle:Pdf:bookingActivity.html.twig', array(
+                    'reservation'=>$reservation,
+                    'item'=>$reservation->getActivity(),
+                    'latitude' => $reservation->getActivity()->getLatitudeDestination(),
+                    'longitude' => $reservation->getActivity()->getLongitudeDestination(),
+                    'address_map' => trim($reservation->getActivity()->getAddressDestination(), ','),
+                    'activity_phone'=>$reservation->getActivityAgency()->getPhone(),
+                    'checking_date'=>$reservation->getCheckin(),
+                    'schedule'=>$reservation->getSchedule(),
+                    'cant_adut'=>$reservation->getCanAdul(),
+                    'cant_chil'=>$reservation->getCanChil(),
+                    'price'=>$reservation->getTotalPrice(),
+                    'pdf' => true,
+                    'base_path'=>$base_path
+                )),
+            $reservation->getId().'.pdf'
+        );
+        
+        return true;
+    }
 }
