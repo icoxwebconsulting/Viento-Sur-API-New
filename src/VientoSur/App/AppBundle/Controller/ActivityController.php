@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use VientoSur\App\AppBundle\Entity\Reservation;
 use Symfony\Component\Validator\Constraints\DateTime;
 use VientoSur\App\AppBundle\Entity\Passengers;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Activity controller.
