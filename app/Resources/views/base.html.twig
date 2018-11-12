@@ -29,7 +29,7 @@
         {% block shorter_script %}{% endblock %}
         {% block stylesheets %}
         {% endblock %}
-
+        {% set isIframe = app.session.get('iframe') %}
 </head>
 <body>
 {% block analytics %}
@@ -59,6 +59,7 @@
             {% set symbol = 'AR$' %}
         {% endif %}
         {% set decimal =false %}
+        {% if isIframe != true %}
         <header class="new-header" {% if app.request.get('_route') != 'homepage' %} style="position: relative;" {% endif %}>
             <div class="container-fluid">
                 <div class="row">
@@ -90,10 +91,11 @@
                 </div>
             </div>
         </header>
+        {% endif %}                    
         <div class="global-wrap">
             {% block content %}
             {% endblock %}
-
+            {% if isIframe != true %}
             <!-- GO FOOTER -->
             <footer id="main-footer">
                 <div class="footer">
@@ -220,6 +222,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}            
     {% endblock %}
 
     <script src="{{ asset('rpascal/js/jquery-1.10.2.js') }}"></script>
@@ -368,6 +371,7 @@
             });
         }
     </script>
+{% if isIframe != true %}
     <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
@@ -425,6 +429,7 @@
     twq('init','nxd42');
     twq('track','PageView');
 </script>
+{% endif %}
 <!-- End Twitter universal website tag code -->
 {% block javascripts %}
 {% endblock %}

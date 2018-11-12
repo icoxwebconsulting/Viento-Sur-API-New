@@ -34,7 +34,9 @@
     <script src="{{ asset('bundles/vientosurappapp/js/tweet.js') }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/countdown.js') }}"></script>
     <script src="{{ asset('bundles/vientosurappapp/js/gridrotator.js') }}"></script>
+    {% if isIframe != true %}
     <script src="{{ asset('js/custom.js') }}"></script>
+    {% endif %}
     <script src="{{ asset('assets/vendor/bootpag/lib/jquery.bootpag.min.js') }}"></script>
     <script src="{{ asset('js/jScroll.js') }}"></script>
     <script>
