@@ -624,4 +624,24 @@ class ActivityController extends Controller
         exit();
         
     }
+    
+    /**
+     * @Route("/booking/booton/iframe/{id_agency}/{iframe}/{name}", name="viento_sur_app_booton_iframe_activity")
+     */
+    public function getBootonIframe(Request $request){
+        
+        $agency      = $request->get('id_agency');
+        $iframe      = $request->get('iframe');
+        $name_agency = $request->get('name');
+        $locale      = $request->get('_locale');
+        
+        $session     = $request->getSession();
+        
+        $session->set('agency', $agency);
+        $session->set('iframe', $iframe);
+        $session->set('name_agency', $name_agency);
+        
+        
+        return $this->redirectToRoute('homepage', array('_locale'=> $locale, '_type' => 'actividad'));
+    }
 }
