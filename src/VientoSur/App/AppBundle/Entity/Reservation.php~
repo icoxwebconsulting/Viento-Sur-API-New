@@ -164,6 +164,12 @@ class Reservation
     protected $activity_agency;
     
     /**
+     * @ORM\ManyToOne(targetEntity="ActivityAgency")
+     * @ORM\JoinColumn(name="activity_agency_partner", referencedColumnName="id", nullable=true)
+     */
+    protected $activity_agency_partner;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Activity")
      * @ORM\JoinColumn(name="activity", referencedColumnName="id", nullable=true)
      */
@@ -768,5 +774,53 @@ class Reservation
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * Set contactType
+     *
+     * @param string $contactType
+     *
+     * @return Reservation
+     */
+    public function setContactType($contactType)
+    {
+        $this->contactType = $contactType;
+
+        return $this;
+    }
+
+    /**
+     * Get contactType
+     *
+     * @return string
+     */
+    public function getContactType()
+    {
+        return $this->contactType;
+    }
+
+    /**
+     * Set documentNumber
+     *
+     * @param string $documentNumber
+     *
+     * @return Reservation
+     */
+    public function setDocumentNumber($documentNumber)
+    {
+        $this->documentNumber = $documentNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get documentNumber
+     *
+     * @return string
+     */
+    public function getDocumentNumber()
+    {
+        return $this->documentNumber;
     }
 }

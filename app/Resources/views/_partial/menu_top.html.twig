@@ -115,6 +115,14 @@
                                 <li><a href="{{ path('actyvity_list') }}">{{ 'admin.activities_list' | trans }}</a></li>
                                 <li><a href="{{ path('actyvity_new') }}">{{ 'admin.add_activity' | trans }}</a></li>
                                 <li class="divider"></li>
+                                <li class="dropdown-header">{{ 'index.reservation' | trans }}</li>
+                                <li><a href="{{ path('reservation_list_activity') }}">{{ 'index.reservations' | trans }}</a></li>
+                            </ul>
+                        </li>
+                        <li class="col-sm-6">
+                            <ul>
+                                <li class="dropdown-header">Boton de Actividades</li>
+                                <li><a href="{{ path('button_actyvity') }}">Obtener</a></li>
                             </ul>
                         </li>
                     </ul>

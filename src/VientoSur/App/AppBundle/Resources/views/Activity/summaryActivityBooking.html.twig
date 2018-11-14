@@ -1,15 +1,19 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.purchase_summary' | trans }}{% endblock %}
-
+{% set isIframe = app.session.get('iframe') %}
 {% block banner %}
-    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% if isIframe != true %}
+        {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% endif %}    
 {% endblock %}
 
 {% block breadcrumb %}
-    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
-        {% block section %}Actividades{% endblock %}
-        {% block sub_section %}Detalle de actividades{% endblock %}
-    {% endembed %}
+    {% if isIframe != true %}
+        {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+            {% block section %}Actividades{% endblock %}
+            {% block sub_section %}Detalle de actividades{% endblock %}
+        {% endembed %}
+    {% endif %} 
 {% endblock %}
 
 {% block content %}

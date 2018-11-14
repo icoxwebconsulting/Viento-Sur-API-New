@@ -1,4 +1,5 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% set isIframe = app.session.get('iframe') %}
 {% block title %}{{ 'index.rooms_available' | trans }} {{item.name}} {% endblock %}
 {% block meta_open_graph %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +14,17 @@
     </script>
 {% endblock %}
 {% block banner %}
-    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% if isIframe != true %}
+        {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% endif %}    
 {% endblock %}
 {% block breadcrumb %}
-    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
-        {% block section %}Actividades{% endblock %}
-        {% block sub_section %}Detalle de actividades{% endblock %}
-    {% endembed %}
+    {% if isIframe != true %}
+        {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+            {% block section %}Actividades{% endblock %}
+            {% block sub_section %}Detalle de actividades{% endblock %}
+        {% endembed %}
+    {% endif %}    
 {% endblock %}
 {% block content %}
     {{ parent() }}
@@ -238,7 +243,11 @@
 
             function popup()
             {
-                popupWindow = window.open('{{ preference['response']['sandbox_init_point'] }}','Pagar- {{ item.name }} - vientosur.net', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, top=300, left=500, width=700, height=700');
+                {% if isIframe != true %}
+                    popupWindow = window.open('{{ preference['response']['sandbox_init_point'] }}','Pagar- {{ item.name }} - vientosur.net', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, top=300, left=500, width=700, height=700');
+                {% else %}
+                    window.location.href = '{{ preference['response']['sandbox_init_point'] }}';
+                {% endif %}    
             }
 
             function parent_disable() {

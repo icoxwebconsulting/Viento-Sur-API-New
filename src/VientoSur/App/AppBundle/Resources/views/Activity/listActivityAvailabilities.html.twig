@@ -1,8 +1,10 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
+{% set isIframe = app.session.get('iframe') %}
 {% block title %}Búsqueda de Actividades{% endblock %}
-
 {% block banner %}
-    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% if isIframe != true %}
+        {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% endif %}
 {% endblock %}
 
 {#{% block switch_service %}
@@ -10,10 +12,12 @@
 {% endblock %}#}
 
 {% block breadcrumb %}
+    {% if isIframe != true %}
     {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
         {% block section %}Actividades{% endblock %}
         {% block sub_section %}Detalle de actividades{% endblock %}
     {% endembed %}
+    {% endif %}
 {% endblock %}
 {% block content %}
     {{ parent() }}  
@@ -60,7 +64,11 @@
                 event.stopPropagation();
                 var element = event.target;
                 if ($(element).data('prevent') != 'modal') {
-                    window.open(this.dataset.href, '_blank');
+                    {% if isIframe != true %}
+                        window.open(this.dataset.href, '_blank');
+                    {% else %}
+                        window.location.href = this.dataset.href;
+                    {% endif %}    
                 } else {
                     latLng = {lat: $(element).data('latitude'), lng: $(element).data('longitude')};
                     hotelName = $(element).data('name');

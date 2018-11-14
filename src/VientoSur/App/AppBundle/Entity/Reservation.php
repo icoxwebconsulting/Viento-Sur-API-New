@@ -164,6 +164,12 @@ class Reservation
     protected $activity_agency;
     
     /**
+     * @ORM\ManyToOne(targetEntity="ActivityAgency")
+     * @ORM\JoinColumn(name="activity_agency_partner", referencedColumnName="id", nullable=true)
+     */
+    protected $activity_agency_partner;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Activity")
      * @ORM\JoinColumn(name="activity", referencedColumnName="id", nullable=true)
      */
@@ -816,5 +822,29 @@ class Reservation
     public function getDocumentNumber()
     {
         return $this->documentNumber;
+    }
+
+    /**
+     * Set activityAgencyPartner
+     *
+     * @param \VientoSur\App\AppBundle\Entity\ActivityAgency $activityAgencyPartner
+     *
+     * @return Reservation
+     */
+    public function setActivityAgencyPartner(\VientoSur\App\AppBundle\Entity\ActivityAgency $activityAgencyPartner = null)
+    {
+        $this->activity_agency_partner = $activityAgencyPartner;
+
+        return $this;
+    }
+
+    /**
+     * Get activityAgencyPartner
+     *
+     * @return \VientoSur\App\AppBundle\Entity\ActivityAgency
+     */
+    public function getActivityAgencyPartner()
+    {
+        return $this->activity_agency_partner;
     }
 }

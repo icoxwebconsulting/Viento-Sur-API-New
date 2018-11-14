@@ -1,3 +1,4 @@
+{% set isIframe = app.session.get('iframe') %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,12 +41,14 @@
 <header id="main-header">
     <div class="" style="height: 100px;">
         <div class="" style="padding: 0 15px; line-height: 0; height: 100px">
+            {% if isIframe != true %}
             <div class="col-md-3">
                 <a class="logo" href="#">
                     <img src="https://www.vientosur.net/bundles/vientosurappapp/images/vientosur-logo-color.png" alt="Viento Sur" title="">
                 </a>
             </div>
-            <div class="col-md-9" style="position: relative; top: -40px;">
+            {% endif %}
+            <div class="col-md-9" style="position: relative; {% if isIframe != true %} top: -40px; {% endif %}">
               <p style="color:#000; text-align: right; padding-top:15px;">{{ 'hotels.reservation_number' | trans }}:
                   <span style="font-weight: bold;color: #008cd1;font-size: 17px;">{{ reservation.id }}</span>
               </p>

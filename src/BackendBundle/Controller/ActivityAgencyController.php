@@ -206,4 +206,24 @@ class ActivityAgencyController extends Controller
         }
         
     }
+    
+    /**
+     * @param Request $request
+     * @Security("has_role('ROLE_ACTIVITY')")
+     * @Route("/button-activity", name="button_actyvity")
+     * @Method("GET")
+     * @return array
+     */
+    public function getButtonActivityAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        
+        $user = $this->getUser();
+        
+        $activityAgency = $em->getRepository("VientoSurAppAppBundle:ActivityAgency")->findOneByUser($user);
+        
+        return $this->render(':admin/activity_agency:button_activity.html.twig', array(
+            'entity' => $activityAgency
+        ));
+        
+    }
 }

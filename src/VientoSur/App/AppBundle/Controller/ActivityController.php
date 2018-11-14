@@ -194,7 +194,7 @@ class ActivityController extends Controller
         
         $destinationTextMap = "'".$activity->getAddressDestination()."'";
         
-        $regreso = 'http://viento-sur.icox.mobi'.$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
+        $regreso = 'http://vientosur.local:8080'.$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
         $cancelado = '';
         
         // Crea el objeto MP
@@ -288,8 +288,10 @@ class ActivityController extends Controller
      */
     public function bookingPayMPOkAction(Request $request)
     {
-        $session     = $request->getSession();
-        $em = $this->getDoctrine()->getManager();
+        $session        = $request->getSession();
+        $em             = $this->getDoctrine()->getManager();
+        $isIframe       = $session->get("iframe");
+        $agencyPartner  = $session->get("agency");
         
         $reservation_id = $session->get('resevation_id');
         
@@ -345,7 +347,13 @@ class ActivityController extends Controller
         $reservation->setActivity($activity);
         $reservation->setActivityAgency($activity->getActivityAgency());
         $reservation->setRefundable(0);
-        $reservation->setOrigin('vientosur');
+        $origen = $isIframe == true?$session->get('name_agency'):'vientosur';
+        $reservation->setOrigin($origen);
+        
+        if($agencyPartner){
+            $activityAgencyPartner = $em->getRepository("VientoSurAppAppBundle:ActivityAgency")->findOneById($agencyPartner);
+            $reservation->setActivityAgencyPartner($activityAgencyPartner);
+        }
         
         $em->persist($reservation);
         
@@ -361,8 +369,11 @@ class ActivityController extends Controller
         
         $session->set('resevation_id', $reservation->getId());
         
-        
-        return $this->render('VientoSurAppAppBundle:Activity:bookingPayMPOk.html.twig');  
+        if($isIframe){
+            return $this->redirect($this->generateUrl('viento_sur_app_booking_activity_summary')); 
+        }else{
+            return $this->render('VientoSurAppAppBundle:Activity:bookingPayMPOk.html.twig');  
+        }    
     }
     
     /**
@@ -626,9 +637,9 @@ class ActivityController extends Controller
     }
     
     /**
-     * @Route("/booking/booton/iframe/{id_agency}/{iframe}/{name}", name="viento_sur_app_booton_iframe_activity")
+     * @Route("/booking/button/iframe/{id_agency}/{iframe}/{name}", name="viento_sur_app_button_iframe_activity")
      */
-    public function getBootonIframe(Request $request){
+    public function getButtonIframe(Request $request){
         
         $agency      = $request->get('id_agency');
         $iframe      = $request->get('iframe');

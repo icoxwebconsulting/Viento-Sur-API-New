@@ -137,6 +137,7 @@
         </a>
     </div>
     {% endif %}
+    {% if isIframe != true %}
     <div>
         <p>{{ 'index.hotel_footer' | trans }}</p>
         <p>{{ 'index.hotel_footer2' | trans }}</p>
@@ -144,5 +145,6 @@
     <div>
         {{ 'index.footer_copy.responsible' | trans }} <span>Viento Sur</span> {{ 'index.footer_copy.tour' | trans }}
     </div>
+    {% endif %}
     <br><br>                            
 </div>    

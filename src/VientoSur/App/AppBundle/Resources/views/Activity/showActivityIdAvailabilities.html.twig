@@ -1,6 +1,7 @@
 {% extends 'VientoSurAppAppBundle::layoutHotel.html.twig' %}
 {% block title %}{{ 'index.rooms_available' | trans }} {{item.name}} {% endblock %}
 {% set url = 'uploads/activity/image/'~item.id~'/' %}
+{% set isIframe = app.session.get('iframe') %}
 {% block meta_open_graph %}
     {% if pictures is defined %}
         {% for key, picture in pictures %}
@@ -179,7 +180,9 @@
 {% endblock %}
 
 {% block banner %}
-    {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% if isIframe != true %}
+        {% include '@VientoSurAppApp/_partial/banner.html.twig' %}
+    {% endif %}
 {% endblock %}
 
 {% block switch_service %}
@@ -187,10 +190,12 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
-        {% block section %}Actividades{% endblock %}
-        {% block sub_section %}Detalle de actividades{% endblock %}
-    {% endembed %}
+    {% if isIframe != true %}
+        {% embed '@VientoSurAppApp/_partial/breadcrumb.html.twig' %}
+            {% block section %}Actividades{% endblock %}
+            {% block sub_section %}Detalle de actividades{% endblock %}
+        {% endembed %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
