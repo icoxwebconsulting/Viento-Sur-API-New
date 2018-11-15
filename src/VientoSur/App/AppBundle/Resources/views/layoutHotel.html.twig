@@ -88,7 +88,7 @@
             }
             else {
                 var url = $(this).data('path');
-                var data_form = $('formConsult').serialize();
+                var data_form = $('#formConsult').serialize();
                 $.ajax({
                     type: 'post',
                     url: url,
