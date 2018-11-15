@@ -78,6 +78,9 @@
 
 
         $('#submitConsult').find('.modal-footer #confirmConsult').on('click', function () {
+            
+            getReCatcha();
+            
             if ($('#observacion').val() === "") {
                 // invalid
                 $("#requerido").text("Debe indicar una observación");

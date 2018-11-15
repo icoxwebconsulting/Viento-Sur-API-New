@@ -437,12 +437,13 @@
 <!-- End Twitter universal website tag code -->
 <script src='https://www.google.com/recaptcha/api.js?render=6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS'></script>
 <script>
-    grecaptcha.ready(function() {
-    grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
-    .then(function(token) {
-        $('#g-recaptcha-response').val(token);
-    });
-    });
+    grecaptcha.ready(getReCatcha());
+    function getReCatcha(){
+        grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
+        .then(function(token) {
+            $('#g-recaptcha-response').val(token);
+        });
+    }
 </script>
 {% block javascripts %}
 {% endblock %}
