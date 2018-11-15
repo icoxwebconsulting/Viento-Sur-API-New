@@ -220,6 +220,7 @@
                                 </div>
                             </div>    
                         </form>
+                        <script src='https://www.google.com/recaptcha/api.js'></script>        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'index.popup.cancel' | trans }}</button>
@@ -434,15 +435,6 @@
     twq('track','PageView');
 </script>
 <!-- End Twitter universal website tag code -->
-<script src='https://www.google.com/recaptcha/api.js?render=6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS'></script>
-<script>
-    grecaptcha.ready(function() {
-    grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
-    .then(function(token) {
-    // Verify the token on the server.
-    });
-    });
-</script>
 {% block javascripts %}
 {% endblock %}
 
