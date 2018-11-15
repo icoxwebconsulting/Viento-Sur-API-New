@@ -1076,21 +1076,28 @@ class HotelController extends Controller
 
     protected function reCaptchaVerification($token){
         
-        $data = array("secret" => "6LcF7noUAAAAAOnsMn5-mEEyrP_AhkYYMjyO1fF1", "response" => "$token");                                                                    
-        $data_string = json_encode($data);                                                                                   
+        $data = array("secret" => "6LcF7noUAAAAAOnsMn5-mEEyrP_AhkYYMjyO1fF1", "response" => "$token"); 
+        
+        // abrimos la sesión cURL
+        $ch = curl_init();
 
-        $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');                                                                      
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-            'Content-Type: application/json',                                                                                
-            'Content-Length: ' . strlen($data_string))                                                                       
-        );                                                                                                                   
+        // definimos la URL a la que hacemos la petición
+        curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+        // indicamos el tipo de petición: POST
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        // definimos cada uno de los parámetros
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "secret=6LcF7noUAAAAAOnsMn5-mEEyrP_AhkYYMjyO1fF1&response=$token");
 
-        $result = curl_exec($ch);
+        // recibimos la respuesta y la guardamos en una variable
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $remote_server_output = curl_exec ($ch);
 
-        echo "$result";
+        // cerramos la sesión cURL
+        curl_close ($ch);
+
+        // hacemos lo que queramos con los datos recibidos
+        // por ejemplo, los mostramos
+        print_r($remote_server_output);
         
     }
 //    /**
