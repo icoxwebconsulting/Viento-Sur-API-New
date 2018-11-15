@@ -88,15 +88,11 @@
             }
             else {
                 var url = $(this).data('path');
-                var data = {
-                    fullname: $('#fullnameField').val(),
-                    email: $('#emailField').val(),
-                    message: $('#messageField').val()
-                };
+                var data_form = $('formConsult').serialize();
                 $.ajax({
                     type: 'post',
                     url: url,
-                    data: data,
+                    data: data_form,
                     success: function (data) {
                         //$('#submitConsult').modal('hide');
                         //location.reload();
