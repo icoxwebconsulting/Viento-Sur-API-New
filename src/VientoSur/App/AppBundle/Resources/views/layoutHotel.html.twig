@@ -65,6 +65,8 @@
 
         });
         $('#submitConsult').on('show.bs.modal', function (e) {
+            getReCatcha();
+            
             $title = $(e.relatedTarget).attr('data-title');
             $(this).find('.modal-title').text($title);
 
@@ -78,13 +80,6 @@
 
 
         $('#submitConsult').find('.modal-footer #confirmConsult').on('click', function () {
-            
-            grecaptcha.ready(function(){
-                grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
-                .then(function(token) {
-                    $('#g-recaptcha-response').val(token);
-                });
-            });
             
             if ($('#observacion').val() === "") {
                 // invalid
