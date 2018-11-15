@@ -40,6 +40,13 @@ class IndexController extends Controller
         $promotions        = null;
         $locale = $request->get('_locale');
         $type = $request->get('_type');
+        $session = $request->getSession();
+        
+        $referer = $request->headers->get('referer');
+        
+        if($referer == 'http://viento-sur.icox.mobi/app_dev.php/'){
+            $session->clear();
+        }
 
         switch ($locale) {
             case 'es':
