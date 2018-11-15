@@ -438,7 +438,7 @@
 <script src='https://www.google.com/recaptcha/api.js?render=6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS'></script>
 <script>
     grecaptcha.ready(function(){
-        setInterval('getReCatcha()',10000);
+        setInterval('getReCatcha()',5 * 60 * 1000);
     });
     
     function getReCatcha(){
