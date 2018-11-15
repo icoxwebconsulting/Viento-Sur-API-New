@@ -391,6 +391,10 @@ class HotelController extends Controller
     {
         $email = $request->request->get('email');
         
+        $token = $request->get('g-recaptcha-response');
+        
+        $this->reCaptchaVerification($token);
+        
         $html = $this->renderView(
             'VientoSurAppAppBundle:Email:contact.html.twig',
             array(
@@ -1070,6 +1074,25 @@ class HotelController extends Controller
         );
     }
 
+    protected function reCaptchaVerification($token){
+        
+        $data = array("secret" => "6LcF7noUAAAAAOnsMn5-mEEyrP_AhkYYMjyO1fF1", "response" => "$token");                                                                    
+        $data_string = json_encode($data);                                                                                   
+
+        $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');                                                                      
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+            'Content-Length: ' . strlen($data_string))                                                                       
+        );                                                                                                                   
+
+        $result = curl_exec($ch);
+
+        echo "$result";
+        
+    }
 //    /**
 //     * @Route("/cards", name="viento_sur_app_get_cards")
 //     */
