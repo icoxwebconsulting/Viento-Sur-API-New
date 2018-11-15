@@ -95,10 +95,11 @@
                     data: data_form,
                     success: function (data) {
                         if(data.status === 'success'){
+                            alert('El mensaje no se ha enviado correctamente');
                             $('#submitConsult').modal('hide');
-                            $('#DataTable').DataTable().ajax.reload(null, false);
+                            location.reload();
                         }else{
-                           alert('El mensaje no se ha enviado correctamente') 
+                           alert('El mensaje no se ha enviado correctamente'); 
                         }
                     }
                 });
