@@ -219,6 +219,7 @@
                                     <div class="g-recaptcha" data-sitekey="6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS"></div>    
                                 </div>
                             </div>    
+                            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />   
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -439,7 +440,7 @@
     grecaptcha.ready(function() {
     grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
     .then(function(token) {
-        alert(token);
+        $('#g-recaptcha-response').val(token);
     });
     });
 </script>
