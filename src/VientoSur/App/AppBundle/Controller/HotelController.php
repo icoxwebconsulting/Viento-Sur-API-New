@@ -390,19 +390,28 @@ class HotelController extends Controller
     public function consultAction(Request $request)
     {
         $email = $request->request->get('email');
-        $html = $this->renderView(
-            'VientoSurAppAppBundle:Email:contact.html.twig',
-            array(
-                'txtContactName' => $request->request->get('fullname'),
-                'txtEmail' => $request->request->get('email'),
-                'txtComments' => $request->request->get('message')
-            )
-        );
+        
+        $token = $request->get('g-recaptcha-response');
+        
+        if($this->reCaptchaVerification($token) == true){
+        
+            $html = $this->renderView(
+                'VientoSurAppAppBundle:Email:contact.html.twig',
+                array(
+                    'txtContactName' => $request->request->get('fullname'),
+                    'txtEmail' => $request->request->get('email'),
+                    'txtComments' => $request->request->get('message')
+                )
+            );
 
-        $this->get('email.service')->sendCommentsEmail($html, $email);
+            $this->get('email.service')->sendCommentsEmail($html, $email);
 
-        $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
-        return new JsonResponse(array("status" => 'success'));
+            $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
+            return new JsonResponse(array("status" => 'success'));
+        }else{
+            $request->getSession()->getFlashBag()->add('error', 'El mensaje no se ha enviado.');
+            return new JsonResponse(array("status" => 'error'));    
+        }
     }
 
     /**
@@ -1069,6 +1078,30 @@ class HotelController extends Controller
         );
     }
 
+    protected function reCaptchaVerification($token){
+        
+        // abrimos la sesión cURL
+        $ch = curl_init();
+
+        // definimos la URL a la que hacemos la petición
+        curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+        // indicamos el tipo de petición: POST
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        // definimos cada uno de los parámetros
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "secret=6LcF7noUAAAAAOnsMn5-mEEyrP_AhkYYMjyO1fF1&response=$token");
+
+        // recibimos la respuesta y la guardamos en una variable
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $remote_server_output = curl_exec ($ch);
+
+        // cerramos la sesión cURL
+        curl_close ($ch);
+        
+        $response = json_decode($remote_server_output);
+        
+        return $response->success;
+       
+    }
 //    /**
 //     * @Route("/cards", name="viento_sur_app_get_cards")
 //     */

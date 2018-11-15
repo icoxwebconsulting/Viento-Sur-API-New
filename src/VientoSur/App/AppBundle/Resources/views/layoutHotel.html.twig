@@ -66,6 +66,8 @@
 
         });
         $('#submitConsult').on('show.bs.modal', function (e) {
+            getReCatcha();
+            
             $title = $(e.relatedTarget).attr('data-title');
             $(this).find('.modal-title').text($title);
 
@@ -79,6 +81,7 @@
 
 
         $('#submitConsult').find('.modal-footer #confirmConsult').on('click', function () {
+            
             if ($('#observacion').val() === "") {
                 // invalid
                 $("#requerido").text("Debe indicar una observación");
@@ -86,20 +89,19 @@
             }
             else {
                 var url = $(this).data('path');
-                var data = {
-                    fullname: $('#fullnameField').val(),
-                    email: $('#emailField').val(),
-                    message: $('#messageField').val()
-                };
+                var data_form = $('#formConsult').serialize();
                 $.ajax({
                     type: 'post',
                     url: url,
-                    data: data,
+                    data: data_form,
                     success: function (data) {
-                        //$('#submitConsult').modal('hide');
-                        //location.reload();
-                        $('#submitConsult').modal('hide');
-                        $('#DataTable').DataTable().ajax.reload(null, false);
+                        if(data.status === 'success'){
+                            alert('El mensaje se ha enviado correctamente');
+                            $('#submitConsult').modal('hide');
+                            location.reload();
+                        }else{
+                           alert('El mensaje no se ha enviado correctamente'); 
+                        }
                     }
                 });
                 return true;
