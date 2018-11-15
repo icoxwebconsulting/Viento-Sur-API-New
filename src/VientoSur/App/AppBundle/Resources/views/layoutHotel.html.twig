@@ -79,7 +79,12 @@
 
         $('#submitConsult').find('.modal-footer #confirmConsult').on('click', function () {
             
-            getReCatcha();
+            grecaptcha.ready(function(){
+                grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
+                .then(function(token) {
+                    $('#g-recaptcha-response').val(token);
+                });
+            });
             
             if ($('#observacion').val() === "") {
                 // invalid
