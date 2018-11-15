@@ -219,7 +219,7 @@
                                     <div class="g-recaptcha" data-sitekey="6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS"></div>    
                                 </div>
                             </div>    
-                            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />   
+                            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" class="recaptcha" />   
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -438,15 +438,16 @@
 <script src='https://www.google.com/recaptcha/api.js?render=6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS'></script>
 <script>
     grecaptcha.ready(function(){
-        getReCatcha();
+        setInterval('getReCatcha()',10000);
     });
     
     function getReCatcha(){
         grecaptcha.execute('6LcF7noUAAAAAApm1gLyucKIouLcUBwM7WJi1yxS', {action: 'homepage'})
         .then(function(token) {
-            $('#g-recaptcha-response').val(token);
+            $('.recaptcha').val(token);
         });
     }
+    
 </script>
 {% block javascripts %}
 {% endblock %}
