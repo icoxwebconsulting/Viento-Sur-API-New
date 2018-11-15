@@ -94,10 +94,12 @@
                     url: url,
                     data: data_form,
                     success: function (data) {
-                        //$('#submitConsult').modal('hide');
-                        //location.reload();
-                        $('#submitConsult').modal('hide');
-                        $('#DataTable').DataTable().ajax.reload(null, false);
+                        if(data.status === 'success'){
+                            $('#submitConsult').modal('hide');
+                            $('#DataTable').DataTable().ajax.reload(null, false);
+                        }else{
+                           alert('El mensaje no se ha enviado correctamente') 
+                        }
                     }
                 });
                 return true;

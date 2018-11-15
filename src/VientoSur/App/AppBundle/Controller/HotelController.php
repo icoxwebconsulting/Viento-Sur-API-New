@@ -393,21 +393,25 @@ class HotelController extends Controller
         
         $token = $request->get('g-recaptcha-response');
         
-        $this->reCaptchaVerification($token);
+        if($this->reCaptchaVerification($token) == true){
         
-        $html = $this->renderView(
-            'VientoSurAppAppBundle:Email:contact.html.twig',
-            array(
-                'txtContactName' => $request->request->get('fullname'),
-                'txtEmail' => $request->request->get('email'),
-                'txtComments' => $request->request->get('message')
-            )
-        );
+            $html = $this->renderView(
+                'VientoSurAppAppBundle:Email:contact.html.twig',
+                array(
+                    'txtContactName' => $request->request->get('fullname'),
+                    'txtEmail' => $request->request->get('email'),
+                    'txtComments' => $request->request->get('message')
+                )
+            );
 
-        $this->get('email.service')->sendCommentsEmail($html, $email);
+            $this->get('email.service')->sendCommentsEmail($html, $email);
 
-        $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
-        return new JsonResponse(array("status" => 'success'));
+            $request->getSession()->getFlashBag()->add('success', 'El mensaje se ha enviado exitosamente.');
+            return new JsonResponse(array("status" => 'success'));
+        }else{
+            $request->getSession()->getFlashBag()->add('error', 'El mensaje no se ha enviado.');
+            return new JsonResponse(array("status" => 'error'));    
+        }
     }
 
     /**
@@ -1076,8 +1080,6 @@ class HotelController extends Controller
 
     protected function reCaptchaVerification($token){
         
-        $data = array("secret" => "6LcF7noUAAAAAOnsMn5-mEEyrP_AhkYYMjyO1fF1", "response" => "$token"); 
-        
         // abrimos la sesión cURL
         $ch = curl_init();
 
@@ -1094,11 +1096,11 @@ class HotelController extends Controller
 
         // cerramos la sesión cURL
         curl_close ($ch);
-
-        // hacemos lo que queramos con los datos recibidos
-        // por ejemplo, los mostramos
-        print_r($remote_server_output);
         
+        $response = json_decode($remote_server_output);
+        
+        return $response->success;
+       
     }
 //    /**
 //     * @Route("/cards", name="viento_sur_app_get_cards")
