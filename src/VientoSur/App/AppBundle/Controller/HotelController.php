@@ -390,6 +390,10 @@ class HotelController extends Controller
     public function consultAction(Request $request)
     {
         $email = $request->request->get('email');
+        
+        print_r($request->request->all());
+        exit();
+        
         $html = $this->renderView(
             'VientoSurAppAppBundle:Email:contact.html.twig',
             array(
