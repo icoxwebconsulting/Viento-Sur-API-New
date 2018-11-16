@@ -12,11 +12,11 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <a data-category="price" class="nav-drop-menu-a" >Desde:</a>
+                <a data-category="price" class="nav-drop-menu-a" >{{ 'admin.from_the' | trans }}:</a>
                 <input name="from_price" type="text" value="{{ from_price | trans}}">
             </li>
             <li>
-                <a data-category="price" class="nav-drop-menu-a" >Hasta:</a>
+                <a data-category="price" class="nav-drop-menu-a" >{{ 'admin.until' | trans }}:</a>
                 <input name="to_price" type="text" value="{{ to_price | trans}}">
             </li>
         </ul>
@@ -24,7 +24,7 @@
     <div class="btn-group booking-sort col-xs-3 noPadding">
         <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="Actividades con días Habilitados en {{ app.session.get('destination_activity').text }} - VientoSur.net">
             <span class="sort_name" id="sort_price" style="font-size: 11px;">
-                Días Habilitados
+                {{ 'activity.activity_day_availabilities' | trans }}
             </span>
             <span class="caret"></span>
         </button>
@@ -70,7 +70,7 @@
     <div class="btn-group booking-sort col-xs-3 noPadding">
         <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="Actividades disponible para mañana, tarde o todo el día en {{ app.session.get('destination_activity').text }} - VientoSur.net">
             <span class="sort_name" id="sort_price" style="font-size: 11px;">
-                Disponible
+                {{ 'activity.available' | trans }}
             </span>
             <span class="caret"></span>
         </button>
@@ -87,7 +87,7 @@
             </li>
             <li>
                 <a data-category="available" class="nav-drop-menu-a" >
-                    Todo el Día <input name="available" type="radio" value="all" {% if available == 'all' %} checked {% endif %} style="display: inline">
+                    {{ 'activity.all_day' | trans }} <input name="available" type="radio" value="all" {% if available == 'all' %} checked {% endif %} style="display: inline">
                 </a>
             </li>
         </ul>
@@ -95,7 +95,7 @@
     <div class="btn-group booking-sort col-xs-3 noPadding">
         <button type="button" class="btnDropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="Actividades de duración por turno en {{ app.session.get('destination_activity').text }} - VientoSur.net">
             <span class="sort_name" id="sort_price" style="font-size: 11px;">
-                Duración por turno - (Horas)
+                {{ 'activity.duration_hours' | trans }}
             </span>
             <span class="caret"></span>
         </button>

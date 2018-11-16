@@ -1,4 +1,6 @@
 index:
+    activity: Activity
+    activity_detail: Detail of activities
     date_placeholder: dd/mm/yyyy
     room_code: Room code
     meal_plan: Meal plan
@@ -89,6 +91,9 @@ index:
            12_more: 12 or more
            searching: Searching Flights...
            multiple_destinations: Multiple destinations
+        activity:
+           from_placeholder: Where do you go 
+           from: Origin
     slogan: Book your trip to any part of the world,
     slogan_2: finding all the offers in one place
     answer_head: Have a questions?
@@ -566,7 +571,7 @@ admin:
     friday: Friday
     saturday: Saturday
     from_the: From the
-    from_the: Until
+    until: Until
     people: People
     select: Select
     agency: Agency
@@ -639,3 +644,12 @@ admin:
         shopping: Shopping
         singles: Alone and alone
         sport: Sports
+activity:
+    activity_availabilities: Activities available for these dates in %place% with best price 
+    activity_day_availabilities: Enabled days
+    available: Available
+    all_day: All day
+    duration_hours: Duration - (Hours)
+    search_menu:
+        destiny: Destination
+        destiny_maps: Map of destinations

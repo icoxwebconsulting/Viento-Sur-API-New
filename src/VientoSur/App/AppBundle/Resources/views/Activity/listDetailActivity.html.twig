@@ -1,4 +1,4 @@
-{% if not pagination | length  %}
+    {% if not pagination | length  %}
     <li>No se encontraron Actividades disponibles</li>
 {% else %}
     {% set targetCurrency = app.session.get('targetCurrency') %}

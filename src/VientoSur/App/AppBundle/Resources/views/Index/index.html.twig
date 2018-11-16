@@ -50,7 +50,7 @@
 
             <div class="tabbed round">
                 <ul role="tablist">
-                    <li id="actividad-tab" href="#actividad" aria-controls="actividad" role="tab" data-toggle="tab"><i class="fa fa-bicycle" aria-hidden="true"></i> Actividad</a></li>
+                    <li id="actividad-tab" href="#actividad" aria-controls="actividad" role="tab" data-toggle="tab"><i class="fa fa-bicycle" aria-hidden="true"></i> {{ 'index.activity' | trans }}</a></li>
                     {% if isIframe != true %}
                     <li id="vuelos-tab" href="#vuelos" aria-controls="vuelos" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> {{ 'index.flights' | trans }}</a></li>
                     <li class="active" href="#hoteles" aria-controls="hoteles" role="tab" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> {{ 'index.hotels' | trans }}</a></li>

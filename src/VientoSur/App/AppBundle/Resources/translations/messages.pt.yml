@@ -1,4 +1,6 @@
 index:
+    activity: Atividade
+    activity_detail: Detalhe das atividades
     date_placeholder: dd/mm/aaaa
     room_code: Código do quarto
     meal_plan: Plano de refeição
@@ -84,6 +86,9 @@ index:
            12_more: 12 ou mais
            searching: Procurando voos...
            multiple_destinations: Múltiplos destinos
+        activity:
+           from_placeholder: Digite uma cidade
+           from: Digite o destino
     slogan: Reserve a sua viagem para qualquer lugar do mundo,
     slogan_2: encontrar todas as ofertas em um só lugar
     answer_head: Tenha uma pergunta?
@@ -634,3 +639,12 @@ admin:
         shopping: Compras
         singles: Sozinho e sozinho
         sport: Esportes
+activity:
+    activity_availabilities: Atividades disponíveis para essas datas em %place% com melhor preço
+    activity_day_availabilities: Dias habilitados
+    available: Disponível
+    all_day: Todo o dia
+    duration_hours: Duração - (Horas)
+    search_menu:
+        destiny: Destino
+        destiny_maps: Mapa dos destinos

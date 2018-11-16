@@ -4,7 +4,7 @@
             <form name="searchActivity" id="search-activity" action ="{{ path('viento_sur_process_search_activity', {'_locale': app.request.locale})}}" method="POST">
                 <div class="row">
                     <div class="form-group col-xs-12">
-                        <label>Destino</label>
+                        <label>{{ 'activity.search_menu.destiny' | trans }}</label>
                         <i class="fa fa-map-marker input-icon"></i>
                         <input id="autocomplete-activity" required="" name="autocomplete" type="text" class="city-input form-control" data-provide="typeahead" value="{{ autocomplete }}">
                         <input id="latitude" name="latitude" type="hidden" value="{{ latitude }}">
@@ -21,7 +21,7 @@
         <div id="formSearch">                
             <div class="row">
                 <div class="form-group col-xs-12">
-                    <label>Mapa de destinos</label>
+                    <label>{{ 'activity.search_menu.destiny_maps' | trans }}</label>
                     <div id="MultiMap" style="width: 100%; height: 150px;"></div>
                 </div>
             </div>      
