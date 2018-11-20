@@ -251,7 +251,7 @@
                                 </p>
                             </div>
                             <div class="boxPrice col-xs-12 col-sm-3">
-                                <p>Precio final por adulto</p>
+                                <p>{{ 'activity.price' | trans }}</p>
                                 <h5>{{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  item.price, 'symbol': symbol})) }}</h5>
                                 <button id="animarscroll">{{ 'hotels.choose_room' | trans }}</button>
                             </div>
@@ -298,8 +298,8 @@
                         </div>
                         <div class="row">
                             <div class="listRooms col-xs-12">
-                                <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">Seleccione fecha y cantidad de pasajeros</h2>
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Duración: {{ item.duration }} hs - {{ render(controller('VientoSurAppAppBundle:Activity:getDayByActivity',{ 'id':  item.id})) }}
+                                <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">{{ 'activity.select_date_passengers' | trans }}</h2>
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ 'flights.duration' | trans }}: {{ item.duration }} hs - {{ render(controller('VientoSurAppAppBundle:Activity:getDayByActivity',{ 'id':  item.id})) }}
                                 <fieldset style="margin-top: 15px; margin-bottom: 15px">
                                     {% set display_am = 'none' %}
                                     {% set display_pm = 'none' %}
@@ -335,13 +335,13 @@
                                     {% endif %}    
                                     <form action ="{{ path('viento_sur_app_boking_action_pay', {'_locale': app.request.locale})}}" method="POST">
                                         <br/>
-                                        <p id="scheduleAM" style="display: {{ display_am }}">Pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}}<p>
-                                        <p id="schedulePM" style="display: {{ display_pm }}">Pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}}<p>
-                                        <p id="scheduleAll" style="display: {{ display_all }}">Pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll}} hasta las {{ item.toAll}}<p>
+                                        <p id="scheduleAM" style="display: {{ display_am }}">Pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}}<p>
+                                        <p id="schedulePM" style="display: {{ display_pm }}">Pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}}<p>
+                                        <p id="scheduleAll" style="display: {{ display_all }}">Pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll}} {{ "admin.until" | trans }} {{ item.toAll}}<p>
                                         <br>   
                                         <div class="col-xs-10">
                                             <div class="col-xs-3">
-                                                <p>Elegir fecha</p>
+                                                <p>{{ "index.search.hotel.date" | trans }}</p>
                                                 <div class="form-group">
                                                     <div class='input-group date' id='datetimepicker11'>
                                                         <input type='text' name="date" class="form-control" required="required" value='{{ date }}' />
@@ -353,7 +353,7 @@
                                                 </div>    
                                             </div> 
                                             <div class="col-xs-3">
-                                                <p>Adultos (13 años o más)</p>
+                                                <p>{{"index.search.hotel.adults" | trans}} {{"activity.adults_years" | trans}}</p>
                                                 <select id="can-adul" name="can-adul" class="form-control room-select" style="width: 50%" required="required">
                                                     {% for i in 0..item.capacityForShift %}
                                                         <option {% if 0 != i %} value="{{ i }}" {% endif %} {% if can_adul  == i  %} selected="selected" {% endif %}>{{ i }}</option>
@@ -361,7 +361,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-xs-3">
-                                                <p>Menores (0 a 12 años)</p>
+                                                <p>{{"activity.minors_years" | trans}}</p>
                                                 <select id="can-chil" name="can-chil" class="form-control room-select" style="width: 50%" required="required">
                                                     {% for i in 0..item.capacityForShift %}
                                                         <option {% if 0 != i %} value="{{ i }}" {% endif %} {% if can_chil == i %} selected="selected" {% endif %}> {{ i }}</option>
@@ -371,7 +371,7 @@
                                         </div> 
                                         <div class="col-xs-2">
                                             <div class="boxPrice">
-                                                <p>Precio final</p>
+                                                <p>{{ 'activity.price' | trans }}</p>
                                                 <h5>{{ symbol }} <samp id="currency">{{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</samp></h5>
                                                 <button id="animarscroll" type="submit">{{ 'hotels.book' | trans }}</button>
                                             </div>       
@@ -386,11 +386,11 @@
                         </div>  
                         <div class="row">
                             <div class="listRooms col-xs-12">
-                                <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">Información general</h2>
+                                <h2 class="titleSection col" title="Actividad {{ item.name }} - VientoSur.net">{{ "admin.general_information" | trans}}</h2>
                                 <div class="descriptionHotel col-xs-9">
-                                    <p id="info">Direccion de Salida: {{ item.addressOrigin}}</p>
-                                    <p id="info">Direccion de Destino: {{ item.addressDestination }}</p> 
-                                    <p id="info">Duración: {{ item.duration }} hs</p> 
+                                    <p id="info">{{ "activity.address_exit" | trans}}: {{ item.addressOrigin}}</p>
+                                    <p id="info">{{ "activity.destination_address" | trans}}: {{ item.addressDestination }}</p> 
+                                    <p id="info">{{ 'flights.duration' | trans }}: {{ item.duration }} hs</p> 
                                 </div>    
                             </div>    
                         </div> 
@@ -398,7 +398,7 @@
                             <div class="itemsHotel col-xs-12">
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <h5 title="Actividad {{ item.name }} -  VientoSur.net">Incluye</h5>
+                                        <h5 title="Actividad {{ item.name }} -  VientoSur.net">{{"activity.inclui"| trans}}</h5>
                                         <ul class="amenities-list list-services">
                                             {% for information  in item.generalInformation %}
                                                 <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{ information.name }}</li>

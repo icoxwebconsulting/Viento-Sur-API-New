@@ -36,6 +36,7 @@ class ActivityController extends Controller
         $destinationText = $request->get('autocomplete');
         $lat = $request->get('latitude');
         $lgn = $request->get('longitude');
+        $locale      = $request->get('_locale');
         
         
         //form filter 
@@ -60,7 +61,7 @@ class ActivityController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         
-        $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findByLatAndLgn($lat, $lgn, $from_price, $to_price, $day_1, $day_2, $day_3, $day_4, $day_5, $day_6, $day_7, $available, $duration);
+        $entities = $em->getRepository("VientoSurAppAppBundle:Activity")->findByLatAndLgn($lat, $lgn, $from_price, $to_price, $day_1, $day_2, $day_3, $day_4, $day_5, $day_6, $day_7, $available, $duration, $locale);
         
         $page = $request->query->getInt('page', 1);
         $paginator = $this->get('knp_paginator');

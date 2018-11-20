@@ -123,7 +123,7 @@ hotels:
     not_found: No available hotels
     last_room: Last room available
     lasts: Lasts
-    choose_room: Choose room
+    choose_room: Book now
     room_per_night: Room per night
     share_in: Share in
     hotels_in: Hotels in
@@ -141,7 +141,7 @@ hotels:
     price_per_night: Price per night
     room_per_night: Room per night
     show_rooms: Show rooms
-    choose_room: Choose room
+    choose_room: Book now
     pictures: Pictures
     picture: Picture
     map: Mapa
@@ -645,11 +645,28 @@ admin:
         singles: Alone and alone
         sport: Sports
 activity:
+    your_activity: Your activity
     activity_availabilities: Activities available for these dates in %place% with best price 
+    activity_in: Activity in
     activity_day_availabilities: Enabled days
     available: Available
     all_day: All day
     duration_hours: Duration - (Hours)
+    price: Final price
+    see_detail: See detail
+    select_date_passengers: Select date and number of passengers
+    adults_years: (13 years or more)
+    minors_years: Minors (0 to 12 years old)
+    inclui: Inclui
+    address_exit: Departure address
+    destination_address: Destination address
+    number_of_passengers: Número de passageiros
+    turn: Turn
+    confirm_your_email: Confirm your Email
+    email_not_match: Email addresses do not match
+    reservation_to_this_address: We will send the confirmation of your reservation to this address.
+    the_sale_registration: Once the payment has been made, you must return to our page to complete the sale registration
+    complete_the_field: Complete the field
     search_menu:
         destiny: Destination
         destiny_maps: Map of destinations

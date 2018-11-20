@@ -8,7 +8,7 @@ use Gedmo\Translatable\TranslatableListener;
 
 class ActivityRepository extends EntityRepository
 {
-    public function findByLatAndLgn($lat, $lgn, $from_price, $to_price, $day_1, $day_2, $day_3, $day_4, $day_5, $day_6, $day_7, $available, $duration){
+    public function findByLatAndLgn($lat, $lgn, $from_price, $to_price, $day_1, $day_2, $day_3, $day_4, $day_5, $day_6, $day_7, $available, $duration, $locale){
         
         $config = $this->getEntityManager()->getConfiguration();
         
@@ -85,7 +85,7 @@ class ActivityRepository extends EntityRepository
         'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );
 
-        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'es');
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
 
         return $query;
     }

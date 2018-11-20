@@ -66,23 +66,23 @@
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <div>
-                                                            <label class="label-lef required" for="form_passengers_first_name0">Nombre(s):</label>
-                                                            <input type="text" id="first_name" name="first_name" required="required" placeholder="Como aparece en el documento" class="form-control input-width">
+                                                            <label class="label-lef required" for="form_passengers_first_name0">{{ "hotels.labels.name" | trans }}</label>
+                                                            <input type="text" id="first_name" name="first_name" required="required" placeholder="{{"hotels.labels.name_placeholder"|trans}}" class="form-control input-width">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <div>
-                                                            <label class="label-lef required" for="form_passengers_first_name0">Apellido(s):</label>
-                                                            <input type="text" id="last_name" name="last_name" required="required" placeholder="Como aparece en el documento" class="form-control input-width">
+                                                            <label class="label-lef required" for="form_passengers_first_name0">{{ "hotels.labels.lastname" | trans }}</label>
+                                                            <input type="text" id="last_name" name="last_name" required="required" placeholder="{{"hotels.labels.name_placeholder"|trans}}" class="form-control input-width">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <div>
-                                                            <label class="label-lef required" for="form_passengers_document_number0">Doc. de Identidad:</label>
+                                                            <label class="label-lef required" for="form_passengers_document_number0">{{ "hotels.labels.document" | trans }}</label>
                                                             <input type="text" id="document_number" name="document_number" required="required" class="form-control input-width-50">                                                                                                                        
                                                         </div>
                                                     </div>
@@ -100,7 +100,7 @@
                                             <div class="row">
                                                 <div class="col-sm-2">
                                                     <div class="form-group">
-                                                        <label class="label-lef" for="">País:</label>
+                                                        <label class="label-lef" for="">{{"hotels.labels.country"|trans}}</label>
                                                         <div class="intl-tel-input allow-dropdown" style="width: 85% !important">
                                                             <input type="text" id="country_code" name="country_code" required="required" style="margin-top:5px !important; width: 50px;" class="form-control" autocomplete="off" value="+54">
                                                         </div>
@@ -108,7 +108,7 @@
                                                 </div> 
                                                 <div class="col-sm-3">
                                                     <div class="form-group">                                                                          
-                                                        <label class="label-lef" for="">Tipo:</label>
+                                                        <label class="label-lef" for="">{{"hotels.labels.type"|trans}}</label>
                                                         <select id="contact_type" name="contact_type" class="form-control type_form">
                                                             <option value="CELULAR">Celular</option>
                                                             <option value="HOME">Casa</option>
@@ -120,7 +120,7 @@
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="form-group">                       
-                                                        <label class="label-lef" for="">Número:</label>
+                                                        <label class="label-lef" for="">{{"hotels.labels.number"|trans}}</label>
                                                         <input type="text" id="contact_number" name="contact_number" required="required" class="form-control type_form">
                                                     </div>
                                                 </div>
@@ -140,8 +140,8 @@
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <div class="form-group">
-                                                        <label class="label-lef" for="">Confirme su Email:</label>
-                                                        <input type="email" id="info_email" name="info_email" required="required" placeholder="Confirme su email" class="form-control email_confirm_form" autocomplete="off">
+                                                        <label class="label-lef" for="">{{"activity.confirm_your_email"|trans}}:</label>
+                                                        <input type="email" id="info_email" name="info_email" required="required" placeholder="{{"activity.confirm_your_email"|trans}}" class="form-control email_confirm_form" autocomplete="off">
 
                                                     </div>
                                                 </div>
@@ -149,18 +149,18 @@
                                                     <div class="alert alert-danger" role="alert" style="background: #ea0000; border-color: #ea0000; color:#fff;">
                                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                         <span class="sr-only">Error:</span>
-                                                        Las direcciones de email no coinciden.
+                                                        {{"activity.email_not_match"|trans}}.
                                                     </div>
                                                 </div>
                                             </div> 
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <p class="bg-success">Enviaremos la confirmación de tu reserva a esta dirección.</p>
+                                                    <p class="bg-success">{{"activity.reservation_to_this_address"|trans}}</p>
                                                 </div>
                                             </div> 
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <p class="bg-success">Una vez realizado el pago debera volver a nuestra pagina para terminar el registro de venta</p>
+                                                    <p class="bg-success">{{"activity.the_sale_registration"|trans}}</p>
                                                 </div>
                                             </div>     
                                         </div>
@@ -171,10 +171,10 @@
                                 <div id="thumbHotel">
                                     <div class="row col-xs-12 col-sm-12 priceRoom" style="text-align: center; padding-left: 25px; ">
                                         <div class="col-xs-6 col-sm-6">
-                                            <button onclick="javascript:location.href='{{ path('viento_sur_app_app_homepage_show_activity_id',{'_locale': app.request.locale, 'id': item.id, 'latitude': latitude, 'longitude': longitude})}}'" style='background: #BBB;'>Editar</button>
+                                            <button onclick="javascript:location.href='{{ path('viento_sur_app_app_homepage_show_activity_id',{'_locale': app.request.locale, 'id': item.id, 'latitude': latitude, 'longitude': longitude})}}'" style='background: #BBB;'>{{"hotels.edit_reservation"|trans}}</button>
                                         </div>
                                         <div class="col-xs-6 col-sm-6">
-                                            <button type="submit" id='viewModalPay' data-title="Pagar- {{ item.name }}">Pagar</button>
+                                            <button type="submit" id='viewModalPay' data-title="Pagar- {{ item.name }}">{{"hotels.buy"|trans}}</button>
                                         </div>    
                                     </div>         
                                 </div>             
@@ -187,7 +187,7 @@
                 <div class="col-xs-12 col-sm-3 col-sm-pull-9">
                     <div id="sidebar">
                         <div id="infoReserva" class="hidden-xs">
-                            <h5 class="titleReserva">Su Actividad:</h5>
+                            <h5 class="titleReserva">{{ "activity.your_activity" | trans }}:</h5>
                             <p style="float: left; margin-right: 10px;"><span>{{ item.name }}</span></p>
                             <br style="clear: both" />
                             <img src="{{ render(controller('VientoSurAppAppBundle:Activity:getPictureByActivity',{ 'id':  item.id})) }}" width="95" height="95"
@@ -203,16 +203,16 @@
                             </div>
                             <div class="datesPayment">
                                 <h5>{{ 'hotels.paying' | trans }}:</h5>
-                                <p><b>Cantidad de pasajeros:</b> {% if can_adul > 0 %}{{ can_adul }} Adultos {% endif %} {% if can_chil > 0 and can_adul > 0 %} y {% endif %} {% if can_chil > 0 %}{{ can_chil }} Menores {% endif %}</p>
-                                <p><b>Duración:</b> {{ item.duration }} hs</p>
+                                <p><b>{{"activity.number_of_passengers" | trans }}:</b> {% if can_adul > 0 %}{{ can_adul }} Adultos {% endif %} {% if can_chil > 0 and can_adul > 0 %} y {% endif %} {% if can_chil > 0 %}{{ can_chil }} Menores {% endif %}</p>
+                                <p><b>{{ "flights.duration" | trans }}:</b> {{ item.duration }} hs</p>
                                 <p>
                                     <span>
                                         {% if schedule == 'am' %}
-                                            <b>Turno: AM - pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}} el día {{ date }}</b>
+                                            {{ "activity.turn" | trans }}<b>: AM - pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>
                                         {% elseif schedule == 'pm' %}
-                                            <b>Turno: PM - pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}} el día {{ date }}</b>    
+                                            <b>{{ "activity.turn" | trans }}: PM - pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
                                         {% else %}  
-                                            <b>Turno: pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll }} hasta las {{ item.toAll}} el día {{ date }}</b>    
+                                            <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll }} {{ "admin.until" | trans }} {{ item.toAll}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
                                         {% endif %}
                                     </span>
                                 </p>
@@ -264,14 +264,14 @@
                 var numeros = $('#contact_number');
                 var email = $('#contact_email');
                 var conf_email = $('#info_email');
-                if(name.val() === ''){alert('Complete el campo Nombre(s)'); name.focus();return false;}
-                if(lastname.val() === ''){alert('Complete el campo Apellido(s)'); lastname.focus();return false;}
-                if(dni.val() === ''){alert('Complete el campo Doc. de Identidad'); dni.focus();return false;}
-                if(pais.val() === ''){alert('Complete el campo País'); pais.focus();return false;}
-                if(type.val() === ''){alert('Complete el campo Tipo'); type.focus();return false;}
-                if(numeros.val() === ''){alert('Complete el campo Número'); numeros.focus();return false;}
-                if(email.val() === ''){alert('Complete el campo Email'); email.focus();return false;}
-                if(conf_email.val() === ''){alert('Complete el campo Confirme su Email'); conf_email.focus();return false;}
+                if(name.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{ "hotels.labels.name" | trans }}'); name.focus();return false;}
+                if(lastname.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{ "hotels.labels.lastname" | trans }}'); lastname.focus();return false;}
+                if(dni.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{ "hotels.labels.document" | trans }}'); dni.focus();return false;}
+                if(pais.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{"hotels.labels.country"|trans}}'); pais.focus();return false;}
+                if(type.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{"hotels.labels.type"|trans}}'); type.focus();return false;}
+                if(numeros.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{"hotels.labels.number"|trans}}'); numeros.focus();return false;}
+                if(email.val() === ''){alert('{{"activity.complete_the_field"|trans}} Email'); email.focus();return false;}
+                if(conf_email.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{"activity.confirm_your_email"|trans}}'); conf_email.focus();return false;}
                 if(email.val() === conf_email.val()){$('#errorEmail').hide();}else{$('#errorEmail').show(); return false;}
                 
                 $.ajax({

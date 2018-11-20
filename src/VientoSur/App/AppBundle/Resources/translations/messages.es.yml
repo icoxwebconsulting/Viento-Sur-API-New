@@ -644,12 +644,28 @@ admin:
         singles: Solos y solas
         sport: Deportes
 activity:
+    your_activity: Su Actividad
     activity_availabilities: Actividades disponibles para estas fechas en %place% con mejor precio
     activity_in: Actividades en
     activity_day_availabilities: Días Habilitados
     available: Disponible
     all_day: Todo el Día
     duration_hours: Duración - (Horas)
+    price: Precio final
+    see_detail: Ver detalle
+    select_date_passengers: Seleccione fecha y cantidad de pasajeros
+    adults_years: (13 años o más)
+    minors_years: Menores (0 a 12 años)
+    inclui: Incluye
+    address_exit: Dirección de Salida
+    destination_address: Dirección de Destino
+    number_of_passengers: Cantidad de pasajeros
+    turn: Turno
+    confirm_your_email: Confirme su Email
+    email_not_match: Las direcciones de email no coinciden
+    reservation_to_this_address: Enviaremos la confirmación de tu reserva a esta dirección.
+    the_sale_registration: Una vez realizado el pago deberá volver a nuestra página para terminar el registro de venta
+    complete_the_field: Complete el campo
     search_menu:
         destiny: Destino
         destiny_maps: Mapa de destinos

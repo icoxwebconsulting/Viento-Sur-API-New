@@ -117,7 +117,7 @@ hotels:
     not_found: Não foram encontrados hotéis
     last_room: Última Disponibilidade quarto
     lasts: Últimas
-    choose_room: Escolha quarto
+    choose_room: Reservar agora
     room_per_night: Quarto por noite
     share_in: Compartilhe em
     hotels_in: Hotéis em
@@ -136,7 +136,7 @@ hotels:
     price_per_night: Preço, por noite
     room_per_night: Quarto, por noite
     show_rooms: Ver quartos
-    choose_room: Escolher quarto
+    choose_room: Reservar agora
     pictures: Fotos
     picture: Foto
     map: Mapa
@@ -640,11 +640,28 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    your_activity: Sua atividade
     activity_availabilities: Atividades disponíveis para essas datas em %place% com melhor preço
+    activity_in: Atividade em
     activity_day_availabilities: Dias habilitados
     available: Disponível
     all_day: Todo o dia
     duration_hours: Duração - (Horas)
+    price: Preço final
+    see_detail: Ver detalhe
+    select_date_passengers: Selecione a data e o número de passageiros
+    adults_years: (13 anos ou mais)
+    minors_years: Menores (0 a 12 anos)
+    inclui: Inclui
+    address_exit: Endereço de partida
+    destination_address: Endereço de destino
+    number_of_passengers: Número de passageiros
+    turn: Turn
+    confirm_your_email: Confirme seu email
+    email_not_match: Os endereços de email não correspondem
+    reservation_to_this_address: Vamos enviar a confirmação da sua reserva para este endereço.
+    the_sale_registration: Uma vez que o pagamento tenha sido feito, você deve retornar à nossa página para concluir o registro da venda
+    complete_the_field: Complete o campo
     search_menu:
         destiny: Destino
         destiny_maps: Mapa dos destinos
