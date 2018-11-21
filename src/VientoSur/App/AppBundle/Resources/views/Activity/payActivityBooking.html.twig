@@ -44,8 +44,39 @@
                 <div class="col-xs-12">
                     <div id="sidebar">
                         <div id="infoReserva" class="hidden-sm hidden-md hidden-lg">
-                            <h5 class="titleReserva">{{ 'hotels.your_accommodation' | trans }}:</h5>
+                            <h5 class="titleReserva">{{ "activity.your_activity" | trans }}:</h5>
                             <p style="float: left; margin-right: 10px;"><span>{{ item.name }}</span></p>
+                            <br style="clear: both" />
+                            <img src="{{ render(controller('VientoSurAppAppBundle:Activity:getPictureByActivity',{ 'id':  item.id})) }}" width="95" height="95"
+                                         alt="{{ item.name }}" style="margin: 15px;">
+                            <br style="clear: both" />
+                            <div class="modalMap" style="font-size: 12px; color: whitesmoke; cursor: pointer">
+                                <i class="fa fa-map-marker fa-lg input-icon"  style="font-size: 12px"></i>&nbsp;
+                                <a class="booking-item-address" data-prevent="modal"
+                                   data-latitude="{{ latitude }}"
+                                   data-longitude="{{ longitude }}"
+                                   data-name="{{ item.name }}" style="font-size: 12px; color: whitesmoke">
+                                    {{ address_map }} </a>
+                            </div>
+                            <div class="datesPayment">
+                                <h5>{{ 'hotels.paying' | trans }}:</h5>
+                                <p><b>{{"activity.number_of_passengers" | trans }}:</b> {% if can_adul > 0 %}{{ can_adul }} Adultos {% endif %} {% if can_chil > 0 and can_adul > 0 %} y {% endif %} {% if can_chil > 0 %}{{ can_chil }} Menores {% endif %}</p>
+                                <p><b>{{ "flights.duration" | trans }}:</b> {{ item.duration }} hs</p>
+                                <p>
+                                    <span>
+                                        {% if schedule == 'am' %}
+                                            {{ "activity.turn" | trans }}<b>: AM - pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>
+                                        {% elseif schedule == 'pm' %}
+                                            <b>{{ "activity.turn" | trans }}: PM - pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
+                                        {% else %}  
+                                            <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll }} {{ "admin.until" | trans }} {{ item.toAll}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
+                                        {% endif %}
+                                    </span>
+                                </p>
+                                <b><span id="cuoteDesktop"  style="color: #fff"></span></b>
+                                <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</span></p>
+                                <aside>{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</aside>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -169,7 +200,7 @@
                             </div> 
                             <span class="booking-item cursor-pointer">
                                 <div id="thumbHotel">
-                                    <div class="row col-xs-12 col-sm-12 priceRoom" style="text-align: center; padding-left: 25px; ">
+                                    <div class="row col-xs-12 col-sm-12 priceRoom" style="text-align: center; padding-left: 25px; margin-left: -15px; ">
                                         <div class="col-xs-6 col-sm-6">
                                             <button onclick="javascript:location.href='{{ path('viento_sur_app_app_homepage_show_activity_id',{'_locale': app.request.locale, 'id': item.id, 'latitude': latitude, 'longitude': longitude})}}'" style='background: #BBB;'>{{"hotels.edit_reservation"|trans}}</button>
                                         </div>
