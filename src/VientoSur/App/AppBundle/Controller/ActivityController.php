@@ -195,7 +195,7 @@ class ActivityController extends Controller
         
         $destinationTextMap = "'".$activity->getAddressDestination()."'";
         
-        $regreso = 'http://viento-sur.icox.mobi'.$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
+        $regreso = $this->getParameter('url_site').$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
         $cancelado = '';
         
         // Crea el objeto MP

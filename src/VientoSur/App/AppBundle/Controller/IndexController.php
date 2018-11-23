@@ -44,7 +44,7 @@ class IndexController extends Controller
         
         $referer = $request->headers->get('referer');
         
-        if($referer == 'http://viento-sur.icox.mobi/app_dev.php/'){
+        if($referer == $this->getParameter('url_site_referer')){
             $session->clear();
         }
 

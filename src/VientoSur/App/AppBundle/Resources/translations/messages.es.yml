@@ -644,6 +644,7 @@ admin:
         singles: Solos y solas
         sport: Deportes
 activity:
+    block_date: Bloquear Fecha 
     your_activity: Su Actividad
     activity_availabilities: Actividades disponibles para estas fechas en %place% con mejor precio
     activity_in: Actividades en

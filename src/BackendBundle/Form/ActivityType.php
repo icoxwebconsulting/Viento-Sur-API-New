@@ -53,6 +53,7 @@ class ActivityType extends AbstractType
                     'mapped' => true,
                     'attr' => array(
                         "minlength" => 1, //Longitud minima
+                        "maxlength" => 1000
                     )
                 )
             )
@@ -61,7 +62,11 @@ class ActivityType extends AbstractType
                 TextareaType::class,
                 array(
                     'mapped' => false,
-                    'required' => false
+                    'required' => false,
+                    'attr' => array(
+                        "minlength" => 1, //Longitud minima
+                        "maxlength" => 1000
+                    )
                 )
             )
             ->add(
@@ -69,7 +74,11 @@ class ActivityType extends AbstractType
                 TextareaType::class,
                 array(
                     'mapped' => false,
-                    'required' => false
+                    'required' => false,
+                    'attr' => array(
+                        "minlength" => 1, //Longitud minima
+                        "maxlength" => 1000
+                    )
                 )
             )
             ->add(

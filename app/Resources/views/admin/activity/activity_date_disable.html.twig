@@ -15,11 +15,11 @@
                 <i class="fa fa-align-justify"></i> {{ activity.name }} - Deshabilitar por fechas
                 <a href="{{ path('actyvity_list') }}" class="btn" style="float:right">{{ 'admin.back' | trans }}</a>
             </div>
-            <div>
+            <div class="col-lg-6">
                 <form method="POST" name="date-disable">
                     <input type="text" class="form-control date" name="date" placeholder="Pick the multiple dates" value="{{ entity.disableAt }}" style="display: none">
                     <input type="hidden" value="{{ activity.id }}" name="activity" />
-                    <button id="send" type="submit" class="btn btn-success btn-lg pull-right" style="margin-top: 300px; position: absolute;"><i class="fa fa-dot-circle-o"></i> {{ 'admin.send' | trans }}</button>
+                    <button id="send" type="submit" class="btn btn-success btn-lg pull-right" style="margin-top: 300px; position: absolute;"><i class="fa fa-dot-circle-o"></i> {{ 'activity.block_date' | trans }}</button>
                 </form>
             </div>
         </div>
@@ -46,7 +46,7 @@
   margin-left: 41px;
   top: 0 !important;
   left: 0 !important;
-  width: 93%;
+  width: 50%;
 }
 .datepicker-inline {
   width: 220px;

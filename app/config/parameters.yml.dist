@@ -45,3 +45,6 @@ parameters:
     google_api_key_shorter: 'AIzaSyArVearZl_EkMJP1moq2Zksa5oZhHzlGt4'
 
     items_per_page: 10
+
+    url_site_referer: 'http://vientosur.local:8080/app_dev.php/'
+    url_site: 'http://vientosur.local:8080'

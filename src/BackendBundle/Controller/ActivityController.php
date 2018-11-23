@@ -209,11 +209,11 @@ class ActivityController extends Controller
             $descriptionPt = $form->get('descriptionPt')->getData();
             $descriptionEn = $form->get('descriptionEn')->getData();
             
-            if($rol===1){
-                $activity_agency = $request->get('activity_agency_id');
-                $activity_agency_object = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneById($activity_agency);
-                $entity->setActivityAgency($activity_agency_object);                
-            }
+           
+            $activity_agency = $request->get('activity_agency_id');
+            $activity_agency_object = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneById($activity_agency);
+            $entity->setActivityAgency($activity_agency_object);                
+           
 
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
