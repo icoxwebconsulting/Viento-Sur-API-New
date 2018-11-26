@@ -645,6 +645,7 @@ admin:
         singles: Alone and alone
         sport: Sports
 activity:
+    text_date_block: Select the dates in which you can not provide activities. 
     block_date: Block Date
     your_activity: Your activity
     activity_availabilities: Activities available for these dates in %place% with best price 

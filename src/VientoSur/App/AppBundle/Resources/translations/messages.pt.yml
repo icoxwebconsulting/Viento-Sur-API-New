@@ -640,6 +640,7 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    text_date_block: Selecione as datas em que você não pode fornecer atividades. 
     block_date: Bloquear Data
     your_activity: Sua atividade
     activity_availabilities: Atividades disponíveis para essas datas em %place% com melhor preço

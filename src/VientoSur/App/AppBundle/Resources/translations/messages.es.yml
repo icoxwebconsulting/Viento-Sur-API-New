@@ -644,6 +644,7 @@ admin:
         singles: Solos y solas
         sport: Deportes
 activity:
+    text_date_block: Seleccione las fechas en la cual no podrá proveer actividades. 
     block_date: Bloquear Fecha 
     your_activity: Su Actividad
     activity_availabilities: Actividades disponibles para estas fechas en %place% con mejor precio

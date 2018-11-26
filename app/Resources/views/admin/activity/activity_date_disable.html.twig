@@ -16,6 +16,7 @@
                 <a href="{{ path('actyvity_list') }}" class="btn" style="float:right">{{ 'admin.back' | trans }}</a>
             </div>
             <div class="col-lg-6">
+                <p style="margin-bottom: 25px;">(*) {{ "activity.text_date_block" | trans }}</p>
                 <form method="POST" name="date-disable">
                     <input type="text" class="form-control date" name="date" placeholder="Pick the multiple dates" value="{{ entity.disableAt }}" style="display: none">
                     <input type="hidden" value="{{ activity.id }}" name="activity" />
