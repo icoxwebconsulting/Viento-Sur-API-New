@@ -317,8 +317,8 @@
                                             {% set display_am = 'block' %}
                                         {% endif %}    
                                         <select id="schedule_select" name="schedule_am_pm" class="form-control room-select" style="width: 150px">
-                                            <option {% if schedule == 'am '%} selected="selected" {% endif %}>AM</option>
-                                            <option {% if schedule == 'pm' %} selected="selected" {% endif %}>PM</option>
+                                            <option {% if schedule == 'am '%} selected="selected" {% endif %}>{{ "activity.morning" | trans}}</option>
+                                            <option {% if schedule == 'pm' %} selected="selected" {% endif %}>{{ "activity.afternoon" | trans}}</option>
                                         </select>    
                                     {% elseif item.Am == 1 %}    
                                         <legend>AM</legend> 
