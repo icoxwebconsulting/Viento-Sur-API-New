@@ -297,11 +297,11 @@ class ActivityController extends Controller
      * @return string result
      */
     function distance($pointInit, $pointEnd) {
-        $latInit = $pointInit['latitude_destination'];
-        $longInit = $pointInit['longitude_destination'];
+        $latInit = (float) $pointInit['latitude_destination'];
+        $longInit = (float) $pointInit['longitude_destination'];
 
-        $latEnd = $pointEnd['latitude_destination'];
-        $longEnd = $pointEnd['longitude_destination'];
+        $latEnd = (float) $pointEnd['latitude_destination'];
+        $longEnd = (float) $pointEnd['longitude_destination'];
 
         $theta = $longInit - $longEnd;
         $dist = sin(deg2rad($latInit)) * sin(deg2rad($latEnd)) +  cos(deg2rad($latInit)) * cos(deg2rad($latEnd)) * cos(deg2rad($theta));

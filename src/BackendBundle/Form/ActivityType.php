@@ -83,27 +83,51 @@ class ActivityType extends AbstractType
             )
             ->add(
                 'address_origin',
-                HiddenType::class
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )  
             )
             ->add(
                 'latitude_origin',
-                HiddenType::class
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )  
             )
             ->add(
                 'longitude_origin',
-                HiddenType::class
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )  
             )  
             ->add(
                 'address_destination',
-                HiddenType::class
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )  
             )
             ->add(
                 'latitude_destination',
-                HiddenType::class
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )  
             )
             ->add(
                 'longitude_destination',
-                HiddenType::class
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )  
             )    
             ->add(
                 'price',

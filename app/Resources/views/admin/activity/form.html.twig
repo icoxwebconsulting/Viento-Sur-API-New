@@ -110,13 +110,7 @@
                                                 <label class="col-md-6 form-control-label" for="search-address">{{ 'hotels.address' | trans }} de Salida y / o Destino*</label>
                                             </div>
                                             <div class="form-group">
-                                                <div class="col-md-9">
-                                                    {{ form_widget(form.address_origin) }}
-                                                    {{ form_widget(form.latitude_origin) }}
-                                                    {{ form_widget(form.longitude_origin) }}
-                                                    {{ form_widget(form.address_destination) }}
-                                                    {{ form_widget(form.latitude_destination) }}
-                                                    {{ form_widget(form.longitude_destination) }}
+                                                <div class="col-md-9">            
                                                 </div>
                                             </div>
                                             <div class="form-group row" style="margin-bottom: 0rem;">
@@ -128,11 +122,25 @@
                                         <div class="col-md-6">
                                             <div class="col-md-12">
                                                 <div class="row" style="padding: 15px">
-                                                    <h4>Direccion de Salida:  <em id="show-exit">{{ form.address_origin.vars.value }}</em></h4>
+                                                    <h4>{{ "activity.address_exit" | trans }}:</h4>  
+                                                            {% set latitude = "activity.latitude" | trans  %}
+                                                            {% set longitude = "activity.longitude" | trans %}
+                                                            {% set address_example = "activity.adress_example" | trans %}
+                                                        <em id="show-destination">
+                                                            {{ form_widget(form.address_origin, {'attr':{'style':'width: 250px', 'class': 'form-control', 'required': 'required', 'placeholder': address_example,}}) }}
+                                                            {{ form_widget(form.latitude_origin, {'attr':{'style':'width: 250px', 'class': 'form-control', 'required': 'required', 'placeholder': latitude,}}) }}
+                                                            {{ form_widget(form.longitude_origin, {'attr':{'style':'width: 250px', 'class': 'form-control', 'required': 'required', 'placeholder': longitude,}}) }}
+                                                        </em>
                                                     <br>
-                                                    <h4>Direccion de Destino: <em id="show-destination">{{ form.address_destination.vars.value }}</em></h4>
+                                                    <h4>{{ "activity.destination_address" | trans }}:</h4>
+                                                        <em id="show-destination">
+                                                            {{ form_widget(form.address_destination, {'attr':{'style':'width: 250px', 'class': 'form-control', 'required': 'required', 'placeholder': address_example,}}) }}
+                                                            {{ form_widget(form.latitude_destination , {'attr':{'style':'width: 250px', 'class': 'form-control', 'required': 'required', 'placeholder': latitude,}}) }}
+                                                            {{ form_widget(form.longitude_destination, {'attr':{'style':'width: 250px', 'class': 'form-control', 'required': 'required', 'placeholder': longitude,}}) }}
+                                                        </em>
                                                     <br>
-                                                    <button type="button" id="reset-location">Reiniciar</button>
+                                                    <br>
+                                                    <button type="button" id="reset-location">{{"activity.reset_address" | trans }}</button>
                                                 </div>    
                                             </div>    
                                         </div>    
@@ -234,7 +242,7 @@
 
                                 <div class="form-group">
                                     <fieldset class="fieldset-custom" style="margin: 0px;">
-                                        <label class="label-fieldset" style="left: 45px;">AM</label>
+                                        <label class="label-fieldset" style="left: 45px;">{{ "activity.morning" | trans}}</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
                                             {{ form_widget(form.pick_up_am) }}
@@ -258,7 +266,7 @@
                                 </div>
                                 <div class="form-group" style="background: #EBF5FB;">
                                     <fieldset class="fieldset-custom" style="margin: 0px;">
-                                        <label class="label-fieldset" style="left: 45px;">PM</label>
+                                        <label class="label-fieldset" style="left: 45px;">{{ "activity.afternoon" | trans}}</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
                                             {{ form_widget(form.pick_up_pm) }}
@@ -685,7 +693,7 @@
               searchAheadOptions: {
                   limit: 2
               }
-            }).on('geocode_response', function(eventResponse) {
+            }).on('searchahead_selected', function(eventResponse) {
                 console.log(eventResponse);
                 var lat = document.getElementById("appbundle_activity_latitude_origin").value;
                 if(lat === ''){
@@ -693,17 +701,17 @@
                 }    
                 
                 if(count === 0 ){
-                   document.getElementById("appbundle_activity_latitude_origin").value = eventResponse.results[0].locations[0].latLng.lat;
-                   document.getElementById("appbundle_activity_longitude_origin").value = eventResponse.results[0].locations[0].latLng.lng; 
-                   address = eventResponse.results[0].locations[0].street+', '+eventResponse.results[0].locations[0].adminArea5+', '+eventResponse.results[0].locations[0].adminArea3+', '+eventResponse.results[0].locations[0].adminArea1+', '+eventResponse.results[0].locations[0].postalCode;
-                   document.getElementById("show-exit").innerHTML = address;
+                   document.getElementById("appbundle_activity_latitude_origin").value  = eventResponse.result.place.geometry.coordinates[0];
+                   document.getElementById("appbundle_activity_longitude_origin").value = eventResponse.result.place.geometry.coordinates[1]; 
+                   address = eventResponse.result.displayString;
+                   //document.getElementById("show-exit").innerHTML = address;
                    document.getElementById("appbundle_activity_address_origin").value = address;
                    count++;
                 }else{
-                   document.getElementById("appbundle_activity_latitude_destination").value = eventResponse.results[0].locations[0].latLng.lat;
-                   document.getElementById("appbundle_activity_longitude_destination").value = eventResponse.results[0].locations[0].latLng.lng; 
-                   address = eventResponse.results[0].locations[0].street+', '+eventResponse.results[0].locations[0].adminArea5+', '+eventResponse.results[0].locations[0].adminArea3+', '+eventResponse.results[0].locations[0].adminArea1+', '+eventResponse.results[0].locations[0].postalCode;
-                   document.getElementById("show-destination").innerHTML = address;
+                   document.getElementById("appbundle_activity_latitude_destination").value  = eventResponse.result.place.geometry.coordinates[0];
+                   document.getElementById("appbundle_activity_longitude_destination").value = eventResponse.result.place.geometry.coordinates[1]; 
+                   address = eventResponse.result.displayString;
+                   //document.getElementById("show-destination").innerHTML = address;
                    document.getElementById("appbundle_activity_address_destination").value = address; 
                    count = 0;
                 }    
@@ -827,17 +835,36 @@
 
             $("#btbsubpag1").click(function() {
                 //tomamos el valor de cada input y guardamos en variables
-                var inties = $('#appbundle_activity_name').val();
-                var intipt = $('#appbundle_activity_namePt').val();
-                var intien = $('#appbundle_activity_nameEn').val();
+                var inties = $('#appbundle_activity_name');
+                var intipt = $('#appbundle_activity_namePt');
+                var intien = $('#appbundle_activity_nameEn');
                 //var insalida = $('#insalida').val();
                 //var indestino = $('#indestino').val();
-                var orig_insalida = $('#appbundle_activity_address_origin').val();
-                var orig_indestino = $('#appbundle_activity_address_destination').val();
-
+                var orig_insalida = $('#appbundle_activity_address_origin');
+                var orig_indestino = $('#appbundle_activity_address_destination');
+                
+                if(inties.val() === ''){
+                    alert("Ingrese el nombre de la actividad");
+                    inties.focus();
+                    return false;
+                } 
+                else if(intipt.val() === ''){
+                    alert("Digite o nome da atividade");
+                    intipt.focus();
+                    return false;
+                } 
+                else if(intipt.val() == ''){
+                    alert("Enter activity name");
+                    intipt.focus();
+                    return false;
+                }else if(orig_insalida.val() === '' || orig_indestino.val() === ''){
+                    alert("Ingrese la Dirección");
+                    return false;
+                }    
+                
                 //alert(inties + intipt + intien + orig_insalida + orig_indestino);
 
-                if (inties != '' && intipt != '' && intien != '' && orig_insalida != '' && orig_indestino != '') {
+                if (inties.val() != '' && intipt.val() != '' && intien.val() != '' && orig_insalida.val() != '' && orig_indestino.val() != '') {
                  //alert("Not a valid character");
                  $('#boton1').removeClass("btn-primary").addClass("btn-default");
                  $('#boton2').removeClass("btn-default").addClass("btn-primary");

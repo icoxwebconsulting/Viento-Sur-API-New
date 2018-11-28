@@ -640,6 +640,12 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    afternoon: à tarde
+    morning: Amanhã
+    adress_example: Endereço, Cidade, Província, País
+    latitude: Latitude
+    longitude: Longitude
+    reset_address: Reiniciar
     text_date_block: Selecione as datas em que você não pode fornecer atividades. 
     block_date: Bloquear Data
     your_activity: Sua atividade
