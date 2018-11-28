@@ -41,7 +41,7 @@ class ActivityController extends Controller
         
         //form filter 
         $from_price = $request->get('from_price', 250);
-        $to_price   = $request->get('to_price', 1560);
+        $to_price   = $request->get('to_price', 2560);
         
         $day_1      = $request->get('day_1', 0);
         $day_2      = $request->get('day_2', 0);
