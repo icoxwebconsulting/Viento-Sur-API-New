@@ -640,6 +640,9 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    several_days: Vários dias
+    midday: Meio dia
+    select_duration: Selecione a duração
     afternoon: à tarde
     morning: Amanhã
     adress_example: Endereço, Cidade, Província, País

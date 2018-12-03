@@ -220,6 +220,24 @@ class Activity
     
     /**
      * @var string
+     * @ORM\Column(name="from_several", type="string")
+     */
+    protected $from_several;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="to_several", type="string")
+     */
+    protected $to_several;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="several_day", type="boolean",options={"default" : 0})
+     */
+    protected $several_day;
+    
+    /**
+     * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="duration", type="string", length=255)
      */
@@ -242,6 +260,12 @@ class Activity
      * @ORM\Column(name="pick_up_all", type="string", length=255)
      */
     protected $pick_up_all;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="pick_up_several", type="string", length=255)
+     */
+    protected $pick_up_several;
     
     /**
      * @ORM\ManyToMany(targetEntity="GeneralInformation")
@@ -992,8 +1016,10 @@ class Activity
       
         foreach ($newValues as $key => $value) {
             $index++;
-            if($index < $coutn){
-                $data.= $key.',';
+            if($coutn === 1){
+                $data.= $key;
+            }elseif($index < $coutn){
+                $data.= $key.', ';
             }else{
                 $data = substr($data, 0, -1);
                 $data.=' y '. $key;
@@ -1015,4 +1041,220 @@ class Activity
         
         return $val;
     } 
+
+    /**
+     * Set addressOrigin
+     *
+     * @param string $addressOrigin
+     *
+     * @return Activity
+     */
+    public function setAddressOrigin($addressOrigin)
+    {
+        $this->address_origin = $addressOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get addressOrigin
+     *
+     * @return string
+     */
+    public function getAddressOrigin()
+    {
+        return $this->address_origin;
+    }
+
+    /**
+     * Set latitudeOrigin
+     *
+     * @param string $latitudeOrigin
+     *
+     * @return Activity
+     */
+    public function setLatitudeOrigin($latitudeOrigin)
+    {
+        $this->latitude_origin = $latitudeOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get latitudeOrigin
+     *
+     * @return string
+     */
+    public function getLatitudeOrigin()
+    {
+        return $this->latitude_origin;
+    }
+
+    /**
+     * Set longitudeOrigin
+     *
+     * @param string $longitudeOrigin
+     *
+     * @return Activity
+     */
+    public function setLongitudeOrigin($longitudeOrigin)
+    {
+        $this->longitude_origin = $longitudeOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get longitudeOrigin
+     *
+     * @return string
+     */
+    public function getLongitudeOrigin()
+    {
+        return $this->longitude_origin;
+    }
+
+    /**
+     * Set addressDestination
+     *
+     * @param string $addressDestination
+     *
+     * @return Activity
+     */
+    public function setAddressDestination($addressDestination)
+    {
+        $this->address_destination = $addressDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get addressDestination
+     *
+     * @return string
+     */
+    public function getAddressDestination()
+    {
+        return $this->address_destination;
+    }
+
+    /**
+     * Set latitudeDestination
+     *
+     * @param string $latitudeDestination
+     *
+     * @return Activity
+     */
+    public function setLatitudeDestination($latitudeDestination)
+    {
+        $this->latitude_destination = $latitudeDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get latitudeDestination
+     *
+     * @return string
+     */
+    public function getLatitudeDestination()
+    {
+        return $this->latitude_destination;
+    }
+
+    /**
+     * Set longitudeDestination
+     *
+     * @param string $longitudeDestination
+     *
+     * @return Activity
+     */
+    public function setLongitudeDestination($longitudeDestination)
+    {
+        $this->longitude_destination = $longitudeDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get longitudeDestination
+     *
+     * @return string
+     */
+    public function getLongitudeDestination()
+    {
+        return $this->longitude_destination;
+    }
+
+    /**
+     * Set fromSeveral
+     *
+     * @param string $fromSeveral
+     *
+     * @return Activity
+     */
+    public function setFromSeveral($fromSeveral)
+    {
+        $this->from_several = $fromSeveral;
+
+        return $this;
+    }
+
+    /**
+     * Get fromSeveral
+     *
+     * @return string
+     */
+    public function getFromSeveral()
+    {
+        return $this->from_several;
+    }
+
+    /**
+     * Set toSeveral
+     *
+     * @param string $toSeveral
+     *
+     * @return Activity
+     */
+    public function setToSeveral($toSeveral)
+    {
+        $this->to_several = $toSeveral;
+
+        return $this;
+    }
+
+    /**
+     * Get toSeveral
+     *
+     * @return string
+     */
+    public function getToSeveral()
+    {
+        return $this->to_several;
+    }
+
+    /**
+     * Set severalDay
+     *
+     * @param boolean $severalDay
+     *
+     * @return Activity
+     */
+    public function setSeveralDay($severalDay)
+    {
+        $this->several_day = $severalDay;
+
+        return $this;
+    }
+
+    /**
+     * Get severalDay
+     *
+     * @return boolean
+     */
+    public function getSeveralDay()
+    {
+        return $this->several_day;
+    }
 }

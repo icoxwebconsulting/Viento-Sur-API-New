@@ -209,7 +209,14 @@ class ActivityType extends AbstractType
                  array(
                     'required' => false, 
                 )    
-            )     
+            )   
+            ->add(
+                 'several_day',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )    
+            )       
             ->add(
                 'capacity_for_shift',
                 ChoiceType::class,
@@ -461,6 +468,52 @@ class ActivityType extends AbstractType
                                   '23:00'=>'23:00',]
                 )
             )
+            ->add(
+                'pick_up_several',
+                ChoiceType::class,
+                array(
+                    'choices' => ['00:00'=>'00:00',
+                                  '01:00'=>'01:00',  
+                                  '02:00'=>'02:00',
+                                  '03:00'=>'03:00',
+                                  '04:00'=>'04:00',
+                                  '05:00'=>'05:00',
+                                  '06:00'=>'06:00',
+                                  '07:00'=>'07:00',
+                                  '08:00'=>'08:00',
+                                  '09:00'=>'09:00',
+                                  '10:00'=>'10:00',
+                                  '11:00'=>'11:00',
+                                  '12:00'=>'12:00',  
+                                  '13:00'=>'13:00',
+                                  '14:00'=>'14:00',  
+                                  '15:00'=>'15:00',
+                                  '16:00'=>'16:00',
+                                  '17:00'=>'17:00',
+                                  '18:00'=>'18:00',
+                                  '19:00'=>'19:00',
+                                  '20:00'=>'20:00',
+                                  '21:00'=>'21:00',
+                                  '22:00'=>'22:00',
+                                  '23:00'=>'23:00',]
+                )
+            ) 
+            ->add(
+                'from_several',
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )    
+            )    
+            ->add(
+                'to_several',
+                TextType::class,
+                array(
+                    'label' => false,
+                    'required' => true
+                )    
+            )        
             ->add('general_information' , EntityType::class , array(
                       'class'    => GeneralInformation::class ,
                       'query_builder' => function (EntityRepository $er) {

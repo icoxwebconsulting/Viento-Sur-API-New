@@ -220,6 +220,24 @@ class Activity
     
     /**
      * @var string
+     * @ORM\Column(name="from_several", type="string")
+     */
+    protected $from_several;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="to_several", type="string")
+     */
+    protected $to_several;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="several_day", type="boolean",options={"default" : 0})
+     */
+    protected $several_day;
+    
+    /**
+     * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="duration", type="string", length=255)
      */
@@ -242,6 +260,12 @@ class Activity
      * @ORM\Column(name="pick_up_all", type="string", length=255)
      */
     protected $pick_up_all;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="pick_up_several", type="string", length=255)
+     */
+    protected $pick_up_several;
     
     /**
      * @ORM\ManyToMany(targetEntity="GeneralInformation")
@@ -1160,5 +1184,101 @@ class Activity
     public function getLongitudeDestination()
     {
         return $this->longitude_destination;
+    }
+
+    /**
+     * Set fromSeveral
+     *
+     * @param string $fromSeveral
+     *
+     * @return Activity
+     */
+    public function setFromSeveral($fromSeveral)
+    {
+        $this->from_several = $fromSeveral;
+
+        return $this;
+    }
+
+    /**
+     * Get fromSeveral
+     *
+     * @return string
+     */
+    public function getFromSeveral()
+    {
+        return $this->from_several;
+    }
+
+    /**
+     * Set toSeveral
+     *
+     * @param string $toSeveral
+     *
+     * @return Activity
+     */
+    public function setToSeveral($toSeveral)
+    {
+        $this->to_several = $toSeveral;
+
+        return $this;
+    }
+
+    /**
+     * Get toSeveral
+     *
+     * @return string
+     */
+    public function getToSeveral()
+    {
+        return $this->to_several;
+    }
+
+    /**
+     * Set severalDay
+     *
+     * @param boolean $severalDay
+     *
+     * @return Activity
+     */
+    public function setSeveralDay($severalDay)
+    {
+        $this->several_day = $severalDay;
+
+        return $this;
+    }
+
+    /**
+     * Get severalDay
+     *
+     * @return boolean
+     */
+    public function getSeveralDay()
+    {
+        return $this->several_day;
+    }
+
+    /**
+     * Set pickUpSeveral
+     *
+     * @param string $pickUpSeveral
+     *
+     * @return Activity
+     */
+    public function setPickUpSeveral($pickUpSeveral)
+    {
+        $this->pick_up_several = $pickUpSeveral;
+
+        return $this;
+    }
+
+    /**
+     * Get pickUpSeveral
+     *
+     * @return string
+     */
+    public function getPickUpSeveral()
+    {
+        return $this->pick_up_several;
     }
 }
