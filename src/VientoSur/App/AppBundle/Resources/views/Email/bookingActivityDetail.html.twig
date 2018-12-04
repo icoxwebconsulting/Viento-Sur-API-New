@@ -70,13 +70,15 @@
                             <h4 style="margin: 0; padding: 0;">
                                 <span>
                                     {% if schedule == 'am' %}
-                                        <b>Turno: AM - pick up: {{ item.pickUpAm }} - desde las {{ item.fromAm}} hasta las {{ item.toAm}}</b>
+                                        <b>{{ "activity.turn" | trans }}: AM - pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}} {{ "index.search.hotel.date" | trans }}</b>
                                     {% elseif schedule == 'pm' %}
-                                        <b>Turno: PM - pick up: {{ item.pickUpPm }} - desde las {{ item.fromPm}} hasta las {{ item.toPm}}</b>    
-                                    {% else %}  
-                                        <b>Turno: pick up: {{ item.pickUpAll }} - desde las {{ item.fromAll }} hasta las {{ item.toAll}}</b>    
+                                        <b>{{ "activity.turn" | trans }}: PM - pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}} {{ "index.search.hotel.date" | trans }}</b>    
+                                    {% elseif schedule == 'all_day'  %}  
+                                        <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll }} {{ "admin.until" | trans }} {{ item.toAll}} {{ "index.search.hotel.date" | trans }}</b>    
+                                    {% elseif schedule == 'several_day'  %} 
+                                        <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromSeveral }} {{ "admin.until" | trans }} {{ item.toSeveral}}</b>    
                                     {% endif %}
-                                        - <b>Duración:</b> {{ item.duration }} hs
+                                        - <b>{{ "flights.duration" | trans }}:</b> {{ item.duration }} hs
                                 </span>
                             </h4>
                         </td> 

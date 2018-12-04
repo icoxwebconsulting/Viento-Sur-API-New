@@ -120,6 +120,23 @@ class ActivityController extends Controller
         $can_chil    = $session->get('can_chil')?$session->get('can_chil'):0;
         $date        = $session->get('date')?$session->get('date'):'';
         $schedule    = $session->get('schedule')?$session->get('schedule'):'';
+        $several_day = '';
+        
+        if($activity->getSeveralDay()){
+            $time_from = strtotime($activity->getFromSeveral());
+            
+            $newformatFrom = new \DateTime(date('Y-d-m',$time_from));
+            
+            $time_to = strtotime($activity->getToSeveral());
+            
+            $newformatTo = new \DateTime(date('Y-d-m',$time_to));
+            
+            $diff = $newformatFrom->diff($newformatTo);
+            
+            $several_day = $diff->days;
+            
+        }
+        
         
         $date_disabled   = $em->getRepository("VientoSurAppAppBundle:DatesDisableActivity")->findByActivity($activity);
         
@@ -146,7 +163,9 @@ class ActivityController extends Controller
             'date'=>$date,
             'can_adul'=>(Int) $can_adul,
             'can_chil'=>(Int) $can_chil,
-            'schedule'=>$schedule
+            'several_day'=>(Int) $several_day,
+            'from_severla' => $activity->getFromSeveral(),
+            'to_severla' => $activity->getToSeveral(),
         ));
     }
     
@@ -570,6 +589,9 @@ class ActivityController extends Controller
         $reservation = $em->getRepository('VientoSurAppAppBundle:Reservation')->findOneById($reservationId);
         $picture = $em->getRepository("VientoSurAppAppBundle:Picture")->findOneByActivity($reservation->getActivity());
         
+        $base_path ='';
+        
+        if($picture)
         $base_path = $request->server->get('DOCUMENT_ROOT').'/uploads/activity/image/'.$reservation->getActivity()->getId().'/'.$picture->getImageName();
         
         $knp_snappy->generateFromHtml(
@@ -577,8 +599,8 @@ class ActivityController extends Controller
                 'VientoSurAppAppBundle:Pdf:bookingActivity.html.twig', array(
                     'reservation'=>$reservation,
                     'item'=>$reservation->getActivity(),
-                    'latitude' => $reservation->getActivity()->getLatitudeDestination(),
-                    'longitude' => $reservation->getActivity()->getLongitudeDestination(),
+                    'latitude' => (Float) $reservation->getActivity()->getLatitudeDestination(),
+                    'longitude' => (Float) $reservation->getActivity()->getLongitudeDestination(),
                     'address_map' => trim($reservation->getActivity()->getAddressDestination(), ','),
                     'activity_phone'=>$reservation->getActivityAgency()->getPhone(),
                     'checking_date'=>$reservation->getCheckin(),

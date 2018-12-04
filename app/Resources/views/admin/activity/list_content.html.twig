@@ -18,6 +18,7 @@
         {% endif %}
     </td>
     <td>
+        <a href="{{ path('viento_sur_app_app_homepage_show_activity_id', {id: entity.id, latitude: entity.latitudeDestination, longitude: entity.longitudeDestination}) }}" data-toggle="tooltip" title="Ver" target="_blanck"><i class="fa fa-eye"></i></a>
         <a href="{{ path('activity_picture_list', {id: entity.id}) }}" data-toggle="tooltip" title="Imagen"><i class="fa fa-image"></i></a>
         <a href="{{ path('activity_date_disable', {id: entity.id}) }}" data-toggle="tooltip" title="Disable Activity by Dates"><i class="fa fa-calendar"></i></a>
         <a href="{{ path('actyvity_edit', {id: entity.id}) }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a>

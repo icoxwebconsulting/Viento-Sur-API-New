@@ -68,8 +68,10 @@
                                             {{ "activity.turn" | trans }}<b>: AM - pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>
                                         {% elseif schedule == 'pm' %}
                                             <b>{{ "activity.turn" | trans }}: PM - pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
-                                        {% else %}  
+                                        {% elseif schedule == 'all_day'  %}  
                                             <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll }} {{ "admin.until" | trans }} {{ item.toAll}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
+                                        {% elseif schedule == 'several_day'  %} 
+                                            <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromSeveral }} {{ "admin.until" | trans }} {{ item.toSeveral}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
                                         {% endif %}
                                     </span>
                                 </p>
@@ -239,11 +241,13 @@
                                 <p>
                                     <span>
                                         {% if schedule == 'am' %}
-                                            {{ "activity.turn" | trans }}<b>: AM - pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>
+                                            {{ "activity.turn" | trans }}<b>: AM - pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}} {{ "index.search.hotel.date" | trans }}</b>
                                         {% elseif schedule == 'pm' %}
                                             <b>{{ "activity.turn" | trans }}: PM - pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
-                                        {% else %}  
+                                        {% elseif schedule == 'all_day'  %}  
                                             <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll }} {{ "admin.until" | trans }} {{ item.toAll}} {{ "index.search.hotel.date" | trans }} {{ date }}</b>    
+                                        {% elseif schedule == 'several_day'  %} 
+                                            <b>{{ "activity.turn" | trans }}: pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromSeveral }} {{ "admin.until" | trans }} {{ item.toSeveral}} {{ "index.search.hotel.checkout_date" | trans }}:  {{ date }}</b>    
                                         {% endif %}
                                     </span>
                                 </p>

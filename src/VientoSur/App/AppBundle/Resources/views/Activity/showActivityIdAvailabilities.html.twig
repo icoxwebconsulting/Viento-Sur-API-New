@@ -332,14 +332,22 @@
                                         <legend>Todo el día</legend>
                                         {% set display_all = 'block' %}
                                         {% set schedule = "all_day" %}
+                                    {% elseif item.severalDay == 1%} 
+                                        <legend>{{ several_day }} día/s</legend>
+                                        {% set display_several = 'block' %}
+                                        {% set schedule = "several_day" %}
                                     {% endif %}    
                                     <form action ="{{ path('viento_sur_app_boking_action_pay', {'_locale': app.request.locale})}}" method="POST">
                                         <br/>
                                         <p id="scheduleAM" style="display: {{ display_am }}">Pick up: {{ item.pickUpAm }} - {{ "admin.from_the" | trans }} {{ item.fromAm}} {{ "admin.until" | trans }} {{ item.toAm}}<p>
                                         <p id="schedulePM" style="display: {{ display_pm }}">Pick up: {{ item.pickUpPm }} - {{ "admin.from_the" | trans }} {{ item.fromPm}} {{ "admin.until" | trans }} {{ item.toPm}}<p>
                                         <p id="scheduleAll" style="display: {{ display_all }}">Pick up: {{ item.pickUpAll }} - {{ "admin.from_the" | trans }} {{ item.fromAll}} {{ "admin.until" | trans }} {{ item.toAll}}<p>
+                                        <p id="scheduleSeveral" style="display: {{ display_several }}">Pick up: {{ item.pickUpSeveral }} - {{ "admin.from_the" | trans }} {{ item.fromSeveral}} {{ "admin.until" | trans }} {{ item.toSeveral}}<p>
                                         <br>   
                                         <div class="col-xs-12 col-sm-10" style="margin-left: -30px; margin-bottom: 10px;">
+                                            {% if item.severalDay == 1%}
+                                                <input type='hidden' name="date" class="form-control" required="required" value='{{ item.fromSeveral}}' />
+                                            {% else %}    
                                             <div class="col-xs-4">
                                                 <p>{{ "index.search.hotel.date" | trans }}</p>
                                                 <div class="form-group">
@@ -352,6 +360,7 @@
                                                     </div>
                                                 </div>    
                                             </div> 
+                                            {% endif %}            
                                             <div class="col-xs-3">
                                                 <p>{{"index.search.hotel.adults" | trans}} {{"activity.adults_years" | trans}}</p>
                                                 <select id="can-adul" name="can-adul" class="form-control room-select" style="width: 50%" required="required">

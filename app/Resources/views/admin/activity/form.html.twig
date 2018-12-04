@@ -245,15 +245,15 @@
                                         <label class="label-fieldset" style="left: 45px;">{{ "activity.select_duration" | trans}}</label>
                                         <div class="col-md-3">
                                             <select id="schedule_select" name="schedule_am_pm" class="form-control room-select" style="width: 150px">
-                                                <option {% if form.am.vars.checked or form.pm.vars.checked %} selected="selected" {% endif %} value="midday" >{{ "activity.midday" | trans}}</option>
-                                                <option {% if form.all_day.vars.checked %} selected="selected" {% endif %} value="allday" >{{ "activity.all_day" | trans}}</option>
-                                                <option {% if form.several_day.vars.checked %} selected="selected" {% endif %} value="severaldays" >{{ "activity.several_days" | trans}}</option>
+                                                <option {% if entity.am == 1 or entity.pm == 1 %} selected="selected" {% endif %} value="midday" >{{ "activity.midday" | trans}}</option>
+                                                <option {% if entity.allDay == 1 %} selected="selected" {% endif %} value="allday" >{{ "activity.all_day" | trans}}</option>
+                                                <option {% if entity.severalDay == 1 %} selected="selected" {% endif %} value="severaldays" >{{ "activity.several_days" | trans}}</option>
                                             </select>    
                                         </div>    
                                     </fieldset> 
                                 </div>            
                                 <div class="form-group">            
-                                    <fieldset id="midday_am" class="fieldset-custom" style="margin: 0px; {% if form.am.vars.checked == false and form.pm.vars.checked == false %} display: none {% endif %}">
+                                    <fieldset id="midday_am" class="fieldset-custom" style="margin: 0px; {% if entity.am == 0 and entity.pm == 0 %} display: none {% endif %}">
                                         <label class="label-fieldset" style="left: 45px;">{{ "activity.morning" | trans}}</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
@@ -277,7 +277,7 @@
                                     </fieldset>
                                 </div>
                                 <div class="form-group" style="background: #EBF5FB;">
-                                    <fieldset id="midday_pm" class="fieldset-custom" style="margin: 0px; {% if form.am.vars.checked == false and form.pm.vars.checked == false %} display: none {% endif %}">
+                                    <fieldset id="midday_pm" class="fieldset-custom" style="margin: 0px; {% if entity.am == 0 and entity.pm == 0 %} display: none {% endif %}">
                                         <label class="label-fieldset" style="left: 45px;">{{ "activity.afternoon" | trans}}</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
@@ -301,7 +301,7 @@
                                     </fieldset>
                                 </div>
                                 <div class="form-group">
-                                    <fieldset id="allday" class="fieldset-custom" style="margin: 0px; {% if form.all_day.vars.checked == false %} display: none {% endif %}">
+                                    <fieldset id="allday" class="fieldset-custom" style="margin: 0px; {% if entity.allDay == 0 %} display: none {% endif %}">
                                         <label class="label-fieldset" style="left: 45px;">{{ "activity.all_day" | trans}}</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
@@ -325,7 +325,7 @@
                                     </fieldset>
                                 </div>
                                 <div class="form-group">
-                                    <fieldset id="severaldays" class="fieldset-custom" style="margin: 0px; {% if form.several_day.vars.checked == false %} display: none {% endif %}">
+                                    <fieldset id="severaldays" class="fieldset-custom" style="margin: 0px; {% if entity.severalDay == 0 %} display: none {% endif %}">
                                         <label class="label-fieldset" style="left: 45px;">{{ "activity.several_days" | trans}}</label>
                                         <div class="col-md-3">
                                             <label class="control-label">PICK UP</label><br/>
@@ -770,28 +770,28 @@
                     $("#midday_pm").show();
                     $("#allday").hide();
                     $("#severaldays").hide();
-                    $("#appbundle_activity_am").attr('checked','checked');
-                    $("#appbundle_activity_pm").attr('checked','checked');
-                    $("#appbundle_activity_several_day").removeAttr('checked');
-                    $("#appbundle_activity_all_day").removeAttr('checked');
+                    $("#appbundle_activity_am").attr('checked','checked').val('1');
+                    $("#appbundle_activity_pm").attr('checked','checked').val('1');
+                    $("#appbundle_activity_several_day").removeAttr('checked').val('0');
+                    $("#appbundle_activity_all_day").removeAttr('checked').val('0');
                 }else if(value_option === 'allday'){
                     $("#allday").show();
                     $("#midday_am").hide();
                     $("#midday_pm").hide();
                     $("#severaldays").hide();
-                    $("#appbundle_activity_am").removeAttr('checked');
-                    $("#appbundle_activity_pm").removeAttr('checked');
-                    $("#appbundle_activity_several_day").removeAttr('checked');
-                    $("#appbundle_activity_all_day").attr('checked','checked');
+                    $("#appbundle_activity_am").removeAttr('checked').val('0');
+                    $("#appbundle_activity_pm").removeAttr('checked').val('0');
+                    $("#appbundle_activity_several_day").removeAttr('checked').val('0');
+                    $("#appbundle_activity_all_day").attr('checked','checked').val('1');
                 }else if(value_option === 'severaldays'){
                     $("#severaldays").show();
                     $("#midday_am").hide();
                     $("#midday_pm").hide();
                     $("#allday").hide();
-                    $("#appbundle_activity_am").removeAttr('checked');
-                    $("#appbundle_activity_pm").removeAttr('checked');
+                    $("#appbundle_activity_am").removeAttr('checked').val('0');
+                    $("#appbundle_activity_pm").removeAttr('checked').val('0');
                     $("#appbundle_activity_several_day").attr('checked','checked');
-                    $("#appbundle_activity_all_day").removeAttr('checked');
+                    $("#appbundle_activity_all_day").removeAttr('checked').val('0');
                 }    
                 
             });    

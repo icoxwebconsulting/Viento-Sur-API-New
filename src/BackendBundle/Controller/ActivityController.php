@@ -95,7 +95,8 @@ class ActivityController extends Controller
             'id' => $id,
             'action' => $action,
             'entities' => $entities,
-            'activity_agency' => $activity_agency
+            'activity_agency' => $activity_agency,
+            'entity'=>$entity
         ));
     }
     
@@ -208,6 +209,31 @@ class ActivityController extends Controller
             
             $descriptionPt = $form->get('descriptionPt')->getData();
             $descriptionEn = $form->get('descriptionEn')->getData();
+            
+            $am = $form->get('am')->getData();
+            $pm = $form->get('pm')->getData();
+            $all_day = $form->get('all_day')->getData();
+            $several_day = $form->get('several_day')->getData();
+            
+            
+            if($am == 1 || $pm == 1){
+                $entity->setAllDay(0);
+                $entity->setSeveralDay(0);
+                $entity->setAm(1);
+                $entity->setPm(1);
+            }
+            if($all_day == 1){
+                $entity->setAm(0);
+                $entity->setPm(0);
+                $entity->setSeveralDay(0);
+                $entity->setAllDay(1);
+            }
+            if($several_day == 1){
+                $entity->setAm(0);
+                $entity->setPm(0);
+                $entity->setAllDay(0);
+                $entity->setSeveralDay(1);
+            }
             
            
             $activity_agency = $request->get('activity_agency_id');
