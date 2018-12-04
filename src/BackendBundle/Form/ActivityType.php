@@ -503,7 +503,7 @@ class ActivityType extends AbstractType
                 TextType::class,
                 array(
                     'label' => false,
-                    'required' => true
+                    'required' => false
                 )    
             )    
             ->add(
@@ -511,7 +511,7 @@ class ActivityType extends AbstractType
                 TextType::class,
                 array(
                     'label' => false,
-                    'required' => true
+                    'required' => false
                 )    
             )        
             ->add('general_information' , EntityType::class , array(
