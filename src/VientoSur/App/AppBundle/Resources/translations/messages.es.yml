@@ -644,6 +644,7 @@ admin:
         singles: Solos y solas
         sport: Deportes
 activity:
+    address_text: Puede ingresar la dirección y las coordenadas o buscarlas en el mapa
     several_days: Varios Días
     midday: Mediodía
     select_duration: Seleccionar duración
