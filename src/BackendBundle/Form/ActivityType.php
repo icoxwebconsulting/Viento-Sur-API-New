@@ -132,6 +132,17 @@ class ActivityType extends AbstractType
             ->add(
                 'price',
                 TextType::class
+            ) 
+            ->add(
+                'reserva_hours',
+                ChoiceType::class,
+                array(
+                    'data' => '24',
+                    'choices' => ['12'=>'12',
+                                  '24'=>'24',  
+                                  '48'=>'48',
+                                  '72'=>'72']
+                )
             )    
             ->add(
                  'availability',

@@ -85,7 +85,8 @@
             $('#datetimepicker11').datepicker({
                 daysOfWeekDisabled: '{{ array_week_disabled }}',
                 format: "dd/mm/yyyy",
-                datesDisabled: {{ text_date_disabled | raw }}
+                datesDisabled: {{ text_date_disabled | raw }},
+                startDate: '{{ newdate }}'
             });
             
             $('#can-adul').change(function(){
@@ -401,6 +402,7 @@
                                     <p id="info">{{ "activity.address_exit" | trans}}: {{ item.addressOrigin}}</p>
                                     <p id="info">{{ "activity.destination_address" | trans}}: {{ item.addressDestination }}</p> 
                                     <p id="info">{{ 'flights.duration' | trans }}: {{ item.duration }} hs</p> 
+                                    <p id="info">{{ 'activity.book_before' | trans }}: {{ item.reservaHours }} hs</p> 
                                 </div>    
                             </div>    
                         </div> 

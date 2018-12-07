@@ -640,6 +640,7 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    book_before: Reserve antes
     address_text: Você pode inserir o endereço e coordená-los ou pesquisá-los no mapa
     several_days: Vários dias
     midday: Meio dia

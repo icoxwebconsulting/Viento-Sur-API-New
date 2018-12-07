@@ -103,6 +103,13 @@ class Activity
     protected $activity_agency;
     
     /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="reserva_hours", type="string")
+     */
+    private $reserva_hours;
+    
+    /**
      * @var float
      * @Assert\NotBlank()
      * @ORM\Column(name="price", type="float")
@@ -1281,4 +1288,30 @@ class Activity
     {
         return $this->pick_up_several;
     }
+    
+    /**
+     * Set reservaHours
+     *
+     * @param string $reservaHours
+     *
+     * @return Activity
+     */
+    public function setReservaHours($reservaHours)
+    {
+        $this->reserva_hours = $reservaHours;
+
+        return $this;
+    }
+
+    /**
+     * Get reservaHours
+     *
+     * @return string
+     */
+    public function getReservaHours()
+    {
+        return $this->reserva_hours;
+    }
+    
+    
 }

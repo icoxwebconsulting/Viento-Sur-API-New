@@ -149,6 +149,11 @@ class ActivityController extends Controller
         $text_date_disabled .= '"]';
         
         
+        $date_new = new \DateTime();
+        $hour_r = $activity->getReservaHours();
+        $date_new->modify("+$hour_r hours");
+        $newdate = $date_new->format('d/m/Y');
+        
         return $this->render('VientoSurAppAppBundle:Activity:showActivityIdAvailabilities.html.twig', array(
             'item'=>$activity,
             'pictures'=>$pictures,
@@ -164,8 +169,9 @@ class ActivityController extends Controller
             'can_adul'=>(Int) $can_adul,
             'can_chil'=>(Int) $can_chil,
             'several_day'=>(Int) $several_day,
-            'from_severla' => $activity->getFromSeveral(),
-            'to_severla' => $activity->getToSeveral(),
+            'from_severla'=> $activity->getFromSeveral(),
+            'to_severla'=> $activity->getToSeveral(),
+            'newdate'=> $newdate
         ));
     }
     
@@ -222,26 +228,6 @@ class ActivityController extends Controller
         // Crea un token
         $token = $mp->get_access_token();
         
-        /*$payment = $mp->get(
-            "/v1/payments/search",
-            array(
-                "external_reference" => "Reference_1234"
-            )
-        );
-        
-        //$paymentInfo = $mp->get("/v1/payments/885489184");
-        
-        
-        /*$filters = array (
-            "id"=>"16501416"
-        );
-
-        $search_result = $mp->search_payment ($filters, 0, 1);*/
-        
-        /*echo '<pre>';
-        print_r($payment);
-        echo '</pre>';
-        exit();*/
         
         // Configuramos los datos del cobro
         $preference_data = array(

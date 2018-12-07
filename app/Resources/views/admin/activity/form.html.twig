@@ -186,7 +186,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label class="control-label">{{ 'admin.price' | trans }}</label></br>
                                             {{ form_widget(form.price, { 'attr': { 'class': 'form-control input-number'}}) }}
                                         </div>
@@ -195,12 +195,17 @@
                                             {{ form_widget(form.capacity_for_shift, {'attr': {'style': 'height: 40px; margin-top: -3px;'}}) }}
                                             ({{ 'admin.people'  | trans}})
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label class="control-label">{{ 'admin.duration_per_shift' | trans }}</label><br/>
                                             {{ form_widget(form.duration, {'attr': {'style': 'height: 40px; margin-top: -3px;'}}) }}
                                             (Horas)
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <label class="control-label">{{ 'activity.book_before' | trans }}</label><br/>
+                                            {{ form_widget(form.reserva_hours, {'attr': {'style': 'height: 40px; margin-top: -3px;'}}) }}
+                                            (Horas)
+                                        </div>    
+                                        <div class="col-md-2">
                                             <label class="control-label">{{ 'admin.enabled' | trans }}</label><br/>
                                             {{ form_widget(form.availability, { 'attr': { 'class': 'form-control'}}) }}
                                         </div>
