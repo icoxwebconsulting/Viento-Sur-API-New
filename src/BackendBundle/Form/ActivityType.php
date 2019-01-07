@@ -152,6 +152,23 @@ class ActivityType extends AbstractType
                 )   
             )
             ->add(
+                'percentage_paid',
+                ChoiceType::class,
+                array(
+                    'data' => '30',
+                    'choices' => ['30'=>'30 %',
+                                  '40'=>'40 %',  
+                                  '50'=>'50 %']
+                )
+            ) 
+            ->add(
+                 'percentage_paid_enabled',
+                 'checkbox',
+                 array(
+                    'required' => false, 
+                )    
+            )      
+            ->add(
                  'monday',
                  'checkbox',
                  array(

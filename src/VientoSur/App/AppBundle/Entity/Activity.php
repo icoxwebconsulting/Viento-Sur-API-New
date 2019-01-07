@@ -251,6 +251,19 @@ class Activity
     protected $duration;
     
     /**
+     * @var integer
+     * @Assert\NotBlank()
+     * @ORM\Column(name="percentage_paid", type="integer", length=10)
+     */
+    protected $percentage_paid;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="percentage_paid_enabled", type="boolean",options={"default" : 0})
+     */
+    protected $percentage_paid_enabled;
+    
+    /**
      * @var string
      * @ORM\Column(name="pick_up_am", type="string", length=255)
      */
@@ -1313,5 +1326,52 @@ class Activity
         return $this->reserva_hours;
     }
     
-    
+
+    /**
+     * Set percentagePaid
+     *
+     * @param integer $percentagePaid
+     *
+     * @return Activity
+     */
+    public function setPercentagePaid($percentagePaid)
+    {
+        $this->percentage_paid = $percentagePaid;
+
+        return $this;
+    }
+
+    /**
+     * Get percentagePaid
+     *
+     * @return integer
+     */
+    public function getPercentagePaid()
+    {
+        return $this->percentage_paid;
+    }
+
+    /**
+     * Set percentagePaidEnabled
+     *
+     * @param boolean $percentagePaidEnabled
+     *
+     * @return Activity
+     */
+    public function setPercentagePaidEnabled($percentagePaidEnabled)
+    {
+        $this->percentage_paid_enabled = $percentagePaidEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get percentagePaidEnabled
+     *
+     * @return boolean
+     */
+    public function getPercentagePaidEnabled()
+    {
+        return $this->percentage_paid_enabled;
+    }
 }

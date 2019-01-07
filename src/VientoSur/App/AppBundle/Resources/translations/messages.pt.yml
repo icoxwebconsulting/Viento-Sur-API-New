@@ -640,6 +640,8 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    percentage_paid_in_web: Porcentagem paga na web
+    payment_on_arrival: Pagamento no destino
     book_before: Reserve antes
     address_text: Você pode inserir o endereço e coordená-los ou pesquisá-los no mapa
     several_days: Vários dias

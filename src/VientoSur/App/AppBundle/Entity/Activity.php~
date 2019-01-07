@@ -103,6 +103,13 @@ class Activity
     protected $activity_agency;
     
     /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="reserva_hours", type="string")
+     */
+    private $reserva_hours;
+    
+    /**
      * @var float
      * @Assert\NotBlank()
      * @ORM\Column(name="price", type="float")
@@ -242,6 +249,19 @@ class Activity
      * @ORM\Column(name="duration", type="string", length=255)
      */
     protected $duration;
+    
+    /**
+     * @var integer
+     * @Assert\NotBlank()
+     * @ORM\Column(name="percentage_paid", type="integer", length=10)
+     */
+    protected $percentage_paid;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="percentage_paid_enabled", type="boolean",options={"default" : 0})
+     */
+    protected $percentage_paid_enabled;
     
     /**
      * @var string
@@ -1021,7 +1041,7 @@ class Activity
             }elseif($index < $coutn){
                 $data.= $key.', ';
             }else{
-                $data = substr($data, 0, -1);
+                $data = substr($data, 0, -2);
                 $data.=' y '. $key;
             }    
         }
@@ -1257,4 +1277,53 @@ class Activity
     {
         return $this->several_day;
     }
+
+    /**
+     * Set pickUpSeveral
+     *
+     * @param string $pickUpSeveral
+     *
+     * @return Activity
+     */
+    public function setPickUpSeveral($pickUpSeveral)
+    {
+        $this->pick_up_several = $pickUpSeveral;
+
+        return $this;
+    }
+
+    /**
+     * Get pickUpSeveral
+     *
+     * @return string
+     */
+    public function getPickUpSeveral()
+    {
+        return $this->pick_up_several;
+    }
+    
+    /**
+     * Set reservaHours
+     *
+     * @param string $reservaHours
+     *
+     * @return Activity
+     */
+    public function setReservaHours($reservaHours)
+    {
+        $this->reserva_hours = $reservaHours;
+
+        return $this;
+    }
+
+    /**
+     * Get reservaHours
+     *
+     * @return string
+     */
+    public function getReservaHours()
+    {
+        return $this->reserva_hours;
+    }
+    
 }
