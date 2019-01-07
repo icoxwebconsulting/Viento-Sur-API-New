@@ -236,14 +236,18 @@ class ActivityController extends Controller
             }
             
            
-            $activity_agency = $request->get('activity_agency_id');
-            $activity_agency_object = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneById($activity_agency);
-            $entity->setActivityAgency($activity_agency_object);                
-           
+            $activity_agency = $request->get('activity_agency_id', NULL);
 
+            if($activity_agency){
+                $activity_agency_object = $em->getRepository('VientoSurAppAppBundle:ActivityAgency')->findOneById($activity_agency);
+                $entity->setActivityAgency($activity_agency_object); 
+            }
+           
             $entity->setCreatedBy($this->getUser());
             $em->persist($entity);
             $em->flush();
+            
+            $activity_agency_name = $entity->getActivityAgency()->getName();
 
             $entity->setName($namePt);
             $entity->setDescription($descriptionPt);
@@ -270,7 +274,7 @@ class ActivityController extends Controller
             $requestActivity = $request->get('appbundle_activity');
 
             $dataActivity = [
-                    'agency' => $entity->getActivityAgency()->getName(),
+                    'agency' => $activity_agency_name,
                     'activity' => $requestActivity['name'],
                     'address_destination' => $requestActivity['address_destination'],
                     'latitude_destination' => $requestActivity['latitude_destination'],

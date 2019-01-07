@@ -227,13 +227,13 @@ class Activity
     
     /**
      * @var string
-     * @ORM\Column(name="from_several", type="string")
+     * @ORM\Column(name="from_several", type="string", nullable=true)
      */
     protected $from_several;
     
     /**
      * @var string
-     * @ORM\Column(name="to_several", type="string")
+     * @ORM\Column(name="to_several", type="string", nullable=true)
      */
     protected $to_several;
     
