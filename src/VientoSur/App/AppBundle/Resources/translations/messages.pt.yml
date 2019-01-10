@@ -640,6 +640,7 @@ admin:
         singles: Sozinho e sozinho
         sport: Esportes
 activity:
+    msj_payment_on_arrival: Você pode pagar no destino, pagando %percentage%% pela reserva e o restante no destino
     percentage_paid_in_web: Porcentagem paga na web
     payment_on_arrival: Pagamento no destino
     book_before: Reserve antes

@@ -209,6 +209,7 @@ class ActivityController extends Controller
         $session->set('currencies_id', $currencies_id);
         $session->set('activity_id', $activity_id);
         $preference_arrival = null;
+        $percentage_paid = null;
         
         
         $em = $this->getDoctrine()->getManager();
@@ -297,7 +298,8 @@ class ActivityController extends Controller
             'date'=>$date,
             'can_adul'=>$can_adul,
             'can_chil'=>$can_chil,
-            'preference_arrival'=>$preference_arrival
+            'preference_arrival'=>$preference_arrival,
+            'percentage_paid'=>$percentage_paid
         ));
     }
     

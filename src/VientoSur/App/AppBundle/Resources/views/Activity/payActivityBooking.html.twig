@@ -259,6 +259,10 @@
                                 </p>
                                 <b><span id="cuoteDesktop"  style="color: #fff"></span></b>
                                 <p><span>{{ 'hotels.total_price' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</span></p>
+                                {% if preference_arrival %}
+                                <h3 style="font-size: 12px; line-height: 1.5;">{{ 'activity.msj_payment_on_arrival' | trans |replace({'%percentage%': percentage_paid }) }}.</h3>
+                                <b><span id="cuoteDesktop"  style="color: #fff"></span></b>         
+                                {% endif %}
                                 <aside>{{ 'hotels.paying_msg' | trans |replace({'%currency%': symbol}) }}.</aside>
                             </div> 
                         </div>    

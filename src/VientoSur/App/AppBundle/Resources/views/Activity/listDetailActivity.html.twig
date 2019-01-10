@@ -39,6 +39,13 @@
                                 </div>
                             </div>
                         </div>
+                        {% if item.percentage_paid_enabled %}        
+                        <p class="inDemand">
+                            <span>
+                                {{ 'activity.payment_on_arrival' | trans }}
+                            </span>
+                        </p> 
+                        {% endif %}
                     </div>
                     <div class="col-xs-5 col-sm-2 textRight priceRoom">
                         <p> {{ 'activity.price' | trans }} </p>
