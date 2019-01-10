@@ -158,6 +158,18 @@ class Reservation
     private $documentNumber;
     
     /**
+     * @var integer
+     * @ORM\Column(name="percentage_paid", type="integer", length=10, nullable=true)
+     */
+    protected $percentage_paid;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="percentage_paid_enabled", type="boolean",options={"default" : 0})
+     */
+    protected $percentage_paid_enabled;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="ActivityAgency")
      * @ORM\JoinColumn(name="activity_agency", referencedColumnName="id", nullable=true)
      */
@@ -822,5 +834,29 @@ class Reservation
     public function getDocumentNumber()
     {
         return $this->documentNumber;
+    }
+
+    /**
+     * Set activityAgencyPartner
+     *
+     * @param \VientoSur\App\AppBundle\Entity\ActivityAgency $activityAgencyPartner
+     *
+     * @return Reservation
+     */
+    public function setActivityAgencyPartner(\VientoSur\App\AppBundle\Entity\ActivityAgency $activityAgencyPartner = null)
+    {
+        $this->activity_agency_partner = $activityAgencyPartner;
+
+        return $this;
+    }
+
+    /**
+     * Get activityAgencyPartner
+     *
+     * @return \VientoSur\App\AppBundle\Entity\ActivityAgency
+     */
+    public function getActivityAgencyPartner()
+    {
+        return $this->activity_agency_partner;
     }
 }

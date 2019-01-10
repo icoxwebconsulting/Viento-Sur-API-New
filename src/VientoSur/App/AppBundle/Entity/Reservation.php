@@ -158,6 +158,18 @@ class Reservation
     private $documentNumber;
     
     /**
+     * @var integer
+     * @ORM\Column(name="percentage_paid", type="integer", length=10, nullable=true)
+     */
+    protected $percentage_paid;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="percentage_paid_enabled", type="boolean",options={"default" : 0})
+     */
+    protected $percentage_paid_enabled;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="ActivityAgency")
      * @ORM\JoinColumn(name="activity_agency", referencedColumnName="id", nullable=true)
      */
@@ -846,5 +858,53 @@ class Reservation
     public function getActivityAgencyPartner()
     {
         return $this->activity_agency_partner;
+    }
+
+    /**
+     * Set percentagePaid
+     *
+     * @param integer $percentagePaid
+     *
+     * @return Reservation
+     */
+    public function setPercentagePaid($percentagePaid)
+    {
+        $this->percentage_paid = $percentagePaid;
+
+        return $this;
+    }
+
+    /**
+     * Get percentagePaid
+     *
+     * @return integer
+     */
+    public function getPercentagePaid()
+    {
+        return $this->percentage_paid;
+    }
+
+    /**
+     * Set percentagePaidEnabled
+     *
+     * @param boolean $percentagePaidEnabled
+     *
+     * @return Reservation
+     */
+    public function setPercentagePaidEnabled($percentagePaidEnabled)
+    {
+        $this->percentage_paid_enabled = $percentagePaidEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get percentagePaidEnabled
+     *
+     * @return boolean
+     */
+    public function getPercentagePaidEnabled()
+    {
+        return $this->percentage_paid_enabled;
     }
 }

@@ -403,6 +403,9 @@
                                     <p id="info">{{ "activity.destination_address" | trans}}: {{ item.addressDestination }}</p> 
                                     <p id="info">{{ 'flights.duration' | trans }}: {{ item.duration }} hs</p> 
                                     <p id="info">{{ 'activity.book_before' | trans }}: {{ item.reservaHours }} hs</p> 
+                                    {% if item.percentagePaidEnabled  %}
+                                    <p id="info">{{ 'activity.payment_on_arrival' | trans }}</p> 
+                                    {% endif %}
                                 </div>    
                             </div>    
                         </div> 

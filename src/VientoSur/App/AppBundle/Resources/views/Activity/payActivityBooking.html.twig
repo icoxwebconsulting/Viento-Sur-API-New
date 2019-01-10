@@ -203,15 +203,21 @@
                             <span class="booking-item cursor-pointer">
                                 <div id="thumbHotel">
                                     <div class="row col-xs-12 col-sm-12 priceRoom" style="text-align: center; padding-left: 25px; margin-left: -15px; ">
-                                        <div class="col-xs-6 col-sm-6">
+                                        <div class="col-xs-6 {% if preference_arrival %} col-sm-4 {% else %} col-sm-6 {% endif %}">
                                             <button onclick="javascript:location.href='{{ path('viento_sur_app_app_homepage_show_activity_id',{'_locale': app.request.locale, 'id': item.id, 'latitude': latitude, 'longitude': longitude})}}'" style='background: #BBB;'>{{"hotels.edit_reservation"|trans}}</button>
                                         </div>
-                                        <div class="col-xs-6 col-sm-6">
+                                        <div class="col-xs-6 {% if preference_arrival %} col-sm-4 {% else %} col-sm-6 {% endif %}">
                                             <button type="submit" id='viewModalPay' data-title="Pagar- {{ item.name }}">{{"hotels.buy"|trans}}</button>
-                                        </div>    
+                                        </div>
+                                        {% if preference_arrival %}
+                                        <div class="col-xs-6 col-sm-4">
+                                            <button type="submit" id='viewModalPayArrival' data-title="Pagar en destino- {{ item.name }}">{{ 'activity.payment_on_arrival' | trans }}</button>
+                                        </div>
+                                        {% endif %}
                                     </div>         
                                 </div>             
-                            </span>                     
+                            </span>  
+                            <input type="hidden" name="pay_arrival" id="pay_arrival" value="0">        
                         </form>       
                     </div>        
                 </div>
@@ -275,6 +281,7 @@
             $(document).click(parent_disable());
             
             var popupWindow=null;
+            var popupWindowArrival=null;
 
             function popup()
             {
@@ -284,13 +291,59 @@
                     window.location.href = '{{ preference['response']['sandbox_init_point'] }}';
                 {% endif %}    
             }
+            
+            function popupArrival()
+            {
+                {% if isIframe != true %}
+                    popupWindowArrival = window.open('{{ preference_arrival['response']['sandbox_init_point'] }}','Pagar- {{ item.name }} - vientosur.net', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, top=300, left=500, width=700, height=700');
+                {% else %}
+                    window.location.href = '{{ preference_arrival['response']['sandbox_init_point'] }}';
+                {% endif %}    
+            }
 
             function parent_disable() {
-                if(popupWindow && !popupWindow.closed)
-                popupWindow.focus();
+                if(popupWindow && !popupWindow.closed){
+                popupWindow.focus();}
+                
+                if(popupWindowArrival && !popupWindowArrival.closed){
+                popupWindowArrival.focus();}
             }
             
+            $('#viewModalPayArrival').click(function(){
+                $('#pay_arrival').val(1);
+                if(checkDataForm()){
+                    $.ajax({
+                        type: 'GET',
+                        url: $('#pay-data-form').attr('action'),
+                        data: $('#pay-data-form').serialize(),
+                        success: function(result) {
+                            if(result === 'ok'){
+                                popupArrival();
+                            }
+                        }
+                    });
+                    return false;
+                } 
+            });
+            
             $('#viewModalPay').click(function(){
+                if(checkDataForm()){
+                    $.ajax({
+                        type: 'GET',
+                        url: $('#pay-data-form').attr('action'),
+                        data: $('#pay-data-form').serialize(),
+                        success: function(result) {
+                            if(result === 'ok'){
+                                popup();
+                            }
+                        }
+                    });
+                    return false;
+                }
+            });
+            
+            function checkDataForm(){
+                
                 var name = $('#first_name');
                 var lastname = $('#last_name');
                 var dni = $('#document_number');
@@ -309,18 +362,8 @@
                 if(conf_email.val() === ''){alert('{{"activity.complete_the_field"|trans}} {{"activity.confirm_your_email"|trans}}'); conf_email.focus();return false;}
                 if(email.val() === conf_email.val()){$('#errorEmail').hide();}else{$('#errorEmail').show(); return false;}
                 
-                $.ajax({
-                    type: 'GET',
-                    url: $('#pay-data-form').attr('action'),
-                    data: $('#pay-data-form').serialize(),
-                    success: function(result) {
-                        if(result === 'ok'){
-                            popup();
-                        }
-                    }
-                });
-                return false;
-            });
+                return true;
+            }    
             
             var latLng;
             var hotelName;

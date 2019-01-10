@@ -208,6 +208,7 @@ class ActivityController extends Controller
         $session->set('date', $date);
         $session->set('currencies_id', $currencies_id);
         $session->set('activity_id', $activity_id);
+        $preference_arrival = null;
         
         
         $em = $this->getDoctrine()->getManager();
@@ -222,6 +223,8 @@ class ActivityController extends Controller
         
         $regreso = $this->getParameter('url_site').$this->generateUrl('viento_sur_app_boking_action_pay_mp_ok');
         $cancelado = '';
+        
+        $percentage_paid_enabled = $activity->getPercentagePaidEnabled();
         
         // Crea el objeto MP
         $mp = $this->get('grunch_mercadopago')->getMp();
@@ -251,6 +254,35 @@ class ActivityController extends Controller
         // Enviar los datos al API de Mercado Pago para la generación del link
         $preference = $mp->create_preference($preference_data);
         
+        // pago en destino mercado pago
+        if($percentage_paid_enabled){
+            
+            $percentage_paid = $activity->getPercentagePaid();
+            $price_percenteage = (double) ($price * ($percentage_paid/100));
+            
+            // Configuramos los datos del cobro en destino
+            $preference_data_arrival = array(
+                "items" => [
+                        [
+                            "title" => $activity->getId().'-'.$activity->getName().' - '.$activity->getActivityAgency()->getId().'-'.$activity->getActivityAgency()->getName() ,
+                            "quantity" => 1,
+                            "currency_id" => $currencies_id, // Si deseas saber con que tipos de monedas puedes cobrar visita https://api.mercadopago.com/currencies
+                            "unit_price" => (double) $price_percenteage
+                        ],
+                    ],
+                    "default_payment_method_id" => "visa", // método de pago por default
+                    "installments" => 1,
+                    "external_reference"=> "Reference_1234_67",
+                    "back_urls" => [
+                        "success" => $regreso,
+                        "failure" => $cancelado
+                    ]      
+            );
+            
+            // Enviar los datos al API de Mercado Pago para la generación del link
+            $preference_arrival = $mp->create_preference($preference_data_arrival);
+        }
+        
         return $this->render('VientoSurAppAppBundle:Activity:payActivityBooking.html.twig', array(
             'item'=>$activity,
             'pictures'=>$pictures,
@@ -264,7 +296,8 @@ class ActivityController extends Controller
             'schedule'=>$schedule,
             'date'=>$date,
             'can_adul'=>$can_adul,
-            'can_chil'=>$can_chil
+            'can_chil'=>$can_chil,
+            'preference_arrival'=>$preference_arrival
         ));
     }
     
@@ -282,6 +315,7 @@ class ActivityController extends Controller
         $session->set('contact_type', $request->get('contact_type'));
         $session->set('contact_number', $request->get('contact_number'));
         $session->set('contact_email', $request->get('contact_email'));
+        $session->set('pay_arrival', $request->get('pay_arrival'));
         
         echo 'ok';
         exit();
@@ -315,6 +349,7 @@ class ActivityController extends Controller
         $schedule      = $session->get('schedule');
         $date          = $session->get('date');
         $currencies_id = $session->get('currencies_id');
+        $pay_arrival   = $session->get('pay_arrival');
         
         $name_buyer      = $session->get('name_buyer');
         $lastname_buyer  = $session->get('lastname_buyer');
@@ -327,6 +362,13 @@ class ActivityController extends Controller
         $activity_id     = $session->get('activity_id');
         
         $activity =  $em->getRepository("VientoSurAppAppBundle:Activity")->findOneById($activity_id);
+        
+        $price_percenteage = null;
+        
+        if($pay_arrival == 1 && $activity->getPercentagePaidEnabled()){
+            $percentage_paid = $activity->getPercentagePaid();
+            $price_percenteage = (double) ($price * ($percentage_paid/100));
+        }
         
         $reservation = new Reservation();
         
@@ -353,6 +395,8 @@ class ActivityController extends Controller
         $reservation->setActivity($activity);
         $reservation->setActivityAgency($activity->getActivityAgency());
         $reservation->setRefundable(0);
+        $reservation->setPercentagePaid($price_percenteage);
+        $reservation->setPercentagePaidEnabled($pay_arrival);
         $origen = $isIframe == true?$session->get('name_agency'):'vientosur';
         $reservation->setOrigin($origen);
         
