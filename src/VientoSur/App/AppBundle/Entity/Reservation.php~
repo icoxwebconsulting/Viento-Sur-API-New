@@ -71,6 +71,12 @@ class Reservation
      * @ORM\Column(name="total_price", type="float", nullable=true)
      */
     private $totalPrice;
+    
+    /**
+     * @var
+     * @ORM\Column(name="rest_of_pay", type="float", nullable=true)
+     */
+    private $restOfPay;
 
     /**
      * @var string
@@ -858,5 +864,53 @@ class Reservation
     public function getActivityAgencyPartner()
     {
         return $this->activity_agency_partner;
+    }
+
+    /**
+     * Set percentagePaid
+     *
+     * @param integer $percentagePaid
+     *
+     * @return Reservation
+     */
+    public function setPercentagePaid($percentagePaid)
+    {
+        $this->percentage_paid = $percentagePaid;
+
+        return $this;
+    }
+
+    /**
+     * Get percentagePaid
+     *
+     * @return integer
+     */
+    public function getPercentagePaid()
+    {
+        return $this->percentage_paid;
+    }
+
+    /**
+     * Set percentagePaidEnabled
+     *
+     * @param boolean $percentagePaidEnabled
+     *
+     * @return Reservation
+     */
+    public function setPercentagePaidEnabled($percentagePaidEnabled)
+    {
+        $this->percentage_paid_enabled = $percentagePaidEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get percentagePaidEnabled
+     *
+     * @return boolean
+     */
+    public function getPercentagePaidEnabled()
+    {
+        return $this->percentage_paid_enabled;
     }
 }

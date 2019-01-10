@@ -366,10 +366,12 @@ class ActivityController extends Controller
         $activity =  $em->getRepository("VientoSurAppAppBundle:Activity")->findOneById($activity_id);
         
         $price_percenteage = null;
+        $rest_of_pay       = null;
         
         if($pay_arrival == 1 && $activity->getPercentagePaidEnabled()){
             $percentage_paid = $activity->getPercentagePaid();
             $price_percenteage = (double) ($price * ($percentage_paid/100));
+            $rest_of_pay = (double) $price - $price_percenteage;
         }
         
         $reservation = new Reservation();
@@ -399,6 +401,7 @@ class ActivityController extends Controller
         $reservation->setRefundable(0);
         $reservation->setPercentagePaid($price_percenteage);
         $reservation->setPercentagePaidEnabled($pay_arrival);
+        $reservation->setRestOfPay($rest_of_pay);
         $origen = $isIframe == true?$session->get('name_agency'):'vientosur';
         $reservation->setOrigin($origen);
         

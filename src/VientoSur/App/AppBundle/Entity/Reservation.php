@@ -71,6 +71,12 @@ class Reservation
      * @ORM\Column(name="total_price", type="float", nullable=true)
      */
     private $totalPrice;
+    
+    /**
+     * @var
+     * @ORM\Column(name="rest_of_pay", type="float", nullable=true)
+     */
+    private $restOfPay;
 
     /**
      * @var string
@@ -906,5 +912,29 @@ class Reservation
     public function getPercentagePaidEnabled()
     {
         return $this->percentage_paid_enabled;
+    }
+
+    /**
+     * Set restOfPay
+     *
+     * @param float $restOfPay
+     *
+     * @return Reservation
+     */
+    public function setRestOfPay($restOfPay)
+    {
+        $this->restOfPay = $restOfPay;
+
+        return $this;
+    }
+
+    /**
+     * Get restOfPay
+     *
+     * @return float
+     */
+    public function getRestOfPay()
+    {
+        return $this->restOfPay;
     }
 }
