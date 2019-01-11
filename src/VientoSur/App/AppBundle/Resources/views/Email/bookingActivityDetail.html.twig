@@ -100,6 +100,11 @@
                         <td width="40%">
                             {{ 'hotels.total_price' | trans }}:<br>
                             <h2>{{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  price, 'symbol': symbol})) }}</h2>
+                            {% if reservation.percentagePaidEnabled%}
+                                - {{ 'activity.payment_on_arrival' | trans }} -<br/>
+                                {{ 'activity.percentage_paid_in_web' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  reservation.percentagePaid, 'symbol': symbol})) }}<br/>
+                                {{ 'activity.rest_payment' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  restOfPay, 'symbol': symbol})) }}<br/>
+                            {% endif %}  
                         </td>    
                     </tr>    
                 </table> 
@@ -115,6 +120,11 @@
                             <h2 style=";font-size: 12px">{{ 'hotels.pay' | trans }}</h2>
                             <h5 style="font-size: 12px">
                                 {{ 'hotels.payment_method_chosen' | trans }}:<br/>
+                                {% if reservation.percentagePaidEnabled%}
+                                    - {{ 'activity.payment_on_arrival' | trans }} -<br/>
+                                    {{ 'activity.percentage_paid_in_web' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  reservation.percentagePaid, 'symbol': symbol})) }}<br/>
+                                    {{ 'activity.rest_payment' | trans }}: {{ symbol }} {{ render(controller('VientoSurAppAppBundle:Activity:getConvertCurrency',{ 'amount':  restOfPay, 'symbol': symbol})) }}<br/>
+                                {% endif %}  
                                 MercadoPago.com - referencia de pago Nº: {{ reservation.collectionId }}
                             </h5>
                         </td>

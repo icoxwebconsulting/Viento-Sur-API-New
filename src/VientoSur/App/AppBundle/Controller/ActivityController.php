@@ -469,6 +469,7 @@ class ActivityController extends Controller
                     'cant_adut'=>$reservation->getCanAdul(),
                     'cant_chil'=>$reservation->getCanChil(),
                     'price'=>$reservation->getTotalPrice(),
+                    'restOfPay'=>$reservation->getRestOfPay(),
                     'pdf' => false
                 ));
         

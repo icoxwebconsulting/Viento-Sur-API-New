@@ -645,6 +645,7 @@ admin:
         singles: Alone and alone
         sport: Sports
 activity:
+    rest_payment: Pay at destination
     msj_payment_on_arrival: You can pay at destination, paying %percentage%% for the reservation and the rest at destination 
     percentage_paid_in_web: Percentage paid in web 
     payment_on_arrival: Payment on arrival
