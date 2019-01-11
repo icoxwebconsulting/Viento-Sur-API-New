@@ -150,7 +150,7 @@ class ActivityController extends Controller
         
         
         $date_new = new \DateTime();
-        $hour_r = $activity->getReservaHours();
+        $hour_r = (int) $activity->getReservaHours();
         $date_new->modify("+$hour_r hours");
         $newdate = $date_new->format('d/m/Y');
         
